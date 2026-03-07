@@ -1,0 +1,15 @@
+apiVersion: regional.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Hostname
+metadata:
+  annotations:
+    meta.upbound.io/example-id: regional/v1alpha1/hostname
+  labels:
+    testing.upbound.io/example-name: example_regional_hostname
+  name: example-regional-hostname
+  namespace: crossplane-system
+spec:
+  forProvider:
+    hostname: foo.example.com
+    regionKey: ca
+    routing: dns
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

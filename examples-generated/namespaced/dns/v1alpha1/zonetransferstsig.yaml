@@ -1,0 +1,17 @@
+apiVersion: dns.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: ZoneTransfersTsig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1alpha1/zonetransferstsig
+  labels:
+    testing.upbound.io/example-name: example_dns_zone_transfers_tsig
+  name: example-dns-zone-transfers-tsig
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 01a7362d577a6c3019a474fd6f485823
+    algo: hmac-sha512.
+    name: tsig.customer.cf.
+    secretSecretRef:
+      key: example-key
+      name: example-secret

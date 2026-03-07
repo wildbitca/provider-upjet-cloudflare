@@ -1,0 +1,18 @@
+apiVersion: workers.upjet-cloudflare.upbound.io/v1alpha1
+kind: Deployment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: workers/v1alpha1/deployment
+  labels:
+    testing.upbound.io/example-name: example_workers_deployment
+  name: example-workers-deployment
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    annotations:
+      workersMessage: Deploy bug fix.
+    scriptName: this-is_my_script-01
+    strategy: percentage
+    versions:
+    - percentage: 100
+      versionId: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e

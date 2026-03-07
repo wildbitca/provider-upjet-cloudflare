@@ -1,0 +1,22 @@
+apiVersion: turnstile.upjet-cloudflare.upbound.io/v1alpha1
+kind: Widget
+metadata:
+  annotations:
+    meta.upbound.io/example-id: turnstile/v1alpha1/widget
+  labels:
+    testing.upbound.io/example-name: example_turnstile_widget
+  name: example-turnstile-widget
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    botFightMode: false
+    clearanceLevel: interactive
+    domains:
+    - 203.0.113.1
+    - cloudflare.com
+    - blog.example.com
+    ephemeralId: false
+    mode: invisible
+    name: blog.cloudflare.com login form
+    offlabel: false
+    region: world

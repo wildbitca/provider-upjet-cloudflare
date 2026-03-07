@@ -1,0 +1,27 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustAccessAIControlsMcpPortal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccessaicontrolsmcpportal
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_ai_controls_mcp_portal
+  name: example-zero-trust-access-ai-controls-mcp-portal
+spec:
+  forProvider:
+    accountId: a86a8f5c339544d7bdc89926de14fb8c
+    description: This is my custom MCP Portal
+    hostname: exmaple.com
+    name: My MCP Portal
+    secureWebGateway: false
+    servers:
+    - defaultDisabled: true
+      onBehalf: true
+      serverId: my-mcp-server
+      updatedPrompts:
+      - description: description
+        enabled: true
+        name: name
+      updatedTools:
+      - description: description
+        enabled: true
+        name: name

@@ -1,0 +1,15 @@
+apiVersion: cloudflare.upjet-cloudflare.upbound.io/v1alpha1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudflare/v1alpha1/user
+  labels:
+    testing.upbound.io/example-name: example_user
+  name: example-user
+spec:
+  forProvider:
+    country: US
+    firstName: John
+    lastName: Appleseed
+    telephone: +1 123-123-1234
+    zipcode: "12345"

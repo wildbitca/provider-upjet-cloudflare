@@ -1,0 +1,33 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustAccessIdentityProvider
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccessidentityprovider
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_identity_provider
+  name: example-zero-trust-access-identity-provider
+spec:
+  forProvider:
+    config:
+      claims:
+      - email_verified
+      - preferred_username
+      - custom_claim_name
+      clientId: <your client id>
+      clientSecretSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      conditionalAccessEnabled: true
+      directoryId: <your azure directory uuid>
+      emailClaimName: custom_claim_name
+      prompt: login
+      supportGroups: true
+    name: Widget Corps IDP
+    scimConfig:
+      enabled: true
+      identityUpdateBehavior: automatic
+      seatDeprovision: true
+      userDeprovision: true
+    type: onetimepin
+    zoneId: zone_id

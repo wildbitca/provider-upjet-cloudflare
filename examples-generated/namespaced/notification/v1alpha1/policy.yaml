@@ -1,0 +1,111 @@
+apiVersion: notification.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Policy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: notification/v1alpha1/policy
+  labels:
+    testing.upbound.io/example-name: example_notification_policy
+  name: example-notification-policy
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    alertInterval: 30m
+    alertType: universal_ssl_event_type
+    description: Something describing the policy.
+    enabled: true
+    filters:
+      actions:
+      - string
+      affectedAsns:
+      - string
+      affectedComponents:
+      - string
+      affectedLocations:
+      - string
+      airportCode:
+      - string
+      alertTriggerPreferences:
+      - string
+      alertTriggerPreferencesValue:
+      - string
+      enabled:
+      - string
+      environment:
+      - string
+      event:
+      - string
+      eventSource:
+      - string
+      eventType:
+      - string
+      groupBy:
+      - string
+      healthCheckId:
+      - string
+      incidentImpact:
+      - INCIDENT_IMPACT_NONE
+      inputId:
+      - string
+      insightClass:
+      - string
+      limit:
+      - string
+      logoTag:
+      - string
+      megabitsPerSecond:
+      - string
+      newHealth:
+      - string
+      newStatus:
+      - string
+      packetsPerSecond:
+      - string
+      poolId:
+      - string
+      popNames:
+      - string
+      product:
+      - string
+      projectId:
+      - string
+      protocol:
+      - string
+      queryTag:
+      - string
+      requestsPerSecond:
+      - string
+      selectors:
+      - string
+      services:
+      - string
+      slo:
+      - "99.9"
+      status:
+      - string
+      targetHostname:
+      - string
+      targetIp:
+      - string
+      targetZoneName:
+      - string
+      trafficExclusions:
+      - security_events
+      tunnelId:
+      - string
+      tunnelName:
+      - string
+      type:
+      - string
+      where:
+      - string
+      zones:
+      - string
+    mechanisms:
+      email:
+      - id: id
+      pagerduty:
+      - id: f174e90afafe4643bbbc4a0ed4fc8415
+      webhooks:
+      - id: f174e90afafe4643bbbc4a0ed4fc8415
+    name: SSL Notification Event Policy

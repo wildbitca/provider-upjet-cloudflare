@@ -1,0 +1,50 @@
+apiVersion: custom.upjet-cloudflare.upbound.io/v1alpha1
+kind: Hostname
+metadata:
+  annotations:
+    meta.upbound.io/example-id: custom/v1alpha1/hostname
+  labels:
+    testing.upbound.io/example-name: example_custom_hostname
+  name: example-custom-hostname
+spec:
+  forProvider:
+    customMetadata:
+      foo: string
+    hostname: app.example.com
+    ssl:
+      bundleMethod: ubiquitous
+      certificateAuthority: google
+      cloudflareBranding: false
+      customCertBundle:
+      - customCertificate: |2+
+                -----BEGIN CERTIFICATE-----
+                MIIDdjCCAl6gAwIBAgIJAPnMg0Fs+/B0MA0GCSqGSIb3DQEBCwUAMFsx...
+                -----END CERTIFICATE-----
+
+        customKeySecretRef:
+          key: example-key
+          name: example-secret
+          namespace: upbound-system
+      customCertificate: |2+
+            -----BEGIN CERTIFICATE-----
+            MIIFJDCCBAygAwIBAgIQD0ifmj/Yi5NP/2gdUySbfzANBgkqhkiG9w0BAQsFADBN
+            MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMScwJQYDVQQDEx5E...SzSHfXp5lnu/3V08I72q1QNzOCgY1XeL4GKVcj4or6cT6tX6oJH7ePPmfrBfqI/O
+            OeH8gMJ+FuwtXYEPa4hBf38M5eU5xWG7
+            -----END CERTIFICATE-----
+
+      customKeySecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      method: http
+      settings:
+        ciphers:
+        - ECDHE-RSA-AES128-GCM-SHA256
+        - AES128-SHA
+        earlyHints: "on"
+        http2: "on"
+        minTlsVersion: "1.2"
+        tls13: "on"
+      type: dv
+      wildcard: false
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

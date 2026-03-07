@@ -1,0 +1,12 @@
+apiVersion: tiered.upjet-cloudflare.upbound.io/v1alpha1
+kind: Cache
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tiered/v1alpha1/cache
+  labels:
+    testing.upbound.io/example-name: example_tiered_cache
+  name: example-tiered-cache
+spec:
+  forProvider:
+    value: "on"
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

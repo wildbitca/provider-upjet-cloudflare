@@ -1,0 +1,16 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustDlpDataset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustdlpdataset
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_dlp_dataset
+  name: example-zero-trust-dlp-dataset
+spec:
+  forProvider:
+    accountId: account_id
+    caseSensitive: true
+    description: description
+    encodingVersion: 0
+    name: name
+    secret: true

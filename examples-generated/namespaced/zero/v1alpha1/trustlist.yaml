@@ -1,0 +1,18 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustlist
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_list
+  name: example-zero-trust-list
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 699d98642c564d2e855e9661899b7252
+    description: The serial numbers for administrators
+    items:
+    - description: Austin office IP
+      value: 8GE8721REF
+    name: Admin Serial Numbers
+    type: SERIAL

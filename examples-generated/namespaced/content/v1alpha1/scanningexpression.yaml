@@ -1,0 +1,14 @@
+apiVersion: content.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: ScanningExpression
+metadata:
+  annotations:
+    meta.upbound.io/example-id: content/v1alpha1/scanningexpression
+  labels:
+    testing.upbound.io/example-name: example_content_scanning_expression
+  name: example-content-scanning-expression
+  namespace: crossplane-system
+spec:
+  forProvider:
+    body:
+    - payload: lookup_json_string(http.request.body.raw, "file")
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

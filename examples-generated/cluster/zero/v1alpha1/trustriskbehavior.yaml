@@ -1,0 +1,15 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustRiskBehavior
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustriskbehavior
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_risk_behavior
+  name: example-zero-trust-risk-behavior
+spec:
+  forProvider:
+    accountId: account_id
+    behaviors:
+      foo:
+        enabled: true
+        risk_level: low

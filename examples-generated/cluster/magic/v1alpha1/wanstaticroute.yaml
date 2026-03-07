@@ -1,0 +1,21 @@
+apiVersion: magic.upjet-cloudflare.upbound.io/v1alpha1
+kind: WanStaticRoute
+metadata:
+  annotations:
+    meta.upbound.io/example-id: magic/v1alpha1/wanstaticroute
+  labels:
+    testing.upbound.io/example-name: example_magic_wan_static_route
+  name: example-magic-wan-static-route
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    description: New route for new prefix 203.0.113.1
+    nexthop: 203.0.113.1
+    prefix: 192.0.2.0/24
+    priority: 0
+    scope:
+      coloNames:
+      - den01
+      coloRegions:
+      - APAC
+    weight: 0

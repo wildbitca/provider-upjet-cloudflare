@@ -1,0 +1,17 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustTunnelCloudflared
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trusttunnelcloudflared
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_tunnel_cloudflared
+  name: example-zero-trust-tunnel-cloudflared
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 699d98642c564d2e855e9661899b7252
+    configSrc: cloudflare
+    name: blog
+    tunnelSecretSecretRef:
+      key: example-key
+      name: example-secret

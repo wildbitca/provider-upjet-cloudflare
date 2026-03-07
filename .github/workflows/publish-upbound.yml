@@ -1,0 +1,123 @@
+name: Publish to Upbound Marketplace
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+concurrency:
+  group: publish-upbound-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  IMAGE_PATH: xpkg.upbound.io/wildbitca/provider-upjet-cloudflare
+  GO_VERSION: '1.24'
+  DOCKER_BUILDX_VERSION: 'v0.30.1'
+
+permissions:
+  contents: read
+
+jobs:
+  publish-upbound:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require Upbound token
+        run: |
+          if [ -z "${{ secrets.UPBOUND_TOKEN }}" ]; then
+            echo "::error::UPBOUND_TOKEN secret is not set. Add it in repo Settings → Secrets and variables → Actions (e.g. from 'up robot token create' or Upbound account token)."
+            exit 1
+          fi
+
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v4
+        with:
+          platforms: all
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v4
+        with:
+          version: ${{ env.DOCKER_BUILDX_VERSION }}
+
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Find the Go Build Cache
+        id: go
+        run: echo "cache=$(make go.cachedir)" >> $GITHUB_OUTPUT
+
+      - name: Prepare cache directories
+        run: |
+          mkdir -p .work/pkg
+          mkdir -p "$(make go.cachedir)"
+
+      - name: Cache the Go Build Cache
+        uses: actions/cache@v5
+        with:
+          path: ${{ steps.go.outputs.cache }}
+          key: ${{ runner.os }}-provider-upjet-cloudflare-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: ${{ runner.os }}-provider-upjet-cloudflare-go-
+
+      - name: Cache Go Dependencies
+        uses: actions/cache@v5
+        with:
+          path: .work/pkg
+          key: ${{ runner.os }}-provider-upjet-cloudflare-pkg-${{ hashFiles('**/go.sum') }}
+          restore-keys: ${{ runner.os }}-provider-upjet-cloudflare-pkg-
+
+      - name: Vendor Dependencies
+        run: make vendor vendor.check
+
+      - name: Install Upbound CLI
+        run: |
+          curl -sL "https://cli.upbound.io" | sh
+          sudo mv up /usr/local/bin/
+          curl -sL "https://cli.upbound.io" | BIN=docker-credential-up sh
+          sudo mv docker-credential-up /usr/local/bin/
+          up version
+
+      - name: Authenticate with Upbound
+        run: up login -t "${{ secrets.UPBOUND_TOKEN }}"
+
+      - name: Configure Docker credential helper for Upbound
+        run: |
+          mkdir -p ~/.docker
+          config_file=~/.docker/config.json
+          if [ -f "$config_file" ]; then
+            jq '.credHelpers["xpkg.upbound.io"] = "up"' "$config_file" > "${config_file}.tmp" && mv "${config_file}.tmp" "$config_file"
+          else
+            echo '{"credHelpers":{"xpkg.upbound.io":"up"}}' > "$config_file"
+          fi
+
+      - name: Build provider image and xpkg
+        run: make -j2 build.all
+        env:
+          BUILD_ARGS: "--load --cache-from type=gha --cache-to type=gha,mode=max"
+
+      - name: Push to Upbound Marketplace
+        run: XPKG_REG_ORGS=xpkg.upbound.io/wildbitca make xpkg.release.publish
+
+      - name: Append extensions to package
+        run: |
+          set -euo pipefail
+          VERSION="${{ github.ref_name }}"
+          IMAGE="${{ env.IMAGE_PATH }}:${VERSION}"
+          DIGEST=$(docker buildx imagetools inspect "$IMAGE" 2>&1 | awk '/Digest:/ {print $NF; exit}')
+          if [ -z "$DIGEST" ]; then
+            echo "::error::Failed to get image digest for $IMAGE"
+            exit 1
+          fi
+          echo "Appending extensions (source: ${{ env.IMAGE_PATH }}@$DIGEST)"
+          up xpkg append --extensions-root=./extensions \
+            --destination="$IMAGE" \
+            "${{ env.IMAGE_PATH }}@${DIGEST}"
+
+      - name: Publish Marketplace listing
+        run: up repository update wildbitca/provider-upjet-cloudflare --publish

@@ -1,0 +1,17 @@
+apiVersion: custom.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Pages
+metadata:
+  annotations:
+    meta.upbound.io/example-id: custom/v1alpha1/pages
+  labels:
+    testing.upbound.io/example-name: example_custom_pages
+  name: example-custom-pages
+  namespace: crossplane-system
+spec:
+  forProvider:
+    identifier: ratelimit_block
+    state: default
+    url: http://www.example.com
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

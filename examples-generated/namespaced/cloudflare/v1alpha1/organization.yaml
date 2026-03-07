@@ -1,0 +1,20 @@
+apiVersion: cloudflare.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Organization
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudflare/v1alpha1/organization
+  labels:
+    testing.upbound.io/example-name: example_organization
+  name: example-organization
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: name
+    parent:
+      id: a7b9c3d2e8f4g1h5i6j0k9l2m3n7o4p8
+    profile:
+      businessAddress: business_address
+      businessEmail: business_email
+      businessName: business_name
+      businessPhone: business_phone
+      externalMetadata: external_metadata

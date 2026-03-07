@@ -1,0 +1,10 @@
+# Minimal Upbound project file so "up project build" / "up project push" recognize this repo.
+# See https://docs.upbound.io/manuals/cli/concepts/projects
+apiVersion: meta.dev.upbound.io/v1alpha1
+kind: Project
+metadata:
+  name: provider-upjet-cloudflare
+spec:
+  repository: xpkg.upbound.io/wildbitca/provider-upjet-cloudflare
+  description: Upjet-based Crossplane provider for Cloudflare.
+  license: Apache-2.0

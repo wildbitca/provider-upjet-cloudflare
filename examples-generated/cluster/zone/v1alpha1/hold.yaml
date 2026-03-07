@@ -1,0 +1,13 @@
+apiVersion: zone.upjet-cloudflare.upbound.io/v1alpha1
+kind: Hold
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zone/v1alpha1/hold
+  labels:
+    testing.upbound.io/example-name: example_zone_hold
+  name: example-zone-hold
+spec:
+  forProvider:
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

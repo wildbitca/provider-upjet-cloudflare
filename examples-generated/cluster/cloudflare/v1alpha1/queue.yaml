@@ -1,0 +1,12 @@
+apiVersion: cloudflare.upjet-cloudflare.upbound.io/v1alpha1
+kind: Queue
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudflare/v1alpha1/queue
+  labels:
+    testing.upbound.io/example-name: example_queue
+  name: example-queue
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    queueName: example-queue

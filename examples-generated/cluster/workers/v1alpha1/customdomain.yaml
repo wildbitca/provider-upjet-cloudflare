@@ -1,0 +1,15 @@
+apiVersion: workers.upjet-cloudflare.upbound.io/v1alpha1
+kind: CustomDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: workers/v1alpha1/customdomain
+  labels:
+    testing.upbound.io/example-name: example_workers_custom_domain
+  name: example-workers-custom-domain
+spec:
+  forProvider:
+    accountId: 9a7806061c88ada191ed06f989cc3dac
+    environment: production
+    hostname: foo.example.com
+    service: foo
+    zoneId: 593c9c94de529bbbfaac7c53ced0447d

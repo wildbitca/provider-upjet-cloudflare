@@ -1,0 +1,20 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustDeviceSettings
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustdevicesettings
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_device_settings
+  name: example-zero-trust-device-settings
+spec:
+  forProvider:
+    accountId: 699d98642c564d2e855e9661899b7252
+    disableForTime: 0
+    externalEmergencySignalEnabled: true
+    externalEmergencySignalFingerprint: abcd1234567890abcd1234567890abcd1234567890abcd1234567890abcd1234
+    externalEmergencySignalInterval: 5m
+    externalEmergencySignalUrl: https://192.0.2.1/signal
+    gatewayProxyEnabled: true
+    gatewayUdpProxyEnabled: true
+    rootCertificateInstallationEnabled: true
+    useZtVirtualIp: true

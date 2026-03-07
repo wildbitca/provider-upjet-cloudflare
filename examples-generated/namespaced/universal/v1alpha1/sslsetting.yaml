@@ -1,0 +1,13 @@
+apiVersion: universal.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: SSLSetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: universal/v1alpha1/sslsetting
+  labels:
+    testing.upbound.io/example-name: example_universal_ssl_setting
+  name: example-universal-ssl-setting
+  namespace: crossplane-system
+spec:
+  forProvider:
+    enabled: true
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

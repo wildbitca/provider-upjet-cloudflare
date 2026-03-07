@@ -1,0 +1,13 @@
+apiVersion: authenticated.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: OriginPullsSettings
+metadata:
+  annotations:
+    meta.upbound.io/example-id: authenticated/v1alpha1/originpullssettings
+  labels:
+    testing.upbound.io/example-name: example_authenticated_origin_pulls_settings
+  name: example-authenticated-origin-pulls-settings
+  namespace: crossplane-system
+spec:
+  forProvider:
+    enabled: true
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

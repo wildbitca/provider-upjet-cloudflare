@@ -1,0 +1,58 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustTunnelCloudflaredConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trusttunnelcloudflaredconfig
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_tunnel_cloudflared_config
+  name: example-zero-trust-tunnel-cloudflared-config
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    config:
+      ingress:
+      - hostname: tunnel.example.com
+        originRequest:
+          access:
+            audTag:
+            - string
+            required: false
+            teamName: zero-trust-organization-name
+          caPool: caPool
+          connectTimeout: 10
+          disableChunkedEncoding: true
+          http2Origin: true
+          httpHostHeader: httpHostHeader
+          keepAliveConnections: 100
+          keepAliveTimeout: 90
+          matchSnItoHost: false
+          noHappyEyeballs: false
+          noTlsVerify: false
+          originServerName: originServerName
+          proxyType: proxyType
+          tcpKeepAlive: 30
+          tlsTimeout: 10
+        path: subpath
+        service: https://localhost:8001
+      originRequest:
+        access:
+          audTag:
+          - string
+          required: false
+          teamName: zero-trust-organization-name
+        caPool: caPool
+        connectTimeout: 10
+        disableChunkedEncoding: true
+        http2Origin: true
+        httpHostHeader: httpHostHeader
+        keepAliveConnections: 100
+        keepAliveTimeout: 90
+        matchSnItoHost: false
+        noHappyEyeballs: false
+        noTlsVerify: false
+        originServerName: originServerName
+        proxyType: proxyType
+        tcpKeepAlive: 30
+        tlsTimeout: 10
+    tunnelId: f70ff985-a4ef-4643-bbbc-4a0ed4fc8415

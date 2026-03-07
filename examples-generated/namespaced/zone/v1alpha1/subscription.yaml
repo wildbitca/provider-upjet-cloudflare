@@ -1,0 +1,18 @@
+apiVersion: zone.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Subscription
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zone/v1alpha1/subscription
+  labels:
+    testing.upbound.io/example-name: example_zone_subscription
+  name: example-zone-subscription
+  namespace: crossplane-system
+spec:
+  forProvider:
+    frequency: monthly
+    ratePlan:
+      id: free
+      scope: zone
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

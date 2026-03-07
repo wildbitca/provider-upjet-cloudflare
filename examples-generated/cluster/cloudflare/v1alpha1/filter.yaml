@@ -1,0 +1,19 @@
+apiVersion: cloudflare.upjet-cloudflare.upbound.io/v1alpha1
+kind: Filter
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudflare/v1alpha1/filter
+  labels:
+    testing.upbound.io/example-name: example_filter
+  name: example-filter
+spec:
+  forProvider:
+    body:
+    - description: Restrict access from these browsers on this address range.
+      expression: (http.request.uri.path ~ ".*wp-login.php" or http.request.uri.path
+        ~ ".*xmlrpc.php") and ip.addr ne 172.16.22.155
+      paused: false
+      ref: FIL-100
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

@@ -1,0 +1,30 @@
+apiVersion: cloudflare.upjet-cloudflare.upbound.io/v1alpha1
+kind: Worker
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudflare/v1alpha1/worker
+  labels:
+    testing.upbound.io/example-name: example_worker
+  name: example-worker
+spec:
+  forProvider:
+    accountIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    logpush: true
+    name: my-worker
+    observability:
+      enabled: true
+      headSamplingRate: 1
+      logs:
+        enabled: true
+        headSamplingRate: 1
+        invocationLogs: true
+    subdomain:
+      enabled: true
+      previewsEnabled: true
+    tags:
+    - my-team
+    - my-public-api
+    tailConsumers:
+    - name: my-tail-consumer

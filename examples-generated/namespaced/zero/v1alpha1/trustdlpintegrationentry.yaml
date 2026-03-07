@@ -1,0 +1,15 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustDlpIntegrationEntry
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustdlpintegrationentry
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_dlp_integration_entry
+  name: example-zero-trust-dlp-integration-entry
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: account_id
+    enabled: true
+    entryId: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e
+    profileId: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e

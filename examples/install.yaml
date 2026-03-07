@@ -1,0 +1,6 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-upjet-cloudflare
+spec:
+  package: xpkg.crossplane.io/wildbitca/provider-upjet-cloudflare:v0.1.0

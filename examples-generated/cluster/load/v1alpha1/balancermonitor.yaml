@@ -1,0 +1,31 @@
+apiVersion: load.upjet-cloudflare.upbound.io/v1alpha1
+kind: BalancerMonitor
+metadata:
+  annotations:
+    meta.upbound.io/example-id: load/v1alpha1/balancermonitor
+  labels:
+    testing.upbound.io/example-name: example_load_balancer_monitor
+  name: example-load-balancer-monitor
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    allowInsecure: true
+    consecutiveDown: 0
+    consecutiveUp: 0
+    description: Login page monitor
+    expectedBody: alive
+    expectedCodes: 2xx
+    followRedirects: true
+    header:
+      Host:
+      - example.com
+      X-App-ID:
+      - abc123
+    interval: 0
+    method: GET
+    path: /health
+    port: 0
+    probeZone: example.com
+    retries: 0
+    timeout: 0
+    type: https

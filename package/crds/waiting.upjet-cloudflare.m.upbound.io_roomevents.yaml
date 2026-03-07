@@ -1,0 +1,491 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: roomevents.waiting.upjet-cloudflare.m.upbound.io
+spec:
+  group: waiting.upjet-cloudflare.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: RoomEvent
+    listKind: RoomEventList
+    plural: roomevents
+    singular: roomevent
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: RoomEvent is the Schema for the RoomEvents API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: RoomEventSpec defines the desired state of RoomEvent
+            properties:
+              forProvider:
+                properties:
+                  customPageHtml:
+                    description: |-
+                      (String) If set, the event will override the waiting room's custom_page_html property while it is active. If null, the event will inherit it.
+                      If set, the event will override the waiting room's `custom_page_html` property while it is active. If null, the event will inherit it.
+                    type: string
+                  description:
+                    description: |-
+                      (String) A note that you can use to add more details about the event.
+                      A note that you can use to add more details about the event.
+                    type: string
+                  disableSessionRenewal:
+                    description: |-
+                      (Boolean) If set, the event will override the waiting room's disable_session_renewal property while it is active. If null, the event will inherit it.
+                      If set, the event will override the waiting room's `disable_session_renewal` property while it is active. If null, the event will inherit it.
+                    type: boolean
+                  eventEndTime:
+                    description: |-
+                      (String) An ISO 8601 timestamp that marks the end of the event.
+                      An ISO 8601 timestamp that marks the end of the event.
+                    type: string
+                  eventStartTime:
+                    description: |-
+                      (String) An ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. The start time must be at least one minute before event_end_time.
+                      An ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. The start time must be at least one minute before `event_end_time`.
+                    type: string
+                  name:
+                    description: |-
+                      (String) A unique name to identify the event. Only alphanumeric characters, hyphens and underscores are allowed.
+                      A unique name to identify the event. Only alphanumeric characters, hyphens and underscores are allowed.
+                    type: string
+                  newUsersPerMinute:
+                    description: |-
+                      (Number) If set, the event will override the waiting room's new_users_per_minute property while it is active. If null, the event will inherit it. This can only be set if the event's total_active_users property is also set.
+                      If set, the event will override the waiting room's `new_users_per_minute` property while it is active. If null, the event will inherit it. This can only be set if the event's `total_active_users` property is also set.
+                    type: number
+                  prequeueStartTime:
+                    description: |-
+                      (String) An ISO 8601 timestamp that marks when to begin queueing all users before the event starts. The prequeue must start at least five minutes before event_start_time.
+                      An ISO 8601 timestamp that marks when to begin queueing all users before the event starts. The prequeue must start at least five minutes before `event_start_time`.
+                    type: string
+                  queueingMethod:
+                    description: |-
+                      (String) If set, the event will override the waiting room's queueing_method property while it is active. If null, the event will inherit it.
+                      If set, the event will override the waiting room's `queueing_method` property while it is active. If null, the event will inherit it.
+                    type: string
+                  sessionDuration:
+                    description: |-
+                      (Number) If set, the event will override the waiting room's session_duration property while it is active. If null, the event will inherit it.
+                      If set, the event will override the waiting room's `session_duration` property while it is active. If null, the event will inherit it.
+                    type: number
+                  shuffleAtEventStart:
+                    description: |-
+                      (Boolean) If enabled, users in the prequeue will be shuffled randomly at the event_start_time. Requires that prequeue_start_time is not null. This is useful for situations when many users will join the event prequeue at the same time and you want to shuffle them to ensure fairness. Naturally, it makes the most sense to enable this feature when the queueing_method during the event respects ordering such as fifo, or else the shuffling may be unnecessary.
+                      If enabled, users in the prequeue will be shuffled randomly at the `event_start_time`. Requires that `prequeue_start_time` is not null. This is useful for situations when many users will join the event prequeue at the same time and you want to shuffle them to ensure fairness. Naturally, it makes the most sense to enable this feature when the `queueing_method` during the event respects ordering such as **fifo**, or else the shuffling may be unnecessary.
+                    type: boolean
+                  suspended:
+                    description: |-
+                      (Boolean) Suspends or allows an event. If set to true, the event is ignored and traffic will be handled based on the waiting room configuration.
+                      Suspends or allows an event. If set to `true`, the event is ignored and traffic will be handled based on the waiting room configuration.
+                    type: boolean
+                  totalActiveUsers:
+                    description: |-
+                      (Number) If set, the event will override the waiting room's total_active_users property while it is active. If null, the event will inherit it. This can only be set if the event's new_users_per_minute property is also set.
+                      If set, the event will override the waiting room's `total_active_users` property while it is active. If null, the event will inherit it. This can only be set if the event's `new_users_per_minute` property is also set.
+                    type: number
+                  turnstileAction:
+                    description: |-
+                      (String) If set, the event will override the waiting room's turnstile_action property while it is active. If null, the event will inherit it.
+                      Available values: "log", "infinite_queue".
+                      If set, the event will override the waiting room's `turnstile_action` property while it is active. If null, the event will inherit it.
+                      Available values: "log", "infinite_queue".
+                    type: string
+                  turnstileMode:
+                    description: |-
+                      (String) If set, the event will override the waiting room's turnstile_mode property while it is active. If null, the event will inherit it.
+                      Available values: "off", "invisible", "visible_non_interactive", "visible_managed".
+                      If set, the event will override the waiting room's `turnstile_mode` property while it is active. If null, the event will inherit it.
+                      Available values: "off", "invisible", "visible_non_interactive", "visible_managed".
+                    type: string
+                  waitingRoomId:
+                    description: (String)
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  customPageHtml:
+                    description: |-
+                      (String) If set, the event will override the waiting room's custom_page_html property while it is active. If null, the event will inherit it.
+                      If set, the event will override the waiting room's `custom_page_html` property while it is active. If null, the event will inherit it.
+                    type: string
+                  description:
+                    description: |-
+                      (String) A note that you can use to add more details about the event.
+                      A note that you can use to add more details about the event.
+                    type: string
+                  disableSessionRenewal:
+                    description: |-
+                      (Boolean) If set, the event will override the waiting room's disable_session_renewal property while it is active. If null, the event will inherit it.
+                      If set, the event will override the waiting room's `disable_session_renewal` property while it is active. If null, the event will inherit it.
+                    type: boolean
+                  eventEndTime:
+                    description: |-
+                      (String) An ISO 8601 timestamp that marks the end of the event.
+                      An ISO 8601 timestamp that marks the end of the event.
+                    type: string
+                  eventStartTime:
+                    description: |-
+                      (String) An ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. The start time must be at least one minute before event_end_time.
+                      An ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. The start time must be at least one minute before `event_end_time`.
+                    type: string
+                  name:
+                    description: |-
+                      (String) A unique name to identify the event. Only alphanumeric characters, hyphens and underscores are allowed.
+                      A unique name to identify the event. Only alphanumeric characters, hyphens and underscores are allowed.
+                    type: string
+                  newUsersPerMinute:
+                    description: |-
+                      (Number) If set, the event will override the waiting room's new_users_per_minute property while it is active. If null, the event will inherit it. This can only be set if the event's total_active_users property is also set.
+                      If set, the event will override the waiting room's `new_users_per_minute` property while it is active. If null, the event will inherit it. This can only be set if the event's `total_active_users` property is also set.
+                    type: number
+                  prequeueStartTime:
+                    description: |-
+                      (String) An ISO 8601 timestamp that marks when to begin queueing all users before the event starts. The prequeue must start at least five minutes before event_start_time.
+                      An ISO 8601 timestamp that marks when to begin queueing all users before the event starts. The prequeue must start at least five minutes before `event_start_time`.
+                    type: string
+                  queueingMethod:
+                    description: |-
+                      (String) If set, the event will override the waiting room's queueing_method property while it is active. If null, the event will inherit it.
+                      If set, the event will override the waiting room's `queueing_method` property while it is active. If null, the event will inherit it.
+                    type: string
+                  sessionDuration:
+                    description: |-
+                      (Number) If set, the event will override the waiting room's session_duration property while it is active. If null, the event will inherit it.
+                      If set, the event will override the waiting room's `session_duration` property while it is active. If null, the event will inherit it.
+                    type: number
+                  shuffleAtEventStart:
+                    description: |-
+                      (Boolean) If enabled, users in the prequeue will be shuffled randomly at the event_start_time. Requires that prequeue_start_time is not null. This is useful for situations when many users will join the event prequeue at the same time and you want to shuffle them to ensure fairness. Naturally, it makes the most sense to enable this feature when the queueing_method during the event respects ordering such as fifo, or else the shuffling may be unnecessary.
+                      If enabled, users in the prequeue will be shuffled randomly at the `event_start_time`. Requires that `prequeue_start_time` is not null. This is useful for situations when many users will join the event prequeue at the same time and you want to shuffle them to ensure fairness. Naturally, it makes the most sense to enable this feature when the `queueing_method` during the event respects ordering such as **fifo**, or else the shuffling may be unnecessary.
+                    type: boolean
+                  suspended:
+                    description: |-
+                      (Boolean) Suspends or allows an event. If set to true, the event is ignored and traffic will be handled based on the waiting room configuration.
+                      Suspends or allows an event. If set to `true`, the event is ignored and traffic will be handled based on the waiting room configuration.
+                    type: boolean
+                  totalActiveUsers:
+                    description: |-
+                      (Number) If set, the event will override the waiting room's total_active_users property while it is active. If null, the event will inherit it. This can only be set if the event's new_users_per_minute property is also set.
+                      If set, the event will override the waiting room's `total_active_users` property while it is active. If null, the event will inherit it. This can only be set if the event's `new_users_per_minute` property is also set.
+                    type: number
+                  turnstileAction:
+                    description: |-
+                      (String) If set, the event will override the waiting room's turnstile_action property while it is active. If null, the event will inherit it.
+                      Available values: "log", "infinite_queue".
+                      If set, the event will override the waiting room's `turnstile_action` property while it is active. If null, the event will inherit it.
+                      Available values: "log", "infinite_queue".
+                    type: string
+                  turnstileMode:
+                    description: |-
+                      (String) If set, the event will override the waiting room's turnstile_mode property while it is active. If null, the event will inherit it.
+                      Available values: "off", "invisible", "visible_non_interactive", "visible_managed".
+                      If set, the event will override the waiting room's `turnstile_mode` property while it is active. If null, the event will inherit it.
+                      Available values: "off", "invisible", "visible_non_interactive", "visible_managed".
+                    type: string
+                  waitingRoomId:
+                    description: (String)
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.eventEndTime is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.eventEndTime)
+                || (has(self.initProvider) && has(self.initProvider.eventEndTime))'
+            - message: spec.forProvider.eventStartTime is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.eventStartTime)
+                || (has(self.initProvider) && has(self.initProvider.eventStartTime))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.waitingRoomId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.waitingRoomId)
+                || (has(self.initProvider) && has(self.initProvider.waitingRoomId))'
+            - message: spec.forProvider.zoneId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.zoneId)
+                || (has(self.initProvider) && has(self.initProvider.zoneId))'
+          status:
+            description: RoomEventStatus defines the observed state of RoomEvent.
+            properties:
+              atProvider:
+                properties:
+                  createdOn:
+                    description: (String)
+                    type: string
+                  customPageHtml:
+                    description: |-
+                      (String) If set, the event will override the waiting room's custom_page_html property while it is active. If null, the event will inherit it.
+                      If set, the event will override the waiting room's `custom_page_html` property while it is active. If null, the event will inherit it.
+                    type: string
+                  description:
+                    description: |-
+                      (String) A note that you can use to add more details about the event.
+                      A note that you can use to add more details about the event.
+                    type: string
+                  disableSessionRenewal:
+                    description: |-
+                      (Boolean) If set, the event will override the waiting room's disable_session_renewal property while it is active. If null, the event will inherit it.
+                      If set, the event will override the waiting room's `disable_session_renewal` property while it is active. If null, the event will inherit it.
+                    type: boolean
+                  eventEndTime:
+                    description: |-
+                      (String) An ISO 8601 timestamp that marks the end of the event.
+                      An ISO 8601 timestamp that marks the end of the event.
+                    type: string
+                  eventStartTime:
+                    description: |-
+                      (String) An ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. The start time must be at least one minute before event_end_time.
+                      An ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. The start time must be at least one minute before `event_end_time`.
+                    type: string
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  modifiedOn:
+                    description: (String)
+                    type: string
+                  name:
+                    description: |-
+                      (String) A unique name to identify the event. Only alphanumeric characters, hyphens and underscores are allowed.
+                      A unique name to identify the event. Only alphanumeric characters, hyphens and underscores are allowed.
+                    type: string
+                  newUsersPerMinute:
+                    description: |-
+                      (Number) If set, the event will override the waiting room's new_users_per_minute property while it is active. If null, the event will inherit it. This can only be set if the event's total_active_users property is also set.
+                      If set, the event will override the waiting room's `new_users_per_minute` property while it is active. If null, the event will inherit it. This can only be set if the event's `total_active_users` property is also set.
+                    type: number
+                  prequeueStartTime:
+                    description: |-
+                      (String) An ISO 8601 timestamp that marks when to begin queueing all users before the event starts. The prequeue must start at least five minutes before event_start_time.
+                      An ISO 8601 timestamp that marks when to begin queueing all users before the event starts. The prequeue must start at least five minutes before `event_start_time`.
+                    type: string
+                  queueingMethod:
+                    description: |-
+                      (String) If set, the event will override the waiting room's queueing_method property while it is active. If null, the event will inherit it.
+                      If set, the event will override the waiting room's `queueing_method` property while it is active. If null, the event will inherit it.
+                    type: string
+                  sessionDuration:
+                    description: |-
+                      (Number) If set, the event will override the waiting room's session_duration property while it is active. If null, the event will inherit it.
+                      If set, the event will override the waiting room's `session_duration` property while it is active. If null, the event will inherit it.
+                    type: number
+                  shuffleAtEventStart:
+                    description: |-
+                      (Boolean) If enabled, users in the prequeue will be shuffled randomly at the event_start_time. Requires that prequeue_start_time is not null. This is useful for situations when many users will join the event prequeue at the same time and you want to shuffle them to ensure fairness. Naturally, it makes the most sense to enable this feature when the queueing_method during the event respects ordering such as fifo, or else the shuffling may be unnecessary.
+                      If enabled, users in the prequeue will be shuffled randomly at the `event_start_time`. Requires that `prequeue_start_time` is not null. This is useful for situations when many users will join the event prequeue at the same time and you want to shuffle them to ensure fairness. Naturally, it makes the most sense to enable this feature when the `queueing_method` during the event respects ordering such as **fifo**, or else the shuffling may be unnecessary.
+                    type: boolean
+                  suspended:
+                    description: |-
+                      (Boolean) Suspends or allows an event. If set to true, the event is ignored and traffic will be handled based on the waiting room configuration.
+                      Suspends or allows an event. If set to `true`, the event is ignored and traffic will be handled based on the waiting room configuration.
+                    type: boolean
+                  totalActiveUsers:
+                    description: |-
+                      (Number) If set, the event will override the waiting room's total_active_users property while it is active. If null, the event will inherit it. This can only be set if the event's new_users_per_minute property is also set.
+                      If set, the event will override the waiting room's `total_active_users` property while it is active. If null, the event will inherit it. This can only be set if the event's `new_users_per_minute` property is also set.
+                    type: number
+                  turnstileAction:
+                    description: |-
+                      (String) If set, the event will override the waiting room's turnstile_action property while it is active. If null, the event will inherit it.
+                      Available values: "log", "infinite_queue".
+                      If set, the event will override the waiting room's `turnstile_action` property while it is active. If null, the event will inherit it.
+                      Available values: "log", "infinite_queue".
+                    type: string
+                  turnstileMode:
+                    description: |-
+                      (String) If set, the event will override the waiting room's turnstile_mode property while it is active. If null, the event will inherit it.
+                      Available values: "off", "invisible", "visible_non_interactive", "visible_managed".
+                      If set, the event will override the waiting room's `turnstile_mode` property while it is active. If null, the event will inherit it.
+                      Available values: "off", "invisible", "visible_non_interactive", "visible_managed".
+                    type: string
+                  waitingRoomId:
+                    description: (String)
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

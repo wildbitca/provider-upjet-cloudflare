@@ -1,0 +1,1705 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: balancers.load.upjet-cloudflare.upbound.io
+spec:
+  group: load.upjet-cloudflare.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: Balancer
+    listKind: BalancerList
+    plural: balancers
+    singular: balancer
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Balancer is the Schema for the Balancers API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: BalancerSpec defines the desired state of Balancer
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  adaptiveRouting:
+                    description: downtime failover occurs immediately when an origin
+                      becomes unavailable due to HTTP 521, 522, or 523 response codes.
+                      If there is another healthy origin in the same pool, the request
+                      is retried once against this alternate origin. (see below for
+                      nested schema)
+                    properties:
+                      failoverAcrossPools:
+                        description: |-
+                          downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See session_affinity_attributes for control over when sessions are broken or reassigned.
+                          Extends zero-downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See `session_affinity_attributes` for control over when sessions are broken or reassigned.
+                        type: boolean
+                    type: object
+                  countryPools:
+                    additionalProperties:
+                      items:
+                        type: string
+                      type: array
+                    description: |-
+                      (Map of List of String) A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+                      A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+                    type: object
+                  defaultPools:
+                    description: |-
+                      (List of String) A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+                      A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: |-
+                      (String) Object description.
+                      Object description.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Whether to enable (the default) this load balancer.
+                      Whether to enable (the default) this load balancer.
+                    type: boolean
+                  fallbackPool:
+                    description: |-
+                      (String) The pool ID to use when all other pools are detected as unhealthy.
+                      The pool ID to use when all other pools are detected as unhealthy.
+                    type: string
+                  locationStrategy:
+                    description: based steering for non-proxied requests. See steering_policy
+                      to learn how steering is affected. (see below for nested schema)
+                    properties:
+                      mode:
+                        description: |-
+                          (String) Determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+                          Determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+                          - `"pop"`: Use the Cloudflare PoP location.
+                          - `"resolver_ip"`: Use the DNS resolver GeoIP location. If the GeoIP lookup is unsuccessful, use the Cloudflare PoP location.
+                          Available values: "pop", "resolver_ip".
+                        type: string
+                      preferEcs:
+                        description: |-
+                          (String) Whether the EDNS Client Subnet (ECS) GeoIP should be preferred as the authoritative location.
+                          Whether the EDNS Client Subnet (ECS) GeoIP should be preferred as the authoritative location.
+                          - `"always"`: Always prefer ECS.
+                          - `"never"`: Never prefer ECS.
+                          - `"proximity"`: Prefer ECS only when `steering_policy="proximity"`.
+                          - `"geo"`: Prefer ECS only when `steering_policy="geo"`.
+                          Available values: "always", "never", "proximity", "geo".
+                        type: string
+                    type: object
+                  name:
+                    description: |-
+                      (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+                      The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+                    type: string
+                  networks:
+                    description: |-
+                      (List of String) List of networks where Load Balancer or Pool is enabled.
+                      List of networks where Load Balancer or Pool is enabled.
+                    items:
+                      type: string
+                    type: array
+                  popPools:
+                    additionalProperties:
+                      items:
+                        type: string
+                      type: array
+                    description: |-
+                      (Map of List of String) Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+                      Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+                    type: object
+                  proxied:
+                    description: |-
+                      (Boolean) Whether the hostname should be gray clouded (false) or orange clouded (true).
+                      Whether the hostname should be gray clouded (false) or orange clouded (true).
+                    type: boolean
+                  randomSteering:
+                    description: (Attributes) Configures pool weights.
+                    properties:
+                      defaultWeight:
+                        description: |-
+                          (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
+                          The default weight for pools in the load balancer that are not specified in the pool_weights map.
+                        type: number
+                      poolWeights:
+                        additionalProperties:
+                          type: number
+                        description: |-
+                          (Map of Number) A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+                          A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+                        type: object
+                        x-kubernetes-map-type: granular
+                    type: object
+                  regionPools:
+                    additionalProperties:
+                      items:
+                        type: string
+                      type: array
+                    description: |-
+                      (Map of List of String) A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+                      A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+                    type: object
+                  rules:
+                    description: '(Attributes List) BETA Field Not General Access:
+                      A list of rules for this load balancer to execute. (see below
+                      for nested schema)'
+                    items:
+                      properties:
+                        condition:
+                          description: |-
+                            balancing/understand-basics/load-balancing-rules/expressions.
+                            The condition expressions to evaluate. If the condition evaluates to true, the overrides or fixed_response in this rule will be applied. An empty condition is always true. For more details on condition expressions, please see https://developers.cloudflare.com/load-balancing/understand-basics/load-balancing-rules/expressions.
+                          type: string
+                        disabled:
+                          description: |-
+                            (Boolean) Disable this specific rule. It will no longer be evaluated by this load balancer.
+                            Disable this specific rule. It will no longer be evaluated by this load balancer.
+                          type: boolean
+                        fixedResponse:
+                          description: (Attributes) A collection of fields used to
+                            directly respond to the eyeball instead of routing to
+                            a pool. If a fixed_response is supplied the rule will
+                            be marked as terminates. (see below for nested schema)
+                          properties:
+                            contentType:
+                              description: |-
+                                Type' header to include in the response.
+                                The http 'Content-Type' header to include in the response.
+                              type: string
+                            location:
+                              description: |-
+                                (String) The http 'Location' header to include in the response.
+                                The http 'Location' header to include in the response.
+                              type: string
+                            messageBody:
+                              description: |-
+                                (String) Text to include as the http body.
+                                Text to include as the http body.
+                              type: string
+                            statusCode:
+                              description: |-
+                                (Number) The http status code to respond with.
+                                The http status code to respond with.
+                              type: number
+                          type: object
+                        name:
+                          description: |-
+                            (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+                            Name of this rule. Only used for human readability.
+                          type: string
+                        overrides:
+                          description: (Attributes) A collection of overrides to apply
+                            to the load balancer when this rule's condition is true.
+                            All fields are optional. (see below for nested schema)
+                          properties:
+                            adaptiveRouting:
+                              description: downtime failover occurs immediately when
+                                an origin becomes unavailable due to HTTP 521, 522,
+                                or 523 response codes. If there is another healthy
+                                origin in the same pool, the request is retried once
+                                against this alternate origin. (see below for nested
+                                schema)
+                              properties:
+                                failoverAcrossPools:
+                                  description: |-
+                                    downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See session_affinity_attributes for control over when sessions are broken or reassigned.
+                                    Extends zero-downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See `session_affinity_attributes` for control over when sessions are broken or reassigned.
+                                  type: boolean
+                              type: object
+                            countryPools:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Map of List of String) A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+                                A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+                              type: object
+                            defaultPools:
+                              description: |-
+                                (List of String) A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+                                A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+                              items:
+                                type: string
+                              type: array
+                            fallbackPool:
+                              description: |-
+                                (String) The pool ID to use when all other pools are detected as unhealthy.
+                                The pool ID to use when all other pools are detected as unhealthy.
+                              type: string
+                            locationStrategy:
+                              description: based steering for non-proxied requests.
+                                See steering_policy to learn how steering is affected.
+                                (see below for nested schema)
+                              properties:
+                                mode:
+                                  description: |-
+                                    (String) Determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+                                    Determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+                                    - `"pop"`: Use the Cloudflare PoP location.
+                                    - `"resolver_ip"`: Use the DNS resolver GeoIP location. If the GeoIP lookup is unsuccessful, use the Cloudflare PoP location.
+                                    Available values: "pop", "resolver_ip".
+                                  type: string
+                                preferEcs:
+                                  description: |-
+                                    (String) Whether the EDNS Client Subnet (ECS) GeoIP should be preferred as the authoritative location.
+                                    Whether the EDNS Client Subnet (ECS) GeoIP should be preferred as the authoritative location.
+                                    - `"always"`: Always prefer ECS.
+                                    - `"never"`: Never prefer ECS.
+                                    - `"proximity"`: Prefer ECS only when `steering_policy="proximity"`.
+                                    - `"geo"`: Prefer ECS only when `steering_policy="geo"`.
+                                    Available values: "always", "never", "proximity", "geo".
+                                  type: string
+                              type: object
+                            popPools:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Map of List of String) Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+                                Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+                              type: object
+                            randomSteering:
+                              description: (Attributes) Configures pool weights.
+                              properties:
+                                defaultWeight:
+                                  description: |-
+                                    (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
+                                    The default weight for pools in the load balancer that are not specified in the pool_weights map.
+                                  type: number
+                                poolWeights:
+                                  additionalProperties:
+                                    type: number
+                                  description: |-
+                                    (Map of Number) A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+                                    A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+                                  type: object
+                                  x-kubernetes-map-type: granular
+                              type: object
+                            regionPools:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Map of List of String) A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+                                A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+                              type: object
+                            sessionAffinity:
+                              description: |-
+                                "cookie": On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - "ip_cookie": Behaves the same as "cookie" except the initial origin selection is stable and based on the client's ip address. - "header": On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see session_affinity_attributes.headers) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of session_affinity_ttl seconds or the origin server is unhealthy, then a new origin server is calculated and used. See headers in session_affinity_attributes for additional required configuration.
+                                Available values: "none", "cookie", "ip_cookie", "header".
+                                Specifies the type of session affinity the load balancer should use unless specified as `"none"`. The supported types are: - `"cookie"`: On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - `"ip_cookie"`: Behaves the same as `"cookie"` except the initial origin selection is stable and based on the client's ip address. - `"header"`: On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see `session_affinity_attributes.headers`) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of `session_affinity_ttl` seconds or the origin server is unhealthy, then a new origin server is calculated and used. See `headers` in `session_affinity_attributes` for additional required configuration.
+                                Available values: "none", "cookie", "ip_cookie", "header".
+                              type: string
+                            sessionAffinityAttributes:
+                              description: (Attributes) Configures attributes for
+                                session affinity. (see below for nested schema)
+                              properties:
+                                drainDuration:
+                                  description: |-
+                                    (Number) Configures the drain duration in seconds. This field is only used when session affinity is enabled on the load balancer.
+                                    Configures the drain duration in seconds. This field is only used when session affinity is enabled on the load balancer.
+                                  type: number
+                                headers:
+                                  description: |-
+                                    name-1>,<cookie-name-2>" (example) where everything after the colon is a comma-separated list of cookie names. Providing only "cookie" will result in all cookies being used. The default max number of HTTP header names that can be provided depends on your plan: 5 for Enterprise, 1 for all other plans.
+                                    Configures the names of HTTP headers to base session affinity on when header `session_affinity` is enabled. At least one HTTP header name must be provided. To specify the exact cookies to be used, include an item in the following format: `"cookie:<cookie-name-1>,<cookie-name-2>"` (example) where everything after the colon is a comma-separated list of cookie names. Providing only `"cookie"` will result in all cookies being used. The default max number of HTTP header names that can be provided depends on your plan: 5 for Enterprise, 1 for all other plans.
+                                  items:
+                                    type: string
+                                  type: array
+                                requireAllHeaders:
+                                  description: |-
+                                    "true": Load balancing requests must contain all of the HTTP headers specified by the headers session affinity attribute, otherwise sessions aren't created. - "false": Load balancing requests must contain at least one of the HTTP headers specified by the headers session affinity attribute, otherwise sessions aren't created.
+                                    When header `session_affinity` is enabled, this option can be used to specify how HTTP headers on load balancing requests will be used. The supported values are: - `"true"`: Load balancing requests must contain *all* of the HTTP headers specified by the `headers` session affinity attribute, otherwise sessions aren't created. - `"false"`: Load balancing requests must contain *at least one* of the HTTP headers specified by the `headers` session affinity attribute, otherwise sessions aren't created.
+                                  type: boolean
+                                samesite:
+                                  description: |-
+                                    (String) Configures the SameSite attribute on session affinity cookie. Value "Auto" will be translated to "Lax" or "None" depending if Always Use HTTPS is enabled. Note: when using value "None", the secure attribute can not be set to "Never".
+                                    Available values: "Auto", "Lax", "None", "Strict".
+                                    Configures the SameSite attribute on session affinity cookie. Value "Auto" will be translated to "Lax" or "None" depending if Always Use HTTPS is enabled. Note: when using value "None", the secure attribute can not be set to "Never".
+                                    Available values: "Auto", "Lax", "None", "Strict".
+                                  type: string
+                                secure:
+                                  description: |-
+                                    Cookie header, "Never" indicates the Secure attribute will not be set, and "Auto" will set the Secure attribute depending if Always Use HTTPS is enabled.
+                                    Available values: "Auto", "Always", "Never".
+                                    Configures the Secure attribute on session affinity cookie. Value "Always" indicates the Secure attribute will be set in the Set-Cookie header, "Never" indicates the Secure attribute will not be set, and "Auto" will set the Secure attribute depending if Always Use HTTPS is enabled.
+                                    Available values: "Auto", "Always", "Never".
+                                  type: string
+                                zeroDowntimeFailover:
+                                  description: |-
+                                    downtime failover between origins within a pool when session affinity is enabled. This feature is currently incompatible with Argo, Tiered Cache, and Bandwidth Alliance. The supported values are: - "none": No failover takes place for sessions pinned to the origin (default). - "temporary": Traffic will be sent to another other healthy origin until the originally pinned origin is available; note that this can potentially result in heavy origin flapping. - "sticky": The session affinity cookie is updated and subsequent requests are sent to the new origin. Note: Zero-downtime failover with sticky sessions is currently not supported for session affinity by header.
+                                    Available values: "none", "temporary", "sticky".
+                                    Configures the zero-downtime failover between origins within a pool when session affinity is enabled. This feature is currently incompatible with Argo, Tiered Cache, and Bandwidth Alliance. The supported values are: - `"none"`: No failover takes place for sessions pinned to the origin (default). - `"temporary"`: Traffic will be sent to another other healthy origin until the originally pinned origin is available; note that this can potentially result in heavy origin flapping. - `"sticky"`: The session affinity cookie is updated and subsequent requests are sent to the new origin. Note: Zero-downtime failover with sticky sessions is currently not supported for session affinity by header.
+                                    Available values: "none", "temporary", "sticky".
+                                  type: string
+                              type: object
+                            sessionAffinityTtl:
+                              description: |-
+                                "cookie" / "ip_cookie": The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - "header": The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+                                Time, in seconds, until a client's session expires after being created. Once the expiry time has been reached, subsequent requests may get sent to a different origin server. The accepted ranges per `session_affinity` policy are: - `"cookie"` / `"ip_cookie"`: The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - `"header"`: The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+                              type: number
+                            steeringPolicy:
+                              description: |-
+                                (String) Steering Policy for this load balancer.
+                                Steering Policy for this load balancer.
+                                - `"off"`: Use `default_pools`.
+                                - `"geo"`: Use `region_pools`/`country_pools`/`pop_pools`. For non-proxied requests, the country for `country_pools` is determined by `location_strategy`.
+                                - `"random"`: Select a pool randomly.
+                                - `"dynamic_latency"`: Use round trip time to select the closest pool in default_pools (requires pool health checks).
+                                - `"proximity"`: Use the pools' latitude and longitude to select the closest pool using the Cloudflare PoP location for proxied requests or the location determined by `location_strategy` for non-proxied requests.
+                                - `"least_outstanding_requests"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of outstanding requests. Pools with more pending requests are weighted proportionately less relative to others.
+                                - `"least_connections"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of open connections. Pools with more open connections are weighted proportionately less relative to others. Supported for HTTP/1 and HTTP/2 connections.
+                                - `""`: Will map to `"geo"` if you use `region_pools`/`country_pools`/`pop_pools` otherwise `"off"`.
+                                Available values: "off", "geo", "random", "dynamic_latency", "proximity", "least_outstanding_requests", "least_connections", "".
+                              type: string
+                            ttl:
+                              description: |-
+                                clouded (unproxied) load balancers.
+                                Time to live (TTL) of the DNS entry for the IP address returned by this load balancer. This only applies to gray-clouded (unproxied) load balancers.
+                              type: number
+                          type: object
+                        priority:
+                          description: |-
+                            (Number) The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If no value is provided for any rule the array order of the rules field will be used to assign a priority.
+                            The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If no value is provided for any rule the array order of the rules field will be used to assign a priority.
+                          type: number
+                        terminates:
+                          description: |-
+                            (Boolean) If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
+                            If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
+                          type: boolean
+                      type: object
+                    type: array
+                  sessionAffinity:
+                    description: |-
+                      "cookie": On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - "ip_cookie": Behaves the same as "cookie" except the initial origin selection is stable and based on the client's ip address. - "header": On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see session_affinity_attributes.headers) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of session_affinity_ttl seconds or the origin server is unhealthy, then a new origin server is calculated and used. See headers in session_affinity_attributes for additional required configuration.
+                      Available values: "none", "cookie", "ip_cookie", "header".
+                      Specifies the type of session affinity the load balancer should use unless specified as `"none"`. The supported types are: - `"cookie"`: On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - `"ip_cookie"`: Behaves the same as `"cookie"` except the initial origin selection is stable and based on the client's ip address. - `"header"`: On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see `session_affinity_attributes.headers`) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of `session_affinity_ttl` seconds or the origin server is unhealthy, then a new origin server is calculated and used. See `headers` in `session_affinity_attributes` for additional required configuration.
+                      Available values: "none", "cookie", "ip_cookie", "header".
+                    type: string
+                  sessionAffinityAttributes:
+                    description: (Attributes) Configures attributes for session affinity.
+                      (see below for nested schema)
+                    properties:
+                      drainDuration:
+                        description: |-
+                          (Number) Configures the drain duration in seconds. This field is only used when session affinity is enabled on the load balancer.
+                          Configures the drain duration in seconds. This field is only used when session affinity is enabled on the load balancer.
+                        type: number
+                      headers:
+                        description: |-
+                          name-1>,<cookie-name-2>" (example) where everything after the colon is a comma-separated list of cookie names. Providing only "cookie" will result in all cookies being used. The default max number of HTTP header names that can be provided depends on your plan: 5 for Enterprise, 1 for all other plans.
+                          Configures the names of HTTP headers to base session affinity on when header `session_affinity` is enabled. At least one HTTP header name must be provided. To specify the exact cookies to be used, include an item in the following format: `"cookie:<cookie-name-1>,<cookie-name-2>"` (example) where everything after the colon is a comma-separated list of cookie names. Providing only `"cookie"` will result in all cookies being used. The default max number of HTTP header names that can be provided depends on your plan: 5 for Enterprise, 1 for all other plans.
+                        items:
+                          type: string
+                        type: array
+                      requireAllHeaders:
+                        description: |-
+                          "true": Load balancing requests must contain all of the HTTP headers specified by the headers session affinity attribute, otherwise sessions aren't created. - "false": Load balancing requests must contain at least one of the HTTP headers specified by the headers session affinity attribute, otherwise sessions aren't created.
+                          When header `session_affinity` is enabled, this option can be used to specify how HTTP headers on load balancing requests will be used. The supported values are: - `"true"`: Load balancing requests must contain *all* of the HTTP headers specified by the `headers` session affinity attribute, otherwise sessions aren't created. - `"false"`: Load balancing requests must contain *at least one* of the HTTP headers specified by the `headers` session affinity attribute, otherwise sessions aren't created.
+                        type: boolean
+                      samesite:
+                        description: |-
+                          (String) Configures the SameSite attribute on session affinity cookie. Value "Auto" will be translated to "Lax" or "None" depending if Always Use HTTPS is enabled. Note: when using value "None", the secure attribute can not be set to "Never".
+                          Available values: "Auto", "Lax", "None", "Strict".
+                          Configures the SameSite attribute on session affinity cookie. Value "Auto" will be translated to "Lax" or "None" depending if Always Use HTTPS is enabled. Note: when using value "None", the secure attribute can not be set to "Never".
+                          Available values: "Auto", "Lax", "None", "Strict".
+                        type: string
+                      secure:
+                        description: |-
+                          Cookie header, "Never" indicates the Secure attribute will not be set, and "Auto" will set the Secure attribute depending if Always Use HTTPS is enabled.
+                          Available values: "Auto", "Always", "Never".
+                          Configures the Secure attribute on session affinity cookie. Value "Always" indicates the Secure attribute will be set in the Set-Cookie header, "Never" indicates the Secure attribute will not be set, and "Auto" will set the Secure attribute depending if Always Use HTTPS is enabled.
+                          Available values: "Auto", "Always", "Never".
+                        type: string
+                      zeroDowntimeFailover:
+                        description: |-
+                          downtime failover between origins within a pool when session affinity is enabled. This feature is currently incompatible with Argo, Tiered Cache, and Bandwidth Alliance. The supported values are: - "none": No failover takes place for sessions pinned to the origin (default). - "temporary": Traffic will be sent to another other healthy origin until the originally pinned origin is available; note that this can potentially result in heavy origin flapping. - "sticky": The session affinity cookie is updated and subsequent requests are sent to the new origin. Note: Zero-downtime failover with sticky sessions is currently not supported for session affinity by header.
+                          Available values: "none", "temporary", "sticky".
+                          Configures the zero-downtime failover between origins within a pool when session affinity is enabled. This feature is currently incompatible with Argo, Tiered Cache, and Bandwidth Alliance. The supported values are: - `"none"`: No failover takes place for sessions pinned to the origin (default). - `"temporary"`: Traffic will be sent to another other healthy origin until the originally pinned origin is available; note that this can potentially result in heavy origin flapping. - `"sticky"`: The session affinity cookie is updated and subsequent requests are sent to the new origin. Note: Zero-downtime failover with sticky sessions is currently not supported for session affinity by header.
+                          Available values: "none", "temporary", "sticky".
+                        type: string
+                    type: object
+                  sessionAffinityTtl:
+                    description: |-
+                      "cookie" / "ip_cookie": The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - "header": The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+                      Time, in seconds, until a client's session expires after being created. Once the expiry time has been reached, subsequent requests may get sent to a different origin server. The accepted ranges per `session_affinity` policy are: - `"cookie"` / `"ip_cookie"`: The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - `"header"`: The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+                    type: number
+                  steeringPolicy:
+                    description: |-
+                      (String) Steering Policy for this load balancer.
+                      Steering Policy for this load balancer.
+                      - `"off"`: Use `default_pools`.
+                      - `"geo"`: Use `region_pools`/`country_pools`/`pop_pools`. For non-proxied requests, the country for `country_pools` is determined by `location_strategy`.
+                      - `"random"`: Select a pool randomly.
+                      - `"dynamic_latency"`: Use round trip time to select the closest pool in default_pools (requires pool health checks).
+                      - `"proximity"`: Use the pools' latitude and longitude to select the closest pool using the Cloudflare PoP location for proxied requests or the location determined by `location_strategy` for non-proxied requests.
+                      - `"least_outstanding_requests"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of outstanding requests. Pools with more pending requests are weighted proportionately less relative to others.
+                      - `"least_connections"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of open connections. Pools with more open connections are weighted proportionately less relative to others. Supported for HTTP/1 and HTTP/2 connections.
+                      - `""`: Will map to `"geo"` if you use `region_pools`/`country_pools`/`pop_pools` otherwise `"off"`.
+                      Available values: "off", "geo", "random", "dynamic_latency", "proximity", "least_outstanding_requests", "least_connections", "".
+                    type: string
+                  ttl:
+                    description: |-
+                      clouded (unproxied) load balancers.
+                      Time to live (TTL) of the DNS entry for the IP address returned by this load balancer. This only applies to gray-clouded (unproxied) load balancers.
+                    type: number
+                  zoneId:
+                    description: (String)
+                    type: string
+                  zoneIdRef:
+                    description: Reference to a Zone in zone to populate zoneId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  zoneIdSelector:
+                    description: Selector for a Zone in zone to populate zoneId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  adaptiveRouting:
+                    description: downtime failover occurs immediately when an origin
+                      becomes unavailable due to HTTP 521, 522, or 523 response codes.
+                      If there is another healthy origin in the same pool, the request
+                      is retried once against this alternate origin. (see below for
+                      nested schema)
+                    properties:
+                      failoverAcrossPools:
+                        description: |-
+                          downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See session_affinity_attributes for control over when sessions are broken or reassigned.
+                          Extends zero-downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See `session_affinity_attributes` for control over when sessions are broken or reassigned.
+                        type: boolean
+                    type: object
+                  countryPools:
+                    additionalProperties:
+                      items:
+                        type: string
+                      type: array
+                    description: |-
+                      (Map of List of String) A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+                      A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+                    type: object
+                  defaultPools:
+                    description: |-
+                      (List of String) A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+                      A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: |-
+                      (String) Object description.
+                      Object description.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Whether to enable (the default) this load balancer.
+                      Whether to enable (the default) this load balancer.
+                    type: boolean
+                  fallbackPool:
+                    description: |-
+                      (String) The pool ID to use when all other pools are detected as unhealthy.
+                      The pool ID to use when all other pools are detected as unhealthy.
+                    type: string
+                  locationStrategy:
+                    description: based steering for non-proxied requests. See steering_policy
+                      to learn how steering is affected. (see below for nested schema)
+                    properties:
+                      mode:
+                        description: |-
+                          (String) Determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+                          Determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+                          - `"pop"`: Use the Cloudflare PoP location.
+                          - `"resolver_ip"`: Use the DNS resolver GeoIP location. If the GeoIP lookup is unsuccessful, use the Cloudflare PoP location.
+                          Available values: "pop", "resolver_ip".
+                        type: string
+                      preferEcs:
+                        description: |-
+                          (String) Whether the EDNS Client Subnet (ECS) GeoIP should be preferred as the authoritative location.
+                          Whether the EDNS Client Subnet (ECS) GeoIP should be preferred as the authoritative location.
+                          - `"always"`: Always prefer ECS.
+                          - `"never"`: Never prefer ECS.
+                          - `"proximity"`: Prefer ECS only when `steering_policy="proximity"`.
+                          - `"geo"`: Prefer ECS only when `steering_policy="geo"`.
+                          Available values: "always", "never", "proximity", "geo".
+                        type: string
+                    type: object
+                  name:
+                    description: |-
+                      (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+                      The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+                    type: string
+                  networks:
+                    description: |-
+                      (List of String) List of networks where Load Balancer or Pool is enabled.
+                      List of networks where Load Balancer or Pool is enabled.
+                    items:
+                      type: string
+                    type: array
+                  popPools:
+                    additionalProperties:
+                      items:
+                        type: string
+                      type: array
+                    description: |-
+                      (Map of List of String) Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+                      Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+                    type: object
+                  proxied:
+                    description: |-
+                      (Boolean) Whether the hostname should be gray clouded (false) or orange clouded (true).
+                      Whether the hostname should be gray clouded (false) or orange clouded (true).
+                    type: boolean
+                  randomSteering:
+                    description: (Attributes) Configures pool weights.
+                    properties:
+                      defaultWeight:
+                        description: |-
+                          (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
+                          The default weight for pools in the load balancer that are not specified in the pool_weights map.
+                        type: number
+                      poolWeights:
+                        additionalProperties:
+                          type: number
+                        description: |-
+                          (Map of Number) A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+                          A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+                        type: object
+                        x-kubernetes-map-type: granular
+                    type: object
+                  regionPools:
+                    additionalProperties:
+                      items:
+                        type: string
+                      type: array
+                    description: |-
+                      (Map of List of String) A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+                      A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+                    type: object
+                  rules:
+                    description: '(Attributes List) BETA Field Not General Access:
+                      A list of rules for this load balancer to execute. (see below
+                      for nested schema)'
+                    items:
+                      properties:
+                        condition:
+                          description: |-
+                            balancing/understand-basics/load-balancing-rules/expressions.
+                            The condition expressions to evaluate. If the condition evaluates to true, the overrides or fixed_response in this rule will be applied. An empty condition is always true. For more details on condition expressions, please see https://developers.cloudflare.com/load-balancing/understand-basics/load-balancing-rules/expressions.
+                          type: string
+                        disabled:
+                          description: |-
+                            (Boolean) Disable this specific rule. It will no longer be evaluated by this load balancer.
+                            Disable this specific rule. It will no longer be evaluated by this load balancer.
+                          type: boolean
+                        fixedResponse:
+                          description: (Attributes) A collection of fields used to
+                            directly respond to the eyeball instead of routing to
+                            a pool. If a fixed_response is supplied the rule will
+                            be marked as terminates. (see below for nested schema)
+                          properties:
+                            contentType:
+                              description: |-
+                                Type' header to include in the response.
+                                The http 'Content-Type' header to include in the response.
+                              type: string
+                            location:
+                              description: |-
+                                (String) The http 'Location' header to include in the response.
+                                The http 'Location' header to include in the response.
+                              type: string
+                            messageBody:
+                              description: |-
+                                (String) Text to include as the http body.
+                                Text to include as the http body.
+                              type: string
+                            statusCode:
+                              description: |-
+                                (Number) The http status code to respond with.
+                                The http status code to respond with.
+                              type: number
+                          type: object
+                        name:
+                          description: |-
+                            (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+                            Name of this rule. Only used for human readability.
+                          type: string
+                        overrides:
+                          description: (Attributes) A collection of overrides to apply
+                            to the load balancer when this rule's condition is true.
+                            All fields are optional. (see below for nested schema)
+                          properties:
+                            adaptiveRouting:
+                              description: downtime failover occurs immediately when
+                                an origin becomes unavailable due to HTTP 521, 522,
+                                or 523 response codes. If there is another healthy
+                                origin in the same pool, the request is retried once
+                                against this alternate origin. (see below for nested
+                                schema)
+                              properties:
+                                failoverAcrossPools:
+                                  description: |-
+                                    downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See session_affinity_attributes for control over when sessions are broken or reassigned.
+                                    Extends zero-downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See `session_affinity_attributes` for control over when sessions are broken or reassigned.
+                                  type: boolean
+                              type: object
+                            countryPools:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Map of List of String) A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+                                A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+                              type: object
+                            defaultPools:
+                              description: |-
+                                (List of String) A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+                                A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+                              items:
+                                type: string
+                              type: array
+                            fallbackPool:
+                              description: |-
+                                (String) The pool ID to use when all other pools are detected as unhealthy.
+                                The pool ID to use when all other pools are detected as unhealthy.
+                              type: string
+                            locationStrategy:
+                              description: based steering for non-proxied requests.
+                                See steering_policy to learn how steering is affected.
+                                (see below for nested schema)
+                              properties:
+                                mode:
+                                  description: |-
+                                    (String) Determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+                                    Determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+                                    - `"pop"`: Use the Cloudflare PoP location.
+                                    - `"resolver_ip"`: Use the DNS resolver GeoIP location. If the GeoIP lookup is unsuccessful, use the Cloudflare PoP location.
+                                    Available values: "pop", "resolver_ip".
+                                  type: string
+                                preferEcs:
+                                  description: |-
+                                    (String) Whether the EDNS Client Subnet (ECS) GeoIP should be preferred as the authoritative location.
+                                    Whether the EDNS Client Subnet (ECS) GeoIP should be preferred as the authoritative location.
+                                    - `"always"`: Always prefer ECS.
+                                    - `"never"`: Never prefer ECS.
+                                    - `"proximity"`: Prefer ECS only when `steering_policy="proximity"`.
+                                    - `"geo"`: Prefer ECS only when `steering_policy="geo"`.
+                                    Available values: "always", "never", "proximity", "geo".
+                                  type: string
+                              type: object
+                            popPools:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Map of List of String) Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+                                Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+                              type: object
+                            randomSteering:
+                              description: (Attributes) Configures pool weights.
+                              properties:
+                                defaultWeight:
+                                  description: |-
+                                    (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
+                                    The default weight for pools in the load balancer that are not specified in the pool_weights map.
+                                  type: number
+                                poolWeights:
+                                  additionalProperties:
+                                    type: number
+                                  description: |-
+                                    (Map of Number) A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+                                    A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+                                  type: object
+                                  x-kubernetes-map-type: granular
+                              type: object
+                            regionPools:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Map of List of String) A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+                                A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+                              type: object
+                            sessionAffinity:
+                              description: |-
+                                "cookie": On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - "ip_cookie": Behaves the same as "cookie" except the initial origin selection is stable and based on the client's ip address. - "header": On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see session_affinity_attributes.headers) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of session_affinity_ttl seconds or the origin server is unhealthy, then a new origin server is calculated and used. See headers in session_affinity_attributes for additional required configuration.
+                                Available values: "none", "cookie", "ip_cookie", "header".
+                                Specifies the type of session affinity the load balancer should use unless specified as `"none"`. The supported types are: - `"cookie"`: On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - `"ip_cookie"`: Behaves the same as `"cookie"` except the initial origin selection is stable and based on the client's ip address. - `"header"`: On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see `session_affinity_attributes.headers`) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of `session_affinity_ttl` seconds or the origin server is unhealthy, then a new origin server is calculated and used. See `headers` in `session_affinity_attributes` for additional required configuration.
+                                Available values: "none", "cookie", "ip_cookie", "header".
+                              type: string
+                            sessionAffinityAttributes:
+                              description: (Attributes) Configures attributes for
+                                session affinity. (see below for nested schema)
+                              properties:
+                                drainDuration:
+                                  description: |-
+                                    (Number) Configures the drain duration in seconds. This field is only used when session affinity is enabled on the load balancer.
+                                    Configures the drain duration in seconds. This field is only used when session affinity is enabled on the load balancer.
+                                  type: number
+                                headers:
+                                  description: |-
+                                    name-1>,<cookie-name-2>" (example) where everything after the colon is a comma-separated list of cookie names. Providing only "cookie" will result in all cookies being used. The default max number of HTTP header names that can be provided depends on your plan: 5 for Enterprise, 1 for all other plans.
+                                    Configures the names of HTTP headers to base session affinity on when header `session_affinity` is enabled. At least one HTTP header name must be provided. To specify the exact cookies to be used, include an item in the following format: `"cookie:<cookie-name-1>,<cookie-name-2>"` (example) where everything after the colon is a comma-separated list of cookie names. Providing only `"cookie"` will result in all cookies being used. The default max number of HTTP header names that can be provided depends on your plan: 5 for Enterprise, 1 for all other plans.
+                                  items:
+                                    type: string
+                                  type: array
+                                requireAllHeaders:
+                                  description: |-
+                                    "true": Load balancing requests must contain all of the HTTP headers specified by the headers session affinity attribute, otherwise sessions aren't created. - "false": Load balancing requests must contain at least one of the HTTP headers specified by the headers session affinity attribute, otherwise sessions aren't created.
+                                    When header `session_affinity` is enabled, this option can be used to specify how HTTP headers on load balancing requests will be used. The supported values are: - `"true"`: Load balancing requests must contain *all* of the HTTP headers specified by the `headers` session affinity attribute, otherwise sessions aren't created. - `"false"`: Load balancing requests must contain *at least one* of the HTTP headers specified by the `headers` session affinity attribute, otherwise sessions aren't created.
+                                  type: boolean
+                                samesite:
+                                  description: |-
+                                    (String) Configures the SameSite attribute on session affinity cookie. Value "Auto" will be translated to "Lax" or "None" depending if Always Use HTTPS is enabled. Note: when using value "None", the secure attribute can not be set to "Never".
+                                    Available values: "Auto", "Lax", "None", "Strict".
+                                    Configures the SameSite attribute on session affinity cookie. Value "Auto" will be translated to "Lax" or "None" depending if Always Use HTTPS is enabled. Note: when using value "None", the secure attribute can not be set to "Never".
+                                    Available values: "Auto", "Lax", "None", "Strict".
+                                  type: string
+                                secure:
+                                  description: |-
+                                    Cookie header, "Never" indicates the Secure attribute will not be set, and "Auto" will set the Secure attribute depending if Always Use HTTPS is enabled.
+                                    Available values: "Auto", "Always", "Never".
+                                    Configures the Secure attribute on session affinity cookie. Value "Always" indicates the Secure attribute will be set in the Set-Cookie header, "Never" indicates the Secure attribute will not be set, and "Auto" will set the Secure attribute depending if Always Use HTTPS is enabled.
+                                    Available values: "Auto", "Always", "Never".
+                                  type: string
+                                zeroDowntimeFailover:
+                                  description: |-
+                                    downtime failover between origins within a pool when session affinity is enabled. This feature is currently incompatible with Argo, Tiered Cache, and Bandwidth Alliance. The supported values are: - "none": No failover takes place for sessions pinned to the origin (default). - "temporary": Traffic will be sent to another other healthy origin until the originally pinned origin is available; note that this can potentially result in heavy origin flapping. - "sticky": The session affinity cookie is updated and subsequent requests are sent to the new origin. Note: Zero-downtime failover with sticky sessions is currently not supported for session affinity by header.
+                                    Available values: "none", "temporary", "sticky".
+                                    Configures the zero-downtime failover between origins within a pool when session affinity is enabled. This feature is currently incompatible with Argo, Tiered Cache, and Bandwidth Alliance. The supported values are: - `"none"`: No failover takes place for sessions pinned to the origin (default). - `"temporary"`: Traffic will be sent to another other healthy origin until the originally pinned origin is available; note that this can potentially result in heavy origin flapping. - `"sticky"`: The session affinity cookie is updated and subsequent requests are sent to the new origin. Note: Zero-downtime failover with sticky sessions is currently not supported for session affinity by header.
+                                    Available values: "none", "temporary", "sticky".
+                                  type: string
+                              type: object
+                            sessionAffinityTtl:
+                              description: |-
+                                "cookie" / "ip_cookie": The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - "header": The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+                                Time, in seconds, until a client's session expires after being created. Once the expiry time has been reached, subsequent requests may get sent to a different origin server. The accepted ranges per `session_affinity` policy are: - `"cookie"` / `"ip_cookie"`: The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - `"header"`: The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+                              type: number
+                            steeringPolicy:
+                              description: |-
+                                (String) Steering Policy for this load balancer.
+                                Steering Policy for this load balancer.
+                                - `"off"`: Use `default_pools`.
+                                - `"geo"`: Use `region_pools`/`country_pools`/`pop_pools`. For non-proxied requests, the country for `country_pools` is determined by `location_strategy`.
+                                - `"random"`: Select a pool randomly.
+                                - `"dynamic_latency"`: Use round trip time to select the closest pool in default_pools (requires pool health checks).
+                                - `"proximity"`: Use the pools' latitude and longitude to select the closest pool using the Cloudflare PoP location for proxied requests or the location determined by `location_strategy` for non-proxied requests.
+                                - `"least_outstanding_requests"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of outstanding requests. Pools with more pending requests are weighted proportionately less relative to others.
+                                - `"least_connections"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of open connections. Pools with more open connections are weighted proportionately less relative to others. Supported for HTTP/1 and HTTP/2 connections.
+                                - `""`: Will map to `"geo"` if you use `region_pools`/`country_pools`/`pop_pools` otherwise `"off"`.
+                                Available values: "off", "geo", "random", "dynamic_latency", "proximity", "least_outstanding_requests", "least_connections", "".
+                              type: string
+                            ttl:
+                              description: |-
+                                clouded (unproxied) load balancers.
+                                Time to live (TTL) of the DNS entry for the IP address returned by this load balancer. This only applies to gray-clouded (unproxied) load balancers.
+                              type: number
+                          type: object
+                        priority:
+                          description: |-
+                            (Number) The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If no value is provided for any rule the array order of the rules field will be used to assign a priority.
+                            The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If no value is provided for any rule the array order of the rules field will be used to assign a priority.
+                          type: number
+                        terminates:
+                          description: |-
+                            (Boolean) If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
+                            If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
+                          type: boolean
+                      type: object
+                    type: array
+                  sessionAffinity:
+                    description: |-
+                      "cookie": On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - "ip_cookie": Behaves the same as "cookie" except the initial origin selection is stable and based on the client's ip address. - "header": On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see session_affinity_attributes.headers) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of session_affinity_ttl seconds or the origin server is unhealthy, then a new origin server is calculated and used. See headers in session_affinity_attributes for additional required configuration.
+                      Available values: "none", "cookie", "ip_cookie", "header".
+                      Specifies the type of session affinity the load balancer should use unless specified as `"none"`. The supported types are: - `"cookie"`: On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - `"ip_cookie"`: Behaves the same as `"cookie"` except the initial origin selection is stable and based on the client's ip address. - `"header"`: On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see `session_affinity_attributes.headers`) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of `session_affinity_ttl` seconds or the origin server is unhealthy, then a new origin server is calculated and used. See `headers` in `session_affinity_attributes` for additional required configuration.
+                      Available values: "none", "cookie", "ip_cookie", "header".
+                    type: string
+                  sessionAffinityAttributes:
+                    description: (Attributes) Configures attributes for session affinity.
+                      (see below for nested schema)
+                    properties:
+                      drainDuration:
+                        description: |-
+                          (Number) Configures the drain duration in seconds. This field is only used when session affinity is enabled on the load balancer.
+                          Configures the drain duration in seconds. This field is only used when session affinity is enabled on the load balancer.
+                        type: number
+                      headers:
+                        description: |-
+                          name-1>,<cookie-name-2>" (example) where everything after the colon is a comma-separated list of cookie names. Providing only "cookie" will result in all cookies being used. The default max number of HTTP header names that can be provided depends on your plan: 5 for Enterprise, 1 for all other plans.
+                          Configures the names of HTTP headers to base session affinity on when header `session_affinity` is enabled. At least one HTTP header name must be provided. To specify the exact cookies to be used, include an item in the following format: `"cookie:<cookie-name-1>,<cookie-name-2>"` (example) where everything after the colon is a comma-separated list of cookie names. Providing only `"cookie"` will result in all cookies being used. The default max number of HTTP header names that can be provided depends on your plan: 5 for Enterprise, 1 for all other plans.
+                        items:
+                          type: string
+                        type: array
+                      requireAllHeaders:
+                        description: |-
+                          "true": Load balancing requests must contain all of the HTTP headers specified by the headers session affinity attribute, otherwise sessions aren't created. - "false": Load balancing requests must contain at least one of the HTTP headers specified by the headers session affinity attribute, otherwise sessions aren't created.
+                          When header `session_affinity` is enabled, this option can be used to specify how HTTP headers on load balancing requests will be used. The supported values are: - `"true"`: Load balancing requests must contain *all* of the HTTP headers specified by the `headers` session affinity attribute, otherwise sessions aren't created. - `"false"`: Load balancing requests must contain *at least one* of the HTTP headers specified by the `headers` session affinity attribute, otherwise sessions aren't created.
+                        type: boolean
+                      samesite:
+                        description: |-
+                          (String) Configures the SameSite attribute on session affinity cookie. Value "Auto" will be translated to "Lax" or "None" depending if Always Use HTTPS is enabled. Note: when using value "None", the secure attribute can not be set to "Never".
+                          Available values: "Auto", "Lax", "None", "Strict".
+                          Configures the SameSite attribute on session affinity cookie. Value "Auto" will be translated to "Lax" or "None" depending if Always Use HTTPS is enabled. Note: when using value "None", the secure attribute can not be set to "Never".
+                          Available values: "Auto", "Lax", "None", "Strict".
+                        type: string
+                      secure:
+                        description: |-
+                          Cookie header, "Never" indicates the Secure attribute will not be set, and "Auto" will set the Secure attribute depending if Always Use HTTPS is enabled.
+                          Available values: "Auto", "Always", "Never".
+                          Configures the Secure attribute on session affinity cookie. Value "Always" indicates the Secure attribute will be set in the Set-Cookie header, "Never" indicates the Secure attribute will not be set, and "Auto" will set the Secure attribute depending if Always Use HTTPS is enabled.
+                          Available values: "Auto", "Always", "Never".
+                        type: string
+                      zeroDowntimeFailover:
+                        description: |-
+                          downtime failover between origins within a pool when session affinity is enabled. This feature is currently incompatible with Argo, Tiered Cache, and Bandwidth Alliance. The supported values are: - "none": No failover takes place for sessions pinned to the origin (default). - "temporary": Traffic will be sent to another other healthy origin until the originally pinned origin is available; note that this can potentially result in heavy origin flapping. - "sticky": The session affinity cookie is updated and subsequent requests are sent to the new origin. Note: Zero-downtime failover with sticky sessions is currently not supported for session affinity by header.
+                          Available values: "none", "temporary", "sticky".
+                          Configures the zero-downtime failover between origins within a pool when session affinity is enabled. This feature is currently incompatible with Argo, Tiered Cache, and Bandwidth Alliance. The supported values are: - `"none"`: No failover takes place for sessions pinned to the origin (default). - `"temporary"`: Traffic will be sent to another other healthy origin until the originally pinned origin is available; note that this can potentially result in heavy origin flapping. - `"sticky"`: The session affinity cookie is updated and subsequent requests are sent to the new origin. Note: Zero-downtime failover with sticky sessions is currently not supported for session affinity by header.
+                          Available values: "none", "temporary", "sticky".
+                        type: string
+                    type: object
+                  sessionAffinityTtl:
+                    description: |-
+                      "cookie" / "ip_cookie": The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - "header": The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+                      Time, in seconds, until a client's session expires after being created. Once the expiry time has been reached, subsequent requests may get sent to a different origin server. The accepted ranges per `session_affinity` policy are: - `"cookie"` / `"ip_cookie"`: The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - `"header"`: The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+                    type: number
+                  steeringPolicy:
+                    description: |-
+                      (String) Steering Policy for this load balancer.
+                      Steering Policy for this load balancer.
+                      - `"off"`: Use `default_pools`.
+                      - `"geo"`: Use `region_pools`/`country_pools`/`pop_pools`. For non-proxied requests, the country for `country_pools` is determined by `location_strategy`.
+                      - `"random"`: Select a pool randomly.
+                      - `"dynamic_latency"`: Use round trip time to select the closest pool in default_pools (requires pool health checks).
+                      - `"proximity"`: Use the pools' latitude and longitude to select the closest pool using the Cloudflare PoP location for proxied requests or the location determined by `location_strategy` for non-proxied requests.
+                      - `"least_outstanding_requests"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of outstanding requests. Pools with more pending requests are weighted proportionately less relative to others.
+                      - `"least_connections"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of open connections. Pools with more open connections are weighted proportionately less relative to others. Supported for HTTP/1 and HTTP/2 connections.
+                      - `""`: Will map to `"geo"` if you use `region_pools`/`country_pools`/`pop_pools` otherwise `"off"`.
+                      Available values: "off", "geo", "random", "dynamic_latency", "proximity", "least_outstanding_requests", "least_connections", "".
+                    type: string
+                  ttl:
+                    description: |-
+                      clouded (unproxied) load balancers.
+                      Time to live (TTL) of the DNS entry for the IP address returned by this load balancer. This only applies to gray-clouded (unproxied) load balancers.
+                    type: number
+                  zoneId:
+                    description: (String)
+                    type: string
+                  zoneIdRef:
+                    description: Reference to a Zone in zone to populate zoneId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  zoneIdSelector:
+                    description: Selector for a Zone in zone to populate zoneId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.defaultPools is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.defaultPools)
+                || (has(self.initProvider) && has(self.initProvider.defaultPools))'
+            - message: spec.forProvider.fallbackPool is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.fallbackPool)
+                || (has(self.initProvider) && has(self.initProvider.fallbackPool))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: BalancerStatus defines the observed state of Balancer.
+            properties:
+              atProvider:
+                properties:
+                  adaptiveRouting:
+                    description: downtime failover occurs immediately when an origin
+                      becomes unavailable due to HTTP 521, 522, or 523 response codes.
+                      If there is another healthy origin in the same pool, the request
+                      is retried once against this alternate origin. (see below for
+                      nested schema)
+                    properties:
+                      failoverAcrossPools:
+                        description: |-
+                          downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See session_affinity_attributes for control over when sessions are broken or reassigned.
+                          Extends zero-downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See `session_affinity_attributes` for control over when sessions are broken or reassigned.
+                        type: boolean
+                    type: object
+                  countryPools:
+                    additionalProperties:
+                      items:
+                        type: string
+                      type: array
+                    description: |-
+                      (Map of List of String) A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+                      A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+                    type: object
+                  createdOn:
+                    description: (String)
+                    type: string
+                  defaultPools:
+                    description: |-
+                      (List of String) A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+                      A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: |-
+                      (String) Object description.
+                      Object description.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Whether to enable (the default) this load balancer.
+                      Whether to enable (the default) this load balancer.
+                    type: boolean
+                  fallbackPool:
+                    description: |-
+                      (String) The pool ID to use when all other pools are detected as unhealthy.
+                      The pool ID to use when all other pools are detected as unhealthy.
+                    type: string
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  locationStrategy:
+                    description: based steering for non-proxied requests. See steering_policy
+                      to learn how steering is affected. (see below for nested schema)
+                    properties:
+                      mode:
+                        description: |-
+                          (String) Determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+                          Determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+                          - `"pop"`: Use the Cloudflare PoP location.
+                          - `"resolver_ip"`: Use the DNS resolver GeoIP location. If the GeoIP lookup is unsuccessful, use the Cloudflare PoP location.
+                          Available values: "pop", "resolver_ip".
+                        type: string
+                      preferEcs:
+                        description: |-
+                          (String) Whether the EDNS Client Subnet (ECS) GeoIP should be preferred as the authoritative location.
+                          Whether the EDNS Client Subnet (ECS) GeoIP should be preferred as the authoritative location.
+                          - `"always"`: Always prefer ECS.
+                          - `"never"`: Never prefer ECS.
+                          - `"proximity"`: Prefer ECS only when `steering_policy="proximity"`.
+                          - `"geo"`: Prefer ECS only when `steering_policy="geo"`.
+                          Available values: "always", "never", "proximity", "geo".
+                        type: string
+                    type: object
+                  modifiedOn:
+                    description: (String)
+                    type: string
+                  name:
+                    description: |-
+                      (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+                      The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+                    type: string
+                  networks:
+                    description: |-
+                      (List of String) List of networks where Load Balancer or Pool is enabled.
+                      List of networks where Load Balancer or Pool is enabled.
+                    items:
+                      type: string
+                    type: array
+                  popPools:
+                    additionalProperties:
+                      items:
+                        type: string
+                      type: array
+                    description: |-
+                      (Map of List of String) Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+                      Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+                    type: object
+                  proxied:
+                    description: |-
+                      (Boolean) Whether the hostname should be gray clouded (false) or orange clouded (true).
+                      Whether the hostname should be gray clouded (false) or orange clouded (true).
+                    type: boolean
+                  randomSteering:
+                    description: (Attributes) Configures pool weights.
+                    properties:
+                      defaultWeight:
+                        description: |-
+                          (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
+                          The default weight for pools in the load balancer that are not specified in the pool_weights map.
+                        type: number
+                      poolWeights:
+                        additionalProperties:
+                          type: number
+                        description: |-
+                          (Map of Number) A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+                          A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+                        type: object
+                        x-kubernetes-map-type: granular
+                    type: object
+                  regionPools:
+                    additionalProperties:
+                      items:
+                        type: string
+                      type: array
+                    description: |-
+                      (Map of List of String) A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+                      A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+                    type: object
+                  rules:
+                    description: '(Attributes List) BETA Field Not General Access:
+                      A list of rules for this load balancer to execute. (see below
+                      for nested schema)'
+                    items:
+                      properties:
+                        condition:
+                          description: |-
+                            balancing/understand-basics/load-balancing-rules/expressions.
+                            The condition expressions to evaluate. If the condition evaluates to true, the overrides or fixed_response in this rule will be applied. An empty condition is always true. For more details on condition expressions, please see https://developers.cloudflare.com/load-balancing/understand-basics/load-balancing-rules/expressions.
+                          type: string
+                        disabled:
+                          description: |-
+                            (Boolean) Disable this specific rule. It will no longer be evaluated by this load balancer.
+                            Disable this specific rule. It will no longer be evaluated by this load balancer.
+                          type: boolean
+                        fixedResponse:
+                          description: (Attributes) A collection of fields used to
+                            directly respond to the eyeball instead of routing to
+                            a pool. If a fixed_response is supplied the rule will
+                            be marked as terminates. (see below for nested schema)
+                          properties:
+                            contentType:
+                              description: |-
+                                Type' header to include in the response.
+                                The http 'Content-Type' header to include in the response.
+                              type: string
+                            location:
+                              description: |-
+                                (String) The http 'Location' header to include in the response.
+                                The http 'Location' header to include in the response.
+                              type: string
+                            messageBody:
+                              description: |-
+                                (String) Text to include as the http body.
+                                Text to include as the http body.
+                              type: string
+                            statusCode:
+                              description: |-
+                                (Number) The http status code to respond with.
+                                The http status code to respond with.
+                              type: number
+                          type: object
+                        name:
+                          description: |-
+                            (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+                            Name of this rule. Only used for human readability.
+                          type: string
+                        overrides:
+                          description: (Attributes) A collection of overrides to apply
+                            to the load balancer when this rule's condition is true.
+                            All fields are optional. (see below for nested schema)
+                          properties:
+                            adaptiveRouting:
+                              description: downtime failover occurs immediately when
+                                an origin becomes unavailable due to HTTP 521, 522,
+                                or 523 response codes. If there is another healthy
+                                origin in the same pool, the request is retried once
+                                against this alternate origin. (see below for nested
+                                schema)
+                              properties:
+                                failoverAcrossPools:
+                                  description: |-
+                                    downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See session_affinity_attributes for control over when sessions are broken or reassigned.
+                                    Extends zero-downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See `session_affinity_attributes` for control over when sessions are broken or reassigned.
+                                  type: boolean
+                              type: object
+                            countryPools:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Map of List of String) A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+                                A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+                              type: object
+                            defaultPools:
+                              description: |-
+                                (List of String) A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+                                A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+                              items:
+                                type: string
+                              type: array
+                            fallbackPool:
+                              description: |-
+                                (String) The pool ID to use when all other pools are detected as unhealthy.
+                                The pool ID to use when all other pools are detected as unhealthy.
+                              type: string
+                            locationStrategy:
+                              description: based steering for non-proxied requests.
+                                See steering_policy to learn how steering is affected.
+                                (see below for nested schema)
+                              properties:
+                                mode:
+                                  description: |-
+                                    (String) Determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+                                    Determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+                                    - `"pop"`: Use the Cloudflare PoP location.
+                                    - `"resolver_ip"`: Use the DNS resolver GeoIP location. If the GeoIP lookup is unsuccessful, use the Cloudflare PoP location.
+                                    Available values: "pop", "resolver_ip".
+                                  type: string
+                                preferEcs:
+                                  description: |-
+                                    (String) Whether the EDNS Client Subnet (ECS) GeoIP should be preferred as the authoritative location.
+                                    Whether the EDNS Client Subnet (ECS) GeoIP should be preferred as the authoritative location.
+                                    - `"always"`: Always prefer ECS.
+                                    - `"never"`: Never prefer ECS.
+                                    - `"proximity"`: Prefer ECS only when `steering_policy="proximity"`.
+                                    - `"geo"`: Prefer ECS only when `steering_policy="geo"`.
+                                    Available values: "always", "never", "proximity", "geo".
+                                  type: string
+                              type: object
+                            popPools:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Map of List of String) Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+                                Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+                              type: object
+                            randomSteering:
+                              description: (Attributes) Configures pool weights.
+                              properties:
+                                defaultWeight:
+                                  description: |-
+                                    (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
+                                    The default weight for pools in the load balancer that are not specified in the pool_weights map.
+                                  type: number
+                                poolWeights:
+                                  additionalProperties:
+                                    type: number
+                                  description: |-
+                                    (Map of Number) A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+                                    A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+                                  type: object
+                                  x-kubernetes-map-type: granular
+                              type: object
+                            regionPools:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Map of List of String) A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+                                A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+                              type: object
+                            sessionAffinity:
+                              description: |-
+                                "cookie": On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - "ip_cookie": Behaves the same as "cookie" except the initial origin selection is stable and based on the client's ip address. - "header": On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see session_affinity_attributes.headers) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of session_affinity_ttl seconds or the origin server is unhealthy, then a new origin server is calculated and used. See headers in session_affinity_attributes for additional required configuration.
+                                Available values: "none", "cookie", "ip_cookie", "header".
+                                Specifies the type of session affinity the load balancer should use unless specified as `"none"`. The supported types are: - `"cookie"`: On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - `"ip_cookie"`: Behaves the same as `"cookie"` except the initial origin selection is stable and based on the client's ip address. - `"header"`: On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see `session_affinity_attributes.headers`) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of `session_affinity_ttl` seconds or the origin server is unhealthy, then a new origin server is calculated and used. See `headers` in `session_affinity_attributes` for additional required configuration.
+                                Available values: "none", "cookie", "ip_cookie", "header".
+                              type: string
+                            sessionAffinityAttributes:
+                              description: (Attributes) Configures attributes for
+                                session affinity. (see below for nested schema)
+                              properties:
+                                drainDuration:
+                                  description: |-
+                                    (Number) Configures the drain duration in seconds. This field is only used when session affinity is enabled on the load balancer.
+                                    Configures the drain duration in seconds. This field is only used when session affinity is enabled on the load balancer.
+                                  type: number
+                                headers:
+                                  description: |-
+                                    name-1>,<cookie-name-2>" (example) where everything after the colon is a comma-separated list of cookie names. Providing only "cookie" will result in all cookies being used. The default max number of HTTP header names that can be provided depends on your plan: 5 for Enterprise, 1 for all other plans.
+                                    Configures the names of HTTP headers to base session affinity on when header `session_affinity` is enabled. At least one HTTP header name must be provided. To specify the exact cookies to be used, include an item in the following format: `"cookie:<cookie-name-1>,<cookie-name-2>"` (example) where everything after the colon is a comma-separated list of cookie names. Providing only `"cookie"` will result in all cookies being used. The default max number of HTTP header names that can be provided depends on your plan: 5 for Enterprise, 1 for all other plans.
+                                  items:
+                                    type: string
+                                  type: array
+                                requireAllHeaders:
+                                  description: |-
+                                    "true": Load balancing requests must contain all of the HTTP headers specified by the headers session affinity attribute, otherwise sessions aren't created. - "false": Load balancing requests must contain at least one of the HTTP headers specified by the headers session affinity attribute, otherwise sessions aren't created.
+                                    When header `session_affinity` is enabled, this option can be used to specify how HTTP headers on load balancing requests will be used. The supported values are: - `"true"`: Load balancing requests must contain *all* of the HTTP headers specified by the `headers` session affinity attribute, otherwise sessions aren't created. - `"false"`: Load balancing requests must contain *at least one* of the HTTP headers specified by the `headers` session affinity attribute, otherwise sessions aren't created.
+                                  type: boolean
+                                samesite:
+                                  description: |-
+                                    (String) Configures the SameSite attribute on session affinity cookie. Value "Auto" will be translated to "Lax" or "None" depending if Always Use HTTPS is enabled. Note: when using value "None", the secure attribute can not be set to "Never".
+                                    Available values: "Auto", "Lax", "None", "Strict".
+                                    Configures the SameSite attribute on session affinity cookie. Value "Auto" will be translated to "Lax" or "None" depending if Always Use HTTPS is enabled. Note: when using value "None", the secure attribute can not be set to "Never".
+                                    Available values: "Auto", "Lax", "None", "Strict".
+                                  type: string
+                                secure:
+                                  description: |-
+                                    Cookie header, "Never" indicates the Secure attribute will not be set, and "Auto" will set the Secure attribute depending if Always Use HTTPS is enabled.
+                                    Available values: "Auto", "Always", "Never".
+                                    Configures the Secure attribute on session affinity cookie. Value "Always" indicates the Secure attribute will be set in the Set-Cookie header, "Never" indicates the Secure attribute will not be set, and "Auto" will set the Secure attribute depending if Always Use HTTPS is enabled.
+                                    Available values: "Auto", "Always", "Never".
+                                  type: string
+                                zeroDowntimeFailover:
+                                  description: |-
+                                    downtime failover between origins within a pool when session affinity is enabled. This feature is currently incompatible with Argo, Tiered Cache, and Bandwidth Alliance. The supported values are: - "none": No failover takes place for sessions pinned to the origin (default). - "temporary": Traffic will be sent to another other healthy origin until the originally pinned origin is available; note that this can potentially result in heavy origin flapping. - "sticky": The session affinity cookie is updated and subsequent requests are sent to the new origin. Note: Zero-downtime failover with sticky sessions is currently not supported for session affinity by header.
+                                    Available values: "none", "temporary", "sticky".
+                                    Configures the zero-downtime failover between origins within a pool when session affinity is enabled. This feature is currently incompatible with Argo, Tiered Cache, and Bandwidth Alliance. The supported values are: - `"none"`: No failover takes place for sessions pinned to the origin (default). - `"temporary"`: Traffic will be sent to another other healthy origin until the originally pinned origin is available; note that this can potentially result in heavy origin flapping. - `"sticky"`: The session affinity cookie is updated and subsequent requests are sent to the new origin. Note: Zero-downtime failover with sticky sessions is currently not supported for session affinity by header.
+                                    Available values: "none", "temporary", "sticky".
+                                  type: string
+                              type: object
+                            sessionAffinityTtl:
+                              description: |-
+                                "cookie" / "ip_cookie": The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - "header": The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+                                Time, in seconds, until a client's session expires after being created. Once the expiry time has been reached, subsequent requests may get sent to a different origin server. The accepted ranges per `session_affinity` policy are: - `"cookie"` / `"ip_cookie"`: The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - `"header"`: The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+                              type: number
+                            steeringPolicy:
+                              description: |-
+                                (String) Steering Policy for this load balancer.
+                                Steering Policy for this load balancer.
+                                - `"off"`: Use `default_pools`.
+                                - `"geo"`: Use `region_pools`/`country_pools`/`pop_pools`. For non-proxied requests, the country for `country_pools` is determined by `location_strategy`.
+                                - `"random"`: Select a pool randomly.
+                                - `"dynamic_latency"`: Use round trip time to select the closest pool in default_pools (requires pool health checks).
+                                - `"proximity"`: Use the pools' latitude and longitude to select the closest pool using the Cloudflare PoP location for proxied requests or the location determined by `location_strategy` for non-proxied requests.
+                                - `"least_outstanding_requests"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of outstanding requests. Pools with more pending requests are weighted proportionately less relative to others.
+                                - `"least_connections"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of open connections. Pools with more open connections are weighted proportionately less relative to others. Supported for HTTP/1 and HTTP/2 connections.
+                                - `""`: Will map to `"geo"` if you use `region_pools`/`country_pools`/`pop_pools` otherwise `"off"`.
+                                Available values: "off", "geo", "random", "dynamic_latency", "proximity", "least_outstanding_requests", "least_connections", "".
+                              type: string
+                            ttl:
+                              description: |-
+                                clouded (unproxied) load balancers.
+                                Time to live (TTL) of the DNS entry for the IP address returned by this load balancer. This only applies to gray-clouded (unproxied) load balancers.
+                              type: number
+                          type: object
+                        priority:
+                          description: |-
+                            (Number) The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If no value is provided for any rule the array order of the rules field will be used to assign a priority.
+                            The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If no value is provided for any rule the array order of the rules field will be used to assign a priority.
+                          type: number
+                        terminates:
+                          description: |-
+                            (Boolean) If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
+                            If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
+                          type: boolean
+                      type: object
+                    type: array
+                  sessionAffinity:
+                    description: |-
+                      "cookie": On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - "ip_cookie": Behaves the same as "cookie" except the initial origin selection is stable and based on the client's ip address. - "header": On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see session_affinity_attributes.headers) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of session_affinity_ttl seconds or the origin server is unhealthy, then a new origin server is calculated and used. See headers in session_affinity_attributes for additional required configuration.
+                      Available values: "none", "cookie", "ip_cookie", "header".
+                      Specifies the type of session affinity the load balancer should use unless specified as `"none"`. The supported types are: - `"cookie"`: On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - `"ip_cookie"`: Behaves the same as `"cookie"` except the initial origin selection is stable and based on the client's ip address. - `"header"`: On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see `session_affinity_attributes.headers`) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of `session_affinity_ttl` seconds or the origin server is unhealthy, then a new origin server is calculated and used. See `headers` in `session_affinity_attributes` for additional required configuration.
+                      Available values: "none", "cookie", "ip_cookie", "header".
+                    type: string
+                  sessionAffinityAttributes:
+                    description: (Attributes) Configures attributes for session affinity.
+                      (see below for nested schema)
+                    properties:
+                      drainDuration:
+                        description: |-
+                          (Number) Configures the drain duration in seconds. This field is only used when session affinity is enabled on the load balancer.
+                          Configures the drain duration in seconds. This field is only used when session affinity is enabled on the load balancer.
+                        type: number
+                      headers:
+                        description: |-
+                          name-1>,<cookie-name-2>" (example) where everything after the colon is a comma-separated list of cookie names. Providing only "cookie" will result in all cookies being used. The default max number of HTTP header names that can be provided depends on your plan: 5 for Enterprise, 1 for all other plans.
+                          Configures the names of HTTP headers to base session affinity on when header `session_affinity` is enabled. At least one HTTP header name must be provided. To specify the exact cookies to be used, include an item in the following format: `"cookie:<cookie-name-1>,<cookie-name-2>"` (example) where everything after the colon is a comma-separated list of cookie names. Providing only `"cookie"` will result in all cookies being used. The default max number of HTTP header names that can be provided depends on your plan: 5 for Enterprise, 1 for all other plans.
+                        items:
+                          type: string
+                        type: array
+                      requireAllHeaders:
+                        description: |-
+                          "true": Load balancing requests must contain all of the HTTP headers specified by the headers session affinity attribute, otherwise sessions aren't created. - "false": Load balancing requests must contain at least one of the HTTP headers specified by the headers session affinity attribute, otherwise sessions aren't created.
+                          When header `session_affinity` is enabled, this option can be used to specify how HTTP headers on load balancing requests will be used. The supported values are: - `"true"`: Load balancing requests must contain *all* of the HTTP headers specified by the `headers` session affinity attribute, otherwise sessions aren't created. - `"false"`: Load balancing requests must contain *at least one* of the HTTP headers specified by the `headers` session affinity attribute, otherwise sessions aren't created.
+                        type: boolean
+                      samesite:
+                        description: |-
+                          (String) Configures the SameSite attribute on session affinity cookie. Value "Auto" will be translated to "Lax" or "None" depending if Always Use HTTPS is enabled. Note: when using value "None", the secure attribute can not be set to "Never".
+                          Available values: "Auto", "Lax", "None", "Strict".
+                          Configures the SameSite attribute on session affinity cookie. Value "Auto" will be translated to "Lax" or "None" depending if Always Use HTTPS is enabled. Note: when using value "None", the secure attribute can not be set to "Never".
+                          Available values: "Auto", "Lax", "None", "Strict".
+                        type: string
+                      secure:
+                        description: |-
+                          Cookie header, "Never" indicates the Secure attribute will not be set, and "Auto" will set the Secure attribute depending if Always Use HTTPS is enabled.
+                          Available values: "Auto", "Always", "Never".
+                          Configures the Secure attribute on session affinity cookie. Value "Always" indicates the Secure attribute will be set in the Set-Cookie header, "Never" indicates the Secure attribute will not be set, and "Auto" will set the Secure attribute depending if Always Use HTTPS is enabled.
+                          Available values: "Auto", "Always", "Never".
+                        type: string
+                      zeroDowntimeFailover:
+                        description: |-
+                          downtime failover between origins within a pool when session affinity is enabled. This feature is currently incompatible with Argo, Tiered Cache, and Bandwidth Alliance. The supported values are: - "none": No failover takes place for sessions pinned to the origin (default). - "temporary": Traffic will be sent to another other healthy origin until the originally pinned origin is available; note that this can potentially result in heavy origin flapping. - "sticky": The session affinity cookie is updated and subsequent requests are sent to the new origin. Note: Zero-downtime failover with sticky sessions is currently not supported for session affinity by header.
+                          Available values: "none", "temporary", "sticky".
+                          Configures the zero-downtime failover between origins within a pool when session affinity is enabled. This feature is currently incompatible with Argo, Tiered Cache, and Bandwidth Alliance. The supported values are: - `"none"`: No failover takes place for sessions pinned to the origin (default). - `"temporary"`: Traffic will be sent to another other healthy origin until the originally pinned origin is available; note that this can potentially result in heavy origin flapping. - `"sticky"`: The session affinity cookie is updated and subsequent requests are sent to the new origin. Note: Zero-downtime failover with sticky sessions is currently not supported for session affinity by header.
+                          Available values: "none", "temporary", "sticky".
+                        type: string
+                    type: object
+                  sessionAffinityTtl:
+                    description: |-
+                      "cookie" / "ip_cookie": The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - "header": The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+                      Time, in seconds, until a client's session expires after being created. Once the expiry time has been reached, subsequent requests may get sent to a different origin server. The accepted ranges per `session_affinity` policy are: - `"cookie"` / `"ip_cookie"`: The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - `"header"`: The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+                    type: number
+                  steeringPolicy:
+                    description: |-
+                      (String) Steering Policy for this load balancer.
+                      Steering Policy for this load balancer.
+                      - `"off"`: Use `default_pools`.
+                      - `"geo"`: Use `region_pools`/`country_pools`/`pop_pools`. For non-proxied requests, the country for `country_pools` is determined by `location_strategy`.
+                      - `"random"`: Select a pool randomly.
+                      - `"dynamic_latency"`: Use round trip time to select the closest pool in default_pools (requires pool health checks).
+                      - `"proximity"`: Use the pools' latitude and longitude to select the closest pool using the Cloudflare PoP location for proxied requests or the location determined by `location_strategy` for non-proxied requests.
+                      - `"least_outstanding_requests"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of outstanding requests. Pools with more pending requests are weighted proportionately less relative to others.
+                      - `"least_connections"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of open connections. Pools with more open connections are weighted proportionately less relative to others. Supported for HTTP/1 and HTTP/2 connections.
+                      - `""`: Will map to `"geo"` if you use `region_pools`/`country_pools`/`pop_pools` otherwise `"off"`.
+                      Available values: "off", "geo", "random", "dynamic_latency", "proximity", "least_outstanding_requests", "least_connections", "".
+                    type: string
+                  ttl:
+                    description: |-
+                      clouded (unproxied) load balancers.
+                      Time to live (TTL) of the DNS entry for the IP address returned by this load balancer. This only applies to gray-clouded (unproxied) load balancers.
+                    type: number
+                  zoneId:
+                    description: (String)
+                    type: string
+                  zoneName:
+                    description: (String)
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,17 @@
+apiVersion: waiting.upjet-cloudflare.upbound.io/v1alpha1
+kind: RoomRules
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waiting/v1alpha1/roomrules
+  labels:
+    testing.upbound.io/example-name: example_waiting_room_rules
+  name: example-waiting-room-rules
+spec:
+  forProvider:
+    rules:
+    - action: bypass_waiting_room
+      description: allow all traffic from 10.20.30.40
+      enabled: true
+      expression: ip.src in {10.20.30.40}
+    waitingRoomId: 699d98642c564d2e855e9661899b7252
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353
