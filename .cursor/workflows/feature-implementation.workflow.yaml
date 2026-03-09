@@ -1,0 +1,70 @@
+# Flujo: plan → architect → implement → test → review → security → verify
+# handoff_file: Orchestrator MUST inject. Per-workflow anti-bottleneck.
+# Domain: backend. Stack: Go, Upjet, Crossplane. TEST_CMD=go test ./... ANALYZE_CMD=go vet ./...
+name: feature-implementation
+description: Plan → architect → implement → test → review → security → verify. Reportes en agents/*/analysis/YYMMDD-NNN.md.
+domain: backend
+trigger: User asks to implement a feature, new functionality, or multi-step task.
+steps:
+  - id: plan
+    subagent_type: planner
+    handoff_to: architect
+    prompt_template: |
+      Workspace: {{workspace}}. Domain: backend (Go, Upjet, Crossplane).
+      Goal: {{user_goal}}.
+      Output: Create plan YYMMDD-NNN.md in .cursor/agents/planner/analysis/ with description, files (apis/, config/, internal/), steps, Requires_tests, Security_critical_feature.
+      Update {{handoff_file}} (Plan_ref, Next assigned role=software-architect, Domain=backend).
+      If blocked, set Blocked: true, Return_to_step: plan, Block_reason: [reason].
+  - id: architect
+    subagent_type: software-architect
+    handoff_to: implementer
+    on_concern_return_to: plan
+    prompt_template: |
+      Workspace: {{workspace}}. Domain: backend.
+      Read {{handoff_file}} and plan at Plan_ref. Validate against Upjet/Crossplane provider architecture (apis/, config/, internal/, build/).
+      Generate analysis YYMMDD-NNN.md in .cursor/agents/software-architect/analysis/.
+      If APPROVED: update {{handoff_file}} (Architect_approval: yes, Next assigned role=implementer).
+      If REJECTED: set Blocked: true, Return_to_step: plan, Block_reason: [observations].
+  - id: implement
+    subagent_type: implementer
+    handoff_to: test
+    on_concern_return_to: architect
+    prompt_template: |
+      Workspace: {{workspace}}. Domain: backend.
+      Read {{handoff_file}} and plan at Plan_ref. Verify Architect_approval: yes. Implement Go/Upjet changes. Do NOT write tests.
+      Update {{handoff_file}} (Changes made, Next assigned role=tester if Requires_tests else code-reviewer).
+      If blocked, set Blocked: true, Return_to_step: architect, Block_reason: [reason].
+  - id: test
+    subagent_type: tester
+    handoff_to: review
+    on_concern_return_to: implement
+    prompt_template: |
+      Workspace: {{workspace}}. Domain: backend.
+      Read {{handoff_file}}. If Requires_tests: no, skip, update {{handoff_file}} (Next assigned role=code-reviewer).
+      If Requires_tests: yes, run `go test ./...`, create report in .cursor/agents/tester/analysis/ with coverage.
+      Update {{handoff_file}} (Test_report, Next assigned role=code-reviewer). If tests fail, Blocked, Return_to_step: implement.
+  - id: review
+    subagent_type: code-reviewer
+    handoff_to: security
+    on_concern_return_to: implement
+    prompt_template: |
+      Workspace: {{workspace}}. Domain: backend.
+      Read {{handoff_file}} and changed files. Run `go test ./...` and `go vet ./...`. Review code quality.
+      Generate report in .cursor/agents/code-reviewer/analysis/. If APPROVED: Next assigned role=security. If REQUIRES_CHANGES: Blocked, Return_to_step: implement.
+  - id: security
+    subagent_type: security-auditor
+    handoff_to: verify
+    on_concern_return_to: implement
+    prompt_template: |
+      Workspace: {{workspace}}. Domain: backend.
+      Read {{handoff_file}}. If Security_critical_feature: no, skip audit, Next assigned role=verifier.
+      If yes, run `go list -u -m all`, OWASP review, generate report in .cursor/agents/security-auditor/analysis/. Update Security_audit, Next assigned role=verifier.
+      If FAIL, Blocked, Return_to_step: implement.
+  - id: verify
+    subagent_type: verifier
+    handoff_to: null
+    on_concern_return_to: review
+    prompt_template: |
+      Workspace: {{workspace}}. Domain: backend.
+      Read {{handoff_file}}. Validate acceptance criteria. Confirm Architect_approval, Code_review_verdict, Security_audit.
+      Run `make check-diff` if applicable. Mark done or return with open items. Update {{handoff_file}} with final state.

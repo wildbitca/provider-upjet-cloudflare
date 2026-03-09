@@ -1,0 +1,18 @@
+# provider-upjet-cloudflare — Agentic Setup
+
+## Domain
+**backend**. Stack: Go, Upjet, Crossplane, Cloudflare.
+
+## MCPs
+- cloudflare-docs
+
+## Commands
+- TEST_CMD: go test ./...
+- ANALYZE_CMD: go vet ./...
+- DEPS_AUDIT_CMD: go list -u -m all
+
+## Workflows
+Complex tasks: consult `.cursor/workflows/`. Handoff per workflow (`handoff-<scope>.md`).
+
+## Documentation (Hack 2)
+Do NOT proactively create or update README, CHANGELOG, or docs. Only when user explicitly asks.
