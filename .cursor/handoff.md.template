@@ -1,6 +1,8 @@
 # Handoff
 
 **Git (obligatorio):** NUNCA `git commit`, `git push`, ni crear ramas/remotes desde agentes. Cambios solo en working tree; commit/push manual por el usuario.
+**Worktree (obligatorio):** Con worktree: SIEMPRE mezclar la rama del worktree a la rama principal de origen (desde la cual se creó el worktree). El usuario realiza el merge manualmente.
+**Handoff cleanup (obligatorio):** Al terminar el trabajo: SIEMPRE eliminar este handoff. Evitar handoffs pending, zombies, orphans.
 
 **Goal reached:** (1–2 sentences)
 
@@ -33,4 +35,4 @@
 
 ---
 
-*Copy this template to `handoff-<scope>.md` per workflow run. Orchestrator injects handoff_file. Flow and rules in .cursor/workflows/feature-implementation.workflow.yaml. No git commit/push by agents — working tree only.*
+*Copy this template to `handoff-<scope>.md` per workflow run. Orchestrator injects handoff_file. Flow and rules in .cursor/workflows/feature-implementation.workflow.yaml. No git commit/push by agents — working tree only. With worktree: user must merge worktree branch to main/source branch. When task done: DELETE handoff (no pending/zombie/orphan handoffs).*

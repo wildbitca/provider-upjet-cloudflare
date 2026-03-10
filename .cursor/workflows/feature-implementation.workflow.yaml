@@ -1,6 +1,8 @@
 # Flujo: plan → architect → implement → test → review → security → verify
 # handoff_file: Orchestrator MUST inject. Per-workflow anti-bottleneck.
 # NUNCA git commit, git push, ni crear ramas/remotes; cambios solo en working tree; commit/push manual por el usuario.
+# Con worktree: SIEMPRE mezclar la rama del worktree a la rama principal de origen (desde la cual se creó el worktree).
+# Al terminar el trabajo: SIEMPRE eliminar el handoff; evitar handoffs pending, zombies, orphans.
 # Domain: backend. Stack: Go, Upjet, Crossplane. TEST_CMD=go test ./... ANALYZE_CMD=go vet ./...
 name: feature-implementation
 description: Plan → architect → implement → test → review → security → verify. Reportes en agents/*/analysis/YYMMDD-NNN.md.
@@ -68,4 +70,4 @@ steps:
     prompt_template: |
       Workspace: {{workspace}}. Domain: backend.
       Read {{handoff_file}}. Validate acceptance criteria. Confirm Architect_approval, Code_review_verdict, Security_audit.
-      Run `make check-diff` if applicable. Mark done or return with open items. Update {{handoff_file}} with final state. Do NOT git commit or git push; user commits manually if desired.
+      Run `make check-diff` if applicable. Mark done or return with open items. Update {{handoff_file}} with final state. When task done: DELETE {{handoff_file}} (no pending/zombie/orphan handoffs). Do NOT git commit or git push; user commits manually. With worktree: user must merge worktree branch to main/source branch.
