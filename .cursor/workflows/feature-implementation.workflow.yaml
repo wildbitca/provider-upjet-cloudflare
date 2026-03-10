@@ -1,5 +1,6 @@
 # Flujo: plan → architect → implement → test → review → security → verify
 # handoff_file: Orchestrator MUST inject. Per-workflow anti-bottleneck.
+# NUNCA git commit, git push, ni crear ramas/remotes; cambios solo en working tree; commit/push manual por el usuario.
 # Domain: backend. Stack: Go, Upjet, Crossplane. TEST_CMD=go test ./... ANALYZE_CMD=go vet ./...
 name: feature-implementation
 description: Plan → architect → implement → test → review → security → verify. Reportes en agents/*/analysis/YYMMDD-NNN.md.
@@ -31,7 +32,7 @@ steps:
     on_concern_return_to: architect
     prompt_template: |
       Workspace: {{workspace}}. Domain: backend.
-      Read {{handoff_file}} and plan at Plan_ref. Verify Architect_approval: yes. Implement Go/Upjet changes. Do NOT write tests.
+      Read {{handoff_file}} and plan at Plan_ref. Verify Architect_approval: yes. Implement Go/Upjet changes. Do NOT write tests. Do NOT git commit or git push.
       Update {{handoff_file}} (Changes made, Next assigned role=tester if Requires_tests else code-reviewer).
       If blocked, set Blocked: true, Return_to_step: architect, Block_reason: [reason].
   - id: test
@@ -67,4 +68,4 @@ steps:
     prompt_template: |
       Workspace: {{workspace}}. Domain: backend.
       Read {{handoff_file}}. Validate acceptance criteria. Confirm Architect_approval, Code_review_verdict, Security_audit.
-      Run `make check-diff` if applicable. Mark done or return with open items. Update {{handoff_file}} with final state.
+      Run `make check-diff` if applicable. Mark done or return with open items. Update {{handoff_file}} with final state. Do NOT git commit or git push; user commits manually if desired.

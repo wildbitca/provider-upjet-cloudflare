@@ -1,5 +1,7 @@
 # Handoff
 
+**Git (obligatorio):** NUNCA `git commit`, `git push`, ni crear ramas/remotes desde agentes. Cambios solo en working tree; commit/push manual por el usuario.
+
 **Goal reached:** (1–2 sentences)
 
 **Changes made:** (list file paths only, no code)
@@ -27,7 +29,8 @@
 **Security_audit:** (PASS | CONDITIONAL | FAIL | N/A)
 **Requires_tests:** (yes | no)
 **Security_critical_feature:** (yes | no)
+**Git_commit_push_by_agent:** (prohibido — siempre dejar en working tree; usuario commitea/pushea manual)
 
 ---
 
-*Copy this template to `handoff-<scope>.md` per workflow run. Orchestrator injects handoff_file. Flow and rules in .cursor/workflows/feature-implementation.workflow.yaml*
+*Copy this template to `handoff-<scope>.md` per workflow run. Orchestrator injects handoff_file. Flow and rules in .cursor/workflows/feature-implementation.workflow.yaml. No git commit/push by agents — working tree only.*
