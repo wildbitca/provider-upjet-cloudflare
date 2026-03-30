@@ -1,4 +1,4 @@
-FROM alpine:3.23.2
+FROM alpine:3.23.3
 RUN apk --no-cache add ca-certificates bash
 
 ARG TARGETOS
@@ -37,7 +37,8 @@ RUN unzip /tmp/tofu_${OPENTOFU_VERSION}_${TARGETOS}_${TARGETARCH}.zip -d /usr/lo
   && unzip /tmp/${TERRAFORM_PROVIDER_DOWNLOAD_NAME}_${TERRAFORM_PROVIDER_VERSION}_${TARGETOS}_${TARGETARCH}.zip -d ${PLUGIN_DIR} \
   && chmod +x ${PLUGIN_DIR}/* \
   && rm /tmp/${TERRAFORM_PROVIDER_DOWNLOAD_NAME}_${TERRAFORM_PROVIDER_VERSION}_${TARGETOS}_${TARGETARCH}.zip \
-  && chown -R ${USER_ID}:${USER_ID} /terraform
+  && chown -R ${USER_ID}:${USER_ID} /terraform \
+  && ln -s /terraform/provider-mirror/registry.terraform.io /terraform/provider-mirror/registry.opentofu.org
 # End of - Setup OpenTofu + provider environment
 
 # Provider controller needs these environment variables at runtime

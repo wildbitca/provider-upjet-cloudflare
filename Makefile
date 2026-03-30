@@ -4,7 +4,7 @@
 PROJECT_NAME ?= provider-upjet-cloudflare
 PROJECT_REPO ?= github.com/wildbitca/$(PROJECT_NAME)
 
-export OPENTOFU_VERSION ?= 1.9.0
+export OPENTOFU_VERSION ?= 1.11.5
 
 export TERRAFORM_PROVIDER_SOURCE ?= cloudflare/cloudflare
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/cloudflare/terraform-provider-cloudflare
