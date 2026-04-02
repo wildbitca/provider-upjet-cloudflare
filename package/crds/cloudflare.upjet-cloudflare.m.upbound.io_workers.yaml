@@ -1,0 +1,766 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: workers.cloudflare.upjet-cloudflare.m.upbound.io
+spec:
+  group: cloudflare.upjet-cloudflare.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: Worker
+    listKind: WorkerList
+    plural: workers
+    singular: worker
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Worker is the Schema for the Workers API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: WorkerSpec defines the desired state of Worker
+            properties:
+              forProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  accountIdRef:
+                    description: Reference to a Account in account to populate accountId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  accountIdSelector:
+                    description: Selector for a Account in account to populate accountId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  logpush:
+                    description: |-
+                      (Boolean) Whether logpush is enabled for the Worker.
+                      Whether logpush is enabled for the Worker.
+                    type: boolean
+                  name:
+                    description: |-
+                      (String) Name of the Worker.
+                      Name of the Worker.
+                    type: string
+                  observability:
+                    description: (Attributes) Observability settings for the Worker.
+                      (see below for nested schema)
+                    properties:
+                      enabled:
+                        description: |-
+                          (Boolean) Whether observability is enabled for the Worker.
+                          Whether observability is enabled for the Worker.
+                        type: boolean
+                      headSamplingRate:
+                        description: |-
+                          (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                          The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                        type: number
+                      logs:
+                        description: (Attributes) Log settings for the Worker. (see
+                          below for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether logs are enabled for the Worker.
+                            type: boolean
+                          headSamplingRate:
+                            description: |-
+                              (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                              The sampling rate for logs. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                            type: number
+                          invocationLogs:
+                            description: |-
+                              (Boolean) Whether invocation logs are enabled for the Worker.
+                              Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
+                            type: boolean
+                        type: object
+                    type: object
+                  subdomain:
+                    description: (Attributes) Subdomain settings for the Worker. (see
+                      below for nested schema)
+                    properties:
+                      enabled:
+                        description: |-
+                          (Boolean) Whether observability is enabled for the Worker.
+                          Whether the *.workers.dev subdomain is enabled for the Worker.
+                        type: boolean
+                      previewsEnabled:
+                        description: |-
+                          (Boolean) Whether preview URLs are enabled for the Worker.
+                          Whether [preview URLs](https://developers.cloudflare.com/workers/configuration/previews/) are enabled for the Worker.
+                        type: boolean
+                    type: object
+                  tags:
+                    description: |-
+                      (Set of String) Tags associated with the Worker.
+                      Tags associated with the Worker.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  tailConsumers:
+                    description: (Attributes Set) Other Workers that should consume
+                      logs from the Worker. (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: |-
+                            (String) Name of the Worker.
+                            Name of the consumer Worker.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  accountIdRef:
+                    description: Reference to a Account in account to populate accountId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  accountIdSelector:
+                    description: Selector for a Account in account to populate accountId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  logpush:
+                    description: |-
+                      (Boolean) Whether logpush is enabled for the Worker.
+                      Whether logpush is enabled for the Worker.
+                    type: boolean
+                  name:
+                    description: |-
+                      (String) Name of the Worker.
+                      Name of the Worker.
+                    type: string
+                  observability:
+                    description: (Attributes) Observability settings for the Worker.
+                      (see below for nested schema)
+                    properties:
+                      enabled:
+                        description: |-
+                          (Boolean) Whether observability is enabled for the Worker.
+                          Whether observability is enabled for the Worker.
+                        type: boolean
+                      headSamplingRate:
+                        description: |-
+                          (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                          The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                        type: number
+                      logs:
+                        description: (Attributes) Log settings for the Worker. (see
+                          below for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether logs are enabled for the Worker.
+                            type: boolean
+                          headSamplingRate:
+                            description: |-
+                              (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                              The sampling rate for logs. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                            type: number
+                          invocationLogs:
+                            description: |-
+                              (Boolean) Whether invocation logs are enabled for the Worker.
+                              Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
+                            type: boolean
+                        type: object
+                    type: object
+                  subdomain:
+                    description: (Attributes) Subdomain settings for the Worker. (see
+                      below for nested schema)
+                    properties:
+                      enabled:
+                        description: |-
+                          (Boolean) Whether observability is enabled for the Worker.
+                          Whether the *.workers.dev subdomain is enabled for the Worker.
+                        type: boolean
+                      previewsEnabled:
+                        description: |-
+                          (Boolean) Whether preview URLs are enabled for the Worker.
+                          Whether [preview URLs](https://developers.cloudflare.com/workers/configuration/previews/) are enabled for the Worker.
+                        type: boolean
+                    type: object
+                  tags:
+                    description: |-
+                      (Set of String) Tags associated with the Worker.
+                      Tags associated with the Worker.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  tailConsumers:
+                    description: (Attributes Set) Other Workers that should consume
+                      logs from the Worker. (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: |-
+                            (String) Name of the Worker.
+                            Name of the consumer Worker.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: WorkerStatus defines the observed state of Worker.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  createdOn:
+                    description: |-
+                      (String) When the Worker was created.
+                      When the Worker was created.
+                    type: string
+                  id:
+                    description: (String) Immutable ID of the Worker.
+                    type: string
+                  logpush:
+                    description: |-
+                      (Boolean) Whether logpush is enabled for the Worker.
+                      Whether logpush is enabled for the Worker.
+                    type: boolean
+                  name:
+                    description: |-
+                      (String) Name of the Worker.
+                      Name of the Worker.
+                    type: string
+                  observability:
+                    description: (Attributes) Observability settings for the Worker.
+                      (see below for nested schema)
+                    properties:
+                      enabled:
+                        description: |-
+                          (Boolean) Whether observability is enabled for the Worker.
+                          Whether observability is enabled for the Worker.
+                        type: boolean
+                      headSamplingRate:
+                        description: |-
+                          (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                          The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                        type: number
+                      logs:
+                        description: (Attributes) Log settings for the Worker. (see
+                          below for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether logs are enabled for the Worker.
+                            type: boolean
+                          headSamplingRate:
+                            description: |-
+                              (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                              The sampling rate for logs. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                            type: number
+                          invocationLogs:
+                            description: |-
+                              (Boolean) Whether invocation logs are enabled for the Worker.
+                              Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
+                            type: boolean
+                        type: object
+                    type: object
+                  references:
+                    description: (Attributes) Other resources that reference the Worker
+                      and depend on it existing. (see below for nested schema)
+                    properties:
+                      dispatchNamespaceOutbounds:
+                        description: (Attributes List) Other Workers that reference
+                          the Worker as an outbound for a dispatch namespace. (see
+                          below for nested schema)
+                        items:
+                          properties:
+                            namespaceId:
+                              description: |-
+                                (String) ID of the dispatch namespace.
+                                ID of the dispatch namespace.
+                              type: string
+                            namespaceName:
+                              description: |-
+                                (String) Name of the dispatch namespace.
+                                Name of the dispatch namespace.
+                              type: string
+                            workerId:
+                              description: |-
+                                (String) ID of the Worker using the dispatch namespace.
+                                ID of the Worker using the dispatch namespace.
+                              type: string
+                            workerName:
+                              description: |-
+                                (String) Name of the Worker using the dispatch namespace.
+                                Name of the Worker using the dispatch namespace.
+                              type: string
+                          type: object
+                        type: array
+                      domains:
+                        description: (Attributes List) Custom domains connected to
+                          the Worker. (see below for nested schema)
+                        items:
+                          properties:
+                            certificateId:
+                              description: |-
+                                (String) ID of the TLS certificate issued for the custom domain.
+                                ID of the TLS certificate issued for the custom domain.
+                              type: string
+                            hostname:
+                              description: |-
+                                (String) Full hostname of the custom domain, including the zone name.
+                                Full hostname of the custom domain, including the zone name.
+                              type: string
+                            id:
+                              description: |-
+                                (String) Immutable ID of the Worker.
+                                ID of the custom domain.
+                              type: string
+                            zoneId:
+                              description: |-
+                                (String) ID of the zone.
+                                ID of the zone.
+                              type: string
+                            zoneName:
+                              description: |-
+                                (String) Name of the zone.
+                                Name of the zone.
+                              type: string
+                          type: object
+                        type: array
+                      durableObjects:
+                        description: (Attributes List) Other Workers that reference
+                          Durable Object classes implemented by the Worker. (see below
+                          for nested schema)
+                        items:
+                          properties:
+                            namespaceId:
+                              description: |-
+                                (String) ID of the dispatch namespace.
+                                ID of the Durable Object namespace being used.
+                              type: string
+                            namespaceName:
+                              description: |-
+                                (String) Name of the dispatch namespace.
+                                Name of the Durable Object namespace being used.
+                              type: string
+                            workerId:
+                              description: |-
+                                (String) ID of the Worker using the dispatch namespace.
+                                ID of the Worker using the Durable Object implementation.
+                              type: string
+                            workerName:
+                              description: |-
+                                (String) Name of the Worker using the dispatch namespace.
+                                Name of the Worker using the Durable Object implementation.
+                              type: string
+                          type: object
+                        type: array
+                      queues:
+                        description: (Attributes List) Queues that send messages to
+                          the Worker. (see below for nested schema)
+                        items:
+                          properties:
+                            queueConsumerId:
+                              description: |-
+                                (String) ID of the queue consumer configuration.
+                                ID of the queue consumer configuration.
+                              type: string
+                            queueId:
+                              description: |-
+                                (String) ID of the queue.
+                                ID of the queue.
+                              type: string
+                            queueName:
+                              description: |-
+                                (String) Name of the queue.
+                                Name of the queue.
+                              type: string
+                          type: object
+                        type: array
+                      workers:
+                        description: (Attributes List) Other Workers that reference
+                          the Worker using service bindings. (see below for nested
+                          schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) Immutable ID of the Worker.
+                                ID of the referencing Worker.
+                              type: string
+                            name:
+                              description: |-
+                                (String) Name of the Worker.
+                                Name of the referencing Worker.
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  subdomain:
+                    description: (Attributes) Subdomain settings for the Worker. (see
+                      below for nested schema)
+                    properties:
+                      enabled:
+                        description: |-
+                          (Boolean) Whether observability is enabled for the Worker.
+                          Whether the *.workers.dev subdomain is enabled for the Worker.
+                        type: boolean
+                      previewsEnabled:
+                        description: |-
+                          (Boolean) Whether preview URLs are enabled for the Worker.
+                          Whether [preview URLs](https://developers.cloudflare.com/workers/configuration/previews/) are enabled for the Worker.
+                        type: boolean
+                    type: object
+                  tags:
+                    description: |-
+                      (Set of String) Tags associated with the Worker.
+                      Tags associated with the Worker.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  tailConsumers:
+                    description: (Attributes Set) Other Workers that should consume
+                      logs from the Worker. (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: |-
+                            (String) Name of the Worker.
+                            Name of the consumer Worker.
+                          type: string
+                      type: object
+                    type: array
+                  updatedOn:
+                    description: |-
+                      (String) When the Worker was most recently updated.
+                      When the Worker was most recently updated.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

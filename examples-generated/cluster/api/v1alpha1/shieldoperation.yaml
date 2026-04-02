@@ -1,0 +1,14 @@
+apiVersion: api.upjet-cloudflare.upbound.io/v1alpha1
+kind: ShieldOperation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: api/v1alpha1/shieldoperation
+  labels:
+    testing.upbound.io/example-name: example_api_shield_operation
+  name: example-api-shield-operation
+spec:
+  forProvider:
+    endpoint: /api/v1/users/{var1}
+    host: www.example.com
+    method: GET
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

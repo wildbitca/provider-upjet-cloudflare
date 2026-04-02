@@ -1,0 +1,20 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustAccessMtlsCertificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccessmtlscertificate
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_mtls_certificate
+  name: example-zero-trust-access-mtls-certificate
+  namespace: crossplane-system
+spec:
+  forProvider:
+    associatedHostnames:
+    - admin.example.com
+    certificate: |2
+        -----BEGIN CERTIFICATE-----
+        MIIGAjCCA+qgAwIBAgIJAI7kymlF7CWT...N4RI7KKB7nikiuUf8vhULKy5IX10
+        DrUtmu/B
+        -----END CERTIFICATE-----
+    name: Allow devs
+    zoneId: zone_id

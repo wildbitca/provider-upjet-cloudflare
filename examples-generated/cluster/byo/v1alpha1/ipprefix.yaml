@@ -1,0 +1,16 @@
+apiVersion: byo.upjet-cloudflare.upbound.io/v1alpha1
+kind: IPPrefix
+metadata:
+  annotations:
+    meta.upbound.io/example-id: byo/v1alpha1/ipprefix
+  labels:
+    testing.upbound.io/example-name: example_byo_ip_prefix
+  name: example-byo-ip-prefix
+spec:
+  forProvider:
+    accountId: 258def64c72dae45f3e4c8516e2111f2
+    asn: 13335
+    cidr: 192.0.2.0/24
+    delegateLoaCreation: true
+    description: Internal test prefix
+    loaDocumentId: d933b1530bc56c9953cf8ce166da8004

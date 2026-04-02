@@ -1,0 +1,13 @@
+apiVersion: schema.upjet-cloudflare.upbound.io/v1alpha1
+kind: ValidationOperationSettings
+metadata:
+  annotations:
+    meta.upbound.io/example-id: schema/v1alpha1/validationoperationsettings
+  labels:
+    testing.upbound.io/example-name: example_schema_validation_operation_settings
+  name: example-schema-validation-operation-settings
+spec:
+  forProvider:
+    mitigationAction: block
+    operationId: f174e90a-fafe-4643-bbbc-4a0ed4fc8415
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

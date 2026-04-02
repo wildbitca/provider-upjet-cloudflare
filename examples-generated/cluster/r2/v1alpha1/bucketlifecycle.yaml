@@ -1,0 +1,32 @@
+apiVersion: r2.upjet-cloudflare.upbound.io/v1alpha1
+kind: BucketLifecycle
+metadata:
+  annotations:
+    meta.upbound.io/example-id: r2/v1alpha1/bucketlifecycle
+  labels:
+    testing.upbound.io/example-name: example_r2_bucket_lifecycle
+  name: example-r2-bucket-lifecycle
+spec:
+  forProvider:
+    accountIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    bucketName: example-bucket
+    rules:
+    - abortMultipartUploadsTransition:
+        condition:
+          maxAge: 0
+          type: Age
+      conditions:
+        prefix: prefix
+      deleteObjectsTransition:
+        condition:
+          maxAge: 0
+          type: Age
+      enabled: true
+      id: Expire all objects older than 24 hours
+      storageClassTransitions:
+      - condition:
+          maxAge: 0
+          type: Age
+        storageClass: InfrequentAccess

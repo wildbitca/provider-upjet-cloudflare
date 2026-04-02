@@ -1,0 +1,15 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustAccessCustomPage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccesscustompage
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_custom_page
+  name: example-zero-trust-access-custom-page
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    customHtml: <html><body><h1>Access Denied</h1></body></html>
+    name: name
+    type: identity_denied

@@ -1,0 +1,14 @@
+apiVersion: d1.upjet-cloudflare.upbound.io/v1alpha1
+kind: Database
+metadata:
+  annotations:
+    meta.upbound.io/example-id: d1/v1alpha1/database
+  labels:
+    testing.upbound.io/example-name: example_d1_database
+  name: example-d1-database
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    jurisdiction: eu
+    name: my-database
+    primaryLocationHint: wnam

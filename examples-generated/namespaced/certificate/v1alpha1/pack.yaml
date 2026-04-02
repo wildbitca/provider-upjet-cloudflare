@@ -1,0 +1,21 @@
+apiVersion: certificate.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Pack
+metadata:
+  annotations:
+    meta.upbound.io/example-id: certificate/v1alpha1/pack
+  labels:
+    testing.upbound.io/example-name: example_certificate_pack
+  name: example-certificate-pack
+  namespace: crossplane-system
+spec:
+  forProvider:
+    certificateAuthority: lets_encrypt
+    cloudflareBranding: false
+    hosts:
+    - example.com
+    - '*.example.com'
+    - www.example.com
+    type: advanced
+    validationMethod: txt
+    validityDays: 14
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

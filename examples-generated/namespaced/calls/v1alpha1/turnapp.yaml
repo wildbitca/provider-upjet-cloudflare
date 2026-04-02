@@ -1,0 +1,13 @@
+apiVersion: calls.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TurnApp
+metadata:
+  annotations:
+    meta.upbound.io/example-id: calls/v1alpha1/turnapp
+  labels:
+    testing.upbound.io/example-name: example_calls_turn_app
+  name: example-calls-turn-app
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    name: my-turn-key

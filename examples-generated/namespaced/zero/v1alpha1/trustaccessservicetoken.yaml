@@ -1,0 +1,16 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustAccessServiceToken
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccessservicetoken
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_service_token
+  name: example-zero-trust-access-service-token
+  namespace: crossplane-system
+spec:
+  forProvider:
+    clientSecretVersion: 0
+    duration: 60m
+    name: CI/CD token
+    previousClientSecretExpiresAt: "2014-01-01T05:20:00.12345Z"
+    zoneId: zone_id

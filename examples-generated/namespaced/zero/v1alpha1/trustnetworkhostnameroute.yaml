@@ -1,0 +1,15 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustNetworkHostnameRoute
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustnetworkhostnameroute
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_network_hostname_route
+  name: example-zero-trust-network-hostname-route
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 699d98642c564d2e855e9661899b7252
+    comment: example comment
+    hostname: office-1.local
+    tunnelId: f70ff985-a4ef-4643-bbbc-4a0ed4fc8415

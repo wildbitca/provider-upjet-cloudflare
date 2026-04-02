@@ -1,0 +1,16 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustAccessAIControlsMcpServer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccessaicontrolsmcpserver
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_ai_controls_mcp_server
+  name: example-zero-trust-access-ai-controls-mcp-server
+spec:
+  forProvider:
+    accountId: a86a8f5c339544d7bdc89926de14fb8c
+    authCredentials: auth_credentials
+    authType: unauthenticated
+    description: This is one remote mcp server
+    hostname: https://exmaple.com/mcp
+    name: My MCP Server

@@ -1,0 +1,36 @@
+apiVersion: magic.upjet-cloudflare.upbound.io/v1alpha1
+kind: TransitSiteACL
+metadata:
+  annotations:
+    meta.upbound.io/example-id: magic/v1alpha1/transitsiteacl
+  labels:
+    testing.upbound.io/example-name: example_magic_transit_site_acl
+  name: example-magic-transit-site-acl
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    description: Allows local traffic between PIN pads and cash register.
+    forwardLocally: true
+    lan1:
+      lanId: lan_id
+      lanName: lan_name
+      portRanges:
+      - 8080-9000
+      ports:
+      - 1
+      subnets:
+      - 192.0.2.1
+    lan2:
+      lanId: lan_id
+      lanName: lan_name
+      portRanges:
+      - 8080-9000
+      ports:
+      - 1
+      subnets:
+      - 192.0.2.1
+    name: PIN Pad - Cash Register
+    protocols:
+    - tcp
+    siteId: 023e105f4ecef8ad9ca31a8372d0c353
+    unidirectional: true

@@ -1,0 +1,18 @@
+apiVersion: r2.upjet-cloudflare.upbound.io/v1alpha1
+kind: CustomDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: r2/v1alpha1/customdomain
+  labels:
+    testing.upbound.io/example-name: example_r2_custom_domain
+  name: example-r2-custom-domain
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    bucketName: example-bucket
+    ciphers:
+    - string
+    domain: prefix.example-domain.com
+    enabled: true
+    minTls: "1.0"
+    zoneId: 36ca64a6d92827b8a6b90be344bb1bfd

@@ -1,0 +1,36 @@
+apiVersion: rate.upjet-cloudflare.upbound.io/v1alpha1
+kind: Limit
+metadata:
+  annotations:
+    meta.upbound.io/example-id: rate/v1alpha1/limit
+  labels:
+    testing.upbound.io/example-name: example_rate_limit
+  name: example-rate-limit
+spec:
+  forProvider:
+    action:
+      mode: challenge
+      response:
+        body: <error>This request has been rate-limited.</error>
+        contentType: text/xml
+      timeout: 86400
+    match:
+      headers:
+      - name: Cf-Cache-Status
+        op: ne
+        value: HIT
+      request:
+        methods:
+        - GET
+        - POST
+        schemes:
+        - HTTP
+        - HTTPS
+        url: '*.example.org/path*'
+      response:
+        originTraffic: true
+    period: 900
+    threshold: 60
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

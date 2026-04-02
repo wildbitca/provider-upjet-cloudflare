@@ -1,0 +1,13 @@
+apiVersion: custom.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: HostnameFallbackOrigin
+metadata:
+  annotations:
+    meta.upbound.io/example-id: custom/v1alpha1/hostnamefallbackorigin
+  labels:
+    testing.upbound.io/example-name: example_custom_hostname_fallback_origin
+  name: example-custom-hostname-fallback-origin
+  namespace: crossplane-system
+spec:
+  forProvider:
+    origin: fallback.example.com
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

@@ -1,0 +1,22 @@
+apiVersion: connectivity.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: DirectoryService
+metadata:
+  annotations:
+    meta.upbound.io/example-id: connectivity/v1alpha1/directoryservice
+  labels:
+    testing.upbound.io/example-name: example_connectivity_directory_service
+  name: example-connectivity-directory-service
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    host:
+      hostname: api.example.com
+      resolverNetwork:
+        resolverIps:
+        - string
+        tunnelId: 0191dce4-9ab4-7fce-b660-8e5dec5172da
+    httpPort: 8080
+    httpsPort: 8443
+    name: web-server
+    type: http

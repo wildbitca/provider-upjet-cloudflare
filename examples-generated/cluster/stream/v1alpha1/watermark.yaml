@@ -1,0 +1,17 @@
+apiVersion: stream.upjet-cloudflare.upbound.io/v1alpha1
+kind: Watermark
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stream/v1alpha1/watermark
+  labels:
+    testing.upbound.io/example-name: example_stream_watermark
+  name: example-stream-watermark
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    file: '@/Users/rchen/Downloads/watermark.png'
+    name: Marketing Videos
+    opacity: 0.75
+    padding: 0.1
+    position: center
+    scale: 0.1

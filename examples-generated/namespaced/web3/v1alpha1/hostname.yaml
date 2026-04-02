@@ -1,0 +1,16 @@
+apiVersion: web3.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Hostname
+metadata:
+  annotations:
+    meta.upbound.io/example-id: web3/v1alpha1/hostname
+  labels:
+    testing.upbound.io/example-name: example_web3_hostname
+  name: example-web3-hostname
+  namespace: crossplane-system
+spec:
+  forProvider:
+    description: This is my IPFS gateway.
+    dnslink: /ipns/onboarding.ipfs.cloudflare.com
+    name: gateway.example.com
+    target: ipfs
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

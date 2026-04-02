@@ -1,0 +1,13 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustAccessShortLivedCertificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccessshortlivedcertificate
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_short_lived_certificate
+  name: example-zero-trust-access-short-lived-certificate
+  namespace: crossplane-system
+spec:
+  forProvider:
+    appId: f174e90a-fafe-4643-bbbc-4a0ed4fc8415
+    zoneId: zone_id

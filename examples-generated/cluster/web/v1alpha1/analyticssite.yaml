@@ -1,0 +1,14 @@
+apiVersion: web.upjet-cloudflare.upbound.io/v1alpha1
+kind: AnalyticsSite
+metadata:
+  annotations:
+    meta.upbound.io/example-id: web/v1alpha1/analyticssite
+  labels:
+    testing.upbound.io/example-name: example_web_analytics_site
+  name: example-web-analytics-site
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    autoInstall: true
+    host: example.com
+    zoneTag: 023e105f4ecef8ad9ca31a8372d0c353

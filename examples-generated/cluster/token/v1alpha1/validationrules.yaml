@@ -1,0 +1,25 @@
+apiVersion: token.upjet-cloudflare.upbound.io/v1alpha1
+kind: ValidationRules
+metadata:
+  annotations:
+    meta.upbound.io/example-id: token/v1alpha1/validationrules
+  labels:
+    testing.upbound.io/example-name: example_token_validation_rules
+  name: example-token-validation-rules
+spec:
+  forProvider:
+    action: log
+    description: Long description for Token Validation Rule
+    enabled: true
+    expression: is_jwt_valid("52973293-cb04-4a97-8f55-e7d2ad1107dd") or is_jwt_valid("46eab8d1-6376-45e3-968f-2c649d77d423")
+    selector:
+      exclude:
+      - operationIds:
+        - f9c5615e-fe15-48ce-bec6-cfc1946f1bec
+        - 56828eae-035a-4396-ba07-51c66d680a04
+      include:
+      - host:
+        - v1.example.com
+        - v2.example.com
+    title: Example Token Validation Rule
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

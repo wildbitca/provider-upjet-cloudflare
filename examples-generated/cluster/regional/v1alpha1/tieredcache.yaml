@@ -1,0 +1,12 @@
+apiVersion: regional.upjet-cloudflare.upbound.io/v1alpha1
+kind: TieredCache
+metadata:
+  annotations:
+    meta.upbound.io/example-id: regional/v1alpha1/tieredcache
+  labels:
+    testing.upbound.io/example-name: example_regional_tiered_cache
+  name: example-regional-tiered-cache
+spec:
+  forProvider:
+    value: "on"
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

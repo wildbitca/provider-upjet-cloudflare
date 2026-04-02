@@ -1,0 +1,12 @@
+apiVersion: stream.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Key
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stream/v1alpha1/key
+  labels:
+    testing.upbound.io/example-name: example_stream_key
+  name: example-stream-key
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353

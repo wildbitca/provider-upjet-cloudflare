@@ -1,0 +1,15 @@
+apiVersion: stream.upjet-cloudflare.upbound.io/v1alpha1
+kind: AudioTrack
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stream/v1alpha1/audiotrack
+  labels:
+    testing.upbound.io/example-name: example_stream_audio_track
+  name: example-stream-audio-track
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    audioIdentifier: ea95132c15732412d22c1476fa83f27a
+    default: true
+    identifier: ea95132c15732412d22c1476fa83f27a
+    label: director commentary

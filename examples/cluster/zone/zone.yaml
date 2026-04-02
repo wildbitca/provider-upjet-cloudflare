@@ -1,0 +1,13 @@
+# Example Zone - create after running make generate
+# apiVersion will be zone.upjet-cloudflare.upbound.io/v1beta1
+apiVersion: zone.upjet-cloudflare.upbound.io/v1beta1
+kind: Zone
+metadata:
+  name: example-zone
+spec:
+  forProvider:
+    # name: example.com
+    # accountIdRef/or accountId required
+    type: full
+  providerConfigRef:
+    name: default

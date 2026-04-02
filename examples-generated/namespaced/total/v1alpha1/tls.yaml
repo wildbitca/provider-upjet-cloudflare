@@ -1,0 +1,14 @@
+apiVersion: total.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TLS
+metadata:
+  annotations:
+    meta.upbound.io/example-id: total/v1alpha1/tls
+  labels:
+    testing.upbound.io/example-name: example_total_tls
+  name: example-total-tls
+  namespace: crossplane-system
+spec:
+  forProvider:
+    certificateAuthority: google
+    enabled: true
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

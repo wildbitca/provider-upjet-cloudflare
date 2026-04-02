@@ -1,0 +1,17 @@
+apiVersion: web.upjet-cloudflare.upbound.io/v1alpha1
+kind: AnalyticsRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: web/v1alpha1/analyticsrule
+  labels:
+    testing.upbound.io/example-name: example_web_analytics_rule
+  name: example-web-analytics-rule
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    host: example.com
+    inclusive: true
+    isPaused: false
+    paths:
+    - '*'
+    rulesetId: f174e90a-fafe-4643-bbbc-4a0ed4fc8415

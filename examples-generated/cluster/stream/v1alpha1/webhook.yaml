@@ -1,0 +1,12 @@
+apiVersion: stream.upjet-cloudflare.upbound.io/v1alpha1
+kind: Webhook
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stream/v1alpha1/webhook
+  labels:
+    testing.upbound.io/example-name: example_stream_webhook
+  name: example-stream-webhook
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    notificationUrl: https://example.com

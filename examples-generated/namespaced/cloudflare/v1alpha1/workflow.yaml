@@ -1,0 +1,15 @@
+apiVersion: cloudflare.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Workflow
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudflare/v1alpha1/workflow
+  labels:
+    testing.upbound.io/example-name: example_workflow
+  name: example-workflow
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: account_id
+    className: x
+    scriptName: x
+    workflowName: x

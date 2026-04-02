@@ -1,0 +1,20 @@
+apiVersion: r2.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: BucketLock
+metadata:
+  annotations:
+    meta.upbound.io/example-id: r2/v1alpha1/bucketlock
+  labels:
+    testing.upbound.io/example-name: example_r2_bucket_lock
+  name: example-r2-bucket-lock
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    bucketName: example-bucket
+    rules:
+    - condition:
+        maxAgeSeconds: 100
+        type: Age
+      enabled: true
+      id: Lock all objects for 24 hours
+      prefix: prefix

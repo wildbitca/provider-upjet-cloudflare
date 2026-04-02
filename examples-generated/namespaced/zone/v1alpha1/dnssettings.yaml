@@ -1,0 +1,33 @@
+apiVersion: zone.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: DNSSettings
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zone/v1alpha1/dnssettings
+  labels:
+    testing.upbound.io/example-name: example_zone_dns_settings
+  name: example-zone-dns-settings
+  namespace: crossplane-system
+spec:
+  forProvider:
+    flattenAllCnames: false
+    foundationDns: false
+    internalDns:
+      referenceZoneId: reference_zone_id
+    multiProvider: false
+    nameservers:
+      nsSet: 1
+      type: cloudflare.standard
+    nsTtl: 86400
+    secondaryOverrides: false
+    soa:
+      expire: 604800
+      minTtl: 1800
+      mname: kristina.ns.cloudflare.com
+      refresh: 10000
+      retry: 2400
+      rname: admin.example.com
+      ttl: 3600
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    zoneMode: dns_only

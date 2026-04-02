@@ -1,0 +1,33 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustDNSLocation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustdnslocation
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_dns_location
+  name: example-zero-trust-dns-location
+spec:
+  forProvider:
+    accountId: 699d98642c564d2e855e9661899b7252
+    clientDefault: false
+    dnsDestinationIpsId: 0e4a32c6-6fb8-4858-9296-98f51631e8e6
+    ecsSupport: false
+    endpoints:
+      doh:
+        enabled: true
+        networks:
+        - network: 2001:85a3::/64
+        requireToken: true
+      dot:
+        enabled: true
+        networks:
+        - network: 2001:85a3::/64
+      ipv4:
+        enabled: true
+      ipv6:
+        enabled: true
+        networks:
+        - network: 2001:85a3::/64
+    name: Austin Office Location
+    networks:
+    - network: 192.0.2.1/32

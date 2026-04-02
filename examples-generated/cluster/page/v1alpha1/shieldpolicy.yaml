@@ -1,0 +1,16 @@
+apiVersion: page.upjet-cloudflare.upbound.io/v1alpha1
+kind: ShieldPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: page/v1alpha1/shieldpolicy
+  labels:
+    testing.upbound.io/example-name: example_page_shield_policy
+  name: example-page-shield-policy
+spec:
+  forProvider:
+    action: allow
+    description: Checkout page CSP policy
+    enabled: true
+    expression: ends_with(http.request.uri.path, "/checkout")
+    value: script-src 'none';
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

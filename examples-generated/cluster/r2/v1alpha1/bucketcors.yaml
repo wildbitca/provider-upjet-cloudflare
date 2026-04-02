@@ -1,0 +1,26 @@
+apiVersion: r2.upjet-cloudflare.upbound.io/v1alpha1
+kind: BucketCors
+metadata:
+  annotations:
+    meta.upbound.io/example-id: r2/v1alpha1/bucketcors
+  labels:
+    testing.upbound.io/example-name: example_r2_bucket_cors
+  name: example-r2-bucket-cors
+spec:
+  forProvider:
+    accountIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    bucketName: example-bucket
+    rules:
+    - allowed:
+        headers:
+        - x-requested-by
+        methods:
+        - GET
+        origins:
+        - http://localhost:3000
+      exposeHeaders:
+      - Content-Encoding
+      id: Allow Local Development
+      maxAgeSeconds: 3600

@@ -1,0 +1,12 @@
+apiVersion: stream.upjet-cloudflare.upbound.io/v1alpha1
+kind: Download
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stream/v1alpha1/download
+  labels:
+    testing.upbound.io/example-name: example_stream_download
+  name: example-stream-download
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    identifier: ea95132c15732412d22c1476fa83f27a

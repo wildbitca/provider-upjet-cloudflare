@@ -1,0 +1,17 @@
+apiVersion: account.upjet-cloudflare.upbound.io/v1alpha1
+kind: Member
+metadata:
+  annotations:
+    meta.upbound.io/example-id: account/v1alpha1/member
+  labels:
+    testing.upbound.io/example-name: example_account_member
+  name: example-account-member
+spec:
+  forProvider:
+    accountIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    email: user@example.com
+    roles:
+    - 3536bcfad5faccb999b47003c79917fb
+    status: accepted

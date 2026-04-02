@@ -1,0 +1,15 @@
+apiVersion: api.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Shield
+metadata:
+  annotations:
+    meta.upbound.io/example-id: api/v1alpha1/shield
+  labels:
+    testing.upbound.io/example-name: header_example
+  name: header-example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    authIdCharacteristics:
+    - name: authorization
+      type: header
+    zoneId: 0da42c8d2132a9ddaf714f9e7c920711

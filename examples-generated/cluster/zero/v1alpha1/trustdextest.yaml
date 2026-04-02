@@ -1,0 +1,21 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustDexTest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustdextest
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_dex_test
+  name: example-zero-trust-dex-test
+spec:
+  forProvider:
+    accountId: 01a7362d577a6c3019a474fd6f485823
+    data:
+      host: https://dash.cloudflare.com
+      kind: http
+      method: GET
+    description: Checks the dash endpoint every 30 minutes
+    enabled: true
+    interval: 30m
+    name: HTTP dash health check
+    targetPolicies:
+    - id: f174e90a-fafe-4643-bbbc-4a0ed4fc8415

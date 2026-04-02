@@ -1,0 +1,3123 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: trustaccesspolicies.zero.upjet-cloudflare.m.upbound.io
+spec:
+  group: zero.upjet-cloudflare.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: TrustAccessPolicy
+    listKind: TrustAccessPolicyList
+    plural: trustaccesspolicies
+    singular: trustaccesspolicy
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: TrustAccessPolicy is the Schema for the TrustAccessPolicys API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: TrustAccessPolicySpec defines the desired state of TrustAccessPolicy
+            properties:
+              forProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  accountIdRef:
+                    description: Reference to a Account in account to populate accountId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  accountIdSelector:
+                    description: Selector for a Account in account to populate accountId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  approvalGroups:
+                    description: (Attributes Set) Administrators who can approve a
+                      temporary authentication request. (see below for nested schema)
+                    items:
+                      properties:
+                        approvalsNeeded:
+                          description: |-
+                            (Number) The number of approvals needed to obtain access.
+                            The number of approvals needed to obtain access.
+                          type: number
+                        emailAddresses:
+                          description: |-
+                            (List of String) A list of emails that can approve the access request.
+                            A list of emails that can approve the access request.
+                          items:
+                            type: string
+                          type: array
+                        emailListUuid:
+                          description: |-
+                            usable email list.
+                            The UUID of an re-usable email list.
+                          type: string
+                      type: object
+                    type: array
+                  approvalRequired:
+                    description: |-
+                      (Boolean) Requires the user to request access from an administrator at the start of each session.
+                      Requires the user to request access from an administrator at the start of each session.
+                    type: boolean
+                  connectionRules:
+                    description: (Attributes) The rules that define how users may
+                      connect to targets secured by your application. (see below for
+                      nested schema)
+                    properties:
+                      rdp:
+                        description: specific rules that define clipboard behavior
+                          for RDP connections. (see below for nested schema)
+                        properties:
+                          allowedClipboardLocalToRemoteFormats:
+                            description: |-
+                              (List of String) Clipboard formats allowed when copying from local machine to remote RDP session.
+                              Clipboard formats allowed when copying from local machine to remote RDP session.
+                            items:
+                              type: string
+                            type: array
+                          allowedClipboardRemoteToLocalFormats:
+                            description: |-
+                              (List of String) Clipboard formats allowed when copying from remote RDP session to local machine.
+                              Clipboard formats allowed when copying from remote RDP session to local machine.
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                    type: object
+                  decision:
+                    description: |-
+                      (String) The action Access will take if a user matches this policy. Infrastructure application policies can only use the Allow action.
+                      Available values: "allow", "deny", "non_identity", "bypass".
+                      The action Access will take if a user matches this policy. Infrastructure application policies can only use the Allow action.
+                      Available values: "allow", "deny", "non_identity", "bypass".
+                    type: string
+                  exclude:
+                    description: (Attributes Set) Rules evaluated with a NOT logical
+                      operator. To match the policy, a user cannot meet any of the
+                      Exclude rules. (see below for nested schema)
+                    items:
+                      properties:
+                        anyValidServiceToken:
+                          description: (Attributes) An empty object which matches
+                            on all service tokens. (see below for nested schema)
+                          type: object
+                        authContext:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            acId:
+                              description: |-
+                                (String) The ACID of an Authentication context.
+                                The ACID of an Authentication context.
+                              type: string
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Authentication context.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        authMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            authMethod:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The type of authentication method https://datatracker.ietf.org/doc/html/rfc8176#section-2.
+                              type: string
+                          type: object
+                        azureAd:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Azure group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        certificate:
+                          description: (Attributes) (see below for nested schema)
+                          type: object
+                        commonName:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            commonName:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The common name to match.
+                              type: string
+                          type: object
+                        devicePosture:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            integrationUid:
+                              description: |-
+                                (String) The ID of a device posture integration.
+                                The ID of a device posture integration.
+                              type: string
+                          type: object
+                        email:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the user.
+                              type: string
+                          type: object
+                        emailDomain:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            domain:
+                              description: |-
+                                (String) The email domain to match.
+                                The email domain to match.
+                              type: string
+                          type: object
+                        emailList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created email list.
+                              type: string
+                          type: object
+                        everyone:
+                          description: (Attributes) An empty object which matches
+                            on all users. (see below for nested schema)
+                          type: object
+                        externalEvaluation:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            evaluateUrl:
+                              description: |-
+                                (String) The API endpoint containing your business logic.
+                                The API endpoint containing your business logic.
+                              type: string
+                            keysUrl:
+                              description: |-
+                                (String) The API endpoint containing the key that Access uses to verify that the response came from your API.
+                                The API endpoint containing the key that Access uses to verify that the response came from your API.
+                              type: string
+                          type: object
+                        geo:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            countryCode:
+                              description: |-
+                                (String) The country code that should be matched.
+                                The country code that should be matched.
+                              type: string
+                          type: object
+                        githubOrganization:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Github identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the organization.
+                              type: string
+                            team:
+                              description: |-
+                                (String) The name of the team
+                                The name of the team
+                              type: string
+                          type: object
+                        group:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created Access group.
+                              type: string
+                          type: object
+                        gsuite:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the Google Workspace group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Google Workspace identity provider.
+                              type: string
+                          type: object
+                        ip:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            ip:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                An IPv4 or IPv6 CIDR block.
+                              type: string
+                          type: object
+                        ipList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created IP list.
+                              type: string
+                          type: object
+                        linkedAppToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            appUid:
+                              description: |-
+                                (String) The ID of an Access OIDC SaaS application
+                                The ID of an Access OIDC SaaS application
+                              type: string
+                          type: object
+                        loginMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an identity provider.
+                              type: string
+                          type: object
+                        oidc:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            claimName:
+                              description: |-
+                                (String) The name of the OIDC claim.
+                                The name of the OIDC claim.
+                              type: string
+                            claimValue:
+                              description: |-
+                                (String) The OIDC claim value to look for.
+                                The OIDC claim value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your OIDC identity provider.
+                              type: string
+                          type: object
+                        okta:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Okta identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the Okta group.
+                              type: string
+                          type: object
+                        saml:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            attributeName:
+                              description: |-
+                                (String) The name of the SAML attribute.
+                                The name of the SAML attribute.
+                              type: string
+                            attributeValue:
+                              description: |-
+                                (String) The SAML attribute value to look for.
+                                The SAML attribute value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your SAML identity provider.
+                              type: string
+                          type: object
+                        serviceToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            tokenId:
+                              description: |-
+                                (String) The ID of a Service Token.
+                                The ID of a Service Token.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                  include:
+                    description: (Attributes Set) Rules evaluated with an OR logical
+                      operator. A user needs to meet only one of the Include rules.
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        anyValidServiceToken:
+                          description: (Attributes) An empty object which matches
+                            on all service tokens. (see below for nested schema)
+                          type: object
+                        authContext:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            acId:
+                              description: |-
+                                (String) The ACID of an Authentication context.
+                                The ACID of an Authentication context.
+                              type: string
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Authentication context.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        authMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            authMethod:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The type of authentication method https://datatracker.ietf.org/doc/html/rfc8176#section-2.
+                              type: string
+                          type: object
+                        azureAd:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Azure group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        certificate:
+                          description: (Attributes) (see below for nested schema)
+                          type: object
+                        commonName:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            commonName:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The common name to match.
+                              type: string
+                          type: object
+                        devicePosture:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            integrationUid:
+                              description: |-
+                                (String) The ID of a device posture integration.
+                                The ID of a device posture integration.
+                              type: string
+                          type: object
+                        email:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the user.
+                              type: string
+                          type: object
+                        emailDomain:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            domain:
+                              description: |-
+                                (String) The email domain to match.
+                                The email domain to match.
+                              type: string
+                          type: object
+                        emailList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created email list.
+                              type: string
+                          type: object
+                        everyone:
+                          description: (Attributes) An empty object which matches
+                            on all users. (see below for nested schema)
+                          type: object
+                        externalEvaluation:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            evaluateUrl:
+                              description: |-
+                                (String) The API endpoint containing your business logic.
+                                The API endpoint containing your business logic.
+                              type: string
+                            keysUrl:
+                              description: |-
+                                (String) The API endpoint containing the key that Access uses to verify that the response came from your API.
+                                The API endpoint containing the key that Access uses to verify that the response came from your API.
+                              type: string
+                          type: object
+                        geo:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            countryCode:
+                              description: |-
+                                (String) The country code that should be matched.
+                                The country code that should be matched.
+                              type: string
+                          type: object
+                        githubOrganization:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Github identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the organization.
+                              type: string
+                            team:
+                              description: |-
+                                (String) The name of the team
+                                The name of the team
+                              type: string
+                          type: object
+                        group:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created Access group.
+                              type: string
+                          type: object
+                        gsuite:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the Google Workspace group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Google Workspace identity provider.
+                              type: string
+                          type: object
+                        ip:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            ip:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                An IPv4 or IPv6 CIDR block.
+                              type: string
+                          type: object
+                        ipList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created IP list.
+                              type: string
+                          type: object
+                        linkedAppToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            appUid:
+                              description: |-
+                                (String) The ID of an Access OIDC SaaS application
+                                The ID of an Access OIDC SaaS application
+                              type: string
+                          type: object
+                        loginMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an identity provider.
+                              type: string
+                          type: object
+                        oidc:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            claimName:
+                              description: |-
+                                (String) The name of the OIDC claim.
+                                The name of the OIDC claim.
+                              type: string
+                            claimValue:
+                              description: |-
+                                (String) The OIDC claim value to look for.
+                                The OIDC claim value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your OIDC identity provider.
+                              type: string
+                          type: object
+                        okta:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Okta identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the Okta group.
+                              type: string
+                          type: object
+                        saml:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            attributeName:
+                              description: |-
+                                (String) The name of the SAML attribute.
+                                The name of the SAML attribute.
+                              type: string
+                            attributeValue:
+                              description: |-
+                                (String) The SAML attribute value to look for.
+                                The SAML attribute value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your SAML identity provider.
+                              type: string
+                          type: object
+                        serviceToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            tokenId:
+                              description: |-
+                                (String) The ID of a Service Token.
+                                The ID of a Service Token.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                  isolationRequired:
+                    description: |-
+                      (Boolean) Require this application to be served in an isolated browser for users matching this policy. 'Client Web Isolation' must be on for the account in order to use this feature.
+                      Require this application to be served in an isolated browser for users matching this policy. 'Client Web Isolation' must be on for the account in order to use this feature.
+                    type: boolean
+                  mfaConfig:
+                    description: factor authentication (MFA) settings. (see below
+                      for nested schema)
+                    properties:
+                      allowedAuthenticators:
+                        description: |-
+                          (List of String) Lists the MFA methods that users can authenticate with.
+                          Lists the MFA methods that users can authenticate with.
+                        items:
+                          type: string
+                        type: array
+                      mfaBypass:
+                        description: |-
+                          (Boolean) Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
+                          Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
+                        type: boolean
+                      sessionDuration:
+                        description: |-
+                          (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                          Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
+                        type: string
+                    type: object
+                  name:
+                    description: |-
+                      (String) The name of the Access policy.
+                      The name of the Access policy.
+                    type: string
+                  purposeJustificationPrompt:
+                    description: |-
+                      (String) A custom message that will appear on the purpose justification screen.
+                      A custom message that will appear on the purpose justification screen.
+                    type: string
+                  purposeJustificationRequired:
+                    description: |-
+                      (Boolean) Require users to enter a justification when they log in to the application.
+                      Require users to enter a justification when they log in to the application.
+                    type: boolean
+                  require:
+                    description: (Attributes Set) Rules evaluated with an AND logical
+                      operator. To match the policy, a user must meet all of the Require
+                      rules. (see below for nested schema)
+                    items:
+                      properties:
+                        anyValidServiceToken:
+                          description: (Attributes) An empty object which matches
+                            on all service tokens. (see below for nested schema)
+                          type: object
+                        authContext:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            acId:
+                              description: |-
+                                (String) The ACID of an Authentication context.
+                                The ACID of an Authentication context.
+                              type: string
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Authentication context.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        authMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            authMethod:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The type of authentication method https://datatracker.ietf.org/doc/html/rfc8176#section-2.
+                              type: string
+                          type: object
+                        azureAd:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Azure group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        certificate:
+                          description: (Attributes) (see below for nested schema)
+                          type: object
+                        commonName:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            commonName:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The common name to match.
+                              type: string
+                          type: object
+                        devicePosture:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            integrationUid:
+                              description: |-
+                                (String) The ID of a device posture integration.
+                                The ID of a device posture integration.
+                              type: string
+                          type: object
+                        email:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the user.
+                              type: string
+                          type: object
+                        emailDomain:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            domain:
+                              description: |-
+                                (String) The email domain to match.
+                                The email domain to match.
+                              type: string
+                          type: object
+                        emailList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created email list.
+                              type: string
+                          type: object
+                        everyone:
+                          description: (Attributes) An empty object which matches
+                            on all users. (see below for nested schema)
+                          type: object
+                        externalEvaluation:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            evaluateUrl:
+                              description: |-
+                                (String) The API endpoint containing your business logic.
+                                The API endpoint containing your business logic.
+                              type: string
+                            keysUrl:
+                              description: |-
+                                (String) The API endpoint containing the key that Access uses to verify that the response came from your API.
+                                The API endpoint containing the key that Access uses to verify that the response came from your API.
+                              type: string
+                          type: object
+                        geo:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            countryCode:
+                              description: |-
+                                (String) The country code that should be matched.
+                                The country code that should be matched.
+                              type: string
+                          type: object
+                        githubOrganization:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Github identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the organization.
+                              type: string
+                            team:
+                              description: |-
+                                (String) The name of the team
+                                The name of the team
+                              type: string
+                          type: object
+                        group:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created Access group.
+                              type: string
+                          type: object
+                        gsuite:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the Google Workspace group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Google Workspace identity provider.
+                              type: string
+                          type: object
+                        ip:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            ip:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                An IPv4 or IPv6 CIDR block.
+                              type: string
+                          type: object
+                        ipList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created IP list.
+                              type: string
+                          type: object
+                        linkedAppToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            appUid:
+                              description: |-
+                                (String) The ID of an Access OIDC SaaS application
+                                The ID of an Access OIDC SaaS application
+                              type: string
+                          type: object
+                        loginMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an identity provider.
+                              type: string
+                          type: object
+                        oidc:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            claimName:
+                              description: |-
+                                (String) The name of the OIDC claim.
+                                The name of the OIDC claim.
+                              type: string
+                            claimValue:
+                              description: |-
+                                (String) The OIDC claim value to look for.
+                                The OIDC claim value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your OIDC identity provider.
+                              type: string
+                          type: object
+                        okta:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Okta identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the Okta group.
+                              type: string
+                          type: object
+                        saml:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            attributeName:
+                              description: |-
+                                (String) The name of the SAML attribute.
+                                The name of the SAML attribute.
+                              type: string
+                            attributeValue:
+                              description: |-
+                                (String) The SAML attribute value to look for.
+                                The SAML attribute value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your SAML identity provider.
+                              type: string
+                          type: object
+                        serviceToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            tokenId:
+                              description: |-
+                                (String) The ID of a Service Token.
+                                The ID of a Service Token.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                  sessionDuration:
+                    description: |-
+                      (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                      The amount of time that tokens issued for the application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  accountIdRef:
+                    description: Reference to a Account in account to populate accountId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  accountIdSelector:
+                    description: Selector for a Account in account to populate accountId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  approvalGroups:
+                    description: (Attributes Set) Administrators who can approve a
+                      temporary authentication request. (see below for nested schema)
+                    items:
+                      properties:
+                        approvalsNeeded:
+                          description: |-
+                            (Number) The number of approvals needed to obtain access.
+                            The number of approvals needed to obtain access.
+                          type: number
+                        emailAddresses:
+                          description: |-
+                            (List of String) A list of emails that can approve the access request.
+                            A list of emails that can approve the access request.
+                          items:
+                            type: string
+                          type: array
+                        emailListUuid:
+                          description: |-
+                            usable email list.
+                            The UUID of an re-usable email list.
+                          type: string
+                      type: object
+                    type: array
+                  approvalRequired:
+                    description: |-
+                      (Boolean) Requires the user to request access from an administrator at the start of each session.
+                      Requires the user to request access from an administrator at the start of each session.
+                    type: boolean
+                  connectionRules:
+                    description: (Attributes) The rules that define how users may
+                      connect to targets secured by your application. (see below for
+                      nested schema)
+                    properties:
+                      rdp:
+                        description: specific rules that define clipboard behavior
+                          for RDP connections. (see below for nested schema)
+                        properties:
+                          allowedClipboardLocalToRemoteFormats:
+                            description: |-
+                              (List of String) Clipboard formats allowed when copying from local machine to remote RDP session.
+                              Clipboard formats allowed when copying from local machine to remote RDP session.
+                            items:
+                              type: string
+                            type: array
+                          allowedClipboardRemoteToLocalFormats:
+                            description: |-
+                              (List of String) Clipboard formats allowed when copying from remote RDP session to local machine.
+                              Clipboard formats allowed when copying from remote RDP session to local machine.
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                    type: object
+                  decision:
+                    description: |-
+                      (String) The action Access will take if a user matches this policy. Infrastructure application policies can only use the Allow action.
+                      Available values: "allow", "deny", "non_identity", "bypass".
+                      The action Access will take if a user matches this policy. Infrastructure application policies can only use the Allow action.
+                      Available values: "allow", "deny", "non_identity", "bypass".
+                    type: string
+                  exclude:
+                    description: (Attributes Set) Rules evaluated with a NOT logical
+                      operator. To match the policy, a user cannot meet any of the
+                      Exclude rules. (see below for nested schema)
+                    items:
+                      properties:
+                        anyValidServiceToken:
+                          description: (Attributes) An empty object which matches
+                            on all service tokens. (see below for nested schema)
+                          type: object
+                        authContext:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            acId:
+                              description: |-
+                                (String) The ACID of an Authentication context.
+                                The ACID of an Authentication context.
+                              type: string
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Authentication context.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        authMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            authMethod:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The type of authentication method https://datatracker.ietf.org/doc/html/rfc8176#section-2.
+                              type: string
+                          type: object
+                        azureAd:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Azure group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        certificate:
+                          description: (Attributes) (see below for nested schema)
+                          type: object
+                        commonName:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            commonName:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The common name to match.
+                              type: string
+                          type: object
+                        devicePosture:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            integrationUid:
+                              description: |-
+                                (String) The ID of a device posture integration.
+                                The ID of a device posture integration.
+                              type: string
+                          type: object
+                        email:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the user.
+                              type: string
+                          type: object
+                        emailDomain:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            domain:
+                              description: |-
+                                (String) The email domain to match.
+                                The email domain to match.
+                              type: string
+                          type: object
+                        emailList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created email list.
+                              type: string
+                          type: object
+                        everyone:
+                          description: (Attributes) An empty object which matches
+                            on all users. (see below for nested schema)
+                          type: object
+                        externalEvaluation:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            evaluateUrl:
+                              description: |-
+                                (String) The API endpoint containing your business logic.
+                                The API endpoint containing your business logic.
+                              type: string
+                            keysUrl:
+                              description: |-
+                                (String) The API endpoint containing the key that Access uses to verify that the response came from your API.
+                                The API endpoint containing the key that Access uses to verify that the response came from your API.
+                              type: string
+                          type: object
+                        geo:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            countryCode:
+                              description: |-
+                                (String) The country code that should be matched.
+                                The country code that should be matched.
+                              type: string
+                          type: object
+                        githubOrganization:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Github identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the organization.
+                              type: string
+                            team:
+                              description: |-
+                                (String) The name of the team
+                                The name of the team
+                              type: string
+                          type: object
+                        group:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created Access group.
+                              type: string
+                          type: object
+                        gsuite:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the Google Workspace group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Google Workspace identity provider.
+                              type: string
+                          type: object
+                        ip:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            ip:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                An IPv4 or IPv6 CIDR block.
+                              type: string
+                          type: object
+                        ipList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created IP list.
+                              type: string
+                          type: object
+                        linkedAppToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            appUid:
+                              description: |-
+                                (String) The ID of an Access OIDC SaaS application
+                                The ID of an Access OIDC SaaS application
+                              type: string
+                          type: object
+                        loginMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an identity provider.
+                              type: string
+                          type: object
+                        oidc:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            claimName:
+                              description: |-
+                                (String) The name of the OIDC claim.
+                                The name of the OIDC claim.
+                              type: string
+                            claimValue:
+                              description: |-
+                                (String) The OIDC claim value to look for.
+                                The OIDC claim value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your OIDC identity provider.
+                              type: string
+                          type: object
+                        okta:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Okta identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the Okta group.
+                              type: string
+                          type: object
+                        saml:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            attributeName:
+                              description: |-
+                                (String) The name of the SAML attribute.
+                                The name of the SAML attribute.
+                              type: string
+                            attributeValue:
+                              description: |-
+                                (String) The SAML attribute value to look for.
+                                The SAML attribute value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your SAML identity provider.
+                              type: string
+                          type: object
+                        serviceToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            tokenId:
+                              description: |-
+                                (String) The ID of a Service Token.
+                                The ID of a Service Token.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                  include:
+                    description: (Attributes Set) Rules evaluated with an OR logical
+                      operator. A user needs to meet only one of the Include rules.
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        anyValidServiceToken:
+                          description: (Attributes) An empty object which matches
+                            on all service tokens. (see below for nested schema)
+                          type: object
+                        authContext:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            acId:
+                              description: |-
+                                (String) The ACID of an Authentication context.
+                                The ACID of an Authentication context.
+                              type: string
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Authentication context.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        authMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            authMethod:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The type of authentication method https://datatracker.ietf.org/doc/html/rfc8176#section-2.
+                              type: string
+                          type: object
+                        azureAd:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Azure group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        certificate:
+                          description: (Attributes) (see below for nested schema)
+                          type: object
+                        commonName:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            commonName:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The common name to match.
+                              type: string
+                          type: object
+                        devicePosture:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            integrationUid:
+                              description: |-
+                                (String) The ID of a device posture integration.
+                                The ID of a device posture integration.
+                              type: string
+                          type: object
+                        email:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the user.
+                              type: string
+                          type: object
+                        emailDomain:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            domain:
+                              description: |-
+                                (String) The email domain to match.
+                                The email domain to match.
+                              type: string
+                          type: object
+                        emailList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created email list.
+                              type: string
+                          type: object
+                        everyone:
+                          description: (Attributes) An empty object which matches
+                            on all users. (see below for nested schema)
+                          type: object
+                        externalEvaluation:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            evaluateUrl:
+                              description: |-
+                                (String) The API endpoint containing your business logic.
+                                The API endpoint containing your business logic.
+                              type: string
+                            keysUrl:
+                              description: |-
+                                (String) The API endpoint containing the key that Access uses to verify that the response came from your API.
+                                The API endpoint containing the key that Access uses to verify that the response came from your API.
+                              type: string
+                          type: object
+                        geo:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            countryCode:
+                              description: |-
+                                (String) The country code that should be matched.
+                                The country code that should be matched.
+                              type: string
+                          type: object
+                        githubOrganization:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Github identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the organization.
+                              type: string
+                            team:
+                              description: |-
+                                (String) The name of the team
+                                The name of the team
+                              type: string
+                          type: object
+                        group:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created Access group.
+                              type: string
+                          type: object
+                        gsuite:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the Google Workspace group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Google Workspace identity provider.
+                              type: string
+                          type: object
+                        ip:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            ip:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                An IPv4 or IPv6 CIDR block.
+                              type: string
+                          type: object
+                        ipList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created IP list.
+                              type: string
+                          type: object
+                        linkedAppToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            appUid:
+                              description: |-
+                                (String) The ID of an Access OIDC SaaS application
+                                The ID of an Access OIDC SaaS application
+                              type: string
+                          type: object
+                        loginMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an identity provider.
+                              type: string
+                          type: object
+                        oidc:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            claimName:
+                              description: |-
+                                (String) The name of the OIDC claim.
+                                The name of the OIDC claim.
+                              type: string
+                            claimValue:
+                              description: |-
+                                (String) The OIDC claim value to look for.
+                                The OIDC claim value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your OIDC identity provider.
+                              type: string
+                          type: object
+                        okta:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Okta identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the Okta group.
+                              type: string
+                          type: object
+                        saml:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            attributeName:
+                              description: |-
+                                (String) The name of the SAML attribute.
+                                The name of the SAML attribute.
+                              type: string
+                            attributeValue:
+                              description: |-
+                                (String) The SAML attribute value to look for.
+                                The SAML attribute value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your SAML identity provider.
+                              type: string
+                          type: object
+                        serviceToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            tokenId:
+                              description: |-
+                                (String) The ID of a Service Token.
+                                The ID of a Service Token.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                  isolationRequired:
+                    description: |-
+                      (Boolean) Require this application to be served in an isolated browser for users matching this policy. 'Client Web Isolation' must be on for the account in order to use this feature.
+                      Require this application to be served in an isolated browser for users matching this policy. 'Client Web Isolation' must be on for the account in order to use this feature.
+                    type: boolean
+                  mfaConfig:
+                    description: factor authentication (MFA) settings. (see below
+                      for nested schema)
+                    properties:
+                      allowedAuthenticators:
+                        description: |-
+                          (List of String) Lists the MFA methods that users can authenticate with.
+                          Lists the MFA methods that users can authenticate with.
+                        items:
+                          type: string
+                        type: array
+                      mfaBypass:
+                        description: |-
+                          (Boolean) Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
+                          Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
+                        type: boolean
+                      sessionDuration:
+                        description: |-
+                          (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                          Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
+                        type: string
+                    type: object
+                  name:
+                    description: |-
+                      (String) The name of the Access policy.
+                      The name of the Access policy.
+                    type: string
+                  purposeJustificationPrompt:
+                    description: |-
+                      (String) A custom message that will appear on the purpose justification screen.
+                      A custom message that will appear on the purpose justification screen.
+                    type: string
+                  purposeJustificationRequired:
+                    description: |-
+                      (Boolean) Require users to enter a justification when they log in to the application.
+                      Require users to enter a justification when they log in to the application.
+                    type: boolean
+                  require:
+                    description: (Attributes Set) Rules evaluated with an AND logical
+                      operator. To match the policy, a user must meet all of the Require
+                      rules. (see below for nested schema)
+                    items:
+                      properties:
+                        anyValidServiceToken:
+                          description: (Attributes) An empty object which matches
+                            on all service tokens. (see below for nested schema)
+                          type: object
+                        authContext:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            acId:
+                              description: |-
+                                (String) The ACID of an Authentication context.
+                                The ACID of an Authentication context.
+                              type: string
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Authentication context.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        authMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            authMethod:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The type of authentication method https://datatracker.ietf.org/doc/html/rfc8176#section-2.
+                              type: string
+                          type: object
+                        azureAd:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Azure group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        certificate:
+                          description: (Attributes) (see below for nested schema)
+                          type: object
+                        commonName:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            commonName:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The common name to match.
+                              type: string
+                          type: object
+                        devicePosture:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            integrationUid:
+                              description: |-
+                                (String) The ID of a device posture integration.
+                                The ID of a device posture integration.
+                              type: string
+                          type: object
+                        email:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the user.
+                              type: string
+                          type: object
+                        emailDomain:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            domain:
+                              description: |-
+                                (String) The email domain to match.
+                                The email domain to match.
+                              type: string
+                          type: object
+                        emailList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created email list.
+                              type: string
+                          type: object
+                        everyone:
+                          description: (Attributes) An empty object which matches
+                            on all users. (see below for nested schema)
+                          type: object
+                        externalEvaluation:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            evaluateUrl:
+                              description: |-
+                                (String) The API endpoint containing your business logic.
+                                The API endpoint containing your business logic.
+                              type: string
+                            keysUrl:
+                              description: |-
+                                (String) The API endpoint containing the key that Access uses to verify that the response came from your API.
+                                The API endpoint containing the key that Access uses to verify that the response came from your API.
+                              type: string
+                          type: object
+                        geo:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            countryCode:
+                              description: |-
+                                (String) The country code that should be matched.
+                                The country code that should be matched.
+                              type: string
+                          type: object
+                        githubOrganization:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Github identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the organization.
+                              type: string
+                            team:
+                              description: |-
+                                (String) The name of the team
+                                The name of the team
+                              type: string
+                          type: object
+                        group:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created Access group.
+                              type: string
+                          type: object
+                        gsuite:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the Google Workspace group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Google Workspace identity provider.
+                              type: string
+                          type: object
+                        ip:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            ip:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                An IPv4 or IPv6 CIDR block.
+                              type: string
+                          type: object
+                        ipList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created IP list.
+                              type: string
+                          type: object
+                        linkedAppToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            appUid:
+                              description: |-
+                                (String) The ID of an Access OIDC SaaS application
+                                The ID of an Access OIDC SaaS application
+                              type: string
+                          type: object
+                        loginMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an identity provider.
+                              type: string
+                          type: object
+                        oidc:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            claimName:
+                              description: |-
+                                (String) The name of the OIDC claim.
+                                The name of the OIDC claim.
+                              type: string
+                            claimValue:
+                              description: |-
+                                (String) The OIDC claim value to look for.
+                                The OIDC claim value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your OIDC identity provider.
+                              type: string
+                          type: object
+                        okta:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Okta identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the Okta group.
+                              type: string
+                          type: object
+                        saml:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            attributeName:
+                              description: |-
+                                (String) The name of the SAML attribute.
+                                The name of the SAML attribute.
+                              type: string
+                            attributeValue:
+                              description: |-
+                                (String) The SAML attribute value to look for.
+                                The SAML attribute value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your SAML identity provider.
+                              type: string
+                          type: object
+                        serviceToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            tokenId:
+                              description: |-
+                                (String) The ID of a Service Token.
+                                The ID of a Service Token.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                  sessionDuration:
+                    description: |-
+                      (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                      The amount of time that tokens issued for the application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.decision is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.decision)
+                || (has(self.initProvider) && has(self.initProvider.decision))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: TrustAccessPolicyStatus defines the observed state of TrustAccessPolicy.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  approvalGroups:
+                    description: (Attributes Set) Administrators who can approve a
+                      temporary authentication request. (see below for nested schema)
+                    items:
+                      properties:
+                        approvalsNeeded:
+                          description: |-
+                            (Number) The number of approvals needed to obtain access.
+                            The number of approvals needed to obtain access.
+                          type: number
+                        emailAddresses:
+                          description: |-
+                            (List of String) A list of emails that can approve the access request.
+                            A list of emails that can approve the access request.
+                          items:
+                            type: string
+                          type: array
+                        emailListUuid:
+                          description: |-
+                            usable email list.
+                            The UUID of an re-usable email list.
+                          type: string
+                      type: object
+                    type: array
+                  approvalRequired:
+                    description: |-
+                      (Boolean) Requires the user to request access from an administrator at the start of each session.
+                      Requires the user to request access from an administrator at the start of each session.
+                    type: boolean
+                  connectionRules:
+                    description: (Attributes) The rules that define how users may
+                      connect to targets secured by your application. (see below for
+                      nested schema)
+                    properties:
+                      rdp:
+                        description: specific rules that define clipboard behavior
+                          for RDP connections. (see below for nested schema)
+                        properties:
+                          allowedClipboardLocalToRemoteFormats:
+                            description: |-
+                              (List of String) Clipboard formats allowed when copying from local machine to remote RDP session.
+                              Clipboard formats allowed when copying from local machine to remote RDP session.
+                            items:
+                              type: string
+                            type: array
+                          allowedClipboardRemoteToLocalFormats:
+                            description: |-
+                              (List of String) Clipboard formats allowed when copying from remote RDP session to local machine.
+                              Clipboard formats allowed when copying from remote RDP session to local machine.
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                    type: object
+                  decision:
+                    description: |-
+                      (String) The action Access will take if a user matches this policy. Infrastructure application policies can only use the Allow action.
+                      Available values: "allow", "deny", "non_identity", "bypass".
+                      The action Access will take if a user matches this policy. Infrastructure application policies can only use the Allow action.
+                      Available values: "allow", "deny", "non_identity", "bypass".
+                    type: string
+                  exclude:
+                    description: (Attributes Set) Rules evaluated with a NOT logical
+                      operator. To match the policy, a user cannot meet any of the
+                      Exclude rules. (see below for nested schema)
+                    items:
+                      properties:
+                        anyValidServiceToken:
+                          description: (Attributes) An empty object which matches
+                            on all service tokens. (see below for nested schema)
+                          type: object
+                        authContext:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            acId:
+                              description: |-
+                                (String) The ACID of an Authentication context.
+                                The ACID of an Authentication context.
+                              type: string
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Authentication context.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        authMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            authMethod:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The type of authentication method https://datatracker.ietf.org/doc/html/rfc8176#section-2.
+                              type: string
+                          type: object
+                        azureAd:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Azure group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        certificate:
+                          description: (Attributes) (see below for nested schema)
+                          type: object
+                        commonName:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            commonName:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The common name to match.
+                              type: string
+                          type: object
+                        devicePosture:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            integrationUid:
+                              description: |-
+                                (String) The ID of a device posture integration.
+                                The ID of a device posture integration.
+                              type: string
+                          type: object
+                        email:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the user.
+                              type: string
+                          type: object
+                        emailDomain:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            domain:
+                              description: |-
+                                (String) The email domain to match.
+                                The email domain to match.
+                              type: string
+                          type: object
+                        emailList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created email list.
+                              type: string
+                          type: object
+                        everyone:
+                          description: (Attributes) An empty object which matches
+                            on all users. (see below for nested schema)
+                          type: object
+                        externalEvaluation:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            evaluateUrl:
+                              description: |-
+                                (String) The API endpoint containing your business logic.
+                                The API endpoint containing your business logic.
+                              type: string
+                            keysUrl:
+                              description: |-
+                                (String) The API endpoint containing the key that Access uses to verify that the response came from your API.
+                                The API endpoint containing the key that Access uses to verify that the response came from your API.
+                              type: string
+                          type: object
+                        geo:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            countryCode:
+                              description: |-
+                                (String) The country code that should be matched.
+                                The country code that should be matched.
+                              type: string
+                          type: object
+                        githubOrganization:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Github identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the organization.
+                              type: string
+                            team:
+                              description: |-
+                                (String) The name of the team
+                                The name of the team
+                              type: string
+                          type: object
+                        group:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created Access group.
+                              type: string
+                          type: object
+                        gsuite:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the Google Workspace group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Google Workspace identity provider.
+                              type: string
+                          type: object
+                        ip:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            ip:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                An IPv4 or IPv6 CIDR block.
+                              type: string
+                          type: object
+                        ipList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created IP list.
+                              type: string
+                          type: object
+                        linkedAppToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            appUid:
+                              description: |-
+                                (String) The ID of an Access OIDC SaaS application
+                                The ID of an Access OIDC SaaS application
+                              type: string
+                          type: object
+                        loginMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an identity provider.
+                              type: string
+                          type: object
+                        oidc:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            claimName:
+                              description: |-
+                                (String) The name of the OIDC claim.
+                                The name of the OIDC claim.
+                              type: string
+                            claimValue:
+                              description: |-
+                                (String) The OIDC claim value to look for.
+                                The OIDC claim value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your OIDC identity provider.
+                              type: string
+                          type: object
+                        okta:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Okta identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the Okta group.
+                              type: string
+                          type: object
+                        saml:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            attributeName:
+                              description: |-
+                                (String) The name of the SAML attribute.
+                                The name of the SAML attribute.
+                              type: string
+                            attributeValue:
+                              description: |-
+                                (String) The SAML attribute value to look for.
+                                The SAML attribute value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your SAML identity provider.
+                              type: string
+                          type: object
+                        serviceToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            tokenId:
+                              description: |-
+                                (String) The ID of a Service Token.
+                                The ID of a Service Token.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                  id:
+                    description: (String) The UUID of the policy
+                    type: string
+                  include:
+                    description: (Attributes Set) Rules evaluated with an OR logical
+                      operator. A user needs to meet only one of the Include rules.
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        anyValidServiceToken:
+                          description: (Attributes) An empty object which matches
+                            on all service tokens. (see below for nested schema)
+                          type: object
+                        authContext:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            acId:
+                              description: |-
+                                (String) The ACID of an Authentication context.
+                                The ACID of an Authentication context.
+                              type: string
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Authentication context.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        authMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            authMethod:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The type of authentication method https://datatracker.ietf.org/doc/html/rfc8176#section-2.
+                              type: string
+                          type: object
+                        azureAd:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Azure group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        certificate:
+                          description: (Attributes) (see below for nested schema)
+                          type: object
+                        commonName:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            commonName:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The common name to match.
+                              type: string
+                          type: object
+                        devicePosture:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            integrationUid:
+                              description: |-
+                                (String) The ID of a device posture integration.
+                                The ID of a device posture integration.
+                              type: string
+                          type: object
+                        email:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the user.
+                              type: string
+                          type: object
+                        emailDomain:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            domain:
+                              description: |-
+                                (String) The email domain to match.
+                                The email domain to match.
+                              type: string
+                          type: object
+                        emailList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created email list.
+                              type: string
+                          type: object
+                        everyone:
+                          description: (Attributes) An empty object which matches
+                            on all users. (see below for nested schema)
+                          type: object
+                        externalEvaluation:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            evaluateUrl:
+                              description: |-
+                                (String) The API endpoint containing your business logic.
+                                The API endpoint containing your business logic.
+                              type: string
+                            keysUrl:
+                              description: |-
+                                (String) The API endpoint containing the key that Access uses to verify that the response came from your API.
+                                The API endpoint containing the key that Access uses to verify that the response came from your API.
+                              type: string
+                          type: object
+                        geo:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            countryCode:
+                              description: |-
+                                (String) The country code that should be matched.
+                                The country code that should be matched.
+                              type: string
+                          type: object
+                        githubOrganization:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Github identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the organization.
+                              type: string
+                            team:
+                              description: |-
+                                (String) The name of the team
+                                The name of the team
+                              type: string
+                          type: object
+                        group:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created Access group.
+                              type: string
+                          type: object
+                        gsuite:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the Google Workspace group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Google Workspace identity provider.
+                              type: string
+                          type: object
+                        ip:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            ip:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                An IPv4 or IPv6 CIDR block.
+                              type: string
+                          type: object
+                        ipList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created IP list.
+                              type: string
+                          type: object
+                        linkedAppToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            appUid:
+                              description: |-
+                                (String) The ID of an Access OIDC SaaS application
+                                The ID of an Access OIDC SaaS application
+                              type: string
+                          type: object
+                        loginMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an identity provider.
+                              type: string
+                          type: object
+                        oidc:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            claimName:
+                              description: |-
+                                (String) The name of the OIDC claim.
+                                The name of the OIDC claim.
+                              type: string
+                            claimValue:
+                              description: |-
+                                (String) The OIDC claim value to look for.
+                                The OIDC claim value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your OIDC identity provider.
+                              type: string
+                          type: object
+                        okta:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Okta identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the Okta group.
+                              type: string
+                          type: object
+                        saml:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            attributeName:
+                              description: |-
+                                (String) The name of the SAML attribute.
+                                The name of the SAML attribute.
+                              type: string
+                            attributeValue:
+                              description: |-
+                                (String) The SAML attribute value to look for.
+                                The SAML attribute value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your SAML identity provider.
+                              type: string
+                          type: object
+                        serviceToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            tokenId:
+                              description: |-
+                                (String) The ID of a Service Token.
+                                The ID of a Service Token.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                  isolationRequired:
+                    description: |-
+                      (Boolean) Require this application to be served in an isolated browser for users matching this policy. 'Client Web Isolation' must be on for the account in order to use this feature.
+                      Require this application to be served in an isolated browser for users matching this policy. 'Client Web Isolation' must be on for the account in order to use this feature.
+                    type: boolean
+                  mfaConfig:
+                    description: factor authentication (MFA) settings. (see below
+                      for nested schema)
+                    properties:
+                      allowedAuthenticators:
+                        description: |-
+                          (List of String) Lists the MFA methods that users can authenticate with.
+                          Lists the MFA methods that users can authenticate with.
+                        items:
+                          type: string
+                        type: array
+                      mfaBypass:
+                        description: |-
+                          (Boolean) Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
+                          Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
+                        type: boolean
+                      sessionDuration:
+                        description: |-
+                          (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                          Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
+                        type: string
+                    type: object
+                  name:
+                    description: |-
+                      (String) The name of the Access policy.
+                      The name of the Access policy.
+                    type: string
+                  purposeJustificationPrompt:
+                    description: |-
+                      (String) A custom message that will appear on the purpose justification screen.
+                      A custom message that will appear on the purpose justification screen.
+                    type: string
+                  purposeJustificationRequired:
+                    description: |-
+                      (Boolean) Require users to enter a justification when they log in to the application.
+                      Require users to enter a justification when they log in to the application.
+                    type: boolean
+                  require:
+                    description: (Attributes Set) Rules evaluated with an AND logical
+                      operator. To match the policy, a user must meet all of the Require
+                      rules. (see below for nested schema)
+                    items:
+                      properties:
+                        anyValidServiceToken:
+                          description: (Attributes) An empty object which matches
+                            on all service tokens. (see below for nested schema)
+                          type: object
+                        authContext:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            acId:
+                              description: |-
+                                (String) The ACID of an Authentication context.
+                                The ACID of an Authentication context.
+                              type: string
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Authentication context.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        authMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            authMethod:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The type of authentication method https://datatracker.ietf.org/doc/html/rfc8176#section-2.
+                              type: string
+                          type: object
+                        azureAd:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an Azure group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Azure identity provider.
+                              type: string
+                          type: object
+                        certificate:
+                          description: (Attributes) (see below for nested schema)
+                          type: object
+                        commonName:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            commonName:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The common name to match.
+                              type: string
+                          type: object
+                        devicePosture:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            integrationUid:
+                              description: |-
+                                (String) The ID of a device posture integration.
+                                The ID of a device posture integration.
+                              type: string
+                          type: object
+                        email:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the user.
+                              type: string
+                          type: object
+                        emailDomain:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            domain:
+                              description: |-
+                                (String) The email domain to match.
+                                The email domain to match.
+                              type: string
+                          type: object
+                        emailList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created email list.
+                              type: string
+                          type: object
+                        everyone:
+                          description: (Attributes) An empty object which matches
+                            on all users. (see below for nested schema)
+                          type: object
+                        externalEvaluation:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            evaluateUrl:
+                              description: |-
+                                (String) The API endpoint containing your business logic.
+                                The API endpoint containing your business logic.
+                              type: string
+                            keysUrl:
+                              description: |-
+                                (String) The API endpoint containing the key that Access uses to verify that the response came from your API.
+                                The API endpoint containing the key that Access uses to verify that the response came from your API.
+                              type: string
+                          type: object
+                        geo:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            countryCode:
+                              description: |-
+                                (String) The country code that should be matched.
+                                The country code that should be matched.
+                              type: string
+                          type: object
+                        githubOrganization:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Github identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the organization.
+                              type: string
+                            team:
+                              description: |-
+                                (String) The name of the team
+                                The name of the team
+                              type: string
+                          type: object
+                        group:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created Access group.
+                              type: string
+                          type: object
+                        gsuite:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            email:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                The email of the Google Workspace group.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Google Workspace identity provider.
+                              type: string
+                          type: object
+                        ip:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            ip:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                An IPv4 or IPv6 CIDR block.
+                              type: string
+                          type: object
+                        ipList:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of a previously created IP list.
+                              type: string
+                          type: object
+                        linkedAppToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            appUid:
+                              description: |-
+                                (String) The ID of an Access OIDC SaaS application
+                                The ID of an Access OIDC SaaS application
+                              type: string
+                          type: object
+                        loginMethod:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            id:
+                              description: |-
+                                (String) The UUID of the policy
+                                The ID of an identity provider.
+                              type: string
+                          type: object
+                        oidc:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            claimName:
+                              description: |-
+                                (String) The name of the OIDC claim.
+                                The name of the OIDC claim.
+                              type: string
+                            claimValue:
+                              description: |-
+                                (String) The OIDC claim value to look for.
+                                The OIDC claim value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your OIDC identity provider.
+                              type: string
+                          type: object
+                        okta:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your Okta identity provider.
+                              type: string
+                            name:
+                              description: |-
+                                (String) The name of the Access policy.
+                                The name of the Okta group.
+                              type: string
+                          type: object
+                        saml:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            attributeName:
+                              description: |-
+                                (String) The name of the SAML attribute.
+                                The name of the SAML attribute.
+                              type: string
+                            attributeValue:
+                              description: |-
+                                (String) The SAML attribute value to look for.
+                                The SAML attribute value to look for.
+                              type: string
+                            identityProviderId:
+                              description: |-
+                                (String) The ID of your Azure identity provider.
+                                The ID of your SAML identity provider.
+                              type: string
+                          type: object
+                        serviceToken:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            tokenId:
+                              description: |-
+                                (String) The ID of a Service Token.
+                                The ID of a Service Token.
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                  sessionDuration:
+                    description: |-
+                      (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                      The amount of time that tokens issued for the application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

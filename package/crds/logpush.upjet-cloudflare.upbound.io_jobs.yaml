@@ -1,0 +1,732 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: jobs.logpush.upjet-cloudflare.upbound.io
+spec:
+  group: logpush.upjet-cloudflare.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: Job
+    listKind: JobList
+    plural: jobs
+    singular: job
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Job is the Schema for the Jobs API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: JobSpec defines the desired state of Job
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                    type: string
+                  dataset:
+                    description: |-
+                      (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
+                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
+                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                    type: string
+                  destinationConf:
+                    description: |-
+                      (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+                      Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Flag that indicates if the job is enabled.
+                      Flag that indicates if the job is enabled.
+                    type: boolean
+                  filter:
+                    description: |-
+                      (String) The filters to select the events to include and/or remove from your logs. For more information, refer to Filters.
+                      The filters to select the events to include and/or remove from your logs. For more information, refer to [Filters](https://developers.cloudflare.com/logs/reference/filters/).
+                    type: string
+                  frequency:
+                    description: |-
+                      (String, Deprecated) This field is deprecated. Please use max_upload_* parameters instead. . The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to high sends your logs in larger quantities of smaller files. Setting frequency to low sends logs in smaller quantities of larger files.
+                      Available values: "high", "low".
+                      This field is deprecated. Please use `max_upload_*` parameters instead. . The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to high sends your logs in larger quantities of smaller files. Setting frequency to low sends logs in smaller quantities of larger files.
+                      Available values: "high", "low".
+                    type: string
+                  kind:
+                    description: |-
+                      (String) The kind parameter  is used to differentiate between Logpush and Edge Log Delivery jobs (when supported by the dataset).
+                      Available values: "", "edge".
+                      The kind parameter (optional) is used to differentiate between Logpush and Edge Log Delivery jobs (when supported by the dataset).
+                      Available values: "", "edge".
+                    type: string
+                  logpullOptions:
+                    description: |-
+                      (String, Deprecated) This field is deprecated. Use output_options instead. Configuration string. It specifies things like requested fields and timestamp formats. If migrating from the logpull api, copy the url (full url or just the query string) of your call here, and logpush will keep on making this call for you, setting start and end times appropriately.
+                      This field is deprecated. Use `output_options` instead. Configuration string. It specifies things like requested fields and timestamp formats. If migrating from the logpull api, copy the url (full url or just the query string) of your call here, and logpush will keep on making this call for you, setting start and end times appropriately.
+                    type: string
+                  maxUploadBytes:
+                    description: |-
+                      (Number) The maximum uncompressed file size of a batch of logs. This setting value must be between 5 MB and 1 GB, or 0 to disable it. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
+                      The maximum uncompressed file size of a batch of logs. This setting value must be between `5 MB` and `1 GB`, or `0` to disable it. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
+                    type: number
+                  maxUploadIntervalSeconds:
+                    description: |-
+                      (Number) The maximum interval in seconds for log batches. This setting must be between 30 and 300 seconds (5 minutes), or 0 to disable it. Note that you cannot specify a minimum interval for log batches; this means that log files may be sent in shorter intervals than this.
+                      The maximum interval in seconds for log batches. This setting must be between 30 and 300 seconds (5 minutes), or `0` to disable it. Note that you cannot specify a minimum interval for log batches; this means that log files may be sent in shorter intervals than this.
+                    type: number
+                  maxUploadRecords:
+                    description: |-
+                      (Number) The maximum number of log lines per batch. This setting must be between 1000 and 1,000,000 lines, or 0 to disable it. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
+                      The maximum number of log lines per batch. This setting must be between 1000 and 1,000,000 lines, or `0` to disable it. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
+                    type: number
+                  name:
+                    description: |-
+                      (String) Optional human readable job name. Not unique. Cloudflare suggests. that you set this to a meaningful string, like the domain name, to make it easier to identify your job.
+                      Optional human readable job name. Not unique. Cloudflare suggests. that you set this to a meaningful string, like the domain name, to make it easier to identify your job.
+                    type: string
+                  outputOptions:
+                    description: (Attributes) The structured replacement for logpull_options.
+                      When including this field, the logpull_option field will be
+                      ignored. (see below for nested schema)
+                    properties:
+                      batchPrefix:
+                        description: |-
+                          (String) String to be prepended before each batch.
+                          String to be prepended before each batch.
+                        type: string
+                      batchSuffix:
+                        description: |-
+                          (String) String to be appended after each batch.
+                          String to be appended after each batch.
+                        type: string
+                      cve202144228:
+                        description: |-
+                          (Boolean) If set to true, will cause all occurrences of ${ in the generated files to be replaced with x{.
+                          If set to true, will cause all occurrences of `${` in the generated files to be replaced with `x{`.
+                        type: boolean
+                      fieldDelimiter:
+                        description: |-
+                          (String) String to join fields. This field be ignored when record_template is set.
+                          String to join fields. This field be ignored when `record_template` is set.
+                        type: string
+                      fieldNames:
+                        description: |-
+                          (List of String) List of field names to be included in the Logpush output. For the moment, there is no option to add all fields at once, so you must specify all the fields names you are interested in.
+                          List of field names to be included in the Logpush output. For the moment, there is no option to add all fields at once, so you must specify all the fields names you are interested in.
+                        items:
+                          type: string
+                        type: array
+                      outputType:
+                        description: |-
+                          (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
+                          Available values: "ndjson", "csv".
+                          Specifies the output type, such as `ndjson` or `csv`. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
+                          Available values: "ndjson", "csv".
+                        type: string
+                      recordDelimiter:
+                        description: |-
+                          between the records as separator.
+                          String to be inserted in-between the records as separator.
+                        type: string
+                      recordPrefix:
+                        description: |-
+                          (String) String to be prepended before each record.
+                          String to be prepended before each record.
+                        type: string
+                      recordSuffix:
+                        description: |-
+                          (String) String to be appended after each record.
+                          String to be appended after each record.
+                        type: string
+                      recordTemplate:
+                        description: |-
+                          templates, etc.
+                          String to use as template for each record instead of the default json key value mapping. All fields used in the template must be present in `field_names` as well, otherwise they will end up as null. Format as a Go `text/template` without any standard functions, like conditionals, loops, sub-templates, etc.
+                        type: string
+                      sampleRate:
+                        description: |-
+                          (Number) Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
+                          Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
+                        type: number
+                      timestampFormat:
+                        description: |-
+                          (String) String to specify the format for timestamps, such as unixnano, unix, or rfc3339.
+                          Available values: "unixnano", "unix", "rfc3339".
+                          String to specify the format for timestamps, such as `unixnano`, `unix`, or `rfc3339`.
+                          Available values: "unixnano", "unix", "rfc3339".
+                        type: string
+                    type: object
+                  ownershipChallengeSecretRef:
+                    description: |-
+                      (String, Sensitive) Ownership challenge token to prove destination ownership.
+                      Ownership challenge token to prove destination ownership.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  zoneId:
+                    description: |-
+                      (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                      The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                    type: string
+                  dataset:
+                    description: |-
+                      (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
+                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
+                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                    type: string
+                  destinationConf:
+                    description: |-
+                      (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+                      Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Flag that indicates if the job is enabled.
+                      Flag that indicates if the job is enabled.
+                    type: boolean
+                  filter:
+                    description: |-
+                      (String) The filters to select the events to include and/or remove from your logs. For more information, refer to Filters.
+                      The filters to select the events to include and/or remove from your logs. For more information, refer to [Filters](https://developers.cloudflare.com/logs/reference/filters/).
+                    type: string
+                  frequency:
+                    description: |-
+                      (String, Deprecated) This field is deprecated. Please use max_upload_* parameters instead. . The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to high sends your logs in larger quantities of smaller files. Setting frequency to low sends logs in smaller quantities of larger files.
+                      Available values: "high", "low".
+                      This field is deprecated. Please use `max_upload_*` parameters instead. . The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to high sends your logs in larger quantities of smaller files. Setting frequency to low sends logs in smaller quantities of larger files.
+                      Available values: "high", "low".
+                    type: string
+                  kind:
+                    description: |-
+                      (String) The kind parameter  is used to differentiate between Logpush and Edge Log Delivery jobs (when supported by the dataset).
+                      Available values: "", "edge".
+                      The kind parameter (optional) is used to differentiate between Logpush and Edge Log Delivery jobs (when supported by the dataset).
+                      Available values: "", "edge".
+                    type: string
+                  logpullOptions:
+                    description: |-
+                      (String, Deprecated) This field is deprecated. Use output_options instead. Configuration string. It specifies things like requested fields and timestamp formats. If migrating from the logpull api, copy the url (full url or just the query string) of your call here, and logpush will keep on making this call for you, setting start and end times appropriately.
+                      This field is deprecated. Use `output_options` instead. Configuration string. It specifies things like requested fields and timestamp formats. If migrating from the logpull api, copy the url (full url or just the query string) of your call here, and logpush will keep on making this call for you, setting start and end times appropriately.
+                    type: string
+                  maxUploadBytes:
+                    description: |-
+                      (Number) The maximum uncompressed file size of a batch of logs. This setting value must be between 5 MB and 1 GB, or 0 to disable it. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
+                      The maximum uncompressed file size of a batch of logs. This setting value must be between `5 MB` and `1 GB`, or `0` to disable it. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
+                    type: number
+                  maxUploadIntervalSeconds:
+                    description: |-
+                      (Number) The maximum interval in seconds for log batches. This setting must be between 30 and 300 seconds (5 minutes), or 0 to disable it. Note that you cannot specify a minimum interval for log batches; this means that log files may be sent in shorter intervals than this.
+                      The maximum interval in seconds for log batches. This setting must be between 30 and 300 seconds (5 minutes), or `0` to disable it. Note that you cannot specify a minimum interval for log batches; this means that log files may be sent in shorter intervals than this.
+                    type: number
+                  maxUploadRecords:
+                    description: |-
+                      (Number) The maximum number of log lines per batch. This setting must be between 1000 and 1,000,000 lines, or 0 to disable it. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
+                      The maximum number of log lines per batch. This setting must be between 1000 and 1,000,000 lines, or `0` to disable it. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
+                    type: number
+                  name:
+                    description: |-
+                      (String) Optional human readable job name. Not unique. Cloudflare suggests. that you set this to a meaningful string, like the domain name, to make it easier to identify your job.
+                      Optional human readable job name. Not unique. Cloudflare suggests. that you set this to a meaningful string, like the domain name, to make it easier to identify your job.
+                    type: string
+                  outputOptions:
+                    description: (Attributes) The structured replacement for logpull_options.
+                      When including this field, the logpull_option field will be
+                      ignored. (see below for nested schema)
+                    properties:
+                      batchPrefix:
+                        description: |-
+                          (String) String to be prepended before each batch.
+                          String to be prepended before each batch.
+                        type: string
+                      batchSuffix:
+                        description: |-
+                          (String) String to be appended after each batch.
+                          String to be appended after each batch.
+                        type: string
+                      cve202144228:
+                        description: |-
+                          (Boolean) If set to true, will cause all occurrences of ${ in the generated files to be replaced with x{.
+                          If set to true, will cause all occurrences of `${` in the generated files to be replaced with `x{`.
+                        type: boolean
+                      fieldDelimiter:
+                        description: |-
+                          (String) String to join fields. This field be ignored when record_template is set.
+                          String to join fields. This field be ignored when `record_template` is set.
+                        type: string
+                      fieldNames:
+                        description: |-
+                          (List of String) List of field names to be included in the Logpush output. For the moment, there is no option to add all fields at once, so you must specify all the fields names you are interested in.
+                          List of field names to be included in the Logpush output. For the moment, there is no option to add all fields at once, so you must specify all the fields names you are interested in.
+                        items:
+                          type: string
+                        type: array
+                      outputType:
+                        description: |-
+                          (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
+                          Available values: "ndjson", "csv".
+                          Specifies the output type, such as `ndjson` or `csv`. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
+                          Available values: "ndjson", "csv".
+                        type: string
+                      recordDelimiter:
+                        description: |-
+                          between the records as separator.
+                          String to be inserted in-between the records as separator.
+                        type: string
+                      recordPrefix:
+                        description: |-
+                          (String) String to be prepended before each record.
+                          String to be prepended before each record.
+                        type: string
+                      recordSuffix:
+                        description: |-
+                          (String) String to be appended after each record.
+                          String to be appended after each record.
+                        type: string
+                      recordTemplate:
+                        description: |-
+                          templates, etc.
+                          String to use as template for each record instead of the default json key value mapping. All fields used in the template must be present in `field_names` as well, otherwise they will end up as null. Format as a Go `text/template` without any standard functions, like conditionals, loops, sub-templates, etc.
+                        type: string
+                      sampleRate:
+                        description: |-
+                          (Number) Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
+                          Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
+                        type: number
+                      timestampFormat:
+                        description: |-
+                          (String) String to specify the format for timestamps, such as unixnano, unix, or rfc3339.
+                          Available values: "unixnano", "unix", "rfc3339".
+                          String to specify the format for timestamps, such as `unixnano`, `unix`, or `rfc3339`.
+                          Available values: "unixnano", "unix", "rfc3339".
+                        type: string
+                    type: object
+                  ownershipChallengeSecretRef:
+                    description: |-
+                      (String, Sensitive) Ownership challenge token to prove destination ownership.
+                      Ownership challenge token to prove destination ownership.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  zoneId:
+                    description: |-
+                      (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                      The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.destinationConf is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.destinationConf)
+                || (has(self.initProvider) && has(self.initProvider.destinationConf))'
+          status:
+            description: JobStatus defines the observed state of Job.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                    type: string
+                  dataset:
+                    description: |-
+                      (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
+                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
+                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                    type: string
+                  destinationConf:
+                    description: |-
+                      (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+                      Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Flag that indicates if the job is enabled.
+                      Flag that indicates if the job is enabled.
+                    type: boolean
+                  errorMessage:
+                    description: |-
+                      (String) If not null, the job is currently failing. Failures are usually. repetitive (example: no permissions to write to destination bucket). Only the last failure is recorded. On successful execution of a job the error_message and last_error are set to null.
+                      If not null, the job is currently failing. Failures are usually. repetitive (example: no permissions to write to destination bucket). Only the last failure is recorded. On successful execution of a job the error_message and last_error are set to null.
+                    type: string
+                  filter:
+                    description: |-
+                      (String) The filters to select the events to include and/or remove from your logs. For more information, refer to Filters.
+                      The filters to select the events to include and/or remove from your logs. For more information, refer to [Filters](https://developers.cloudflare.com/logs/reference/filters/).
+                    type: string
+                  frequency:
+                    description: |-
+                      (String, Deprecated) This field is deprecated. Please use max_upload_* parameters instead. . The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to high sends your logs in larger quantities of smaller files. Setting frequency to low sends logs in smaller quantities of larger files.
+                      Available values: "high", "low".
+                      This field is deprecated. Please use `max_upload_*` parameters instead. . The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to high sends your logs in larger quantities of smaller files. Setting frequency to low sends logs in smaller quantities of larger files.
+                      Available values: "high", "low".
+                    type: string
+                  id:
+                    description: (Number) Unique id of the job.
+                    type: string
+                  kind:
+                    description: |-
+                      (String) The kind parameter  is used to differentiate between Logpush and Edge Log Delivery jobs (when supported by the dataset).
+                      Available values: "", "edge".
+                      The kind parameter (optional) is used to differentiate between Logpush and Edge Log Delivery jobs (when supported by the dataset).
+                      Available values: "", "edge".
+                    type: string
+                  lastComplete:
+                    description: |-
+                      07-23T10:00:00Z to 2018-07-23T10:01:00Z then the value of this field will be 2018-07-23T10:01:00Z. If the job has never run or has just been enabled and hasn't run yet then the field will be empty.
+                      Records the last time for which logs have been successfully pushed. If the last successful push was for logs range 2018-07-23T10:00:00Z to 2018-07-23T10:01:00Z then the value of this field will be 2018-07-23T10:01:00Z. If the job has never run or has just been enabled and hasn't run yet then the field will be empty.
+                    type: string
+                  lastError:
+                    description: |-
+                      (String) Records the last time the job failed. If not null, the job is currently. failing. If null, the job has either never failed or has run successfully at least once since last failure. See also the error_message field.
+                      Records the last time the job failed. If not null, the job is currently. failing. If null, the job has either never failed or has run successfully at least once since last failure. See also the error_message field.
+                    type: string
+                  logpullOptions:
+                    description: |-
+                      (String, Deprecated) This field is deprecated. Use output_options instead. Configuration string. It specifies things like requested fields and timestamp formats. If migrating from the logpull api, copy the url (full url or just the query string) of your call here, and logpush will keep on making this call for you, setting start and end times appropriately.
+                      This field is deprecated. Use `output_options` instead. Configuration string. It specifies things like requested fields and timestamp formats. If migrating from the logpull api, copy the url (full url or just the query string) of your call here, and logpush will keep on making this call for you, setting start and end times appropriately.
+                    type: string
+                  maxUploadBytes:
+                    description: |-
+                      (Number) The maximum uncompressed file size of a batch of logs. This setting value must be between 5 MB and 1 GB, or 0 to disable it. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
+                      The maximum uncompressed file size of a batch of logs. This setting value must be between `5 MB` and `1 GB`, or `0` to disable it. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
+                    type: number
+                  maxUploadIntervalSeconds:
+                    description: |-
+                      (Number) The maximum interval in seconds for log batches. This setting must be between 30 and 300 seconds (5 minutes), or 0 to disable it. Note that you cannot specify a minimum interval for log batches; this means that log files may be sent in shorter intervals than this.
+                      The maximum interval in seconds for log batches. This setting must be between 30 and 300 seconds (5 minutes), or `0` to disable it. Note that you cannot specify a minimum interval for log batches; this means that log files may be sent in shorter intervals than this.
+                    type: number
+                  maxUploadRecords:
+                    description: |-
+                      (Number) The maximum number of log lines per batch. This setting must be between 1000 and 1,000,000 lines, or 0 to disable it. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
+                      The maximum number of log lines per batch. This setting must be between 1000 and 1,000,000 lines, or `0` to disable it. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
+                    type: number
+                  name:
+                    description: |-
+                      (String) Optional human readable job name. Not unique. Cloudflare suggests. that you set this to a meaningful string, like the domain name, to make it easier to identify your job.
+                      Optional human readable job name. Not unique. Cloudflare suggests. that you set this to a meaningful string, like the domain name, to make it easier to identify your job.
+                    type: string
+                  outputOptions:
+                    description: (Attributes) The structured replacement for logpull_options.
+                      When including this field, the logpull_option field will be
+                      ignored. (see below for nested schema)
+                    properties:
+                      batchPrefix:
+                        description: |-
+                          (String) String to be prepended before each batch.
+                          String to be prepended before each batch.
+                        type: string
+                      batchSuffix:
+                        description: |-
+                          (String) String to be appended after each batch.
+                          String to be appended after each batch.
+                        type: string
+                      cve202144228:
+                        description: |-
+                          (Boolean) If set to true, will cause all occurrences of ${ in the generated files to be replaced with x{.
+                          If set to true, will cause all occurrences of `${` in the generated files to be replaced with `x{`.
+                        type: boolean
+                      fieldDelimiter:
+                        description: |-
+                          (String) String to join fields. This field be ignored when record_template is set.
+                          String to join fields. This field be ignored when `record_template` is set.
+                        type: string
+                      fieldNames:
+                        description: |-
+                          (List of String) List of field names to be included in the Logpush output. For the moment, there is no option to add all fields at once, so you must specify all the fields names you are interested in.
+                          List of field names to be included in the Logpush output. For the moment, there is no option to add all fields at once, so you must specify all the fields names you are interested in.
+                        items:
+                          type: string
+                        type: array
+                      outputType:
+                        description: |-
+                          (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
+                          Available values: "ndjson", "csv".
+                          Specifies the output type, such as `ndjson` or `csv`. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
+                          Available values: "ndjson", "csv".
+                        type: string
+                      recordDelimiter:
+                        description: |-
+                          between the records as separator.
+                          String to be inserted in-between the records as separator.
+                        type: string
+                      recordPrefix:
+                        description: |-
+                          (String) String to be prepended before each record.
+                          String to be prepended before each record.
+                        type: string
+                      recordSuffix:
+                        description: |-
+                          (String) String to be appended after each record.
+                          String to be appended after each record.
+                        type: string
+                      recordTemplate:
+                        description: |-
+                          templates, etc.
+                          String to use as template for each record instead of the default json key value mapping. All fields used in the template must be present in `field_names` as well, otherwise they will end up as null. Format as a Go `text/template` without any standard functions, like conditionals, loops, sub-templates, etc.
+                        type: string
+                      sampleRate:
+                        description: |-
+                          (Number) Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
+                          Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
+                        type: number
+                      timestampFormat:
+                        description: |-
+                          (String) String to specify the format for timestamps, such as unixnano, unix, or rfc3339.
+                          Available values: "unixnano", "unix", "rfc3339".
+                          String to specify the format for timestamps, such as `unixnano`, `unix`, or `rfc3339`.
+                          Available values: "unixnano", "unix", "rfc3339".
+                        type: string
+                    type: object
+                  zoneId:
+                    description: |-
+                      (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                      The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

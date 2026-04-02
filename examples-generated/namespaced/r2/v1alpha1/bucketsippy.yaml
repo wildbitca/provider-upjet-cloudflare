@@ -1,0 +1,27 @@
+apiVersion: r2.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: BucketSippy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: r2/v1alpha1/bucketsippy
+  labels:
+    testing.upbound.io/example-name: example_r2_bucket_sippy
+  name: example-r2-bucket-sippy
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    bucketName: example-bucket
+    destination:
+      accessKeyId: accessKeyId
+      cloudProvider: r2
+      secretAccessKeySecretRef:
+        key: example-key
+        name: example-secret
+    source:
+      accessKeyId: accessKeyId
+      bucket: bucket
+      cloudProvider: aws
+      region: region
+      secretAccessKeySecretRef:
+        key: example-key
+        name: example-secret

@@ -1,0 +1,13 @@
+apiVersion: url.upjet-cloudflare.upbound.io/v1alpha1
+kind: NormalizationSettings
+metadata:
+  annotations:
+    meta.upbound.io/example-id: url/v1alpha1/normalizationsettings
+  labels:
+    testing.upbound.io/example-name: example_url_normalization_settings
+  name: example-url-normalization-settings
+spec:
+  forProvider:
+    scope: incoming
+    type: cloudflare
+    zoneId: 9f1839b6152d298aca64c4e906b6d074

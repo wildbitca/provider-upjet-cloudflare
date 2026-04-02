@@ -1,0 +1,15 @@
+apiVersion: registrar.upjet-cloudflare.upbound.io/v1alpha1
+kind: Domain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: registrar/v1alpha1/domain
+  labels:
+    testing.upbound.io/example-name: example_registrar_domain
+  name: example-registrar-domain
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    autoRenew: true
+    domainName: cloudflare.com
+    locked: false
+    privacy: true

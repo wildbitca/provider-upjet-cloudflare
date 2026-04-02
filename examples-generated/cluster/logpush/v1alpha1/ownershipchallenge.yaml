@@ -1,0 +1,12 @@
+apiVersion: logpush.upjet-cloudflare.upbound.io/v1alpha1
+kind: OwnershipChallenge
+metadata:
+  annotations:
+    meta.upbound.io/example-id: logpush/v1alpha1/ownershipchallenge
+  labels:
+    testing.upbound.io/example-name: example_logpush_ownership_challenge
+  name: example-logpush-ownership-challenge
+spec:
+  forProvider:
+    destinationConf: s3://mybucket/logs?region=us-west-2
+    zoneId: zone_id

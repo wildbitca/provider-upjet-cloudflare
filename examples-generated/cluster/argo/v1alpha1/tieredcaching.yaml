@@ -1,0 +1,12 @@
+apiVersion: argo.upjet-cloudflare.upbound.io/v1alpha1
+kind: TieredCaching
+metadata:
+  annotations:
+    meta.upbound.io/example-id: argo/v1alpha1/tieredcaching
+  labels:
+    testing.upbound.io/example-name: example_argo_tiered_caching
+  name: example-argo-tiered-caching
+spec:
+  forProvider:
+    value: "on"
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

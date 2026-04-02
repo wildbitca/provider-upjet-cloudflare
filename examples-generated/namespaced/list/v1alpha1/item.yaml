@@ -1,0 +1,14 @@
+apiVersion: list.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Item
+metadata:
+  annotations:
+    meta.upbound.io/example-id: list/v1alpha1/item
+  labels:
+    testing.upbound.io/example-name: example_list_item
+  name: example-list-item
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    ip: 10.0.0.1
+    listId: 2c0fc9fa937b11eaa1b71c4d701ab86e

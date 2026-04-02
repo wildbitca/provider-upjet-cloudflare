@@ -1,0 +1,23 @@
+apiVersion: stream.upjet-cloudflare.upbound.io/v1alpha1
+kind: LiveInput
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stream/v1alpha1/liveinput
+  labels:
+    testing.upbound.io/example-name: example_stream_live_input
+  name: example-stream-live-input
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    defaultCreator: defaultCreator
+    deleteRecordingAfterDays: 45
+    enabled: true
+    meta:
+      name: test stream 1
+    recording:
+      allowedOrigins:
+      - example.com
+      hideLiveViewerCount: false
+      mode: "off"
+      requireSignedUrls: false
+      timeoutSeconds: 0

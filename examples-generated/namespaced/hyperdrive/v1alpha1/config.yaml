@@ -1,0 +1,29 @@
+apiVersion: hyperdrive.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Config
+metadata:
+  annotations:
+    meta.upbound.io/example-id: hyperdrive/v1alpha1/config
+  labels:
+    testing.upbound.io/example-name: example_hyperdrive_config
+  name: example-hyperdrive-config
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    caching:
+      disabled: true
+    mtls:
+      caCertificateId: 00000000-0000-0000-0000-0000000000
+      mtlsCertificateId: 00000000-0000-0000-0000-0000000000
+      sslmode: verify-full
+    name: example-hyperdrive
+    origin:
+      database: postgres
+      host: database.example.com
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+      port: 5432
+      scheme: postgres
+      user: postgres
+    originConnectionLimit: 60

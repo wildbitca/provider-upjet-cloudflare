@@ -1,0 +1,13 @@
+apiVersion: r2.upjet-cloudflare.upbound.io/v1alpha1
+kind: ManagedDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: r2/v1alpha1/manageddomain
+  labels:
+    testing.upbound.io/example-name: example_r2_managed_domain
+  name: example-r2-managed-domain
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    bucketName: example-bucket
+    enabled: true
