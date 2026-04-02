@@ -1,0 +1,903 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: searchinstances.ai.upjet-cloudflare.m.upbound.io
+spec:
+  group: ai.upjet-cloudflare.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: SearchInstance
+    listKind: SearchInstanceList
+    plural: searchinstances
+    singular: searchinstance
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: SearchInstance is the Schema for the SearchInstances API. <no
+          value>
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: SearchInstanceSpec defines the desired state of SearchInstance
+            properties:
+              forProvider:
+                properties:
+                  accountId:
+                    type: string
+                  aiGatewayId:
+                    type: string
+                  aisearchModel:
+                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
+                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
+                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
+                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
+                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
+                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
+                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
+                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
+                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
+                      "openai/gpt-5-nano", "".'
+                    type: string
+                  cache:
+                    type: boolean
+                  cacheThreshold:
+                    description: 'Available values: "super_strict_match", "close_enough",
+                      "flexible_friend", "anything_goes".'
+                    type: string
+                  chunk:
+                    type: boolean
+                  chunkOverlap:
+                    type: number
+                  chunkSize:
+                    type: number
+                  customMetadata:
+                    items:
+                      properties:
+                        dataType:
+                          description: 'Available values: "text", "number", "boolean".'
+                          type: string
+                        fieldName:
+                          type: string
+                      type: object
+                    type: array
+                  embeddingModel:
+                    description: 'Available values: "@cf/qwen/qwen3-embedding-0.6b",
+                      "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m",
+                      "google-ai-studio/gemini-embedding-001", "openai/text-embedding-3-small",
+                      "openai/text-embedding-3-large", "".'
+                    type: string
+                  fusionMethod:
+                    description: 'Available values: "max", "rrf".'
+                    type: string
+                  hybridSearchEnabled:
+                    type: boolean
+                  maxNumResults:
+                    type: number
+                  metadata:
+                    properties:
+                      createdFromAisearchWizard:
+                        type: boolean
+                      workerDomain:
+                        type: string
+                    type: object
+                  paused:
+                    type: boolean
+                  publicEndpointParams:
+                    properties:
+                      authorizedHosts:
+                        items:
+                          type: string
+                        type: array
+                      chatCompletionsEndpoint:
+                        properties:
+                          disabled:
+                            description: Disable chat completions endpoint for this
+                              public endpoint
+                            type: boolean
+                        type: object
+                      enabled:
+                        type: boolean
+                      mcp:
+                        properties:
+                          description:
+                            type: string
+                          disabled:
+                            description: Disable MCP endpoint for this public endpoint
+                            type: boolean
+                        type: object
+                      rateLimit:
+                        properties:
+                          periodMs:
+                            type: number
+                          requests:
+                            type: number
+                          technique:
+                            description: 'Available values: "fixed", "sliding".'
+                            type: string
+                        type: object
+                      searchEndpoint:
+                        properties:
+                          disabled:
+                            description: Disable search endpoint for this public endpoint
+                            type: boolean
+                        type: object
+                    type: object
+                  reranking:
+                    type: boolean
+                  rerankingModel:
+                    description: 'Available values: "@cf/baai/bge-reranker-base",
+                      "".'
+                    type: string
+                  retrievalOptions:
+                    properties:
+                      keywordMatchMode:
+                        description: |-
+                          Controls how keyword search terms are matched. exact_match requires all terms to appear (AND); fuzzy_match returns results containing any term (OR). Defaults to exact_match.
+                          Available values: "exact_match", "fuzzy_match".
+                        type: string
+                    type: object
+                  rewriteModel:
+                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
+                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
+                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
+                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
+                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
+                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
+                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
+                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
+                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
+                      "openai/gpt-5-nano", "".'
+                    type: string
+                  rewriteQuery:
+                    type: boolean
+                  scoreThreshold:
+                    type: number
+                  source:
+                    type: string
+                  sourceParams:
+                    properties:
+                      excludeItems:
+                        description: 'List of path patterns to exclude. Uses micromatch
+                          glob syntax: * matches within a path segment, ** matches
+                          across path segments (e.g., /admin/** matches /admin/users
+                          and /admin/settings/advanced)'
+                        items:
+                          type: string
+                        type: array
+                      includeItems:
+                        description: 'List of path patterns to include. Uses micromatch
+                          glob syntax: * matches within a path segment, ** matches
+                          across path segments (e.g., /blog/** matches /blog/post
+                          and /blog/2024/post)'
+                        items:
+                          type: string
+                        type: array
+                      prefix:
+                        type: string
+                      r2Jurisdiction:
+                        type: string
+                      webCrawler:
+                        properties:
+                          parseOptions:
+                            properties:
+                              includeHeaders:
+                                additionalProperties:
+                                  type: string
+                                type: object
+                                x-kubernetes-map-type: granular
+                              includeImages:
+                                type: boolean
+                              specificSitemaps:
+                                description: List of specific sitemap URLs to use
+                                  for crawling. Only valid when parse_type is 'sitemap'.
+                                items:
+                                  type: string
+                                type: array
+                              useBrowserRendering:
+                                type: boolean
+                            type: object
+                          parseType:
+                            description: 'Available values: "sitemap", "feed-rss".'
+                            type: string
+                          storeOptions:
+                            properties:
+                              r2Jurisdiction:
+                                type: string
+                              storageId:
+                                type: string
+                              storageType:
+                                description: 'Available values: "r2".'
+                                type: string
+                            type: object
+                        type: object
+                    type: object
+                  summarization:
+                    type: boolean
+                  summarizationModel:
+                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
+                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
+                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
+                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
+                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
+                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
+                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
+                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
+                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
+                      "openai/gpt-5-nano", "".'
+                    type: string
+                  systemPromptAisearch:
+                    type: string
+                  systemPromptIndexSummarization:
+                    type: string
+                  systemPromptRewriteQuery:
+                    type: string
+                  tokenId:
+                    type: string
+                  type:
+                    description: 'Available values: "r2", "web-crawler".'
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    type: string
+                  aiGatewayId:
+                    type: string
+                  aisearchModel:
+                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
+                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
+                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
+                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
+                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
+                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
+                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
+                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
+                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
+                      "openai/gpt-5-nano", "".'
+                    type: string
+                  cache:
+                    type: boolean
+                  cacheThreshold:
+                    description: 'Available values: "super_strict_match", "close_enough",
+                      "flexible_friend", "anything_goes".'
+                    type: string
+                  chunk:
+                    type: boolean
+                  chunkOverlap:
+                    type: number
+                  chunkSize:
+                    type: number
+                  customMetadata:
+                    items:
+                      properties:
+                        dataType:
+                          description: 'Available values: "text", "number", "boolean".'
+                          type: string
+                        fieldName:
+                          type: string
+                      type: object
+                    type: array
+                  embeddingModel:
+                    description: 'Available values: "@cf/qwen/qwen3-embedding-0.6b",
+                      "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m",
+                      "google-ai-studio/gemini-embedding-001", "openai/text-embedding-3-small",
+                      "openai/text-embedding-3-large", "".'
+                    type: string
+                  fusionMethod:
+                    description: 'Available values: "max", "rrf".'
+                    type: string
+                  hybridSearchEnabled:
+                    type: boolean
+                  maxNumResults:
+                    type: number
+                  metadata:
+                    properties:
+                      createdFromAisearchWizard:
+                        type: boolean
+                      workerDomain:
+                        type: string
+                    type: object
+                  paused:
+                    type: boolean
+                  publicEndpointParams:
+                    properties:
+                      authorizedHosts:
+                        items:
+                          type: string
+                        type: array
+                      chatCompletionsEndpoint:
+                        properties:
+                          disabled:
+                            description: Disable chat completions endpoint for this
+                              public endpoint
+                            type: boolean
+                        type: object
+                      enabled:
+                        type: boolean
+                      mcp:
+                        properties:
+                          description:
+                            type: string
+                          disabled:
+                            description: Disable MCP endpoint for this public endpoint
+                            type: boolean
+                        type: object
+                      rateLimit:
+                        properties:
+                          periodMs:
+                            type: number
+                          requests:
+                            type: number
+                          technique:
+                            description: 'Available values: "fixed", "sliding".'
+                            type: string
+                        type: object
+                      searchEndpoint:
+                        properties:
+                          disabled:
+                            description: Disable search endpoint for this public endpoint
+                            type: boolean
+                        type: object
+                    type: object
+                  reranking:
+                    type: boolean
+                  rerankingModel:
+                    description: 'Available values: "@cf/baai/bge-reranker-base",
+                      "".'
+                    type: string
+                  retrievalOptions:
+                    properties:
+                      keywordMatchMode:
+                        description: |-
+                          Controls how keyword search terms are matched. exact_match requires all terms to appear (AND); fuzzy_match returns results containing any term (OR). Defaults to exact_match.
+                          Available values: "exact_match", "fuzzy_match".
+                        type: string
+                    type: object
+                  rewriteModel:
+                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
+                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
+                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
+                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
+                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
+                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
+                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
+                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
+                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
+                      "openai/gpt-5-nano", "".'
+                    type: string
+                  rewriteQuery:
+                    type: boolean
+                  scoreThreshold:
+                    type: number
+                  source:
+                    type: string
+                  sourceParams:
+                    properties:
+                      excludeItems:
+                        description: 'List of path patterns to exclude. Uses micromatch
+                          glob syntax: * matches within a path segment, ** matches
+                          across path segments (e.g., /admin/** matches /admin/users
+                          and /admin/settings/advanced)'
+                        items:
+                          type: string
+                        type: array
+                      includeItems:
+                        description: 'List of path patterns to include. Uses micromatch
+                          glob syntax: * matches within a path segment, ** matches
+                          across path segments (e.g., /blog/** matches /blog/post
+                          and /blog/2024/post)'
+                        items:
+                          type: string
+                        type: array
+                      prefix:
+                        type: string
+                      r2Jurisdiction:
+                        type: string
+                      webCrawler:
+                        properties:
+                          parseOptions:
+                            properties:
+                              includeHeaders:
+                                additionalProperties:
+                                  type: string
+                                type: object
+                                x-kubernetes-map-type: granular
+                              includeImages:
+                                type: boolean
+                              specificSitemaps:
+                                description: List of specific sitemap URLs to use
+                                  for crawling. Only valid when parse_type is 'sitemap'.
+                                items:
+                                  type: string
+                                type: array
+                              useBrowserRendering:
+                                type: boolean
+                            type: object
+                          parseType:
+                            description: 'Available values: "sitemap", "feed-rss".'
+                            type: string
+                          storeOptions:
+                            properties:
+                              r2Jurisdiction:
+                                type: string
+                              storageId:
+                                type: string
+                              storageType:
+                                description: 'Available values: "r2".'
+                                type: string
+                            type: object
+                        type: object
+                    type: object
+                  summarization:
+                    type: boolean
+                  summarizationModel:
+                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
+                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
+                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
+                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
+                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
+                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
+                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
+                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
+                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
+                      "openai/gpt-5-nano", "".'
+                    type: string
+                  systemPromptAisearch:
+                    type: string
+                  systemPromptIndexSummarization:
+                    type: string
+                  systemPromptRewriteQuery:
+                    type: string
+                  tokenId:
+                    type: string
+                  type:
+                    description: 'Available values: "r2", "web-crawler".'
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.accountId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
+                || (has(self.initProvider) && has(self.initProvider.accountId))'
+            - message: spec.forProvider.source is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.source)
+                || (has(self.initProvider) && has(self.initProvider.source))'
+            - message: spec.forProvider.type is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
+          status:
+            description: SearchInstanceStatus defines the observed state of SearchInstance.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    type: string
+                  aiGatewayId:
+                    type: string
+                  aisearchModel:
+                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
+                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
+                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
+                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
+                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
+                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
+                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
+                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
+                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
+                      "openai/gpt-5-nano", "".'
+                    type: string
+                  cache:
+                    type: boolean
+                  cacheThreshold:
+                    description: 'Available values: "super_strict_match", "close_enough",
+                      "flexible_friend", "anything_goes".'
+                    type: string
+                  chunk:
+                    type: boolean
+                  chunkOverlap:
+                    type: number
+                  chunkSize:
+                    type: number
+                  createdAt:
+                    type: string
+                  createdBy:
+                    type: string
+                  customMetadata:
+                    items:
+                      properties:
+                        dataType:
+                          description: 'Available values: "text", "number", "boolean".'
+                          type: string
+                        fieldName:
+                          type: string
+                      type: object
+                    type: array
+                  embeddingModel:
+                    description: 'Available values: "@cf/qwen/qwen3-embedding-0.6b",
+                      "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m",
+                      "google-ai-studio/gemini-embedding-001", "openai/text-embedding-3-small",
+                      "openai/text-embedding-3-large", "".'
+                    type: string
+                  enable:
+                    type: boolean
+                  fusionMethod:
+                    description: 'Available values: "max", "rrf".'
+                    type: string
+                  hybridSearchEnabled:
+                    type: boolean
+                  id:
+                    type: string
+                  lastActivity:
+                    type: string
+                  maxNumResults:
+                    type: number
+                  metadata:
+                    properties:
+                      createdFromAisearchWizard:
+                        type: boolean
+                      workerDomain:
+                        type: string
+                    type: object
+                  modifiedAt:
+                    type: string
+                  modifiedBy:
+                    type: string
+                  paused:
+                    type: boolean
+                  publicEndpointId:
+                    type: string
+                  publicEndpointParams:
+                    properties:
+                      authorizedHosts:
+                        items:
+                          type: string
+                        type: array
+                      chatCompletionsEndpoint:
+                        properties:
+                          disabled:
+                            description: Disable chat completions endpoint for this
+                              public endpoint
+                            type: boolean
+                        type: object
+                      enabled:
+                        type: boolean
+                      mcp:
+                        properties:
+                          description:
+                            type: string
+                          disabled:
+                            description: Disable MCP endpoint for this public endpoint
+                            type: boolean
+                        type: object
+                      rateLimit:
+                        properties:
+                          periodMs:
+                            type: number
+                          requests:
+                            type: number
+                          technique:
+                            description: 'Available values: "fixed", "sliding".'
+                            type: string
+                        type: object
+                      searchEndpoint:
+                        properties:
+                          disabled:
+                            description: Disable search endpoint for this public endpoint
+                            type: boolean
+                        type: object
+                    type: object
+                  reranking:
+                    type: boolean
+                  rerankingModel:
+                    description: 'Available values: "@cf/baai/bge-reranker-base",
+                      "".'
+                    type: string
+                  retrievalOptions:
+                    properties:
+                      keywordMatchMode:
+                        description: |-
+                          Controls how keyword search terms are matched. exact_match requires all terms to appear (AND); fuzzy_match returns results containing any term (OR). Defaults to exact_match.
+                          Available values: "exact_match", "fuzzy_match".
+                        type: string
+                    type: object
+                  rewriteModel:
+                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
+                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
+                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
+                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
+                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
+                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
+                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
+                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
+                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
+                      "openai/gpt-5-nano", "".'
+                    type: string
+                  rewriteQuery:
+                    type: boolean
+                  scoreThreshold:
+                    type: number
+                  source:
+                    type: string
+                  sourceParams:
+                    properties:
+                      excludeItems:
+                        description: 'List of path patterns to exclude. Uses micromatch
+                          glob syntax: * matches within a path segment, ** matches
+                          across path segments (e.g., /admin/** matches /admin/users
+                          and /admin/settings/advanced)'
+                        items:
+                          type: string
+                        type: array
+                      includeItems:
+                        description: 'List of path patterns to include. Uses micromatch
+                          glob syntax: * matches within a path segment, ** matches
+                          across path segments (e.g., /blog/** matches /blog/post
+                          and /blog/2024/post)'
+                        items:
+                          type: string
+                        type: array
+                      prefix:
+                        type: string
+                      r2Jurisdiction:
+                        type: string
+                      webCrawler:
+                        properties:
+                          parseOptions:
+                            properties:
+                              includeHeaders:
+                                additionalProperties:
+                                  type: string
+                                type: object
+                                x-kubernetes-map-type: granular
+                              includeImages:
+                                type: boolean
+                              specificSitemaps:
+                                description: List of specific sitemap URLs to use
+                                  for crawling. Only valid when parse_type is 'sitemap'.
+                                items:
+                                  type: string
+                                type: array
+                              useBrowserRendering:
+                                type: boolean
+                            type: object
+                          parseType:
+                            description: 'Available values: "sitemap", "feed-rss".'
+                            type: string
+                          storeOptions:
+                            properties:
+                              r2Jurisdiction:
+                                type: string
+                              storageId:
+                                type: string
+                              storageType:
+                                description: 'Available values: "r2".'
+                                type: string
+                            type: object
+                        type: object
+                    type: object
+                  status:
+                    type: string
+                  summarization:
+                    type: boolean
+                  summarizationModel:
+                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
+                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
+                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
+                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
+                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
+                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
+                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
+                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
+                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
+                      "openai/gpt-5-nano", "".'
+                    type: string
+                  systemPromptAisearch:
+                    type: string
+                  systemPromptIndexSummarization:
+                    type: string
+                  systemPromptRewriteQuery:
+                    type: string
+                  tokenId:
+                    type: string
+                  type:
+                    description: 'Available values: "r2", "web-crawler".'
+                    type: string
+                  vectorizeName:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

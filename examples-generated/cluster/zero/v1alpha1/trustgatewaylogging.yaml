@@ -1,0 +1,22 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustGatewayLogging
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustgatewaylogging
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_gateway_logging
+  name: example-zero-trust-gateway-logging
+spec:
+  forProvider:
+    accountId: 699d98642c564d2e855e9661899b7252
+    redactPii: true
+    settingsByRuleType:
+      dns:
+        logAll: false
+        logBlocks: true
+      http:
+        logAll: false
+        logBlocks: true
+      l4:
+        logAll: false
+        logBlocks: true

@@ -1,0 +1,14 @@
+apiVersion: api.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: ShieldOperationSchemaValidationSettings
+metadata:
+  annotations:
+    meta.upbound.io/example-id: api/v1alpha1/shieldoperationschemavalidationsettings
+  labels:
+    testing.upbound.io/example-name: example_api_shield_operation_schema_validation_settings
+  name: example-api-shield-operation-schema-validation-settings
+  namespace: crossplane-system
+spec:
+  forProvider:
+    mitigationAction: block
+    operationId: f174e90a-fafe-4643-bbbc-4a0ed4fc8415
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

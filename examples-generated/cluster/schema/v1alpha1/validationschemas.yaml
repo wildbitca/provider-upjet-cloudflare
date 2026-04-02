@@ -1,0 +1,15 @@
+apiVersion: schema.upjet-cloudflare.upbound.io/v1alpha1
+kind: ValidationSchemas
+metadata:
+  annotations:
+    meta.upbound.io/example-id: schema/v1alpha1/validationschemas
+  labels:
+    testing.upbound.io/example-name: example_schema_validation_schemas
+  name: example-schema-validation-schemas
+spec:
+  forProvider:
+    kind: openapi_v3
+    name: petstore schema
+    source: <schema file contents>
+    validationEnabled: true
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

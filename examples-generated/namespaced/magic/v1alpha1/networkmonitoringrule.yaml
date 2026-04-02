@@ -1,0 +1,19 @@
+apiVersion: magic.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: NetworkMonitoringRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: magic/v1alpha1/networkmonitoringrule
+  labels:
+    testing.upbound.io/example-name: example_magic_network_monitoring_rule
+  name: example-magic-network-monitoring-rule
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 6f91088a406011ed95aed352566e8d4c
+    automaticAdvertisement: true
+    bandwidth: 1000
+    duration: 1m
+    name: my_rule_1
+    packetThreshold: 10000
+    prefixes:
+    - 203.0.113.1/32

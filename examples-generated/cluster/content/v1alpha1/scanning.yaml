@@ -1,0 +1,12 @@
+apiVersion: content.upjet-cloudflare.upbound.io/v1alpha1
+kind: Scanning
+metadata:
+  annotations:
+    meta.upbound.io/example-id: content/v1alpha1/scanning
+  labels:
+    testing.upbound.io/example-name: example_content_scanning
+  name: example-content-scanning
+spec:
+  forProvider:
+    value: enabled
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

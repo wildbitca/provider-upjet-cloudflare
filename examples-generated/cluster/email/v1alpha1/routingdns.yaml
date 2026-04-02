@@ -1,0 +1,12 @@
+apiVersion: email.upjet-cloudflare.upbound.io/v1alpha1
+kind: RoutingDNS
+metadata:
+  annotations:
+    meta.upbound.io/example-id: email/v1alpha1/routingdns
+  labels:
+    testing.upbound.io/example-name: example_email_routing_dns
+  name: example-email-routing-dns
+spec:
+  forProvider:
+    name: example.net
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

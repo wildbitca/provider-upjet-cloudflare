@@ -1,0 +1,156 @@
+apiVersion: pages.upjet-cloudflare.upbound.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: pages/v1alpha1/project
+  labels:
+    testing.upbound.io/example-name: example_pages_project
+  name: example-pages-project
+spec:
+  forProvider:
+    accountIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    buildConfig:
+      buildCaching: true
+      buildCommand: npm run build
+      destinationDir: build
+      rootDir: /
+      webAnalyticsTag: cee1c73f6e4743d0b5e6bb1a0bcaabcc
+      webAnalyticsTokenSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+    deploymentConfigs:
+      preview:
+        aiBindings:
+          AI_BINDING:
+            project_id: some-project-id
+        alwaysUseLatestCompatibilityDate: false
+        analyticsEngineDatasets:
+          ANALYTICS_ENGINE_BINDING:
+            dataset: api_analytics
+        browsers:
+          BROWSER: {}
+        buildImageMajorVersion: 3
+        compatibilityDate: "2025-01-01"
+        compatibilityFlags:
+        - url_standard
+        d1Databases:
+          D1_BINDING:
+            id: 445e2955-951a-43f8-a35b-a4d0c8138f63
+        durableObjectNamespaces:
+          DO_BINDING:
+            namespace_id: 5eb63bbbe01eeed093cb22bb8f5acdc3
+        envVars:
+          foo:
+            type: plain_text
+            value: hello world
+        failOpen: true
+        hyperdriveBindings:
+          HYPERDRIVE:
+            id: a76a99bc342644deb02c38d66082262a
+        kvNamespaces:
+          KV_BINDING:
+            namespace_id: 5eb63bbbe01eeed093cb22bb8f5acdc3
+        limits:
+          cpuMs: 100
+        mtlsCertificates:
+          MTLS:
+            certificate_id: d7cdd17c-916f-4cb7-aabe-585eb382ec4e
+        placement:
+          mode: smart
+        queueProducers:
+          QUEUE_PRODUCER_BINDING:
+            name: some-queue
+        r2Buckets:
+          R2_BINDING:
+            jurisdiction: eu
+            name: some-bucket
+        services:
+          SERVICE_BINDING:
+            entrypoint: MyHandler
+            environment: production
+            service: example-worker
+        usageModel: standard
+        vectorizeBindings:
+          VECTORIZE:
+            index_name: my_index
+        wranglerConfigHash: abc123def456
+      production:
+        aiBindings:
+          AI_BINDING:
+            project_id: some-project-id
+        alwaysUseLatestCompatibilityDate: false
+        analyticsEngineDatasets:
+          ANALYTICS_ENGINE_BINDING:
+            dataset: api_analytics
+        browsers:
+          BROWSER: {}
+        buildImageMajorVersion: 3
+        compatibilityDate: "2025-01-01"
+        compatibilityFlags:
+        - url_standard
+        d1Databases:
+          D1_BINDING:
+            id: 445e2955-951a-43f8-a35b-a4d0c8138f63
+        durableObjectNamespaces:
+          DO_BINDING:
+            namespace_id: 5eb63bbbe01eeed093cb22bb8f5acdc3
+        envVars:
+          foo:
+            type: plain_text
+            value: hello world
+        failOpen: true
+        hyperdriveBindings:
+          HYPERDRIVE:
+            id: a76a99bc342644deb02c38d66082262a
+        kvNamespaces:
+          KV_BINDING:
+            namespace_id: 5eb63bbbe01eeed093cb22bb8f5acdc3
+        limits:
+          cpuMs: 100
+        mtlsCertificates:
+          MTLS:
+            certificate_id: d7cdd17c-916f-4cb7-aabe-585eb382ec4e
+        placement:
+          mode: smart
+        queueProducers:
+          QUEUE_PRODUCER_BINDING:
+            name: some-queue
+        r2Buckets:
+          R2_BINDING:
+            jurisdiction: eu
+            name: some-bucket
+        services:
+          SERVICE_BINDING:
+            entrypoint: MyHandler
+            environment: production
+            service: example-worker
+        usageModel: standard
+        vectorizeBindings:
+          VECTORIZE:
+            index_name: my_index
+        wranglerConfigHash: abc123def456
+    name: my-pages-app
+    productionBranch: main
+    source:
+      config:
+        deploymentsEnabled: true
+        owner: my-org
+        ownerId: "12345678"
+        pathExcludes:
+        - string
+        pathIncludes:
+        - string
+        prCommentsEnabled: true
+        previewBranchExcludes:
+        - string
+        previewBranchIncludes:
+        - string
+        previewDeploymentSetting: all
+        productionBranch: main
+        productionDeploymentsEnabled: true
+        repoId: "12345678"
+        repoName: my-repo
+      type: github

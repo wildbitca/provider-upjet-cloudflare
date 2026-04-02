@@ -1,0 +1,1884 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: trustgatewaypolicies.zero.upjet-cloudflare.upbound.io
+spec:
+  group: zero.upjet-cloudflare.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: TrustGatewayPolicy
+    listKind: TrustGatewayPolicyList
+    plural: trustgatewaypolicies
+    singular: trustgatewaypolicy
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: TrustGatewayPolicy is the Schema for the TrustGatewayPolicys
+          API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: TrustGatewayPolicySpec defines the desired state of TrustGatewayPolicy
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  accountId:
+                    description: (String)
+                    type: string
+                  action:
+                    description: |-
+                      (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
+                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                      Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to `true`.
+                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                    type: string
+                  description:
+                    description: |-
+                      (String) Specify the rule description.
+                      Specify the rule description.
+                    type: string
+                  devicePosture:
+                    description: |-
+                      (String) Specify the wirefilter expression used for device posture check. The API automatically formats and sanitizes expressions before storing them.
+                      Specify the wirefilter expression used for device posture check. The API automatically formats and sanitizes expressions before storing them.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Specify whether the rule is enabled.
+                      Specify whether the rule is enabled.
+                    type: boolean
+                  expiration:
+                    description: (Attributes) Defines the expiration time stamp and
+                      default duration of a DNS policy. Takes precedence over the
+                      policy's schedule configuration, if any. This  does not apply
+                      to HTTP or network policies. Settable only for dns rules. (see
+                      below for nested schema)
+                    properties:
+                      duration:
+                        description: |-
+                          (Number) Defines the default duration a policy active in minutes. Must set in order to use the reset_expiration endpoint on this rule.
+                          Defines the default duration a policy active in minutes. Must set in order to use the `reset_expiration` endpoint on this rule.
+                        type: number
+                      expiresAt:
+                        description: |-
+                          zero offsets but converts them to the equivalent UTC+00:00  value and returns timestamps with a trailing Z. Expiration policies ignore client  timezones and expire globally at the specified expires_at time.
+                          Show the timestamp when the policy expires and stops applying.  The value must follow RFC 3339 and include a UTC offset.  The system accepts non-zero offsets but converts them to the equivalent UTC+00:00  value and returns timestamps with a trailing Z. Expiration policies ignore client  timezones and expire globally at the specified expires_at time.
+                        type: string
+                    type: object
+                  filters:
+                    description: |-
+                      (List of String) Specify the protocol or layer to evaluate the traffic, identity, and device posture expressions. Can only contain a single value.
+                      Specify the protocol or layer to evaluate the traffic, identity, and device posture expressions. Can only contain a single value.
+                    items:
+                      type: string
+                    type: array
+                  identity:
+                    description: |-
+                      (String) Specify the wirefilter expression used for identity matching. The API automatically formats and sanitizes expressions before storing them.
+                      Specify the wirefilter expression used for identity matching. The API automatically formats and sanitizes expressions before storing them.
+                    type: string
+                  name:
+                    description: |-
+                      (String) Specify the rule name.
+                      Specify the rule name.
+                    type: string
+                  precedence:
+                    description: |-
+                      (Number) Set the order of your rules. Lower values indicate higher precedence. At each processing phase, evaluate applicable rules in ascending order of this value.
+                      Set the order of your rules. Lower values indicate higher precedence. At each processing phase, evaluate applicable rules in ascending order of this value. Refer to [Order of enforcement](http://developers.cloudflare.
+                    type: number
+                  ruleSettings:
+                    description: returned values in your configuration to prevent
+                      drift. (see below for nested schema)
+                    properties:
+                      addHeaders:
+                        additionalProperties:
+                          items:
+                            type: string
+                          type: array
+                        description: |-
+                          value pairs. Use header names as keys that map to arrays of header values. Settable only for http rules with the action set to allow.
+                          Add custom headers to allowed requests as key-value pairs. Use header names as keys that map to arrays of header values. Settable only for `http` rules with the action set to `allow`.
+                        type: object
+                      allowChildBypass:
+                        description: |-
+                          (Boolean) Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
+                          Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
+                        type: boolean
+                      auditSsh:
+                        description: (Attributes) Define the settings for the Audit
+                          SSH action. Settable only for l4 rules with audit_ssh action.
+                          (see below for nested schema)
+                        properties:
+                          commandLogging:
+                            description: |-
+                              (Boolean) Enable SSH command logging.
+                              Enable SSH command logging.
+                            type: boolean
+                        type: object
+                      bisoAdminControls:
+                        description: (Attributes) Configure browser isolation behavior.
+                          Settable only for http rules with the action set to isolate.
+                          (see below for nested schema)
+                        properties:
+                          copy:
+                            description: |-
+                              (String) Configure copy behavior. If set to remote_only, users cannot copy isolated content from the remote browser to the local clipboard. If this field is absent, copying remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                              Configure copy behavior. If set to remote_only, users cannot copy isolated content from the remote browser to the local clipboard. If this field is absent, copying remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                            type: string
+                          dcp:
+                            description: |-
+                              pasting. Only applies when version == "v1".
+                              Set to false to enable copy-pasting. Only applies when `version == "v1"`.
+                            type: boolean
+                          dd:
+                            description: |-
+                              (Boolean) Set to false to enable downloading. Only applies when version == "v1".
+                              Set to false to enable downloading. Only applies when `version == "v1"`.
+                            type: boolean
+                          dk:
+                            description: |-
+                              (Boolean) Set to false to enable keyboard usage. Only applies when version == "v1".
+                              Set to false to enable keyboard usage. Only applies when `version == "v1"`.
+                            type: boolean
+                          download:
+                            description: |-
+                              (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                              Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                            type: string
+                          dp:
+                            description: |-
+                              (Boolean) Set to false to enable printing. Only applies when version == "v1".
+                              Set to false to enable printing. Only applies when `version == "v1"`.
+                            type: boolean
+                          du:
+                            description: |-
+                              (Boolean) Set to false to enable uploading. Only applies when version == "v1".
+                              Set to false to enable uploading. Only applies when `version == "v1"`.
+                            type: boolean
+                          keyboard:
+                            description: |-
+                              (String) Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                              Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                            type: string
+                          paste:
+                            description: |-
+                              (String) Configure paste behavior. If set to remote_only, users cannot paste content from the local clipboard into isolated pages. If this field is absent, pasting remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                              Configure paste behavior. If set to remote_only, users cannot paste content from the local clipboard into isolated pages. If this field is absent, pasting remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                            type: string
+                          printing:
+                            description: |-
+                              (String) Configure print behavior. Default, Printing is enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                              Configure print behavior. Default, Printing is enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                            type: string
+                          upload:
+                            description: |-
+                              (String) Configure upload behavior. If this field is absent, uploading remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                              Configure upload behavior. If this field is absent, uploading remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                            type: string
+                          version:
+                            description: |-
+                              only).
+                              Indicate which version of the browser isolation controls should apply.
+                              Available values: "v1", "v2".
+                            type: string
+                        type: object
+                      blockPage:
+                        description: (Attributes) Configure custom block page settings.
+                          If missing or null, use the account settings. Settable only
+                          for http rules with the action set to block. (see below
+                          for nested schema)
+                        properties:
+                          includeContext:
+                            description: |-
+                              (Boolean) Specify whether to pass the context information as query parameters.
+                              Specify whether to pass the context information as query parameters.
+                            type: boolean
+                          targetUri:
+                            description: |-
+                              (String) Specify the URI to which the user is redirected.
+                              Specify the URI to which the user is redirected.
+                            type: string
+                        type: object
+                      blockPageEnabled:
+                        description: |-
+                          (Boolean) Enable the custom block page. Settable only for dns rules with action block.
+                          Enable the custom block page. Settable only for `dns` rules with action `block`.
+                        type: boolean
+                      blockReason:
+                        description: |-
+                          (String) Explain why the rule blocks the request. The custom block page shows this text (if enabled). Settable only for dns, l4, and http rules when the action set to block.
+                          Explain why the rule blocks the request. The custom block page shows this text (if enabled). Settable only for `dns`, `l4`, and `http` rules when the action set to `block`.
+                        type: string
+                      bypassParentRule:
+                        description: |-
+                          (Boolean) Set to enable MSP accounts to bypass their parent's rules. Only MSP child accounts can set this. Settable for all types of rules.
+                          Set to enable MSP accounts to bypass their parent's rules. Only MSP child accounts can set this. Settable for all types of rules.
+                        type: boolean
+                      checkSession:
+                        description: (Attributes) Configure session check behavior.
+                          Settable only for l4 and http rules with the action set
+                          to allow. (see below for nested schema)
+                        properties:
+                          duration:
+                            description: |-
+                              (Number) Defines the default duration a policy active in minutes. Must set in order to use the reset_expiration endpoint on this rule.
+                              Sets the required session freshness threshold. The API returns a normalized version of this value.
+                            type: string
+                          enforce:
+                            description: |-
+                              (Boolean) Enable session enforcement.
+                              Enable session enforcement.
+                            type: boolean
+                        type: object
+                      dnsResolvers:
+                        description: (Attributes) Configure custom resolvers to route
+                          queries that match the resolver policy. Unused with 'resolve_dns_through_cloudflare'
+                          or 'resolve_dns_internally' settings. DNS queries get routed
+                          to the address closest to their origin. Only valid when
+                          a rule's action set to 'resolve'. Settable only for dns_resolver
+                          rules. (see below for nested schema)
+                        properties:
+                          ipv4:
+                            description: (Attributes List) (see below for nested schema)
+                            items:
+                              properties:
+                                ip:
+                                  description: |-
+                                    (String) Specify the IPv4 address of the upstream resolver.
+                                    Specify the IPv4 address of the upstream resolver.
+                                  type: string
+                                port:
+                                  description: |-
+                                    (Number) Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                                    Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                                  type: number
+                                routeThroughPrivateNetwork:
+                                  description: |-
+                                    (Boolean) Indicate whether to connect to this resolver over a private network. Must set when vnet_id set.
+                                    Indicate whether to connect to this resolver over a private network. Must set when vnet_id set.
+                                  type: boolean
+                                vnetId:
+                                  description: |-
+                                    (String) Specify an optional virtual network for this resolver. Uses default virtual network id if omitted.
+                                    Specify an optional virtual network for this resolver. Uses default virtual network id if omitted.
+                                  type: string
+                              type: object
+                            type: array
+                          ipv6:
+                            description: (Attributes List) (see below for nested schema)
+                            items:
+                              properties:
+                                ip:
+                                  description: |-
+                                    (String) Specify the IPv4 address of the upstream resolver.
+                                    Specify the IPv6 address of the upstream resolver.
+                                  type: string
+                                port:
+                                  description: |-
+                                    (Number) Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                                    Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                                  type: number
+                                routeThroughPrivateNetwork:
+                                  description: |-
+                                    (Boolean) Indicate whether to connect to this resolver over a private network. Must set when vnet_id set.
+                                    Indicate whether to connect to this resolver over a private network. Must set when vnet_id set.
+                                  type: boolean
+                                vnetId:
+                                  description: |-
+                                    (String) Specify an optional virtual network for this resolver. Uses default virtual network id if omitted.
+                                    Specify an optional virtual network for this resolver. Uses default virtual network id if omitted.
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      egress:
+                        description: (Attributes) Configure how Gateway Proxy traffic
+                          egresses. You can enable this setting for rules with Egress
+                          actions and filters, or omit it to indicate local egress
+                          via WARP IPs. Settable only for egress rules. (see below
+                          for nested schema)
+                        properties:
+                          ipv4:
+                            description: |-
+                              (Attributes List) (see below for nested schema)
+                              Specify the IPv4 address to use for egress.
+                            type: string
+                          ipv4Fallback:
+                            description: |-
+                              (String) Specify the fallback IPv4 address to use for egress when the primary IPv4 fails. Set '0.0.0.0' to indicate local egress via WARP IPs.
+                              Specify the fallback IPv4 address to use for egress when the primary IPv4 fails. Set '0.0.0.0' to indicate local egress via WARP IPs.
+                            type: string
+                          ipv6:
+                            description: |-
+                              (Attributes List) (see below for nested schema)
+                              Specify the IPv6 range to use for egress.
+                            type: string
+                        type: object
+                      forensicCopy:
+                        description: (Attributes) Configure whether a copy of the
+                          HTTP request will be sent to storage when the rule matches.
+                          (see below for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Specify whether the rule is enabled.
+                              Enable sending the copy to storage.
+                            type: boolean
+                        type: object
+                      ignoreCnameCategoryMatches:
+                        description: |-
+                          (Boolean) Ignore category matches at CNAME domains in a response. When off, evaluate categories in this rule against all CNAME domain categories in the response. Settable only for dns and dns_resolver rules.
+                          Ignore category matches at CNAME domains in a response. When off, evaluate categories in this rule against all CNAME domain categories in the response. Settable only for `dns` and `dns_resolver` rules.
+                        type: boolean
+                      insecureDisableDnssecValidation:
+                        description: |-
+                          (Boolean) Specify whether to disable DNSSEC validation (for Allow actions) [INSECURE]. Settable only for dns rules.
+                          Specify whether to disable DNSSEC validation (for Allow actions) [INSECURE]. Settable only for `dns` rules.
+                        type: boolean
+                      ipCategories:
+                        description: |-
+                          (Boolean) Enable IPs in DNS resolver category blocks. The system blocks only domain name categories unless you enable this setting. Settable only for dns and dns_resolver rules.
+                          Enable IPs in DNS resolver category blocks. The system blocks only domain name categories unless you enable this setting. Settable only for `dns` and `dns_resolver` rules.
+                        type: boolean
+                      ipIndicatorFeeds:
+                        description: |-
+                          (Boolean) Indicates whether to include IPs in DNS resolver indicator feed blocks. Default, indicator feeds block only domain names. Settable only for dns and dns_resolver rules.
+                          Indicates whether to include IPs in DNS resolver indicator feed blocks. Default, indicator feeds block only domain names. Settable only for `dns` and `dns_resolver` rules.
+                        type: boolean
+                      l4override:
+                        description: (Attributes) Send matching traffic to the supplied
+                          destination IP address and port. Settable only for l4 rules
+                          with the action set to l4_override. (see below for nested
+                          schema)
+                        properties:
+                          ip:
+                            description: |-
+                              (String) Specify the IPv4 address of the upstream resolver.
+                              Defines the IPv4 or IPv6 address.
+                            type: string
+                          port:
+                            description: |-
+                              (Number) Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                              Defines a port number to use for TCP/UDP overrides.
+                            type: number
+                        type: object
+                      notificationSettings:
+                        description: (Attributes) Configure a notification to display
+                          on the user's device when this rule matched. Settable for
+                          all types of rules with the action set to block. (see below
+                          for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Specify whether the rule is enabled.
+                              Enable notification.
+                            type: boolean
+                          includeContext:
+                            description: |-
+                              (Boolean) Specify whether to pass the context information as query parameters.
+                              Indicates whether to pass the context information as query parameters.
+                            type: boolean
+                          msg:
+                            description: |-
+                              (String) Customize the message shown in the notification.
+                              Customize the message shown in the notification.
+                            type: string
+                          supportUrl:
+                            description: |-
+                              (String) Defines an optional URL to direct users to additional information. If unset, the notification opens a block page.
+                              Defines an optional URL to direct users to additional information. If unset, the notification opens a block page.
+                            type: string
+                        type: object
+                      overrideHost:
+                        description: |-
+                          (String) Defines a hostname for override, for the matching DNS queries. Settable only for dns rules with the action set to override.
+                          Defines a hostname for override, for the matching DNS queries. Settable only for `dns` rules with the action set to `override`.
+                        type: string
+                      overrideIps:
+                        description: |-
+                          (List of String) Defines a an IP or set of IPs for overriding matched DNS queries. Settable only for dns rules with the action set to override.
+                          Defines a an IP or set of IPs for overriding matched DNS queries. Settable only for `dns` rules with the action set to `override`.
+                        items:
+                          type: string
+                        type: array
+                      payloadLog:
+                        description: (Attributes) Configure DLP payload logging. Settable
+                          only for http rules. (see below for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Specify whether the rule is enabled.
+                              Enable DLP payload logging for this rule.
+                            type: boolean
+                        type: object
+                      quarantine:
+                        description: (Attributes) Configure settings that apply to
+                          quarantine rules. Settable only for http rules. (see below
+                          for nested schema)
+                        properties:
+                          fileTypes:
+                            description: |-
+                              (List of String) Specify the types of files to sandbox.
+                              Specify the types of files to sandbox.
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      redirect:
+                        description: (Attributes) Apply settings to redirect rules.
+                          Settable only for http rules with the action set to redirect.
+                          (see below for nested schema)
+                        properties:
+                          includeContext:
+                            description: |-
+                              (Boolean) Specify whether to pass the context information as query parameters.
+                              Specify whether to pass the context information as query parameters.
+                            type: boolean
+                          preservePathAndQuery:
+                            description: |-
+                              (Boolean) Specify whether to append the path and query parameters from the original request to target_uri.
+                              Specify whether to append the path and query parameters from the original request to target_uri.
+                            type: boolean
+                          targetUri:
+                            description: |-
+                              (String) Specify the URI to which the user is redirected.
+                              Specify the URI to which the user is redirected.
+                            type: string
+                        type: object
+                      resolveDnsInternally:
+                        description: (Attributes) Configure to forward the query to
+                          the internal DNS service, passing the specified 'view_id'
+                          as input. Not used when 'dns_resolvers' is specified or
+                          'resolve_dns_through_cloudflare' is set. Only valid when
+                          a rule's action set to 'resolve'. Settable only for dns_resolver
+                          rules. (see below for nested schema)
+                        properties:
+                          fallback:
+                            description: |-
+                              (String) Specify the fallback behavior to apply when the internal DNS response code differs from 'NOERROR' or when the response data contains only CNAME records for 'A' or 'AAAA' queries.
+                              Available values: "none", "public_dns".
+                              Specify the fallback behavior to apply when the internal DNS response code differs from 'NOERROR' or when the response data contains only CNAME records for 'A' or 'AAAA' queries.
+                              Available values: "none", "public_dns".
+                            type: string
+                          viewId:
+                            description: |-
+                              (String) Specify the internal DNS view identifier to pass to the internal DNS service.
+                              Specify the internal DNS view identifier to pass to the internal DNS service.
+                            type: string
+                        type: object
+                      resolveDnsThroughCloudflare:
+                        description: |-
+                          (Boolean) Enable to send queries that match the policy to Cloudflare's default 1.1.1.1 DNS resolver. Cannot set when 'dns_resolvers' specified or 'resolve_dns_internally' is set. Only valid when a rule's action set to 'resolve'. Settable only for dns_resolver rules.
+                          Enable to send queries that match the policy to Cloudflare's default 1.1.1.1 DNS resolver. Cannot set when 'dns_resolvers' specified or 'resolve_dns_internally' is set. Only valid when a rule's action set to 'resolve'. Settable only for `dns_resolver` rules.
+                        type: boolean
+                      untrustedCert:
+                        description: (Attributes) Configure behavior when an upstream
+                          certificate is invalid or an SSL error occurs. Settable
+                          only for http rules with the action set to allow. (see below
+                          for nested schema)
+                        properties:
+                          action:
+                            description: |-
+                              (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
+                              Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                              Defines the action performed when an untrusted certificate seen. The default action an error with HTTP code 526.
+                              Available values: "pass_through", "block", "error".
+                            type: string
+                        type: object
+                    type: object
+                  schedule:
+                    description: (Attributes) Defines the schedule for activating
+                      DNS policies. Settable only for dns and dns_resolver rules.
+                      (see below for nested schema)
+                    properties:
+                      fri:
+                        description: |-
+                          24:00.  If this parameter omitted, the rule is deactivated on Fridays.
+                          Specify the time intervals when the rule is active on Fridays, in the increasing order from 00:00-24:00.  If this parameter omitted, the rule is deactivated on Fridays.
+                        type: string
+                      mon:
+                        description: |-
+                          24:00(capped at maximum of 6 time splits). If this parameter omitted, the rule is deactivated on Mondays.
+                          Specify the time intervals when the rule is active on Mondays, in the increasing order from 00:00-24:00(capped at maximum of 6 time splits). If this parameter omitted, the rule is deactivated on Mondays.
+                        type: string
+                      sat:
+                        description: |-
+                          24:00.  If this parameter omitted, the rule is deactivated on Saturdays.
+                          Specify the time intervals when the rule is active on Saturdays, in the increasing order from 00:00-24:00.  If this parameter omitted, the rule is deactivated on Saturdays.
+                        type: string
+                      sun:
+                        description: |-
+                          24:00. If this parameter omitted, the rule is deactivated on Sundays.
+                          Specify the time intervals when the rule is active on Sundays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Sundays.
+                        type: string
+                      thu:
+                        description: |-
+                          24:00. If this parameter omitted, the rule is deactivated on Thursdays.
+                          Specify the time intervals when the rule is active on Thursdays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Thursdays.
+                        type: string
+                      timeZone:
+                        description: |-
+                          (String) Specify the time zone for rule evaluation. When a valid time zone city name is provided, Gateway always uses the current time for that time zone. When this parameter is omitted, Gateway uses the time zone determined from the user's IP address. Colo time zone is used when the user's IP address does not resolve to a location.
+                          Specify the time zone for rule evaluation. When a [valid time zone city name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) is provided, Gateway always uses the current time for that time zone. When this parameter is omitted, Gateway uses the time zone determined from the user's IP address. Colo time zone is used when the user's IP address does not resolve to a location.
+                        type: string
+                      tue:
+                        description: |-
+                          24:00. If this parameter omitted, the rule is deactivated on Tuesdays.
+                          Specify the time intervals when the rule is active on Tuesdays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Tuesdays.
+                        type: string
+                      wed:
+                        description: |-
+                          24:00. If this parameter omitted, the rule is deactivated on Wednesdays.
+                          Specify the time intervals when the rule is active on Wednesdays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Wednesdays.
+                        type: string
+                    type: object
+                  traffic:
+                    description: |-
+                      (String) Specify the wirefilter expression used for traffic matching. The API automatically formats and sanitizes expressions before storing them.
+                      Specify the wirefilter expression used for traffic matching. The API automatically formats and sanitizes expressions before storing them.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    description: (String)
+                    type: string
+                  action:
+                    description: |-
+                      (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
+                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                      Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to `true`.
+                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                    type: string
+                  description:
+                    description: |-
+                      (String) Specify the rule description.
+                      Specify the rule description.
+                    type: string
+                  devicePosture:
+                    description: |-
+                      (String) Specify the wirefilter expression used for device posture check. The API automatically formats and sanitizes expressions before storing them.
+                      Specify the wirefilter expression used for device posture check. The API automatically formats and sanitizes expressions before storing them.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Specify whether the rule is enabled.
+                      Specify whether the rule is enabled.
+                    type: boolean
+                  expiration:
+                    description: (Attributes) Defines the expiration time stamp and
+                      default duration of a DNS policy. Takes precedence over the
+                      policy's schedule configuration, if any. This  does not apply
+                      to HTTP or network policies. Settable only for dns rules. (see
+                      below for nested schema)
+                    properties:
+                      duration:
+                        description: |-
+                          (Number) Defines the default duration a policy active in minutes. Must set in order to use the reset_expiration endpoint on this rule.
+                          Defines the default duration a policy active in minutes. Must set in order to use the `reset_expiration` endpoint on this rule.
+                        type: number
+                      expiresAt:
+                        description: |-
+                          zero offsets but converts them to the equivalent UTC+00:00  value and returns timestamps with a trailing Z. Expiration policies ignore client  timezones and expire globally at the specified expires_at time.
+                          Show the timestamp when the policy expires and stops applying.  The value must follow RFC 3339 and include a UTC offset.  The system accepts non-zero offsets but converts them to the equivalent UTC+00:00  value and returns timestamps with a trailing Z. Expiration policies ignore client  timezones and expire globally at the specified expires_at time.
+                        type: string
+                    type: object
+                  filters:
+                    description: |-
+                      (List of String) Specify the protocol or layer to evaluate the traffic, identity, and device posture expressions. Can only contain a single value.
+                      Specify the protocol or layer to evaluate the traffic, identity, and device posture expressions. Can only contain a single value.
+                    items:
+                      type: string
+                    type: array
+                  identity:
+                    description: |-
+                      (String) Specify the wirefilter expression used for identity matching. The API automatically formats and sanitizes expressions before storing them.
+                      Specify the wirefilter expression used for identity matching. The API automatically formats and sanitizes expressions before storing them.
+                    type: string
+                  name:
+                    description: |-
+                      (String) Specify the rule name.
+                      Specify the rule name.
+                    type: string
+                  precedence:
+                    description: |-
+                      (Number) Set the order of your rules. Lower values indicate higher precedence. At each processing phase, evaluate applicable rules in ascending order of this value.
+                      Set the order of your rules. Lower values indicate higher precedence. At each processing phase, evaluate applicable rules in ascending order of this value. Refer to [Order of enforcement](http://developers.cloudflare.
+                    type: number
+                  ruleSettings:
+                    description: returned values in your configuration to prevent
+                      drift. (see below for nested schema)
+                    properties:
+                      addHeaders:
+                        additionalProperties:
+                          items:
+                            type: string
+                          type: array
+                        description: |-
+                          value pairs. Use header names as keys that map to arrays of header values. Settable only for http rules with the action set to allow.
+                          Add custom headers to allowed requests as key-value pairs. Use header names as keys that map to arrays of header values. Settable only for `http` rules with the action set to `allow`.
+                        type: object
+                      allowChildBypass:
+                        description: |-
+                          (Boolean) Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
+                          Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
+                        type: boolean
+                      auditSsh:
+                        description: (Attributes) Define the settings for the Audit
+                          SSH action. Settable only for l4 rules with audit_ssh action.
+                          (see below for nested schema)
+                        properties:
+                          commandLogging:
+                            description: |-
+                              (Boolean) Enable SSH command logging.
+                              Enable SSH command logging.
+                            type: boolean
+                        type: object
+                      bisoAdminControls:
+                        description: (Attributes) Configure browser isolation behavior.
+                          Settable only for http rules with the action set to isolate.
+                          (see below for nested schema)
+                        properties:
+                          copy:
+                            description: |-
+                              (String) Configure copy behavior. If set to remote_only, users cannot copy isolated content from the remote browser to the local clipboard. If this field is absent, copying remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                              Configure copy behavior. If set to remote_only, users cannot copy isolated content from the remote browser to the local clipboard. If this field is absent, copying remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                            type: string
+                          dcp:
+                            description: |-
+                              pasting. Only applies when version == "v1".
+                              Set to false to enable copy-pasting. Only applies when `version == "v1"`.
+                            type: boolean
+                          dd:
+                            description: |-
+                              (Boolean) Set to false to enable downloading. Only applies when version == "v1".
+                              Set to false to enable downloading. Only applies when `version == "v1"`.
+                            type: boolean
+                          dk:
+                            description: |-
+                              (Boolean) Set to false to enable keyboard usage. Only applies when version == "v1".
+                              Set to false to enable keyboard usage. Only applies when `version == "v1"`.
+                            type: boolean
+                          download:
+                            description: |-
+                              (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                              Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                            type: string
+                          dp:
+                            description: |-
+                              (Boolean) Set to false to enable printing. Only applies when version == "v1".
+                              Set to false to enable printing. Only applies when `version == "v1"`.
+                            type: boolean
+                          du:
+                            description: |-
+                              (Boolean) Set to false to enable uploading. Only applies when version == "v1".
+                              Set to false to enable uploading. Only applies when `version == "v1"`.
+                            type: boolean
+                          keyboard:
+                            description: |-
+                              (String) Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                              Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                            type: string
+                          paste:
+                            description: |-
+                              (String) Configure paste behavior. If set to remote_only, users cannot paste content from the local clipboard into isolated pages. If this field is absent, pasting remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                              Configure paste behavior. If set to remote_only, users cannot paste content from the local clipboard into isolated pages. If this field is absent, pasting remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                            type: string
+                          printing:
+                            description: |-
+                              (String) Configure print behavior. Default, Printing is enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                              Configure print behavior. Default, Printing is enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                            type: string
+                          upload:
+                            description: |-
+                              (String) Configure upload behavior. If this field is absent, uploading remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                              Configure upload behavior. If this field is absent, uploading remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                            type: string
+                          version:
+                            description: |-
+                              only).
+                              Indicate which version of the browser isolation controls should apply.
+                              Available values: "v1", "v2".
+                            type: string
+                        type: object
+                      blockPage:
+                        description: (Attributes) Configure custom block page settings.
+                          If missing or null, use the account settings. Settable only
+                          for http rules with the action set to block. (see below
+                          for nested schema)
+                        properties:
+                          includeContext:
+                            description: |-
+                              (Boolean) Specify whether to pass the context information as query parameters.
+                              Specify whether to pass the context information as query parameters.
+                            type: boolean
+                          targetUri:
+                            description: |-
+                              (String) Specify the URI to which the user is redirected.
+                              Specify the URI to which the user is redirected.
+                            type: string
+                        type: object
+                      blockPageEnabled:
+                        description: |-
+                          (Boolean) Enable the custom block page. Settable only for dns rules with action block.
+                          Enable the custom block page. Settable only for `dns` rules with action `block`.
+                        type: boolean
+                      blockReason:
+                        description: |-
+                          (String) Explain why the rule blocks the request. The custom block page shows this text (if enabled). Settable only for dns, l4, and http rules when the action set to block.
+                          Explain why the rule blocks the request. The custom block page shows this text (if enabled). Settable only for `dns`, `l4`, and `http` rules when the action set to `block`.
+                        type: string
+                      bypassParentRule:
+                        description: |-
+                          (Boolean) Set to enable MSP accounts to bypass their parent's rules. Only MSP child accounts can set this. Settable for all types of rules.
+                          Set to enable MSP accounts to bypass their parent's rules. Only MSP child accounts can set this. Settable for all types of rules.
+                        type: boolean
+                      checkSession:
+                        description: (Attributes) Configure session check behavior.
+                          Settable only for l4 and http rules with the action set
+                          to allow. (see below for nested schema)
+                        properties:
+                          duration:
+                            description: |-
+                              (Number) Defines the default duration a policy active in minutes. Must set in order to use the reset_expiration endpoint on this rule.
+                              Sets the required session freshness threshold. The API returns a normalized version of this value.
+                            type: string
+                          enforce:
+                            description: |-
+                              (Boolean) Enable session enforcement.
+                              Enable session enforcement.
+                            type: boolean
+                        type: object
+                      dnsResolvers:
+                        description: (Attributes) Configure custom resolvers to route
+                          queries that match the resolver policy. Unused with 'resolve_dns_through_cloudflare'
+                          or 'resolve_dns_internally' settings. DNS queries get routed
+                          to the address closest to their origin. Only valid when
+                          a rule's action set to 'resolve'. Settable only for dns_resolver
+                          rules. (see below for nested schema)
+                        properties:
+                          ipv4:
+                            description: (Attributes List) (see below for nested schema)
+                            items:
+                              properties:
+                                ip:
+                                  description: |-
+                                    (String) Specify the IPv4 address of the upstream resolver.
+                                    Specify the IPv4 address of the upstream resolver.
+                                  type: string
+                                port:
+                                  description: |-
+                                    (Number) Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                                    Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                                  type: number
+                                routeThroughPrivateNetwork:
+                                  description: |-
+                                    (Boolean) Indicate whether to connect to this resolver over a private network. Must set when vnet_id set.
+                                    Indicate whether to connect to this resolver over a private network. Must set when vnet_id set.
+                                  type: boolean
+                                vnetId:
+                                  description: |-
+                                    (String) Specify an optional virtual network for this resolver. Uses default virtual network id if omitted.
+                                    Specify an optional virtual network for this resolver. Uses default virtual network id if omitted.
+                                  type: string
+                              type: object
+                            type: array
+                          ipv6:
+                            description: (Attributes List) (see below for nested schema)
+                            items:
+                              properties:
+                                ip:
+                                  description: |-
+                                    (String) Specify the IPv4 address of the upstream resolver.
+                                    Specify the IPv6 address of the upstream resolver.
+                                  type: string
+                                port:
+                                  description: |-
+                                    (Number) Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                                    Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                                  type: number
+                                routeThroughPrivateNetwork:
+                                  description: |-
+                                    (Boolean) Indicate whether to connect to this resolver over a private network. Must set when vnet_id set.
+                                    Indicate whether to connect to this resolver over a private network. Must set when vnet_id set.
+                                  type: boolean
+                                vnetId:
+                                  description: |-
+                                    (String) Specify an optional virtual network for this resolver. Uses default virtual network id if omitted.
+                                    Specify an optional virtual network for this resolver. Uses default virtual network id if omitted.
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      egress:
+                        description: (Attributes) Configure how Gateway Proxy traffic
+                          egresses. You can enable this setting for rules with Egress
+                          actions and filters, or omit it to indicate local egress
+                          via WARP IPs. Settable only for egress rules. (see below
+                          for nested schema)
+                        properties:
+                          ipv4:
+                            description: |-
+                              (Attributes List) (see below for nested schema)
+                              Specify the IPv4 address to use for egress.
+                            type: string
+                          ipv4Fallback:
+                            description: |-
+                              (String) Specify the fallback IPv4 address to use for egress when the primary IPv4 fails. Set '0.0.0.0' to indicate local egress via WARP IPs.
+                              Specify the fallback IPv4 address to use for egress when the primary IPv4 fails. Set '0.0.0.0' to indicate local egress via WARP IPs.
+                            type: string
+                          ipv6:
+                            description: |-
+                              (Attributes List) (see below for nested schema)
+                              Specify the IPv6 range to use for egress.
+                            type: string
+                        type: object
+                      forensicCopy:
+                        description: (Attributes) Configure whether a copy of the
+                          HTTP request will be sent to storage when the rule matches.
+                          (see below for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Specify whether the rule is enabled.
+                              Enable sending the copy to storage.
+                            type: boolean
+                        type: object
+                      ignoreCnameCategoryMatches:
+                        description: |-
+                          (Boolean) Ignore category matches at CNAME domains in a response. When off, evaluate categories in this rule against all CNAME domain categories in the response. Settable only for dns and dns_resolver rules.
+                          Ignore category matches at CNAME domains in a response. When off, evaluate categories in this rule against all CNAME domain categories in the response. Settable only for `dns` and `dns_resolver` rules.
+                        type: boolean
+                      insecureDisableDnssecValidation:
+                        description: |-
+                          (Boolean) Specify whether to disable DNSSEC validation (for Allow actions) [INSECURE]. Settable only for dns rules.
+                          Specify whether to disable DNSSEC validation (for Allow actions) [INSECURE]. Settable only for `dns` rules.
+                        type: boolean
+                      ipCategories:
+                        description: |-
+                          (Boolean) Enable IPs in DNS resolver category blocks. The system blocks only domain name categories unless you enable this setting. Settable only for dns and dns_resolver rules.
+                          Enable IPs in DNS resolver category blocks. The system blocks only domain name categories unless you enable this setting. Settable only for `dns` and `dns_resolver` rules.
+                        type: boolean
+                      ipIndicatorFeeds:
+                        description: |-
+                          (Boolean) Indicates whether to include IPs in DNS resolver indicator feed blocks. Default, indicator feeds block only domain names. Settable only for dns and dns_resolver rules.
+                          Indicates whether to include IPs in DNS resolver indicator feed blocks. Default, indicator feeds block only domain names. Settable only for `dns` and `dns_resolver` rules.
+                        type: boolean
+                      l4override:
+                        description: (Attributes) Send matching traffic to the supplied
+                          destination IP address and port. Settable only for l4 rules
+                          with the action set to l4_override. (see below for nested
+                          schema)
+                        properties:
+                          ip:
+                            description: |-
+                              (String) Specify the IPv4 address of the upstream resolver.
+                              Defines the IPv4 or IPv6 address.
+                            type: string
+                          port:
+                            description: |-
+                              (Number) Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                              Defines a port number to use for TCP/UDP overrides.
+                            type: number
+                        type: object
+                      notificationSettings:
+                        description: (Attributes) Configure a notification to display
+                          on the user's device when this rule matched. Settable for
+                          all types of rules with the action set to block. (see below
+                          for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Specify whether the rule is enabled.
+                              Enable notification.
+                            type: boolean
+                          includeContext:
+                            description: |-
+                              (Boolean) Specify whether to pass the context information as query parameters.
+                              Indicates whether to pass the context information as query parameters.
+                            type: boolean
+                          msg:
+                            description: |-
+                              (String) Customize the message shown in the notification.
+                              Customize the message shown in the notification.
+                            type: string
+                          supportUrl:
+                            description: |-
+                              (String) Defines an optional URL to direct users to additional information. If unset, the notification opens a block page.
+                              Defines an optional URL to direct users to additional information. If unset, the notification opens a block page.
+                            type: string
+                        type: object
+                      overrideHost:
+                        description: |-
+                          (String) Defines a hostname for override, for the matching DNS queries. Settable only for dns rules with the action set to override.
+                          Defines a hostname for override, for the matching DNS queries. Settable only for `dns` rules with the action set to `override`.
+                        type: string
+                      overrideIps:
+                        description: |-
+                          (List of String) Defines a an IP or set of IPs for overriding matched DNS queries. Settable only for dns rules with the action set to override.
+                          Defines a an IP or set of IPs for overriding matched DNS queries. Settable only for `dns` rules with the action set to `override`.
+                        items:
+                          type: string
+                        type: array
+                      payloadLog:
+                        description: (Attributes) Configure DLP payload logging. Settable
+                          only for http rules. (see below for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Specify whether the rule is enabled.
+                              Enable DLP payload logging for this rule.
+                            type: boolean
+                        type: object
+                      quarantine:
+                        description: (Attributes) Configure settings that apply to
+                          quarantine rules. Settable only for http rules. (see below
+                          for nested schema)
+                        properties:
+                          fileTypes:
+                            description: |-
+                              (List of String) Specify the types of files to sandbox.
+                              Specify the types of files to sandbox.
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      redirect:
+                        description: (Attributes) Apply settings to redirect rules.
+                          Settable only for http rules with the action set to redirect.
+                          (see below for nested schema)
+                        properties:
+                          includeContext:
+                            description: |-
+                              (Boolean) Specify whether to pass the context information as query parameters.
+                              Specify whether to pass the context information as query parameters.
+                            type: boolean
+                          preservePathAndQuery:
+                            description: |-
+                              (Boolean) Specify whether to append the path and query parameters from the original request to target_uri.
+                              Specify whether to append the path and query parameters from the original request to target_uri.
+                            type: boolean
+                          targetUri:
+                            description: |-
+                              (String) Specify the URI to which the user is redirected.
+                              Specify the URI to which the user is redirected.
+                            type: string
+                        type: object
+                      resolveDnsInternally:
+                        description: (Attributes) Configure to forward the query to
+                          the internal DNS service, passing the specified 'view_id'
+                          as input. Not used when 'dns_resolvers' is specified or
+                          'resolve_dns_through_cloudflare' is set. Only valid when
+                          a rule's action set to 'resolve'. Settable only for dns_resolver
+                          rules. (see below for nested schema)
+                        properties:
+                          fallback:
+                            description: |-
+                              (String) Specify the fallback behavior to apply when the internal DNS response code differs from 'NOERROR' or when the response data contains only CNAME records for 'A' or 'AAAA' queries.
+                              Available values: "none", "public_dns".
+                              Specify the fallback behavior to apply when the internal DNS response code differs from 'NOERROR' or when the response data contains only CNAME records for 'A' or 'AAAA' queries.
+                              Available values: "none", "public_dns".
+                            type: string
+                          viewId:
+                            description: |-
+                              (String) Specify the internal DNS view identifier to pass to the internal DNS service.
+                              Specify the internal DNS view identifier to pass to the internal DNS service.
+                            type: string
+                        type: object
+                      resolveDnsThroughCloudflare:
+                        description: |-
+                          (Boolean) Enable to send queries that match the policy to Cloudflare's default 1.1.1.1 DNS resolver. Cannot set when 'dns_resolvers' specified or 'resolve_dns_internally' is set. Only valid when a rule's action set to 'resolve'. Settable only for dns_resolver rules.
+                          Enable to send queries that match the policy to Cloudflare's default 1.1.1.1 DNS resolver. Cannot set when 'dns_resolvers' specified or 'resolve_dns_internally' is set. Only valid when a rule's action set to 'resolve'. Settable only for `dns_resolver` rules.
+                        type: boolean
+                      untrustedCert:
+                        description: (Attributes) Configure behavior when an upstream
+                          certificate is invalid or an SSL error occurs. Settable
+                          only for http rules with the action set to allow. (see below
+                          for nested schema)
+                        properties:
+                          action:
+                            description: |-
+                              (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
+                              Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                              Defines the action performed when an untrusted certificate seen. The default action an error with HTTP code 526.
+                              Available values: "pass_through", "block", "error".
+                            type: string
+                        type: object
+                    type: object
+                  schedule:
+                    description: (Attributes) Defines the schedule for activating
+                      DNS policies. Settable only for dns and dns_resolver rules.
+                      (see below for nested schema)
+                    properties:
+                      fri:
+                        description: |-
+                          24:00.  If this parameter omitted, the rule is deactivated on Fridays.
+                          Specify the time intervals when the rule is active on Fridays, in the increasing order from 00:00-24:00.  If this parameter omitted, the rule is deactivated on Fridays.
+                        type: string
+                      mon:
+                        description: |-
+                          24:00(capped at maximum of 6 time splits). If this parameter omitted, the rule is deactivated on Mondays.
+                          Specify the time intervals when the rule is active on Mondays, in the increasing order from 00:00-24:00(capped at maximum of 6 time splits). If this parameter omitted, the rule is deactivated on Mondays.
+                        type: string
+                      sat:
+                        description: |-
+                          24:00.  If this parameter omitted, the rule is deactivated on Saturdays.
+                          Specify the time intervals when the rule is active on Saturdays, in the increasing order from 00:00-24:00.  If this parameter omitted, the rule is deactivated on Saturdays.
+                        type: string
+                      sun:
+                        description: |-
+                          24:00. If this parameter omitted, the rule is deactivated on Sundays.
+                          Specify the time intervals when the rule is active on Sundays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Sundays.
+                        type: string
+                      thu:
+                        description: |-
+                          24:00. If this parameter omitted, the rule is deactivated on Thursdays.
+                          Specify the time intervals when the rule is active on Thursdays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Thursdays.
+                        type: string
+                      timeZone:
+                        description: |-
+                          (String) Specify the time zone for rule evaluation. When a valid time zone city name is provided, Gateway always uses the current time for that time zone. When this parameter is omitted, Gateway uses the time zone determined from the user's IP address. Colo time zone is used when the user's IP address does not resolve to a location.
+                          Specify the time zone for rule evaluation. When a [valid time zone city name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) is provided, Gateway always uses the current time for that time zone. When this parameter is omitted, Gateway uses the time zone determined from the user's IP address. Colo time zone is used when the user's IP address does not resolve to a location.
+                        type: string
+                      tue:
+                        description: |-
+                          24:00. If this parameter omitted, the rule is deactivated on Tuesdays.
+                          Specify the time intervals when the rule is active on Tuesdays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Tuesdays.
+                        type: string
+                      wed:
+                        description: |-
+                          24:00. If this parameter omitted, the rule is deactivated on Wednesdays.
+                          Specify the time intervals when the rule is active on Wednesdays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Wednesdays.
+                        type: string
+                    type: object
+                  traffic:
+                    description: |-
+                      (String) Specify the wirefilter expression used for traffic matching. The API automatically formats and sanitizes expressions before storing them.
+                      Specify the wirefilter expression used for traffic matching. The API automatically formats and sanitizes expressions before storing them.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.accountId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
+                || (has(self.initProvider) && has(self.initProvider.accountId))'
+            - message: spec.forProvider.action is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.action)
+                || (has(self.initProvider) && has(self.initProvider.action))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: TrustGatewayPolicyStatus defines the observed state of TrustGatewayPolicy.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    description: (String)
+                    type: string
+                  action:
+                    description: |-
+                      (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
+                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                      Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to `true`.
+                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                    type: string
+                  createdAt:
+                    description: (String)
+                    type: string
+                  deletedAt:
+                    description: |-
+                      (String) Indicate the date of deletion, if any.
+                      Indicate the date of deletion, if any.
+                    type: string
+                  description:
+                    description: |-
+                      (String) Specify the rule description.
+                      Specify the rule description.
+                    type: string
+                  devicePosture:
+                    description: |-
+                      (String) Specify the wirefilter expression used for device posture check. The API automatically formats and sanitizes expressions before storing them.
+                      Specify the wirefilter expression used for device posture check. The API automatically formats and sanitizes expressions before storing them.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Specify whether the rule is enabled.
+                      Specify whether the rule is enabled.
+                    type: boolean
+                  expiration:
+                    description: (Attributes) Defines the expiration time stamp and
+                      default duration of a DNS policy. Takes precedence over the
+                      policy's schedule configuration, if any. This  does not apply
+                      to HTTP or network policies. Settable only for dns rules. (see
+                      below for nested schema)
+                    properties:
+                      duration:
+                        description: |-
+                          (Number) Defines the default duration a policy active in minutes. Must set in order to use the reset_expiration endpoint on this rule.
+                          Defines the default duration a policy active in minutes. Must set in order to use the `reset_expiration` endpoint on this rule.
+                        type: number
+                      expired:
+                        description: |-
+                          (Boolean) Indicates whether the policy is expired.
+                          Indicates whether the policy is expired.
+                        type: boolean
+                      expiresAt:
+                        description: |-
+                          zero offsets but converts them to the equivalent UTC+00:00  value and returns timestamps with a trailing Z. Expiration policies ignore client  timezones and expire globally at the specified expires_at time.
+                          Show the timestamp when the policy expires and stops applying.  The value must follow RFC 3339 and include a UTC offset.  The system accepts non-zero offsets but converts them to the equivalent UTC+00:00  value and returns timestamps with a trailing Z. Expiration policies ignore client  timezones and expire globally at the specified expires_at time.
+                        type: string
+                    type: object
+                  filters:
+                    description: |-
+                      (List of String) Specify the protocol or layer to evaluate the traffic, identity, and device posture expressions. Can only contain a single value.
+                      Specify the protocol or layer to evaluate the traffic, identity, and device posture expressions. Can only contain a single value.
+                    items:
+                      type: string
+                    type: array
+                  id:
+                    description: (String) Identify the API resource with a UUID.
+                    type: string
+                  identity:
+                    description: |-
+                      (String) Specify the wirefilter expression used for identity matching. The API automatically formats and sanitizes expressions before storing them.
+                      Specify the wirefilter expression used for identity matching. The API automatically formats and sanitizes expressions before storing them.
+                    type: string
+                  name:
+                    description: |-
+                      (String) Specify the rule name.
+                      Specify the rule name.
+                    type: string
+                  precedence:
+                    description: |-
+                      (Number) Set the order of your rules. Lower values indicate higher precedence. At each processing phase, evaluate applicable rules in ascending order of this value.
+                      Set the order of your rules. Lower values indicate higher precedence. At each processing phase, evaluate applicable rules in ascending order of this value. Refer to [Order of enforcement](http://developers.cloudflare.
+                    type: number
+                  readOnly:
+                    description: |-
+                      (Boolean) Indicate that this rule is shared via the Orgs API and read only.
+                      Indicate that this rule is shared via the Orgs API and read only.
+                    type: boolean
+                  ruleSettings:
+                    description: returned values in your configuration to prevent
+                      drift. (see below for nested schema)
+                    properties:
+                      addHeaders:
+                        additionalProperties:
+                          items:
+                            type: string
+                          type: array
+                        description: |-
+                          value pairs. Use header names as keys that map to arrays of header values. Settable only for http rules with the action set to allow.
+                          Add custom headers to allowed requests as key-value pairs. Use header names as keys that map to arrays of header values. Settable only for `http` rules with the action set to `allow`.
+                        type: object
+                      allowChildBypass:
+                        description: |-
+                          (Boolean) Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
+                          Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
+                        type: boolean
+                      auditSsh:
+                        description: (Attributes) Define the settings for the Audit
+                          SSH action. Settable only for l4 rules with audit_ssh action.
+                          (see below for nested schema)
+                        properties:
+                          commandLogging:
+                            description: |-
+                              (Boolean) Enable SSH command logging.
+                              Enable SSH command logging.
+                            type: boolean
+                        type: object
+                      bisoAdminControls:
+                        description: (Attributes) Configure browser isolation behavior.
+                          Settable only for http rules with the action set to isolate.
+                          (see below for nested schema)
+                        properties:
+                          copy:
+                            description: |-
+                              (String) Configure copy behavior. If set to remote_only, users cannot copy isolated content from the remote browser to the local clipboard. If this field is absent, copying remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                              Configure copy behavior. If set to remote_only, users cannot copy isolated content from the remote browser to the local clipboard. If this field is absent, copying remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                            type: string
+                          dcp:
+                            description: |-
+                              pasting. Only applies when version == "v1".
+                              Set to false to enable copy-pasting. Only applies when `version == "v1"`.
+                            type: boolean
+                          dd:
+                            description: |-
+                              (Boolean) Set to false to enable downloading. Only applies when version == "v1".
+                              Set to false to enable downloading. Only applies when `version == "v1"`.
+                            type: boolean
+                          dk:
+                            description: |-
+                              (Boolean) Set to false to enable keyboard usage. Only applies when version == "v1".
+                              Set to false to enable keyboard usage. Only applies when `version == "v1"`.
+                            type: boolean
+                          download:
+                            description: |-
+                              (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                              Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                            type: string
+                          dp:
+                            description: |-
+                              (Boolean) Set to false to enable printing. Only applies when version == "v1".
+                              Set to false to enable printing. Only applies when `version == "v1"`.
+                            type: boolean
+                          du:
+                            description: |-
+                              (Boolean) Set to false to enable uploading. Only applies when version == "v1".
+                              Set to false to enable uploading. Only applies when `version == "v1"`.
+                            type: boolean
+                          keyboard:
+                            description: |-
+                              (String) Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                              Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                            type: string
+                          paste:
+                            description: |-
+                              (String) Configure paste behavior. If set to remote_only, users cannot paste content from the local clipboard into isolated pages. If this field is absent, pasting remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                              Configure paste behavior. If set to remote_only, users cannot paste content from the local clipboard into isolated pages. If this field is absent, pasting remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled", "remote_only".
+                            type: string
+                          printing:
+                            description: |-
+                              (String) Configure print behavior. Default, Printing is enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                              Configure print behavior. Default, Printing is enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                            type: string
+                          upload:
+                            description: |-
+                              (String) Configure upload behavior. If this field is absent, uploading remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                              Configure upload behavior. If this field is absent, uploading remains enabled. Applies only when version == "v2".
+                              Available values: "enabled", "disabled".
+                            type: string
+                          version:
+                            description: |-
+                              only).
+                              Indicate which version of the browser isolation controls should apply.
+                              Available values: "v1", "v2".
+                            type: string
+                        type: object
+                      blockPage:
+                        description: (Attributes) Configure custom block page settings.
+                          If missing or null, use the account settings. Settable only
+                          for http rules with the action set to block. (see below
+                          for nested schema)
+                        properties:
+                          includeContext:
+                            description: |-
+                              (Boolean) Specify whether to pass the context information as query parameters.
+                              Specify whether to pass the context information as query parameters.
+                            type: boolean
+                          targetUri:
+                            description: |-
+                              (String) Specify the URI to which the user is redirected.
+                              Specify the URI to which the user is redirected.
+                            type: string
+                        type: object
+                      blockPageEnabled:
+                        description: |-
+                          (Boolean) Enable the custom block page. Settable only for dns rules with action block.
+                          Enable the custom block page. Settable only for `dns` rules with action `block`.
+                        type: boolean
+                      blockReason:
+                        description: |-
+                          (String) Explain why the rule blocks the request. The custom block page shows this text (if enabled). Settable only for dns, l4, and http rules when the action set to block.
+                          Explain why the rule blocks the request. The custom block page shows this text (if enabled). Settable only for `dns`, `l4`, and `http` rules when the action set to `block`.
+                        type: string
+                      bypassParentRule:
+                        description: |-
+                          (Boolean) Set to enable MSP accounts to bypass their parent's rules. Only MSP child accounts can set this. Settable for all types of rules.
+                          Set to enable MSP accounts to bypass their parent's rules. Only MSP child accounts can set this. Settable for all types of rules.
+                        type: boolean
+                      checkSession:
+                        description: (Attributes) Configure session check behavior.
+                          Settable only for l4 and http rules with the action set
+                          to allow. (see below for nested schema)
+                        properties:
+                          duration:
+                            description: |-
+                              (Number) Defines the default duration a policy active in minutes. Must set in order to use the reset_expiration endpoint on this rule.
+                              Sets the required session freshness threshold. The API returns a normalized version of this value.
+                            type: string
+                          enforce:
+                            description: |-
+                              (Boolean) Enable session enforcement.
+                              Enable session enforcement.
+                            type: boolean
+                        type: object
+                      dnsResolvers:
+                        description: (Attributes) Configure custom resolvers to route
+                          queries that match the resolver policy. Unused with 'resolve_dns_through_cloudflare'
+                          or 'resolve_dns_internally' settings. DNS queries get routed
+                          to the address closest to their origin. Only valid when
+                          a rule's action set to 'resolve'. Settable only for dns_resolver
+                          rules. (see below for nested schema)
+                        properties:
+                          ipv4:
+                            description: (Attributes List) (see below for nested schema)
+                            items:
+                              properties:
+                                ip:
+                                  description: |-
+                                    (String) Specify the IPv4 address of the upstream resolver.
+                                    Specify the IPv4 address of the upstream resolver.
+                                  type: string
+                                port:
+                                  description: |-
+                                    (Number) Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                                    Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                                  type: number
+                                routeThroughPrivateNetwork:
+                                  description: |-
+                                    (Boolean) Indicate whether to connect to this resolver over a private network. Must set when vnet_id set.
+                                    Indicate whether to connect to this resolver over a private network. Must set when vnet_id set.
+                                  type: boolean
+                                vnetId:
+                                  description: |-
+                                    (String) Specify an optional virtual network for this resolver. Uses default virtual network id if omitted.
+                                    Specify an optional virtual network for this resolver. Uses default virtual network id if omitted.
+                                  type: string
+                              type: object
+                            type: array
+                          ipv6:
+                            description: (Attributes List) (see below for nested schema)
+                            items:
+                              properties:
+                                ip:
+                                  description: |-
+                                    (String) Specify the IPv4 address of the upstream resolver.
+                                    Specify the IPv6 address of the upstream resolver.
+                                  type: string
+                                port:
+                                  description: |-
+                                    (Number) Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                                    Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                                  type: number
+                                routeThroughPrivateNetwork:
+                                  description: |-
+                                    (Boolean) Indicate whether to connect to this resolver over a private network. Must set when vnet_id set.
+                                    Indicate whether to connect to this resolver over a private network. Must set when vnet_id set.
+                                  type: boolean
+                                vnetId:
+                                  description: |-
+                                    (String) Specify an optional virtual network for this resolver. Uses default virtual network id if omitted.
+                                    Specify an optional virtual network for this resolver. Uses default virtual network id if omitted.
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      egress:
+                        description: (Attributes) Configure how Gateway Proxy traffic
+                          egresses. You can enable this setting for rules with Egress
+                          actions and filters, or omit it to indicate local egress
+                          via WARP IPs. Settable only for egress rules. (see below
+                          for nested schema)
+                        properties:
+                          ipv4:
+                            description: |-
+                              (Attributes List) (see below for nested schema)
+                              Specify the IPv4 address to use for egress.
+                            type: string
+                          ipv4Fallback:
+                            description: |-
+                              (String) Specify the fallback IPv4 address to use for egress when the primary IPv4 fails. Set '0.0.0.0' to indicate local egress via WARP IPs.
+                              Specify the fallback IPv4 address to use for egress when the primary IPv4 fails. Set '0.0.0.0' to indicate local egress via WARP IPs.
+                            type: string
+                          ipv6:
+                            description: |-
+                              (Attributes List) (see below for nested schema)
+                              Specify the IPv6 range to use for egress.
+                            type: string
+                        type: object
+                      forensicCopy:
+                        description: (Attributes) Configure whether a copy of the
+                          HTTP request will be sent to storage when the rule matches.
+                          (see below for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Specify whether the rule is enabled.
+                              Enable sending the copy to storage.
+                            type: boolean
+                        type: object
+                      ignoreCnameCategoryMatches:
+                        description: |-
+                          (Boolean) Ignore category matches at CNAME domains in a response. When off, evaluate categories in this rule against all CNAME domain categories in the response. Settable only for dns and dns_resolver rules.
+                          Ignore category matches at CNAME domains in a response. When off, evaluate categories in this rule against all CNAME domain categories in the response. Settable only for `dns` and `dns_resolver` rules.
+                        type: boolean
+                      insecureDisableDnssecValidation:
+                        description: |-
+                          (Boolean) Specify whether to disable DNSSEC validation (for Allow actions) [INSECURE]. Settable only for dns rules.
+                          Specify whether to disable DNSSEC validation (for Allow actions) [INSECURE]. Settable only for `dns` rules.
+                        type: boolean
+                      ipCategories:
+                        description: |-
+                          (Boolean) Enable IPs in DNS resolver category blocks. The system blocks only domain name categories unless you enable this setting. Settable only for dns and dns_resolver rules.
+                          Enable IPs in DNS resolver category blocks. The system blocks only domain name categories unless you enable this setting. Settable only for `dns` and `dns_resolver` rules.
+                        type: boolean
+                      ipIndicatorFeeds:
+                        description: |-
+                          (Boolean) Indicates whether to include IPs in DNS resolver indicator feed blocks. Default, indicator feeds block only domain names. Settable only for dns and dns_resolver rules.
+                          Indicates whether to include IPs in DNS resolver indicator feed blocks. Default, indicator feeds block only domain names. Settable only for `dns` and `dns_resolver` rules.
+                        type: boolean
+                      l4override:
+                        description: (Attributes) Send matching traffic to the supplied
+                          destination IP address and port. Settable only for l4 rules
+                          with the action set to l4_override. (see below for nested
+                          schema)
+                        properties:
+                          ip:
+                            description: |-
+                              (String) Specify the IPv4 address of the upstream resolver.
+                              Defines the IPv4 or IPv6 address.
+                            type: string
+                          port:
+                            description: |-
+                              (Number) Specify a port number to use for the upstream resolver. Defaults to 53 if unspecified.
+                              Defines a port number to use for TCP/UDP overrides.
+                            type: number
+                        type: object
+                      notificationSettings:
+                        description: (Attributes) Configure a notification to display
+                          on the user's device when this rule matched. Settable for
+                          all types of rules with the action set to block. (see below
+                          for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Specify whether the rule is enabled.
+                              Enable notification.
+                            type: boolean
+                          includeContext:
+                            description: |-
+                              (Boolean) Specify whether to pass the context information as query parameters.
+                              Indicates whether to pass the context information as query parameters.
+                            type: boolean
+                          msg:
+                            description: |-
+                              (String) Customize the message shown in the notification.
+                              Customize the message shown in the notification.
+                            type: string
+                          supportUrl:
+                            description: |-
+                              (String) Defines an optional URL to direct users to additional information. If unset, the notification opens a block page.
+                              Defines an optional URL to direct users to additional information. If unset, the notification opens a block page.
+                            type: string
+                        type: object
+                      overrideHost:
+                        description: |-
+                          (String) Defines a hostname for override, for the matching DNS queries. Settable only for dns rules with the action set to override.
+                          Defines a hostname for override, for the matching DNS queries. Settable only for `dns` rules with the action set to `override`.
+                        type: string
+                      overrideIps:
+                        description: |-
+                          (List of String) Defines a an IP or set of IPs for overriding matched DNS queries. Settable only for dns rules with the action set to override.
+                          Defines a an IP or set of IPs for overriding matched DNS queries. Settable only for `dns` rules with the action set to `override`.
+                        items:
+                          type: string
+                        type: array
+                      payloadLog:
+                        description: (Attributes) Configure DLP payload logging. Settable
+                          only for http rules. (see below for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Specify whether the rule is enabled.
+                              Enable DLP payload logging for this rule.
+                            type: boolean
+                        type: object
+                      quarantine:
+                        description: (Attributes) Configure settings that apply to
+                          quarantine rules. Settable only for http rules. (see below
+                          for nested schema)
+                        properties:
+                          fileTypes:
+                            description: |-
+                              (List of String) Specify the types of files to sandbox.
+                              Specify the types of files to sandbox.
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      redirect:
+                        description: (Attributes) Apply settings to redirect rules.
+                          Settable only for http rules with the action set to redirect.
+                          (see below for nested schema)
+                        properties:
+                          includeContext:
+                            description: |-
+                              (Boolean) Specify whether to pass the context information as query parameters.
+                              Specify whether to pass the context information as query parameters.
+                            type: boolean
+                          preservePathAndQuery:
+                            description: |-
+                              (Boolean) Specify whether to append the path and query parameters from the original request to target_uri.
+                              Specify whether to append the path and query parameters from the original request to target_uri.
+                            type: boolean
+                          targetUri:
+                            description: |-
+                              (String) Specify the URI to which the user is redirected.
+                              Specify the URI to which the user is redirected.
+                            type: string
+                        type: object
+                      resolveDnsInternally:
+                        description: (Attributes) Configure to forward the query to
+                          the internal DNS service, passing the specified 'view_id'
+                          as input. Not used when 'dns_resolvers' is specified or
+                          'resolve_dns_through_cloudflare' is set. Only valid when
+                          a rule's action set to 'resolve'. Settable only for dns_resolver
+                          rules. (see below for nested schema)
+                        properties:
+                          fallback:
+                            description: |-
+                              (String) Specify the fallback behavior to apply when the internal DNS response code differs from 'NOERROR' or when the response data contains only CNAME records for 'A' or 'AAAA' queries.
+                              Available values: "none", "public_dns".
+                              Specify the fallback behavior to apply when the internal DNS response code differs from 'NOERROR' or when the response data contains only CNAME records for 'A' or 'AAAA' queries.
+                              Available values: "none", "public_dns".
+                            type: string
+                          viewId:
+                            description: |-
+                              (String) Specify the internal DNS view identifier to pass to the internal DNS service.
+                              Specify the internal DNS view identifier to pass to the internal DNS service.
+                            type: string
+                        type: object
+                      resolveDnsThroughCloudflare:
+                        description: |-
+                          (Boolean) Enable to send queries that match the policy to Cloudflare's default 1.1.1.1 DNS resolver. Cannot set when 'dns_resolvers' specified or 'resolve_dns_internally' is set. Only valid when a rule's action set to 'resolve'. Settable only for dns_resolver rules.
+                          Enable to send queries that match the policy to Cloudflare's default 1.1.1.1 DNS resolver. Cannot set when 'dns_resolvers' specified or 'resolve_dns_internally' is set. Only valid when a rule's action set to 'resolve'. Settable only for `dns_resolver` rules.
+                        type: boolean
+                      untrustedCert:
+                        description: (Attributes) Configure behavior when an upstream
+                          certificate is invalid or an SSL error occurs. Settable
+                          only for http rules with the action set to allow. (see below
+                          for nested schema)
+                        properties:
+                          action:
+                            description: |-
+                              (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
+                              Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                              Defines the action performed when an untrusted certificate seen. The default action an error with HTTP code 526.
+                              Available values: "pass_through", "block", "error".
+                            type: string
+                        type: object
+                    type: object
+                  schedule:
+                    description: (Attributes) Defines the schedule for activating
+                      DNS policies. Settable only for dns and dns_resolver rules.
+                      (see below for nested schema)
+                    properties:
+                      fri:
+                        description: |-
+                          24:00.  If this parameter omitted, the rule is deactivated on Fridays.
+                          Specify the time intervals when the rule is active on Fridays, in the increasing order from 00:00-24:00.  If this parameter omitted, the rule is deactivated on Fridays.
+                        type: string
+                      mon:
+                        description: |-
+                          24:00(capped at maximum of 6 time splits). If this parameter omitted, the rule is deactivated on Mondays.
+                          Specify the time intervals when the rule is active on Mondays, in the increasing order from 00:00-24:00(capped at maximum of 6 time splits). If this parameter omitted, the rule is deactivated on Mondays.
+                        type: string
+                      sat:
+                        description: |-
+                          24:00.  If this parameter omitted, the rule is deactivated on Saturdays.
+                          Specify the time intervals when the rule is active on Saturdays, in the increasing order from 00:00-24:00.  If this parameter omitted, the rule is deactivated on Saturdays.
+                        type: string
+                      sun:
+                        description: |-
+                          24:00. If this parameter omitted, the rule is deactivated on Sundays.
+                          Specify the time intervals when the rule is active on Sundays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Sundays.
+                        type: string
+                      thu:
+                        description: |-
+                          24:00. If this parameter omitted, the rule is deactivated on Thursdays.
+                          Specify the time intervals when the rule is active on Thursdays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Thursdays.
+                        type: string
+                      timeZone:
+                        description: |-
+                          (String) Specify the time zone for rule evaluation. When a valid time zone city name is provided, Gateway always uses the current time for that time zone. When this parameter is omitted, Gateway uses the time zone determined from the user's IP address. Colo time zone is used when the user's IP address does not resolve to a location.
+                          Specify the time zone for rule evaluation. When a [valid time zone city name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) is provided, Gateway always uses the current time for that time zone. When this parameter is omitted, Gateway uses the time zone determined from the user's IP address. Colo time zone is used when the user's IP address does not resolve to a location.
+                        type: string
+                      tue:
+                        description: |-
+                          24:00. If this parameter omitted, the rule is deactivated on Tuesdays.
+                          Specify the time intervals when the rule is active on Tuesdays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Tuesdays.
+                        type: string
+                      wed:
+                        description: |-
+                          24:00. If this parameter omitted, the rule is deactivated on Wednesdays.
+                          Specify the time intervals when the rule is active on Wednesdays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Wednesdays.
+                        type: string
+                    type: object
+                  sharable:
+                    description: |-
+                      (Boolean) Indicate that this rule is sharable via the Orgs API.
+                      Indicate that this rule is sharable via the Orgs API.
+                    type: boolean
+                  sourceAccount:
+                    description: |-
+                      (String) Provide the account tag of the account that created the rule.
+                      Provide the account tag of the account that created the rule.
+                    type: string
+                  traffic:
+                    description: |-
+                      (String) Specify the wirefilter expression used for traffic matching. The API automatically formats and sanitizes expressions before storing them.
+                      Specify the wirefilter expression used for traffic matching. The API automatically formats and sanitizes expressions before storing them.
+                    type: string
+                  updatedAt:
+                    description: (String)
+                    type: string
+                  version:
+                    description: |-
+                      only).
+                      Indicate the version number of the rule(read-only).
+                    type: number
+                  warningStatus:
+                    description: |-
+                      (String) Indicate a warning for a misconfigured rule, if any.
+                      Indicate a warning for a misconfigured rule, if any.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

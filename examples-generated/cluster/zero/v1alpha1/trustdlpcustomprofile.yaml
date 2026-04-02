@@ -1,0 +1,36 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustDlpCustomProfile
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustdlpcustomprofile
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_dlp_custom_profile
+  name: example-zero-trust-dlp-custom-profile
+spec:
+  forProvider:
+    accountId: account_id
+    description: Custom profile with entries
+    name: name
+    sharedEntries:
+    - enabled: true
+      entryId: 56a8c060-01bb-4f89-ba1e-3ad42770a342
+      entryType: predefined
+
+---
+
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustDlpCustomEntry
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustdlpcustomprofile
+  labels:
+    testing.upbound.io/example-name: example_custom_entry
+  name: example-custom-entry
+spec:
+  forProvider:
+    accountId: account_id
+    enabled: true
+    name: custom
+    pattern:
+      regex: customentryregex
+    profileId: ${cloudflare_zero_trust_dlp_custom_profile.example_zero_trust_dlp_custom_profile.id}

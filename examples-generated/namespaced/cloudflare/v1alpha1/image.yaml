@@ -1,0 +1,17 @@
+apiVersion: cloudflare.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Image
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudflare/v1alpha1/image
+  labels:
+    testing.upbound.io/example-name: example_image
+  name: example-image
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    creator: creator
+    file: null
+    metadata: {}
+    requireSignedUrls: true
+    url: https://example.com/path/to/logo.png

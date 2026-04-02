@@ -1,0 +1,15 @@
+# Example DNS Record - create after running make generate
+# Requires a Zone to exist. apiVersion will be dns.upjet-cloudflare.upbound.io/v1beta1
+apiVersion: dns.upjet-cloudflare.upbound.io/v1beta1
+kind: Record
+metadata:
+  name: example-record
+spec:
+  forProvider:
+    name: www
+    type: A
+    content: 192.0.2.1
+    zoneIdRef:
+      name: example-zone
+  providerConfigRef:
+    name: default

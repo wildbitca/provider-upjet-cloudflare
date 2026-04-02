@@ -1,0 +1,831 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: balancerpools.load.upjet-cloudflare.m.upbound.io
+spec:
+  group: load.upjet-cloudflare.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: BalancerPool
+    listKind: BalancerPoolList
+    plural: balancerpools
+    singular: balancerpool
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: BalancerPool is the Schema for the BalancerPools API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: BalancerPoolSpec defines the desired state of BalancerPool
+            properties:
+              forProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  checkRegions:
+                    description: |-
+                      (List of String) A list of regions from which to run health checks. Null means every Cloudflare data center.
+                      A list of regions from which to run health checks. Null means every Cloudflare data center.
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: |-
+                      readable description of the pool.
+                      A human-readable description of the pool.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
+                      Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
+                    type: boolean
+                  latitude:
+                    description: |-
+                      (Number) The latitude of the data center containing the origins used in this pool in decimal degrees. If this is set, longitude must also be set.
+                      The latitude of the data center containing the origins used in this pool in decimal degrees. If this is set, longitude must also be set.
+                    type: number
+                  loadShedding:
+                    description: (Attributes) Configures load shedding policies and
+                      percentages for the pool. (see below for nested schema)
+                    properties:
+                      defaultPercent:
+                        description: |-
+                          (Number) The percent of traffic to shed from the pool, according to the default policy. Applies to new sessions and traffic without session affinity.
+                          The percent of traffic to shed from the pool, according to the default policy. Applies to new sessions and traffic without session affinity.
+                        type: number
+                      defaultPolicy:
+                        description: |-
+                          Connecting-IP address and sheds all requests originating from a percent of IPs.
+                          Available values: "random", "hash".
+                          The default policy to use when load shedding. A random policy randomly sheds a given percent of requests. A hash policy computes a hash over the CF-Connecting-IP address and sheds all requests originating from a percent of IPs.
+                          Available values: "random", "hash".
+                        type: string
+                      sessionPercent:
+                        description: |-
+                          (Number) The percent of existing sessions to shed from the pool, according to the session policy.
+                          The percent of existing sessions to shed from the pool, according to the session policy.
+                        type: number
+                      sessionPolicy:
+                        description: |-
+                          (String) Only the hash policy is supported for existing sessions (to avoid exponential decay).
+                          Available values: "hash".
+                          Only the hash policy is supported for existing sessions (to avoid exponential decay).
+                          Available values: "hash".
+                        type: string
+                    type: object
+                  longitude:
+                    description: |-
+                      (Number) The longitude of the data center containing the origins used in this pool in decimal degrees. If this is set, latitude must also be set.
+                      The longitude of the data center containing the origins used in this pool in decimal degrees. If this is set, latitude must also be set.
+                    type: number
+                  minimumOrigins:
+                    description: |-
+                      (Number) The minimum number of origins that must be healthy for this pool to serve traffic. If the number of healthy origins falls below this number, the pool will be marked unhealthy and will failover to the next available pool.
+                      The minimum number of origins that must be healthy for this pool to serve traffic. If the number of healthy origins falls below this number, the pool will be marked unhealthy and will failover to the next available pool.
+                    type: number
+                  monitor:
+                    description: |-
+                      (String) The ID of the Monitor to use for checking the health of origins within this pool.
+                      The ID of the Monitor to use for checking the health of origins within this pool.
+                    type: string
+                  monitorGroup:
+                    description: |-
+                      (String) The ID of the Monitor Group to use for checking the health of origins within this pool.
+                      The ID of the Monitor Group to use for checking the health of origins within this pool.
+                    type: string
+                  name:
+                    description: |-
+                      (String) A short name (tag) for the pool. Only alphanumeric characters, hyphens, and underscores are allowed.
+                      A short name (tag) for the pool. Only alphanumeric characters, hyphens, and underscores are allowed.
+                    type: string
+                  notificationEmail:
+                    description: |-
+                      (String) This field is now deprecated. It has been moved to Cloudflare's Centralized Notification service https://developers.cloudflare.com/fundamentals/notifications/. The email address to send health status notifications to. This can be an individual mailbox or a mailing list. Multiple emails can be supplied as a comma delimited list.
+                      This field is now deprecated. It has been moved to Cloudflare's Centralized Notification service https://developers.cloudflare.com/fundamentals/notifications/. The email address to send health status notifications to. This can be an individual mailbox or a mailing list. Multiple emails can be supplied as a comma delimited list.
+                    type: string
+                  notificationFilter:
+                    description: (Attributes) Filter pool and origin health notifications
+                      by resource type or health status. Use null to reset. (see below
+                      for nested schema)
+                    properties:
+                      origin:
+                        description: (Attributes) Filter options for a particular
+                          resource type (pool or origin). Use null to reset. (see
+                          below for nested schema)
+                        properties:
+                          disable:
+                            description: |-
+                              (Boolean) If set true, disable notifications for this type of resource (pool or origin).
+                              If set true, disable notifications for this type of resource (pool or origin).
+                            type: boolean
+                          healthy:
+                            description: |-
+                              (Boolean) If present, send notifications only for this health status (e.g. false for only DOWN events). Use null to reset (all events).
+                              If present, send notifications only for this health status (e.g. false for only DOWN events). Use null to reset (all events).
+                            type: boolean
+                        type: object
+                      pool:
+                        description: (Attributes) Filter options for a particular
+                          resource type (pool or origin). Use null to reset. (see
+                          below for nested schema)
+                        properties:
+                          disable:
+                            description: |-
+                              (Boolean) If set true, disable notifications for this type of resource (pool or origin).
+                              If set true, disable notifications for this type of resource (pool or origin).
+                            type: boolean
+                          healthy:
+                            description: |-
+                              (Boolean) If present, send notifications only for this health status (e.g. false for only DOWN events). Use null to reset (all events).
+                              If present, send notifications only for this health status (e.g. false for only DOWN events). Use null to reset (all events).
+                            type: boolean
+                        type: object
+                    type: object
+                  originSteering:
+                    description: (Attributes) Configures origin steering for the pool.
+                      Controls how origins are selected for new sessions and traffic
+                      without session affinity. (see below for nested schema)
+                    properties:
+                      policy:
+                        description: |-
+                          (String) The type of origin steering policy to use.
+                          The type of origin steering policy to use.
+                          - `"random"`: Select an origin randomly.
+                          - `"hash"`: Select an origin by computing a hash over the CF-Connecting-IP address.
+                          - `"least_outstanding_requests"`: Select an origin by taking into consideration origin weights, as well as each origin's number of outstanding requests. Origins with more pending requests are weighted proportionately less relative to others.
+                          - `"least_connections"`: Select an origin by taking into consideration origin weights, as well as each origin's number of open connections. Origins with more open connections are weighted proportionately less relative to others. Supported for HTTP/1 and HTTP/2 connections.
+                          Available values: "random", "hash", "least_outstanding_requests", "least_connections".
+                        type: string
+                    type: object
+                  origins:
+                    description: (Attributes Set) The list of origins within this
+                      pool. Traffic directed at this pool is balanced across all currently
+                      healthy origins, provided the pool itself is healthy. (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        address:
+                          description: |-
+                            (String) The IP address (IPv4 or IPv6) of the origin, or its publicly addressable hostname. Hostnames entered here should resolve directly to the origin, and not be a hostname proxied by Cloudflare. To set an internal/reserved address, virtual_network_id must also be set.
+                            The IP address (IPv4 or IPv6) of the origin, or its publicly addressable hostname. Hostnames entered here should resolve directly to the origin, and not be a hostname proxied by Cloudflare. To set an internal/reserved address, virtual_network_id must also be set.
+                          type: string
+                        disabledAt:
+                          description: |-
+                            (String) This field shows up only if the pool is disabled. This field is set with the time the pool was disabled at.
+                            This field shows up only if the origin is disabled. This field is set with the time the origin was disabled.
+                          type: string
+                        enabled:
+                          description: |-
+                            (Boolean) Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
+                            Whether to enable (the default) this origin within the pool. Disabled origins will not receive traffic and are excluded from health checks. The origin will only be disabled for the current pool.
+                          type: boolean
+                        header:
+                          description: (Attributes) The request header is used to
+                            pass additional information with an HTTP request. Currently
+                            supported header is 'Host'. (see below for nested schema)
+                          properties:
+                            host:
+                              description: |-
+                                (List of String) The 'Host' header allows to override the hostname set in the HTTP request. Current support is 1 'Host' header override per origin.
+                                The 'Host' header allows to override the hostname set in the HTTP request. Current support is 1 'Host' header override per origin.
+                              items:
+                                type: string
+                              type: array
+                          type: object
+                        name:
+                          description: |-
+                            (String) A short name (tag) for the pool. Only alphanumeric characters, hyphens, and underscores are allowed.
+                            A human-identifiable name for the origin.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) The port for upstream connections. A value of 0 means the default port for the protocol will be used.
+                            The port for upstream connections. A value of 0 means the default port for the protocol will be used.
+                          type: number
+                        virtualNetworkId:
+                          description: |-
+                            (String) The virtual network subnet ID the origin belongs in. Virtual network must also belong to the account.
+                            The virtual network subnet ID the origin belongs in. Virtual network must also belong to the account.
+                          type: string
+                        weight:
+                          description: |-
+                            (Number) The weight of this origin relative to other origins in the pool. Based on the configured weight the total traffic is distributed among origins within the pool.
+                            The weight of this origin relative to other origins in the pool. Based on the configured weight the total traffic is distributed among origins within the pool.
+                            - `origin_steering.policy="least_outstanding_requests"`: Use weight to scale the origin's outstanding requests.
+                            - `origin_steering.policy="least_connections"`: Use weight to scale the origin's open connections.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  checkRegions:
+                    description: |-
+                      (List of String) A list of regions from which to run health checks. Null means every Cloudflare data center.
+                      A list of regions from which to run health checks. Null means every Cloudflare data center.
+                    items:
+                      type: string
+                    type: array
+                  description:
+                    description: |-
+                      readable description of the pool.
+                      A human-readable description of the pool.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
+                      Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
+                    type: boolean
+                  latitude:
+                    description: |-
+                      (Number) The latitude of the data center containing the origins used in this pool in decimal degrees. If this is set, longitude must also be set.
+                      The latitude of the data center containing the origins used in this pool in decimal degrees. If this is set, longitude must also be set.
+                    type: number
+                  loadShedding:
+                    description: (Attributes) Configures load shedding policies and
+                      percentages for the pool. (see below for nested schema)
+                    properties:
+                      defaultPercent:
+                        description: |-
+                          (Number) The percent of traffic to shed from the pool, according to the default policy. Applies to new sessions and traffic without session affinity.
+                          The percent of traffic to shed from the pool, according to the default policy. Applies to new sessions and traffic without session affinity.
+                        type: number
+                      defaultPolicy:
+                        description: |-
+                          Connecting-IP address and sheds all requests originating from a percent of IPs.
+                          Available values: "random", "hash".
+                          The default policy to use when load shedding. A random policy randomly sheds a given percent of requests. A hash policy computes a hash over the CF-Connecting-IP address and sheds all requests originating from a percent of IPs.
+                          Available values: "random", "hash".
+                        type: string
+                      sessionPercent:
+                        description: |-
+                          (Number) The percent of existing sessions to shed from the pool, according to the session policy.
+                          The percent of existing sessions to shed from the pool, according to the session policy.
+                        type: number
+                      sessionPolicy:
+                        description: |-
+                          (String) Only the hash policy is supported for existing sessions (to avoid exponential decay).
+                          Available values: "hash".
+                          Only the hash policy is supported for existing sessions (to avoid exponential decay).
+                          Available values: "hash".
+                        type: string
+                    type: object
+                  longitude:
+                    description: |-
+                      (Number) The longitude of the data center containing the origins used in this pool in decimal degrees. If this is set, latitude must also be set.
+                      The longitude of the data center containing the origins used in this pool in decimal degrees. If this is set, latitude must also be set.
+                    type: number
+                  minimumOrigins:
+                    description: |-
+                      (Number) The minimum number of origins that must be healthy for this pool to serve traffic. If the number of healthy origins falls below this number, the pool will be marked unhealthy and will failover to the next available pool.
+                      The minimum number of origins that must be healthy for this pool to serve traffic. If the number of healthy origins falls below this number, the pool will be marked unhealthy and will failover to the next available pool.
+                    type: number
+                  monitor:
+                    description: |-
+                      (String) The ID of the Monitor to use for checking the health of origins within this pool.
+                      The ID of the Monitor to use for checking the health of origins within this pool.
+                    type: string
+                  monitorGroup:
+                    description: |-
+                      (String) The ID of the Monitor Group to use for checking the health of origins within this pool.
+                      The ID of the Monitor Group to use for checking the health of origins within this pool.
+                    type: string
+                  name:
+                    description: |-
+                      (String) A short name (tag) for the pool. Only alphanumeric characters, hyphens, and underscores are allowed.
+                      A short name (tag) for the pool. Only alphanumeric characters, hyphens, and underscores are allowed.
+                    type: string
+                  notificationEmail:
+                    description: |-
+                      (String) This field is now deprecated. It has been moved to Cloudflare's Centralized Notification service https://developers.cloudflare.com/fundamentals/notifications/. The email address to send health status notifications to. This can be an individual mailbox or a mailing list. Multiple emails can be supplied as a comma delimited list.
+                      This field is now deprecated. It has been moved to Cloudflare's Centralized Notification service https://developers.cloudflare.com/fundamentals/notifications/. The email address to send health status notifications to. This can be an individual mailbox or a mailing list. Multiple emails can be supplied as a comma delimited list.
+                    type: string
+                  notificationFilter:
+                    description: (Attributes) Filter pool and origin health notifications
+                      by resource type or health status. Use null to reset. (see below
+                      for nested schema)
+                    properties:
+                      origin:
+                        description: (Attributes) Filter options for a particular
+                          resource type (pool or origin). Use null to reset. (see
+                          below for nested schema)
+                        properties:
+                          disable:
+                            description: |-
+                              (Boolean) If set true, disable notifications for this type of resource (pool or origin).
+                              If set true, disable notifications for this type of resource (pool or origin).
+                            type: boolean
+                          healthy:
+                            description: |-
+                              (Boolean) If present, send notifications only for this health status (e.g. false for only DOWN events). Use null to reset (all events).
+                              If present, send notifications only for this health status (e.g. false for only DOWN events). Use null to reset (all events).
+                            type: boolean
+                        type: object
+                      pool:
+                        description: (Attributes) Filter options for a particular
+                          resource type (pool or origin). Use null to reset. (see
+                          below for nested schema)
+                        properties:
+                          disable:
+                            description: |-
+                              (Boolean) If set true, disable notifications for this type of resource (pool or origin).
+                              If set true, disable notifications for this type of resource (pool or origin).
+                            type: boolean
+                          healthy:
+                            description: |-
+                              (Boolean) If present, send notifications only for this health status (e.g. false for only DOWN events). Use null to reset (all events).
+                              If present, send notifications only for this health status (e.g. false for only DOWN events). Use null to reset (all events).
+                            type: boolean
+                        type: object
+                    type: object
+                  originSteering:
+                    description: (Attributes) Configures origin steering for the pool.
+                      Controls how origins are selected for new sessions and traffic
+                      without session affinity. (see below for nested schema)
+                    properties:
+                      policy:
+                        description: |-
+                          (String) The type of origin steering policy to use.
+                          The type of origin steering policy to use.
+                          - `"random"`: Select an origin randomly.
+                          - `"hash"`: Select an origin by computing a hash over the CF-Connecting-IP address.
+                          - `"least_outstanding_requests"`: Select an origin by taking into consideration origin weights, as well as each origin's number of outstanding requests. Origins with more pending requests are weighted proportionately less relative to others.
+                          - `"least_connections"`: Select an origin by taking into consideration origin weights, as well as each origin's number of open connections. Origins with more open connections are weighted proportionately less relative to others. Supported for HTTP/1 and HTTP/2 connections.
+                          Available values: "random", "hash", "least_outstanding_requests", "least_connections".
+                        type: string
+                    type: object
+                  origins:
+                    description: (Attributes Set) The list of origins within this
+                      pool. Traffic directed at this pool is balanced across all currently
+                      healthy origins, provided the pool itself is healthy. (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        address:
+                          description: |-
+                            (String) The IP address (IPv4 or IPv6) of the origin, or its publicly addressable hostname. Hostnames entered here should resolve directly to the origin, and not be a hostname proxied by Cloudflare. To set an internal/reserved address, virtual_network_id must also be set.
+                            The IP address (IPv4 or IPv6) of the origin, or its publicly addressable hostname. Hostnames entered here should resolve directly to the origin, and not be a hostname proxied by Cloudflare. To set an internal/reserved address, virtual_network_id must also be set.
+                          type: string
+                        disabledAt:
+                          description: |-
+                            (String) This field shows up only if the pool is disabled. This field is set with the time the pool was disabled at.
+                            This field shows up only if the origin is disabled. This field is set with the time the origin was disabled.
+                          type: string
+                        enabled:
+                          description: |-
+                            (Boolean) Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
+                            Whether to enable (the default) this origin within the pool. Disabled origins will not receive traffic and are excluded from health checks. The origin will only be disabled for the current pool.
+                          type: boolean
+                        header:
+                          description: (Attributes) The request header is used to
+                            pass additional information with an HTTP request. Currently
+                            supported header is 'Host'. (see below for nested schema)
+                          properties:
+                            host:
+                              description: |-
+                                (List of String) The 'Host' header allows to override the hostname set in the HTTP request. Current support is 1 'Host' header override per origin.
+                                The 'Host' header allows to override the hostname set in the HTTP request. Current support is 1 'Host' header override per origin.
+                              items:
+                                type: string
+                              type: array
+                          type: object
+                        name:
+                          description: |-
+                            (String) A short name (tag) for the pool. Only alphanumeric characters, hyphens, and underscores are allowed.
+                            A human-identifiable name for the origin.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) The port for upstream connections. A value of 0 means the default port for the protocol will be used.
+                            The port for upstream connections. A value of 0 means the default port for the protocol will be used.
+                          type: number
+                        virtualNetworkId:
+                          description: |-
+                            (String) The virtual network subnet ID the origin belongs in. Virtual network must also belong to the account.
+                            The virtual network subnet ID the origin belongs in. Virtual network must also belong to the account.
+                          type: string
+                        weight:
+                          description: |-
+                            (Number) The weight of this origin relative to other origins in the pool. Based on the configured weight the total traffic is distributed among origins within the pool.
+                            The weight of this origin relative to other origins in the pool. Based on the configured weight the total traffic is distributed among origins within the pool.
+                            - `origin_steering.policy="least_outstanding_requests"`: Use weight to scale the origin's outstanding requests.
+                            - `origin_steering.policy="least_connections"`: Use weight to scale the origin's open connections.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.accountId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
+                || (has(self.initProvider) && has(self.initProvider.accountId))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.origins is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.origins)
+                || (has(self.initProvider) && has(self.initProvider.origins))'
+          status:
+            description: BalancerPoolStatus defines the observed state of BalancerPool.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  checkRegions:
+                    description: |-
+                      (List of String) A list of regions from which to run health checks. Null means every Cloudflare data center.
+                      A list of regions from which to run health checks. Null means every Cloudflare data center.
+                    items:
+                      type: string
+                    type: array
+                  createdOn:
+                    description: (String)
+                    type: string
+                  description:
+                    description: |-
+                      readable description of the pool.
+                      A human-readable description of the pool.
+                    type: string
+                  disabledAt:
+                    description: |-
+                      (String) This field shows up only if the pool is disabled. This field is set with the time the pool was disabled at.
+                      This field shows up only if the pool is disabled. This field is set with the time the pool was disabled at.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
+                      Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
+                    type: boolean
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  latitude:
+                    description: |-
+                      (Number) The latitude of the data center containing the origins used in this pool in decimal degrees. If this is set, longitude must also be set.
+                      The latitude of the data center containing the origins used in this pool in decimal degrees. If this is set, longitude must also be set.
+                    type: number
+                  loadShedding:
+                    description: (Attributes) Configures load shedding policies and
+                      percentages for the pool. (see below for nested schema)
+                    properties:
+                      defaultPercent:
+                        description: |-
+                          (Number) The percent of traffic to shed from the pool, according to the default policy. Applies to new sessions and traffic without session affinity.
+                          The percent of traffic to shed from the pool, according to the default policy. Applies to new sessions and traffic without session affinity.
+                        type: number
+                      defaultPolicy:
+                        description: |-
+                          Connecting-IP address and sheds all requests originating from a percent of IPs.
+                          Available values: "random", "hash".
+                          The default policy to use when load shedding. A random policy randomly sheds a given percent of requests. A hash policy computes a hash over the CF-Connecting-IP address and sheds all requests originating from a percent of IPs.
+                          Available values: "random", "hash".
+                        type: string
+                      sessionPercent:
+                        description: |-
+                          (Number) The percent of existing sessions to shed from the pool, according to the session policy.
+                          The percent of existing sessions to shed from the pool, according to the session policy.
+                        type: number
+                      sessionPolicy:
+                        description: |-
+                          (String) Only the hash policy is supported for existing sessions (to avoid exponential decay).
+                          Available values: "hash".
+                          Only the hash policy is supported for existing sessions (to avoid exponential decay).
+                          Available values: "hash".
+                        type: string
+                    type: object
+                  longitude:
+                    description: |-
+                      (Number) The longitude of the data center containing the origins used in this pool in decimal degrees. If this is set, latitude must also be set.
+                      The longitude of the data center containing the origins used in this pool in decimal degrees. If this is set, latitude must also be set.
+                    type: number
+                  minimumOrigins:
+                    description: |-
+                      (Number) The minimum number of origins that must be healthy for this pool to serve traffic. If the number of healthy origins falls below this number, the pool will be marked unhealthy and will failover to the next available pool.
+                      The minimum number of origins that must be healthy for this pool to serve traffic. If the number of healthy origins falls below this number, the pool will be marked unhealthy and will failover to the next available pool.
+                    type: number
+                  modifiedOn:
+                    description: (String)
+                    type: string
+                  monitor:
+                    description: |-
+                      (String) The ID of the Monitor to use for checking the health of origins within this pool.
+                      The ID of the Monitor to use for checking the health of origins within this pool.
+                    type: string
+                  monitorGroup:
+                    description: |-
+                      (String) The ID of the Monitor Group to use for checking the health of origins within this pool.
+                      The ID of the Monitor Group to use for checking the health of origins within this pool.
+                    type: string
+                  name:
+                    description: |-
+                      (String) A short name (tag) for the pool. Only alphanumeric characters, hyphens, and underscores are allowed.
+                      A short name (tag) for the pool. Only alphanumeric characters, hyphens, and underscores are allowed.
+                    type: string
+                  networks:
+                    description: |-
+                      (List of String) List of networks where Load Balancer or Pool is enabled.
+                      List of networks where Load Balancer or Pool is enabled.
+                    items:
+                      type: string
+                    type: array
+                  notificationEmail:
+                    description: |-
+                      (String) This field is now deprecated. It has been moved to Cloudflare's Centralized Notification service https://developers.cloudflare.com/fundamentals/notifications/. The email address to send health status notifications to. This can be an individual mailbox or a mailing list. Multiple emails can be supplied as a comma delimited list.
+                      This field is now deprecated. It has been moved to Cloudflare's Centralized Notification service https://developers.cloudflare.com/fundamentals/notifications/. The email address to send health status notifications to. This can be an individual mailbox or a mailing list. Multiple emails can be supplied as a comma delimited list.
+                    type: string
+                  notificationFilter:
+                    description: (Attributes) Filter pool and origin health notifications
+                      by resource type or health status. Use null to reset. (see below
+                      for nested schema)
+                    properties:
+                      origin:
+                        description: (Attributes) Filter options for a particular
+                          resource type (pool or origin). Use null to reset. (see
+                          below for nested schema)
+                        properties:
+                          disable:
+                            description: |-
+                              (Boolean) If set true, disable notifications for this type of resource (pool or origin).
+                              If set true, disable notifications for this type of resource (pool or origin).
+                            type: boolean
+                          healthy:
+                            description: |-
+                              (Boolean) If present, send notifications only for this health status (e.g. false for only DOWN events). Use null to reset (all events).
+                              If present, send notifications only for this health status (e.g. false for only DOWN events). Use null to reset (all events).
+                            type: boolean
+                        type: object
+                      pool:
+                        description: (Attributes) Filter options for a particular
+                          resource type (pool or origin). Use null to reset. (see
+                          below for nested schema)
+                        properties:
+                          disable:
+                            description: |-
+                              (Boolean) If set true, disable notifications for this type of resource (pool or origin).
+                              If set true, disable notifications for this type of resource (pool or origin).
+                            type: boolean
+                          healthy:
+                            description: |-
+                              (Boolean) If present, send notifications only for this health status (e.g. false for only DOWN events). Use null to reset (all events).
+                              If present, send notifications only for this health status (e.g. false for only DOWN events). Use null to reset (all events).
+                            type: boolean
+                        type: object
+                    type: object
+                  originSteering:
+                    description: (Attributes) Configures origin steering for the pool.
+                      Controls how origins are selected for new sessions and traffic
+                      without session affinity. (see below for nested schema)
+                    properties:
+                      policy:
+                        description: |-
+                          (String) The type of origin steering policy to use.
+                          The type of origin steering policy to use.
+                          - `"random"`: Select an origin randomly.
+                          - `"hash"`: Select an origin by computing a hash over the CF-Connecting-IP address.
+                          - `"least_outstanding_requests"`: Select an origin by taking into consideration origin weights, as well as each origin's number of outstanding requests. Origins with more pending requests are weighted proportionately less relative to others.
+                          - `"least_connections"`: Select an origin by taking into consideration origin weights, as well as each origin's number of open connections. Origins with more open connections are weighted proportionately less relative to others. Supported for HTTP/1 and HTTP/2 connections.
+                          Available values: "random", "hash", "least_outstanding_requests", "least_connections".
+                        type: string
+                    type: object
+                  origins:
+                    description: (Attributes Set) The list of origins within this
+                      pool. Traffic directed at this pool is balanced across all currently
+                      healthy origins, provided the pool itself is healthy. (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        address:
+                          description: |-
+                            (String) The IP address (IPv4 or IPv6) of the origin, or its publicly addressable hostname. Hostnames entered here should resolve directly to the origin, and not be a hostname proxied by Cloudflare. To set an internal/reserved address, virtual_network_id must also be set.
+                            The IP address (IPv4 or IPv6) of the origin, or its publicly addressable hostname. Hostnames entered here should resolve directly to the origin, and not be a hostname proxied by Cloudflare. To set an internal/reserved address, virtual_network_id must also be set.
+                          type: string
+                        disabledAt:
+                          description: |-
+                            (String) This field shows up only if the pool is disabled. This field is set with the time the pool was disabled at.
+                            This field shows up only if the origin is disabled. This field is set with the time the origin was disabled.
+                          type: string
+                        enabled:
+                          description: |-
+                            (Boolean) Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
+                            Whether to enable (the default) this origin within the pool. Disabled origins will not receive traffic and are excluded from health checks. The origin will only be disabled for the current pool.
+                          type: boolean
+                        header:
+                          description: (Attributes) The request header is used to
+                            pass additional information with an HTTP request. Currently
+                            supported header is 'Host'. (see below for nested schema)
+                          properties:
+                            host:
+                              description: |-
+                                (List of String) The 'Host' header allows to override the hostname set in the HTTP request. Current support is 1 'Host' header override per origin.
+                                The 'Host' header allows to override the hostname set in the HTTP request. Current support is 1 'Host' header override per origin.
+                              items:
+                                type: string
+                              type: array
+                          type: object
+                        name:
+                          description: |-
+                            (String) A short name (tag) for the pool. Only alphanumeric characters, hyphens, and underscores are allowed.
+                            A human-identifiable name for the origin.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) The port for upstream connections. A value of 0 means the default port for the protocol will be used.
+                            The port for upstream connections. A value of 0 means the default port for the protocol will be used.
+                          type: number
+                        virtualNetworkId:
+                          description: |-
+                            (String) The virtual network subnet ID the origin belongs in. Virtual network must also belong to the account.
+                            The virtual network subnet ID the origin belongs in. Virtual network must also belong to the account.
+                          type: string
+                        weight:
+                          description: |-
+                            (Number) The weight of this origin relative to other origins in the pool. Based on the configured weight the total traffic is distributed among origins within the pool.
+                            The weight of this origin relative to other origins in the pool. Based on the configured weight the total traffic is distributed among origins within the pool.
+                            - `origin_steering.policy="least_outstanding_requests"`: Use weight to scale the origin's outstanding requests.
+                            - `origin_steering.policy="least_connections"`: Use weight to scale the origin's open connections.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

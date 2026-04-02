@@ -1,0 +1,13 @@
+apiVersion: logpull.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Retention
+metadata:
+  annotations:
+    meta.upbound.io/example-id: logpull/v1alpha1/retention
+  labels:
+    testing.upbound.io/example-name: example_logpull_retention
+  name: example-logpull-retention
+  namespace: crossplane-system
+spec:
+  forProvider:
+    flag: true
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

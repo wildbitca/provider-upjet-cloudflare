@@ -1,0 +1,13 @@
+apiVersion: email.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: RoutingAddress
+metadata:
+  annotations:
+    meta.upbound.io/example-id: email/v1alpha1/routingaddress
+  labels:
+    testing.upbound.io/example-name: example_email_routing_address
+  name: example-email-routing-address
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    email: user@example.com

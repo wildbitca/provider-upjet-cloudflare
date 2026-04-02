@@ -1,0 +1,42 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustOrganization
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustorganization
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_organization
+  name: example-zero-trust-organization
+  namespace: crossplane-system
+spec:
+  forProvider:
+    allowAuthenticateViaWarp: true
+    authDomain: test.cloudflareaccess.com
+    autoRedirectToIdentity: true
+    customPages:
+      forbidden: 699d98642c564d2e855e9661899b7252
+      identityDenied: 699d98642c564d2e855e9661899b7252
+    denyUnmatchedRequests: true
+    denyUnmatchedRequestsExemptedZoneNames:
+    - example.com
+    isUiReadOnly: true
+    loginDesign:
+      backgroundColor: '#c5ed1b'
+      footerText: This is an example description.
+      headerText: This is an example description.
+      logoPath: https://example.com/logo.png
+      textColor: '#c5ed1b'
+    mfaConfig:
+      allowedAuthenticators:
+      - totp
+      - biometrics
+      - security_key
+      sessionDuration: 24h
+    mfaConfigurationAllowed: true
+    mfaRequiredForAllApps: false
+    name: Widget Corps Internal Applications
+    sessionDuration: 24h
+    uiReadOnlyToggleReason: Temporarily turn off the UI read only lock to make a change
+      via the UI
+    userSeatExpirationInactiveTime: 730h
+    warpAuthSessionDuration: 24h
+    zoneId: zone_id

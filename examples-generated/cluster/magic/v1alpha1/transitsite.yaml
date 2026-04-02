@@ -1,0 +1,19 @@
+apiVersion: magic.upjet-cloudflare.upbound.io/v1alpha1
+kind: TransitSite
+metadata:
+  annotations:
+    meta.upbound.io/example-id: magic/v1alpha1/transitsite
+  labels:
+    testing.upbound.io/example-name: example_magic_transit_site
+  name: example-magic-transit-site
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    connectorId: ac60d3d0435248289d446cedd870bcf4
+    description: description
+    haMode: true
+    location:
+      lat: "37.6192"
+      lon: "122.3816"
+    name: site_1
+    secondaryConnectorId: 8d67040d3835dbcf46ce29da440dc482

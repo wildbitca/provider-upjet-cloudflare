@@ -1,0 +1,18 @@
+apiVersion: zone.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: DNSSEC
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zone/v1alpha1/dnssec
+  labels:
+    testing.upbound.io/example-name: example_zone_dnssec
+  name: example-zone-dnssec
+  namespace: crossplane-system
+spec:
+  forProvider:
+    dnssecMultiSigner: false
+    dnssecPresigned: true
+    dnssecUseNsec3: false
+    status: active
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

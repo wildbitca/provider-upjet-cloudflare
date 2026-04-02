@@ -1,0 +1,15 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustTunnelCloudflaredVirtualNetwork
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trusttunnelcloudflaredvirtualnetwork
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_tunnel_cloudflared_virtual_network
+  name: example-zero-trust-tunnel-cloudflared-virtual-network
+spec:
+  forProvider:
+    accountId: 699d98642c564d2e855e9661899b7252
+    comment: Staging VPC for data science
+    isDefault: true
+    isDefaultNetwork: false
+    name: us-east-1-vpc

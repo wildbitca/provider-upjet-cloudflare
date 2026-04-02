@@ -1,0 +1,101 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustAccessApplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccessapplication
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_application
+  name: example-zero-trust-access-application
+  namespace: crossplane-system
+spec:
+  forProvider:
+    allowAuthenticateViaWarp: true
+    allowIframe: true
+    allowedIdps:
+    - 699d98642c564d2e855e9661899b7252
+    appLauncherVisible: true
+    autoRedirectToIdentity: true
+    corsHeaders:
+      allowAllHeaders: true
+      allowAllMethods: true
+      allowAllOrigins: true
+      allowCredentials: true
+      allowedHeaders:
+      - string
+      allowedMethods:
+      - GET
+      allowedOrigins:
+      - https://example.com
+      maxAge: -1
+    customDenyMessage: custom_deny_message
+    customDenyUrl: custom_deny_url
+    customNonIdentityDenyUrl: custom_non_identity_deny_url
+    customPages:
+    - 699d98642c564d2e855e9661899b7252
+    destinations:
+    - type: public
+      uri: test.example.com/admin
+    - type: public
+      uri: test.anotherexample.com/staff
+    - cidr: 10.5.0.0/24
+      hostname: hostname
+      l4Protocol: tcp
+      portRange: 80-90
+      type: private
+      vnetId: vnet_id
+    - cidr: 10.5.0.3/32
+      hostname: hostname
+      l4Protocol: tcp
+      portRange: "80"
+      type: private
+      vnetId: vnet_id
+    - cidr: cidr
+      hostname: hostname
+      l4Protocol: tcp
+      portRange: port_range
+      type: private
+      vnetId: vnet_id
+    domain: test.example.com/admin
+    enableBindingCookie: true
+    httpOnlyCookieAttribute: true
+    logoUrl: https://www.cloudflare.com/img/logo-web-badges/cf-logo-on-white-bg.svg
+    name: Admin Site
+    optionsPreflightBypass: true
+    pathCookieAttribute: true
+    policies:
+    - id: f174e90a-fafe-4643-bbbc-4a0ed4fc8415
+      precedence: 0
+    readServiceTokensFromHeader: Authorization
+    sameSiteCookieAttribute: strict
+    scimConfig:
+      authentication:
+        passwordSecretRef:
+          key: example-key
+          name: example-secret
+        scheme: httpbasic
+        user: user
+      deactivateOnDelete: true
+      enabled: true
+      idpUid: idp_uid
+      mappings:
+      - enabled: true
+        filter: title pr or userType eq "Intern"
+        operations:
+          create: true
+          delete: true
+          update: true
+        schema: urn:ietf:params:scim:schemas:core:2.0:User
+        strictness: strict
+        transformJsonata: '$merge([$, {''userName'': $substringBefore($.userName,
+          ''@'') & ''+test@'' & $substringAfter($.userName, ''@'')}])'
+      remoteUri: remote_uri
+    selfHostedDomains:
+    - test.example.com/admin
+    - test.anotherexample.com/staff
+    serviceAuth401Redirect: true
+    sessionDuration: 24h
+    skipInterstitial: true
+    tags:
+    - engineers
+    type: self_hosted
+    zoneId: zone_id

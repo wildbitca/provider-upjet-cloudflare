@@ -1,0 +1,17 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustDeviceDefaultProfileLocalDomainFallback
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustdevicedefaultprofilelocaldomainfallback
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_device_default_profile_local_domain_fallback
+  name: example-zero-trust-device-default-profile-local-domain-fallback
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 699d98642c564d2e855e9661899b7252
+    domains:
+    - description: Domain bypass for local development
+      dnsServer:
+      - 1.1.1.1
+      suffix: example.com

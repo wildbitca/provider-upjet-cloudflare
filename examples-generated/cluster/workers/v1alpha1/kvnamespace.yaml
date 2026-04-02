@@ -1,0 +1,14 @@
+apiVersion: workers.upjet-cloudflare.upbound.io/v1alpha1
+kind: KvNamespace
+metadata:
+  annotations:
+    meta.upbound.io/example-id: workers/v1alpha1/kvnamespace
+  labels:
+    testing.upbound.io/example-name: example_workers_kv_namespace
+  name: example-workers-kv-namespace
+spec:
+  forProvider:
+    accountIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    title: My Own Namespace

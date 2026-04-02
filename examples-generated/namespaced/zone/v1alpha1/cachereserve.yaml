@@ -1,0 +1,15 @@
+apiVersion: zone.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: CacheReserve
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zone/v1alpha1/cachereserve
+  labels:
+    testing.upbound.io/example-name: example_zone_cache_reserve
+  name: example-zone-cache-reserve
+  namespace: crossplane-system
+spec:
+  forProvider:
+    value: "on"
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

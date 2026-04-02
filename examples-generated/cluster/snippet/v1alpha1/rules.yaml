@@ -1,0 +1,16 @@
+apiVersion: snippet.upjet-cloudflare.upbound.io/v1alpha1
+kind: Rules
+metadata:
+  annotations:
+    meta.upbound.io/example-id: snippet/v1alpha1/rules
+  labels:
+    testing.upbound.io/example-name: example_snippet_rules
+  name: example-snippet-rules
+spec:
+  forProvider:
+    rules:
+    - description: Execute my_snippet when IP address is 1.1.1.1.
+      enabled: true
+      expression: ip.src eq 1.1.1.1
+      snippetName: my_snippet
+    zoneId: 9f1839b6152d298aca64c4e906b6d074

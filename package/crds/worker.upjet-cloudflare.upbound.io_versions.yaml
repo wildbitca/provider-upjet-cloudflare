@@ -1,0 +1,1991 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: versions.worker.upjet-cloudflare.upbound.io
+spec:
+  group: worker.upjet-cloudflare.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: Version
+    listKind: VersionList
+    plural: versions
+    singular: version
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Version is the Schema for the Versions API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: VersionSpec defines the desired state of Version
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  annotations:
+                    description: (Attributes) Metadata about the version. (see below
+                      for nested schema)
+                    properties:
+                      workersMessage:
+                        description: |-
+                          readable message about the version.
+                          Human-readable message about the version.
+                        type: string
+                      workersTag:
+                        description: |-
+                          provided identifier for the version.
+                          User-provided identifier for the version.
+                        type: string
+                    type: object
+                  assets:
+                    description: (Attributes) Configuration for assets within a Worker.
+                    properties:
+                      config:
+                        description: (Attributes) Configuration for assets within
+                          a Worker. (see below for nested schema)
+                        properties:
+                          htmlHandling:
+                            description: |-
+                              trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
+                              Determines the redirects and rewrites of requests for HTML content.
+                              Available values: "auto-trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
+                            type: string
+                          notFoundHandling:
+                            description: |-
+                              page", "single-page-application".
+                              Determines the response when a request does not match a static asset, and there is no Worker script.
+                              Available values: "none", "404-page", "single-page-application".
+                            type: string
+                          runWorkerFirst:
+                            description: |-
+                              negative rule must be provided, and negative rules have higher precedence than non-negative rules.
+                              When a boolean true, requests will always invoke the Worker script. Otherwise, attempt to serve an asset matching the request, falling back to the Worker script. When a list of strings, contains path rules to control routing to either the Worker or assets. Glob (*) and negative (!) rules are supported. Rules must start with either '/' or '!/'. At least one non-negative rule must be provided, and negative rules have higher precedence than non-negative rules.
+                            x-kubernetes-preserve-unknown-fields: true
+                        type: object
+                      directory:
+                        description: |-
+                          (String) Path to the directory containing asset files to upload.
+                          Path to the directory containing asset files to upload.
+                        type: string
+                      jwtSecretRef:
+                        description: |-
+                          (String, Sensitive) Token provided upon successful upload of all files from a registered manifest.
+                          Token provided upon successful upload of all files from a registered manifest.
+                        properties:
+                          key:
+                            description: The key to select.
+                            type: string
+                          name:
+                            description: Name of the secret.
+                            type: string
+                          namespace:
+                            description: Namespace of the secret.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        - namespace
+                        type: object
+                    type: object
+                  bindings:
+                    description: upload-metadata/#bindings. (see below for nested
+                      schema)
+                    items:
+                      properties:
+                        algorithm:
+                          description: |-
+                            specific key parameters. Learn more.
+                            Algorithm-specific key parameters. [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#algorithm).
+                          type: string
+                        allowedDestinationAddresses:
+                          description: |-
+                            (List of String) List of allowed destination addresses.
+                            List of allowed destination addresses.
+                          items:
+                            type: string
+                          type: array
+                        allowedSenderAddresses:
+                          description: |-
+                            (List of String) List of allowed sender addresses.
+                            List of allowed sender addresses.
+                          items:
+                            type: string
+                          type: array
+                        bucketName:
+                          description: |-
+                            (String) R2 bucket to bind to.
+                            R2 bucket to bind to.
+                          type: string
+                        certificateId:
+                          description: |-
+                            (String) Identifier of the certificate to bind to.
+                            Identifier of the certificate to bind to.
+                          type: string
+                        className:
+                          description: |-
+                            (String) The exported class name of the Durable Object.
+                            The exported class name of the Durable Object.
+                          type: string
+                        dataset:
+                          description: |-
+                            (String) The name of the dataset to bind to.
+                            The name of the dataset to bind to.
+                          type: string
+                        destinationAddress:
+                          description: |-
+                            (String) Destination address for the email.
+                            Destination address for the email.
+                          type: string
+                        environment:
+                          description: |-
+                            (String) The environment of the script_name to bind to.
+                            The environment of the script_name to bind to.
+                          type: string
+                        format:
+                          description: |-
+                            (String) Data format of the key. Learn more.
+                            Available values: "raw", "pkcs8", "spki", "jwk".
+                            Data format of the key. [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#format).
+                            Available values: "raw", "pkcs8", "spki", "jwk".
+                          type: string
+                        id:
+                          description: |-
+                            (String) Version identifier.
+                            Identifier of the D1 database to bind to.
+                          type: string
+                        indexName:
+                          description: |-
+                            (String) Name of the Vectorize index to bind to.
+                            Name of the Vectorize index to bind to.
+                          type: string
+                        json:
+                          description: |-
+                            (String) JSON data to use.
+                            JSON data to use.
+                          type: string
+                        jurisdiction:
+                          description: |-
+                            (String) The jurisdiction of the R2 bucket.
+                            Available values: "eu", "fedramp".
+                            The [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) of the R2 bucket.
+                            Available values: "eu", "fedramp".
+                          type: string
+                        keyBase64SecretRef:
+                          description: |-
+                            encoded key data. Required if format is "raw", "pkcs8", or "spki".
+                            Base64-encoded key data. Required if `format` is "raw", "pkcs8", or "spki".
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        keyJwkSecretRef:
+                          description: |-
+                            (String, Sensitive) Key data in JSON Web Key format. Required if format is "jwk".
+                            Key data in [JSON Web Key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#json_web_key) format. Required if `format` is "jwk".
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        name:
+                          description: |-
+                            (String) A JavaScript variable name for the binding.
+                            A JavaScript variable name for the binding.
+                          type: string
+                        namespace:
+                          description: |-
+                            (String) The name of the dispatch namespace.
+                            The name of the dispatch namespace.
+                          type: string
+                        namespaceId:
+                          description: |-
+                            (String) Namespace identifier tag.
+                            Namespace identifier tag.
+                          type: string
+                        oldName:
+                          description: |-
+                            (String) The old name of the inherited binding. If set, the binding will be renamed from old_name to name in the new version. If not set, the binding will keep the same name between versions.
+                            The old name of the inherited binding. If set, the binding will be renamed from `old_name` to `name` in the new version. If not set, the binding will keep the same name between versions.
+                          type: string
+                        outbound:
+                          description: (Attributes) Outbound worker. (see below for
+                            nested schema)
+                          properties:
+                            params:
+                              description: (Attributes List) Pass information from
+                                the Dispatch Worker to the Outbound Worker through
+                                the parameters. (see below for nested schema)
+                              items:
+                                properties:
+                                  name:
+                                    description: |-
+                                      (String) A JavaScript variable name for the binding.
+                                      Name of the parameter.
+                                    type: string
+                                type: object
+                              type: array
+                            worker:
+                              description: (Attributes) Outbound worker. (see below
+                                for nested schema)
+                              properties:
+                                entrypoint:
+                                  description: |-
+                                    (String) Entrypoint to invoke on the outbound worker.
+                                    Entrypoint to invoke on the outbound worker.
+                                  type: string
+                                environment:
+                                  description: |-
+                                    (String) The environment of the script_name to bind to.
+                                    Environment of the outbound worker.
+                                  type: string
+                                service:
+                                  description: |-
+                                    (String) Name of Worker to bind to.
+                                    Name of the outbound worker.
+                                  type: string
+                              type: object
+                          type: object
+                        part:
+                          description: |-
+                            (String) The name of the file containing the data content. Only accepted for service worker syntax Workers.
+                            The name of the file containing the data content. Only accepted for `service worker syntax` Workers.
+                          type: string
+                        pipeline:
+                          description: |-
+                            (String) Name of the Pipeline to bind to.
+                            Name of the Pipeline to bind to.
+                          type: string
+                        queueName:
+                          description: |-
+                            (String) Name of the Queue to bind to.
+                            Name of the Queue to bind to.
+                          type: string
+                        scriptName:
+                          description: |-
+                            (String) The script where the Durable Object is defined, if it is external to this Worker.
+                            The script where the Durable Object is defined, if it is external to this Worker.
+                          type: string
+                        secretName:
+                          description: |-
+                            (String) Name of the secret in the store.
+                            Name of the secret in the store.
+                          type: string
+                        service:
+                          description: |-
+                            (String) Name of Worker to bind to.
+                            Name of Worker to bind to.
+                          type: string
+                        simple:
+                          description: (Attributes) The rate limit configuration.
+                            (see below for nested schema)
+                          properties:
+                            limit:
+                              description: |-
+                                (Number) The limit (requests per period).
+                                The limit (requests per period).
+                              type: number
+                            period:
+                              description: |-
+                                (Number) The period in seconds.
+                                The period in seconds.
+                              type: number
+                          type: object
+                        storeId:
+                          description: |-
+                            (String) ID of the store containing the secret.
+                            ID of the store containing the secret.
+                          type: string
+                        textSecretRef:
+                          description: |-
+                            (String, Sensitive) The text value to use.
+                            The text value to use.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        type:
+                          description: |-
+                            (String) The kind of resource that the binding provides.
+                            Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+                            The kind of resource that the binding provides.
+                            Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+                          type: string
+                        usages:
+                          description: |-
+                            (Set of String) Allowed operations with the key. Learn more.
+                            Allowed operations with the key. [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#keyUsages).
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        versionId:
+                          description: |-
+                            (String) Identifier for the version to inherit the binding from, which can be the version ID or the literal "latest" to inherit from the latest version. Defaults to inheriting the binding from the latest version.
+                            Identifier for the version to inherit the binding from, which can be the version ID or the literal "latest" to inherit from the latest version. Defaults to inheriting the binding from the latest version.
+                          type: string
+                        workflowName:
+                          description: |-
+                            (String) Name of the Workflow to bind to.
+                            Name of the Workflow to bind to.
+                          type: string
+                      type: object
+                    type: array
+                  compatibilityDate:
+                    description: |-
+                      (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
+                      Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
+                    type: string
+                  compatibilityFlags:
+                    description: |-
+                      (Set of String) Flags that enable or disable certain features in the Workers runtime. Used to enable upcoming features or opt in or out of specific changes not included in a compatibility_date.
+                      Flags that enable or disable certain features in the Workers runtime. Used to enable upcoming features or opt in or out of specific changes not included in a `compatibility_date`.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  limits:
+                    description: (Attributes) Resource limits enforced at runtime.
+                      (see below for nested schema)
+                    properties:
+                      cpuMs:
+                        description: |-
+                          (Number) CPU time limit in milliseconds.
+                          CPU time limit in milliseconds.
+                        type: number
+                    type: object
+                  mainModule:
+                    description: |-
+                      (String) The name of the main module in the modules array (e.g. the name of the module that exports a fetch handler).
+                      The name of the main module in the `modules` array (e.g. the name of the module that exports a `fetch` handler).
+                    type: string
+                  migrations:
+                    description: (Attributes) Migrations for Durable Objects associated
+                      with the version. Migrations are applied when the version is
+                      deployed. (see below for nested schema)
+                    properties:
+                      deletedClasses:
+                        description: |-
+                          (List of String) A list of classes to delete Durable Object namespaces from.
+                          A list of classes to delete Durable Object namespaces from.
+                        items:
+                          type: string
+                        type: array
+                      newClasses:
+                        description: |-
+                          (List of String) A list of classes to create Durable Object namespaces from.
+                          A list of classes to create Durable Object namespaces from.
+                        items:
+                          type: string
+                        type: array
+                      newSqliteClasses:
+                        description: |-
+                          (List of String) A list of classes to create Durable Object namespaces with SQLite from.
+                          A list of classes to create Durable Object namespaces with SQLite from.
+                        items:
+                          type: string
+                        type: array
+                      newTag:
+                        description: |-
+                          (String) Tag to set as the latest migration tag.
+                          Tag to set as the latest migration tag.
+                        type: string
+                      oldTag:
+                        description: |-
+                          (String) Tag used to verify against the latest migration tag for this Worker. If they don't match, the upload is rejected.
+                          Tag used to verify against the latest migration tag for this Worker. If they don't match, the upload is rejected.
+                        type: string
+                      renamedClasses:
+                        description: (Attributes List) A list of classes with Durable
+                          Object namespaces that were renamed. (see below for nested
+                          schema)
+                        items:
+                          properties:
+                            from:
+                              description: (String)
+                              type: string
+                            to:
+                              description: (String)
+                              type: string
+                          type: object
+                        type: array
+                      steps:
+                        description: (Attributes List) Migrations to apply in order.
+                          (see below for nested schema)
+                        items:
+                          properties:
+                            deletedClasses:
+                              description: |-
+                                (List of String) A list of classes to delete Durable Object namespaces from.
+                                A list of classes to delete Durable Object namespaces from.
+                              items:
+                                type: string
+                              type: array
+                            newClasses:
+                              description: |-
+                                (List of String) A list of classes to create Durable Object namespaces from.
+                                A list of classes to create Durable Object namespaces from.
+                              items:
+                                type: string
+                              type: array
+                            newSqliteClasses:
+                              description: |-
+                                (List of String) A list of classes to create Durable Object namespaces with SQLite from.
+                                A list of classes to create Durable Object namespaces with SQLite from.
+                              items:
+                                type: string
+                              type: array
+                            renamedClasses:
+                              description: (Attributes List) A list of classes with
+                                Durable Object namespaces that were renamed. (see
+                                below for nested schema)
+                              items:
+                                properties:
+                                  from:
+                                    description: (String)
+                                    type: string
+                                  to:
+                                    description: (String)
+                                    type: string
+                                type: object
+                              type: array
+                            transferredClasses:
+                              description: (Attributes List) A list of transfers for
+                                Durable Object namespaces from a different Worker
+                                and class to a class defined in this Worker. (see
+                                below for nested schema)
+                              items:
+                                properties:
+                                  from:
+                                    description: (String)
+                                    type: string
+                                  fromScript:
+                                    description: (String)
+                                    type: string
+                                  to:
+                                    description: (String)
+                                    type: string
+                                type: object
+                              type: array
+                          type: object
+                        type: array
+                      transferredClasses:
+                        description: (Attributes List) A list of transfers for Durable
+                          Object namespaces from a different Worker and class to a
+                          class defined in this Worker. (see below for nested schema)
+                        items:
+                          properties:
+                            from:
+                              description: (String)
+                              type: string
+                            fromScript:
+                              description: (String)
+                              type: string
+                            to:
+                              description: (String)
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  modules:
+                    description: (Attributes Set) Code, sourcemaps, and other content
+                      used at runtime.
+                    items:
+                      properties:
+                        contentBase64:
+                          description: |-
+                            encoded module content.
+                            The base64-encoded module content.
+                          type: string
+                        contentFile:
+                          description: |-
+                            (String) The file path of the module content.
+                            The file path of the module content.
+                          type: string
+                        contentType:
+                          description: |-
+                            (String) The content type of the module.
+                            The content type of the module.
+                          type: string
+                        name:
+                          description: |-
+                            (String) A JavaScript variable name for the binding.
+                            The name of the module.
+                          type: string
+                      type: object
+                    type: array
+                  placement:
+                    description: (Attributes) Configuration for Smart Placement. Specify
+                      mode='smart' for Smart Placement, or one of region/hostname/host.
+                      (see below for nested schema)
+                    properties:
+                      host:
+                        description: |-
+                          (String) TCP host and port for targeted placement.
+                          TCP host and port for targeted placement.
+                        type: string
+                      hostname:
+                        description: |-
+                          (String) HTTP hostname for targeted placement.
+                          HTTP hostname for targeted placement.
+                        type: string
+                      mode:
+                        description: |-
+                          (String) Enables Smart Placement.
+                          Available values: "smart", "targeted".
+                          Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+                          Available values: "smart", "targeted".
+                        type: string
+                      region:
+                        description: |-
+                          (String) Cloud region for targeted placement in format 'provider:region'.
+                          Cloud region for targeted placement in format 'provider:region'.
+                        type: string
+                      target:
+                        description: (Attributes List) Array of placement targets
+                          (currently limited to single target). (see below for nested
+                          schema)
+                        items:
+                          properties:
+                            host:
+                              description: |-
+                                (String) TCP host and port for targeted placement.
+                                TCP host:port for targeted placement.
+                              type: string
+                            hostname:
+                              description: |-
+                                (String) HTTP hostname for targeted placement.
+                                HTTP hostname for targeted placement.
+                              type: string
+                            region:
+                              description: |-
+                                (String) Cloud region for targeted placement in format 'provider:region'.
+                                Cloud region in format 'provider:region'.
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  usageModel:
+                    description: |-
+                      (String, Deprecated) Usage model for the version.
+                      Available values: "standard", "bundled", "unbound".
+                      Usage model for the version.
+                      Available values: "standard", "bundled", "unbound".
+                    type: string
+                  workerId:
+                    description: |-
+                      (String) Identifier for the Worker, which can be ID or name.
+                      Identifier for the Worker, which can be ID or name.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  annotations:
+                    description: (Attributes) Metadata about the version. (see below
+                      for nested schema)
+                    properties:
+                      workersMessage:
+                        description: |-
+                          readable message about the version.
+                          Human-readable message about the version.
+                        type: string
+                      workersTag:
+                        description: |-
+                          provided identifier for the version.
+                          User-provided identifier for the version.
+                        type: string
+                    type: object
+                  assets:
+                    description: (Attributes) Configuration for assets within a Worker.
+                    properties:
+                      config:
+                        description: (Attributes) Configuration for assets within
+                          a Worker. (see below for nested schema)
+                        properties:
+                          htmlHandling:
+                            description: |-
+                              trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
+                              Determines the redirects and rewrites of requests for HTML content.
+                              Available values: "auto-trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
+                            type: string
+                          notFoundHandling:
+                            description: |-
+                              page", "single-page-application".
+                              Determines the response when a request does not match a static asset, and there is no Worker script.
+                              Available values: "none", "404-page", "single-page-application".
+                            type: string
+                          runWorkerFirst:
+                            description: |-
+                              negative rule must be provided, and negative rules have higher precedence than non-negative rules.
+                              When a boolean true, requests will always invoke the Worker script. Otherwise, attempt to serve an asset matching the request, falling back to the Worker script. When a list of strings, contains path rules to control routing to either the Worker or assets. Glob (*) and negative (!) rules are supported. Rules must start with either '/' or '!/'. At least one non-negative rule must be provided, and negative rules have higher precedence than non-negative rules.
+                            x-kubernetes-preserve-unknown-fields: true
+                        type: object
+                      directory:
+                        description: |-
+                          (String) Path to the directory containing asset files to upload.
+                          Path to the directory containing asset files to upload.
+                        type: string
+                      jwtSecretRef:
+                        description: |-
+                          (String, Sensitive) Token provided upon successful upload of all files from a registered manifest.
+                          Token provided upon successful upload of all files from a registered manifest.
+                        properties:
+                          key:
+                            description: The key to select.
+                            type: string
+                          name:
+                            description: Name of the secret.
+                            type: string
+                          namespace:
+                            description: Namespace of the secret.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        - namespace
+                        type: object
+                    type: object
+                  bindings:
+                    description: upload-metadata/#bindings. (see below for nested
+                      schema)
+                    items:
+                      properties:
+                        algorithm:
+                          description: |-
+                            specific key parameters. Learn more.
+                            Algorithm-specific key parameters. [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#algorithm).
+                          type: string
+                        allowedDestinationAddresses:
+                          description: |-
+                            (List of String) List of allowed destination addresses.
+                            List of allowed destination addresses.
+                          items:
+                            type: string
+                          type: array
+                        allowedSenderAddresses:
+                          description: |-
+                            (List of String) List of allowed sender addresses.
+                            List of allowed sender addresses.
+                          items:
+                            type: string
+                          type: array
+                        bucketName:
+                          description: |-
+                            (String) R2 bucket to bind to.
+                            R2 bucket to bind to.
+                          type: string
+                        certificateId:
+                          description: |-
+                            (String) Identifier of the certificate to bind to.
+                            Identifier of the certificate to bind to.
+                          type: string
+                        className:
+                          description: |-
+                            (String) The exported class name of the Durable Object.
+                            The exported class name of the Durable Object.
+                          type: string
+                        dataset:
+                          description: |-
+                            (String) The name of the dataset to bind to.
+                            The name of the dataset to bind to.
+                          type: string
+                        destinationAddress:
+                          description: |-
+                            (String) Destination address for the email.
+                            Destination address for the email.
+                          type: string
+                        environment:
+                          description: |-
+                            (String) The environment of the script_name to bind to.
+                            The environment of the script_name to bind to.
+                          type: string
+                        format:
+                          description: |-
+                            (String) Data format of the key. Learn more.
+                            Available values: "raw", "pkcs8", "spki", "jwk".
+                            Data format of the key. [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#format).
+                            Available values: "raw", "pkcs8", "spki", "jwk".
+                          type: string
+                        id:
+                          description: |-
+                            (String) Version identifier.
+                            Identifier of the D1 database to bind to.
+                          type: string
+                        indexName:
+                          description: |-
+                            (String) Name of the Vectorize index to bind to.
+                            Name of the Vectorize index to bind to.
+                          type: string
+                        json:
+                          description: |-
+                            (String) JSON data to use.
+                            JSON data to use.
+                          type: string
+                        jurisdiction:
+                          description: |-
+                            (String) The jurisdiction of the R2 bucket.
+                            Available values: "eu", "fedramp".
+                            The [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) of the R2 bucket.
+                            Available values: "eu", "fedramp".
+                          type: string
+                        keyBase64SecretRef:
+                          description: |-
+                            encoded key data. Required if format is "raw", "pkcs8", or "spki".
+                            Base64-encoded key data. Required if `format` is "raw", "pkcs8", or "spki".
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        keyJwkSecretRef:
+                          description: |-
+                            (String, Sensitive) Key data in JSON Web Key format. Required if format is "jwk".
+                            Key data in [JSON Web Key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#json_web_key) format. Required if `format` is "jwk".
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        name:
+                          description: |-
+                            (String) A JavaScript variable name for the binding.
+                            A JavaScript variable name for the binding.
+                          type: string
+                        namespace:
+                          description: |-
+                            (String) The name of the dispatch namespace.
+                            The name of the dispatch namespace.
+                          type: string
+                        namespaceId:
+                          description: |-
+                            (String) Namespace identifier tag.
+                            Namespace identifier tag.
+                          type: string
+                        oldName:
+                          description: |-
+                            (String) The old name of the inherited binding. If set, the binding will be renamed from old_name to name in the new version. If not set, the binding will keep the same name between versions.
+                            The old name of the inherited binding. If set, the binding will be renamed from `old_name` to `name` in the new version. If not set, the binding will keep the same name between versions.
+                          type: string
+                        outbound:
+                          description: (Attributes) Outbound worker. (see below for
+                            nested schema)
+                          properties:
+                            params:
+                              description: (Attributes List) Pass information from
+                                the Dispatch Worker to the Outbound Worker through
+                                the parameters. (see below for nested schema)
+                              items:
+                                properties:
+                                  name:
+                                    description: |-
+                                      (String) A JavaScript variable name for the binding.
+                                      Name of the parameter.
+                                    type: string
+                                type: object
+                              type: array
+                            worker:
+                              description: (Attributes) Outbound worker. (see below
+                                for nested schema)
+                              properties:
+                                entrypoint:
+                                  description: |-
+                                    (String) Entrypoint to invoke on the outbound worker.
+                                    Entrypoint to invoke on the outbound worker.
+                                  type: string
+                                environment:
+                                  description: |-
+                                    (String) The environment of the script_name to bind to.
+                                    Environment of the outbound worker.
+                                  type: string
+                                service:
+                                  description: |-
+                                    (String) Name of Worker to bind to.
+                                    Name of the outbound worker.
+                                  type: string
+                              type: object
+                          type: object
+                        part:
+                          description: |-
+                            (String) The name of the file containing the data content. Only accepted for service worker syntax Workers.
+                            The name of the file containing the data content. Only accepted for `service worker syntax` Workers.
+                          type: string
+                        pipeline:
+                          description: |-
+                            (String) Name of the Pipeline to bind to.
+                            Name of the Pipeline to bind to.
+                          type: string
+                        queueName:
+                          description: |-
+                            (String) Name of the Queue to bind to.
+                            Name of the Queue to bind to.
+                          type: string
+                        scriptName:
+                          description: |-
+                            (String) The script where the Durable Object is defined, if it is external to this Worker.
+                            The script where the Durable Object is defined, if it is external to this Worker.
+                          type: string
+                        secretName:
+                          description: |-
+                            (String) Name of the secret in the store.
+                            Name of the secret in the store.
+                          type: string
+                        service:
+                          description: |-
+                            (String) Name of Worker to bind to.
+                            Name of Worker to bind to.
+                          type: string
+                        simple:
+                          description: (Attributes) The rate limit configuration.
+                            (see below for nested schema)
+                          properties:
+                            limit:
+                              description: |-
+                                (Number) The limit (requests per period).
+                                The limit (requests per period).
+                              type: number
+                            period:
+                              description: |-
+                                (Number) The period in seconds.
+                                The period in seconds.
+                              type: number
+                          type: object
+                        storeId:
+                          description: |-
+                            (String) ID of the store containing the secret.
+                            ID of the store containing the secret.
+                          type: string
+                        textSecretRef:
+                          description: |-
+                            (String, Sensitive) The text value to use.
+                            The text value to use.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        type:
+                          description: |-
+                            (String) The kind of resource that the binding provides.
+                            Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+                            The kind of resource that the binding provides.
+                            Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+                          type: string
+                        usages:
+                          description: |-
+                            (Set of String) Allowed operations with the key. Learn more.
+                            Allowed operations with the key. [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#keyUsages).
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        versionId:
+                          description: |-
+                            (String) Identifier for the version to inherit the binding from, which can be the version ID or the literal "latest" to inherit from the latest version. Defaults to inheriting the binding from the latest version.
+                            Identifier for the version to inherit the binding from, which can be the version ID or the literal "latest" to inherit from the latest version. Defaults to inheriting the binding from the latest version.
+                          type: string
+                        workflowName:
+                          description: |-
+                            (String) Name of the Workflow to bind to.
+                            Name of the Workflow to bind to.
+                          type: string
+                      type: object
+                    type: array
+                  compatibilityDate:
+                    description: |-
+                      (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
+                      Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
+                    type: string
+                  compatibilityFlags:
+                    description: |-
+                      (Set of String) Flags that enable or disable certain features in the Workers runtime. Used to enable upcoming features or opt in or out of specific changes not included in a compatibility_date.
+                      Flags that enable or disable certain features in the Workers runtime. Used to enable upcoming features or opt in or out of specific changes not included in a `compatibility_date`.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  limits:
+                    description: (Attributes) Resource limits enforced at runtime.
+                      (see below for nested schema)
+                    properties:
+                      cpuMs:
+                        description: |-
+                          (Number) CPU time limit in milliseconds.
+                          CPU time limit in milliseconds.
+                        type: number
+                    type: object
+                  mainModule:
+                    description: |-
+                      (String) The name of the main module in the modules array (e.g. the name of the module that exports a fetch handler).
+                      The name of the main module in the `modules` array (e.g. the name of the module that exports a `fetch` handler).
+                    type: string
+                  migrations:
+                    description: (Attributes) Migrations for Durable Objects associated
+                      with the version. Migrations are applied when the version is
+                      deployed. (see below for nested schema)
+                    properties:
+                      deletedClasses:
+                        description: |-
+                          (List of String) A list of classes to delete Durable Object namespaces from.
+                          A list of classes to delete Durable Object namespaces from.
+                        items:
+                          type: string
+                        type: array
+                      newClasses:
+                        description: |-
+                          (List of String) A list of classes to create Durable Object namespaces from.
+                          A list of classes to create Durable Object namespaces from.
+                        items:
+                          type: string
+                        type: array
+                      newSqliteClasses:
+                        description: |-
+                          (List of String) A list of classes to create Durable Object namespaces with SQLite from.
+                          A list of classes to create Durable Object namespaces with SQLite from.
+                        items:
+                          type: string
+                        type: array
+                      newTag:
+                        description: |-
+                          (String) Tag to set as the latest migration tag.
+                          Tag to set as the latest migration tag.
+                        type: string
+                      oldTag:
+                        description: |-
+                          (String) Tag used to verify against the latest migration tag for this Worker. If they don't match, the upload is rejected.
+                          Tag used to verify against the latest migration tag for this Worker. If they don't match, the upload is rejected.
+                        type: string
+                      renamedClasses:
+                        description: (Attributes List) A list of classes with Durable
+                          Object namespaces that were renamed. (see below for nested
+                          schema)
+                        items:
+                          properties:
+                            from:
+                              description: (String)
+                              type: string
+                            to:
+                              description: (String)
+                              type: string
+                          type: object
+                        type: array
+                      steps:
+                        description: (Attributes List) Migrations to apply in order.
+                          (see below for nested schema)
+                        items:
+                          properties:
+                            deletedClasses:
+                              description: |-
+                                (List of String) A list of classes to delete Durable Object namespaces from.
+                                A list of classes to delete Durable Object namespaces from.
+                              items:
+                                type: string
+                              type: array
+                            newClasses:
+                              description: |-
+                                (List of String) A list of classes to create Durable Object namespaces from.
+                                A list of classes to create Durable Object namespaces from.
+                              items:
+                                type: string
+                              type: array
+                            newSqliteClasses:
+                              description: |-
+                                (List of String) A list of classes to create Durable Object namespaces with SQLite from.
+                                A list of classes to create Durable Object namespaces with SQLite from.
+                              items:
+                                type: string
+                              type: array
+                            renamedClasses:
+                              description: (Attributes List) A list of classes with
+                                Durable Object namespaces that were renamed. (see
+                                below for nested schema)
+                              items:
+                                properties:
+                                  from:
+                                    description: (String)
+                                    type: string
+                                  to:
+                                    description: (String)
+                                    type: string
+                                type: object
+                              type: array
+                            transferredClasses:
+                              description: (Attributes List) A list of transfers for
+                                Durable Object namespaces from a different Worker
+                                and class to a class defined in this Worker. (see
+                                below for nested schema)
+                              items:
+                                properties:
+                                  from:
+                                    description: (String)
+                                    type: string
+                                  fromScript:
+                                    description: (String)
+                                    type: string
+                                  to:
+                                    description: (String)
+                                    type: string
+                                type: object
+                              type: array
+                          type: object
+                        type: array
+                      transferredClasses:
+                        description: (Attributes List) A list of transfers for Durable
+                          Object namespaces from a different Worker and class to a
+                          class defined in this Worker. (see below for nested schema)
+                        items:
+                          properties:
+                            from:
+                              description: (String)
+                              type: string
+                            fromScript:
+                              description: (String)
+                              type: string
+                            to:
+                              description: (String)
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  modules:
+                    description: (Attributes Set) Code, sourcemaps, and other content
+                      used at runtime.
+                    items:
+                      properties:
+                        contentBase64:
+                          description: |-
+                            encoded module content.
+                            The base64-encoded module content.
+                          type: string
+                        contentFile:
+                          description: |-
+                            (String) The file path of the module content.
+                            The file path of the module content.
+                          type: string
+                        contentType:
+                          description: |-
+                            (String) The content type of the module.
+                            The content type of the module.
+                          type: string
+                        name:
+                          description: |-
+                            (String) A JavaScript variable name for the binding.
+                            The name of the module.
+                          type: string
+                      type: object
+                    type: array
+                  placement:
+                    description: (Attributes) Configuration for Smart Placement. Specify
+                      mode='smart' for Smart Placement, or one of region/hostname/host.
+                      (see below for nested schema)
+                    properties:
+                      host:
+                        description: |-
+                          (String) TCP host and port for targeted placement.
+                          TCP host and port for targeted placement.
+                        type: string
+                      hostname:
+                        description: |-
+                          (String) HTTP hostname for targeted placement.
+                          HTTP hostname for targeted placement.
+                        type: string
+                      mode:
+                        description: |-
+                          (String) Enables Smart Placement.
+                          Available values: "smart", "targeted".
+                          Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+                          Available values: "smart", "targeted".
+                        type: string
+                      region:
+                        description: |-
+                          (String) Cloud region for targeted placement in format 'provider:region'.
+                          Cloud region for targeted placement in format 'provider:region'.
+                        type: string
+                      target:
+                        description: (Attributes List) Array of placement targets
+                          (currently limited to single target). (see below for nested
+                          schema)
+                        items:
+                          properties:
+                            host:
+                              description: |-
+                                (String) TCP host and port for targeted placement.
+                                TCP host:port for targeted placement.
+                              type: string
+                            hostname:
+                              description: |-
+                                (String) HTTP hostname for targeted placement.
+                                HTTP hostname for targeted placement.
+                              type: string
+                            region:
+                              description: |-
+                                (String) Cloud region for targeted placement in format 'provider:region'.
+                                Cloud region in format 'provider:region'.
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  usageModel:
+                    description: |-
+                      (String, Deprecated) Usage model for the version.
+                      Available values: "standard", "bundled", "unbound".
+                      Usage model for the version.
+                      Available values: "standard", "bundled", "unbound".
+                    type: string
+                  workerId:
+                    description: |-
+                      (String) Identifier for the Worker, which can be ID or name.
+                      Identifier for the Worker, which can be ID or name.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.accountId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
+                || (has(self.initProvider) && has(self.initProvider.accountId))'
+            - message: spec.forProvider.workerId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.workerId)
+                || (has(self.initProvider) && has(self.initProvider.workerId))'
+          status:
+            description: VersionStatus defines the observed state of Version.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  annotations:
+                    description: (Attributes) Metadata about the version. (see below
+                      for nested schema)
+                    properties:
+                      workersMessage:
+                        description: |-
+                          readable message about the version.
+                          Human-readable message about the version.
+                        type: string
+                      workersTag:
+                        description: |-
+                          provided identifier for the version.
+                          User-provided identifier for the version.
+                        type: string
+                      workersTriggeredBy:
+                        description: |-
+                          (String) Operation that triggered the creation of the version.
+                          Operation that triggered the creation of the version.
+                        type: string
+                    type: object
+                  assets:
+                    description: (Attributes) Configuration for assets within a Worker.
+                    properties:
+                      assetManifestSha256:
+                        description: |-
+                          256 hash of the asset manifest of files to upload.
+                          The SHA-256 hash of the asset manifest of files to upload.
+                        type: string
+                      config:
+                        description: (Attributes) Configuration for assets within
+                          a Worker. (see below for nested schema)
+                        properties:
+                          htmlHandling:
+                            description: |-
+                              trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
+                              Determines the redirects and rewrites of requests for HTML content.
+                              Available values: "auto-trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
+                            type: string
+                          notFoundHandling:
+                            description: |-
+                              page", "single-page-application".
+                              Determines the response when a request does not match a static asset, and there is no Worker script.
+                              Available values: "none", "404-page", "single-page-application".
+                            type: string
+                          runWorkerFirst:
+                            description: |-
+                              negative rule must be provided, and negative rules have higher precedence than non-negative rules.
+                              When a boolean true, requests will always invoke the Worker script. Otherwise, attempt to serve an asset matching the request, falling back to the Worker script. When a list of strings, contains path rules to control routing to either the Worker or assets. Glob (*) and negative (!) rules are supported. Rules must start with either '/' or '!/'. At least one non-negative rule must be provided, and negative rules have higher precedence than non-negative rules.
+                            x-kubernetes-preserve-unknown-fields: true
+                        type: object
+                      directory:
+                        description: |-
+                          (String) Path to the directory containing asset files to upload.
+                          Path to the directory containing asset files to upload.
+                        type: string
+                    type: object
+                  bindings:
+                    description: upload-metadata/#bindings. (see below for nested
+                      schema)
+                    items:
+                      properties:
+                        algorithm:
+                          description: |-
+                            specific key parameters. Learn more.
+                            Algorithm-specific key parameters. [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#algorithm).
+                          type: string
+                        allowedDestinationAddresses:
+                          description: |-
+                            (List of String) List of allowed destination addresses.
+                            List of allowed destination addresses.
+                          items:
+                            type: string
+                          type: array
+                        allowedSenderAddresses:
+                          description: |-
+                            (List of String) List of allowed sender addresses.
+                            List of allowed sender addresses.
+                          items:
+                            type: string
+                          type: array
+                        bucketName:
+                          description: |-
+                            (String) R2 bucket to bind to.
+                            R2 bucket to bind to.
+                          type: string
+                        certificateId:
+                          description: |-
+                            (String) Identifier of the certificate to bind to.
+                            Identifier of the certificate to bind to.
+                          type: string
+                        className:
+                          description: |-
+                            (String) The exported class name of the Durable Object.
+                            The exported class name of the Durable Object.
+                          type: string
+                        dataset:
+                          description: |-
+                            (String) The name of the dataset to bind to.
+                            The name of the dataset to bind to.
+                          type: string
+                        destinationAddress:
+                          description: |-
+                            (String) Destination address for the email.
+                            Destination address for the email.
+                          type: string
+                        environment:
+                          description: |-
+                            (String) The environment of the script_name to bind to.
+                            The environment of the script_name to bind to.
+                          type: string
+                        format:
+                          description: |-
+                            (String) Data format of the key. Learn more.
+                            Available values: "raw", "pkcs8", "spki", "jwk".
+                            Data format of the key. [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#format).
+                            Available values: "raw", "pkcs8", "spki", "jwk".
+                          type: string
+                        id:
+                          description: |-
+                            (String) Version identifier.
+                            Identifier of the D1 database to bind to.
+                          type: string
+                        indexName:
+                          description: |-
+                            (String) Name of the Vectorize index to bind to.
+                            Name of the Vectorize index to bind to.
+                          type: string
+                        json:
+                          description: |-
+                            (String) JSON data to use.
+                            JSON data to use.
+                          type: string
+                        jurisdiction:
+                          description: |-
+                            (String) The jurisdiction of the R2 bucket.
+                            Available values: "eu", "fedramp".
+                            The [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) of the R2 bucket.
+                            Available values: "eu", "fedramp".
+                          type: string
+                        name:
+                          description: |-
+                            (String) A JavaScript variable name for the binding.
+                            A JavaScript variable name for the binding.
+                          type: string
+                        namespace:
+                          description: |-
+                            (String) The name of the dispatch namespace.
+                            The name of the dispatch namespace.
+                          type: string
+                        namespaceId:
+                          description: |-
+                            (String) Namespace identifier tag.
+                            Namespace identifier tag.
+                          type: string
+                        oldName:
+                          description: |-
+                            (String) The old name of the inherited binding. If set, the binding will be renamed from old_name to name in the new version. If not set, the binding will keep the same name between versions.
+                            The old name of the inherited binding. If set, the binding will be renamed from `old_name` to `name` in the new version. If not set, the binding will keep the same name between versions.
+                          type: string
+                        outbound:
+                          description: (Attributes) Outbound worker. (see below for
+                            nested schema)
+                          properties:
+                            params:
+                              description: (Attributes List) Pass information from
+                                the Dispatch Worker to the Outbound Worker through
+                                the parameters. (see below for nested schema)
+                              items:
+                                properties:
+                                  name:
+                                    description: |-
+                                      (String) A JavaScript variable name for the binding.
+                                      Name of the parameter.
+                                    type: string
+                                type: object
+                              type: array
+                            worker:
+                              description: (Attributes) Outbound worker. (see below
+                                for nested schema)
+                              properties:
+                                entrypoint:
+                                  description: |-
+                                    (String) Entrypoint to invoke on the outbound worker.
+                                    Entrypoint to invoke on the outbound worker.
+                                  type: string
+                                environment:
+                                  description: |-
+                                    (String) The environment of the script_name to bind to.
+                                    Environment of the outbound worker.
+                                  type: string
+                                service:
+                                  description: |-
+                                    (String) Name of Worker to bind to.
+                                    Name of the outbound worker.
+                                  type: string
+                              type: object
+                          type: object
+                        part:
+                          description: |-
+                            (String) The name of the file containing the data content. Only accepted for service worker syntax Workers.
+                            The name of the file containing the data content. Only accepted for `service worker syntax` Workers.
+                          type: string
+                        pipeline:
+                          description: |-
+                            (String) Name of the Pipeline to bind to.
+                            Name of the Pipeline to bind to.
+                          type: string
+                        queueName:
+                          description: |-
+                            (String) Name of the Queue to bind to.
+                            Name of the Queue to bind to.
+                          type: string
+                        scriptName:
+                          description: |-
+                            (String) The script where the Durable Object is defined, if it is external to this Worker.
+                            The script where the Durable Object is defined, if it is external to this Worker.
+                          type: string
+                        secretName:
+                          description: |-
+                            (String) Name of the secret in the store.
+                            Name of the secret in the store.
+                          type: string
+                        service:
+                          description: |-
+                            (String) Name of Worker to bind to.
+                            Name of Worker to bind to.
+                          type: string
+                        simple:
+                          description: (Attributes) The rate limit configuration.
+                            (see below for nested schema)
+                          properties:
+                            limit:
+                              description: |-
+                                (Number) The limit (requests per period).
+                                The limit (requests per period).
+                              type: number
+                            period:
+                              description: |-
+                                (Number) The period in seconds.
+                                The period in seconds.
+                              type: number
+                          type: object
+                        storeId:
+                          description: |-
+                            (String) ID of the store containing the secret.
+                            ID of the store containing the secret.
+                          type: string
+                        type:
+                          description: |-
+                            (String) The kind of resource that the binding provides.
+                            Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+                            The kind of resource that the binding provides.
+                            Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+                          type: string
+                        usages:
+                          description: |-
+                            (Set of String) Allowed operations with the key. Learn more.
+                            Allowed operations with the key. [Learn more](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#keyUsages).
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        versionId:
+                          description: |-
+                            (String) Identifier for the version to inherit the binding from, which can be the version ID or the literal "latest" to inherit from the latest version. Defaults to inheriting the binding from the latest version.
+                            Identifier for the version to inherit the binding from, which can be the version ID or the literal "latest" to inherit from the latest version. Defaults to inheriting the binding from the latest version.
+                          type: string
+                        workflowName:
+                          description: |-
+                            (String) Name of the Workflow to bind to.
+                            Name of the Workflow to bind to.
+                          type: string
+                      type: object
+                    type: array
+                  compatibilityDate:
+                    description: |-
+                      (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
+                      Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
+                    type: string
+                  compatibilityFlags:
+                    description: |-
+                      (Set of String) Flags that enable or disable certain features in the Workers runtime. Used to enable upcoming features or opt in or out of specific changes not included in a compatibility_date.
+                      Flags that enable or disable certain features in the Workers runtime. Used to enable upcoming features or opt in or out of specific changes not included in a `compatibility_date`.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  createdOn:
+                    description: |-
+                      (String) When the version was created.
+                      When the version was created.
+                    type: string
+                  id:
+                    description: (String) Version identifier.
+                    type: string
+                  limits:
+                    description: (Attributes) Resource limits enforced at runtime.
+                      (see below for nested schema)
+                    properties:
+                      cpuMs:
+                        description: |-
+                          (Number) CPU time limit in milliseconds.
+                          CPU time limit in milliseconds.
+                        type: number
+                    type: object
+                  mainModule:
+                    description: |-
+                      (String) The name of the main module in the modules array (e.g. the name of the module that exports a fetch handler).
+                      The name of the main module in the `modules` array (e.g. the name of the module that exports a `fetch` handler).
+                    type: string
+                  mainScriptBase64:
+                    description: |-
+                      encoded main script content. This is only returned for service worker syntax workers (not ES modules). Used when importing existing workers that use the older service worker syntax.
+                      The base64-encoded main script content. This is only returned for service worker syntax workers (not ES modules). Used when importing existing workers that use the older service worker syntax.
+                    type: string
+                  migrations:
+                    description: (Attributes) Migrations for Durable Objects associated
+                      with the version. Migrations are applied when the version is
+                      deployed. (see below for nested schema)
+                    properties:
+                      deletedClasses:
+                        description: |-
+                          (List of String) A list of classes to delete Durable Object namespaces from.
+                          A list of classes to delete Durable Object namespaces from.
+                        items:
+                          type: string
+                        type: array
+                      newClasses:
+                        description: |-
+                          (List of String) A list of classes to create Durable Object namespaces from.
+                          A list of classes to create Durable Object namespaces from.
+                        items:
+                          type: string
+                        type: array
+                      newSqliteClasses:
+                        description: |-
+                          (List of String) A list of classes to create Durable Object namespaces with SQLite from.
+                          A list of classes to create Durable Object namespaces with SQLite from.
+                        items:
+                          type: string
+                        type: array
+                      newTag:
+                        description: |-
+                          (String) Tag to set as the latest migration tag.
+                          Tag to set as the latest migration tag.
+                        type: string
+                      oldTag:
+                        description: |-
+                          (String) Tag used to verify against the latest migration tag for this Worker. If they don't match, the upload is rejected.
+                          Tag used to verify against the latest migration tag for this Worker. If they don't match, the upload is rejected.
+                        type: string
+                      renamedClasses:
+                        description: (Attributes List) A list of classes with Durable
+                          Object namespaces that were renamed. (see below for nested
+                          schema)
+                        items:
+                          properties:
+                            from:
+                              description: (String)
+                              type: string
+                            to:
+                              description: (String)
+                              type: string
+                          type: object
+                        type: array
+                      steps:
+                        description: (Attributes List) Migrations to apply in order.
+                          (see below for nested schema)
+                        items:
+                          properties:
+                            deletedClasses:
+                              description: |-
+                                (List of String) A list of classes to delete Durable Object namespaces from.
+                                A list of classes to delete Durable Object namespaces from.
+                              items:
+                                type: string
+                              type: array
+                            newClasses:
+                              description: |-
+                                (List of String) A list of classes to create Durable Object namespaces from.
+                                A list of classes to create Durable Object namespaces from.
+                              items:
+                                type: string
+                              type: array
+                            newSqliteClasses:
+                              description: |-
+                                (List of String) A list of classes to create Durable Object namespaces with SQLite from.
+                                A list of classes to create Durable Object namespaces with SQLite from.
+                              items:
+                                type: string
+                              type: array
+                            renamedClasses:
+                              description: (Attributes List) A list of classes with
+                                Durable Object namespaces that were renamed. (see
+                                below for nested schema)
+                              items:
+                                properties:
+                                  from:
+                                    description: (String)
+                                    type: string
+                                  to:
+                                    description: (String)
+                                    type: string
+                                type: object
+                              type: array
+                            transferredClasses:
+                              description: (Attributes List) A list of transfers for
+                                Durable Object namespaces from a different Worker
+                                and class to a class defined in this Worker. (see
+                                below for nested schema)
+                              items:
+                                properties:
+                                  from:
+                                    description: (String)
+                                    type: string
+                                  fromScript:
+                                    description: (String)
+                                    type: string
+                                  to:
+                                    description: (String)
+                                    type: string
+                                type: object
+                              type: array
+                          type: object
+                        type: array
+                      transferredClasses:
+                        description: (Attributes List) A list of transfers for Durable
+                          Object namespaces from a different Worker and class to a
+                          class defined in this Worker. (see below for nested schema)
+                        items:
+                          properties:
+                            from:
+                              description: (String)
+                              type: string
+                            fromScript:
+                              description: (String)
+                              type: string
+                            to:
+                              description: (String)
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  modules:
+                    description: (Attributes Set) Code, sourcemaps, and other content
+                      used at runtime.
+                    items:
+                      properties:
+                        contentBase64:
+                          description: |-
+                            encoded module content.
+                            The base64-encoded module content.
+                          type: string
+                        contentFile:
+                          description: |-
+                            (String) The file path of the module content.
+                            The file path of the module content.
+                          type: string
+                        contentSha256:
+                          description: |-
+                            256 hash of the module content.
+                            The SHA-256 hash of the module content.
+                          type: string
+                        contentType:
+                          description: |-
+                            (String) The content type of the module.
+                            The content type of the module.
+                          type: string
+                        name:
+                          description: |-
+                            (String) A JavaScript variable name for the binding.
+                            The name of the module.
+                          type: string
+                      type: object
+                    type: array
+                  number:
+                    description: |-
+                      (Number) The integer version number, starting from one.
+                      The integer version number, starting from one.
+                    type: number
+                  placement:
+                    description: (Attributes) Configuration for Smart Placement. Specify
+                      mode='smart' for Smart Placement, or one of region/hostname/host.
+                      (see below for nested schema)
+                    properties:
+                      host:
+                        description: |-
+                          (String) TCP host and port for targeted placement.
+                          TCP host and port for targeted placement.
+                        type: string
+                      hostname:
+                        description: |-
+                          (String) HTTP hostname for targeted placement.
+                          HTTP hostname for targeted placement.
+                        type: string
+                      mode:
+                        description: |-
+                          (String) Enables Smart Placement.
+                          Available values: "smart", "targeted".
+                          Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+                          Available values: "smart", "targeted".
+                        type: string
+                      region:
+                        description: |-
+                          (String) Cloud region for targeted placement in format 'provider:region'.
+                          Cloud region for targeted placement in format 'provider:region'.
+                        type: string
+                      target:
+                        description: (Attributes List) Array of placement targets
+                          (currently limited to single target). (see below for nested
+                          schema)
+                        items:
+                          properties:
+                            host:
+                              description: |-
+                                (String) TCP host and port for targeted placement.
+                                TCP host:port for targeted placement.
+                              type: string
+                            hostname:
+                              description: |-
+                                (String) HTTP hostname for targeted placement.
+                                HTTP hostname for targeted placement.
+                              type: string
+                            region:
+                              description: |-
+                                (String) Cloud region for targeted placement in format 'provider:region'.
+                                Cloud region in format 'provider:region'.
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  source:
+                    description: |-
+                      (String) The client used to create the version.
+                      The client used to create the version.
+                    type: string
+                  startupTimeMs:
+                    description: |-
+                      (Number) Time in milliseconds spent on Worker startup.
+                      Time in milliseconds spent on [Worker startup](https://developers.cloudflare.com/workers/platform/limits/#worker-startup-time).
+                    type: number
+                  usageModel:
+                    description: |-
+                      (String, Deprecated) Usage model for the version.
+                      Available values: "standard", "bundled", "unbound".
+                      Usage model for the version.
+                      Available values: "standard", "bundled", "unbound".
+                    type: string
+                  workerId:
+                    description: |-
+                      (String) Identifier for the Worker, which can be ID or name.
+                      Identifier for the Worker, which can be ID or name.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

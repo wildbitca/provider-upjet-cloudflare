@@ -1,0 +1,14 @@
+apiVersion: hostname.upjet-cloudflare.upbound.io/v1alpha1
+kind: TLSSetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: hostname/v1alpha1/tlssetting
+  labels:
+    testing.upbound.io/example-name: example_hostname_tls_setting
+  name: example-hostname-tls-setting
+spec:
+  forProvider:
+    hostname: app.example.com
+    settingId: ciphers
+    value: "1.0"
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

@@ -1,0 +1,491 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: routingdnses.email.upjet-cloudflare.upbound.io
+spec:
+  group: email.upjet-cloudflare.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: RoutingDNS
+    listKind: RoutingDNSList
+    plural: routingdnses
+    singular: routingdns
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: RoutingDNS is the Schema for the RoutingDNSs API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: RoutingDNSSpec defines the desired state of RoutingDNS
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  name:
+                    description: |-
+                      (String) Domain of your zone.
+                      Domain of your zone.
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  name:
+                    description: |-
+                      (String) Domain of your zone.
+                      Domain of your zone.
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.zoneId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.zoneId)
+                || (has(self.initProvider) && has(self.initProvider.zoneId))'
+          status:
+            description: RoutingDNSStatus defines the observed state of RoutingDNS.
+            properties:
+              atProvider:
+                properties:
+                  created:
+                    description: |-
+                      (String) The date and time the settings have been created.
+                      The date and time the settings have been created.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) State of the zone settings for Email Routing.
+                      State of the zone settings for Email Routing.
+                    type: boolean
+                  errors:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        code:
+                          description: (Number)
+                          type: number
+                        documentationUrl:
+                          description: (String)
+                          type: string
+                        message:
+                          description: (String)
+                          type: string
+                        source:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            pointer:
+                              description: (String)
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                  id:
+                    description: (String) Identifier.
+                    type: string
+                  messages:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        code:
+                          description: (Number)
+                          type: number
+                        documentationUrl:
+                          description: (String)
+                          type: string
+                        message:
+                          description: (String)
+                          type: string
+                        source:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            pointer:
+                              description: (String)
+                              type: string
+                          type: object
+                      type: object
+                    type: array
+                  modified:
+                    description: |-
+                      (String) The date and time the settings have been modified.
+                      The date and time the settings have been modified.
+                    type: string
+                  name:
+                    description: |-
+                      (String) Domain of your zone.
+                      Domain of your zone.
+                    type: string
+                  result:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      content:
+                        description: |-
+                          (String) DNS record content.
+                          DNS record content.
+                        type: string
+                      errors:
+                        description: (Attributes List) (see below for nested schema)
+                        items:
+                          properties:
+                            code:
+                              description: (Number)
+                              type: string
+                            missing:
+                              description: (Attributes) List of records needed to
+                                enable an Email Routing zone. (see below for nested
+                                schema)
+                              properties:
+                                content:
+                                  description: |-
+                                    (String) DNS record content.
+                                    DNS record content.
+                                  type: string
+                                name:
+                                  description: |-
+                                    (String) Domain of your zone.
+                                    DNS record name (or @ for the zone apex).
+                                  type: string
+                                priority:
+                                  description: |-
+                                    (Number) Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
+                                    Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
+                                  type: number
+                                ttl:
+                                  description: |-
+                                    (Number) Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
+                                    Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
+                                  type: number
+                                type:
+                                  description: |-
+                                    (String) DNS record type.
+                                    Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
+                                    DNS record type.
+                                    Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
+                                  type: string
+                              type: object
+                          type: object
+                        type: array
+                      name:
+                        description: |-
+                          (String) Domain of your zone.
+                          DNS record name (or @ for the zone apex).
+                        type: string
+                      priority:
+                        description: |-
+                          (Number) Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
+                          Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
+                        type: number
+                      record:
+                        description: (Attributes List) (see below for nested schema)
+                        items:
+                          properties:
+                            content:
+                              description: |-
+                                (String) DNS record content.
+                                DNS record content.
+                              type: string
+                            name:
+                              description: |-
+                                (String) Domain of your zone.
+                                DNS record name (or @ for the zone apex).
+                              type: string
+                            priority:
+                              description: |-
+                                (Number) Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
+                                Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
+                              type: number
+                            ttl:
+                              description: |-
+                                (Number) Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
+                                Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
+                              type: number
+                            type:
+                              description: |-
+                                (String) DNS record type.
+                                Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
+                                DNS record type.
+                                Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
+                              type: string
+                          type: object
+                        type: array
+                      ttl:
+                        description: |-
+                          (Number) Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
+                          Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
+                        type: number
+                      type:
+                        description: |-
+                          (String) DNS record type.
+                          Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
+                          DNS record type.
+                          Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
+                        type: string
+                    type: object
+                  resultInfo:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      emailRoutingDnsCount:
+                        description: |-
+                          (Number) Total number of results for the requested service.
+                          Total number of results for the requested service.
+                        type: number
+                      page:
+                        description: |-
+                          (Number) Current page within paginated list of results.
+                          Current page within paginated list of results.
+                        type: number
+                      perPage:
+                        description: |-
+                          (Number) Number of results per page of results.
+                          Number of results per page of results.
+                        type: number
+                      totalCount:
+                        description: |-
+                          (Number) Total results available without any search parameters.
+                          Total results available without any search parameters.
+                        type: number
+                    type: object
+                  skipWizard:
+                    description: |-
+                      (Boolean) Flag to check if the user skipped the configuration wizard.
+                      Flag to check if the user skipped the configuration wizard.
+                    type: boolean
+                  status:
+                    description: |-
+                      (String) Show the state of your account, and the type or configuration error.
+                      Available values: "ready", "unconfigured", "misconfigured", "misconfigured/locked", "unlocked".
+                      Show the state of your account, and the type or configuration error.
+                      Available values: "ready", "unconfigured", "misconfigured", "misconfigured/locked", "unlocked".
+                    type: string
+                  success:
+                    description: |-
+                      (Boolean) Whether the API call was successful.
+                      Whether the API call was successful.
+                    type: boolean
+                  tag:
+                    description: |-
+                      (String, Deprecated) Email Routing settings tag. (Deprecated, replaced by Email Routing settings identifier)
+                      Email Routing settings tag. (Deprecated, replaced by Email Routing settings identifier)
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

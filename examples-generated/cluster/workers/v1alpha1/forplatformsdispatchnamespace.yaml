@@ -1,0 +1,12 @@
+apiVersion: workers.upjet-cloudflare.upbound.io/v1alpha1
+kind: ForPlatformsDispatchNamespace
+metadata:
+  annotations:
+    meta.upbound.io/example-id: workers/v1alpha1/forplatformsdispatchnamespace
+  labels:
+    testing.upbound.io/example-name: example_workers_for_platforms_dispatch_namespace
+  name: example-workers-for-platforms-dispatch-namespace
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    name: my-dispatch-namespace

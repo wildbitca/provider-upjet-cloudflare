@@ -1,0 +1,14 @@
+apiVersion: account.upjet-cloudflare.upbound.io/v1alpha1
+kind: Account
+metadata:
+  annotations:
+    meta.upbound.io/example-id: account/v1alpha1/account
+  labels:
+    testing.upbound.io/example-name: example_account
+  name: example-account
+spec:
+  forProvider:
+    name: name
+    type: standard
+    unit:
+      id: f267e341f3dd4697bd3b9f71dd96247f

@@ -1,0 +1,22 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustDevicePostureIntegration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustdevicepostureintegration
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_device_posture_integration
+  name: example-zero-trust-device-posture-integration
+spec:
+  forProvider:
+    accountId: 699d98642c564d2e855e9661899b7252
+    config:
+      apiUrl: https://as123.awmdm.com/API
+      authUrl: https://na.uemauth.workspaceone.com/connect/token
+      clientId: example client id
+      clientSecretSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+    interval: 10m
+    name: My Workspace One Integration
+    type: workspace_one

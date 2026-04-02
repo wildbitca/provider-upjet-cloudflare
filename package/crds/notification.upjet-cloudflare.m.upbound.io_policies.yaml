@@ -1,0 +1,1366 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: policies.notification.upjet-cloudflare.m.upbound.io
+spec:
+  group: notification.upjet-cloudflare.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: Policy
+    listKind: PolicyList
+    plural: policies
+    singular: policy
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Policy is the Schema for the Policys API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: PolicySpec defines the desired state of Policy
+            properties:
+              forProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The account id
+                      The account id
+                    type: string
+                  alertInterval:
+                    description: |-
+                      alert from the same incident, not support on all alert types.
+                      Optional specification of how often to re-alert from the same incident, not support on all alert types.
+                    type: string
+                  alertType:
+                    description: |-
+                      (String) Refers to which event will trigger a Notification dispatch. You can use the endpoint to get available alert types which then will give you a list of possible values.
+                      Available values: "abuse_report_alert", "access_custom_certificate_expiration_type", "advanced_ddos_attack_l4_alert", "advanced_ddos_attack_l7_alert", "advanced_http_alert_error", "bgp_hijack_notification", "billing_usage_alert", "block_notification_block_removed", "block_notification_new_block", "block_notification_review_rejected", "bot_traffic_basic_alert", "brand_protection_alert", "brand_protection_digest", "clickhouse_alert_fw_anomaly", "clickhouse_alert_fw_ent_anomaly", "cloudforce_one_request_notification", "custom_analytics", "custom_bot_detection_alert", "custom_ssl_certificate_event_type", "dedicated_ssl_certificate_event_type", "device_connectivity_anomaly_alert", "dos_attack_l4", "dos_attack_l7", "expiring_service_token_alert", "failing_logpush_job_disabled_alert", "fbm_auto_advertisement", "fbm_dosd_attack", "fbm_volumetric_attack", "health_check_status_notification", "hostname_aop_custom_certificate_expiration_type", "http_alert_edge_error", "http_alert_origin_error", "image_notification", "image_resizing_notification", "incident_alert", "load_balancing_health_alert", "load_balancing_pool_enablement_alert", "logo_match_alert", "magic_tunnel_health_check_event", "magic_wan_tunnel_health", "maintenance_event_notification", "mtls_certificate_store_certificate_expiration_type", "pages_event_alert", "radar_notification", "real_origin_monitoring", "scriptmonitor_alert_new_code_change_detections", "scriptmonitor_alert_new_hosts", "scriptmonitor_alert_new_malicious_hosts", "scriptmonitor_alert_new_malicious_scripts", "scriptmonitor_alert_new_malicious_url", "scriptmonitor_alert_new_max_length_resource_url", "scriptmonitor_alert_new_resources", "secondary_dns_all_primaries_failing", "secondary_dns_primaries_failing", "secondary_dns_warning", "secondary_dns_zone_successfully_updated", "secondary_dns_zone_validation_warning", "security_insights_alert", "sentinel_alert", "stream_live_notifications", "synthetic_test_latency_alert", "synthetic_test_low_availability_alert", "traffic_anomalies_alert", "tunnel_health_event", "tunnel_update_event", "universal_ssl_event_type", "web_analytics_metrics_update", "zone_aop_custom_certificate_expiration_type".
+                      Refers to which event will trigger a Notification dispatch. You can use the endpoint to get available alert types which then will give you a list of possible values.
+                      Available values: "abuse_report_alert", "access_custom_certificate_expiration_type", "advanced_ddos_attack_l4_alert", "advanced_ddos_attack_l7_alert", "advanced_http_alert_error", "bgp_hijack_notification", "billing_usage_alert", "block_notification_block_removed", "block_notification_new_block", "block_notification_review_rejected", "bot_traffic_basic_alert", "brand_protection_alert", "brand_protection_digest", "clickhouse_alert_fw_anomaly", "clickhouse_alert_fw_ent_anomaly", "cloudforce_one_request_notification", "custom_analytics", "custom_bot_detection_alert", "custom_ssl_certificate_event_type", "dedicated_ssl_certificate_event_type", "device_connectivity_anomaly_alert", "dos_attack_l4", "dos_attack_l7", "expiring_service_token_alert", "failing_logpush_job_disabled_alert", "fbm_auto_advertisement", "fbm_dosd_attack", "fbm_volumetric_attack", "health_check_status_notification", "hostname_aop_custom_certificate_expiration_type", "http_alert_edge_error", "http_alert_origin_error", "image_notification", "image_resizing_notification", "incident_alert", "load_balancing_health_alert", "load_balancing_pool_enablement_alert", "logo_match_alert", "magic_tunnel_health_check_event", "magic_wan_tunnel_health", "maintenance_event_notification", "mtls_certificate_store_certificate_expiration_type", "pages_event_alert", "radar_notification", "real_origin_monitoring", "scriptmonitor_alert_new_code_change_detections", "scriptmonitor_alert_new_hosts", "scriptmonitor_alert_new_malicious_hosts", "scriptmonitor_alert_new_malicious_scripts", "scriptmonitor_alert_new_malicious_url", "scriptmonitor_alert_new_max_length_resource_url", "scriptmonitor_alert_new_resources", "secondary_dns_all_primaries_failing", "secondary_dns_primaries_failing", "secondary_dns_warning", "secondary_dns_zone_successfully_updated", "secondary_dns_zone_validation_warning", "security_insights_alert", "sentinel_alert", "stream_live_notifications", "synthetic_test_latency_alert", "synthetic_test_low_availability_alert", "traffic_anomalies_alert", "tunnel_health_event", "tunnel_update_event", "universal_ssl_event_type", "web_analytics_metrics_update", "zone_aop_custom_certificate_expiration_type".
+                    type: string
+                  description:
+                    description: |-
+                      (String) Optional description for the Notification policy.
+                      Optional description for the Notification policy.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Whether or not the Notification policy is enabled.
+                      Whether or not the Notification policy is enabled.
+                    type: boolean
+                  filters:
+                    description: (Attributes) Optional filters that allow you to be
+                      alerted only on a subset of events for that alert type based
+                      on some criteria. This is only available for select alert types.
+                      See alert type documentation for more details. (see below for
+                      nested schema)
+                    properties:
+                      actions:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      affectedAsns:
+                        description: |-
+                          (List of String) Used for configuring radar_notification
+                          Used for configuring radar_notification
+                        items:
+                          type: string
+                        type: array
+                      affectedComponents:
+                        description: |-
+                          (List of String) Used for configuring incident_alert
+                          Used for configuring incident_alert
+                        items:
+                          type: string
+                        type: array
+                      affectedLocations:
+                        description: |-
+                          (List of String) Used for configuring radar_notification
+                          Used for configuring radar_notification
+                        items:
+                          type: string
+                        type: array
+                      airportCode:
+                        description: |-
+                          (List of String) Used for configuring maintenance_event_notification
+                          Used for configuring maintenance_event_notification
+                        items:
+                          type: string
+                        type: array
+                      alertTriggerPreferences:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      alertTriggerPreferencesValue:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      enabled:
+                        description: |-
+                          (Boolean) Whether or not the Notification policy is enabled.
+                          Used for configuring load_balancing_pool_enablement_alert
+                        items:
+                          type: string
+                        type: array
+                      environment:
+                        description: |-
+                          (List of String) Used for configuring pages_event_alert
+                          Used for configuring pages_event_alert
+                        items:
+                          type: string
+                        type: array
+                      event:
+                        description: |-
+                          (List of String) Used for configuring pages_event_alert
+                          Used for configuring pages_event_alert
+                        items:
+                          type: string
+                        type: array
+                      eventSource:
+                        description: |-
+                          (List of String) Used for configuring load_balancing_health_alert
+                          Used for configuring load_balancing_health_alert
+                        items:
+                          type: string
+                        type: array
+                      eventType:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      groupBy:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      healthCheckId:
+                        description: |-
+                          (List of String) Used for configuring health_check_status_notification
+                          Used for configuring health_check_status_notification
+                        items:
+                          type: string
+                        type: array
+                      incidentImpact:
+                        description: |-
+                          (List of String) Used for configuring incident_alert
+                          Used for configuring incident_alert
+                        items:
+                          type: string
+                        type: array
+                      inputId:
+                        description: |-
+                          (List of String) Used for configuring stream_live_notifications
+                          Used for configuring stream_live_notifications
+                        items:
+                          type: string
+                        type: array
+                      insightClass:
+                        description: |-
+                          (List of String) Used for configuring security_insights_alert
+                          Used for configuring security_insights_alert
+                        items:
+                          type: string
+                        type: array
+                      limit:
+                        description: |-
+                          (List of String) Used for configuring billing_usage_alert
+                          Used for configuring billing_usage_alert
+                        items:
+                          type: string
+                        type: array
+                      logoTag:
+                        description: |-
+                          (List of String) Used for configuring logo_match_alert
+                          Used for configuring logo_match_alert
+                        items:
+                          type: string
+                        type: array
+                      megabitsPerSecond:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l4_alert
+                          Used for configuring advanced_ddos_attack_l4_alert
+                        items:
+                          type: string
+                        type: array
+                      newHealth:
+                        description: |-
+                          (List of String) Used for configuring load_balancing_health_alert
+                          Used for configuring load_balancing_health_alert
+                        items:
+                          type: string
+                        type: array
+                      newStatus:
+                        description: |-
+                          (List of String) Used for configuring tunnel_health_event
+                          Used for configuring tunnel_health_event
+                        items:
+                          type: string
+                        type: array
+                      packetsPerSecond:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l4_alert
+                          Used for configuring advanced_ddos_attack_l4_alert
+                        items:
+                          type: string
+                        type: array
+                      poolId:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      popNames:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      product:
+                        description: |-
+                          (List of String) Used for configuring billing_usage_alert
+                          Used for configuring billing_usage_alert
+                        items:
+                          type: string
+                        type: array
+                      projectId:
+                        description: |-
+                          (List of String) Used for configuring pages_event_alert
+                          Used for configuring pages_event_alert
+                        items:
+                          type: string
+                        type: array
+                      protocol:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l4_alert
+                          Used for configuring advanced_ddos_attack_l4_alert
+                        items:
+                          type: string
+                        type: array
+                      queryTag:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      requestsPerSecond:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l7_alert
+                          Used for configuring advanced_ddos_attack_l7_alert
+                        items:
+                          type: string
+                        type: array
+                      selectors:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      services:
+                        description: |-
+                          (List of String) Used for configuring clickhouse_alert_fw_ent_anomaly
+                          Used for configuring clickhouse_alert_fw_ent_anomaly
+                        items:
+                          type: string
+                        type: array
+                      slo:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      status:
+                        description: |-
+                          (List of String) Used for configuring health_check_status_notification
+                          Used for configuring health_check_status_notification
+                        items:
+                          type: string
+                        type: array
+                      targetHostname:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l7_alert
+                          Used for configuring advanced_ddos_attack_l7_alert
+                        items:
+                          type: string
+                        type: array
+                      targetIp:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l4_alert
+                          Used for configuring advanced_ddos_attack_l4_alert
+                        items:
+                          type: string
+                        type: array
+                      targetZoneName:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l7_alert
+                          Used for configuring advanced_ddos_attack_l7_alert
+                        items:
+                          type: string
+                        type: array
+                      trafficExclusions:
+                        description: |-
+                          (List of String) Used for configuring traffic_anomalies_alert
+                          Used for configuring traffic_anomalies_alert
+                        items:
+                          type: string
+                        type: array
+                      tunnelId:
+                        description: |-
+                          (List of String) Used for configuring tunnel_health_event
+                          Used for configuring tunnel_health_event
+                        items:
+                          type: string
+                        type: array
+                      tunnelName:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      type:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      where:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      zones:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  mechanisms:
+                    description: (Attributes) List of IDs that will be used when dispatching
+                      a notification. IDs for email type will be the email address.
+                      (see below for nested schema)
+                    properties:
+                      email:
+                        description: (Attributes Set) (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) UUID
+                                The email address
+                              type: string
+                          type: object
+                        type: array
+                      pagerduty:
+                        description: (Attributes Set) (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) UUID
+                                UUID
+                              type: string
+                          type: object
+                        type: array
+                      webhooks:
+                        description: (Attributes Set) (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) UUID
+                                UUID
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  name:
+                    description: |-
+                      (String) Name of the policy.
+                      Name of the policy.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The account id
+                      The account id
+                    type: string
+                  alertInterval:
+                    description: |-
+                      alert from the same incident, not support on all alert types.
+                      Optional specification of how often to re-alert from the same incident, not support on all alert types.
+                    type: string
+                  alertType:
+                    description: |-
+                      (String) Refers to which event will trigger a Notification dispatch. You can use the endpoint to get available alert types which then will give you a list of possible values.
+                      Available values: "abuse_report_alert", "access_custom_certificate_expiration_type", "advanced_ddos_attack_l4_alert", "advanced_ddos_attack_l7_alert", "advanced_http_alert_error", "bgp_hijack_notification", "billing_usage_alert", "block_notification_block_removed", "block_notification_new_block", "block_notification_review_rejected", "bot_traffic_basic_alert", "brand_protection_alert", "brand_protection_digest", "clickhouse_alert_fw_anomaly", "clickhouse_alert_fw_ent_anomaly", "cloudforce_one_request_notification", "custom_analytics", "custom_bot_detection_alert", "custom_ssl_certificate_event_type", "dedicated_ssl_certificate_event_type", "device_connectivity_anomaly_alert", "dos_attack_l4", "dos_attack_l7", "expiring_service_token_alert", "failing_logpush_job_disabled_alert", "fbm_auto_advertisement", "fbm_dosd_attack", "fbm_volumetric_attack", "health_check_status_notification", "hostname_aop_custom_certificate_expiration_type", "http_alert_edge_error", "http_alert_origin_error", "image_notification", "image_resizing_notification", "incident_alert", "load_balancing_health_alert", "load_balancing_pool_enablement_alert", "logo_match_alert", "magic_tunnel_health_check_event", "magic_wan_tunnel_health", "maintenance_event_notification", "mtls_certificate_store_certificate_expiration_type", "pages_event_alert", "radar_notification", "real_origin_monitoring", "scriptmonitor_alert_new_code_change_detections", "scriptmonitor_alert_new_hosts", "scriptmonitor_alert_new_malicious_hosts", "scriptmonitor_alert_new_malicious_scripts", "scriptmonitor_alert_new_malicious_url", "scriptmonitor_alert_new_max_length_resource_url", "scriptmonitor_alert_new_resources", "secondary_dns_all_primaries_failing", "secondary_dns_primaries_failing", "secondary_dns_warning", "secondary_dns_zone_successfully_updated", "secondary_dns_zone_validation_warning", "security_insights_alert", "sentinel_alert", "stream_live_notifications", "synthetic_test_latency_alert", "synthetic_test_low_availability_alert", "traffic_anomalies_alert", "tunnel_health_event", "tunnel_update_event", "universal_ssl_event_type", "web_analytics_metrics_update", "zone_aop_custom_certificate_expiration_type".
+                      Refers to which event will trigger a Notification dispatch. You can use the endpoint to get available alert types which then will give you a list of possible values.
+                      Available values: "abuse_report_alert", "access_custom_certificate_expiration_type", "advanced_ddos_attack_l4_alert", "advanced_ddos_attack_l7_alert", "advanced_http_alert_error", "bgp_hijack_notification", "billing_usage_alert", "block_notification_block_removed", "block_notification_new_block", "block_notification_review_rejected", "bot_traffic_basic_alert", "brand_protection_alert", "brand_protection_digest", "clickhouse_alert_fw_anomaly", "clickhouse_alert_fw_ent_anomaly", "cloudforce_one_request_notification", "custom_analytics", "custom_bot_detection_alert", "custom_ssl_certificate_event_type", "dedicated_ssl_certificate_event_type", "device_connectivity_anomaly_alert", "dos_attack_l4", "dos_attack_l7", "expiring_service_token_alert", "failing_logpush_job_disabled_alert", "fbm_auto_advertisement", "fbm_dosd_attack", "fbm_volumetric_attack", "health_check_status_notification", "hostname_aop_custom_certificate_expiration_type", "http_alert_edge_error", "http_alert_origin_error", "image_notification", "image_resizing_notification", "incident_alert", "load_balancing_health_alert", "load_balancing_pool_enablement_alert", "logo_match_alert", "magic_tunnel_health_check_event", "magic_wan_tunnel_health", "maintenance_event_notification", "mtls_certificate_store_certificate_expiration_type", "pages_event_alert", "radar_notification", "real_origin_monitoring", "scriptmonitor_alert_new_code_change_detections", "scriptmonitor_alert_new_hosts", "scriptmonitor_alert_new_malicious_hosts", "scriptmonitor_alert_new_malicious_scripts", "scriptmonitor_alert_new_malicious_url", "scriptmonitor_alert_new_max_length_resource_url", "scriptmonitor_alert_new_resources", "secondary_dns_all_primaries_failing", "secondary_dns_primaries_failing", "secondary_dns_warning", "secondary_dns_zone_successfully_updated", "secondary_dns_zone_validation_warning", "security_insights_alert", "sentinel_alert", "stream_live_notifications", "synthetic_test_latency_alert", "synthetic_test_low_availability_alert", "traffic_anomalies_alert", "tunnel_health_event", "tunnel_update_event", "universal_ssl_event_type", "web_analytics_metrics_update", "zone_aop_custom_certificate_expiration_type".
+                    type: string
+                  description:
+                    description: |-
+                      (String) Optional description for the Notification policy.
+                      Optional description for the Notification policy.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Whether or not the Notification policy is enabled.
+                      Whether or not the Notification policy is enabled.
+                    type: boolean
+                  filters:
+                    description: (Attributes) Optional filters that allow you to be
+                      alerted only on a subset of events for that alert type based
+                      on some criteria. This is only available for select alert types.
+                      See alert type documentation for more details. (see below for
+                      nested schema)
+                    properties:
+                      actions:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      affectedAsns:
+                        description: |-
+                          (List of String) Used for configuring radar_notification
+                          Used for configuring radar_notification
+                        items:
+                          type: string
+                        type: array
+                      affectedComponents:
+                        description: |-
+                          (List of String) Used for configuring incident_alert
+                          Used for configuring incident_alert
+                        items:
+                          type: string
+                        type: array
+                      affectedLocations:
+                        description: |-
+                          (List of String) Used for configuring radar_notification
+                          Used for configuring radar_notification
+                        items:
+                          type: string
+                        type: array
+                      airportCode:
+                        description: |-
+                          (List of String) Used for configuring maintenance_event_notification
+                          Used for configuring maintenance_event_notification
+                        items:
+                          type: string
+                        type: array
+                      alertTriggerPreferences:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      alertTriggerPreferencesValue:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      enabled:
+                        description: |-
+                          (Boolean) Whether or not the Notification policy is enabled.
+                          Used for configuring load_balancing_pool_enablement_alert
+                        items:
+                          type: string
+                        type: array
+                      environment:
+                        description: |-
+                          (List of String) Used for configuring pages_event_alert
+                          Used for configuring pages_event_alert
+                        items:
+                          type: string
+                        type: array
+                      event:
+                        description: |-
+                          (List of String) Used for configuring pages_event_alert
+                          Used for configuring pages_event_alert
+                        items:
+                          type: string
+                        type: array
+                      eventSource:
+                        description: |-
+                          (List of String) Used for configuring load_balancing_health_alert
+                          Used for configuring load_balancing_health_alert
+                        items:
+                          type: string
+                        type: array
+                      eventType:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      groupBy:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      healthCheckId:
+                        description: |-
+                          (List of String) Used for configuring health_check_status_notification
+                          Used for configuring health_check_status_notification
+                        items:
+                          type: string
+                        type: array
+                      incidentImpact:
+                        description: |-
+                          (List of String) Used for configuring incident_alert
+                          Used for configuring incident_alert
+                        items:
+                          type: string
+                        type: array
+                      inputId:
+                        description: |-
+                          (List of String) Used for configuring stream_live_notifications
+                          Used for configuring stream_live_notifications
+                        items:
+                          type: string
+                        type: array
+                      insightClass:
+                        description: |-
+                          (List of String) Used for configuring security_insights_alert
+                          Used for configuring security_insights_alert
+                        items:
+                          type: string
+                        type: array
+                      limit:
+                        description: |-
+                          (List of String) Used for configuring billing_usage_alert
+                          Used for configuring billing_usage_alert
+                        items:
+                          type: string
+                        type: array
+                      logoTag:
+                        description: |-
+                          (List of String) Used for configuring logo_match_alert
+                          Used for configuring logo_match_alert
+                        items:
+                          type: string
+                        type: array
+                      megabitsPerSecond:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l4_alert
+                          Used for configuring advanced_ddos_attack_l4_alert
+                        items:
+                          type: string
+                        type: array
+                      newHealth:
+                        description: |-
+                          (List of String) Used for configuring load_balancing_health_alert
+                          Used for configuring load_balancing_health_alert
+                        items:
+                          type: string
+                        type: array
+                      newStatus:
+                        description: |-
+                          (List of String) Used for configuring tunnel_health_event
+                          Used for configuring tunnel_health_event
+                        items:
+                          type: string
+                        type: array
+                      packetsPerSecond:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l4_alert
+                          Used for configuring advanced_ddos_attack_l4_alert
+                        items:
+                          type: string
+                        type: array
+                      poolId:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      popNames:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      product:
+                        description: |-
+                          (List of String) Used for configuring billing_usage_alert
+                          Used for configuring billing_usage_alert
+                        items:
+                          type: string
+                        type: array
+                      projectId:
+                        description: |-
+                          (List of String) Used for configuring pages_event_alert
+                          Used for configuring pages_event_alert
+                        items:
+                          type: string
+                        type: array
+                      protocol:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l4_alert
+                          Used for configuring advanced_ddos_attack_l4_alert
+                        items:
+                          type: string
+                        type: array
+                      queryTag:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      requestsPerSecond:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l7_alert
+                          Used for configuring advanced_ddos_attack_l7_alert
+                        items:
+                          type: string
+                        type: array
+                      selectors:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      services:
+                        description: |-
+                          (List of String) Used for configuring clickhouse_alert_fw_ent_anomaly
+                          Used for configuring clickhouse_alert_fw_ent_anomaly
+                        items:
+                          type: string
+                        type: array
+                      slo:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      status:
+                        description: |-
+                          (List of String) Used for configuring health_check_status_notification
+                          Used for configuring health_check_status_notification
+                        items:
+                          type: string
+                        type: array
+                      targetHostname:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l7_alert
+                          Used for configuring advanced_ddos_attack_l7_alert
+                        items:
+                          type: string
+                        type: array
+                      targetIp:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l4_alert
+                          Used for configuring advanced_ddos_attack_l4_alert
+                        items:
+                          type: string
+                        type: array
+                      targetZoneName:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l7_alert
+                          Used for configuring advanced_ddos_attack_l7_alert
+                        items:
+                          type: string
+                        type: array
+                      trafficExclusions:
+                        description: |-
+                          (List of String) Used for configuring traffic_anomalies_alert
+                          Used for configuring traffic_anomalies_alert
+                        items:
+                          type: string
+                        type: array
+                      tunnelId:
+                        description: |-
+                          (List of String) Used for configuring tunnel_health_event
+                          Used for configuring tunnel_health_event
+                        items:
+                          type: string
+                        type: array
+                      tunnelName:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      type:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      where:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      zones:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  mechanisms:
+                    description: (Attributes) List of IDs that will be used when dispatching
+                      a notification. IDs for email type will be the email address.
+                      (see below for nested schema)
+                    properties:
+                      email:
+                        description: (Attributes Set) (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) UUID
+                                The email address
+                              type: string
+                          type: object
+                        type: array
+                      pagerduty:
+                        description: (Attributes Set) (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) UUID
+                                UUID
+                              type: string
+                          type: object
+                        type: array
+                      webhooks:
+                        description: (Attributes Set) (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) UUID
+                                UUID
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  name:
+                    description: |-
+                      (String) Name of the policy.
+                      Name of the policy.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.accountId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
+                || (has(self.initProvider) && has(self.initProvider.accountId))'
+            - message: spec.forProvider.alertType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.alertType)
+                || (has(self.initProvider) && has(self.initProvider.alertType))'
+            - message: spec.forProvider.mechanisms is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.mechanisms)
+                || (has(self.initProvider) && has(self.initProvider.mechanisms))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: PolicyStatus defines the observed state of Policy.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The account id
+                      The account id
+                    type: string
+                  alertInterval:
+                    description: |-
+                      alert from the same incident, not support on all alert types.
+                      Optional specification of how often to re-alert from the same incident, not support on all alert types.
+                    type: string
+                  alertType:
+                    description: |-
+                      (String) Refers to which event will trigger a Notification dispatch. You can use the endpoint to get available alert types which then will give you a list of possible values.
+                      Available values: "abuse_report_alert", "access_custom_certificate_expiration_type", "advanced_ddos_attack_l4_alert", "advanced_ddos_attack_l7_alert", "advanced_http_alert_error", "bgp_hijack_notification", "billing_usage_alert", "block_notification_block_removed", "block_notification_new_block", "block_notification_review_rejected", "bot_traffic_basic_alert", "brand_protection_alert", "brand_protection_digest", "clickhouse_alert_fw_anomaly", "clickhouse_alert_fw_ent_anomaly", "cloudforce_one_request_notification", "custom_analytics", "custom_bot_detection_alert", "custom_ssl_certificate_event_type", "dedicated_ssl_certificate_event_type", "device_connectivity_anomaly_alert", "dos_attack_l4", "dos_attack_l7", "expiring_service_token_alert", "failing_logpush_job_disabled_alert", "fbm_auto_advertisement", "fbm_dosd_attack", "fbm_volumetric_attack", "health_check_status_notification", "hostname_aop_custom_certificate_expiration_type", "http_alert_edge_error", "http_alert_origin_error", "image_notification", "image_resizing_notification", "incident_alert", "load_balancing_health_alert", "load_balancing_pool_enablement_alert", "logo_match_alert", "magic_tunnel_health_check_event", "magic_wan_tunnel_health", "maintenance_event_notification", "mtls_certificate_store_certificate_expiration_type", "pages_event_alert", "radar_notification", "real_origin_monitoring", "scriptmonitor_alert_new_code_change_detections", "scriptmonitor_alert_new_hosts", "scriptmonitor_alert_new_malicious_hosts", "scriptmonitor_alert_new_malicious_scripts", "scriptmonitor_alert_new_malicious_url", "scriptmonitor_alert_new_max_length_resource_url", "scriptmonitor_alert_new_resources", "secondary_dns_all_primaries_failing", "secondary_dns_primaries_failing", "secondary_dns_warning", "secondary_dns_zone_successfully_updated", "secondary_dns_zone_validation_warning", "security_insights_alert", "sentinel_alert", "stream_live_notifications", "synthetic_test_latency_alert", "synthetic_test_low_availability_alert", "traffic_anomalies_alert", "tunnel_health_event", "tunnel_update_event", "universal_ssl_event_type", "web_analytics_metrics_update", "zone_aop_custom_certificate_expiration_type".
+                      Refers to which event will trigger a Notification dispatch. You can use the endpoint to get available alert types which then will give you a list of possible values.
+                      Available values: "abuse_report_alert", "access_custom_certificate_expiration_type", "advanced_ddos_attack_l4_alert", "advanced_ddos_attack_l7_alert", "advanced_http_alert_error", "bgp_hijack_notification", "billing_usage_alert", "block_notification_block_removed", "block_notification_new_block", "block_notification_review_rejected", "bot_traffic_basic_alert", "brand_protection_alert", "brand_protection_digest", "clickhouse_alert_fw_anomaly", "clickhouse_alert_fw_ent_anomaly", "cloudforce_one_request_notification", "custom_analytics", "custom_bot_detection_alert", "custom_ssl_certificate_event_type", "dedicated_ssl_certificate_event_type", "device_connectivity_anomaly_alert", "dos_attack_l4", "dos_attack_l7", "expiring_service_token_alert", "failing_logpush_job_disabled_alert", "fbm_auto_advertisement", "fbm_dosd_attack", "fbm_volumetric_attack", "health_check_status_notification", "hostname_aop_custom_certificate_expiration_type", "http_alert_edge_error", "http_alert_origin_error", "image_notification", "image_resizing_notification", "incident_alert", "load_balancing_health_alert", "load_balancing_pool_enablement_alert", "logo_match_alert", "magic_tunnel_health_check_event", "magic_wan_tunnel_health", "maintenance_event_notification", "mtls_certificate_store_certificate_expiration_type", "pages_event_alert", "radar_notification", "real_origin_monitoring", "scriptmonitor_alert_new_code_change_detections", "scriptmonitor_alert_new_hosts", "scriptmonitor_alert_new_malicious_hosts", "scriptmonitor_alert_new_malicious_scripts", "scriptmonitor_alert_new_malicious_url", "scriptmonitor_alert_new_max_length_resource_url", "scriptmonitor_alert_new_resources", "secondary_dns_all_primaries_failing", "secondary_dns_primaries_failing", "secondary_dns_warning", "secondary_dns_zone_successfully_updated", "secondary_dns_zone_validation_warning", "security_insights_alert", "sentinel_alert", "stream_live_notifications", "synthetic_test_latency_alert", "synthetic_test_low_availability_alert", "traffic_anomalies_alert", "tunnel_health_event", "tunnel_update_event", "universal_ssl_event_type", "web_analytics_metrics_update", "zone_aop_custom_certificate_expiration_type".
+                    type: string
+                  created:
+                    description: (String)
+                    type: string
+                  description:
+                    description: |-
+                      (String) Optional description for the Notification policy.
+                      Optional description for the Notification policy.
+                    type: string
+                  enabled:
+                    description: |-
+                      (Boolean) Whether or not the Notification policy is enabled.
+                      Whether or not the Notification policy is enabled.
+                    type: boolean
+                  filters:
+                    description: (Attributes) Optional filters that allow you to be
+                      alerted only on a subset of events for that alert type based
+                      on some criteria. This is only available for select alert types.
+                      See alert type documentation for more details. (see below for
+                      nested schema)
+                    properties:
+                      actions:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      affectedAsns:
+                        description: |-
+                          (List of String) Used for configuring radar_notification
+                          Used for configuring radar_notification
+                        items:
+                          type: string
+                        type: array
+                      affectedComponents:
+                        description: |-
+                          (List of String) Used for configuring incident_alert
+                          Used for configuring incident_alert
+                        items:
+                          type: string
+                        type: array
+                      affectedLocations:
+                        description: |-
+                          (List of String) Used for configuring radar_notification
+                          Used for configuring radar_notification
+                        items:
+                          type: string
+                        type: array
+                      airportCode:
+                        description: |-
+                          (List of String) Used for configuring maintenance_event_notification
+                          Used for configuring maintenance_event_notification
+                        items:
+                          type: string
+                        type: array
+                      alertTriggerPreferences:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      alertTriggerPreferencesValue:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      enabled:
+                        description: |-
+                          (Boolean) Whether or not the Notification policy is enabled.
+                          Used for configuring load_balancing_pool_enablement_alert
+                        items:
+                          type: string
+                        type: array
+                      environment:
+                        description: |-
+                          (List of String) Used for configuring pages_event_alert
+                          Used for configuring pages_event_alert
+                        items:
+                          type: string
+                        type: array
+                      event:
+                        description: |-
+                          (List of String) Used for configuring pages_event_alert
+                          Used for configuring pages_event_alert
+                        items:
+                          type: string
+                        type: array
+                      eventSource:
+                        description: |-
+                          (List of String) Used for configuring load_balancing_health_alert
+                          Used for configuring load_balancing_health_alert
+                        items:
+                          type: string
+                        type: array
+                      eventType:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      groupBy:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      healthCheckId:
+                        description: |-
+                          (List of String) Used for configuring health_check_status_notification
+                          Used for configuring health_check_status_notification
+                        items:
+                          type: string
+                        type: array
+                      incidentImpact:
+                        description: |-
+                          (List of String) Used for configuring incident_alert
+                          Used for configuring incident_alert
+                        items:
+                          type: string
+                        type: array
+                      inputId:
+                        description: |-
+                          (List of String) Used for configuring stream_live_notifications
+                          Used for configuring stream_live_notifications
+                        items:
+                          type: string
+                        type: array
+                      insightClass:
+                        description: |-
+                          (List of String) Used for configuring security_insights_alert
+                          Used for configuring security_insights_alert
+                        items:
+                          type: string
+                        type: array
+                      limit:
+                        description: |-
+                          (List of String) Used for configuring billing_usage_alert
+                          Used for configuring billing_usage_alert
+                        items:
+                          type: string
+                        type: array
+                      logoTag:
+                        description: |-
+                          (List of String) Used for configuring logo_match_alert
+                          Used for configuring logo_match_alert
+                        items:
+                          type: string
+                        type: array
+                      megabitsPerSecond:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l4_alert
+                          Used for configuring advanced_ddos_attack_l4_alert
+                        items:
+                          type: string
+                        type: array
+                      newHealth:
+                        description: |-
+                          (List of String) Used for configuring load_balancing_health_alert
+                          Used for configuring load_balancing_health_alert
+                        items:
+                          type: string
+                        type: array
+                      newStatus:
+                        description: |-
+                          (List of String) Used for configuring tunnel_health_event
+                          Used for configuring tunnel_health_event
+                        items:
+                          type: string
+                        type: array
+                      packetsPerSecond:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l4_alert
+                          Used for configuring advanced_ddos_attack_l4_alert
+                        items:
+                          type: string
+                        type: array
+                      poolId:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      popNames:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      product:
+                        description: |-
+                          (List of String) Used for configuring billing_usage_alert
+                          Used for configuring billing_usage_alert
+                        items:
+                          type: string
+                        type: array
+                      projectId:
+                        description: |-
+                          (List of String) Used for configuring pages_event_alert
+                          Used for configuring pages_event_alert
+                        items:
+                          type: string
+                        type: array
+                      protocol:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l4_alert
+                          Used for configuring advanced_ddos_attack_l4_alert
+                        items:
+                          type: string
+                        type: array
+                      queryTag:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      requestsPerSecond:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l7_alert
+                          Used for configuring advanced_ddos_attack_l7_alert
+                        items:
+                          type: string
+                        type: array
+                      selectors:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      services:
+                        description: |-
+                          (List of String) Used for configuring clickhouse_alert_fw_ent_anomaly
+                          Used for configuring clickhouse_alert_fw_ent_anomaly
+                        items:
+                          type: string
+                        type: array
+                      slo:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      status:
+                        description: |-
+                          (List of String) Used for configuring health_check_status_notification
+                          Used for configuring health_check_status_notification
+                        items:
+                          type: string
+                        type: array
+                      targetHostname:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l7_alert
+                          Used for configuring advanced_ddos_attack_l7_alert
+                        items:
+                          type: string
+                        type: array
+                      targetIp:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l4_alert
+                          Used for configuring advanced_ddos_attack_l4_alert
+                        items:
+                          type: string
+                        type: array
+                      targetZoneName:
+                        description: |-
+                          (List of String) Used for configuring advanced_ddos_attack_l7_alert
+                          Used for configuring advanced_ddos_attack_l7_alert
+                        items:
+                          type: string
+                        type: array
+                      trafficExclusions:
+                        description: |-
+                          (List of String) Used for configuring traffic_anomalies_alert
+                          Used for configuring traffic_anomalies_alert
+                        items:
+                          type: string
+                        type: array
+                      tunnelId:
+                        description: |-
+                          (List of String) Used for configuring tunnel_health_event
+                          Used for configuring tunnel_health_event
+                        items:
+                          type: string
+                        type: array
+                      tunnelName:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      type:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      where:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                      zones:
+                        description: |-
+                          (List of String) Usage depends on specific alert type
+                          Usage depends on specific alert type
+                        items:
+                          type: string
+                        type: array
+                    type: object
+                  id:
+                    description: (String) UUID
+                    type: string
+                  mechanisms:
+                    description: (Attributes) List of IDs that will be used when dispatching
+                      a notification. IDs for email type will be the email address.
+                      (see below for nested schema)
+                    properties:
+                      email:
+                        description: (Attributes Set) (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) UUID
+                                The email address
+                              type: string
+                          type: object
+                        type: array
+                      pagerduty:
+                        description: (Attributes Set) (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) UUID
+                                UUID
+                              type: string
+                          type: object
+                        type: array
+                      webhooks:
+                        description: (Attributes Set) (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) UUID
+                                UUID
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  modified:
+                    description: (String)
+                    type: string
+                  name:
+                    description: |-
+                      (String) Name of the policy.
+                      Name of the policy.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

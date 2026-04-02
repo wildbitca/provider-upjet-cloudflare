@@ -1,0 +1,1186 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: records.dns.upjet-cloudflare.m.upbound.io
+spec:
+  group: dns.upjet-cloudflare.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: Record
+    listKind: RecordList
+    plural: records
+    singular: record
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Record is the Schema for the Records API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: RecordSpec defines the desired state of Record
+            properties:
+              forProvider:
+                properties:
+                  comment:
+                    description: |-
+                      (String) Comments or notes about the DNS record. This field has no effect on DNS responses.
+                      Comments or notes about the DNS record. This field has no effect on DNS responses.
+                    type: string
+                  content:
+                    description: |-
+                      (String) A valid IPv4 address.
+                      A valid IPv4 address.
+                    type: string
+                  data:
+                    description: (Attributes) Components of a CAA record. (see below
+                      for nested schema)
+                    properties:
+                      algorithm:
+                        description: |-
+                          (Number) Algorithm.
+                          Algorithm.
+                        type: number
+                      altitude:
+                        description: |-
+                          (Number) Altitude of location in meters.
+                          Altitude of location in meters.
+                        type: number
+                      certificate:
+                        description: |-
+                          (String) Certificate.
+                          Certificate.
+                        type: string
+                      digest:
+                        description: |-
+                          (String) Digest.
+                          Digest.
+                        type: string
+                      digestType:
+                        description: |-
+                          (Number) Digest Type.
+                          Digest Type.
+                        type: number
+                      fingerprint:
+                        description: |-
+                          (String) Fingerprint.
+                          Fingerprint.
+                        type: string
+                      flags:
+                        description: |-
+                          (Dynamic) Flags for the CAA record.
+                          Flags for the CAA record.
+                        x-kubernetes-preserve-unknown-fields: true
+                      keyTag:
+                        description: |-
+                          (Number) Key Tag.
+                          Key Tag.
+                        type: number
+                      latDegrees:
+                        description: |-
+                          (Number) Degrees of latitude.
+                          Degrees of latitude.
+                        type: number
+                      latDirection:
+                        description: |-
+                          (String) Latitude direction.
+                          Available values: "N", "S".
+                          Latitude direction.
+                          Available values: "N", "S".
+                        type: string
+                      latMinutes:
+                        description: |-
+                          (Number) Minutes of latitude.
+                          Minutes of latitude.
+                        type: number
+                      latSeconds:
+                        description: |-
+                          (Number) Seconds of latitude.
+                          Seconds of latitude.
+                        type: number
+                      longDegrees:
+                        description: |-
+                          (Number) Degrees of longitude.
+                          Degrees of longitude.
+                        type: number
+                      longDirection:
+                        description: |-
+                          (String) Longitude direction.
+                          Available values: "E", "W".
+                          Longitude direction.
+                          Available values: "E", "W".
+                        type: string
+                      longMinutes:
+                        description: |-
+                          (Number) Minutes of longitude.
+                          Minutes of longitude.
+                        type: number
+                      longSeconds:
+                        description: |-
+                          (Number) Seconds of longitude.
+                          Seconds of longitude.
+                        type: number
+                      matchingType:
+                        description: |-
+                          (Number) Matching Type.
+                          Matching Type.
+                        type: number
+                      order:
+                        description: |-
+                          (Number) Order.
+                          Order.
+                        type: number
+                      port:
+                        description: |-
+                          (Number) The port of the service.
+                          The port of the service.
+                        type: number
+                      precisionHorz:
+                        description: |-
+                          (Number) Horizontal precision of location.
+                          Horizontal precision of location.
+                        type: number
+                      precisionVert:
+                        description: |-
+                          (Number) Vertical precision of location.
+                          Vertical precision of location.
+                        type: number
+                      preference:
+                        description: |-
+                          (Number) Preference.
+                          Preference.
+                        type: number
+                      priority:
+                        description: |-
+                          (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
+                          Priority.
+                        type: number
+                      protocol:
+                        description: |-
+                          (Number) Protocol.
+                          Protocol.
+                        type: number
+                      publicKey:
+                        description: |-
+                          (String) Public Key.
+                          Public Key.
+                        type: string
+                      regex:
+                        description: |-
+                          (String) Regex.
+                          Regex.
+                        type: string
+                      replacement:
+                        description: |-
+                          (String) Replacement.
+                          Replacement.
+                        type: string
+                      selector:
+                        description: |-
+                          (Number) Selector.
+                          Selector.
+                        type: number
+                      service:
+                        description: |-
+                          (String) Service.
+                          Service.
+                        type: string
+                      size:
+                        description: |-
+                          (Number) Size of location in meters.
+                          Size of location in meters.
+                        type: number
+                      tag:
+                        description: |-
+                          (String) Name of the property controlled by this record (e.g.: issue, issuewild, iodef).
+                          Name of the property controlled by this record (e.g.: issue, issuewild, iodef).
+                        type: string
+                      target:
+                        description: |-
+                          (String) Target.
+                          Target.
+                        type: string
+                      type:
+                        description: |-
+                          (String) Record type.
+                          Available values: "A", "AAAA", "CNAME", "MX", "NS", "OPENPGPKEY", "PTR", "TXT", "CAA", "CERT", "DNSKEY", "DS", "HTTPS", "LOC", "NAPTR", "SMIMEA", "SRV", "SSHFP", "SVCB", "TLSA", "URI".
+                          Type.
+                        type: number
+                      usage:
+                        description: |-
+                          (Number) Usage.
+                          Usage.
+                        type: number
+                      value:
+                        description: |-
+                          (String) Value of the record. This field's semantics depend on the chosen tag.
+                          Value of the record. This field's semantics depend on the chosen tag.
+                        type: string
+                      weight:
+                        description: |-
+                          (Number) The record weight.
+                          The record weight.
+                        type: number
+                    type: object
+                  name:
+                    description: |-
+                      (String) DNS record name (or @ for the zone apex) in Punycode.
+                      DNS record name (or @ for the zone apex) in Punycode.
+                    type: string
+                  priority:
+                    description: |-
+                      (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
+                      Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
+                    type: number
+                  proxied:
+                    description: |-
+                      (Boolean) Whether the record is receiving the performance and security benefits of Cloudflare.
+                      Whether the record is receiving the performance and security benefits of Cloudflare.
+                    type: boolean
+                  settings:
+                    description: (Attributes) Settings for the DNS record. (see below
+                      for nested schema)
+                    properties:
+                      flattenCname:
+                        description: |-
+                          (Boolean) If enabled, causes the CNAME record to be resolved externally and the resulting address records (e.g., A and AAAA) to be returned instead of the CNAME record itself. This setting is unavailable for proxied records, since they are always flattened.
+                          If enabled, causes the CNAME record to be resolved externally and the resulting address records (e.g., A and AAAA) to be returned instead of the CNAME record itself. This setting is unavailable for proxied records, since they are always flattened.
+                        type: boolean
+                      ipv4Only:
+                        description: |-
+                          (Boolean) When enabled, only A records will be generated, and AAAA records will not be created. This setting is intended for exceptional cases. Note that this option only applies to proxied records and it has no effect on whether Cloudflare communicates with the origin using IPv4 or IPv6.
+                          When enabled, only A records will be generated, and AAAA records will not be created. This setting is intended for exceptional cases. Note that this option only applies to proxied records and it has no effect on whether Cloudflare communicates with the origin using IPv4 or IPv6.
+                        type: boolean
+                      ipv6Only:
+                        description: |-
+                          (Boolean) When enabled, only AAAA records will be generated, and A records will not be created. This setting is intended for exceptional cases. Note that this option only applies to proxied records and it has no effect on whether Cloudflare communicates with the origin using IPv4 or IPv6.
+                          When enabled, only AAAA records will be generated, and A records will not be created. This setting is intended for exceptional cases. Note that this option only applies to proxied records and it has no effect on whether Cloudflare communicates with the origin using IPv4 or IPv6.
+                        type: boolean
+                    type: object
+                  tags:
+                    description: |-
+                      (Set of String) Custom tags for the DNS record. This field has no effect on DNS responses.
+                      Custom tags for the DNS record. This field has no effect on DNS responses.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  ttl:
+                    description: |-
+                      (Number) Time To Live (TTL) of the DNS record in seconds. Setting to 1 means 'automatic'. Value must be between 60 and 86400, with the minimum reduced to 30 for Enterprise zones.
+                      Time To Live (TTL) of the DNS record in seconds. Setting to 1 means 'automatic'. Value must be between 60 and 86400, with the minimum reduced to 30 for Enterprise zones.
+                    type: number
+                  type:
+                    description: |-
+                      (String) Record type.
+                      Available values: "A", "AAAA", "CNAME", "MX", "NS", "OPENPGPKEY", "PTR", "TXT", "CAA", "CERT", "DNSKEY", "DS", "HTTPS", "LOC", "NAPTR", "SMIMEA", "SRV", "SSHFP", "SVCB", "TLSA", "URI".
+                      Record type.
+                      Available values: "A", "AAAA", "CNAME", "MX", "NS", "OPENPGPKEY", "PTR", "TXT", "CAA", "CERT", "DNSKEY", "DS", "HTTPS", "LOC", "NAPTR", "SMIMEA", "SRV", "SSHFP", "SVCB", "TLSA", "URI".
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  zoneIdRef:
+                    description: Reference to a Zone in zone to populate zoneId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  zoneIdSelector:
+                    description: Selector for a Zone in zone to populate zoneId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  comment:
+                    description: |-
+                      (String) Comments or notes about the DNS record. This field has no effect on DNS responses.
+                      Comments or notes about the DNS record. This field has no effect on DNS responses.
+                    type: string
+                  content:
+                    description: |-
+                      (String) A valid IPv4 address.
+                      A valid IPv4 address.
+                    type: string
+                  data:
+                    description: (Attributes) Components of a CAA record. (see below
+                      for nested schema)
+                    properties:
+                      algorithm:
+                        description: |-
+                          (Number) Algorithm.
+                          Algorithm.
+                        type: number
+                      altitude:
+                        description: |-
+                          (Number) Altitude of location in meters.
+                          Altitude of location in meters.
+                        type: number
+                      certificate:
+                        description: |-
+                          (String) Certificate.
+                          Certificate.
+                        type: string
+                      digest:
+                        description: |-
+                          (String) Digest.
+                          Digest.
+                        type: string
+                      digestType:
+                        description: |-
+                          (Number) Digest Type.
+                          Digest Type.
+                        type: number
+                      fingerprint:
+                        description: |-
+                          (String) Fingerprint.
+                          Fingerprint.
+                        type: string
+                      flags:
+                        description: |-
+                          (Dynamic) Flags for the CAA record.
+                          Flags for the CAA record.
+                        x-kubernetes-preserve-unknown-fields: true
+                      keyTag:
+                        description: |-
+                          (Number) Key Tag.
+                          Key Tag.
+                        type: number
+                      latDegrees:
+                        description: |-
+                          (Number) Degrees of latitude.
+                          Degrees of latitude.
+                        type: number
+                      latDirection:
+                        description: |-
+                          (String) Latitude direction.
+                          Available values: "N", "S".
+                          Latitude direction.
+                          Available values: "N", "S".
+                        type: string
+                      latMinutes:
+                        description: |-
+                          (Number) Minutes of latitude.
+                          Minutes of latitude.
+                        type: number
+                      latSeconds:
+                        description: |-
+                          (Number) Seconds of latitude.
+                          Seconds of latitude.
+                        type: number
+                      longDegrees:
+                        description: |-
+                          (Number) Degrees of longitude.
+                          Degrees of longitude.
+                        type: number
+                      longDirection:
+                        description: |-
+                          (String) Longitude direction.
+                          Available values: "E", "W".
+                          Longitude direction.
+                          Available values: "E", "W".
+                        type: string
+                      longMinutes:
+                        description: |-
+                          (Number) Minutes of longitude.
+                          Minutes of longitude.
+                        type: number
+                      longSeconds:
+                        description: |-
+                          (Number) Seconds of longitude.
+                          Seconds of longitude.
+                        type: number
+                      matchingType:
+                        description: |-
+                          (Number) Matching Type.
+                          Matching Type.
+                        type: number
+                      order:
+                        description: |-
+                          (Number) Order.
+                          Order.
+                        type: number
+                      port:
+                        description: |-
+                          (Number) The port of the service.
+                          The port of the service.
+                        type: number
+                      precisionHorz:
+                        description: |-
+                          (Number) Horizontal precision of location.
+                          Horizontal precision of location.
+                        type: number
+                      precisionVert:
+                        description: |-
+                          (Number) Vertical precision of location.
+                          Vertical precision of location.
+                        type: number
+                      preference:
+                        description: |-
+                          (Number) Preference.
+                          Preference.
+                        type: number
+                      priority:
+                        description: |-
+                          (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
+                          Priority.
+                        type: number
+                      protocol:
+                        description: |-
+                          (Number) Protocol.
+                          Protocol.
+                        type: number
+                      publicKey:
+                        description: |-
+                          (String) Public Key.
+                          Public Key.
+                        type: string
+                      regex:
+                        description: |-
+                          (String) Regex.
+                          Regex.
+                        type: string
+                      replacement:
+                        description: |-
+                          (String) Replacement.
+                          Replacement.
+                        type: string
+                      selector:
+                        description: |-
+                          (Number) Selector.
+                          Selector.
+                        type: number
+                      service:
+                        description: |-
+                          (String) Service.
+                          Service.
+                        type: string
+                      size:
+                        description: |-
+                          (Number) Size of location in meters.
+                          Size of location in meters.
+                        type: number
+                      tag:
+                        description: |-
+                          (String) Name of the property controlled by this record (e.g.: issue, issuewild, iodef).
+                          Name of the property controlled by this record (e.g.: issue, issuewild, iodef).
+                        type: string
+                      target:
+                        description: |-
+                          (String) Target.
+                          Target.
+                        type: string
+                      type:
+                        description: |-
+                          (String) Record type.
+                          Available values: "A", "AAAA", "CNAME", "MX", "NS", "OPENPGPKEY", "PTR", "TXT", "CAA", "CERT", "DNSKEY", "DS", "HTTPS", "LOC", "NAPTR", "SMIMEA", "SRV", "SSHFP", "SVCB", "TLSA", "URI".
+                          Type.
+                        type: number
+                      usage:
+                        description: |-
+                          (Number) Usage.
+                          Usage.
+                        type: number
+                      value:
+                        description: |-
+                          (String) Value of the record. This field's semantics depend on the chosen tag.
+                          Value of the record. This field's semantics depend on the chosen tag.
+                        type: string
+                      weight:
+                        description: |-
+                          (Number) The record weight.
+                          The record weight.
+                        type: number
+                    type: object
+                  name:
+                    description: |-
+                      (String) DNS record name (or @ for the zone apex) in Punycode.
+                      DNS record name (or @ for the zone apex) in Punycode.
+                    type: string
+                  priority:
+                    description: |-
+                      (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
+                      Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
+                    type: number
+                  proxied:
+                    description: |-
+                      (Boolean) Whether the record is receiving the performance and security benefits of Cloudflare.
+                      Whether the record is receiving the performance and security benefits of Cloudflare.
+                    type: boolean
+                  settings:
+                    description: (Attributes) Settings for the DNS record. (see below
+                      for nested schema)
+                    properties:
+                      flattenCname:
+                        description: |-
+                          (Boolean) If enabled, causes the CNAME record to be resolved externally and the resulting address records (e.g., A and AAAA) to be returned instead of the CNAME record itself. This setting is unavailable for proxied records, since they are always flattened.
+                          If enabled, causes the CNAME record to be resolved externally and the resulting address records (e.g., A and AAAA) to be returned instead of the CNAME record itself. This setting is unavailable for proxied records, since they are always flattened.
+                        type: boolean
+                      ipv4Only:
+                        description: |-
+                          (Boolean) When enabled, only A records will be generated, and AAAA records will not be created. This setting is intended for exceptional cases. Note that this option only applies to proxied records and it has no effect on whether Cloudflare communicates with the origin using IPv4 or IPv6.
+                          When enabled, only A records will be generated, and AAAA records will not be created. This setting is intended for exceptional cases. Note that this option only applies to proxied records and it has no effect on whether Cloudflare communicates with the origin using IPv4 or IPv6.
+                        type: boolean
+                      ipv6Only:
+                        description: |-
+                          (Boolean) When enabled, only AAAA records will be generated, and A records will not be created. This setting is intended for exceptional cases. Note that this option only applies to proxied records and it has no effect on whether Cloudflare communicates with the origin using IPv4 or IPv6.
+                          When enabled, only AAAA records will be generated, and A records will not be created. This setting is intended for exceptional cases. Note that this option only applies to proxied records and it has no effect on whether Cloudflare communicates with the origin using IPv4 or IPv6.
+                        type: boolean
+                    type: object
+                  tags:
+                    description: |-
+                      (Set of String) Custom tags for the DNS record. This field has no effect on DNS responses.
+                      Custom tags for the DNS record. This field has no effect on DNS responses.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  ttl:
+                    description: |-
+                      (Number) Time To Live (TTL) of the DNS record in seconds. Setting to 1 means 'automatic'. Value must be between 60 and 86400, with the minimum reduced to 30 for Enterprise zones.
+                      Time To Live (TTL) of the DNS record in seconds. Setting to 1 means 'automatic'. Value must be between 60 and 86400, with the minimum reduced to 30 for Enterprise zones.
+                    type: number
+                  type:
+                    description: |-
+                      (String) Record type.
+                      Available values: "A", "AAAA", "CNAME", "MX", "NS", "OPENPGPKEY", "PTR", "TXT", "CAA", "CERT", "DNSKEY", "DS", "HTTPS", "LOC", "NAPTR", "SMIMEA", "SRV", "SSHFP", "SVCB", "TLSA", "URI".
+                      Record type.
+                      Available values: "A", "AAAA", "CNAME", "MX", "NS", "OPENPGPKEY", "PTR", "TXT", "CAA", "CERT", "DNSKEY", "DS", "HTTPS", "LOC", "NAPTR", "SMIMEA", "SRV", "SSHFP", "SVCB", "TLSA", "URI".
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  zoneIdRef:
+                    description: Reference to a Zone in zone to populate zoneId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  zoneIdSelector:
+                    description: Selector for a Zone in zone to populate zoneId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.ttl is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.ttl)
+                || (has(self.initProvider) && has(self.initProvider.ttl))'
+            - message: spec.forProvider.type is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
+          status:
+            description: RecordStatus defines the observed state of Record.
+            properties:
+              atProvider:
+                properties:
+                  comment:
+                    description: |-
+                      (String) Comments or notes about the DNS record. This field has no effect on DNS responses.
+                      Comments or notes about the DNS record. This field has no effect on DNS responses.
+                    type: string
+                  commentModifiedOn:
+                    description: |-
+                      (String) When the record comment was last modified. Omitted if there is no comment.
+                      When the record comment was last modified. Omitted if there is no comment.
+                    type: string
+                  content:
+                    description: |-
+                      (String) A valid IPv4 address.
+                      A valid IPv4 address.
+                    type: string
+                  createdOn:
+                    description: |-
+                      (String) When the record was created.
+                      When the record was created.
+                    type: string
+                  data:
+                    description: (Attributes) Components of a CAA record. (see below
+                      for nested schema)
+                    properties:
+                      algorithm:
+                        description: |-
+                          (Number) Algorithm.
+                          Algorithm.
+                        type: number
+                      altitude:
+                        description: |-
+                          (Number) Altitude of location in meters.
+                          Altitude of location in meters.
+                        type: number
+                      certificate:
+                        description: |-
+                          (String) Certificate.
+                          Certificate.
+                        type: string
+                      digest:
+                        description: |-
+                          (String) Digest.
+                          Digest.
+                        type: string
+                      digestType:
+                        description: |-
+                          (Number) Digest Type.
+                          Digest Type.
+                        type: number
+                      fingerprint:
+                        description: |-
+                          (String) Fingerprint.
+                          Fingerprint.
+                        type: string
+                      flags:
+                        description: |-
+                          (Dynamic) Flags for the CAA record.
+                          Flags for the CAA record.
+                        x-kubernetes-preserve-unknown-fields: true
+                      keyTag:
+                        description: |-
+                          (Number) Key Tag.
+                          Key Tag.
+                        type: number
+                      latDegrees:
+                        description: |-
+                          (Number) Degrees of latitude.
+                          Degrees of latitude.
+                        type: number
+                      latDirection:
+                        description: |-
+                          (String) Latitude direction.
+                          Available values: "N", "S".
+                          Latitude direction.
+                          Available values: "N", "S".
+                        type: string
+                      latMinutes:
+                        description: |-
+                          (Number) Minutes of latitude.
+                          Minutes of latitude.
+                        type: number
+                      latSeconds:
+                        description: |-
+                          (Number) Seconds of latitude.
+                          Seconds of latitude.
+                        type: number
+                      longDegrees:
+                        description: |-
+                          (Number) Degrees of longitude.
+                          Degrees of longitude.
+                        type: number
+                      longDirection:
+                        description: |-
+                          (String) Longitude direction.
+                          Available values: "E", "W".
+                          Longitude direction.
+                          Available values: "E", "W".
+                        type: string
+                      longMinutes:
+                        description: |-
+                          (Number) Minutes of longitude.
+                          Minutes of longitude.
+                        type: number
+                      longSeconds:
+                        description: |-
+                          (Number) Seconds of longitude.
+                          Seconds of longitude.
+                        type: number
+                      matchingType:
+                        description: |-
+                          (Number) Matching Type.
+                          Matching Type.
+                        type: number
+                      order:
+                        description: |-
+                          (Number) Order.
+                          Order.
+                        type: number
+                      port:
+                        description: |-
+                          (Number) The port of the service.
+                          The port of the service.
+                        type: number
+                      precisionHorz:
+                        description: |-
+                          (Number) Horizontal precision of location.
+                          Horizontal precision of location.
+                        type: number
+                      precisionVert:
+                        description: |-
+                          (Number) Vertical precision of location.
+                          Vertical precision of location.
+                        type: number
+                      preference:
+                        description: |-
+                          (Number) Preference.
+                          Preference.
+                        type: number
+                      priority:
+                        description: |-
+                          (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
+                          Priority.
+                        type: number
+                      protocol:
+                        description: |-
+                          (Number) Protocol.
+                          Protocol.
+                        type: number
+                      publicKey:
+                        description: |-
+                          (String) Public Key.
+                          Public Key.
+                        type: string
+                      regex:
+                        description: |-
+                          (String) Regex.
+                          Regex.
+                        type: string
+                      replacement:
+                        description: |-
+                          (String) Replacement.
+                          Replacement.
+                        type: string
+                      selector:
+                        description: |-
+                          (Number) Selector.
+                          Selector.
+                        type: number
+                      service:
+                        description: |-
+                          (String) Service.
+                          Service.
+                        type: string
+                      size:
+                        description: |-
+                          (Number) Size of location in meters.
+                          Size of location in meters.
+                        type: number
+                      tag:
+                        description: |-
+                          (String) Name of the property controlled by this record (e.g.: issue, issuewild, iodef).
+                          Name of the property controlled by this record (e.g.: issue, issuewild, iodef).
+                        type: string
+                      target:
+                        description: |-
+                          (String) Target.
+                          Target.
+                        type: string
+                      type:
+                        description: |-
+                          (String) Record type.
+                          Available values: "A", "AAAA", "CNAME", "MX", "NS", "OPENPGPKEY", "PTR", "TXT", "CAA", "CERT", "DNSKEY", "DS", "HTTPS", "LOC", "NAPTR", "SMIMEA", "SRV", "SSHFP", "SVCB", "TLSA", "URI".
+                          Type.
+                        type: number
+                      usage:
+                        description: |-
+                          (Number) Usage.
+                          Usage.
+                        type: number
+                      value:
+                        description: |-
+                          (String) Value of the record. This field's semantics depend on the chosen tag.
+                          Value of the record. This field's semantics depend on the chosen tag.
+                        type: string
+                      weight:
+                        description: |-
+                          (Number) The record weight.
+                          The record weight.
+                        type: number
+                    type: object
+                  id:
+                    description: (String) Identifier.
+                    type: string
+                  meta:
+                    description: |-
+                      specific information about the record.
+                      Extra Cloudflare-specific information about the record.
+                    type: string
+                  modifiedOn:
+                    description: |-
+                      (String) When the record was last modified.
+                      When the record was last modified.
+                    type: string
+                  name:
+                    description: |-
+                      (String) DNS record name (or @ for the zone apex) in Punycode.
+                      DNS record name (or @ for the zone apex) in Punycode.
+                    type: string
+                  priority:
+                    description: |-
+                      (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
+                      Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
+                    type: number
+                  proxiable:
+                    description: |-
+                      (Boolean) Whether the record can be proxied by Cloudflare or not.
+                      Whether the record can be proxied by Cloudflare or not.
+                    type: boolean
+                  proxied:
+                    description: |-
+                      (Boolean) Whether the record is receiving the performance and security benefits of Cloudflare.
+                      Whether the record is receiving the performance and security benefits of Cloudflare.
+                    type: boolean
+                  settings:
+                    description: (Attributes) Settings for the DNS record. (see below
+                      for nested schema)
+                    properties:
+                      flattenCname:
+                        description: |-
+                          (Boolean) If enabled, causes the CNAME record to be resolved externally and the resulting address records (e.g., A and AAAA) to be returned instead of the CNAME record itself. This setting is unavailable for proxied records, since they are always flattened.
+                          If enabled, causes the CNAME record to be resolved externally and the resulting address records (e.g., A and AAAA) to be returned instead of the CNAME record itself. This setting is unavailable for proxied records, since they are always flattened.
+                        type: boolean
+                      ipv4Only:
+                        description: |-
+                          (Boolean) When enabled, only A records will be generated, and AAAA records will not be created. This setting is intended for exceptional cases. Note that this option only applies to proxied records and it has no effect on whether Cloudflare communicates with the origin using IPv4 or IPv6.
+                          When enabled, only A records will be generated, and AAAA records will not be created. This setting is intended for exceptional cases. Note that this option only applies to proxied records and it has no effect on whether Cloudflare communicates with the origin using IPv4 or IPv6.
+                        type: boolean
+                      ipv6Only:
+                        description: |-
+                          (Boolean) When enabled, only AAAA records will be generated, and A records will not be created. This setting is intended for exceptional cases. Note that this option only applies to proxied records and it has no effect on whether Cloudflare communicates with the origin using IPv4 or IPv6.
+                          When enabled, only AAAA records will be generated, and A records will not be created. This setting is intended for exceptional cases. Note that this option only applies to proxied records and it has no effect on whether Cloudflare communicates with the origin using IPv4 or IPv6.
+                        type: boolean
+                    type: object
+                  tags:
+                    description: |-
+                      (Set of String) Custom tags for the DNS record. This field has no effect on DNS responses.
+                      Custom tags for the DNS record. This field has no effect on DNS responses.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  tagsModifiedOn:
+                    description: |-
+                      (String) When the record tags were last modified. Omitted if there are no tags.
+                      When the record tags were last modified. Omitted if there are no tags.
+                    type: string
+                  ttl:
+                    description: |-
+                      (Number) Time To Live (TTL) of the DNS record in seconds. Setting to 1 means 'automatic'. Value must be between 60 and 86400, with the minimum reduced to 30 for Enterprise zones.
+                      Time To Live (TTL) of the DNS record in seconds. Setting to 1 means 'automatic'. Value must be between 60 and 86400, with the minimum reduced to 30 for Enterprise zones.
+                    type: number
+                  type:
+                    description: |-
+                      (String) Record type.
+                      Available values: "A", "AAAA", "CNAME", "MX", "NS", "OPENPGPKEY", "PTR", "TXT", "CAA", "CERT", "DNSKEY", "DS", "HTTPS", "LOC", "NAPTR", "SMIMEA", "SRV", "SSHFP", "SVCB", "TLSA", "URI".
+                      Record type.
+                      Available values: "A", "AAAA", "CNAME", "MX", "NS", "OPENPGPKEY", "PTR", "TXT", "CAA", "CERT", "DNSKEY", "DS", "HTTPS", "LOC", "NAPTR", "SMIMEA", "SRV", "SSHFP", "SVCB", "TLSA", "URI".
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
