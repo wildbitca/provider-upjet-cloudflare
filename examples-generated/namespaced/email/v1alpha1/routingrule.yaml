@@ -1,0 +1,23 @@
+apiVersion: email.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: RoutingRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: email/v1alpha1/routingrule
+  labels:
+    testing.upbound.io/example-name: example_email_routing_rule
+  name: example-email-routing-rule
+  namespace: crossplane-system
+spec:
+  forProvider:
+    actions:
+    - type: forward
+      value:
+      - destinationaddress@example.net
+    enabled: true
+    matchers:
+    - field: to
+      type: literal
+      value: test@example.com
+    name: Send to user@example.net rule.
+    priority: 0
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

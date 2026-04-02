@@ -1,0 +1,320 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: tlssettings.hostname.upjet-cloudflare.m.upbound.io
+spec:
+  group: hostname.upjet-cloudflare.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: TLSSetting
+    listKind: TLSSettingList
+    plural: tlssettings
+    singular: tlssetting
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: TLSSetting is the Schema for the TLSSettings API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: TLSSettingSpec defines the desired state of TLSSetting
+            properties:
+              forProvider:
+                properties:
+                  hostname:
+                    description: |-
+                      (String) The hostname for which the tls settings are set.
+                      The hostname for which the tls settings are set.
+                    type: string
+                  settingId:
+                    description: |-
+                      (String) The TLS Setting name. The value type depends on the setting:
+                      The TLS Setting name. The value type depends on the setting:
+                      - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
+                      - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`)
+                      - `http2`: value is `"on"` or `"off"`
+                      Available values: "ciphers", "min_tls_version", "http2".
+                    type: string
+                  value:
+                    description: |-
+                      (Dynamic) The TLS setting value. The type depends on the setting_id used in the request path:
+                      The TLS setting value. The type depends on the `setting_id` used in the request path:
+                      - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
+                      - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`)
+                      - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`)
+                      Available values: "1.0", "1.1", "1.2", "1.3", "on", "off".
+                    x-kubernetes-preserve-unknown-fields: true
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  hostname:
+                    description: |-
+                      (String) The hostname for which the tls settings are set.
+                      The hostname for which the tls settings are set.
+                    type: string
+                  settingId:
+                    description: |-
+                      (String) The TLS Setting name. The value type depends on the setting:
+                      The TLS Setting name. The value type depends on the setting:
+                      - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
+                      - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`)
+                      - `http2`: value is `"on"` or `"off"`
+                      Available values: "ciphers", "min_tls_version", "http2".
+                    type: string
+                  value:
+                    description: |-
+                      (Dynamic) The TLS setting value. The type depends on the setting_id used in the request path:
+                      The TLS setting value. The type depends on the `setting_id` used in the request path:
+                      - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
+                      - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`)
+                      - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`)
+                      Available values: "1.0", "1.1", "1.2", "1.3", "on", "off".
+                    x-kubernetes-preserve-unknown-fields: true
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.hostname is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.hostname)
+                || (has(self.initProvider) && has(self.initProvider.hostname))'
+            - message: spec.forProvider.settingId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.settingId)
+                || (has(self.initProvider) && has(self.initProvider.settingId))'
+            - message: spec.forProvider.value is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.value)
+                || (has(self.initProvider) && has(self.initProvider.value))'
+            - message: spec.forProvider.zoneId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.zoneId)
+                || (has(self.initProvider) && has(self.initProvider.zoneId))'
+          status:
+            description: TLSSettingStatus defines the observed state of TLSSetting.
+            properties:
+              atProvider:
+                properties:
+                  createdAt:
+                    description: |-
+                      (String) This is the time the tls setting was originally created for this hostname.
+                      This is the time the tls setting was originally created for this hostname.
+                    type: string
+                  hostname:
+                    description: |-
+                      (String) The hostname for which the tls settings are set.
+                      The hostname for which the tls settings are set.
+                    type: string
+                  id:
+                    description: '(String) The TLS Setting name. The value type depends
+                      on the setting:'
+                    type: string
+                  settingId:
+                    description: |-
+                      (String) The TLS Setting name. The value type depends on the setting:
+                      The TLS Setting name. The value type depends on the setting:
+                      - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
+                      - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`)
+                      - `http2`: value is `"on"` or `"off"`
+                      Available values: "ciphers", "min_tls_version", "http2".
+                    type: string
+                  status:
+                    description: |-
+                      (String) Deployment status for the given tls setting.
+                      Deployment status for the given tls setting.
+                    type: string
+                  updatedAt:
+                    description: |-
+                      (String) This is the time the tls setting was updated.
+                      This is the time the tls setting was updated.
+                    type: string
+                  value:
+                    description: |-
+                      (Dynamic) The TLS setting value. The type depends on the setting_id used in the request path:
+                      The TLS setting value. The type depends on the `setting_id` used in the request path:
+                      - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
+                      - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`)
+                      - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`)
+                      Available values: "1.0", "1.1", "1.2", "1.3", "on", "off".
+                    x-kubernetes-preserve-unknown-fields: true
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

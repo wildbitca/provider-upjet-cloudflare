@@ -1,0 +1,55 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustAccessPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccesspolicy
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_policy
+  name: example-zero-trust-access-policy
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    approvalGroups:
+    - approvalsNeeded: 1
+      emailAddresses:
+      - test1@cloudflare.com
+      - test2@cloudflare.com
+      emailListUuid: email_list_uuid
+    - approvalsNeeded: 3
+      emailAddresses:
+      - test@cloudflare.com
+      - test2@cloudflare.com
+      emailListUuid: 597147a1-976b-4ef2-9af0-81d5d007fc34
+    approvalRequired: true
+    connectionRules:
+      rdp:
+        allowedClipboardLocalToRemoteFormats:
+        - text
+        allowedClipboardRemoteToLocalFormats:
+        - text
+    decision: allow
+    exclude:
+    - group:
+        id: aa0a4aab-672b-4bdb-bc33-a59f1130a11f
+    include:
+    - group:
+        id: aa0a4aab-672b-4bdb-bc33-a59f1130a11f
+    isolationRequired: false
+    mfaConfig:
+      allowedAuthenticators:
+      - totp
+      - biometrics
+      - security_key
+      mfaBypass: false
+      sessionDuration: 24h
+    name: Allow devs
+    purposeJustificationPrompt: Please enter a justification for entering this protected
+      domain.
+    purposeJustificationRequired: true
+    require:
+    - group:
+        id: aa0a4aab-672b-4bdb-bc33-a59f1130a11f
+    sessionDuration: 24h

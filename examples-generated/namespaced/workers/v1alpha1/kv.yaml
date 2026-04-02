@@ -1,0 +1,16 @@
+apiVersion: workers.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Kv
+metadata:
+  annotations:
+    meta.upbound.io/example-id: workers/v1alpha1/kv
+  labels:
+    testing.upbound.io/example-name: example_workers_kv
+  name: example-workers-kv
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    keyName: My-Key
+    metadata: {}
+    namespaceId: 0f2ac74b498b48028cb68387c421e279
+    value: Some Value

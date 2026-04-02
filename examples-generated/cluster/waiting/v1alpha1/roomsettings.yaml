@@ -1,0 +1,12 @@
+apiVersion: waiting.upjet-cloudflare.upbound.io/v1alpha1
+kind: RoomSettings
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waiting/v1alpha1/roomsettings
+  labels:
+    testing.upbound.io/example-name: example_waiting_room_settings
+  name: example-waiting-room-settings
+spec:
+  forProvider:
+    searchEngineCrawlerBypass: true
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

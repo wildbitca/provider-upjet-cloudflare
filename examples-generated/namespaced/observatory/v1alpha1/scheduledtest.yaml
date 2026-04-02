@@ -1,0 +1,13 @@
+apiVersion: observatory.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: ScheduledTest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: observatory/v1alpha1/scheduledtest
+  labels:
+    testing.upbound.io/example-name: example_observatory_scheduled_test
+  name: example-observatory-scheduled-test
+  namespace: crossplane-system
+spec:
+  forProvider:
+    url: example.com
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

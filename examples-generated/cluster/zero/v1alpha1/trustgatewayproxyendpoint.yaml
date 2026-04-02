@@ -1,0 +1,13 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustGatewayProxyEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustgatewayproxyendpoint
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_gateway_proxy_endpoint
+  name: example-zero-trust-gateway-proxy-endpoint
+spec:
+  forProvider:
+    accountId: 699d98642c564d2e855e9661899b7252
+    kind: ip
+    name: Devops team

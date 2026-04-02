@@ -1,0 +1,23 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustAccessGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccessgroup
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_group
+  name: example-zero-trust-access-group
+  namespace: crossplane-system
+spec:
+  forProvider:
+    exclude:
+    - group:
+        id: aa0a4aab-672b-4bdb-bc33-a59f1130a11f
+    include:
+    - group:
+        id: aa0a4aab-672b-4bdb-bc33-a59f1130a11f
+    isDefault: true
+    name: Allow devs
+    require:
+    - group:
+        id: aa0a4aab-672b-4bdb-bc33-a59f1130a11f
+    zoneId: zone_id

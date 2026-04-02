@@ -1,0 +1,13 @@
+apiVersion: cloudforce.upjet-cloudflare.upbound.io/v1alpha1
+kind: OneRequestMessage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudforce/v1alpha1/onerequestmessage
+  labels:
+    testing.upbound.io/example-name: example_cloudforce_one_request_message
+  name: example-cloudforce-one-request-message
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    content: Can you elaborate on the type of DoS that occurred?
+    requestId: f174e90a-fafe-4643-bbbc-4a0ed4fc8415

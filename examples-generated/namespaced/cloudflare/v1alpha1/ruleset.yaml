@@ -1,0 +1,21 @@
+apiVersion: cloudflare.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Ruleset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudflare/v1alpha1/ruleset
+  labels:
+    testing.upbound.io/example-name: example_ruleset
+  name: example-ruleset
+  namespace: crossplane-system
+spec:
+  forProvider:
+    description: A description for my ruleset.
+    kind: root
+    name: My ruleset
+    phase: http_request_firewall_custom
+    rules:
+    - action: block
+      description: Block the request.
+      expression: ip.src ne 1.1.1.1
+      ref: my_rule
+    zoneId: 9f1839b6152d298aca64c4e906b6d074

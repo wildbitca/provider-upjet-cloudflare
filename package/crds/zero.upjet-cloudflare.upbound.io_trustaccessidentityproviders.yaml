@@ -1,0 +1,1079 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: trustaccessidentityproviders.zero.upjet-cloudflare.upbound.io
+spec:
+  group: zero.upjet-cloudflare.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: TrustAccessIdentityProvider
+    listKind: TrustAccessIdentityProviderList
+    plural: trustaccessidentityproviders
+    singular: trustaccessidentityprovider
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: TrustAccessIdentityProvider is the Schema for the TrustAccessIdentityProviders
+          API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: TrustAccessIdentityProviderSpec defines the desired state
+              of TrustAccessIdentityProvider
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                    type: string
+                  accountIdRef:
+                    description: Reference to a Account in account to populate accountId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  accountIdSelector:
+                    description: Selector for a Account in account to populate accountId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  config:
+                    description: (Attributes) The configuration parameters for the
+                      identity provider. To view the required parameters for a specific
+                      provider, refer to our developer documentation. (see below for
+                      nested schema)
+                    properties:
+                      appsDomain:
+                        description: |-
+                          (String) Your companies TLD
+                          Your companies TLD
+                        type: string
+                      attributes:
+                        description: |-
+                          (List of String) A list of SAML attribute names that will be added to your signed JWT token and can be used in SAML policy rules.
+                          A list of SAML attribute names that will be added to your signed JWT token and can be used in SAML policy rules.
+                        items:
+                          type: string
+                        type: array
+                      authUrl:
+                        description: |-
+                          (String) The authorization_endpoint URL of your IdP
+                          The authorization_endpoint URL of your IdP
+                        type: string
+                      authorizationServerId:
+                        description: |-
+                          (String) Your okta authorization server id
+                          Your okta authorization server id
+                        type: string
+                      centrifyAccount:
+                        description: |-
+                          (String) Your centrify account url
+                          Your centrify account url
+                        type: string
+                      centrifyAppId:
+                        description: |-
+                          (String) Your centrify app id
+                          Your centrify app id
+                        type: string
+                      certsUrl:
+                        description: |-
+                          (String) The jwks_uri endpoint of your IdP to allow the IdP keys to sign the tokens
+                          The jwks_uri endpoint of your IdP to allow the IdP keys to sign the tokens
+                        type: string
+                      claims:
+                        description: |-
+                          (List of String) Custom claims
+                          Custom claims
+                        items:
+                          type: string
+                        type: array
+                      clientId:
+                        description: |-
+                          (String) Your OAuth Client ID
+                          Your OAuth Client ID
+                        type: string
+                      clientSecretSecretRef:
+                        description: |-
+                          (String, Sensitive) Your OAuth Client Secret
+                          Your OAuth Client Secret
+                        properties:
+                          key:
+                            description: The key to select.
+                            type: string
+                          name:
+                            description: Name of the secret.
+                            type: string
+                          namespace:
+                            description: Namespace of the secret.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        - namespace
+                        type: object
+                      conditionalAccessEnabled:
+                        description: |-
+                          (Boolean) Should Cloudflare try to load authentication contexts from your account
+                          Should Cloudflare try to load authentication contexts from your account
+                        type: boolean
+                      directoryId:
+                        description: |-
+                          (String) Your Azure directory uuid
+                          Your Azure directory uuid
+                        type: string
+                      emailAttributeName:
+                        description: |-
+                          (String) The attribute name for email in the SAML response.
+                          The attribute name for email in the SAML response.
+                        type: string
+                      emailClaimName:
+                        description: |-
+                          (String) The claim name for email in the id_token response.
+                          The claim name for email in the id_token response.
+                        type: string
+                      headerAttributes:
+                        description: (Attributes List) Add a list of attribute names
+                          that will be returned in the response header from the Access
+                          callback. (see below for nested schema)
+                        items:
+                          properties:
+                            attributeName:
+                              description: |-
+                                (String) attribute name from the IDP
+                                attribute name from the IDP
+                              type: string
+                            headerName:
+                              description: |-
+                                (String) header that will be added on the request to the origin
+                                header that will be added on the request to the origin
+                              type: string
+                          type: object
+                        type: array
+                      idpPublicCerts:
+                        description: |-
+                          (List of String) X509 certificate to verify the signature in the SAML authentication response
+                          X509 certificate to verify the signature in the SAML authentication response
+                        items:
+                          type: string
+                        type: array
+                      issuerUrl:
+                        description: |-
+                          (String) IdP Entity ID or Issuer URL
+                          IdP Entity ID or Issuer URL
+                        type: string
+                      oktaAccount:
+                        description: |-
+                          (String) Your okta account url
+                          Your okta account url
+                        type: string
+                      oneloginAccount:
+                        description: |-
+                          (String) Your OneLogin account url
+                          Your OneLogin account url
+                        type: string
+                      pingEnvId:
+                        description: |-
+                          (String) Your PingOne environment identifier
+                          Your PingOne environment identifier
+                        type: string
+                      pkceEnabled:
+                        description: |-
+                          (Boolean) Enable Proof Key for Code Exchange (PKCE)
+                          Enable Proof Key for Code Exchange (PKCE)
+                        type: boolean
+                      prompt:
+                        description: |-
+                          sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
+                          Available values: "login", "select_account", "none".
+                          Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
+                          Available values: "login", "select_account", "none".
+                        type: string
+                      scopes:
+                        description: |-
+                          (List of String) OAuth scopes
+                          OAuth scopes
+                        items:
+                          type: string
+                        type: array
+                      signRequest:
+                        description: |-
+                          (Boolean) Sign the SAML authentication request with Access credentials. To verify the signature, use the public key from the Access certs endpoints.
+                          Sign the SAML authentication request with Access credentials. To verify the signature, use the public key from the Access certs endpoints.
+                        type: boolean
+                      ssoTargetUrl:
+                        description: |-
+                          (String) URL to send the SAML authentication requests to
+                          URL to send the SAML authentication requests to
+                        type: string
+                      supportGroups:
+                        description: |-
+                          (Boolean) Should Cloudflare try to load groups from your account
+                          Should Cloudflare try to load groups from your account
+                        type: boolean
+                      tokenUrl:
+                        description: |-
+                          (String) The token_endpoint URL of your IdP
+                          The token_endpoint URL of your IdP
+                        type: string
+                    type: object
+                  name:
+                    description: |-
+                      (String) The name of the identity provider, shown to users on the login page.
+                      The name of the identity provider, shown to users on the login page.
+                    type: string
+                  scimConfig:
+                    description: Domain Identity Management (SCIM) with the identity
+                      provider. (see below for nested schema)
+                    properties:
+                      enabled:
+                        description: |-
+                          (Boolean) A flag to enable or disable SCIM for the identity provider.
+                          A flag to enable or disable SCIM for the identity provider.
+                        type: boolean
+                      identityUpdateBehavior:
+                        description: |-
+                          authentication on group membership updates, user identity update will only occur after successful re-authentication. With "reauth" identities will not contain fields from the SCIM user resource. With "no_action" identities will not be changed by SCIM updates in any way and users will not be prompted to reauthenticate.
+                          Available values: "automatic", "reauth", "no_action".
+                          Indicates how a SCIM event updates a user identity used for policy evaluation. Use "automatic" to automatically update a user's identity and augment it with fields from the SCIM user resource. Use "reauth" to force re-authentication on group membership updates, user identity update will only occur after successful re-authentication. With "reauth" identities will not contain fields from the SCIM user resource. With "no_action" identities will not be changed by SCIM updates in any way and users will not be prompted to reauthenticate.
+                          Available values: "automatic", "reauth", "no_action".
+                        type: string
+                      seatDeprovision:
+                        description: |-
+                          (Boolean) A flag to remove a user's seat in Zero Trust when they have been deprovisioned in the Identity Provider.  This cannot be enabled unless user_deprovision is also enabled.
+                          A flag to remove a user's seat in Zero Trust when they have been deprovisioned in the Identity Provider.  This cannot be enabled unless user_deprovision is also enabled.
+                        type: boolean
+                      userDeprovision:
+                        description: |-
+                          (Boolean) A flag to enable revoking a user's session in Access and Gateway when they have been deprovisioned in the Identity Provider.
+                          A flag to enable revoking a user's session in Access and Gateway when they have been deprovisioned in the Identity Provider.
+                        type: boolean
+                    type: object
+                  type:
+                    description: |-
+                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+                      The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
+                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                      The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                    type: string
+                  accountIdRef:
+                    description: Reference to a Account in account to populate accountId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  accountIdSelector:
+                    description: Selector for a Account in account to populate accountId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  config:
+                    description: (Attributes) The configuration parameters for the
+                      identity provider. To view the required parameters for a specific
+                      provider, refer to our developer documentation. (see below for
+                      nested schema)
+                    properties:
+                      appsDomain:
+                        description: |-
+                          (String) Your companies TLD
+                          Your companies TLD
+                        type: string
+                      attributes:
+                        description: |-
+                          (List of String) A list of SAML attribute names that will be added to your signed JWT token and can be used in SAML policy rules.
+                          A list of SAML attribute names that will be added to your signed JWT token and can be used in SAML policy rules.
+                        items:
+                          type: string
+                        type: array
+                      authUrl:
+                        description: |-
+                          (String) The authorization_endpoint URL of your IdP
+                          The authorization_endpoint URL of your IdP
+                        type: string
+                      authorizationServerId:
+                        description: |-
+                          (String) Your okta authorization server id
+                          Your okta authorization server id
+                        type: string
+                      centrifyAccount:
+                        description: |-
+                          (String) Your centrify account url
+                          Your centrify account url
+                        type: string
+                      centrifyAppId:
+                        description: |-
+                          (String) Your centrify app id
+                          Your centrify app id
+                        type: string
+                      certsUrl:
+                        description: |-
+                          (String) The jwks_uri endpoint of your IdP to allow the IdP keys to sign the tokens
+                          The jwks_uri endpoint of your IdP to allow the IdP keys to sign the tokens
+                        type: string
+                      claims:
+                        description: |-
+                          (List of String) Custom claims
+                          Custom claims
+                        items:
+                          type: string
+                        type: array
+                      clientId:
+                        description: |-
+                          (String) Your OAuth Client ID
+                          Your OAuth Client ID
+                        type: string
+                      clientSecretSecretRef:
+                        description: |-
+                          (String, Sensitive) Your OAuth Client Secret
+                          Your OAuth Client Secret
+                        properties:
+                          key:
+                            description: The key to select.
+                            type: string
+                          name:
+                            description: Name of the secret.
+                            type: string
+                          namespace:
+                            description: Namespace of the secret.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        - namespace
+                        type: object
+                      conditionalAccessEnabled:
+                        description: |-
+                          (Boolean) Should Cloudflare try to load authentication contexts from your account
+                          Should Cloudflare try to load authentication contexts from your account
+                        type: boolean
+                      directoryId:
+                        description: |-
+                          (String) Your Azure directory uuid
+                          Your Azure directory uuid
+                        type: string
+                      emailAttributeName:
+                        description: |-
+                          (String) The attribute name for email in the SAML response.
+                          The attribute name for email in the SAML response.
+                        type: string
+                      emailClaimName:
+                        description: |-
+                          (String) The claim name for email in the id_token response.
+                          The claim name for email in the id_token response.
+                        type: string
+                      headerAttributes:
+                        description: (Attributes List) Add a list of attribute names
+                          that will be returned in the response header from the Access
+                          callback. (see below for nested schema)
+                        items:
+                          properties:
+                            attributeName:
+                              description: |-
+                                (String) attribute name from the IDP
+                                attribute name from the IDP
+                              type: string
+                            headerName:
+                              description: |-
+                                (String) header that will be added on the request to the origin
+                                header that will be added on the request to the origin
+                              type: string
+                          type: object
+                        type: array
+                      idpPublicCerts:
+                        description: |-
+                          (List of String) X509 certificate to verify the signature in the SAML authentication response
+                          X509 certificate to verify the signature in the SAML authentication response
+                        items:
+                          type: string
+                        type: array
+                      issuerUrl:
+                        description: |-
+                          (String) IdP Entity ID or Issuer URL
+                          IdP Entity ID or Issuer URL
+                        type: string
+                      oktaAccount:
+                        description: |-
+                          (String) Your okta account url
+                          Your okta account url
+                        type: string
+                      oneloginAccount:
+                        description: |-
+                          (String) Your OneLogin account url
+                          Your OneLogin account url
+                        type: string
+                      pingEnvId:
+                        description: |-
+                          (String) Your PingOne environment identifier
+                          Your PingOne environment identifier
+                        type: string
+                      pkceEnabled:
+                        description: |-
+                          (Boolean) Enable Proof Key for Code Exchange (PKCE)
+                          Enable Proof Key for Code Exchange (PKCE)
+                        type: boolean
+                      prompt:
+                        description: |-
+                          sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
+                          Available values: "login", "select_account", "none".
+                          Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
+                          Available values: "login", "select_account", "none".
+                        type: string
+                      scopes:
+                        description: |-
+                          (List of String) OAuth scopes
+                          OAuth scopes
+                        items:
+                          type: string
+                        type: array
+                      signRequest:
+                        description: |-
+                          (Boolean) Sign the SAML authentication request with Access credentials. To verify the signature, use the public key from the Access certs endpoints.
+                          Sign the SAML authentication request with Access credentials. To verify the signature, use the public key from the Access certs endpoints.
+                        type: boolean
+                      ssoTargetUrl:
+                        description: |-
+                          (String) URL to send the SAML authentication requests to
+                          URL to send the SAML authentication requests to
+                        type: string
+                      supportGroups:
+                        description: |-
+                          (Boolean) Should Cloudflare try to load groups from your account
+                          Should Cloudflare try to load groups from your account
+                        type: boolean
+                      tokenUrl:
+                        description: |-
+                          (String) The token_endpoint URL of your IdP
+                          The token_endpoint URL of your IdP
+                        type: string
+                    type: object
+                  name:
+                    description: |-
+                      (String) The name of the identity provider, shown to users on the login page.
+                      The name of the identity provider, shown to users on the login page.
+                    type: string
+                  scimConfig:
+                    description: Domain Identity Management (SCIM) with the identity
+                      provider. (see below for nested schema)
+                    properties:
+                      enabled:
+                        description: |-
+                          (Boolean) A flag to enable or disable SCIM for the identity provider.
+                          A flag to enable or disable SCIM for the identity provider.
+                        type: boolean
+                      identityUpdateBehavior:
+                        description: |-
+                          authentication on group membership updates, user identity update will only occur after successful re-authentication. With "reauth" identities will not contain fields from the SCIM user resource. With "no_action" identities will not be changed by SCIM updates in any way and users will not be prompted to reauthenticate.
+                          Available values: "automatic", "reauth", "no_action".
+                          Indicates how a SCIM event updates a user identity used for policy evaluation. Use "automatic" to automatically update a user's identity and augment it with fields from the SCIM user resource. Use "reauth" to force re-authentication on group membership updates, user identity update will only occur after successful re-authentication. With "reauth" identities will not contain fields from the SCIM user resource. With "no_action" identities will not be changed by SCIM updates in any way and users will not be prompted to reauthenticate.
+                          Available values: "automatic", "reauth", "no_action".
+                        type: string
+                      seatDeprovision:
+                        description: |-
+                          (Boolean) A flag to remove a user's seat in Zero Trust when they have been deprovisioned in the Identity Provider.  This cannot be enabled unless user_deprovision is also enabled.
+                          A flag to remove a user's seat in Zero Trust when they have been deprovisioned in the Identity Provider.  This cannot be enabled unless user_deprovision is also enabled.
+                        type: boolean
+                      userDeprovision:
+                        description: |-
+                          (Boolean) A flag to enable revoking a user's session in Access and Gateway when they have been deprovisioned in the Identity Provider.
+                          A flag to enable revoking a user's session in Access and Gateway when they have been deprovisioned in the Identity Provider.
+                        type: boolean
+                    type: object
+                  type:
+                    description: |-
+                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+                      The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
+                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                      The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.config is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.config)
+                || (has(self.initProvider) && has(self.initProvider.config))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.type is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
+          status:
+            description: TrustAccessIdentityProviderStatus defines the observed state
+              of TrustAccessIdentityProvider.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                    type: string
+                  config:
+                    description: (Attributes) The configuration parameters for the
+                      identity provider. To view the required parameters for a specific
+                      provider, refer to our developer documentation. (see below for
+                      nested schema)
+                    properties:
+                      appsDomain:
+                        description: |-
+                          (String) Your companies TLD
+                          Your companies TLD
+                        type: string
+                      attributes:
+                        description: |-
+                          (List of String) A list of SAML attribute names that will be added to your signed JWT token and can be used in SAML policy rules.
+                          A list of SAML attribute names that will be added to your signed JWT token and can be used in SAML policy rules.
+                        items:
+                          type: string
+                        type: array
+                      authUrl:
+                        description: |-
+                          (String) The authorization_endpoint URL of your IdP
+                          The authorization_endpoint URL of your IdP
+                        type: string
+                      authorizationServerId:
+                        description: |-
+                          (String) Your okta authorization server id
+                          Your okta authorization server id
+                        type: string
+                      centrifyAccount:
+                        description: |-
+                          (String) Your centrify account url
+                          Your centrify account url
+                        type: string
+                      centrifyAppId:
+                        description: |-
+                          (String) Your centrify app id
+                          Your centrify app id
+                        type: string
+                      certsUrl:
+                        description: |-
+                          (String) The jwks_uri endpoint of your IdP to allow the IdP keys to sign the tokens
+                          The jwks_uri endpoint of your IdP to allow the IdP keys to sign the tokens
+                        type: string
+                      claims:
+                        description: |-
+                          (List of String) Custom claims
+                          Custom claims
+                        items:
+                          type: string
+                        type: array
+                      clientId:
+                        description: |-
+                          (String) Your OAuth Client ID
+                          Your OAuth Client ID
+                        type: string
+                      conditionalAccessEnabled:
+                        description: |-
+                          (Boolean) Should Cloudflare try to load authentication contexts from your account
+                          Should Cloudflare try to load authentication contexts from your account
+                        type: boolean
+                      directoryId:
+                        description: |-
+                          (String) Your Azure directory uuid
+                          Your Azure directory uuid
+                        type: string
+                      emailAttributeName:
+                        description: |-
+                          (String) The attribute name for email in the SAML response.
+                          The attribute name for email in the SAML response.
+                        type: string
+                      emailClaimName:
+                        description: |-
+                          (String) The claim name for email in the id_token response.
+                          The claim name for email in the id_token response.
+                        type: string
+                      headerAttributes:
+                        description: (Attributes List) Add a list of attribute names
+                          that will be returned in the response header from the Access
+                          callback. (see below for nested schema)
+                        items:
+                          properties:
+                            attributeName:
+                              description: |-
+                                (String) attribute name from the IDP
+                                attribute name from the IDP
+                              type: string
+                            headerName:
+                              description: |-
+                                (String) header that will be added on the request to the origin
+                                header that will be added on the request to the origin
+                              type: string
+                          type: object
+                        type: array
+                      idpPublicCerts:
+                        description: |-
+                          (List of String) X509 certificate to verify the signature in the SAML authentication response
+                          X509 certificate to verify the signature in the SAML authentication response
+                        items:
+                          type: string
+                        type: array
+                      issuerUrl:
+                        description: |-
+                          (String) IdP Entity ID or Issuer URL
+                          IdP Entity ID or Issuer URL
+                        type: string
+                      oktaAccount:
+                        description: |-
+                          (String) Your okta account url
+                          Your okta account url
+                        type: string
+                      oneloginAccount:
+                        description: |-
+                          (String) Your OneLogin account url
+                          Your OneLogin account url
+                        type: string
+                      pingEnvId:
+                        description: |-
+                          (String) Your PingOne environment identifier
+                          Your PingOne environment identifier
+                        type: string
+                      pkceEnabled:
+                        description: |-
+                          (Boolean) Enable Proof Key for Code Exchange (PKCE)
+                          Enable Proof Key for Code Exchange (PKCE)
+                        type: boolean
+                      prompt:
+                        description: |-
+                          sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
+                          Available values: "login", "select_account", "none".
+                          Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
+                          Available values: "login", "select_account", "none".
+                        type: string
+                      redirectUrl:
+                        description: (String)
+                        type: string
+                      scopes:
+                        description: |-
+                          (List of String) OAuth scopes
+                          OAuth scopes
+                        items:
+                          type: string
+                        type: array
+                      signRequest:
+                        description: |-
+                          (Boolean) Sign the SAML authentication request with Access credentials. To verify the signature, use the public key from the Access certs endpoints.
+                          Sign the SAML authentication request with Access credentials. To verify the signature, use the public key from the Access certs endpoints.
+                        type: boolean
+                      ssoTargetUrl:
+                        description: |-
+                          (String) URL to send the SAML authentication requests to
+                          URL to send the SAML authentication requests to
+                        type: string
+                      supportGroups:
+                        description: |-
+                          (Boolean) Should Cloudflare try to load groups from your account
+                          Should Cloudflare try to load groups from your account
+                        type: boolean
+                      tokenUrl:
+                        description: |-
+                          (String) The token_endpoint URL of your IdP
+                          The token_endpoint URL of your IdP
+                        type: string
+                    type: object
+                  id:
+                    description: (String) UUID.
+                    type: string
+                  name:
+                    description: |-
+                      (String) The name of the identity provider, shown to users on the login page.
+                      The name of the identity provider, shown to users on the login page.
+                    type: string
+                  scimConfig:
+                    description: Domain Identity Management (SCIM) with the identity
+                      provider. (see below for nested schema)
+                    properties:
+                      enabled:
+                        description: |-
+                          (Boolean) A flag to enable or disable SCIM for the identity provider.
+                          A flag to enable or disable SCIM for the identity provider.
+                        type: boolean
+                      identityUpdateBehavior:
+                        description: |-
+                          authentication on group membership updates, user identity update will only occur after successful re-authentication. With "reauth" identities will not contain fields from the SCIM user resource. With "no_action" identities will not be changed by SCIM updates in any way and users will not be prompted to reauthenticate.
+                          Available values: "automatic", "reauth", "no_action".
+                          Indicates how a SCIM event updates a user identity used for policy evaluation. Use "automatic" to automatically update a user's identity and augment it with fields from the SCIM user resource. Use "reauth" to force re-authentication on group membership updates, user identity update will only occur after successful re-authentication. With "reauth" identities will not contain fields from the SCIM user resource. With "no_action" identities will not be changed by SCIM updates in any way and users will not be prompted to reauthenticate.
+                          Available values: "automatic", "reauth", "no_action".
+                        type: string
+                      scimBaseUrl:
+                        description: |-
+                          (String) The base URL of Cloudflare's SCIM V2.0 API endpoint.
+                          The base URL of Cloudflare's SCIM V2.0 API endpoint.
+                        type: string
+                      seatDeprovision:
+                        description: |-
+                          (Boolean) A flag to remove a user's seat in Zero Trust when they have been deprovisioned in the Identity Provider.  This cannot be enabled unless user_deprovision is also enabled.
+                          A flag to remove a user's seat in Zero Trust when they have been deprovisioned in the Identity Provider.  This cannot be enabled unless user_deprovision is also enabled.
+                        type: boolean
+                      userDeprovision:
+                        description: |-
+                          (Boolean) A flag to enable revoking a user's session in Access and Gateway when they have been deprovisioned in the Identity Provider.
+                          A flag to enable revoking a user's session in Access and Gateway when they have been deprovisioned in the Identity Provider.
+                        type: boolean
+                    type: object
+                  type:
+                    description: |-
+                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+                      The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
+                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                      The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

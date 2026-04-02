@@ -1,0 +1,17 @@
+apiVersion: bot.upjet-cloudflare.upbound.io/v1alpha1
+kind: Management
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bot/v1alpha1/management
+  labels:
+    testing.upbound.io/example-name: example_bot_management
+  name: example-bot-management
+spec:
+  forProvider:
+    aiBotsProtection: block
+    cfRobotsVariant: policy_only
+    crawlerProtection: enabled
+    enableJs: true
+    fightMode: true
+    isRobotsTxtManaged: false
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

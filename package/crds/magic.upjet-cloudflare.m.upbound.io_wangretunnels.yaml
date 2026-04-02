@@ -1,0 +1,650 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: wangretunnels.magic.upjet-cloudflare.m.upbound.io
+spec:
+  group: magic.upjet-cloudflare.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: WanGreTunnel
+    listKind: WanGreTunnelList
+    plural: wangretunnels
+    singular: wangretunnel
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: WanGreTunnel is the Schema for the WanGreTunnels API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: WanGreTunnelSpec defines the desired state of WanGreTunnel
+            properties:
+              forProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier
+                      Identifier
+                    type: string
+                  automaticReturnRouting:
+                    description: |-
+                      (Boolean) True if automatic stateful return routing should be enabled for a tunnel, false otherwise.
+                      True if automatic stateful return routing should be enabled for a tunnel, false otherwise.
+                    type: boolean
+                  bgp:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      customerAsn:
+                        description: |-
+                          (Number) ASN used on the customer end of the BGP session
+                          ASN used on the customer end of the BGP session
+                        type: number
+                      extraPrefixes:
+                        description: |-
+                          (List of String) Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
+                          Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
+                        items:
+                          type: string
+                        type: array
+                      md5Key:
+                        description: |-
+                          (String) MD5 key to use for session authentication.
+                          MD5 key to use for session authentication.
+
+                          Note that *this is not a security measure*. MD5 is not a valid security mechanism, and the
+                          key is not treated as a secret value. This is *only* supported for preventing
+                          misconfiguration, not for defending against malicious attacks.
+
+                          The MD5 key, if set, must be of non-zero length and consist only of the following types of
+                          character:
+
+                          * ASCII alphanumerics: `[a-zA-Z0-9]`
+                          * Special characters in the set `'!@#$%^&*()+[]{}<>/.,;:_-~`= \|`
+
+                          In other words, MD5 keys may contain any printable ASCII character aside from newline (0x0A),
+                          quotation mark (`"`), vertical tab (0x0B), carriage return (0x0D), tab (0x09), form feed
+                          (0x0C), and the question mark (`?`). Requests specifying an MD5 key with one or more of
+                          these disallowed characters will be rejected.
+                        type: string
+                    type: object
+                  cloudflareGreEndpoint:
+                    description: |-
+                      (String) The IP address assigned to the Cloudflare side of the GRE tunnel.
+                      The IP address assigned to the Cloudflare side of the GRE tunnel.
+                    type: string
+                  customerGreEndpoint:
+                    description: |-
+                      (String) The IP address assigned to the customer side of the GRE tunnel.
+                      The IP address assigned to the customer side of the GRE tunnel.
+                    type: string
+                  description:
+                    description: |-
+                      (String) An optional description of the GRE tunnel.
+                      An optional description of the GRE tunnel.
+                    type: string
+                  healthCheck:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      direction:
+                        description: |-
+                          (String) The direction of the flow of the healthcheck. Either unidirectional, where the probe comes to you via the tunnel and the result comes back to Cloudflare via the open Internet, or bidirectional where both the probe and result come and go via the tunnel.
+                          Available values: "unidirectional", "bidirectional".
+                          The direction of the flow of the healthcheck. Either unidirectional, where the probe comes to you via the tunnel and the result comes back to Cloudflare via the open Internet, or bidirectional where both the probe and result come and go via the tunnel.
+                          Available values: "unidirectional", "bidirectional".
+                        type: string
+                      enabled:
+                        description: |-
+                          (Boolean) Determines whether to run healthchecks for a tunnel.
+                          Determines whether to run healthchecks for a tunnel.
+                        type: boolean
+                      rate:
+                        description: |-
+                          (String) How frequent the health check is run. The default value is mid.
+                          Available values: "low", "mid", "high".
+                          How frequent the health check is run. The default value is `mid`.
+                          Available values: "low", "mid", "high".
+                        type: string
+                      target:
+                        description: magic-new-hc-target header is set to true and
+                          string form if x-magic-new-hc-target is absent or set to
+                          false. (see below for nested schema)
+                        properties:
+                          saved:
+                            description: |-
+                              (String) The saved health check target. Setting the value to the empty string indicates that the calculated default value will be used.
+                              The saved health check target. Setting the value to the empty string indicates that the calculated default value will be used.
+                            type: string
+                        type: object
+                      type:
+                        description: |-
+                          (String) The type of healthcheck to run, reply or request. The default value is reply.
+                          Available values: "reply", "request".
+                          The type of healthcheck to run, reply or request. The default value is `reply`.
+                          Available values: "reply", "request".
+                        type: string
+                    type: object
+                  interfaceAddress:
+                    description: |-
+                      bit prefix (/31 in CIDR notation) supporting two hosts, one for each side of the tunnel. Select the subnet from the following private IP space: 10.0.0.0–10.255.255.255, 172.16.0.0–172.31.255.255, 192.168.0.0–192.168.255.255.
+                      A 31-bit prefix (/31 in CIDR notation) supporting two hosts, one for each side of the tunnel. Select the subnet from the following private IP space: 10.0.0.0–10.255.255.255, 172.16.0.0–172.31.255.255, 192.168.0.0–192.168.255.255.
+                    type: string
+                  interfaceAddress6:
+                    description: |-
+                      (String) A 127 bit IPV6 prefix from within the virtual_subnet6 prefix space with the address being the first IP of the subnet and not same as the address of virtual_subnet6. Eg if virtual_subnet6 is 2606:54c1:7:0:a9fe:12d2::/127 , interface_address6 could be 2606:54c1:7:0:a9fe:12d2:1:200/127
+                      A 127 bit IPV6 prefix from within the virtual_subnet6 prefix space with the address being the first IP of the subnet and not same as the address of virtual_subnet6. Eg if virtual_subnet6 is 2606:54c1:7:0:a9fe:12d2::/127 , interface_address6 could be 2606:54c1:7:0:a9fe:12d2:1:200/127
+                    type: string
+                  mtu:
+                    description: |-
+                      (Number) Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The minimum value is 576.
+                      Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The minimum value is 576.
+                    type: number
+                  name:
+                    description: |-
+                      (String) The name of the tunnel. The name cannot contain spaces or special characters, must be 15 characters or less, and cannot share a name with another GRE tunnel.
+                      The name of the tunnel. The name cannot contain spaces or special characters, must be 15 characters or less, and cannot share a name with another GRE tunnel.
+                    type: string
+                  ttl:
+                    description: |-
+                      (Number) Time To Live (TTL) in number of hops of the GRE tunnel.
+                      Time To Live (TTL) in number of hops of the GRE tunnel.
+                    type: number
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier
+                      Identifier
+                    type: string
+                  automaticReturnRouting:
+                    description: |-
+                      (Boolean) True if automatic stateful return routing should be enabled for a tunnel, false otherwise.
+                      True if automatic stateful return routing should be enabled for a tunnel, false otherwise.
+                    type: boolean
+                  bgp:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      customerAsn:
+                        description: |-
+                          (Number) ASN used on the customer end of the BGP session
+                          ASN used on the customer end of the BGP session
+                        type: number
+                      extraPrefixes:
+                        description: |-
+                          (List of String) Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
+                          Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
+                        items:
+                          type: string
+                        type: array
+                      md5Key:
+                        description: |-
+                          (String) MD5 key to use for session authentication.
+                          MD5 key to use for session authentication.
+
+                          Note that *this is not a security measure*. MD5 is not a valid security mechanism, and the
+                          key is not treated as a secret value. This is *only* supported for preventing
+                          misconfiguration, not for defending against malicious attacks.
+
+                          The MD5 key, if set, must be of non-zero length and consist only of the following types of
+                          character:
+
+                          * ASCII alphanumerics: `[a-zA-Z0-9]`
+                          * Special characters in the set `'!@#$%^&*()+[]{}<>/.,;:_-~`= \|`
+
+                          In other words, MD5 keys may contain any printable ASCII character aside from newline (0x0A),
+                          quotation mark (`"`), vertical tab (0x0B), carriage return (0x0D), tab (0x09), form feed
+                          (0x0C), and the question mark (`?`). Requests specifying an MD5 key with one or more of
+                          these disallowed characters will be rejected.
+                        type: string
+                    type: object
+                  cloudflareGreEndpoint:
+                    description: |-
+                      (String) The IP address assigned to the Cloudflare side of the GRE tunnel.
+                      The IP address assigned to the Cloudflare side of the GRE tunnel.
+                    type: string
+                  customerGreEndpoint:
+                    description: |-
+                      (String) The IP address assigned to the customer side of the GRE tunnel.
+                      The IP address assigned to the customer side of the GRE tunnel.
+                    type: string
+                  description:
+                    description: |-
+                      (String) An optional description of the GRE tunnel.
+                      An optional description of the GRE tunnel.
+                    type: string
+                  healthCheck:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      direction:
+                        description: |-
+                          (String) The direction of the flow of the healthcheck. Either unidirectional, where the probe comes to you via the tunnel and the result comes back to Cloudflare via the open Internet, or bidirectional where both the probe and result come and go via the tunnel.
+                          Available values: "unidirectional", "bidirectional".
+                          The direction of the flow of the healthcheck. Either unidirectional, where the probe comes to you via the tunnel and the result comes back to Cloudflare via the open Internet, or bidirectional where both the probe and result come and go via the tunnel.
+                          Available values: "unidirectional", "bidirectional".
+                        type: string
+                      enabled:
+                        description: |-
+                          (Boolean) Determines whether to run healthchecks for a tunnel.
+                          Determines whether to run healthchecks for a tunnel.
+                        type: boolean
+                      rate:
+                        description: |-
+                          (String) How frequent the health check is run. The default value is mid.
+                          Available values: "low", "mid", "high".
+                          How frequent the health check is run. The default value is `mid`.
+                          Available values: "low", "mid", "high".
+                        type: string
+                      target:
+                        description: magic-new-hc-target header is set to true and
+                          string form if x-magic-new-hc-target is absent or set to
+                          false. (see below for nested schema)
+                        properties:
+                          saved:
+                            description: |-
+                              (String) The saved health check target. Setting the value to the empty string indicates that the calculated default value will be used.
+                              The saved health check target. Setting the value to the empty string indicates that the calculated default value will be used.
+                            type: string
+                        type: object
+                      type:
+                        description: |-
+                          (String) The type of healthcheck to run, reply or request. The default value is reply.
+                          Available values: "reply", "request".
+                          The type of healthcheck to run, reply or request. The default value is `reply`.
+                          Available values: "reply", "request".
+                        type: string
+                    type: object
+                  interfaceAddress:
+                    description: |-
+                      bit prefix (/31 in CIDR notation) supporting two hosts, one for each side of the tunnel. Select the subnet from the following private IP space: 10.0.0.0–10.255.255.255, 172.16.0.0–172.31.255.255, 192.168.0.0–192.168.255.255.
+                      A 31-bit prefix (/31 in CIDR notation) supporting two hosts, one for each side of the tunnel. Select the subnet from the following private IP space: 10.0.0.0–10.255.255.255, 172.16.0.0–172.31.255.255, 192.168.0.0–192.168.255.255.
+                    type: string
+                  interfaceAddress6:
+                    description: |-
+                      (String) A 127 bit IPV6 prefix from within the virtual_subnet6 prefix space with the address being the first IP of the subnet and not same as the address of virtual_subnet6. Eg if virtual_subnet6 is 2606:54c1:7:0:a9fe:12d2::/127 , interface_address6 could be 2606:54c1:7:0:a9fe:12d2:1:200/127
+                      A 127 bit IPV6 prefix from within the virtual_subnet6 prefix space with the address being the first IP of the subnet and not same as the address of virtual_subnet6. Eg if virtual_subnet6 is 2606:54c1:7:0:a9fe:12d2::/127 , interface_address6 could be 2606:54c1:7:0:a9fe:12d2:1:200/127
+                    type: string
+                  mtu:
+                    description: |-
+                      (Number) Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The minimum value is 576.
+                      Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The minimum value is 576.
+                    type: number
+                  name:
+                    description: |-
+                      (String) The name of the tunnel. The name cannot contain spaces or special characters, must be 15 characters or less, and cannot share a name with another GRE tunnel.
+                      The name of the tunnel. The name cannot contain spaces or special characters, must be 15 characters or less, and cannot share a name with another GRE tunnel.
+                    type: string
+                  ttl:
+                    description: |-
+                      (Number) Time To Live (TTL) in number of hops of the GRE tunnel.
+                      Time To Live (TTL) in number of hops of the GRE tunnel.
+                    type: number
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.accountId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
+                || (has(self.initProvider) && has(self.initProvider.accountId))'
+            - message: spec.forProvider.cloudflareGreEndpoint is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.cloudflareGreEndpoint)
+                || (has(self.initProvider) && has(self.initProvider.cloudflareGreEndpoint))'
+            - message: spec.forProvider.customerGreEndpoint is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.customerGreEndpoint)
+                || (has(self.initProvider) && has(self.initProvider.customerGreEndpoint))'
+            - message: spec.forProvider.interfaceAddress is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.interfaceAddress)
+                || (has(self.initProvider) && has(self.initProvider.interfaceAddress))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: WanGreTunnelStatus defines the observed state of WanGreTunnel.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) Identifier
+                      Identifier
+                    type: string
+                  automaticReturnRouting:
+                    description: |-
+                      (Boolean) True if automatic stateful return routing should be enabled for a tunnel, false otherwise.
+                      True if automatic stateful return routing should be enabled for a tunnel, false otherwise.
+                    type: boolean
+                  bgp:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      customerAsn:
+                        description: |-
+                          (Number) ASN used on the customer end of the BGP session
+                          ASN used on the customer end of the BGP session
+                        type: number
+                      extraPrefixes:
+                        description: |-
+                          (List of String) Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
+                          Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
+                        items:
+                          type: string
+                        type: array
+                      md5Key:
+                        description: |-
+                          (String) MD5 key to use for session authentication.
+                          MD5 key to use for session authentication.
+
+                          Note that *this is not a security measure*. MD5 is not a valid security mechanism, and the
+                          key is not treated as a secret value. This is *only* supported for preventing
+                          misconfiguration, not for defending against malicious attacks.
+
+                          The MD5 key, if set, must be of non-zero length and consist only of the following types of
+                          character:
+
+                          * ASCII alphanumerics: `[a-zA-Z0-9]`
+                          * Special characters in the set `'!@#$%^&*()+[]{}<>/.,;:_-~`= \|`
+
+                          In other words, MD5 keys may contain any printable ASCII character aside from newline (0x0A),
+                          quotation mark (`"`), vertical tab (0x0B), carriage return (0x0D), tab (0x09), form feed
+                          (0x0C), and the question mark (`?`). Requests specifying an MD5 key with one or more of
+                          these disallowed characters will be rejected.
+                        type: string
+                    type: object
+                  bgpStatus:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      bgpState:
+                        description: (String)
+                        type: string
+                      cfSpeakerIp:
+                        description: (String)
+                        type: string
+                      cfSpeakerPort:
+                        description: (Number)
+                        type: number
+                      customerSpeakerIp:
+                        description: (String)
+                        type: string
+                      customerSpeakerPort:
+                        description: (Number)
+                        type: number
+                      state:
+                        description: |-
+                          (String) Available values: "BGP_DOWN", "BGP_UP", "BGP_ESTABLISHING".
+                          Available values: "BGP_DOWN", "BGP_UP", "BGP_ESTABLISHING".
+                        type: string
+                      tcpEstablished:
+                        description: (Boolean)
+                        type: boolean
+                      updatedAt:
+                        description: (String)
+                        type: string
+                    type: object
+                  cloudflareGreEndpoint:
+                    description: |-
+                      (String) The IP address assigned to the Cloudflare side of the GRE tunnel.
+                      The IP address assigned to the Cloudflare side of the GRE tunnel.
+                    type: string
+                  createdOn:
+                    description: |-
+                      (String) The date and time the tunnel was created.
+                      The date and time the tunnel was created.
+                    type: string
+                  customerGreEndpoint:
+                    description: |-
+                      (String) The IP address assigned to the customer side of the GRE tunnel.
+                      The IP address assigned to the customer side of the GRE tunnel.
+                    type: string
+                  description:
+                    description: |-
+                      (String) An optional description of the GRE tunnel.
+                      An optional description of the GRE tunnel.
+                    type: string
+                  healthCheck:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      direction:
+                        description: |-
+                          (String) The direction of the flow of the healthcheck. Either unidirectional, where the probe comes to you via the tunnel and the result comes back to Cloudflare via the open Internet, or bidirectional where both the probe and result come and go via the tunnel.
+                          Available values: "unidirectional", "bidirectional".
+                          The direction of the flow of the healthcheck. Either unidirectional, where the probe comes to you via the tunnel and the result comes back to Cloudflare via the open Internet, or bidirectional where both the probe and result come and go via the tunnel.
+                          Available values: "unidirectional", "bidirectional".
+                        type: string
+                      enabled:
+                        description: |-
+                          (Boolean) Determines whether to run healthchecks for a tunnel.
+                          Determines whether to run healthchecks for a tunnel.
+                        type: boolean
+                      rate:
+                        description: |-
+                          (String) How frequent the health check is run. The default value is mid.
+                          Available values: "low", "mid", "high".
+                          How frequent the health check is run. The default value is `mid`.
+                          Available values: "low", "mid", "high".
+                        type: string
+                      target:
+                        description: magic-new-hc-target header is set to true and
+                          string form if x-magic-new-hc-target is absent or set to
+                          false. (see below for nested schema)
+                        properties:
+                          effective:
+                            description: |-
+                              (String) The effective health check target. If 'saved' is empty, then this field will be populated with the calculated default value on GET requests. Ignored in POST, PUT, and PATCH requests.
+                              The effective health check target. If 'saved' is empty, then this field will be populated with the calculated default value on GET requests. Ignored in POST, PUT, and PATCH requests.
+                            type: string
+                          saved:
+                            description: |-
+                              (String) The saved health check target. Setting the value to the empty string indicates that the calculated default value will be used.
+                              The saved health check target. Setting the value to the empty string indicates that the calculated default value will be used.
+                            type: string
+                        type: object
+                      type:
+                        description: |-
+                          (String) The type of healthcheck to run, reply or request. The default value is reply.
+                          Available values: "reply", "request".
+                          The type of healthcheck to run, reply or request. The default value is `reply`.
+                          Available values: "reply", "request".
+                        type: string
+                    type: object
+                  id:
+                    description: (String) Identifier
+                    type: string
+                  interfaceAddress:
+                    description: |-
+                      bit prefix (/31 in CIDR notation) supporting two hosts, one for each side of the tunnel. Select the subnet from the following private IP space: 10.0.0.0–10.255.255.255, 172.16.0.0–172.31.255.255, 192.168.0.0–192.168.255.255.
+                      A 31-bit prefix (/31 in CIDR notation) supporting two hosts, one for each side of the tunnel. Select the subnet from the following private IP space: 10.0.0.0–10.255.255.255, 172.16.0.0–172.31.255.255, 192.168.0.0–192.168.255.255.
+                    type: string
+                  interfaceAddress6:
+                    description: |-
+                      (String) A 127 bit IPV6 prefix from within the virtual_subnet6 prefix space with the address being the first IP of the subnet and not same as the address of virtual_subnet6. Eg if virtual_subnet6 is 2606:54c1:7:0:a9fe:12d2::/127 , interface_address6 could be 2606:54c1:7:0:a9fe:12d2:1:200/127
+                      A 127 bit IPV6 prefix from within the virtual_subnet6 prefix space with the address being the first IP of the subnet and not same as the address of virtual_subnet6. Eg if virtual_subnet6 is 2606:54c1:7:0:a9fe:12d2::/127 , interface_address6 could be 2606:54c1:7:0:a9fe:12d2:1:200/127
+                    type: string
+                  modifiedOn:
+                    description: |-
+                      (String) The date and time the tunnel was last modified.
+                      The date and time the tunnel was last modified.
+                    type: string
+                  mtu:
+                    description: |-
+                      (Number) Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The minimum value is 576.
+                      Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The minimum value is 576.
+                    type: number
+                  name:
+                    description: |-
+                      (String) The name of the tunnel. The name cannot contain spaces or special characters, must be 15 characters or less, and cannot share a name with another GRE tunnel.
+                      The name of the tunnel. The name cannot contain spaces or special characters, must be 15 characters or less, and cannot share a name with another GRE tunnel.
+                    type: string
+                  ttl:
+                    description: |-
+                      (Number) Time To Live (TTL) in number of hops of the GRE tunnel.
+                      Time To Live (TTL) in number of hops of the GRE tunnel.
+                    type: number
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

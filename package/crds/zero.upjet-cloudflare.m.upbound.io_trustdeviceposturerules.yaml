@@ -1,0 +1,1102 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: trustdeviceposturerules.zero.upjet-cloudflare.m.upbound.io
+spec:
+  group: zero.upjet-cloudflare.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: TrustDevicePostureRule
+    listKind: TrustDevicePostureRuleList
+    plural: trustdeviceposturerules
+    singular: trustdeviceposturerule
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: TrustDevicePostureRule is the Schema for the TrustDevicePostureRules
+          API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: TrustDevicePostureRuleSpec defines the desired state of TrustDevicePostureRule
+            properties:
+              forProvider:
+                properties:
+                  accountId:
+                    description: (String)
+                    type: string
+                  description:
+                    description: |-
+                      (String) The description of the device posture rule.
+                      The description of the device posture rule.
+                    type: string
+                  expiration:
+                    description: |-
+                      (String) Sets the expiration time for a posture check result. If empty, the result remains valid until it is overwritten by new data from the WARP client.
+                      Sets the expiration time for a posture check result. If empty, the result remains valid until it is overwritten by new data from the WARP client.
+                    type: string
+                  input:
+                    description: (Attributes) The value to be checked against. (see
+                      below for nested schema)
+                    properties:
+                      activeThreats:
+                        description: |-
+                          (Number) The Number of active threats.
+                          The Number of active threats.
+                        type: number
+                      certificateId:
+                        description: |-
+                          (String) UUID of Cloudflare managed certificate.
+                          UUID of Cloudflare managed certificate.
+                        type: string
+                      checkDisks:
+                        description: |-
+                          (List of String) List of volume names to be checked for encryption.
+                          List of volume names to be checked for encryption.
+                        items:
+                          type: string
+                        type: array
+                      checkPrivateKey:
+                        description: |-
+                          (Boolean) Confirm the certificate was not imported from another device. We recommend keeping this enabled unless the certificate was deployed without a private key.
+                          Confirm the certificate was not imported from another device. We recommend keeping this enabled unless the certificate was deployed without a private key.
+                        type: boolean
+                      cn:
+                        description: |-
+                          (String) Common Name that is protected by the certificate.
+                          Common Name that is protected by the certificate.
+                        type: string
+                      complianceStatus:
+                        description: |-
+                          (String) Compliance Status.
+                          Available values: "compliant", "noncompliant", "unknown", "notapplicable", "ingraceperiod", "error".
+                          Compliance Status.
+                          Available values: "compliant", "noncompliant", "unknown", "notapplicable", "ingraceperiod", "error".
+                        type: string
+                      connectionId:
+                        description: |-
+                          (String) Posture Integration ID.
+                          Posture Integration ID.
+                        type: string
+                      countOperator:
+                        description: |-
+                          (String) Count Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                          Count Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                        type: string
+                      domain:
+                        description: |-
+                          (String) Domain.
+                          Domain.
+                        type: string
+                      eidLastSeen:
+                        description: |-
+                          (String) For more details on eid last seen, refer to the Tanium documentation.
+                          For more details on eid last seen, refer to the Tanium documentation.
+                        type: string
+                      enabled:
+                        description: |-
+                          (Boolean) Enabled.
+                          Enabled.
+                        type: boolean
+                      exists:
+                        description: |-
+                          (Boolean) Whether or not file exists.
+                          Whether or not file exists.
+                        type: boolean
+                      extendedKeyUsage:
+                        description: |-
+                          (List of String) List of values indicating purposes for which the certificate public key can be used.
+                          List of values indicating purposes for which the certificate public key can be used.
+                        items:
+                          type: string
+                        type: array
+                      id:
+                        description: |-
+                          (String) API UUID.
+                          List ID.
+                        type: string
+                      infected:
+                        description: |-
+                          (Boolean) Whether device is infected.
+                          Whether device is infected.
+                        type: boolean
+                      isActive:
+                        description: |-
+                          (Boolean) Whether device is active.
+                          Whether device is active.
+                        type: boolean
+                      issueCount:
+                        description: |-
+                          (String) The Number of Issues.
+                          The Number of Issues.
+                        type: string
+                      lastSeen:
+                        description: |-
+                          (String) For more details on last seen, please refer to the Crowdstrike documentation.
+                          For more details on last seen, please refer to the Crowdstrike documentation.
+                        type: string
+                      locations:
+                        description: (Attributes) (see below for nested schema)
+                        properties:
+                          paths:
+                            description: |-
+                              (List of String) List of paths to check for client certificate on linux.
+                              List of paths to check for client certificate on linux.
+                            items:
+                              type: string
+                            type: array
+                          trustStores:
+                            description: |-
+                              (List of String) List of trust stores to check for client certificate.
+                              List of trust stores to check for client certificate.
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      networkStatus:
+                        description: |-
+                          (String) Network status of device.
+                          Available values: "connected", "disconnected", "disconnecting", "connecting".
+                          Network status of device.
+                          Available values: "connected", "disconnected", "disconnecting", "connecting".
+                        type: string
+                      operatingSystem:
+                        description: |-
+                          (String) Operating system.
+                          Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
+                          Operating system.
+                          Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
+                        type: string
+                      operationalState:
+                        description: |-
+                          (String) Agent operational state.
+                          Available values: "na", "partially_disabled", "auto_fully_disabled", "fully_disabled", "auto_partially_disabled", "disabled_error", "db_corruption".
+                          Agent operational state.
+                          Available values: "na", "partially_disabled", "auto_fully_disabled", "fully_disabled", "auto_partially_disabled", "disabled_error", "db_corruption".
+                        type: string
+                      operator:
+                        description: |-
+                          (String) Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                          Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                        type: string
+                      os:
+                        description: |-
+                          (String) Os Version.
+                          Os Version.
+                        type: string
+                      osDistroName:
+                        description: |-
+                          (String) Operating System Distribution Name (linux only).
+                          Operating System Distribution Name (linux only).
+                        type: string
+                      osDistroRevision:
+                        description: |-
+                          (String) Version of OS Distribution (linux only).
+                          Version of OS Distribution (linux only).
+                        type: string
+                      osVersionExtra:
+                        description: |-
+                          (String) Additional operating system version details. For Windows, the UBR (Update Build Revision). For Mac or iOS, the Product Version Extra. For Linux, the distribution name and version.
+                          Additional operating system version details. For Windows, the UBR (Update Build Revision). For Mac or iOS, the Product Version Extra. For Linux, the distribution name and version.
+                        type: string
+                      overall:
+                        description: |-
+                          (String) Overall.
+                          Overall.
+                        type: string
+                      path:
+                        description: |-
+                          (String) File path.
+                          File path.
+                        type: string
+                      requireAll:
+                        description: |-
+                          (Boolean) Whether to check all disks for encryption.
+                          Whether to check all disks for encryption.
+                        type: boolean
+                      riskLevel:
+                        description: |-
+                          (String) For more details on risk level, refer to the Tanium documentation.
+                          Available values: "low", "medium", "high", "critical".
+                          For more details on risk level, refer to the Tanium documentation.
+                          Available values: "low", "medium", "high", "critical".
+                        type: string
+                      score:
+                        description: |-
+                          100 assigned to devices set by the 3rd party posture provider.
+                          A value between 0-100 assigned to devices set by the 3rd party posture provider.
+                        type: number
+                      scoreOperator:
+                        description: |-
+                          (String) Score Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                          Score Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                        type: string
+                      sensorConfig:
+                        description: |-
+                          (String) SensorConfig.
+                          SensorConfig.
+                        type: string
+                      sha256:
+                        description: |-
+                          256.
+                          SHA-256.
+                        type: string
+                      state:
+                        description: |-
+                          (String) For more details on state, please refer to the Crowdstrike documentation.
+                          Available values: "online", "offline", "unknown".
+                          For more details on state, please refer to the Crowdstrike documentation.
+                          Available values: "online", "offline", "unknown".
+                        type: string
+                      subjectAlternativeNames:
+                        description: |-
+                          (List of String) List of certificate Subject Alternative Names.
+                          List of certificate Subject Alternative Names.
+                        items:
+                          type: string
+                        type: array
+                      thumbprint:
+                        description: |-
+                          (String) Signing certificate thumbprint.
+                          Signing certificate thumbprint.
+                        type: string
+                      totalScore:
+                        description: |-
+                          (Number) For more details on total score, refer to the Tanium documentation.
+                          For more details on total score, refer to the Tanium documentation.
+                        type: number
+                      updateWindowDays:
+                        description: |-
+                          (Number) Number of days that the antivirus should be updated within.
+                          Number of days that the antivirus should be updated within.
+                        type: number
+                      version:
+                        description: |-
+                          (String) Version of OS.
+                          Version of OS.
+                        type: string
+                      versionOperator:
+                        description: |-
+                          (String) Version Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                          Version Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                        type: string
+                    type: object
+                  match:
+                    description: (Attributes List) The conditions that the client
+                      must match to run the rule. (see below for nested schema)
+                    items:
+                      properties:
+                        platform:
+                          description: |-
+                            (String) Available values: "windows", "mac", "linux", "android", "ios", "chromeos".
+                            Available values: "windows", "mac", "linux", "android", "ios", "chromeos".
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The name of the device posture rule.
+                      The name of the device posture rule.
+                    type: string
+                  schedule:
+                    description: |-
+                      (String) Polling frequency for the WARP client posture check. Default: 5m (poll every five minutes). Minimum: 1m.
+                      Polling frequency for the WARP client posture check. Default: `5m` (poll every five minutes). Minimum: `1m`.
+                    type: string
+                  type:
+                    description: |-
+                      (String) The type of device posture rule.
+                      Available values: "file", "application", "tanium", "gateway", "warp", "disk_encryption", "serial_number", "sentinelone", "carbonblack", "firewall", "os_version", "domain_joined", "client_certificate", "client_certificate_v2", "antivirus", "unique_client_id", "kolide", "tanium_s2s", "crowdstrike_s2s", "intune", "workspace_one", "sentinelone_s2s", "custom_s2s".
+                      The type of device posture rule.
+                      Available values: "file", "application", "tanium", "gateway", "warp", "disk_encryption", "serial_number", "sentinelone", "carbonblack", "firewall", "os_version", "domain_joined", "client_certificate", "client_certificate_v2", "antivirus", "unique_client_id", "kolide", "tanium_s2s", "crowdstrike_s2s", "intune", "workspace_one", "sentinelone_s2s", "custom_s2s".
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    description: (String)
+                    type: string
+                  description:
+                    description: |-
+                      (String) The description of the device posture rule.
+                      The description of the device posture rule.
+                    type: string
+                  expiration:
+                    description: |-
+                      (String) Sets the expiration time for a posture check result. If empty, the result remains valid until it is overwritten by new data from the WARP client.
+                      Sets the expiration time for a posture check result. If empty, the result remains valid until it is overwritten by new data from the WARP client.
+                    type: string
+                  input:
+                    description: (Attributes) The value to be checked against. (see
+                      below for nested schema)
+                    properties:
+                      activeThreats:
+                        description: |-
+                          (Number) The Number of active threats.
+                          The Number of active threats.
+                        type: number
+                      certificateId:
+                        description: |-
+                          (String) UUID of Cloudflare managed certificate.
+                          UUID of Cloudflare managed certificate.
+                        type: string
+                      checkDisks:
+                        description: |-
+                          (List of String) List of volume names to be checked for encryption.
+                          List of volume names to be checked for encryption.
+                        items:
+                          type: string
+                        type: array
+                      checkPrivateKey:
+                        description: |-
+                          (Boolean) Confirm the certificate was not imported from another device. We recommend keeping this enabled unless the certificate was deployed without a private key.
+                          Confirm the certificate was not imported from another device. We recommend keeping this enabled unless the certificate was deployed without a private key.
+                        type: boolean
+                      cn:
+                        description: |-
+                          (String) Common Name that is protected by the certificate.
+                          Common Name that is protected by the certificate.
+                        type: string
+                      complianceStatus:
+                        description: |-
+                          (String) Compliance Status.
+                          Available values: "compliant", "noncompliant", "unknown", "notapplicable", "ingraceperiod", "error".
+                          Compliance Status.
+                          Available values: "compliant", "noncompliant", "unknown", "notapplicable", "ingraceperiod", "error".
+                        type: string
+                      connectionId:
+                        description: |-
+                          (String) Posture Integration ID.
+                          Posture Integration ID.
+                        type: string
+                      countOperator:
+                        description: |-
+                          (String) Count Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                          Count Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                        type: string
+                      domain:
+                        description: |-
+                          (String) Domain.
+                          Domain.
+                        type: string
+                      eidLastSeen:
+                        description: |-
+                          (String) For more details on eid last seen, refer to the Tanium documentation.
+                          For more details on eid last seen, refer to the Tanium documentation.
+                        type: string
+                      enabled:
+                        description: |-
+                          (Boolean) Enabled.
+                          Enabled.
+                        type: boolean
+                      exists:
+                        description: |-
+                          (Boolean) Whether or not file exists.
+                          Whether or not file exists.
+                        type: boolean
+                      extendedKeyUsage:
+                        description: |-
+                          (List of String) List of values indicating purposes for which the certificate public key can be used.
+                          List of values indicating purposes for which the certificate public key can be used.
+                        items:
+                          type: string
+                        type: array
+                      id:
+                        description: |-
+                          (String) API UUID.
+                          List ID.
+                        type: string
+                      infected:
+                        description: |-
+                          (Boolean) Whether device is infected.
+                          Whether device is infected.
+                        type: boolean
+                      isActive:
+                        description: |-
+                          (Boolean) Whether device is active.
+                          Whether device is active.
+                        type: boolean
+                      issueCount:
+                        description: |-
+                          (String) The Number of Issues.
+                          The Number of Issues.
+                        type: string
+                      lastSeen:
+                        description: |-
+                          (String) For more details on last seen, please refer to the Crowdstrike documentation.
+                          For more details on last seen, please refer to the Crowdstrike documentation.
+                        type: string
+                      locations:
+                        description: (Attributes) (see below for nested schema)
+                        properties:
+                          paths:
+                            description: |-
+                              (List of String) List of paths to check for client certificate on linux.
+                              List of paths to check for client certificate on linux.
+                            items:
+                              type: string
+                            type: array
+                          trustStores:
+                            description: |-
+                              (List of String) List of trust stores to check for client certificate.
+                              List of trust stores to check for client certificate.
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      networkStatus:
+                        description: |-
+                          (String) Network status of device.
+                          Available values: "connected", "disconnected", "disconnecting", "connecting".
+                          Network status of device.
+                          Available values: "connected", "disconnected", "disconnecting", "connecting".
+                        type: string
+                      operatingSystem:
+                        description: |-
+                          (String) Operating system.
+                          Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
+                          Operating system.
+                          Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
+                        type: string
+                      operationalState:
+                        description: |-
+                          (String) Agent operational state.
+                          Available values: "na", "partially_disabled", "auto_fully_disabled", "fully_disabled", "auto_partially_disabled", "disabled_error", "db_corruption".
+                          Agent operational state.
+                          Available values: "na", "partially_disabled", "auto_fully_disabled", "fully_disabled", "auto_partially_disabled", "disabled_error", "db_corruption".
+                        type: string
+                      operator:
+                        description: |-
+                          (String) Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                          Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                        type: string
+                      os:
+                        description: |-
+                          (String) Os Version.
+                          Os Version.
+                        type: string
+                      osDistroName:
+                        description: |-
+                          (String) Operating System Distribution Name (linux only).
+                          Operating System Distribution Name (linux only).
+                        type: string
+                      osDistroRevision:
+                        description: |-
+                          (String) Version of OS Distribution (linux only).
+                          Version of OS Distribution (linux only).
+                        type: string
+                      osVersionExtra:
+                        description: |-
+                          (String) Additional operating system version details. For Windows, the UBR (Update Build Revision). For Mac or iOS, the Product Version Extra. For Linux, the distribution name and version.
+                          Additional operating system version details. For Windows, the UBR (Update Build Revision). For Mac or iOS, the Product Version Extra. For Linux, the distribution name and version.
+                        type: string
+                      overall:
+                        description: |-
+                          (String) Overall.
+                          Overall.
+                        type: string
+                      path:
+                        description: |-
+                          (String) File path.
+                          File path.
+                        type: string
+                      requireAll:
+                        description: |-
+                          (Boolean) Whether to check all disks for encryption.
+                          Whether to check all disks for encryption.
+                        type: boolean
+                      riskLevel:
+                        description: |-
+                          (String) For more details on risk level, refer to the Tanium documentation.
+                          Available values: "low", "medium", "high", "critical".
+                          For more details on risk level, refer to the Tanium documentation.
+                          Available values: "low", "medium", "high", "critical".
+                        type: string
+                      score:
+                        description: |-
+                          100 assigned to devices set by the 3rd party posture provider.
+                          A value between 0-100 assigned to devices set by the 3rd party posture provider.
+                        type: number
+                      scoreOperator:
+                        description: |-
+                          (String) Score Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                          Score Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                        type: string
+                      sensorConfig:
+                        description: |-
+                          (String) SensorConfig.
+                          SensorConfig.
+                        type: string
+                      sha256:
+                        description: |-
+                          256.
+                          SHA-256.
+                        type: string
+                      state:
+                        description: |-
+                          (String) For more details on state, please refer to the Crowdstrike documentation.
+                          Available values: "online", "offline", "unknown".
+                          For more details on state, please refer to the Crowdstrike documentation.
+                          Available values: "online", "offline", "unknown".
+                        type: string
+                      subjectAlternativeNames:
+                        description: |-
+                          (List of String) List of certificate Subject Alternative Names.
+                          List of certificate Subject Alternative Names.
+                        items:
+                          type: string
+                        type: array
+                      thumbprint:
+                        description: |-
+                          (String) Signing certificate thumbprint.
+                          Signing certificate thumbprint.
+                        type: string
+                      totalScore:
+                        description: |-
+                          (Number) For more details on total score, refer to the Tanium documentation.
+                          For more details on total score, refer to the Tanium documentation.
+                        type: number
+                      updateWindowDays:
+                        description: |-
+                          (Number) Number of days that the antivirus should be updated within.
+                          Number of days that the antivirus should be updated within.
+                        type: number
+                      version:
+                        description: |-
+                          (String) Version of OS.
+                          Version of OS.
+                        type: string
+                      versionOperator:
+                        description: |-
+                          (String) Version Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                          Version Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                        type: string
+                    type: object
+                  match:
+                    description: (Attributes List) The conditions that the client
+                      must match to run the rule. (see below for nested schema)
+                    items:
+                      properties:
+                        platform:
+                          description: |-
+                            (String) Available values: "windows", "mac", "linux", "android", "ios", "chromeos".
+                            Available values: "windows", "mac", "linux", "android", "ios", "chromeos".
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The name of the device posture rule.
+                      The name of the device posture rule.
+                    type: string
+                  schedule:
+                    description: |-
+                      (String) Polling frequency for the WARP client posture check. Default: 5m (poll every five minutes). Minimum: 1m.
+                      Polling frequency for the WARP client posture check. Default: `5m` (poll every five minutes). Minimum: `1m`.
+                    type: string
+                  type:
+                    description: |-
+                      (String) The type of device posture rule.
+                      Available values: "file", "application", "tanium", "gateway", "warp", "disk_encryption", "serial_number", "sentinelone", "carbonblack", "firewall", "os_version", "domain_joined", "client_certificate", "client_certificate_v2", "antivirus", "unique_client_id", "kolide", "tanium_s2s", "crowdstrike_s2s", "intune", "workspace_one", "sentinelone_s2s", "custom_s2s".
+                      The type of device posture rule.
+                      Available values: "file", "application", "tanium", "gateway", "warp", "disk_encryption", "serial_number", "sentinelone", "carbonblack", "firewall", "os_version", "domain_joined", "client_certificate", "client_certificate_v2", "antivirus", "unique_client_id", "kolide", "tanium_s2s", "crowdstrike_s2s", "intune", "workspace_one", "sentinelone_s2s", "custom_s2s".
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.accountId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
+                || (has(self.initProvider) && has(self.initProvider.accountId))'
+            - message: spec.forProvider.type is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
+          status:
+            description: TrustDevicePostureRuleStatus defines the observed state of
+              TrustDevicePostureRule.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    description: (String)
+                    type: string
+                  description:
+                    description: |-
+                      (String) The description of the device posture rule.
+                      The description of the device posture rule.
+                    type: string
+                  expiration:
+                    description: |-
+                      (String) Sets the expiration time for a posture check result. If empty, the result remains valid until it is overwritten by new data from the WARP client.
+                      Sets the expiration time for a posture check result. If empty, the result remains valid until it is overwritten by new data from the WARP client.
+                    type: string
+                  id:
+                    description: (String) API UUID.
+                    type: string
+                  input:
+                    description: (Attributes) The value to be checked against. (see
+                      below for nested schema)
+                    properties:
+                      activeThreats:
+                        description: |-
+                          (Number) The Number of active threats.
+                          The Number of active threats.
+                        type: number
+                      certificateId:
+                        description: |-
+                          (String) UUID of Cloudflare managed certificate.
+                          UUID of Cloudflare managed certificate.
+                        type: string
+                      checkDisks:
+                        description: |-
+                          (List of String) List of volume names to be checked for encryption.
+                          List of volume names to be checked for encryption.
+                        items:
+                          type: string
+                        type: array
+                      checkPrivateKey:
+                        description: |-
+                          (Boolean) Confirm the certificate was not imported from another device. We recommend keeping this enabled unless the certificate was deployed without a private key.
+                          Confirm the certificate was not imported from another device. We recommend keeping this enabled unless the certificate was deployed without a private key.
+                        type: boolean
+                      cn:
+                        description: |-
+                          (String) Common Name that is protected by the certificate.
+                          Common Name that is protected by the certificate.
+                        type: string
+                      complianceStatus:
+                        description: |-
+                          (String) Compliance Status.
+                          Available values: "compliant", "noncompliant", "unknown", "notapplicable", "ingraceperiod", "error".
+                          Compliance Status.
+                          Available values: "compliant", "noncompliant", "unknown", "notapplicable", "ingraceperiod", "error".
+                        type: string
+                      connectionId:
+                        description: |-
+                          (String) Posture Integration ID.
+                          Posture Integration ID.
+                        type: string
+                      countOperator:
+                        description: |-
+                          (String) Count Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                          Count Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                        type: string
+                      domain:
+                        description: |-
+                          (String) Domain.
+                          Domain.
+                        type: string
+                      eidLastSeen:
+                        description: |-
+                          (String) For more details on eid last seen, refer to the Tanium documentation.
+                          For more details on eid last seen, refer to the Tanium documentation.
+                        type: string
+                      enabled:
+                        description: |-
+                          (Boolean) Enabled.
+                          Enabled.
+                        type: boolean
+                      exists:
+                        description: |-
+                          (Boolean) Whether or not file exists.
+                          Whether or not file exists.
+                        type: boolean
+                      extendedKeyUsage:
+                        description: |-
+                          (List of String) List of values indicating purposes for which the certificate public key can be used.
+                          List of values indicating purposes for which the certificate public key can be used.
+                        items:
+                          type: string
+                        type: array
+                      id:
+                        description: |-
+                          (String) API UUID.
+                          List ID.
+                        type: string
+                      infected:
+                        description: |-
+                          (Boolean) Whether device is infected.
+                          Whether device is infected.
+                        type: boolean
+                      isActive:
+                        description: |-
+                          (Boolean) Whether device is active.
+                          Whether device is active.
+                        type: boolean
+                      issueCount:
+                        description: |-
+                          (String) The Number of Issues.
+                          The Number of Issues.
+                        type: string
+                      lastSeen:
+                        description: |-
+                          (String) For more details on last seen, please refer to the Crowdstrike documentation.
+                          For more details on last seen, please refer to the Crowdstrike documentation.
+                        type: string
+                      locations:
+                        description: (Attributes) (see below for nested schema)
+                        properties:
+                          paths:
+                            description: |-
+                              (List of String) List of paths to check for client certificate on linux.
+                              List of paths to check for client certificate on linux.
+                            items:
+                              type: string
+                            type: array
+                          trustStores:
+                            description: |-
+                              (List of String) List of trust stores to check for client certificate.
+                              List of trust stores to check for client certificate.
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      networkStatus:
+                        description: |-
+                          (String) Network status of device.
+                          Available values: "connected", "disconnected", "disconnecting", "connecting".
+                          Network status of device.
+                          Available values: "connected", "disconnected", "disconnecting", "connecting".
+                        type: string
+                      operatingSystem:
+                        description: |-
+                          (String) Operating system.
+                          Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
+                          Operating system.
+                          Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
+                        type: string
+                      operationalState:
+                        description: |-
+                          (String) Agent operational state.
+                          Available values: "na", "partially_disabled", "auto_fully_disabled", "fully_disabled", "auto_partially_disabled", "disabled_error", "db_corruption".
+                          Agent operational state.
+                          Available values: "na", "partially_disabled", "auto_fully_disabled", "fully_disabled", "auto_partially_disabled", "disabled_error", "db_corruption".
+                        type: string
+                      operator:
+                        description: |-
+                          (String) Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                          Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                        type: string
+                      os:
+                        description: |-
+                          (String) Os Version.
+                          Os Version.
+                        type: string
+                      osDistroName:
+                        description: |-
+                          (String) Operating System Distribution Name (linux only).
+                          Operating System Distribution Name (linux only).
+                        type: string
+                      osDistroRevision:
+                        description: |-
+                          (String) Version of OS Distribution (linux only).
+                          Version of OS Distribution (linux only).
+                        type: string
+                      osVersionExtra:
+                        description: |-
+                          (String) Additional operating system version details. For Windows, the UBR (Update Build Revision). For Mac or iOS, the Product Version Extra. For Linux, the distribution name and version.
+                          Additional operating system version details. For Windows, the UBR (Update Build Revision). For Mac or iOS, the Product Version Extra. For Linux, the distribution name and version.
+                        type: string
+                      overall:
+                        description: |-
+                          (String) Overall.
+                          Overall.
+                        type: string
+                      path:
+                        description: |-
+                          (String) File path.
+                          File path.
+                        type: string
+                      requireAll:
+                        description: |-
+                          (Boolean) Whether to check all disks for encryption.
+                          Whether to check all disks for encryption.
+                        type: boolean
+                      riskLevel:
+                        description: |-
+                          (String) For more details on risk level, refer to the Tanium documentation.
+                          Available values: "low", "medium", "high", "critical".
+                          For more details on risk level, refer to the Tanium documentation.
+                          Available values: "low", "medium", "high", "critical".
+                        type: string
+                      score:
+                        description: |-
+                          100 assigned to devices set by the 3rd party posture provider.
+                          A value between 0-100 assigned to devices set by the 3rd party posture provider.
+                        type: number
+                      scoreOperator:
+                        description: |-
+                          (String) Score Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                          Score Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                        type: string
+                      sensorConfig:
+                        description: |-
+                          (String) SensorConfig.
+                          SensorConfig.
+                        type: string
+                      sha256:
+                        description: |-
+                          256.
+                          SHA-256.
+                        type: string
+                      state:
+                        description: |-
+                          (String) For more details on state, please refer to the Crowdstrike documentation.
+                          Available values: "online", "offline", "unknown".
+                          For more details on state, please refer to the Crowdstrike documentation.
+                          Available values: "online", "offline", "unknown".
+                        type: string
+                      subjectAlternativeNames:
+                        description: |-
+                          (List of String) List of certificate Subject Alternative Names.
+                          List of certificate Subject Alternative Names.
+                        items:
+                          type: string
+                        type: array
+                      thumbprint:
+                        description: |-
+                          (String) Signing certificate thumbprint.
+                          Signing certificate thumbprint.
+                        type: string
+                      totalScore:
+                        description: |-
+                          (Number) For more details on total score, refer to the Tanium documentation.
+                          For more details on total score, refer to the Tanium documentation.
+                        type: number
+                      updateWindowDays:
+                        description: |-
+                          (Number) Number of days that the antivirus should be updated within.
+                          Number of days that the antivirus should be updated within.
+                        type: number
+                      version:
+                        description: |-
+                          (String) Version of OS.
+                          Version of OS.
+                        type: string
+                      versionOperator:
+                        description: |-
+                          (String) Version Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                          Version Operator.
+                          Available values: "<", "<=", ">", ">=", "==".
+                        type: string
+                    type: object
+                  match:
+                    description: (Attributes List) The conditions that the client
+                      must match to run the rule. (see below for nested schema)
+                    items:
+                      properties:
+                        platform:
+                          description: |-
+                            (String) Available values: "windows", "mac", "linux", "android", "ios", "chromeos".
+                            Available values: "windows", "mac", "linux", "android", "ios", "chromeos".
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The name of the device posture rule.
+                      The name of the device posture rule.
+                    type: string
+                  schedule:
+                    description: |-
+                      (String) Polling frequency for the WARP client posture check. Default: 5m (poll every five minutes). Minimum: 1m.
+                      Polling frequency for the WARP client posture check. Default: `5m` (poll every five minutes). Minimum: `1m`.
+                    type: string
+                  type:
+                    description: |-
+                      (String) The type of device posture rule.
+                      Available values: "file", "application", "tanium", "gateway", "warp", "disk_encryption", "serial_number", "sentinelone", "carbonblack", "firewall", "os_version", "domain_joined", "client_certificate", "client_certificate_v2", "antivirus", "unique_client_id", "kolide", "tanium_s2s", "crowdstrike_s2s", "intune", "workspace_one", "sentinelone_s2s", "custom_s2s".
+                      The type of device posture rule.
+                      Available values: "file", "application", "tanium", "gateway", "warp", "disk_encryption", "serial_number", "sentinelone", "carbonblack", "firewall", "os_version", "domain_joined", "client_certificate", "client_certificate_v2", "antivirus", "unique_client_id", "kolide", "tanium_s2s", "crowdstrike_s2s", "intune", "workspace_one", "sentinelone_s2s", "custom_s2s".
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,18 @@
+apiVersion: managed.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Transforms
+metadata:
+  annotations:
+    meta.upbound.io/example-id: managed/v1alpha1/transforms
+  labels:
+    testing.upbound.io/example-name: example_managed_transforms
+  name: example-managed-transforms
+  namespace: crossplane-system
+spec:
+  forProvider:
+    managedRequestHeaders:
+    - enabled: true
+      id: add_bot_protection_headers
+    managedResponseHeaders:
+    - enabled: true
+      id: add_security_headers
+    zoneId: 9f1839b6152d298aca64c4e906b6d074

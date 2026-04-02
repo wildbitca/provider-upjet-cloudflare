@@ -1,0 +1,14 @@
+apiVersion: cloudforce.upjet-cloudflare.upbound.io/v1alpha1
+kind: OneRequestAsset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudforce/v1alpha1/onerequestasset
+  labels:
+    testing.upbound.io/example-name: example_cloudforce_one_request_asset
+  name: example-cloudforce-one-request-asset
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    page: 0
+    perPage: 10
+    requestId: f174e90a-fafe-4643-bbbc-4a0ed4fc8415

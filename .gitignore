@@ -1,0 +1,24 @@
+/.cache
+/.work
+/_output
+cover.out
+/vendor
+/.vendor-new
+.DS_Store
+
+# ignore IDE folders
+.vscode/
+.idea/
+
+# Cursor agentic — do not version agent outputs (local only)
+.cursor/agents/
+
+# Compiled Go binaries accidentally built in repo root
+/dns
+/config
+/monolith
+/zone
+/cloudflare
+/workers
+/r2
+/generator

@@ -1,0 +1,13 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustAccessKeyConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccesskeyconfiguration
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_key_configuration
+  name: example-zero-trust-access-key-configuration
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    keyRotationIntervalDays: 30

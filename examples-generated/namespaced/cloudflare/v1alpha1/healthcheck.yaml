@@ -1,0 +1,45 @@
+apiVersion: cloudflare.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Healthcheck
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudflare/v1alpha1/healthcheck
+  labels:
+    testing.upbound.io/example-name: example_healthcheck
+  name: example-healthcheck
+  namespace: crossplane-system
+spec:
+  forProvider:
+    address: www.example.com
+    checkRegions:
+    - WEU
+    - ENAM
+    consecutiveFails: 0
+    consecutiveSuccesses: 0
+    description: Health check for www.example.com
+    httpConfig:
+      allowInsecure: true
+      expectedBody: success
+      expectedCodes:
+      - 2xx
+      - "302"
+      followRedirects: true
+      header:
+        Host:
+        - example.com
+        X-App-ID:
+        - abc123
+      method: GET
+      path: /health
+      port: 0
+    interval: 0
+    name: server-1
+    retries: 0
+    suspended: true
+    tcpConfig:
+      method: connection_established
+      port: 0
+    timeout: 0
+    type: HTTPS
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

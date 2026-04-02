@@ -1,0 +1,13 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustAccessTag
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccesstag
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_tag
+  name: example-zero-trust-access-tag
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    name: engineers

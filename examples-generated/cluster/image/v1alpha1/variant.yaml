@@ -1,0 +1,17 @@
+apiVersion: image.upjet-cloudflare.upbound.io/v1alpha1
+kind: Variant
+metadata:
+  annotations:
+    meta.upbound.io/example-id: image/v1alpha1/variant
+  labels:
+    testing.upbound.io/example-name: example_image_variant
+  name: example-image-variant
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    neverRequireSignedUrls: true
+    options:
+      fit: scale-down
+      height: 768
+      metadata: none
+      width: 1366

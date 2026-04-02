@@ -1,0 +1,13 @@
+apiVersion: workers.upjet-cloudflare.upbound.io/v1alpha1
+kind: Route
+metadata:
+  annotations:
+    meta.upbound.io/example-id: workers/v1alpha1/route
+  labels:
+    testing.upbound.io/example-name: example_workers_route
+  name: example-workers-route
+spec:
+  forProvider:
+    pattern: example.com/*
+    script: my-workers-script
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

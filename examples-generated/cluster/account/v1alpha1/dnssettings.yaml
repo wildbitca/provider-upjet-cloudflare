@@ -1,0 +1,30 @@
+apiVersion: account.upjet-cloudflare.upbound.io/v1alpha1
+kind: DNSSettings
+metadata:
+  annotations:
+    meta.upbound.io/example-id: account/v1alpha1/dnssettings
+  labels:
+    testing.upbound.io/example-name: example_account_dns_settings
+  name: example-account-dns-settings
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    zoneDefaults:
+      flattenAllCnames: false
+      foundationDns: false
+      internalDns:
+        referenceZoneId: reference_zone_id
+      multiProvider: false
+      nameservers:
+        type: cloudflare.standard
+      nsTtl: 86400
+      secondaryOverrides: false
+      soa:
+        expire: 604800
+        minTtl: 1800
+        mname: kristina.ns.cloudflare.com
+        refresh: 10000
+        retry: 2400
+        rname: admin.example.com
+        ttl: 3600
+      zoneMode: dns_only

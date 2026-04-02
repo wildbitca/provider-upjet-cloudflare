@@ -1,0 +1,13 @@
+apiVersion: api.upjet-cloudflare.upbound.io/v1alpha1
+kind: ShieldSchemaValidationSettings
+metadata:
+  annotations:
+    meta.upbound.io/example-id: api/v1alpha1/shieldschemavalidationsettings
+  labels:
+    testing.upbound.io/example-name: example_api_shield_schema_validation_settings
+  name: example-api-shield-schema-validation-settings
+spec:
+  forProvider:
+    validationDefaultMitigationAction: block
+    validationOverrideMitigationAction: none
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

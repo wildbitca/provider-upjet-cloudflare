@@ -1,0 +1,20 @@
+apiVersion: magic.upjet-cloudflare.upbound.io/v1alpha1
+kind: TransitSiteWan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: magic/v1alpha1/transitsitewan
+  labels:
+    testing.upbound.io/example-name: example_magic_transit_site_wan
+  name: example-magic-transit-site-wan
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    name: name
+    physport: 1
+    priority: 0
+    siteId: 023e105f4ecef8ad9ca31a8372d0c353
+    staticAddressing:
+      address: 192.0.2.0/24
+      gatewayAddress: 192.0.2.1
+      secondaryAddress: 192.0.2.0/24
+    vlanTag: 42

@@ -1,0 +1,48 @@
+apiVersion: zone.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: CacheVariants
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zone/v1alpha1/cachevariants
+  labels:
+    testing.upbound.io/example-name: example_zone_cache_variants
+  name: example-zone-cache-variants
+  namespace: crossplane-system
+spec:
+  forProvider:
+    value:
+      avif:
+      - image/webp
+      - image/jpeg
+      bmp:
+      - image/webp
+      - image/jpeg
+      gif:
+      - image/webp
+      - image/jpeg
+      jp2:
+      - image/webp
+      - image/avif
+      jpeg:
+      - image/webp
+      - image/avif
+      jpg:
+      - image/webp
+      - image/avif
+      jpg2:
+      - image/webp
+      - image/avif
+      png:
+      - image/webp
+      - image/avif
+      tif:
+      - image/webp
+      - image/avif
+      tiff:
+      - image/webp
+      - image/avif
+      webp:
+      - image/jpeg
+      - image/avif
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

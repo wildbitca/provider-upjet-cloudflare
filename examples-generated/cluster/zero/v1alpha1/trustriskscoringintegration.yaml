@@ -1,0 +1,14 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustRiskScoringIntegration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustriskscoringintegration
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_risk_scoring_integration
+  name: example-zero-trust-risk-scoring-integration
+spec:
+  forProvider:
+    accountId: account_id
+    integrationType: Okta
+    referenceId: reference_id
+    tenantUrl: https://example.com

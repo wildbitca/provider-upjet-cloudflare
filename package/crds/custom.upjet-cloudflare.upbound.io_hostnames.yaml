@@ -1,0 +1,780 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: hostnames.custom.upjet-cloudflare.upbound.io
+spec:
+  group: custom.upjet-cloudflare.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: Hostname
+    listKind: HostnameList
+    plural: hostnames
+    singular: hostname
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Hostname is the Schema for the Hostnames API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: HostnameSpec defines the desired state of Hostname
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  customMetadata:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      hostname (customer) settings.
+                      Unique key/value metadata for this hostname. These are per-hostname (customer) settings.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  customOriginServer:
+                    description: |-
+                      (String) a valid hostname that’s been added to your DNS zone as an A, AAAA, or CNAME record.
+                      a valid hostname that’s been added to your DNS zone as an A, AAAA, or CNAME record.
+                    type: string
+                  customOriginSni:
+                    description: |-
+                      (String) A hostname that will be sent to your custom origin server as SNI for TLS handshake. This can be a valid subdomain of the zone or custom origin server name or the string ':request_host_header:' which will cause the host header in the request to be used as SNI. Not configurable with default/fallback origin server.
+                      A hostname that will be sent to your custom origin server as SNI for TLS handshake. This can be a valid subdomain of the zone or custom origin server name or the string ':request_host_header:' which will cause the host header in the request to be used as SNI. Not configurable with default/fallback origin server.
+                    type: string
+                  hostname:
+                    description: |-
+                      (String) The custom hostname that will point to your hostname via CNAME.
+                      The custom hostname that will point to your hostname via CNAME.
+                    type: string
+                  ssl:
+                    description: (Attributes) SSL properties used when creating the
+                      custom hostname. (see below for nested schema)
+                    properties:
+                      bundleMethod:
+                        description: |-
+                          (String) A ubiquitous bundle has the highest probability of being verified everywhere, even by clients using outdated or unusual trust stores. An optimal bundle uses the shortest chain and newest intermediates. And the force bundle verifies the chain, but does not otherwise modify it.
+                          Available values: "ubiquitous", "optimal", "force".
+                          A ubiquitous bundle has the highest probability of being verified everywhere, even by clients using outdated or unusual trust stores. An optimal bundle uses the shortest chain and newest intermediates. And the force bundle verifies the chain, but does not otherwise modify it.
+                          Available values: "ubiquitous", "optimal", "force".
+                        type: string
+                      certificateAuthority:
+                        description: |-
+                          (String) The Certificate Authority that will issue the certificate
+                          Available values: "digicert", "google", "lets_encrypt", "ssl_com".
+                          The Certificate Authority that will issue the certificate
+                          Available values: "digicert", "google", "lets_encrypt", "ssl_com".
+                        type: string
+                      cloudflareBranding:
+                        description: |-
+                          (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
+                          Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
+                        type: boolean
+                      customCertBundle:
+                        description: (Attributes List) Array of custom certificate
+                          and key pairs (1 or 2 pairs allowed) (see below for nested
+                          schema)
+                        items:
+                          properties:
+                            customCertificate:
+                              description: |-
+                                (String) If a custom uploaded certificate is used.
+                                If a custom uploaded certificate is used.
+                              type: string
+                            customKeySecretRef:
+                              description: |-
+                                (String, Sensitive) The key for a custom uploaded certificate.
+                                The key for a custom uploaded certificate.
+                              properties:
+                                key:
+                                  description: The key to select.
+                                  type: string
+                                name:
+                                  description: Name of the secret.
+                                  type: string
+                                namespace:
+                                  description: Namespace of the secret.
+                                  type: string
+                              required:
+                              - key
+                              - name
+                              - namespace
+                              type: object
+                          type: object
+                        type: array
+                      customCertificate:
+                        description: |-
+                          (String) If a custom uploaded certificate is used.
+                          If a custom uploaded certificate is used.
+                        type: string
+                      customKeySecretRef:
+                        description: |-
+                          (String, Sensitive) The key for a custom uploaded certificate.
+                          The key for a custom uploaded certificate.
+                        properties:
+                          key:
+                            description: The key to select.
+                            type: string
+                          name:
+                            description: Name of the secret.
+                            type: string
+                          namespace:
+                            description: Namespace of the secret.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        - namespace
+                        type: object
+                      method:
+                        description: |-
+                          (String) Domain control validation (DCV) method used for this hostname.
+                          Available values: "http", "txt", "email".
+                          Domain control validation (DCV) method used for this hostname.
+                          Available values: "http", "txt", "email".
+                        type: string
+                      settings:
+                        description: (Attributes) SSL specific settings. (see below
+                          for nested schema)
+                        properties:
+                          ciphers:
+                            description: |-
+                              (List of String) An allowlist of ciphers for TLS termination. These ciphers must be in the BoringSSL format.
+                              An allowlist of ciphers for TLS termination. These ciphers must be in the BoringSSL format.
+                            items:
+                              type: string
+                            type: array
+                          earlyHints:
+                            description: |-
+                              (String) Whether or not Early Hints is enabled.
+                              Available values: "on", "off".
+                              Whether or not Early Hints is enabled.
+                              Available values: "on", "off".
+                            type: string
+                          http2:
+                            description: |-
+                              (String) Whether or not HTTP2 is enabled.
+                              Available values: "on", "off".
+                              Whether or not HTTP2 is enabled.
+                              Available values: "on", "off".
+                            type: string
+                          minTlsVersion:
+                            description: |-
+                              (String) The minimum TLS version supported.
+                              Available values: "1.0", "1.1", "1.2", "1.3".
+                              The minimum TLS version supported.
+                              Available values: "1.0", "1.1", "1.2", "1.3".
+                            type: string
+                          tls13:
+                            description: |-
+                              (String) Whether or not TLS 1.3 is enabled.
+                              Available values: "on", "off".
+                              Whether or not TLS 1.3 is enabled.
+                              Available values: "on", "off".
+                            type: string
+                        type: object
+                      type:
+                        description: |-
+                          (String) Level of validation to be used for this hostname. Domain validation (dv) must be used.
+                          Available values: "dv".
+                          Level of validation to be used for this hostname. Domain validation (dv) must be used.
+                          Available values: "dv".
+                        type: string
+                      wildcard:
+                        description: |-
+                          (Boolean) Indicates whether the certificate covers a wildcard.
+                          Indicates whether the certificate covers a wildcard.
+                        type: boolean
+                    type: object
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  customMetadata:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      hostname (customer) settings.
+                      Unique key/value metadata for this hostname. These are per-hostname (customer) settings.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  customOriginServer:
+                    description: |-
+                      (String) a valid hostname that’s been added to your DNS zone as an A, AAAA, or CNAME record.
+                      a valid hostname that’s been added to your DNS zone as an A, AAAA, or CNAME record.
+                    type: string
+                  customOriginSni:
+                    description: |-
+                      (String) A hostname that will be sent to your custom origin server as SNI for TLS handshake. This can be a valid subdomain of the zone or custom origin server name or the string ':request_host_header:' which will cause the host header in the request to be used as SNI. Not configurable with default/fallback origin server.
+                      A hostname that will be sent to your custom origin server as SNI for TLS handshake. This can be a valid subdomain of the zone or custom origin server name or the string ':request_host_header:' which will cause the host header in the request to be used as SNI. Not configurable with default/fallback origin server.
+                    type: string
+                  hostname:
+                    description: |-
+                      (String) The custom hostname that will point to your hostname via CNAME.
+                      The custom hostname that will point to your hostname via CNAME.
+                    type: string
+                  ssl:
+                    description: (Attributes) SSL properties used when creating the
+                      custom hostname. (see below for nested schema)
+                    properties:
+                      bundleMethod:
+                        description: |-
+                          (String) A ubiquitous bundle has the highest probability of being verified everywhere, even by clients using outdated or unusual trust stores. An optimal bundle uses the shortest chain and newest intermediates. And the force bundle verifies the chain, but does not otherwise modify it.
+                          Available values: "ubiquitous", "optimal", "force".
+                          A ubiquitous bundle has the highest probability of being verified everywhere, even by clients using outdated or unusual trust stores. An optimal bundle uses the shortest chain and newest intermediates. And the force bundle verifies the chain, but does not otherwise modify it.
+                          Available values: "ubiquitous", "optimal", "force".
+                        type: string
+                      certificateAuthority:
+                        description: |-
+                          (String) The Certificate Authority that will issue the certificate
+                          Available values: "digicert", "google", "lets_encrypt", "ssl_com".
+                          The Certificate Authority that will issue the certificate
+                          Available values: "digicert", "google", "lets_encrypt", "ssl_com".
+                        type: string
+                      cloudflareBranding:
+                        description: |-
+                          (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
+                          Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
+                        type: boolean
+                      customCertBundle:
+                        description: (Attributes List) Array of custom certificate
+                          and key pairs (1 or 2 pairs allowed) (see below for nested
+                          schema)
+                        items:
+                          properties:
+                            customCertificate:
+                              description: |-
+                                (String) If a custom uploaded certificate is used.
+                                If a custom uploaded certificate is used.
+                              type: string
+                            customKeySecretRef:
+                              description: |-
+                                (String, Sensitive) The key for a custom uploaded certificate.
+                                The key for a custom uploaded certificate.
+                              properties:
+                                key:
+                                  description: The key to select.
+                                  type: string
+                                name:
+                                  description: Name of the secret.
+                                  type: string
+                                namespace:
+                                  description: Namespace of the secret.
+                                  type: string
+                              required:
+                              - key
+                              - name
+                              - namespace
+                              type: object
+                          required:
+                          - customKeySecretRef
+                          type: object
+                        type: array
+                      customCertificate:
+                        description: |-
+                          (String) If a custom uploaded certificate is used.
+                          If a custom uploaded certificate is used.
+                        type: string
+                      customKeySecretRef:
+                        description: |-
+                          (String, Sensitive) The key for a custom uploaded certificate.
+                          The key for a custom uploaded certificate.
+                        properties:
+                          key:
+                            description: The key to select.
+                            type: string
+                          name:
+                            description: Name of the secret.
+                            type: string
+                          namespace:
+                            description: Namespace of the secret.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        - namespace
+                        type: object
+                      method:
+                        description: |-
+                          (String) Domain control validation (DCV) method used for this hostname.
+                          Available values: "http", "txt", "email".
+                          Domain control validation (DCV) method used for this hostname.
+                          Available values: "http", "txt", "email".
+                        type: string
+                      settings:
+                        description: (Attributes) SSL specific settings. (see below
+                          for nested schema)
+                        properties:
+                          ciphers:
+                            description: |-
+                              (List of String) An allowlist of ciphers for TLS termination. These ciphers must be in the BoringSSL format.
+                              An allowlist of ciphers for TLS termination. These ciphers must be in the BoringSSL format.
+                            items:
+                              type: string
+                            type: array
+                          earlyHints:
+                            description: |-
+                              (String) Whether or not Early Hints is enabled.
+                              Available values: "on", "off".
+                              Whether or not Early Hints is enabled.
+                              Available values: "on", "off".
+                            type: string
+                          http2:
+                            description: |-
+                              (String) Whether or not HTTP2 is enabled.
+                              Available values: "on", "off".
+                              Whether or not HTTP2 is enabled.
+                              Available values: "on", "off".
+                            type: string
+                          minTlsVersion:
+                            description: |-
+                              (String) The minimum TLS version supported.
+                              Available values: "1.0", "1.1", "1.2", "1.3".
+                              The minimum TLS version supported.
+                              Available values: "1.0", "1.1", "1.2", "1.3".
+                            type: string
+                          tls13:
+                            description: |-
+                              (String) Whether or not TLS 1.3 is enabled.
+                              Available values: "on", "off".
+                              Whether or not TLS 1.3 is enabled.
+                              Available values: "on", "off".
+                            type: string
+                        type: object
+                      type:
+                        description: |-
+                          (String) Level of validation to be used for this hostname. Domain validation (dv) must be used.
+                          Available values: "dv".
+                          Level of validation to be used for this hostname. Domain validation (dv) must be used.
+                          Available values: "dv".
+                        type: string
+                      wildcard:
+                        description: |-
+                          (Boolean) Indicates whether the certificate covers a wildcard.
+                          Indicates whether the certificate covers a wildcard.
+                        type: boolean
+                    type: object
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.hostname is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.hostname)
+                || (has(self.initProvider) && has(self.initProvider.hostname))'
+            - message: spec.forProvider.ssl is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.ssl)
+                || (has(self.initProvider) && has(self.initProvider.ssl))'
+            - message: spec.forProvider.zoneId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.zoneId)
+                || (has(self.initProvider) && has(self.initProvider.zoneId))'
+          status:
+            description: HostnameStatus defines the observed state of Hostname.
+            properties:
+              atProvider:
+                properties:
+                  createdAt:
+                    description: |-
+                      (String) This is the time the hostname was created.
+                      This is the time the hostname was created.
+                    type: string
+                  customMetadata:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      hostname (customer) settings.
+                      Unique key/value metadata for this hostname. These are per-hostname (customer) settings.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  customOriginServer:
+                    description: |-
+                      (String) a valid hostname that’s been added to your DNS zone as an A, AAAA, or CNAME record.
+                      a valid hostname that’s been added to your DNS zone as an A, AAAA, or CNAME record.
+                    type: string
+                  customOriginSni:
+                    description: |-
+                      (String) A hostname that will be sent to your custom origin server as SNI for TLS handshake. This can be a valid subdomain of the zone or custom origin server name or the string ':request_host_header:' which will cause the host header in the request to be used as SNI. Not configurable with default/fallback origin server.
+                      A hostname that will be sent to your custom origin server as SNI for TLS handshake. This can be a valid subdomain of the zone or custom origin server name or the string ':request_host_header:' which will cause the host header in the request to be used as SNI. Not configurable with default/fallback origin server.
+                    type: string
+                  hostname:
+                    description: |-
+                      (String) The custom hostname that will point to your hostname via CNAME.
+                      The custom hostname that will point to your hostname via CNAME.
+                    type: string
+                  id:
+                    description: (String) Identifier.
+                    type: string
+                  ownershipVerification:
+                    description: (Attributes) This is a record which can be placed
+                      to activate a hostname. (see below for nested schema)
+                    properties:
+                      name:
+                        description: |-
+                          (String) DNS Name for record.
+                          DNS Name for record.
+                        type: string
+                      type:
+                        description: |-
+                          (String) Level of validation to be used for this hostname. Domain validation (dv) must be used.
+                          Available values: "dv".
+                          DNS Record type.
+                          Available values: "txt".
+                        type: string
+                      value:
+                        description: |-
+                          (String) Content for the record.
+                          Content for the record.
+                        type: string
+                    type: object
+                  ownershipVerificationHttp:
+                    description: (Attributes) This presents the token to be served
+                      by the given http url to activate a hostname. (see below for
+                      nested schema)
+                    properties:
+                      httpBody:
+                        description: |-
+                          (String) Token to be served.
+                          Token to be served.
+                        type: string
+                      httpUrl:
+                        description: |-
+                          (String) The HTTP URL that will be checked during custom hostname verification and where the customer should host the token.
+                          The HTTP URL that will be checked during custom hostname verification and where the customer should host the token.
+                        type: string
+                    type: object
+                  ssl:
+                    description: (Attributes) SSL properties used when creating the
+                      custom hostname. (see below for nested schema)
+                    properties:
+                      bundleMethod:
+                        description: |-
+                          (String) A ubiquitous bundle has the highest probability of being verified everywhere, even by clients using outdated or unusual trust stores. An optimal bundle uses the shortest chain and newest intermediates. And the force bundle verifies the chain, but does not otherwise modify it.
+                          Available values: "ubiquitous", "optimal", "force".
+                          A ubiquitous bundle has the highest probability of being verified everywhere, even by clients using outdated or unusual trust stores. An optimal bundle uses the shortest chain and newest intermediates. And the force bundle verifies the chain, but does not otherwise modify it.
+                          Available values: "ubiquitous", "optimal", "force".
+                        type: string
+                      certificateAuthority:
+                        description: |-
+                          (String) The Certificate Authority that will issue the certificate
+                          Available values: "digicert", "google", "lets_encrypt", "ssl_com".
+                          The Certificate Authority that will issue the certificate
+                          Available values: "digicert", "google", "lets_encrypt", "ssl_com".
+                        type: string
+                      cloudflareBranding:
+                        description: |-
+                          (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
+                          Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
+                        type: boolean
+                      customCertBundle:
+                        description: (Attributes List) Array of custom certificate
+                          and key pairs (1 or 2 pairs allowed) (see below for nested
+                          schema)
+                        items:
+                          properties:
+                            customCertificate:
+                              description: |-
+                                (String) If a custom uploaded certificate is used.
+                                If a custom uploaded certificate is used.
+                              type: string
+                          type: object
+                        type: array
+                      customCertificate:
+                        description: |-
+                          (String) If a custom uploaded certificate is used.
+                          If a custom uploaded certificate is used.
+                        type: string
+                      method:
+                        description: |-
+                          (String) Domain control validation (DCV) method used for this hostname.
+                          Available values: "http", "txt", "email".
+                          Domain control validation (DCV) method used for this hostname.
+                          Available values: "http", "txt", "email".
+                        type: string
+                      settings:
+                        description: (Attributes) SSL specific settings. (see below
+                          for nested schema)
+                        properties:
+                          ciphers:
+                            description: |-
+                              (List of String) An allowlist of ciphers for TLS termination. These ciphers must be in the BoringSSL format.
+                              An allowlist of ciphers for TLS termination. These ciphers must be in the BoringSSL format.
+                            items:
+                              type: string
+                            type: array
+                          earlyHints:
+                            description: |-
+                              (String) Whether or not Early Hints is enabled.
+                              Available values: "on", "off".
+                              Whether or not Early Hints is enabled.
+                              Available values: "on", "off".
+                            type: string
+                          http2:
+                            description: |-
+                              (String) Whether or not HTTP2 is enabled.
+                              Available values: "on", "off".
+                              Whether or not HTTP2 is enabled.
+                              Available values: "on", "off".
+                            type: string
+                          minTlsVersion:
+                            description: |-
+                              (String) The minimum TLS version supported.
+                              Available values: "1.0", "1.1", "1.2", "1.3".
+                              The minimum TLS version supported.
+                              Available values: "1.0", "1.1", "1.2", "1.3".
+                            type: string
+                          tls13:
+                            description: |-
+                              (String) Whether or not TLS 1.3 is enabled.
+                              Available values: "on", "off".
+                              Whether or not TLS 1.3 is enabled.
+                              Available values: "on", "off".
+                            type: string
+                        type: object
+                      type:
+                        description: |-
+                          (String) Level of validation to be used for this hostname. Domain validation (dv) must be used.
+                          Available values: "dv".
+                          Level of validation to be used for this hostname. Domain validation (dv) must be used.
+                          Available values: "dv".
+                        type: string
+                      wildcard:
+                        description: |-
+                          (Boolean) Indicates whether the certificate covers a wildcard.
+                          Indicates whether the certificate covers a wildcard.
+                        type: boolean
+                    type: object
+                  status:
+                    description: |-
+                      (String) Status of the hostname's activation.
+                      Available values: "active", "pending", "active_redeploying", "moved", "pending_deletion", "deleted", "pending_blocked", "pending_migration", "pending_provisioned", "test_pending", "test_active", "test_active_apex", "test_blocked", "test_failed", "provisioned", "blocked".
+                      Status of the hostname's activation.
+                      Available values: "active", "pending", "active_redeploying", "moved", "pending_deletion", "deleted", "pending_blocked", "pending_migration", "pending_provisioned", "test_pending", "test_active", "test_active_apex", "test_blocked", "test_failed", "provisioned", "blocked".
+                    type: string
+                  verificationErrors:
+                    description: |-
+                      (List of String) These are errors that were encountered while trying to activate a hostname.
+                      These are errors that were encountered while trying to activate a hostname.
+                    items:
+                      type: string
+                    type: array
+                  zoneId:
+                    description: |-
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

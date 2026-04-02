@@ -1,0 +1,22 @@
+apiVersion: zone.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Lockdown
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zone/v1alpha1/lockdown
+  labels:
+    testing.upbound.io/example-name: example_zone_lockdown
+  name: example-zone-lockdown
+  namespace: crossplane-system
+spec:
+  forProvider:
+    configurations:
+    - target: ip
+      value: 198.51.100.4
+    description: Prevent multiple login failures to mitigate brute force attacks
+    paused: false
+    priority: 5
+    urls:
+    - shop.example.com/*
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

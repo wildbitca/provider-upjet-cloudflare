@@ -1,0 +1,655 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: trustorganizations.zero.upjet-cloudflare.upbound.io
+spec:
+  group: zero.upjet-cloudflare.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: TrustOrganization
+    listKind: TrustOrganizationList
+    plural: trustorganizations
+    singular: trustorganization
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: TrustOrganization is the Schema for the TrustOrganizations API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: TrustOrganizationSpec defines the desired state of TrustOrganization
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                    type: string
+                  allowAuthenticateViaWarp:
+                    description: |-
+                      (Boolean) When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
+                      When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
+                    type: boolean
+                  authDomain:
+                    description: |-
+                      (String) The unique subdomain assigned to your Zero Trust organization.
+                      The unique subdomain assigned to your Zero Trust organization.
+                    type: string
+                  autoRedirectToIdentity:
+                    description: |-
+                      (Boolean) When set to true, users skip the identity provider selection step during login.
+                      When set to `true`, users skip the identity provider selection step during login.
+                    type: boolean
+                  customPages:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      forbidden:
+                        description: |-
+                          identity rule.
+                          The uid of the custom page to use when a user is denied access after failing a non-identity rule.
+                        type: string
+                      identityDenied:
+                        description: |-
+                          (String) The uid of the custom page to use when a user is denied access.
+                          The uid of the custom page to use when a user is denied access.
+                        type: string
+                    type: object
+                  denyUnmatchedRequests:
+                    description: |-
+                      protected resources that lack an associated Access application. If enabled, you must explicitly configure an Access application and policy to allow traffic to your Cloudflare-protected resources. For domains you want to be public across all subdomains, add the domain to the deny_unmatched_requests_exempted_zone_names array.
+                      Determines whether to deny all requests to Cloudflare-protected resources that lack an associated Access application. If enabled, you must explicitly configure an Access application and policy to allow traffic to your Cloudflare-protected resources. For domains you want to be public across all subdomains, add the domain to the `deny_unmatched_requests_exempted_zone_names` array.
+                    type: boolean
+                  denyUnmatchedRequestsExemptedZoneNames:
+                    description: |-
+                      (List of String) Contains zone names to exempt from the deny_unmatched_requests feature. Requests to a subdomain in an exempted zone will block unauthenticated traffic by default if there is a configured Access application and policy that matches the request.
+                      Contains zone names to exempt from the `deny_unmatched_requests` feature. Requests to a subdomain in an exempted zone will block unauthenticated traffic by default if there is a configured Access application and policy that matches the request.
+                    items:
+                      type: string
+                    type: array
+                  isUiReadOnly:
+                    description: |-
+                      Only in the Dashboard, regardless of user permission.
+                      Lock all settings as Read-Only in the Dashboard, regardless of user permission.
+                    type: boolean
+                  loginDesign:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      backgroundColor:
+                        description: |-
+                          (String) The background color on your login page.
+                          The background color on your login page.
+                        type: string
+                      footerText:
+                        description: |-
+                          (String) The text at the bottom of your login page.
+                          The text at the bottom of your login page.
+                        type: string
+                      headerText:
+                        description: |-
+                          (String) The text at the top of your login page.
+                          The text at the top of your login page.
+                        type: string
+                      logoPath:
+                        description: |-
+                          (String) The URL of the logo on your login page.
+                          The URL of the logo on your login page.
+                        type: string
+                      textColor:
+                        description: |-
+                          (String) The text color on your login page.
+                          The text color on your login page.
+                        type: string
+                    type: object
+                  mfaConfig:
+                    description: factor authentication (MFA) settings for an organization.
+                      (see below for nested schema)
+                    properties:
+                      allowedAuthenticators:
+                        description: |-
+                          (List of String) Lists the MFA methods that users can authenticate with.
+                          Lists the MFA methods that users can authenticate with.
+                        items:
+                          type: string
+                        type: array
+                      sessionDuration:
+                        description: |-
+                          (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                          Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
+                        type: string
+                    type: object
+                  mfaConfigurationAllowed:
+                    description: |-
+                      factor authentication (MFA) requirements at the application and policy level.
+                      Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
+                    type: boolean
+                  mfaRequiredForAllApps:
+                    description: |-
+                      (Boolean) Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
+                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
+                    type: boolean
+                  name:
+                    description: |-
+                      (String) The name of your Zero Trust organization.
+                      The name of your Zero Trust organization.
+                    type: string
+                  sessionDuration:
+                    description: |-
+                      (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                      The amount of time that tokens issued for applications will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h.
+                    type: string
+                  uiReadOnlyToggleReason:
+                    description: |-
+                      (String) A description of the reason why the UI read only field is being toggled.
+                      A description of the reason why the UI read only field is being toggled.
+                    type: string
+                  userSeatExpirationInactiveTime:
+                    description: |-
+                      (String) The amount of time a user seat is inactive before it expires. When the user seat exceeds the set time of inactivity, the user is removed as an active seat and no longer counts against your Teams seat count.  Minimum value for this setting is 1 month (730h). Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                      The amount of time a user seat is inactive before it expires. When the user seat exceeds the set time of inactivity, the user is removed as an active seat and no longer counts against your Teams seat count.  Minimum value for this setting is 1 month (730h). Must be in the format `300ms` or `2h45m`. Valid time units are: `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`.
+                    type: string
+                  warpAuthSessionDuration:
+                    description: |-
+                      (String) The amount of time that tokens issued for applications will be valid. Must be in the format 30m or 2h45m. Valid time units are: m, h.
+                      The amount of time that tokens issued for applications will be valid. Must be in the format `30m` or `2h45m`. Valid time units are: m, h.
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                      The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                    type: string
+                  allowAuthenticateViaWarp:
+                    description: |-
+                      (Boolean) When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
+                      When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
+                    type: boolean
+                  authDomain:
+                    description: |-
+                      (String) The unique subdomain assigned to your Zero Trust organization.
+                      The unique subdomain assigned to your Zero Trust organization.
+                    type: string
+                  autoRedirectToIdentity:
+                    description: |-
+                      (Boolean) When set to true, users skip the identity provider selection step during login.
+                      When set to `true`, users skip the identity provider selection step during login.
+                    type: boolean
+                  customPages:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      forbidden:
+                        description: |-
+                          identity rule.
+                          The uid of the custom page to use when a user is denied access after failing a non-identity rule.
+                        type: string
+                      identityDenied:
+                        description: |-
+                          (String) The uid of the custom page to use when a user is denied access.
+                          The uid of the custom page to use when a user is denied access.
+                        type: string
+                    type: object
+                  denyUnmatchedRequests:
+                    description: |-
+                      protected resources that lack an associated Access application. If enabled, you must explicitly configure an Access application and policy to allow traffic to your Cloudflare-protected resources. For domains you want to be public across all subdomains, add the domain to the deny_unmatched_requests_exempted_zone_names array.
+                      Determines whether to deny all requests to Cloudflare-protected resources that lack an associated Access application. If enabled, you must explicitly configure an Access application and policy to allow traffic to your Cloudflare-protected resources. For domains you want to be public across all subdomains, add the domain to the `deny_unmatched_requests_exempted_zone_names` array.
+                    type: boolean
+                  denyUnmatchedRequestsExemptedZoneNames:
+                    description: |-
+                      (List of String) Contains zone names to exempt from the deny_unmatched_requests feature. Requests to a subdomain in an exempted zone will block unauthenticated traffic by default if there is a configured Access application and policy that matches the request.
+                      Contains zone names to exempt from the `deny_unmatched_requests` feature. Requests to a subdomain in an exempted zone will block unauthenticated traffic by default if there is a configured Access application and policy that matches the request.
+                    items:
+                      type: string
+                    type: array
+                  isUiReadOnly:
+                    description: |-
+                      Only in the Dashboard, regardless of user permission.
+                      Lock all settings as Read-Only in the Dashboard, regardless of user permission.
+                    type: boolean
+                  loginDesign:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      backgroundColor:
+                        description: |-
+                          (String) The background color on your login page.
+                          The background color on your login page.
+                        type: string
+                      footerText:
+                        description: |-
+                          (String) The text at the bottom of your login page.
+                          The text at the bottom of your login page.
+                        type: string
+                      headerText:
+                        description: |-
+                          (String) The text at the top of your login page.
+                          The text at the top of your login page.
+                        type: string
+                      logoPath:
+                        description: |-
+                          (String) The URL of the logo on your login page.
+                          The URL of the logo on your login page.
+                        type: string
+                      textColor:
+                        description: |-
+                          (String) The text color on your login page.
+                          The text color on your login page.
+                        type: string
+                    type: object
+                  mfaConfig:
+                    description: factor authentication (MFA) settings for an organization.
+                      (see below for nested schema)
+                    properties:
+                      allowedAuthenticators:
+                        description: |-
+                          (List of String) Lists the MFA methods that users can authenticate with.
+                          Lists the MFA methods that users can authenticate with.
+                        items:
+                          type: string
+                        type: array
+                      sessionDuration:
+                        description: |-
+                          (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                          Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
+                        type: string
+                    type: object
+                  mfaConfigurationAllowed:
+                    description: |-
+                      factor authentication (MFA) requirements at the application and policy level.
+                      Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
+                    type: boolean
+                  mfaRequiredForAllApps:
+                    description: |-
+                      (Boolean) Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
+                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
+                    type: boolean
+                  name:
+                    description: |-
+                      (String) The name of your Zero Trust organization.
+                      The name of your Zero Trust organization.
+                    type: string
+                  sessionDuration:
+                    description: |-
+                      (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                      The amount of time that tokens issued for applications will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h.
+                    type: string
+                  uiReadOnlyToggleReason:
+                    description: |-
+                      (String) A description of the reason why the UI read only field is being toggled.
+                      A description of the reason why the UI read only field is being toggled.
+                    type: string
+                  userSeatExpirationInactiveTime:
+                    description: |-
+                      (String) The amount of time a user seat is inactive before it expires. When the user seat exceeds the set time of inactivity, the user is removed as an active seat and no longer counts against your Teams seat count.  Minimum value for this setting is 1 month (730h). Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                      The amount of time a user seat is inactive before it expires. When the user seat exceeds the set time of inactivity, the user is removed as an active seat and no longer counts against your Teams seat count.  Minimum value for this setting is 1 month (730h). Must be in the format `300ms` or `2h45m`. Valid time units are: `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`.
+                    type: string
+                  warpAuthSessionDuration:
+                    description: |-
+                      (String) The amount of time that tokens issued for applications will be valid. Must be in the format 30m or 2h45m. Valid time units are: m, h.
+                      The amount of time that tokens issued for applications will be valid. Must be in the format `30m` or `2h45m`. Valid time units are: m, h.
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                      The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: TrustOrganizationStatus defines the observed state of TrustOrganization.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                    type: string
+                  allowAuthenticateViaWarp:
+                    description: |-
+                      (Boolean) When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
+                      When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
+                    type: boolean
+                  authDomain:
+                    description: |-
+                      (String) The unique subdomain assigned to your Zero Trust organization.
+                      The unique subdomain assigned to your Zero Trust organization.
+                    type: string
+                  autoRedirectToIdentity:
+                    description: |-
+                      (Boolean) When set to true, users skip the identity provider selection step during login.
+                      When set to `true`, users skip the identity provider selection step during login.
+                    type: boolean
+                  customPages:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      forbidden:
+                        description: |-
+                          identity rule.
+                          The uid of the custom page to use when a user is denied access after failing a non-identity rule.
+                        type: string
+                      identityDenied:
+                        description: |-
+                          (String) The uid of the custom page to use when a user is denied access.
+                          The uid of the custom page to use when a user is denied access.
+                        type: string
+                    type: object
+                  denyUnmatchedRequests:
+                    description: |-
+                      protected resources that lack an associated Access application. If enabled, you must explicitly configure an Access application and policy to allow traffic to your Cloudflare-protected resources. For domains you want to be public across all subdomains, add the domain to the deny_unmatched_requests_exempted_zone_names array.
+                      Determines whether to deny all requests to Cloudflare-protected resources that lack an associated Access application. If enabled, you must explicitly configure an Access application and policy to allow traffic to your Cloudflare-protected resources. For domains you want to be public across all subdomains, add the domain to the `deny_unmatched_requests_exempted_zone_names` array.
+                    type: boolean
+                  denyUnmatchedRequestsExemptedZoneNames:
+                    description: |-
+                      (List of String) Contains zone names to exempt from the deny_unmatched_requests feature. Requests to a subdomain in an exempted zone will block unauthenticated traffic by default if there is a configured Access application and policy that matches the request.
+                      Contains zone names to exempt from the `deny_unmatched_requests` feature. Requests to a subdomain in an exempted zone will block unauthenticated traffic by default if there is a configured Access application and policy that matches the request.
+                    items:
+                      type: string
+                    type: array
+                  id:
+                    type: string
+                  isUiReadOnly:
+                    description: |-
+                      Only in the Dashboard, regardless of user permission.
+                      Lock all settings as Read-Only in the Dashboard, regardless of user permission.
+                    type: boolean
+                  loginDesign:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      backgroundColor:
+                        description: |-
+                          (String) The background color on your login page.
+                          The background color on your login page.
+                        type: string
+                      footerText:
+                        description: |-
+                          (String) The text at the bottom of your login page.
+                          The text at the bottom of your login page.
+                        type: string
+                      headerText:
+                        description: |-
+                          (String) The text at the top of your login page.
+                          The text at the top of your login page.
+                        type: string
+                      logoPath:
+                        description: |-
+                          (String) The URL of the logo on your login page.
+                          The URL of the logo on your login page.
+                        type: string
+                      textColor:
+                        description: |-
+                          (String) The text color on your login page.
+                          The text color on your login page.
+                        type: string
+                    type: object
+                  mfaConfig:
+                    description: factor authentication (MFA) settings for an organization.
+                      (see below for nested schema)
+                    properties:
+                      allowedAuthenticators:
+                        description: |-
+                          (List of String) Lists the MFA methods that users can authenticate with.
+                          Lists the MFA methods that users can authenticate with.
+                        items:
+                          type: string
+                        type: array
+                      sessionDuration:
+                        description: |-
+                          (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                          Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
+                        type: string
+                    type: object
+                  mfaConfigurationAllowed:
+                    description: |-
+                      factor authentication (MFA) requirements at the application and policy level.
+                      Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
+                    type: boolean
+                  mfaRequiredForAllApps:
+                    description: |-
+                      (Boolean) Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
+                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
+                    type: boolean
+                  name:
+                    description: |-
+                      (String) The name of your Zero Trust organization.
+                      The name of your Zero Trust organization.
+                    type: string
+                  sessionDuration:
+                    description: |-
+                      (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                      The amount of time that tokens issued for applications will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h.
+                    type: string
+                  uiReadOnlyToggleReason:
+                    description: |-
+                      (String) A description of the reason why the UI read only field is being toggled.
+                      A description of the reason why the UI read only field is being toggled.
+                    type: string
+                  userSeatExpirationInactiveTime:
+                    description: |-
+                      (String) The amount of time a user seat is inactive before it expires. When the user seat exceeds the set time of inactivity, the user is removed as an active seat and no longer counts against your Teams seat count.  Minimum value for this setting is 1 month (730h). Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+                      The amount of time a user seat is inactive before it expires. When the user seat exceeds the set time of inactivity, the user is removed as an active seat and no longer counts against your Teams seat count.  Minimum value for this setting is 1 month (730h). Must be in the format `300ms` or `2h45m`. Valid time units are: `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`.
+                    type: string
+                  warpAuthSessionDuration:
+                    description: |-
+                      (String) The amount of time that tokens issued for applications will be valid. Must be in the format 30m or 2h45m. Valid time units are: m, h.
+                      The amount of time that tokens issued for applications will be valid. Must be in the format `30m` or `2h45m`. Valid time units are: m, h.
+                    type: string
+                  zoneId:
+                    description: |-
+                      (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                      The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

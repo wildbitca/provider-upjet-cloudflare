@@ -1,0 +1,16 @@
+apiVersion: dns.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: ZoneTransfersOutgoing
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1alpha1/zonetransfersoutgoing
+  labels:
+    testing.upbound.io/example-name: example_dns_zone_transfers_outgoing
+  name: example-dns-zone-transfers-outgoing
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: www.example.com.
+    peers:
+    - 23ff594956f20c2a721606e94745a8aa
+    - 00920f38ce07c2e2f4df50b1f61d4194
+    zoneId: 269d8f4853475ca241c4e730be286b20

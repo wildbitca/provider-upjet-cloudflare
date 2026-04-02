@@ -1,0 +1,20 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustAccessInfrastructureTarget
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustaccessinfrastructuretarget
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_access_infrastructure_target
+  name: example-zero-trust-access-infrastructure-target
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    hostname: infra-access-target
+    ip:
+      ipv4:
+        ipAddr: 187.26.29.249
+        virtualNetworkId: c77b744e-acc8-428f-9257-6878c046ed55
+      ipv6:
+        ipAddr: 64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0
+        virtualNetworkId: c77b744e-acc8-428f-9257-6878c046ed55

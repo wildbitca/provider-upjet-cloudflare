@@ -1,0 +1,25 @@
+apiVersion: token.upjet-cloudflare.upbound.io/v1alpha1
+kind: ValidationConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: token/v1alpha1/validationconfig
+  labels:
+    testing.upbound.io/example-name: example_token_validation_config
+  name: example-token-validation-config
+spec:
+  forProvider:
+    credentials:
+      keys:
+      - alg: ES256
+        crv: P-256
+        kid: 38013f13-c266-4eec-a72a-92ec92779f21
+        kty: EC
+        x: KN53JRwN3wCjm2o39bvZUX2VdrsHzS8pxOAGjm8m7EQ
+        "y": lnkkzIxaveggz-HFhcMWW15nxvOj0Z_uQsXbpK0GFcY
+    description: Long description for Token Validation Configuration
+    title: Example Token Validation Configuration
+    tokenSources:
+    - http.request.headers["x-auth"][0]
+    - http.request.cookies["Authorization"][0]
+    tokenType: JWT
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

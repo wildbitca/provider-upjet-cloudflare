@@ -1,0 +1,12 @@
+apiVersion: zero.upjet-cloudflare.upbound.io/v1alpha1
+kind: TrustTunnelWarpConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trusttunnelwarpconnector
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_tunnel_warp_connector
+  name: example-zero-trust-tunnel-warp-connector
+spec:
+  forProvider:
+    accountId: 699d98642c564d2e855e9661899b7252
+    name: blog

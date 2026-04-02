@@ -1,0 +1,721 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: streams.cloudflare.upjet-cloudflare.upbound.io
+spec:
+  group: cloudflare.upjet-cloudflare.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - upjet-cloudflare
+    kind: Stream
+    listKind: StreamList
+    plural: streams
+    singular: stream
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Stream is the Schema for the Streams API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: StreamSpec defines the desired state of Stream
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The account identifier tag.
+                      The account identifier tag.
+                    type: string
+                  accountIdRef:
+                    description: Reference to a Account in account to populate accountId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  accountIdSelector:
+                    description: Selector for a Account in account to populate accountId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  allowedOrigins:
+                    description: |-
+                      (List of String) Lists the origins allowed to display the video. Enter allowed origin domains in an array and use * for wildcard subdomains. Empty arrays allow the video to be viewed on any origin.
+                      Lists the origins allowed to display the video. Enter allowed origin domains in an array and use `*` for wildcard subdomains. Empty arrays allow the video to be viewed on any origin.
+                    items:
+                      type: string
+                    type: array
+                  creator:
+                    description: |-
+                      defined identifier for the media creator.
+                      A user-defined identifier for the media creator.
+                    type: string
+                  identifier:
+                    description: |-
+                      generated unique identifier for a media item.
+                      A Cloudflare-generated unique identifier for a media item.
+                    type: string
+                  maxDurationSeconds:
+                    description: |-
+                      1 means the value is unknown.
+                      The maximum duration in seconds for a video upload. Can be set for a video that is not yet uploaded to limit its duration. Uploads that exceed the specified duration will fail during processing. A value of `-1` means the value is unknown.
+                    type: number
+                  meta:
+                    description: |-
+                      value store used to reference other systems of record for managing videos.
+                      A user modifiable key-value store used to reference other systems of record for managing videos.
+                    type: string
+                  requireSignedUrls:
+                    description: |-
+                      (Boolean) Indicates whether the video can be a accessed using the UID. When set to true, a signed token must be generated with a signing key to view the video.
+                      Indicates whether the video can be a accessed using the UID. When set to `true`, a signed token must be generated with a signing key to view the video.
+                    type: boolean
+                  scheduledDeletion:
+                    description: |-
+                      (String) Indicates the date and time at which the video will be deleted. Omit the field to indicate no change, or include with a null value to remove an existing scheduled deletion. If specified, must be at least 30 days from upload time.
+                      Indicates the date and time at which the video will be deleted. Omit the field to indicate no change, or include with a `null` value to remove an existing scheduled deletion. If specified, must be at least 30 days from upload time.
+                    type: string
+                  thumbnailTimestampPct:
+                    description: |-
+                      wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
+                      The timestamp for a thumbnail image calculated as a percentage value of the video's duration. To convert from a second-wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
+                    type: number
+                  uploadExpiry:
+                    description: |-
+                      (String) The date and time when the video upload URL is no longer valid for direct user uploads.
+                      The date and time when the video upload URL is no longer valid for direct user uploads.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The account identifier tag.
+                      The account identifier tag.
+                    type: string
+                  accountIdRef:
+                    description: Reference to a Account in account to populate accountId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  accountIdSelector:
+                    description: Selector for a Account in account to populate accountId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  allowedOrigins:
+                    description: |-
+                      (List of String) Lists the origins allowed to display the video. Enter allowed origin domains in an array and use * for wildcard subdomains. Empty arrays allow the video to be viewed on any origin.
+                      Lists the origins allowed to display the video. Enter allowed origin domains in an array and use `*` for wildcard subdomains. Empty arrays allow the video to be viewed on any origin.
+                    items:
+                      type: string
+                    type: array
+                  creator:
+                    description: |-
+                      defined identifier for the media creator.
+                      A user-defined identifier for the media creator.
+                    type: string
+                  identifier:
+                    description: |-
+                      generated unique identifier for a media item.
+                      A Cloudflare-generated unique identifier for a media item.
+                    type: string
+                  maxDurationSeconds:
+                    description: |-
+                      1 means the value is unknown.
+                      The maximum duration in seconds for a video upload. Can be set for a video that is not yet uploaded to limit its duration. Uploads that exceed the specified duration will fail during processing. A value of `-1` means the value is unknown.
+                    type: number
+                  meta:
+                    description: |-
+                      value store used to reference other systems of record for managing videos.
+                      A user modifiable key-value store used to reference other systems of record for managing videos.
+                    type: string
+                  requireSignedUrls:
+                    description: |-
+                      (Boolean) Indicates whether the video can be a accessed using the UID. When set to true, a signed token must be generated with a signing key to view the video.
+                      Indicates whether the video can be a accessed using the UID. When set to `true`, a signed token must be generated with a signing key to view the video.
+                    type: boolean
+                  scheduledDeletion:
+                    description: |-
+                      (String) Indicates the date and time at which the video will be deleted. Omit the field to indicate no change, or include with a null value to remove an existing scheduled deletion. If specified, must be at least 30 days from upload time.
+                      Indicates the date and time at which the video will be deleted. Omit the field to indicate no change, or include with a `null` value to remove an existing scheduled deletion. If specified, must be at least 30 days from upload time.
+                    type: string
+                  thumbnailTimestampPct:
+                    description: |-
+                      wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
+                      The timestamp for a thumbnail image calculated as a percentage value of the video's duration. To convert from a second-wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
+                    type: number
+                  uploadExpiry:
+                    description: |-
+                      (String) The date and time when the video upload URL is no longer valid for direct user uploads.
+                      The date and time when the video upload URL is no longer valid for direct user uploads.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: StreamStatus defines the observed state of Stream.
+            properties:
+              atProvider:
+                properties:
+                  accountId:
+                    description: |-
+                      (String) The account identifier tag.
+                      The account identifier tag.
+                    type: string
+                  allowedOrigins:
+                    description: |-
+                      (List of String) Lists the origins allowed to display the video. Enter allowed origin domains in an array and use * for wildcard subdomains. Empty arrays allow the video to be viewed on any origin.
+                      Lists the origins allowed to display the video. Enter allowed origin domains in an array and use `*` for wildcard subdomains. Empty arrays allow the video to be viewed on any origin.
+                    items:
+                      type: string
+                    type: array
+                  created:
+                    description: |-
+                      (String) The date and time the media item was created.
+                      The date and time the media item was created.
+                    type: string
+                  creator:
+                    description: |-
+                      defined identifier for the media creator.
+                      A user-defined identifier for the media creator.
+                    type: string
+                  duration:
+                    description: |-
+                      1 means the duration is unknown. The duration becomes available after the upload and before the video is ready.
+                      The duration of the video in seconds. A value of `-1` means the duration is unknown. The duration becomes available after the upload and before the video is ready.
+                    type: number
+                  id:
+                    type: string
+                  identifier:
+                    description: |-
+                      generated unique identifier for a media item.
+                      A Cloudflare-generated unique identifier for a media item.
+                    type: string
+                  input:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      height:
+                        description: |-
+                          1 means the height is unknown. The value becomes available after the upload and before the video is ready.
+                          The video height in pixels. A value of `-1` means the height is unknown. The value becomes available after the upload and before the video is ready.
+                        type: number
+                      width:
+                        description: |-
+                          1 means the width is unknown. The value becomes available after the upload and before the video is ready.
+                          The video width in pixels. A value of `-1` means the width is unknown. The value becomes available after the upload and before the video is ready.
+                        type: number
+                    type: object
+                  liveInput:
+                    description: |-
+                      (String) The live input ID used to upload a video with Stream Live.
+                      The live input ID used to upload a video with Stream Live.
+                    type: string
+                  maxDurationSeconds:
+                    description: |-
+                      1 means the value is unknown.
+                      The maximum duration in seconds for a video upload. Can be set for a video that is not yet uploaded to limit its duration. Uploads that exceed the specified duration will fail during processing. A value of `-1` means the value is unknown.
+                    type: number
+                  meta:
+                    description: |-
+                      value store used to reference other systems of record for managing videos.
+                      A user modifiable key-value store used to reference other systems of record for managing videos.
+                    type: string
+                  modified:
+                    description: |-
+                      (String) The date and time the media item was last modified.
+                      The date and time the media item was last modified.
+                    type: string
+                  playback:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      dash:
+                        description: |-
+                          (String) DASH Media Presentation Description for the video.
+                          DASH Media Presentation Description for the video.
+                        type: string
+                      hls:
+                        description: |-
+                          (String) The HLS manifest for the video.
+                          The HLS manifest for the video.
+                        type: string
+                    type: object
+                  preview:
+                    description: |-
+                      (String) The video's preview page URI. This field is omitted until encoding is complete.
+                      The video's preview page URI. This field is omitted until encoding is complete.
+                    type: string
+                  readyToStream:
+                    description: |-
+                      (Boolean) Indicates whether the video is playable. The field is empty if the video is not ready for viewing or the live stream is still in progress.
+                      Indicates whether the video is playable. The field is empty if the video is not ready for viewing or the live stream is still in progress.
+                    type: boolean
+                  readyToStreamAt:
+                    description: |-
+                      (String) Indicates the time at which the video became playable. The field is empty if the video is not ready for viewing or the live stream is still in progress.
+                      Indicates the time at which the video became playable. The field is empty if the video is not ready for viewing or the live stream is still in progress.
+                    type: string
+                  requireSignedUrls:
+                    description: |-
+                      (Boolean) Indicates whether the video can be a accessed using the UID. When set to true, a signed token must be generated with a signing key to view the video.
+                      Indicates whether the video can be a accessed using the UID. When set to `true`, a signed token must be generated with a signing key to view the video.
+                    type: boolean
+                  scheduledDeletion:
+                    description: |-
+                      (String) Indicates the date and time at which the video will be deleted. Omit the field to indicate no change, or include with a null value to remove an existing scheduled deletion. If specified, must be at least 30 days from upload time.
+                      Indicates the date and time at which the video will be deleted. Omit the field to indicate no change, or include with a `null` value to remove an existing scheduled deletion. If specified, must be at least 30 days from upload time.
+                    type: string
+                  size:
+                    description: |-
+                      (Number) The size of the media item in bytes.
+                      The size of the media item in bytes.
+                    type: number
+                  status:
+                    description: (Attributes) Specifies a detailed status for a video.
+                      If the state is inprogress or error, the step field returns
+                      encoding or manifest. If the state is inprogress, pctComplete
+                      returns a number between 0 and 100 to indicate the approximate
+                      percent of completion. If the state is error, errorReasonCode
+                      and errorReasonText provide additional details. (see below for
+                      nested schema)
+                    properties:
+                      errorReasonCode:
+                        description: |-
+                          (String) Specifies why the video failed to encode. This field is empty if the video is not in an error state. Preferred for programmatic use.
+                          Specifies why the video failed to encode. This field is empty if the video is not in an `error` state. Preferred for programmatic use.
+                        type: string
+                      errorReasonText:
+                        description: |-
+                          (String) Specifies why the video failed to encode using a human readable error message in English. This field is empty if the video is not in an error state.
+                          Specifies why the video failed to encode using a human readable error message in English. This field is empty if the video is not in an `error` state.
+                        type: string
+                      pctComplete:
+                        description: |-
+                          negative integer.
+                          Indicates the size of the entire upload in bytes. The value must be a non-negative integer.
+                        type: string
+                      state:
+                        description: |-
+                          inprogress".
+                          Specifies the processing status for all quality levels for a video.
+                          Available values: "pendingupload", "downloading", "queued", "inprogress", "ready", "error", "live-inprogress".
+                        type: string
+                    type: object
+                  thumbnail:
+                    description: |-
+                      (String) The media item's thumbnail URI. This field is omitted until encoding is complete.
+                      The media item's thumbnail URI. This field is omitted until encoding is complete.
+                    type: string
+                  thumbnailTimestampPct:
+                    description: |-
+                      wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
+                      The timestamp for a thumbnail image calculated as a percentage value of the video's duration. To convert from a second-wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
+                    type: number
+                  uid:
+                    description: |-
+                      generated unique identifier for a media item.
+                      A Cloudflare-generated unique identifier for a media item.
+                    type: string
+                  uploadExpiry:
+                    description: |-
+                      (String) The date and time when the video upload URL is no longer valid for direct user uploads.
+                      The date and time when the video upload URL is no longer valid for direct user uploads.
+                    type: string
+                  uploaded:
+                    description: |-
+                      (String) The date and time the media item was uploaded.
+                      The date and time the media item was uploaded.
+                    type: string
+                  watermark:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      created:
+                        description: |-
+                          (String) The date and time the media item was created.
+                          The date and a time a watermark profile was created.
+                        type: string
+                      downloadedFrom:
+                        description: |-
+                          (String) The source URL for a downloaded image. If the watermark profile was created via direct upload, this field is null.
+                          The source URL for a downloaded image. If the watermark profile was created via direct upload, this field is null.
+                        type: string
+                      height:
+                        description: |-
+                          1 means the height is unknown. The value becomes available after the upload and before the video is ready.
+                          The height of the image in pixels.
+                        type: number
+                      name:
+                        description: |-
+                          (String) A short description of the watermark profile.
+                          A short description of the watermark profile.
+                        type: string
+                      opacity:
+                        description: |-
+                          transparent, setting this to 1.0 will not make the image completely opaque.
+                          The translucency of the image. A value of `0.0` makes the image completely transparent, and `1.0` makes the image completely opaque. Note that if the image is already semi-transparent, setting this to `1.0` will not make the image completely opaque.
+                        type: number
+                      padding:
+                        description: |-
+                          (Number) The whitespace between the adjacent edges (determined by position) of the video and the image. 0.0 indicates no padding, and 1.0 indicates a fully padded video width or length, as determined by the algorithm.
+                          The whitespace between the adjacent edges (determined by position) of the video and the image. `0.0` indicates no padding, and `1.0` indicates a fully padded video width or length, as determined by the algorithm.
+                        type: number
+                      position:
+                        description: |-
+                          (String) The location of the image. Valid positions are: upperRight, upperLeft, lowerLeft, lowerRight, and center. Note that center ignores the padding parameter.
+                          The location of the image. Valid positions are: `upperRight`, `upperLeft`, `lowerLeft`, `lowerRight`, and `center`. Note that `center` ignores the `padding` parameter.
+                        type: string
+                      scale:
+                        description: |-
+                          is), and 1.0 fills the entire video.
+                          The size of the image relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. `0.0` indicates no scaling (use the size of the image as-is), and `1.0 `fills the entire video.
+                        type: number
+                      size:
+                        description: |-
+                          (Number) The size of the media item in bytes.
+                          The size of the image in bytes.
+                        type: number
+                      uid:
+                        description: |-
+                          generated unique identifier for a media item.
+                          The unique identifier for a watermark profile.
+                        type: string
+                      width:
+                        description: |-
+                          1 means the width is unknown. The value becomes available after the upload and before the video is ready.
+                          The width of the image in pixels.
+                        type: number
+                    type: object
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

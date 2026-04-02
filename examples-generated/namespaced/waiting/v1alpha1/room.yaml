@@ -1,0 +1,39 @@
+apiVersion: waiting.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Room
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waiting/v1alpha1/room
+  labels:
+    testing.upbound.io/example-name: example_waiting_room
+  name: example-waiting-room
+  namespace: crossplane-system
+spec:
+  forProvider:
+    additionalRoutes:
+    - host: shop2.example.com
+      path: /shop2/checkout
+    cookieAttributes:
+      samesite: auto
+      secure: auto
+    cookieSuffix: abcd
+    customPageHtml: '{{#waitTimeKnown}} {{waitTime}} mins {{/waitTimeKnown}} {{^waitTimeKnown}}
+      Queue all enabled {{/waitTimeKnown}}'
+    defaultTemplateLanguage: es-ES
+    description: Production - DO NOT MODIFY
+    disableSessionRenewal: false
+    enabledOriginCommands:
+    - revoke
+    host: shop.example.com
+    jsonResponseEnabled: false
+    name: production_webinar
+    newUsersPerMinute: 200
+    path: /shop/checkout
+    queueAll: true
+    queueingMethod: fifo
+    queueingStatusCode: 202
+    sessionDuration: 1
+    suspended: true
+    totalActiveUsers: 200
+    turnstileAction: log
+    turnstileMode: "off"
+    zoneId: 023e105f4ecef8ad9ca31a8372d0c353

@@ -1,0 +1,44 @@
+apiVersion: logpush.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Job
+metadata:
+  annotations:
+    meta.upbound.io/example-id: logpush/v1alpha1/job
+  labels:
+    testing.upbound.io/example-name: example_logpush_job
+  name: example-logpush-job
+  namespace: crossplane-system
+spec:
+  forProvider:
+    dataset: gateway_dns
+    destinationConf: s3://mybucket/logs?region=us-west-2
+    enabled: false
+    filter: '{"where":{"and":[{"key":"ClientRequestPath","operator":"contains","value":"/static"},{"key":"ClientRequestHost","operator":"eq","value":"example.com"}]}}'
+    frequency: high
+    kind: ""
+    logpullOptions: fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339
+    maxUploadBytes: 5000000
+    maxUploadIntervalSeconds: 30
+    maxUploadRecords: 1000
+    name: example.com
+    outputOptions:
+      batchPrefix: ""
+      batchSuffix: ""
+      cve202144228: false
+      fieldDelimiter: ','
+      fieldNames:
+      - Datetime
+      - DstIP
+      - SrcIP
+      outputType: ndjson
+      recordDelimiter: ""
+      recordPrefix: '{'
+      recordSuffix: |2+
+            }
+
+      recordTemplate: record_template
+      sampleRate: 1
+      timestampFormat: unixnano
+    ownershipChallengeSecretRef:
+      key: example-key
+      name: example-secret
+    zoneId: zone_id

@@ -1,0 +1,25 @@
+apiVersion: zero.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: TrustDevicePostureRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: zero/v1alpha1/trustdeviceposturerule
+  labels:
+    testing.upbound.io/example-name: example_zero_trust_device_posture_rule
+  name: example-zero-trust-device-posture-rule
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 699d98642c564d2e855e9661899b7252
+    description: The rule for admin serial numbers
+    expiration: 1h
+    input:
+      exists: true
+      operatingSystem: linux
+      path: /bin/cat
+      sha256: https://api.us-2.crowdstrike.com
+      thumbprint: 0aabab210bdb998e9cf45da2c9ce352977ab531c681b74cf1e487be1bbe9fe6e
+    match:
+    - platform: windows
+    name: Admin Serial Numbers
+    schedule: 1h
+    type: file

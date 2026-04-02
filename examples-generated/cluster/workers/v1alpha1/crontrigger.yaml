@@ -1,0 +1,14 @@
+apiVersion: workers.upjet-cloudflare.upbound.io/v1alpha1
+kind: CronTrigger
+metadata:
+  annotations:
+    meta.upbound.io/example-id: workers/v1alpha1/crontrigger
+  labels:
+    testing.upbound.io/example-name: example_workers_cron_trigger
+  name: example-workers-cron-trigger
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    body:
+    - cron: '*/30 * * * *'
+    scriptName: this-is_my_script-01

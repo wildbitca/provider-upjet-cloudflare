@@ -1,0 +1,15 @@
+apiVersion: workers.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: ScriptSubdomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: workers/v1alpha1/scriptsubdomain
+  labels:
+    testing.upbound.io/example-name: example_workers_script_subdomain
+  name: example-workers-script-subdomain
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    enabled: true
+    previewsEnabled: false
+    scriptName: this-is_my_script-01

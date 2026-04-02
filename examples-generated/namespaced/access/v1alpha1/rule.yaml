@@ -1,0 +1,17 @@
+apiVersion: access.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Rule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: access/v1alpha1/rule
+  labels:
+    testing.upbound.io/example-name: example_access_rule
+  name: example-access-rule
+  namespace: crossplane-system
+spec:
+  forProvider:
+    configuration:
+      target: ip
+      value: 198.51.100.4
+    mode: challenge
+    notes: This rule is enabled because of an event that occurred on date X.
+    zoneId: zone_id

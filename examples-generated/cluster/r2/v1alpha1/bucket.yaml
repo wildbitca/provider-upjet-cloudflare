@@ -1,0 +1,16 @@
+apiVersion: r2.upjet-cloudflare.upbound.io/v1alpha1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: r2/v1alpha1/bucket
+  labels:
+    testing.upbound.io/example-name: example_r2_bucket
+  name: example-r2-bucket
+spec:
+  forProvider:
+    accountIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    location: apac
+    name: example-bucket
+    storageClass: Standard

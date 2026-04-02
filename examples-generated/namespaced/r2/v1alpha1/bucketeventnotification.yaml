@@ -1,0 +1,21 @@
+apiVersion: r2.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: BucketEventNotification
+metadata:
+  annotations:
+    meta.upbound.io/example-id: r2/v1alpha1/bucketeventnotification
+  labels:
+    testing.upbound.io/example-name: example_r2_bucket_event_notification
+  name: example-r2-bucket-event-notification
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    bucketName: example-bucket
+    queueId: queue_id
+    rules:
+    - actions:
+      - PutObject
+      - CopyObject
+      description: Notifications from source bucket to queue
+      prefix: img/
+      suffix: .jpeg

@@ -1,0 +1,44 @@
+apiVersion: load.upjet-cloudflare.upbound.io/v1alpha1
+kind: BalancerPool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: load/v1alpha1/balancerpool
+  labels:
+    testing.upbound.io/example-name: example_load_balancer_pool
+  name: example-load-balancer-pool
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    description: Primary data center - Provider XYZ
+    enabled: false
+    latitude: 0
+    loadShedding:
+      defaultPercent: 0
+      defaultPolicy: random
+      sessionPercent: 0
+      sessionPolicy: hash
+    longitude: 0
+    minimumOrigins: 0
+    monitor: monitor
+    monitorGroup: monitor_group
+    name: primary-dc-1
+    notificationEmail: someone@example.com,sometwo@example.com
+    notificationFilter:
+      origin:
+        disable: true
+        healthy: true
+      pool:
+        disable: true
+        healthy: false
+    originSteering:
+      policy: random
+    origins:
+    - address: 0.0.0.0
+      enabled: true
+      header:
+        host:
+        - example.com
+      name: app-server-1
+      port: 0
+      virtualNetworkId: a5624d4e-044a-4ff0-b3e1-e2465353d4b4
+      weight: 0.6

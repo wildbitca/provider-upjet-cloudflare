@@ -1,0 +1,33 @@
+apiVersion: magic.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: WanGreTunnel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: magic/v1alpha1/wangretunnel
+  labels:
+    testing.upbound.io/example-name: example_magic_wan_gre_tunnel
+  name: example-magic-wan-gre-tunnel
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    automaticReturnRouting: true
+    bgp:
+      customerAsn: 0
+      extraPrefixes:
+      - string
+      md5Key: md5_key
+    cloudflareGreEndpoint: 203.0.113.1
+    customerGreEndpoint: 203.0.113.1
+    description: Tunnel for ISP X
+    healthCheck:
+      direction: bidirectional
+      enabled: true
+      rate: low
+      target:
+        saved: 203.0.113.1
+      type: request
+    interfaceAddress: 192.0.2.0/31
+    interfaceAddress6: 2606:54c1:7:0:a9fe:12d2:1:200/127
+    mtu: 0
+    name: GRE_1
+    ttl: 0
