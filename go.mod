@@ -140,4 +140,4 @@ require (
 // Ensure the main module resolves from the current directory (e.g. for go mod tidy in CI).
 replace github.com/wildbitca/provider-upjet-cloudflare => .
 
-replace github.com/crossplane/upjet/v2 => github.com/wildbitca/upjet/v2 v2.2.1-0.20260401142714-e051c1f30991
+replace github.com/crossplane/upjet/v2 => github.com/wildbitca/upjet/v2 v2.2.2
