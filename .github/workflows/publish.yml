@@ -210,6 +210,10 @@ jobs:
           sudo mv docker-credential-up /usr/local/bin/docker-credential-up
           curl -sL "https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh" | sh
           sudo mv crossplane /usr/local/bin/crossplane
+          # Install crane for reliable digest resolution (works with single-arch and multi-arch)
+          VERSION_CRANE="v0.20.3"
+          curl -sLo crane.tar.gz "https://github.com/google/go-containerregistry/releases/download/${VERSION_CRANE}/go-containerregistry_Linux_x86_64.tar.gz"
+          tar -xzf crane.tar.gz crane && chmod +x crane && sudo mv crane /usr/local/bin/crane && rm crane.tar.gz
 
       - name: Authenticate with Upbound
         run: |
@@ -235,9 +239,10 @@ jobs:
             ${UPBOUND_REGISTRY}/provider-cloudflare:${VERSION}
 
       - name: Append extensions
+        continue-on-error: true
         run: |
           IMAGE="${UPBOUND_REGISTRY}/provider-cloudflare:${VERSION}"
-          DIGEST=$(docker buildx imagetools inspect "$IMAGE" 2>&1 | awk '/Digest:/ {print $NF; exit}')
+          DIGEST=$(crane digest "$IMAGE" 2>/dev/null || true)
           if [ -n "$DIGEST" ]; then
             up xpkg append --extensions-root=./extensions \
               --destination="$IMAGE" \
@@ -358,12 +363,18 @@ jobs:
 
           echo "Published: ${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
 
+      - name: Install crane
+        run: |
+          VERSION_CRANE="v0.20.3"
+          curl -sLo crane.tar.gz "https://github.com/google/go-containerregistry/releases/download/${VERSION_CRANE}/go-containerregistry_Linux_x86_64.tar.gz"
+          tar -xzf crane.tar.gz crane && chmod +x crane && sudo mv crane /usr/local/bin/crane && rm crane.tar.gz
+
       - name: Append extensions
         continue-on-error: true
         run: |
           REPO="provider-family-cloudflare"
           IMAGE="${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
-          DIGEST=$(docker buildx imagetools inspect "$IMAGE" 2>&1 | awk '/Digest:/ {print $NF; exit}')
+          DIGEST=$(crane digest "$IMAGE" 2>/dev/null || true)
           if [ -n "$DIGEST" ]; then
             up xpkg append --extensions-root=./extensions \
               --destination="$IMAGE" \
@@ -558,18 +569,28 @@ jobs:
           up xpkg push "${UPBOUND_REGISTRY}/${REPO}:${VERSION}" \
             -f "${WORK_DIR}/${REPO}.xpkg"
 
-          # Append marketplace extensions (may fail for single-arch packages)
+          echo "Published: ${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
+
+      - name: Install crane
+        run: |
+          VERSION_CRANE="v0.20.3"
+          curl -sLo crane.tar.gz "https://github.com/google/go-containerregistry/releases/download/${VERSION_CRANE}/go-containerregistry_Linux_x86_64.tar.gz"
+          tar -xzf crane.tar.gz crane && chmod +x crane && sudo mv crane /usr/local/bin/crane && rm crane.tar.gz
+
+      - name: Append extensions
+        continue-on-error: true
+        run: |
+          SP="${{ matrix.subpackage }}"
+          REPO="provider-cloudflare-${SP}"
           IMAGE="${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
-          DIGEST=$(docker buildx imagetools inspect "$IMAGE" 2>&1 | awk '/Digest:/ {print $NF; exit}')
+          DIGEST=$(crane digest "$IMAGE" 2>/dev/null || true)
           if [ -n "$DIGEST" ]; then
             up xpkg append --extensions-root=./extensions \
               --destination="$IMAGE" \
-              "${UPBOUND_REGISTRY}/${REPO}@${DIGEST}" || echo "::warning::Extensions append failed for ${REPO} (single-arch manifest)"
+              "${UPBOUND_REGISTRY}/${REPO}@${DIGEST}"
           else
             echo "::warning::Could not get digest for ${REPO} extensions append"
           fi
-
-          echo "Published: ${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
 
   # ── GitHub Release ────────────────────────────────────────────────────
   release:
