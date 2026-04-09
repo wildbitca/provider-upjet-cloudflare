@@ -124,14 +124,12 @@ jobs:
             provider-cloudflare-zone
           )
           for repo in "${REPOS[@]}"; do
-            if up repository get "$repo" >/dev/null 2>&1; then
-              echo "✓ $repo exists"
-            else
+            if ! up repository get "$repo" >/dev/null 2>&1; then
               echo "Creating $repo..."
               up repository create "$repo"
-              up repository update --private=false --publish --force "$repo"
-              echo "  → created and published"
             fi
+            up repository update --private=false --publish --force "$repo"
+            echo "✓ $repo published"
           done
 
   # ── Monolith build (all CRDs, multi-arch images + xpkg) ──────────────
@@ -210,10 +208,6 @@ jobs:
           sudo mv docker-credential-up /usr/local/bin/docker-credential-up
           curl -sL "https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh" | sh
           sudo mv crossplane /usr/local/bin/crossplane
-          # Install crane for reliable digest resolution (works with single-arch and multi-arch)
-          VERSION_CRANE="v0.20.3"
-          curl -sLo crane.tar.gz "https://github.com/google/go-containerregistry/releases/download/${VERSION_CRANE}/go-containerregistry_Linux_x86_64.tar.gz"
-          tar -xzf crane.tar.gz crane && chmod +x crane && sudo mv crane /usr/local/bin/crane && rm crane.tar.gz
 
       - name: Authenticate with Upbound
         run: |
@@ -241,15 +235,8 @@ jobs:
       - name: Append extensions
         continue-on-error: true
         run: |
-          IMAGE="${UPBOUND_REGISTRY}/provider-cloudflare:${VERSION}"
-          DIGEST=$(crane digest "$IMAGE" 2>/dev/null || true)
-          if [ -n "$DIGEST" ]; then
-            up xpkg append --extensions-root=./extensions \
-              --destination="$IMAGE" \
-              "${UPBOUND_REGISTRY}/provider-cloudflare@${DIGEST}"
-          else
-            echo "::warning::Could not get digest for extensions append"
-          fi
+          up xpkg append --extensions-root=./extensions \
+            "${UPBOUND_REGISTRY}/provider-cloudflare:${VERSION}"
 
   # ── Family config (ProviderConfig CRDs — must publish before sub-providers) ──
   family-config:
@@ -363,25 +350,11 @@ jobs:
 
           echo "Published: ${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
 
-      - name: Install crane
-        run: |
-          VERSION_CRANE="v0.20.3"
-          curl -sLo crane.tar.gz "https://github.com/google/go-containerregistry/releases/download/${VERSION_CRANE}/go-containerregistry_Linux_x86_64.tar.gz"
-          tar -xzf crane.tar.gz crane && chmod +x crane && sudo mv crane /usr/local/bin/crane && rm crane.tar.gz
-
       - name: Append extensions
         continue-on-error: true
         run: |
-          REPO="provider-family-cloudflare"
-          IMAGE="${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
-          DIGEST=$(crane digest "$IMAGE" 2>/dev/null || true)
-          if [ -n "$DIGEST" ]; then
-            up xpkg append --extensions-root=./extensions \
-              --destination="$IMAGE" \
-              "${UPBOUND_REGISTRY}/${REPO}@${DIGEST}"
-          else
-            echo "::warning::Could not get digest for ${REPO} extensions append"
-          fi
+          up xpkg append --extensions-root=./extensions \
+            "${UPBOUND_REGISTRY}/provider-family-cloudflare:${VERSION}"
 
   # ── Family sub-providers (one per API group, parallel after config) ──
   family-subproviders:
@@ -571,26 +544,12 @@ jobs:
 
           echo "Published: ${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
 
-      - name: Install crane
-        run: |
-          VERSION_CRANE="v0.20.3"
-          curl -sLo crane.tar.gz "https://github.com/google/go-containerregistry/releases/download/${VERSION_CRANE}/go-containerregistry_Linux_x86_64.tar.gz"
-          tar -xzf crane.tar.gz crane && chmod +x crane && sudo mv crane /usr/local/bin/crane && rm crane.tar.gz
-
       - name: Append extensions
         continue-on-error: true
         run: |
           SP="${{ matrix.subpackage }}"
-          REPO="provider-cloudflare-${SP}"
-          IMAGE="${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
-          DIGEST=$(crane digest "$IMAGE" 2>/dev/null || true)
-          if [ -n "$DIGEST" ]; then
-            up xpkg append --extensions-root=./extensions \
-              --destination="$IMAGE" \
-              "${UPBOUND_REGISTRY}/${REPO}@${DIGEST}"
-          else
-            echo "::warning::Could not get digest for ${REPO} extensions append"
-          fi
+          up xpkg append --extensions-root=./extensions \
+            "${UPBOUND_REGISTRY}/provider-cloudflare-${SP}:${VERSION}"
 
   # ── GitHub Release ────────────────────────────────────────────────────
   release:
