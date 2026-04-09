@@ -28,7 +28,7 @@ kind: Provider
 metadata:
   name: provider-cloudflare-dns
 spec:
-  package: xpkg.upbound.io/wildbitca/provider-cloudflare-dns:v0.1.0
+  package: xpkg.upbound.io/wildbitca/provider-cloudflare-dns:v0.1.3
 ```
 
 ## ProviderConfig
