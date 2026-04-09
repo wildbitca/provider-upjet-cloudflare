@@ -332,6 +332,7 @@ jobs:
               meta.crossplane.io/maintainer: "Wildbit"
               meta.crossplane.io/source: "https://github.com/wildbitca/provider-upjet-cloudflare"
               meta.crossplane.io/license: "Apache-2.0"
+              meta.crossplane.io/description: "Upjet-based Crossplane provider family for the Cloudflare API. Shared ProviderConfig for all Cloudflare sub-providers."
             labels:
               pkg.crossplane.io/provider-family: provider-family-cloudflare
           spec:
@@ -523,6 +524,7 @@ jobs:
               meta.crossplane.io/maintainer: "Wildbit"
               meta.crossplane.io/source: "https://github.com/wildbitca/provider-upjet-cloudflare"
               meta.crossplane.io/license: "Apache-2.0"
+              meta.crossplane.io/description: "Crossplane provider for Cloudflare ${SP} resources. Part of provider-family-cloudflare."
             labels:
               pkg.crossplane.io/provider-family: provider-family-cloudflare
           spec:
