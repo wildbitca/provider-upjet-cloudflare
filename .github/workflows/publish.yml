@@ -57,7 +57,6 @@ jobs:
       - name: Ensure repos exist
         run: |
           REPOS=(
-            provider-cloudflare
             provider-family-cloudflare
             provider-cloudflare-access
             provider-cloudflare-account
@@ -131,112 +130,6 @@ jobs:
             up repository update --private=false --publish --force "$repo"
             echo "✓ $repo published"
           done
-
-  # ── Monolith build (all CRDs, multi-arch images + xpkg) ──────────────
-  monolith-build:
-    runs-on: ubuntu-24.04
-    needs: prepare
-    outputs:
-      version: ${{ needs.prepare.outputs.version }}
-    env:
-      VERSION: ${{ needs.prepare.outputs.version }}
-    steps:
-      - uses: docker/setup-qemu-action@v4
-        with: { platforms: all }
-
-      - uses: docker/setup-buildx-action@v4
-        with: { version: '${{ env.DOCKER_BUILDX_VERSION }}' }
-
-      - name: Checkout
-        uses: actions/checkout@v6
-        with: { fetch-depth: 0, submodules: true }
-
-      - uses: actions/setup-go@v6
-        with: { go-version: '${{ env.GO_VERSION }}' }
-
-      - name: Cache Go
-        uses: actions/cache@v5
-        with:
-          path: |
-            ~/.cache/go-build
-            ~/go/pkg/mod
-            .work/pkg
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: ${{ runner.os }}-go-
-
-      - run: make vendor vendor.check
-
-      - name: Install Crossplane CLI
-        run: |
-          curl -sL "https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh" | sh
-          sudo mv crossplane /usr/local/bin/crossplane
-
-      - name: Build images
-        run: make -j2 build.all
-        env:
-          BUILD_ARGS: "--load --cache-from type=gha --cache-to type=gha,mode=max"
-
-      - name: Build xpkg
-        run: make xpkg.build
-
-      - name: Upload xpkg
-        uses: actions/upload-artifact@v4
-        with:
-          name: monolith-xpkg
-          path: _output/xpkg/
-          retention-days: 1
-
-  # ── Monolith publish (push xpkg + append extensions) ──────────────────
-  monolith-publish:
-    runs-on: ubuntu-24.04
-    needs: [monolith-build, ensure-repos]
-    outputs:
-      version: ${{ needs.monolith-build.outputs.version }}
-    env:
-      VERSION: ${{ needs.monolith-build.outputs.version }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Install CLIs
-        run: |
-          curl -sLo up "https://cli.upbound.io/stable/current/bin/linux_amd64/up"
-          chmod +x up
-          sudo mv up /usr/local/bin/up
-          curl -sLo docker-credential-up "https://cli.upbound.io/stable/current/bin/linux_amd64/docker-credential-up"
-          chmod +x docker-credential-up
-          sudo mv docker-credential-up /usr/local/bin/docker-credential-up
-          curl -sL "https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh" | sh
-          sudo mv crossplane /usr/local/bin/crossplane
-
-      - name: Authenticate with Upbound
-        run: |
-          up login -t "${{ secrets.UPBOUND_TOKEN }}"
-          mkdir -p ~/.docker
-          config_file=~/.docker/config.json
-          if [ -f "$config_file" ]; then
-            jq '.credHelpers["xpkg.upbound.io"] = "up"' "$config_file" > "${config_file}.tmp" && mv "${config_file}.tmp" "$config_file"
-          else
-            echo '{"credHelpers":{"xpkg.upbound.io":"up"}}' > "$config_file"
-          fi
-
-      - name: Download xpkg
-        uses: actions/download-artifact@v4
-        with:
-          name: monolith-xpkg
-          path: _output/xpkg/
-
-      - name: Push xpkg to Upbound
-        run: |
-          XPKG_FILES=$(find _output/xpkg/ -name '*.xpkg' | sed 's/^/--package-files /' | tr '\n' ' ')
-          crossplane xpkg push ${XPKG_FILES} \
-            ${UPBOUND_REGISTRY}/provider-cloudflare:${VERSION}
-
-      - name: Append extensions
-        continue-on-error: true
-        run: |
-          up xpkg append --extensions-root=./extensions \
-            "${UPBOUND_REGISTRY}/provider-cloudflare:${VERSION}"
 
   # ── Family config (ProviderConfig CRDs — must publish before sub-providers) ──
   family-config:
@@ -556,10 +449,10 @@ jobs:
   # ── GitHub Release ────────────────────────────────────────────────────
   release:
     runs-on: ubuntu-24.04
-    needs: [monolith-publish, family-subproviders]
-    if: always() && needs.monolith-publish.result == 'success'
+    needs: [prepare, family-subproviders]
+    if: always() && needs.family-subproviders.result == 'success'
     env:
-      VERSION: ${{ needs.monolith-publish.outputs.version }}
+      VERSION: ${{ needs.prepare.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
