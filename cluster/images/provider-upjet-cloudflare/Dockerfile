@@ -3,7 +3,7 @@ RUN apk --no-cache add ca-certificates bash
 
 ARG TARGETOS
 ARG TARGETARCH
-ARG SUBPACKAGE=monolith
+ARG SUBPACKAGE=config
 
 ADD "bin/${TARGETOS}_${TARGETARCH}/${SUBPACKAGE}" /usr/local/bin/provider
 
