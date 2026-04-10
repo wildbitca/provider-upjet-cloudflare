@@ -43,9 +43,9 @@ GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
 GOLANGCILINT_VERSION ?= 2.11.4
 # Provider family sub-packages to build. Set to specific groups to build only those.
-# Use "monolith" for backward-compatible single provider, or list individual groups.
-# Default: build only the monolith (backward-compat) and the generator.
-SUBPACKAGES ?= monolith
+# Provider family sub-packages to build. Use "config" for the family provider,
+# or list individual API groups (e.g., "dns zone r2").
+SUBPACKAGES ?= config
 
 # Map subpackage names to Go package paths
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/generator $(foreach sp,$(SUBPACKAGES),$(GO_PROJECT)/cmd/provider/$(sp))
@@ -256,7 +256,7 @@ submodules:
 run: go.build
 	@$(INFO) Running Crossplane locally out-of-cluster . . .
 	@# To see other arguments that can be provided, run the command with --help instead
-	$(GO_OUT_DIR)/monolith --debug
+	$(GO_OUT_DIR)/config --debug
 
 # ====================================================================================
 # End to End Testing
