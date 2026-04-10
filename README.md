@@ -4,18 +4,13 @@
 
 ## Getting Started
 
-This provider is available in two distribution modes:
-
-| Mode | Package | CRDs | Use when |
-|------|---------|------|----------|
-| **Family** (recommended) | `provider-family-cloudflare` + individual sub-providers | Only what you install | You use a subset of Cloudflare services |
-| **Monolith** | `provider-cloudflare` | All 425 | You need everything or want the simplest setup |
+This provider uses the **family** distribution model: install only the sub-providers you need. The first sub-provider you install automatically pulls in `provider-family-cloudflare`, which manages the shared `ProviderConfig`.
 
 > For provider families background, see [Scalable Provider Families](https://blog.crossplane.io/crd-scaling-provider-families/) and the [Upbound Provider Families docs](https://docs.upbound.io/manuals/packages/providers/provider-families/).
 
-### Install (Family — recommended)
+### Install
 
-Install only the Cloudflare services you need. The first sub-provider you install automatically pulls in `provider-family-cloudflare`, which manages the shared `ProviderConfig`.
+Install only the Cloudflare services you need:
 
 ```yaml
 apiVersion: pkg.crossplane.io/v1
@@ -23,7 +18,7 @@ kind: Provider
 metadata:
   name: provider-cloudflare-dns
 spec:
-  package: xpkg.upbound.io/wildbitca/provider-cloudflare-dns:v0.1.0
+  package: xpkg.upbound.io/wildbitca/provider-cloudflare-dns:v0.2.0
 ```
 
 Need more services? Add more sub-providers:
@@ -34,28 +29,34 @@ kind: Provider
 metadata:
   name: provider-cloudflare-zone
 spec:
-  package: xpkg.upbound.io/wildbitca/provider-cloudflare-zone:v0.1.0
+  package: xpkg.upbound.io/wildbitca/provider-cloudflare-zone:v0.2.0
 ---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-cloudflare-workers
 spec:
-  package: xpkg.upbound.io/wildbitca/provider-cloudflare-workers:v0.1.0
+  package: xpkg.upbound.io/wildbitca/provider-cloudflare-workers:v0.2.0
 ```
 
-See [docs/family/](docs/family/) for the full list of available sub-providers and configuration details.
+### Available sub-providers
 
-### Install (Monolith)
-
-```yaml
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-cloudflare
-spec:
-  package: xpkg.upbound.io/wildbitca/provider-cloudflare:v0.1.0
-```
+| Sub-provider | Resources |
+|-------------|-----------|
+| `provider-cloudflare-dns` | DNS records, firewall, zone transfers |
+| `provider-cloudflare-zone` | Zone settings, DNSSEC, cache variants, subscriptions |
+| `provider-cloudflare-cloudflare` | Rulesets, healthchecks, filters, lists |
+| `provider-cloudflare-workers` | Workers scripts, KV namespaces, routes, cron triggers |
+| `provider-cloudflare-r2` | R2 buckets, CORS, lifecycle, custom domains |
+| `provider-cloudflare-bot` | Bot management |
+| `provider-cloudflare-managed` | Managed transforms |
+| `provider-cloudflare-leaked` | Leaked credential checks |
+| `provider-cloudflare-tiered` | Tiered caching |
+| `provider-cloudflare-universal` | Universal SSL settings |
+| `provider-cloudflare-url` | URL normalization |
+| `provider-cloudflare-web` | Web analytics |
+| `provider-cloudflare-notification` | Notification policies |
+| And 47 more... | See full list in `cmd/provider/` |
 
 ### ProviderConfig
 
@@ -95,20 +96,28 @@ Supported credential keys: `api_token`, `api_key`, `email`, `api_user_service_ke
 
 ### Rate limiting
 
-Cloudflare’s API allows about **1,200 requests per five minutes**. The provider defaults to `--max-reconcile-rate=3` to reduce the risk of HTTP 429s. For large deployments:
+Cloudflare's API allows about **1,200 requests per five minutes**. For large deployments, use a `DeploymentRuntimeConfig` to throttle:
 
-- Set `--max-reconcile-rate` to **2–5** when deploying (e.g. in your Provider or Helm values).
-- Keep `--sync` at **1h** (default) or higher to limit full drift-detection frequency.
-
-Example override when running the provider:
-
-```bash
-provider --max-reconcile-rate=3 --sync=1h ...
+```yaml
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
+metadata:
+  name: cloudflare-throttled
+spec:
+  deploymentTemplate:
+    spec:
+      selector: {}
+      template:
+        spec:
+          containers:
+            - name: package-runtime
+              args:
+                - --poll=30m
+                - --max-reconcile-rate=1
+                - --sync=4h
 ```
 
 ## Developing
-
-Fetch submodules first, then run the code-generation pipeline. `make generate` runs the Upjet generator (same as `go run cmd/generator/main.go "$PWD"`).
 
 ```bash
 make submodules
@@ -117,64 +126,24 @@ export PATH="$(go env GOPATH)/bin:$PATH"
 make generate
 ```
 
-Run code-generation pipeline (alternative):
-
-```bash
-go run cmd/generator/main.go "$PWD"
-```
-
-Run against a Kubernetes cluster (monolith):
+Run against a Kubernetes cluster:
 
 ```bash
 make run
 ```
 
-Build monolith binary:
-
-```bash
-make build
-```
-
-Build family sub-providers (all groups):
+Build family sub-providers:
 
 ```bash
 make build.family
-```
-
-Build specific sub-providers:
-
-```bash
 make build.family FAMILY_SUBPACKAGES="config dns zone"
-```
-
-**Fixing CI (check-diff / lint):** If the CI **check-diff** or **lint** job fails, regenerate locally and commit the result:
-
-```bash
-make submodules
-make generate
-make check-diff
-git add -A && git commit -m "chore: regenerate for CI" && git push
 ```
 
 ## Supported resources
 
-You can see the API reference at [doc.crds.dev](https://doc.crds.dev/github.com/wildbitca/provider-upjet-cloudflare) or on the [Upbound Marketplace](https://marketplace.upbound.io/providers/wildbitca/provider-cloudflare).
+This provider exposes 198 managed resources from the [Cloudflare Terraform Provider v5.18.0](https://registry.terraform.io/providers/cloudflare/cloudflare/5.18.0/docs).
 
-This provider exposes 198 managed resources from the [Cloudflare Terraform Provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs), including:
-
-- **Zone**: `cloudflare_zone`, `cloudflare_zone_dnssec`, `cloudflare_zone_lockdown`, etc.
-- **DNS**: `cloudflare_dns_record`, `cloudflare_dns_firewall`, etc.
-- **Account**: `cloudflare_account`, `cloudflare_account_member`, etc.
-- **Workers**: `cloudflare_worker`, `cloudflare_workers_kv`, `cloudflare_workers_route`, etc.
-- **Load Balancer**: `cloudflare_load_balancer`, `cloudflare_load_balancer_pool`, `cloudflare_load_balancer_monitor`
-- **Zero Trust**: `cloudflare_zero_trust_access_*`, `cloudflare_zero_trust_device_*`, etc.
-- And more.
-
-## Adding resources
-
-- Find the resource in the [Cloudflare Terraform Provider docs](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
-- Prefer **1 resource per PR**.
-- Write a test case for new or modified resources.
+API reference: [doc.crds.dev](https://doc.crds.dev/github.com/wildbitca/provider-upjet-cloudflare)
 
 ## Report a Bug
 
