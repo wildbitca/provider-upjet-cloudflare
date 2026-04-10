@@ -27,7 +27,7 @@ img.build.shared:
 	@cp -r $(OUTPUT_DIR)/bin/ $(IMAGE_TEMP_DIR)/bin || $(FAIL)
 	@docker buildx build $(BUILD_ARGS) \
 		--platform $(IMAGE_PLATFORMS) \
-		--build-arg SUBPACKAGE=$(or $(SUBPACKAGE),monolith) \
+		--build-arg SUBPACKAGE=$(or $(SUBPACKAGE),config) \
 		--build-arg OPENTOFU_VERSION=$(OPENTOFU_VERSION) \
 		--build-arg TERRAFORM_PROVIDER_SOURCE=$(TERRAFORM_PROVIDER_SOURCE) \
 		--build-arg TERRAFORM_PROVIDER_VERSION=$(TERRAFORM_PROVIDER_VERSION) \
