@@ -1,10 +1,35 @@
 package config
 
-import "github.com/crossplane/upjet/v2/pkg/config"
+import (
+	"fmt"
+
+	"github.com/crossplane/upjet/v2/pkg/config"
+)
+
+// zoneIDAsExternalName is a custom ExternalName config for singleton resources
+// that are scoped to a zone but whose Terraform provider schema does not
+// include an `id` attribute in the state. For these resources, the zone_id
+// attribute is used as the external name / Terraform import identifier.
+var zoneIDAsExternalName = config.ExternalName{
+	SetIdentifierArgumentFn: config.NopSetIdentifierArgument,
+	GetExternalNameFn: func(tfstate map[string]interface{}) (string, error) {
+		if id, ok := tfstate["zone_id"].(string); ok && id != "" {
+			return id, nil
+		}
+		if id, ok := tfstate["id"].(string); ok && id != "" {
+			return id, nil
+		}
+		return "", fmt.Errorf("cannot determine external name: neither id nor zone_id found in tfstate")
+	},
+	GetIDFn:                config.ExternalNameAsID,
+	DisableNameInitializer: true,
+}
 
 // ExternalNameConfigs contains all external name configurations for this
 // provider. Cloudflare uses Terraform Plugin Framework. All 198 managed
 // resources use IdentifierFromProvider (provider-generated IDs).
+// Resources whose TF provider schema omits the `id` attribute use
+// zoneIDAsExternalName instead.
 // See https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs
 var ExternalNameConfigs = map[string]config.ExternalName{
 	"cloudflare_access_rule":                                             config.IdentifierFromProvider,
@@ -71,7 +96,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"cloudflare_image":                                                   config.IdentifierFromProvider,
 	"cloudflare_image_variant":                                           config.IdentifierFromProvider,
 	"cloudflare_keyless_certificate":                                     config.IdentifierFromProvider,
-	"cloudflare_leaked_credential_check":                                 config.IdentifierFromProvider,
+	"cloudflare_leaked_credential_check":                                 zoneIDAsExternalName,
 	"cloudflare_leaked_credential_check_rule":                            config.IdentifierFromProvider,
 	"cloudflare_list":                                                    config.IdentifierFromProvider,
 	"cloudflare_list_item":                                               config.IdentifierFromProvider,
@@ -91,7 +116,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"cloudflare_magic_wan_gre_tunnel":                                    config.IdentifierFromProvider,
 	"cloudflare_magic_wan_ipsec_tunnel":                                  config.IdentifierFromProvider,
 	"cloudflare_magic_wan_static_route":                                  config.IdentifierFromProvider,
-	"cloudflare_managed_transforms":                                      config.IdentifierFromProvider,
+	"cloudflare_managed_transforms":                                      zoneIDAsExternalName,
 	"cloudflare_mtls_certificate":                                        config.IdentifierFromProvider,
 	"cloudflare_notification_policy":                                     config.IdentifierFromProvider,
 	"cloudflare_notification_policy_webhooks":                            config.IdentifierFromProvider,
