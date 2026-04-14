@@ -17,13 +17,7 @@ concurrency:
 env:
   GO_VERSION: '1.24'
   DOCKER_BUILDX_VERSION: 'v0.30.1'
-  UPBOUND_REGISTRY: xpkg.upbound.io/wildbitca
-  OPENTOFU_VERSION: '1.11.5'
-  TERRAFORM_PROVIDER_SOURCE: cloudflare/cloudflare
-  TERRAFORM_PROVIDER_VERSION: '5.18.0'
-  TERRAFORM_PROVIDER_DOWNLOAD_NAME: terraform-provider-cloudflare
-  TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX: https://github.com/cloudflare/terraform-provider-cloudflare/releases/download/v5.18.0
-  TERRAFORM_NATIVE_PROVIDER_BINARY: terraform-provider-cloudflare_v5.18.0
+  XPKG_REG_ORG: xpkg.upbound.io/wildbitca
 
 permissions:
   contents: write
@@ -138,6 +132,11 @@ jobs:
     env:
       VERSION: ${{ needs.prepare.outputs.version }}
     steps:
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
       - uses: docker/setup-buildx-action@v4
         with: { version: '${{ env.DOCKER_BUILDX_VERSION }}' }
 
@@ -182,73 +181,29 @@ jobs:
             echo '{"credHelpers":{"xpkg.upbound.io":"up"}}' > "$config_file"
           fi
 
-      - name: Build binary
+      - name: Build
         run: |
-          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
-            -trimpath -installsuffix static \
-            -ldflags "-X github.com/wildbitca/provider-upjet-cloudflare/internal/version.Version=${VERSION} -s -w" \
-            -o _output/bin/linux_amd64/config \
-            ./cmd/provider/config/
+          for platform in linux_amd64 linux_arm64; do
+            make build.family \
+              PLATFORM=${platform} \
+              FAMILY_SUBPACKAGES=config \
+              VERSION=${VERSION} \
+              CROSSPLANE_CLI=crossplane
+          done
 
-      - name: Build image and xpkg
+      - name: Publish
         run: |
-          REPO="provider-family-cloudflare"
-
-          BUILD_CTX=$(mktemp -d)
-          cp cluster/images/provider-upjet-cloudflare/Dockerfile "${BUILD_CTX}/"
-          cp cluster/images/provider-upjet-cloudflare/terraformrc.hcl "${BUILD_CTX}/"
-          cp -r _output/bin/ "${BUILD_CTX}/bin"
-
-          docker buildx build \
-            --platform linux/amd64 \
-            --build-arg SUBPACKAGE=config \
-            --build-arg OPENTOFU_VERSION=${OPENTOFU_VERSION} \
-            --build-arg TERRAFORM_PROVIDER_SOURCE=${TERRAFORM_PROVIDER_SOURCE} \
-            --build-arg TERRAFORM_PROVIDER_VERSION=${TERRAFORM_PROVIDER_VERSION} \
-            --build-arg TERRAFORM_PROVIDER_DOWNLOAD_NAME=${TERRAFORM_PROVIDER_DOWNLOAD_NAME} \
-            --build-arg TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX=${TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX} \
-            --build-arg TERRAFORM_NATIVE_PROVIDER_BINARY=${TERRAFORM_NATIVE_PROVIDER_BINARY} \
-            --cache-from type=gha --cache-to type=gha,mode=max \
-            -t build-${REPO}:latest --load \
-            "${BUILD_CTX}"
-
-          WORK_DIR=$(mktemp -d)
-          mkdir -p "${WORK_DIR}/crds"
-          cp package/crds/upjet-cloudflare.*.yaml "${WORK_DIR}/crds/" 2>/dev/null || true
-
-          cat > "${WORK_DIR}/crossplane.yaml" <<'YAML'
-          apiVersion: meta.pkg.crossplane.io/v1
-          kind: Provider
-          metadata:
-            name: provider-family-cloudflare
-            annotations:
-              meta.crossplane.io/maintainer: "Wildbit"
-              meta.crossplane.io/source: "https://github.com/wildbitca/provider-upjet-cloudflare"
-              meta.crossplane.io/license: "Apache-2.0"
-              meta.crossplane.io/description: "Upjet-based Crossplane provider family for the Cloudflare API. Shared ProviderConfig for all Cloudflare sub-providers."
-            labels:
-              pkg.crossplane.io/provider-family: provider-family-cloudflare
-          spec:
-            capabilities:
-              - SafeStart
-          YAML
-          sed -i 's/^          //' "${WORK_DIR}/crossplane.yaml"
-
-          crossplane xpkg build \
-            --embed-runtime-image="build-${REPO}:latest" \
-            --package-root="${WORK_DIR}" \
-            --package-file="${WORK_DIR}/${REPO}.xpkg"
-
-          up xpkg push "${UPBOUND_REGISTRY}/${REPO}:${VERSION}" \
-            -f "${WORK_DIR}/${REPO}.xpkg"
-
-          echo "Published: ${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
+          make publish.family \
+            FAMILY_SUBPACKAGES=config \
+            XPKG_REG_ORGS=${{ env.XPKG_REG_ORG }} \
+            VERSION=${VERSION} \
+            CROSSPLANE_CLI=crossplane
 
       - name: Append extensions
         continue-on-error: true
         run: |
           up xpkg append --extensions-root=./extensions \
-            "${UPBOUND_REGISTRY}/provider-family-cloudflare:${VERSION}"
+            "${{ env.XPKG_REG_ORG }}/provider-family-cloudflare:${VERSION}"
 
   # ── Family sub-providers (one per API group, parallel after config) ──
   family-subproviders:
@@ -325,6 +280,11 @@ jobs:
           - zero
           - zone
     steps:
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
       - uses: docker/setup-buildx-action@v4
         with: { version: '${{ env.DOCKER_BUILDX_VERSION }}' }
 
@@ -369,82 +329,30 @@ jobs:
             echo '{"credHelpers":{"xpkg.upbound.io":"up"}}' > "$config_file"
           fi
 
-      - name: Build binary
+      - name: Build
         run: |
-          SP="${{ matrix.subpackage }}"
-          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
-            -trimpath -installsuffix static \
-            -ldflags "-X github.com/wildbitca/provider-upjet-cloudflare/internal/version.Version=${VERSION} -s -w" \
-            -o _output/bin/linux_amd64/${SP} \
-            ./cmd/provider/${SP}/
+          for platform in linux_amd64 linux_arm64; do
+            make build.family \
+              PLATFORM=${platform} \
+              FAMILY_SUBPACKAGES=${{ matrix.subpackage }} \
+              VERSION=${VERSION} \
+              CROSSPLANE_CLI=crossplane
+          done
 
-      - name: Build image, xpkg and publish
+      - name: Publish
         run: |
-          SP="${{ matrix.subpackage }}"
-          REPO="provider-cloudflare-${SP}"
-
-          BUILD_CTX=$(mktemp -d)
-          cp cluster/images/provider-upjet-cloudflare/Dockerfile "${BUILD_CTX}/"
-          cp cluster/images/provider-upjet-cloudflare/terraformrc.hcl "${BUILD_CTX}/"
-          cp -r _output/bin/ "${BUILD_CTX}/bin"
-
-          docker buildx build \
-            --platform linux/amd64 \
-            --build-arg SUBPACKAGE=${SP} \
-            --build-arg OPENTOFU_VERSION=${OPENTOFU_VERSION} \
-            --build-arg TERRAFORM_PROVIDER_SOURCE=${TERRAFORM_PROVIDER_SOURCE} \
-            --build-arg TERRAFORM_PROVIDER_VERSION=${TERRAFORM_PROVIDER_VERSION} \
-            --build-arg TERRAFORM_PROVIDER_DOWNLOAD_NAME=${TERRAFORM_PROVIDER_DOWNLOAD_NAME} \
-            --build-arg TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX=${TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX} \
-            --build-arg TERRAFORM_NATIVE_PROVIDER_BINARY=${TERRAFORM_NATIVE_PROVIDER_BINARY} \
-            --cache-from type=gha --cache-to type=gha,mode=max \
-            -t build-${REPO}:latest --load \
-            "${BUILD_CTX}"
-
-          WORK_DIR=$(mktemp -d)
-          mkdir -p "${WORK_DIR}/crds"
-          cp package/crds/${SP}.upjet-cloudflare.*.yaml "${WORK_DIR}/crds/" 2>/dev/null || true
-
-          CRD_COUNT=$(find "${WORK_DIR}/crds/" -name '*.yaml' 2>/dev/null | wc -l)
-          echo "${SP}: ${CRD_COUNT} CRDs"
-
-          cat > "${WORK_DIR}/crossplane.yaml" <<YAML
-          apiVersion: meta.pkg.crossplane.io/v1
-          kind: Provider
-          metadata:
-            name: ${REPO}
-            annotations:
-              meta.crossplane.io/maintainer: "Wildbit"
-              meta.crossplane.io/source: "https://github.com/wildbitca/provider-upjet-cloudflare"
-              meta.crossplane.io/license: "Apache-2.0"
-              meta.crossplane.io/description: "Crossplane provider for Cloudflare ${SP} resources. Part of provider-family-cloudflare."
-            labels:
-              pkg.crossplane.io/provider-family: provider-family-cloudflare
-          spec:
-            dependsOn:
-              - provider: ${UPBOUND_REGISTRY}/provider-family-cloudflare
-                version: ">= ${VERSION}"
-            capabilities:
-              - SafeStart
-          YAML
-          sed -i 's/^          //' "${WORK_DIR}/crossplane.yaml"
-
-          crossplane xpkg build \
-            --embed-runtime-image="build-${REPO}:latest" \
-            --package-root="${WORK_DIR}" \
-            --package-file="${WORK_DIR}/${REPO}.xpkg"
-
-          up xpkg push "${UPBOUND_REGISTRY}/${REPO}:${VERSION}" \
-            -f "${WORK_DIR}/${REPO}.xpkg"
-
-          echo "Published: ${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
+          make publish.family \
+            FAMILY_SUBPACKAGES=${{ matrix.subpackage }} \
+            XPKG_REG_ORGS=${{ env.XPKG_REG_ORG }} \
+            VERSION=${VERSION} \
+            CROSSPLANE_CLI=crossplane
 
       - name: Append extensions
         continue-on-error: true
         run: |
           SP="${{ matrix.subpackage }}"
           up xpkg append --extensions-root=./extensions \
-            "${UPBOUND_REGISTRY}/provider-cloudflare-${SP}:${VERSION}"
+            "${{ env.XPKG_REG_ORG }}/provider-cloudflare-${SP}:${VERSION}"
 
   # ── GitHub Release ────────────────────────────────────────────────────
   release:
