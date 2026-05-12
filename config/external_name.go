@@ -226,7 +226,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"cloudflare_zero_trust_gateway_settings":                             config.IdentifierFromProvider,
 	"cloudflare_zero_trust_list":                                         config.IdentifierFromProvider,
 	"cloudflare_zero_trust_network_hostname_route":                       config.IdentifierFromProvider,
-	"cloudflare_zero_trust_organization":                                 config.IdentifierFromProvider,
+	// TrustOrganization is a singleton per account; TF uses account_id as ID.
+	"cloudflare_zero_trust_organization": config.ParameterAsIdentifier("account_id"),
 	"cloudflare_zero_trust_risk_behavior":                                config.IdentifierFromProvider,
 	"cloudflare_zero_trust_risk_scoring_integration":                     config.IdentifierFromProvider,
 	"cloudflare_zero_trust_tunnel_cloudflared":                           config.IdentifierFromProvider,
