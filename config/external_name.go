@@ -1,6 +1,7 @@
 package config
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/crossplane/upjet/v2/pkg/config"
@@ -52,7 +53,13 @@ var accountIDAsExternalName = config.ExternalName{
 		}
 		return "", fmt.Errorf("cannot determine external name: neither account_id nor id found in tfstate")
 	},
-	GetIDFn:                config.ExternalNameAsID,
+	// cloudflare_zero_trust_organization does not support terraform import
+	// (documented CF provider limitation). Return "" so upjet skips the import
+	// attempt and falls through to CREATE, which is idempotent for this
+	// account-level singleton — CF updates the existing org in-place.
+	GetIDFn: func(_ context.Context, _ string, _ map[string]interface{}, _ map[string]interface{}) (string, error) {
+		return "", nil
+	},
 	OmittedFields:          []string{"account_id"},
 	DisableNameInitializer: true,
 }
