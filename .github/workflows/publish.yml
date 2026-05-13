@@ -9,6 +9,13 @@ on:
         description: "Version override (default: git tag)"
         default: ''
         required: false
+      packages:
+        description: >
+          Sub-providers to publish. Comma-separated list (e.g. "zero,dns") or
+          "all" / empty to publish every sub-provider. "family" is always
+          included — it does not need to be listed explicitly.
+        default: 'all'
+        required: false
 
 concurrency:
   group: publish-${{ github.ref }}
@@ -29,10 +36,12 @@ permissions:
   contents: write
 
 jobs:
+  # ── Resolve version + package list ────────────────────────────────────
   prepare:
     runs-on: ubuntu-24.04
     outputs:
       version: ${{ steps.version.outputs.version }}
+      subpackages: ${{ steps.packages.outputs.subpackages }}
     steps:
       - name: Resolve version
         id: version
@@ -40,7 +49,38 @@ jobs:
           V="${{ github.event.inputs.version }}"
           echo "version=${V:-${{ github.ref_name }}}" >> $GITHUB_OUTPUT
 
-  # ── Ensure Upbound repos exist (parallel with builds) ─────────────────
+      - name: Resolve package list
+        id: packages
+        run: |
+          ALL='["access","account","address","ai","api","argo","authenticated",
+                "bot","byo","calls","certificate","cloud","cloudflare","cloudforce",
+                "connectivity","content","custom","d1","dns","email","firewall",
+                "hostname","hyperdrive","image","keyless","leaked","list","load",
+                "logpull","logpush","magic","managed","mtls","notification",
+                "observatory","organization","origin","page","pages","queue","r2",
+                "rate","regional","registrar","schema","snippet","spectrum","sso",
+                "stream","tiered","token","total","turnstile","universal","url",
+                "user","waiting","web","web3","worker","workers","zero","zone"]'
+
+          INPUT="${{ github.event.inputs.packages }}"
+
+          if [ -z "$INPUT" ] || [ "$INPUT" = "all" ]; then
+            SUBPACKAGES=$(echo "$ALL" | tr -d '\n' | jq -c .)
+          else
+            # Parse comma-separated, strip whitespace and "family" (always built separately)
+            SUBPACKAGES=$(echo "$INPUT" \
+              | tr ',' '\n' \
+              | sed 's/[[:space:]]//g' \
+              | grep -v '^family$' \
+              | grep -v '^$' \
+              | jq -R . \
+              | jq -sc .)
+          fi
+
+          echo "subpackages=$SUBPACKAGES" >> $GITHUB_OUTPUT
+          echo "Will publish sub-providers: $SUBPACKAGES"
+
+  # ── Ensure Upbound repos exist (only for packages being published) ────
   ensure-repos:
     runs-on: ubuntu-24.04
     needs: prepare
@@ -56,82 +96,24 @@ jobs:
 
       - name: Ensure repos exist
         run: |
-          REPOS=(
-            provider-family-cloudflare
-            provider-cloudflare-access
-            provider-cloudflare-account
-            provider-cloudflare-address
-            provider-cloudflare-ai
-            provider-cloudflare-api
-            provider-cloudflare-argo
-            provider-cloudflare-authenticated
-            provider-cloudflare-bot
-            provider-cloudflare-byo
-            provider-cloudflare-calls
-            provider-cloudflare-certificate
-            provider-cloudflare-cloud
-            provider-cloudflare-cloudflare
-            provider-cloudflare-cloudforce
-            provider-cloudflare-connectivity
-            provider-cloudflare-content
-            provider-cloudflare-custom
-            provider-cloudflare-d1
-            provider-cloudflare-dns
-            provider-cloudflare-email
-            provider-cloudflare-firewall
-            provider-cloudflare-hostname
-            provider-cloudflare-hyperdrive
-            provider-cloudflare-image
-            provider-cloudflare-keyless
-            provider-cloudflare-leaked
-            provider-cloudflare-list
-            provider-cloudflare-load
-            provider-cloudflare-logpull
-            provider-cloudflare-logpush
-            provider-cloudflare-magic
-            provider-cloudflare-managed
-            provider-cloudflare-mtls
-            provider-cloudflare-notification
-            provider-cloudflare-observatory
-            provider-cloudflare-organization
-            provider-cloudflare-origin
-            provider-cloudflare-page
-            provider-cloudflare-pages
-            provider-cloudflare-queue
-            provider-cloudflare-r2
-            provider-cloudflare-rate
-            provider-cloudflare-regional
-            provider-cloudflare-registrar
-            provider-cloudflare-schema
-            provider-cloudflare-snippet
-            provider-cloudflare-spectrum
-            provider-cloudflare-sso
-            provider-cloudflare-stream
-            provider-cloudflare-tiered
-            provider-cloudflare-token
-            provider-cloudflare-total
-            provider-cloudflare-turnstile
-            provider-cloudflare-universal
-            provider-cloudflare-url
-            provider-cloudflare-user
-            provider-cloudflare-waiting
-            provider-cloudflare-web
-            provider-cloudflare-web3
-            provider-cloudflare-worker
-            provider-cloudflare-workers
-            provider-cloudflare-zero
-            provider-cloudflare-zone
-          )
+          # Build the list of repos being published in this run.
+          # family-cloudflare is always included.
+          SUBPACKAGES='${{ needs.prepare.outputs.subpackages }}'
+          REPOS=("provider-family-cloudflare")
+          while IFS= read -r pkg; do
+            REPOS+=("provider-cloudflare-${pkg}")
+          done < <(echo "$SUBPACKAGES" | jq -r '.[]')
+
           for repo in "${REPOS[@]}"; do
             if ! up repository get "$repo" >/dev/null 2>&1; then
               echo "Creating $repo..."
               up repository create "$repo"
             fi
             up repository update --private=false --publish --force "$repo"
-            echo "✓ $repo published"
+            echo "✓ $repo"
           done
 
-  # ── Family config (ProviderConfig CRDs — must publish before sub-providers) ──
+  # ── Family config (ProviderConfig CRDs — published before sub-providers) ──
   family-config:
     runs-on: ubuntu-24.04
     needs: [prepare, ensure-repos]
@@ -250,7 +232,7 @@ jobs:
           up xpkg append --extensions-root=./extensions \
             "${UPBOUND_REGISTRY}/provider-family-cloudflare:${VERSION}"
 
-  # ── Family sub-providers (one per API group, parallel after config) ──
+  # ── Family sub-providers (only selected packages, parallel after family-config) ──
   family-subproviders:
     runs-on: ubuntu-24.04
     needs: [prepare, family-config]
@@ -260,70 +242,7 @@ jobs:
       fail-fast: false
       max-parallel: 8
       matrix:
-        subpackage:
-          - access
-          - account
-          - address
-          - ai
-          - api
-          - argo
-          - authenticated
-          - bot
-          - byo
-          - calls
-          - certificate
-          - cloud
-          - cloudflare
-          - cloudforce
-          - connectivity
-          - content
-          - custom
-          - d1
-          - dns
-          - email
-          - firewall
-          - hostname
-          - hyperdrive
-          - image
-          - keyless
-          - leaked
-          - list
-          - load
-          - logpull
-          - logpush
-          - magic
-          - managed
-          - mtls
-          - notification
-          - observatory
-          - organization
-          - origin
-          - page
-          - pages
-          - queue
-          - r2
-          - rate
-          - regional
-          - registrar
-          - schema
-          - snippet
-          - spectrum
-          - sso
-          - stream
-          - tiered
-          - token
-          - total
-          - turnstile
-          - universal
-          - url
-          - user
-          - waiting
-          - web
-          - web3
-          - worker
-          - workers
-          - zero
-          - zone
+        subpackage: ${{ fromJson(needs.prepare.outputs.subpackages) }}
     steps:
       - uses: docker/setup-buildx-action@v4
         with: { version: '${{ env.DOCKER_BUILDX_VERSION }}' }
