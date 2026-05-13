@@ -25,6 +25,38 @@ var zoneIDAsExternalName = config.ExternalName{
 	DisableNameInitializer: true,
 }
 
+// accountIDAsExternalName is a custom ExternalName config for
+// cloudflare_zero_trust_organization. This resource is a per-account
+// singleton whose TF provider schema:
+//   - never sets the `id` attribute in TF state (it remains null after apply/refresh)
+//   - does not support `terraform import` (documented CF provider limitation)
+//
+// Using account_id as the external name works because:
+//  1. After CREATE/UPDATE, TF state always has account_id populated.
+//  2. GetExternalNameFn falls back to account_id when id is absent.
+//
+// Pod-restart recovery: when the ephemeral TF workspace is empty, the
+// import attempt fails (unsupported). upjet then falls through to CREATE,
+// which is idempotent for this singleton — CF updates the existing org.
+// The next observe reads account_id from the freshly populated state.
+var accountIDAsExternalName = config.ExternalName{
+	SetIdentifierArgumentFn: func(base map[string]interface{}, externalName string) {
+		base["account_id"] = externalName
+	},
+	GetExternalNameFn: func(tfstate map[string]interface{}) (string, error) {
+		if id, ok := tfstate["account_id"].(string); ok && id != "" {
+			return id, nil
+		}
+		if id, ok := tfstate["id"].(string); ok && id != "" {
+			return id, nil
+		}
+		return "", fmt.Errorf("cannot determine external name: neither account_id nor id found in tfstate")
+	},
+	GetIDFn:                config.ExternalNameAsID,
+	OmittedFields:          []string{"account_id"},
+	DisableNameInitializer: true,
+}
+
 // ExternalNameConfigs contains all external name configurations for this
 // provider. Cloudflare uses Terraform Plugin Framework. All 198 managed
 // resources use IdentifierFromProvider (provider-generated IDs).
@@ -227,7 +259,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"cloudflare_zero_trust_list":                                         config.IdentifierFromProvider,
 	"cloudflare_zero_trust_network_hostname_route":                       config.IdentifierFromProvider,
 	// TrustOrganization is a singleton per account; TF uses account_id as ID.
-	"cloudflare_zero_trust_organization": config.ParameterAsIdentifier("account_id"),
+	"cloudflare_zero_trust_organization": accountIDAsExternalName,
 	"cloudflare_zero_trust_risk_behavior":                                config.IdentifierFromProvider,
 	"cloudflare_zero_trust_risk_scoring_integration":                     config.IdentifierFromProvider,
 	"cloudflare_zero_trust_tunnel_cloudflared":                           config.IdentifierFromProvider,
