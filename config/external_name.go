@@ -64,11 +64,47 @@ var accountIDAsExternalName = config.ExternalName{
 	DisableNameInitializer: true,
 }
 
+// bucketNameAsExternalName is a custom ExternalName config for R2
+// bucket-scoped singletons (lifecycle, cors, lock, sippy, event
+// notification). These resources' Terraform Plugin Framework schema:
+//   - never sets the `id` attribute in TF state (PUT /lifecycle and
+//     similar endpoints return 204 No Content — no id field exists)
+//   - the parent bucket is unambiguously identified by `bucket_name` +
+//     account_id, so the bucket name is the natural identifier.
+//
+// Without this, observe fails with "cannot find id in tfstate" and the
+// resource stays SYNCED=False even though Create/Update went through.
+var bucketNameAsExternalName = config.ExternalName{
+	SetIdentifierArgumentFn: func(base map[string]interface{}, externalName string) {
+		base["bucket_name"] = externalName
+	},
+	GetExternalNameFn: func(tfstate map[string]interface{}) (string, error) {
+		if id, ok := tfstate["bucket_name"].(string); ok && id != "" {
+			return id, nil
+		}
+		if id, ok := tfstate["id"].(string); ok && id != "" {
+			return id, nil
+		}
+		return "", fmt.Errorf("cannot determine external name: neither bucket_name nor id found in tfstate")
+	},
+	// R2 bucket-scoped singletons do not support `terraform import`
+	// (no documented importable id format). Return "" so upjet skips
+	// the import attempt and falls through to CREATE, which is
+	// idempotent for these singletons (PUT replaces the existing
+	// config on the bucket).
+	GetIDFn: func(_ context.Context, _ string, _ map[string]interface{}, _ map[string]interface{}) (string, error) {
+		return "", nil
+	},
+	OmittedFields:          []string{"bucket_name"},
+	DisableNameInitializer: true,
+}
+
 // ExternalNameConfigs contains all external name configurations for this
 // provider. Cloudflare uses Terraform Plugin Framework. All 198 managed
 // resources use IdentifierFromProvider (provider-generated IDs).
 // Resources whose TF provider schema omits the `id` attribute use
-// zoneIDAsExternalName instead.
+// zoneIDAsExternalName / accountIDAsExternalName / bucketNameAsExternalName
+// depending on their scope.
 // See https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs
 var ExternalNameConfigs = map[string]config.ExternalName{
 	"cloudflare_access_rule":                                             config.IdentifierFromProvider,
@@ -170,11 +206,13 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"cloudflare_queue":                                                   config.IdentifierFromProvider,
 	"cloudflare_queue_consumer":                                          config.IdentifierFromProvider,
 	"cloudflare_r2_bucket":                                               config.IdentifierFromProvider,
-	"cloudflare_r2_bucket_cors":                                          config.IdentifierFromProvider,
-	"cloudflare_r2_bucket_event_notification":                            config.IdentifierFromProvider,
-	"cloudflare_r2_bucket_lifecycle":                                     config.IdentifierFromProvider,
-	"cloudflare_r2_bucket_lock":                                          config.IdentifierFromProvider,
-	"cloudflare_r2_bucket_sippy":                                         config.IdentifierFromProvider,
+	// R2 bucket-scoped singletons: TF provider does not populate `id` in
+	// state (PUT endpoints return 204). Use bucket_name as external name.
+	"cloudflare_r2_bucket_cors":                                          bucketNameAsExternalName,
+	"cloudflare_r2_bucket_event_notification":                            bucketNameAsExternalName,
+	"cloudflare_r2_bucket_lifecycle":                                     bucketNameAsExternalName,
+	"cloudflare_r2_bucket_lock":                                          bucketNameAsExternalName,
+	"cloudflare_r2_bucket_sippy":                                         bucketNameAsExternalName,
 	"cloudflare_r2_custom_domain":                                        config.IdentifierFromProvider,
 	"cloudflare_r2_managed_domain":                                       config.IdentifierFromProvider,
 	"cloudflare_rate_limit":                                              config.IdentifierFromProvider,
