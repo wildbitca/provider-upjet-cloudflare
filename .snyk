@@ -16,3 +16,10 @@ exclude:
 
     # Development scripts
     - hack/**
+
+    # Docker — local dev / image build only. Runtime is serverless (Cloudflare
+    # Workers + Supabase); base-image OS packages are not a production surface.
+    - Dockerfile
+    - "**/Dockerfile"
+    - "**/*.dockerfile"
+    - cluster/images/**
