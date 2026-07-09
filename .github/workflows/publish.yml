@@ -105,13 +105,19 @@ jobs:
             REPOS+=("provider-cloudflare-${pkg}")
           done < <(echo "$SUBPACKAGES" | jq -r '.[]')
 
+          # Only create + publish repos that don't exist yet. Running
+          # `up repository update` for all ~60 repos on every publish trips
+          # Upbound's "Repository Update Rate Limit". Existing repos are already
+          # public+publish, so a get-and-skip is enough.
           for repo in "${REPOS[@]}"; do
-            if ! up repository get "$repo" >/dev/null 2>&1; then
-              echo "Creating $repo..."
-              up repository create "$repo"
+            if up repository get "$repo" >/dev/null 2>&1; then
+              echo "= $repo (exists)"
+              continue
             fi
+            echo "Creating $repo..."
+            up repository create "$repo"
             up repository update --private=false --publish --force "$repo"
-            echo "✓ $repo"
+            echo "✓ $repo (created)"
           done
 
   # ── Family config (ProviderConfig CRDs — published before sub-providers) ──
