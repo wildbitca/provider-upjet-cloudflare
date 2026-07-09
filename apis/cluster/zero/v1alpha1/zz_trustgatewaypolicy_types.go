@@ -55,9 +55,9 @@ type BisoAdminControlsInitParameters struct {
 	// Set to false to enable keyboard usage. Only applies when `version == "v1"`.
 	Dk *bool `json:"dk,omitempty" tf:"dk,omitempty"`
 
-	// (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+	// (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. If this field is absent, downloading remains enabled. Applies only when version == "v2".
 	// Available values: "enabled", "disabled", "remote_only".
-	// Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+	// Configure download behavior. When set to remote_only, users can view downloads but cannot save them. If this field is absent, downloading remains enabled. Applies only when version == "v2".
 	// Available values: "enabled", "disabled", "remote_only".
 	Download *string `json:"download,omitempty" tf:"download,omitempty"`
 
@@ -97,6 +97,10 @@ type BisoAdminControlsInitParameters struct {
 	// Indicate which version of the browser isolation controls should apply.
 	// Available values: "v1", "v2".
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+
+	// (String) Specify the watermark ID (UUID) to apply to the isolated browser session. When present, enables watermark rendering in the isolated browser.
+	// Specify the watermark ID (UUID) to apply to the isolated browser session. When present, enables watermark rendering in the isolated browser.
+	WmID *string `json:"wmId,omitempty" tf:"wm_id,omitempty"`
 }
 
 type BisoAdminControlsObservation struct {
@@ -119,9 +123,9 @@ type BisoAdminControlsObservation struct {
 	// Set to false to enable keyboard usage. Only applies when `version == "v1"`.
 	Dk *bool `json:"dk,omitempty" tf:"dk,omitempty"`
 
-	// (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+	// (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. If this field is absent, downloading remains enabled. Applies only when version == "v2".
 	// Available values: "enabled", "disabled", "remote_only".
-	// Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+	// Configure download behavior. When set to remote_only, users can view downloads but cannot save them. If this field is absent, downloading remains enabled. Applies only when version == "v2".
 	// Available values: "enabled", "disabled", "remote_only".
 	Download *string `json:"download,omitempty" tf:"download,omitempty"`
 
@@ -161,6 +165,10 @@ type BisoAdminControlsObservation struct {
 	// Indicate which version of the browser isolation controls should apply.
 	// Available values: "v1", "v2".
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+
+	// (String) Specify the watermark ID (UUID) to apply to the isolated browser session. When present, enables watermark rendering in the isolated browser.
+	// Specify the watermark ID (UUID) to apply to the isolated browser session. When present, enables watermark rendering in the isolated browser.
+	WmID *string `json:"wmId,omitempty" tf:"wm_id,omitempty"`
 }
 
 type BisoAdminControlsParameters struct {
@@ -187,9 +195,9 @@ type BisoAdminControlsParameters struct {
 	// +kubebuilder:validation:Optional
 	Dk *bool `json:"dk,omitempty" tf:"dk,omitempty"`
 
-	// (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+	// (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. If this field is absent, downloading remains enabled. Applies only when version == "v2".
 	// Available values: "enabled", "disabled", "remote_only".
-	// Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+	// Configure download behavior. When set to remote_only, users can view downloads but cannot save them. If this field is absent, downloading remains enabled. Applies only when version == "v2".
 	// Available values: "enabled", "disabled", "remote_only".
 	// +kubebuilder:validation:Optional
 	Download *string `json:"download,omitempty" tf:"download,omitempty"`
@@ -237,6 +245,11 @@ type BisoAdminControlsParameters struct {
 	// Available values: "v1", "v2".
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+
+	// (String) Specify the watermark ID (UUID) to apply to the isolated browser session. When present, enables watermark rendering in the isolated browser.
+	// Specify the watermark ID (UUID) to apply to the isolated browser session. When present, enables watermark rendering in the isolated browser.
+	// +kubebuilder:validation:Optional
+	WmID *string `json:"wmId,omitempty" tf:"wm_id,omitempty"`
 }
 
 type BlockPageInitParameters struct {

@@ -21,7 +21,7 @@ func (mg *Job) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Job
 func (tr *Job) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"ownership_challenge": "ownershipChallengeSecretRef"}
+	return map[string]string{"destination_conf": "destinationConfSecretRef", "ownership_challenge": "ownershipChallengeSecretRef"}
 }
 
 // GetObservation of this Job
@@ -125,5 +125,5 @@ func (tr *Job) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *Job) GetTerraformSchemaVersion() int {
-	return 1
+	return 500
 }

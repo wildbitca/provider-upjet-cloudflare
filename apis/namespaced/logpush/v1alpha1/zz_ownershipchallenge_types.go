@@ -20,9 +20,9 @@ type OwnershipChallengeInitParameters struct {
 	// The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+	// (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
 	// Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-	DestinationConf *string `json:"destinationConf,omitempty" tf:"destination_conf,omitempty"`
+	DestinationConfSecretRef v1.LocalSecretKeySelector `json:"destinationConfSecretRef" tf:"-"`
 
 	// (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
 	// The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -34,10 +34,6 @@ type OwnershipChallengeObservation struct {
 	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
 	// The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
-
-	// (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-	// Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-	DestinationConf *string `json:"destinationConf,omitempty" tf:"destination_conf,omitempty"`
 
 	// (String)
 	Filename *string `json:"filename,omitempty" tf:"filename,omitempty"`
@@ -62,10 +58,10 @@ type OwnershipChallengeParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+	// (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
 	// Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
 	// +kubebuilder:validation:Optional
-	DestinationConf *string `json:"destinationConf,omitempty" tf:"destination_conf,omitempty"`
+	DestinationConfSecretRef v1.LocalSecretKeySelector `json:"destinationConfSecretRef" tf:"-"`
 
 	// (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
 	// The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -100,7 +96,7 @@ type OwnershipChallengeStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// OwnershipChallenge is the Schema for the OwnershipChallenges API.
+// OwnershipChallenge is the Schema for the OwnershipChallenges API. Accepted Permissions Logs Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -109,7 +105,7 @@ type OwnershipChallengeStatus struct {
 type OwnershipChallenge struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.destinationConf) || (has(self.initProvider) && has(self.initProvider.destinationConf))",message="spec.forProvider.destinationConf is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.destinationConfSecretRef)",message="spec.forProvider.destinationConfSecretRef is a required parameter"
 	Spec   OwnershipChallengeSpec   `json:"spec"`
 	Status OwnershipChallengeStatus `json:"status,omitempty"`
 }

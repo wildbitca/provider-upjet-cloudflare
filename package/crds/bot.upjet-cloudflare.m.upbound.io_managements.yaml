@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Management is the Schema for the Managements API.
+        description: Management is the Schema for the Managements API. Accepted Permissions
+          Bot Management ReadBot Management Write
         properties:
           apiVersion:
             description: |-
@@ -81,6 +82,13 @@ spec:
                       Available values: "off", "policy_only".
                       Specifies the Robots Access Control License variant to use.
                       Available values: "off", "policy_only".
+                    type: string
+                  contentBotsProtection:
+                    description: |-
+                      (String) Enable rule to block content bots. When enabled, blocks automated traffic with low bot scores, excluding safe verified bot categories. Exceptions should be managed via skip rules.
+                      Available values: "block", "disabled".
+                      Enable rule to block content bots. When enabled, blocks automated traffic with low bot scores, excluding safe verified bot categories. Exceptions should be managed via skip rules.
+                      Available values: "block", "disabled".
                     type: string
                   crawlerProtection:
                     description: |-
@@ -186,6 +194,13 @@ spec:
                       Available values: "off", "policy_only".
                       Specifies the Robots Access Control License variant to use.
                       Available values: "off", "policy_only".
+                    type: string
+                  contentBotsProtection:
+                    description: |-
+                      (String) Enable rule to block content bots. When enabled, blocks automated traffic with low bot scores, excluding safe verified bot categories. Exceptions should be managed via skip rules.
+                      Available values: "block", "disabled".
+                      Enable rule to block content bots. When enabled, blocks automated traffic with low bot scores, excluding safe verified bot categories. Exceptions should be managed via skip rules.
+                      Available values: "block", "disabled".
                     type: string
                   crawlerProtection:
                     description: |-
@@ -346,6 +361,13 @@ spec:
                       Available values: "off", "policy_only".
                       Specifies the Robots Access Control License variant to use.
                       Available values: "off", "policy_only".
+                    type: string
+                  contentBotsProtection:
+                    description: |-
+                      (String) Enable rule to block content bots. When enabled, blocks automated traffic with low bot scores, excluding safe verified bot categories. Exceptions should be managed via skip rules.
+                      Available values: "block", "disabled".
+                      Enable rule to block content bots. When enabled, blocks automated traffic with low bot scores, excluding safe verified bot categories. Exceptions should be managed via skip rules.
+                      Available values: "block", "disabled".
                     type: string
                   crawlerProtection:
                     description: |-

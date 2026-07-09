@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustAccessIdentityProvider is the Schema for the TrustAccessIdentityProviders
-          API.
+        description: 'TrustAccessIdentityProvider is the Schema for the TrustAccessIdentityProviders
+          API. Accepted Permissions Access: Organizations, Identity Providers, and
+          Groups ReadAccess: Organizations, Identity Providers, and Groups Write'
         properties:
           apiVersion:
             description: |-
@@ -234,6 +235,20 @@ spec:
                           (String) The claim name for email in the id_token response.
                           The claim name for email in the id_token response.
                         type: string
+                      enableEncryption:
+                        description: |-
+                          (Boolean) Enable SAML assertion encryption. When enabled, the Identity Provider will encrypt
+                          SAML assertions using the certificate from the assigned certificate set.
+                          Enable SAML assertion encryption. When enabled, the Identity Provider will encrypt
+                          SAML assertions using the certificate from the assigned certificate set.
+
+                          To enable encryption:
+                          1. Create a certificate set via POST to `/identity_providers/{id}/saml_certificate`
+                          2. Set this field to `true` and include `saml_certificate_set_id` in the PUT request
+                          3. Configure the public certificate in your external Identity Provider
+
+                          Note: Requires `saml_certificate_set_id` to be set when `true`.
+                        type: boolean
                       headerAttributes:
                         description: (Attributes List) Add a list of attribute names
                           that will be returned in the response header from the Access
@@ -291,6 +306,11 @@ spec:
                           Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
                           Available values: "login", "select_account", "none".
                         type: string
+                      restrictToAccountMembers:
+                        description: |-
+                          (Boolean) When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
+                          When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
+                        type: boolean
                       scopes:
                         description: |-
                           (List of String) OAuth scopes
@@ -324,6 +344,20 @@ spec:
                       (String) The name of the identity provider, shown to users on the login page.
                       The name of the identity provider, shown to users on the login page.
                     type: string
+                  readOnly:
+                    description: |-
+                      (Boolean) Indicates that the identity provider is immutable and cannot be updated or deleted via the API.
+                      Indicates that the identity provider is immutable and cannot be updated or deleted via the API.
+                    type: boolean
+                  samlCertificateSetId:
+                    description: |-
+                      (String) The UID of the SAML encryption certificate set assigned to this Identity Provider.
+                      Only present for SAML identity providers with encryption configured.
+                      Create a certificate set via POST to /identity_providers/{id}/saml_certificate.
+                      The UID of the SAML encryption certificate set assigned to this Identity Provider.
+                      Only present for SAML identity providers with encryption configured.
+                      Create a certificate set via POST to `/identity_providers/{id}/saml_certificate`.
+                    type: string
                   scimConfig:
                     description: Domain Identity Management (SCIM) with the identity
                       provider. (see below for nested schema)
@@ -353,9 +387,9 @@ spec:
                     type: object
                   type:
                     description: |-
-                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
                       The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
                     type: string
                   zoneId:
                     description: |-
@@ -550,6 +584,20 @@ spec:
                           (String) The claim name for email in the id_token response.
                           The claim name for email in the id_token response.
                         type: string
+                      enableEncryption:
+                        description: |-
+                          (Boolean) Enable SAML assertion encryption. When enabled, the Identity Provider will encrypt
+                          SAML assertions using the certificate from the assigned certificate set.
+                          Enable SAML assertion encryption. When enabled, the Identity Provider will encrypt
+                          SAML assertions using the certificate from the assigned certificate set.
+
+                          To enable encryption:
+                          1. Create a certificate set via POST to `/identity_providers/{id}/saml_certificate`
+                          2. Set this field to `true` and include `saml_certificate_set_id` in the PUT request
+                          3. Configure the public certificate in your external Identity Provider
+
+                          Note: Requires `saml_certificate_set_id` to be set when `true`.
+                        type: boolean
                       headerAttributes:
                         description: (Attributes List) Add a list of attribute names
                           that will be returned in the response header from the Access
@@ -607,6 +655,11 @@ spec:
                           Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
                           Available values: "login", "select_account", "none".
                         type: string
+                      restrictToAccountMembers:
+                        description: |-
+                          (Boolean) When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
+                          When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
+                        type: boolean
                       scopes:
                         description: |-
                           (List of String) OAuth scopes
@@ -640,6 +693,20 @@ spec:
                       (String) The name of the identity provider, shown to users on the login page.
                       The name of the identity provider, shown to users on the login page.
                     type: string
+                  readOnly:
+                    description: |-
+                      (Boolean) Indicates that the identity provider is immutable and cannot be updated or deleted via the API.
+                      Indicates that the identity provider is immutable and cannot be updated or deleted via the API.
+                    type: boolean
+                  samlCertificateSetId:
+                    description: |-
+                      (String) The UID of the SAML encryption certificate set assigned to this Identity Provider.
+                      Only present for SAML identity providers with encryption configured.
+                      Create a certificate set via POST to /identity_providers/{id}/saml_certificate.
+                      The UID of the SAML encryption certificate set assigned to this Identity Provider.
+                      Only present for SAML identity providers with encryption configured.
+                      Create a certificate set via POST to `/identity_providers/{id}/saml_certificate`.
+                    type: string
                   scimConfig:
                     description: Domain Identity Management (SCIM) with the identity
                       provider. (see below for nested schema)
@@ -669,9 +736,9 @@ spec:
                     type: object
                   type:
                     description: |-
-                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
                       The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
                     type: string
                   zoneId:
                     description: |-
@@ -836,6 +903,20 @@ spec:
                           (String) The claim name for email in the id_token response.
                           The claim name for email in the id_token response.
                         type: string
+                      enableEncryption:
+                        description: |-
+                          (Boolean) Enable SAML assertion encryption. When enabled, the Identity Provider will encrypt
+                          SAML assertions using the certificate from the assigned certificate set.
+                          Enable SAML assertion encryption. When enabled, the Identity Provider will encrypt
+                          SAML assertions using the certificate from the assigned certificate set.
+
+                          To enable encryption:
+                          1. Create a certificate set via POST to `/identity_providers/{id}/saml_certificate`
+                          2. Set this field to `true` and include `saml_certificate_set_id` in the PUT request
+                          3. Configure the public certificate in your external Identity Provider
+
+                          Note: Requires `saml_certificate_set_id` to be set when `true`.
+                        type: boolean
                       headerAttributes:
                         description: (Attributes List) Add a list of attribute names
                           that will be returned in the response header from the Access
@@ -896,6 +977,11 @@ spec:
                       redirectUrl:
                         description: (String)
                         type: string
+                      restrictToAccountMembers:
+                        description: |-
+                          (Boolean) When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
+                          When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
+                        type: boolean
                       scopes:
                         description: |-
                           (List of String) OAuth scopes
@@ -932,6 +1018,74 @@ spec:
                       (String) The name of the identity provider, shown to users on the login page.
                       The name of the identity provider, shown to users on the login page.
                     type: string
+                  readOnly:
+                    description: |-
+                      (Boolean) Indicates that the identity provider is immutable and cannot be updated or deleted via the API.
+                      Indicates that the identity provider is immutable and cannot be updated or deleted via the API.
+                    type: boolean
+                  samlCertificateSet:
+                    description: |-
+                      (Attributes) The SAML encryption certificate set details, including current and previous certificates.
+                      Only present for SAML identity providers with a certificate set assigned. (see below for nested schema)
+                    properties:
+                      createdAt:
+                        description: |-
+                          (String) Timestamp when the certificate set was created
+                          Timestamp when the certificate set was created
+                        type: string
+                      currentCertificate:
+                        description: (Attributes) The currently active certificate
+                          used for encrypting SAML assertions (see below for nested
+                          schema)
+                        properties:
+                          isCurrent:
+                            description: |-
+                              (Boolean) Indicates whether this is the currently active certificate
+                              Indicates whether this is the currently active certificate
+                            type: boolean
+                          notAfter:
+                            description: |-
+                              (String) Certificate expiration date. Certificates are automatically rotated 30 days before expiration.
+                              Certificate expiration date. Certificates are automatically rotated 30 days before expiration.
+                            type: string
+                          publicCertificate:
+                            description: |-
+                              encoded X.509 certificate containing the public key.
+                              Configure this certificate in your external SAML Identity Provider to enable encryption.
+                              PEM-encoded X.509 certificate containing the public key.
+                              Configure this certificate in your external SAML Identity Provider to enable encryption.
+                            type: string
+                          uid:
+                            description: |-
+                              (String) Unique identifier for the certificate set
+                              Unique identifier for the certificate
+                            type: string
+                        type: object
+                      previousCertificate:
+                        description: |-
+                          (String) The previous certificate, maintained during rotation to ensure continuity. Null if no rotation has occurred. Mirrors the structure of saml_certificate.
+                          The previous certificate, maintained during rotation to ensure continuity. Null if no rotation has occurred. Mirrors the structure of `saml_certificate`.
+                        type: string
+                      uid:
+                        description: |-
+                          (String) Unique identifier for the certificate set
+                          Unique identifier for the certificate set
+                        type: string
+                      updatedAt:
+                        description: |-
+                          (String) Timestamp when the certificate set was last updated (e.g., during rotation)
+                          Timestamp when the certificate set was last updated (e.g., during rotation)
+                        type: string
+                    type: object
+                  samlCertificateSetId:
+                    description: |-
+                      (String) The UID of the SAML encryption certificate set assigned to this Identity Provider.
+                      Only present for SAML identity providers with encryption configured.
+                      Create a certificate set via POST to /identity_providers/{id}/saml_certificate.
+                      The UID of the SAML encryption certificate set assigned to this Identity Provider.
+                      Only present for SAML identity providers with encryption configured.
+                      Create a certificate set via POST to `/identity_providers/{id}/saml_certificate`.
+                    type: string
                   scimConfig:
                     description: Domain Identity Management (SCIM) with the identity
                       provider. (see below for nested schema)
@@ -966,9 +1120,9 @@ spec:
                     type: object
                   type:
                     description: |-
-                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
                       The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
                     type: string
                   zoneId:
                     description: |-

@@ -34,8 +34,10 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustTunnelCloudflared is the Schema for the TrustTunnelCloudflareds
-          API.
+        description: 'TrustTunnelCloudflared is the Schema for the TrustTunnelCloudflareds
+          API. Accepted Permissions Cloudflare One Connector: cloudflared ReadCloudflare
+          One Connector: cloudflared WriteCloudflare One Connectors ReadCloudflare
+          One Connectors WriteCloudflare Tunnel ReadCloudflare Tunnel Write'
         properties:
           apiVersion:
             description: |-

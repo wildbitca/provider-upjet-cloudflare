@@ -107,7 +107,7 @@ type OneRequestMessageStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// OneRequestMessage is the Schema for the OneRequestMessages API.
+// OneRequestMessage is the Schema for the OneRequestMessages API. Accepted Permissions Cloudforce One Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

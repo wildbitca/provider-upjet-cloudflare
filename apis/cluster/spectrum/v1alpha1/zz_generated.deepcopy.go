@@ -104,6 +104,11 @@ func (in *ApplicationInitParameters) DeepCopyInto(out *ApplicationInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.VirtualNetworkID != nil {
+		in, out := &in.VirtualNetworkID, &out.VirtualNetworkID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ZoneID != nil {
 		in, out := &in.ZoneID, &out.ZoneID
 		*out = new(string)
@@ -232,6 +237,11 @@ func (in *ApplicationObservation) DeepCopyInto(out *ApplicationObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.VirtualNetworkID != nil {
+		in, out := &in.VirtualNetworkID, &out.VirtualNetworkID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ZoneID != nil {
 		in, out := &in.ZoneID, &out.ZoneID
 		*out = new(string)
@@ -310,6 +320,11 @@ func (in *ApplicationParameters) DeepCopyInto(out *ApplicationParameters) {
 	}
 	if in.TrafficType != nil {
 		in, out := &in.TrafficType, &out.TrafficType
+		*out = new(string)
+		**out = **in
+	}
+	if in.VirtualNetworkID != nil {
+		in, out := &in.VirtualNetworkID, &out.VirtualNetworkID
 		*out = new(string)
 		**out = **in
 	}

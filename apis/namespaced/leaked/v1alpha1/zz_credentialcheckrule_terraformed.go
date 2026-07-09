@@ -125,5 +125,5 @@ func (tr *CredentialCheckRule) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *CredentialCheckRule) GetTerraformSchemaVersion() int {
-	return 0
+	return 500
 }

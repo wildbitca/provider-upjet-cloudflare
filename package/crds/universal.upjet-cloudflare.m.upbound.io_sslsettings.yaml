@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SSLSetting is the Schema for the SSLSettings API.
+        description: SSLSetting is the Schema for the SSLSettings API. Accepted Permissions
+          SSL and Certificates ReadSSL and Certificates Write
         properties:
           apiVersion:
             description: |-

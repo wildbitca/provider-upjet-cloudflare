@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Organization is the Schema for the Organizations API.
+        description: Organization is the Schema for the Organizations API. Accepted
+          Permissions User Details Write
         properties:
           apiVersion:
             description: |-
@@ -270,6 +271,21 @@ spec:
                             description: (String)
                             type: string
                         type: object
+                      hierarchyTags:
+                        description: |-
+                          element array containing their own tag; sub-organizations return
+                          [rootTag, ...intermediateTags, parentTag, selfTag]. Useful for
+                          constructing authorization scopes that need to cover every ancestor
+                          in the hierarchy.
+                          Ordered chain of organization tags from the root organization down to
+                          (and including) this organization itself. Root organizations return a
+                          single-element array containing their own tag; sub-organizations return
+                          `[rootTag, ...intermediateTags, parentTag, selfTag]`. Useful for
+                          constructing authorization scopes that need to cover every ancestor
+                          in the hierarchy.
+                        items:
+                          type: string
+                        type: array
                       managedBy:
                         description: (String)
                         type: string

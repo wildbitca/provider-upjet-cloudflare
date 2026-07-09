@@ -11,5 +11,9 @@ spec:
   forProvider:
     accountId: account_id
     className: x
+    limits:
+      steps: 1
+    schedules:
+    - cron: x
     scriptName: x
     workflowName: x

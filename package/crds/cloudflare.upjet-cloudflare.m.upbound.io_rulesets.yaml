@@ -354,6 +354,11 @@ spec:
                                 (String) The response content.
                                 The response content.
                               type: string
+                            contentConverter:
+                              description: |-
+                                (Boolean) Whether to enable content conversion (e.g., HTML to Markdown).
+                                Whether to enable content conversion (e.g., HTML to Markdown).
+                              type: boolean
                             contentType:
                               description: |-
                                 (String) The content type header to set with the error response.
@@ -921,6 +926,11 @@ spec:
                                 (Number) A timeout value between two successive read operations to use for your origin server. Historically, the timeout value between two read options from Cloudflare to an origin server is 100 seconds. If you are attempting to reduce HTTP 524 errors because of timeouts from an origin server, try increasing this timeout value.
                                 A timeout value between two successive read operations to use for your origin server. Historically, the timeout value between two read options from Cloudflare to an origin server is 100 seconds. If you are attempting to reduce HTTP 524 errors because of timeouts from an origin server, try increasing this timeout value.
                               type: number
+                            redirectsForAiTraining:
+                              description: |-
+                                (Boolean) Whether to redirect verified AI training crawlers to canonical URLs.
+                                Whether to redirect verified AI training crawlers to canonical URLs.
+                              type: boolean
                             requestBodyBuffering:
                               description: |-
                                 (String) The request body buffering mode to configure.
@@ -1202,6 +1212,51 @@ spec:
                               items:
                                 type: string
                               type: array
+                            vary:
+                              description: header override. (see below for nested
+                                schema)
+                              properties:
+                                default:
+                                  description: (Number) The browser TTL (in seconds)
+                                    if you choose the "override_origin" mode.
+                                  properties:
+                                    action:
+                                      description: |-
+                                        (String) The action to perform when the rule matches.
+                                        Available values: "block", "challenge", "compress_response", "ddos_dynamic", "execute", "force_connection_close", "js_challenge", "log", "log_custom_field", "managed_challenge", "redirect", "rewrite", "route", "score", "serve_error", "set_cache_control", "set_cache_settings", "set_cache_tags", "set_config", "skip".
+                                        How the header value is treated when building the cache key.
+                                        Available values: "bypass", "passthrough", "normalize".
+                                      type: string
+                                  type: object
+                                headers:
+                                  additionalProperties:
+                                    properties:
+                                      action:
+                                        description: |-
+                                          (String) The action to perform when the rule matches.
+                                          Available values: "block", "challenge", "compress_response", "ddos_dynamic", "execute", "force_connection_close", "js_challenge", "log", "log_custom_field", "managed_challenge", "redirect", "rewrite", "route", "score", "serve_error", "set_cache_control", "set_cache_settings", "set_cache_tags", "set_config", "skip".
+                                          How the header value is treated when building the cache key.
+                                          Available values: "bypass", "passthrough", "normalize".
+                                        type: string
+                                      languages:
+                                        description: |-
+                                          language header.
+                                          The set of languages to normalize against. Only valid for the `accept-language` header.
+                                        items:
+                                          type: string
+                                        type: array
+                                      mediaTypes:
+                                        description: |-
+                                          (List of String) The set of media types to normalize against. Only valid for the accept header.
+                                          The set of media types to normalize against. Only valid for the `accept` header.
+                                        items:
+                                          type: string
+                                        type: array
+                                    type: object
+                                  description: (Attributes Map) A map of headers to
+                                    rewrite. (see below for nested schema)
+                                  type: object
+                              type: object
                           type: object
                         description:
                           description: |-
@@ -1612,6 +1667,11 @@ spec:
                                 (String) The response content.
                                 The response content.
                               type: string
+                            contentConverter:
+                              description: |-
+                                (Boolean) Whether to enable content conversion (e.g., HTML to Markdown).
+                                Whether to enable content conversion (e.g., HTML to Markdown).
+                              type: boolean
                             contentType:
                               description: |-
                                 (String) The content type header to set with the error response.
@@ -2179,6 +2239,11 @@ spec:
                                 (Number) A timeout value between two successive read operations to use for your origin server. Historically, the timeout value between two read options from Cloudflare to an origin server is 100 seconds. If you are attempting to reduce HTTP 524 errors because of timeouts from an origin server, try increasing this timeout value.
                                 A timeout value between two successive read operations to use for your origin server. Historically, the timeout value between two read options from Cloudflare to an origin server is 100 seconds. If you are attempting to reduce HTTP 524 errors because of timeouts from an origin server, try increasing this timeout value.
                               type: number
+                            redirectsForAiTraining:
+                              description: |-
+                                (Boolean) Whether to redirect verified AI training crawlers to canonical URLs.
+                                Whether to redirect verified AI training crawlers to canonical URLs.
+                              type: boolean
                             requestBodyBuffering:
                               description: |-
                                 (String) The request body buffering mode to configure.
@@ -2460,6 +2525,51 @@ spec:
                               items:
                                 type: string
                               type: array
+                            vary:
+                              description: header override. (see below for nested
+                                schema)
+                              properties:
+                                default:
+                                  description: (Number) The browser TTL (in seconds)
+                                    if you choose the "override_origin" mode.
+                                  properties:
+                                    action:
+                                      description: |-
+                                        (String) The action to perform when the rule matches.
+                                        Available values: "block", "challenge", "compress_response", "ddos_dynamic", "execute", "force_connection_close", "js_challenge", "log", "log_custom_field", "managed_challenge", "redirect", "rewrite", "route", "score", "serve_error", "set_cache_control", "set_cache_settings", "set_cache_tags", "set_config", "skip".
+                                        How the header value is treated when building the cache key.
+                                        Available values: "bypass", "passthrough", "normalize".
+                                      type: string
+                                  type: object
+                                headers:
+                                  additionalProperties:
+                                    properties:
+                                      action:
+                                        description: |-
+                                          (String) The action to perform when the rule matches.
+                                          Available values: "block", "challenge", "compress_response", "ddos_dynamic", "execute", "force_connection_close", "js_challenge", "log", "log_custom_field", "managed_challenge", "redirect", "rewrite", "route", "score", "serve_error", "set_cache_control", "set_cache_settings", "set_cache_tags", "set_config", "skip".
+                                          How the header value is treated when building the cache key.
+                                          Available values: "bypass", "passthrough", "normalize".
+                                        type: string
+                                      languages:
+                                        description: |-
+                                          language header.
+                                          The set of languages to normalize against. Only valid for the `accept-language` header.
+                                        items:
+                                          type: string
+                                        type: array
+                                      mediaTypes:
+                                        description: |-
+                                          (List of String) The set of media types to normalize against. Only valid for the accept header.
+                                          The set of media types to normalize against. Only valid for the `accept` header.
+                                        items:
+                                          type: string
+                                        type: array
+                                    type: object
+                                  description: (Attributes Map) A map of headers to
+                                    rewrite. (see below for nested schema)
+                                  type: object
+                              type: object
                           type: object
                         description:
                           description: |-
@@ -2941,6 +3051,11 @@ spec:
                                 (String) The response content.
                                 The response content.
                               type: string
+                            contentConverter:
+                              description: |-
+                                (Boolean) Whether to enable content conversion (e.g., HTML to Markdown).
+                                Whether to enable content conversion (e.g., HTML to Markdown).
+                              type: boolean
                             contentType:
                               description: |-
                                 (String) The content type header to set with the error response.
@@ -3508,6 +3623,11 @@ spec:
                                 (Number) A timeout value between two successive read operations to use for your origin server. Historically, the timeout value between two read options from Cloudflare to an origin server is 100 seconds. If you are attempting to reduce HTTP 524 errors because of timeouts from an origin server, try increasing this timeout value.
                                 A timeout value between two successive read operations to use for your origin server. Historically, the timeout value between two read options from Cloudflare to an origin server is 100 seconds. If you are attempting to reduce HTTP 524 errors because of timeouts from an origin server, try increasing this timeout value.
                               type: number
+                            redirectsForAiTraining:
+                              description: |-
+                                (Boolean) Whether to redirect verified AI training crawlers to canonical URLs.
+                                Whether to redirect verified AI training crawlers to canonical URLs.
+                              type: boolean
                             requestBodyBuffering:
                               description: |-
                                 (String) The request body buffering mode to configure.
@@ -3789,6 +3909,51 @@ spec:
                               items:
                                 type: string
                               type: array
+                            vary:
+                              description: header override. (see below for nested
+                                schema)
+                              properties:
+                                default:
+                                  description: (Number) The browser TTL (in seconds)
+                                    if you choose the "override_origin" mode.
+                                  properties:
+                                    action:
+                                      description: |-
+                                        (String) The action to perform when the rule matches.
+                                        Available values: "block", "challenge", "compress_response", "ddos_dynamic", "execute", "force_connection_close", "js_challenge", "log", "log_custom_field", "managed_challenge", "redirect", "rewrite", "route", "score", "serve_error", "set_cache_control", "set_cache_settings", "set_cache_tags", "set_config", "skip".
+                                        How the header value is treated when building the cache key.
+                                        Available values: "bypass", "passthrough", "normalize".
+                                      type: string
+                                  type: object
+                                headers:
+                                  additionalProperties:
+                                    properties:
+                                      action:
+                                        description: |-
+                                          (String) The action to perform when the rule matches.
+                                          Available values: "block", "challenge", "compress_response", "ddos_dynamic", "execute", "force_connection_close", "js_challenge", "log", "log_custom_field", "managed_challenge", "redirect", "rewrite", "route", "score", "serve_error", "set_cache_control", "set_cache_settings", "set_cache_tags", "set_config", "skip".
+                                          How the header value is treated when building the cache key.
+                                          Available values: "bypass", "passthrough", "normalize".
+                                        type: string
+                                      languages:
+                                        description: |-
+                                          language header.
+                                          The set of languages to normalize against. Only valid for the `accept-language` header.
+                                        items:
+                                          type: string
+                                        type: array
+                                      mediaTypes:
+                                        description: |-
+                                          (List of String) The set of media types to normalize against. Only valid for the accept header.
+                                          The set of media types to normalize against. Only valid for the `accept` header.
+                                        items:
+                                          type: string
+                                        type: array
+                                    type: object
+                                  description: (Attributes Map) A map of headers to
+                                    rewrite. (see below for nested schema)
+                                  type: object
+                              type: object
                           type: object
                         description:
                           description: |-

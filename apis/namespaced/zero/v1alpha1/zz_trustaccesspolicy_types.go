@@ -97,52 +97,48 @@ type ConnectionRulesRdpParameters struct {
 	AllowedClipboardRemoteToLocalFormats []*string `json:"allowedClipboardRemoteToLocalFormats,omitempty" tf:"allowed_clipboard_remote_to_local_formats,omitempty"`
 }
 
-type MfaConfigInitParameters struct {
+type ExcludeCloudflareAccountMemberInitParameters struct {
 
-	// (List of String) Lists the MFA methods that users can authenticate with.
-	// Lists the MFA methods that users can authenticate with.
-	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
-
-	// (Boolean) Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
-	// Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
-	MfaBypass *bool `json:"mfaBypass,omitempty" tf:"mfa_bypass,omitempty"`
-
-	// (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
-	// Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
-	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+	// (String) Identifier.
+	// Identifier.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 }
 
-type MfaConfigObservation struct {
+type ExcludeCloudflareAccountMemberObservation struct {
 
-	// (List of String) Lists the MFA methods that users can authenticate with.
-	// Lists the MFA methods that users can authenticate with.
-	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
-
-	// (Boolean) Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
-	// Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
-	MfaBypass *bool `json:"mfaBypass,omitempty" tf:"mfa_bypass,omitempty"`
-
-	// (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
-	// Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
-	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+	// (String) Identifier.
+	// Identifier.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 }
 
-type MfaConfigParameters struct {
+type ExcludeCloudflareAccountMemberParameters struct {
 
-	// (List of String) Lists the MFA methods that users can authenticate with.
-	// Lists the MFA methods that users can authenticate with.
+	// (String) Identifier.
+	// Identifier.
 	// +kubebuilder:validation:Optional
-	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
 
-	// (Boolean) Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
-	// Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
-	// +kubebuilder:validation:Optional
-	MfaBypass *bool `json:"mfaBypass,omitempty" tf:"mfa_bypass,omitempty"`
+type ExcludeUserRiskScoreInitParameters struct {
 
-	// (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
-	// Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	UserRiskScore []*string `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
+}
+
+type ExcludeUserRiskScoreObservation struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	UserRiskScore []*string `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
+}
+
+type ExcludeUserRiskScoreParameters struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
 	// +kubebuilder:validation:Optional
-	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+	UserRiskScore []*string `json:"userRiskScore" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessPolicyConnectionRulesInitParameters struct {
@@ -630,6 +626,9 @@ type TrustAccessPolicyExcludeInitParameters struct {
 	Certificate *TrustAccessPolicyExcludeCertificateInitParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	CloudflareAccountMember *ExcludeCloudflareAccountMemberInitParameters `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	CommonName *TrustAccessPolicyExcludeCommonNameInitParameters `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -685,6 +684,9 @@ type TrustAccessPolicyExcludeInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessPolicyExcludeServiceTokenInitParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	UserRiskScore *ExcludeUserRiskScoreInitParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessPolicyExcludeLinkedAppTokenInitParameters struct {
@@ -749,6 +751,9 @@ type TrustAccessPolicyExcludeObservation struct {
 	Certificate *TrustAccessPolicyExcludeCertificateParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	CloudflareAccountMember *ExcludeCloudflareAccountMemberObservation `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	CommonName *TrustAccessPolicyExcludeCommonNameObservation `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -804,6 +809,9 @@ type TrustAccessPolicyExcludeObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessPolicyExcludeServiceTokenObservation `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	UserRiskScore *ExcludeUserRiskScoreObservation `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessPolicyExcludeOidcInitParameters struct {
@@ -913,6 +921,10 @@ type TrustAccessPolicyExcludeParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
+	CloudflareAccountMember *ExcludeCloudflareAccountMemberParameters `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
 	CommonName *TrustAccessPolicyExcludeCommonNameParameters `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -986,6 +998,10 @@ type TrustAccessPolicyExcludeParameters struct {
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ServiceToken *TrustAccessPolicyExcludeServiceTokenParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	UserRiskScore *ExcludeUserRiskScoreParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessPolicyExcludeSAMLInitParameters struct {
@@ -1179,6 +1195,28 @@ type TrustAccessPolicyIncludeCertificateObservation struct {
 }
 
 type TrustAccessPolicyIncludeCertificateParameters struct {
+}
+
+type TrustAccessPolicyIncludeCloudflareAccountMemberInitParameters struct {
+
+	// (String) Identifier.
+	// Identifier.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
+type TrustAccessPolicyIncludeCloudflareAccountMemberObservation struct {
+
+	// (String) Identifier.
+	// Identifier.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
+type TrustAccessPolicyIncludeCloudflareAccountMemberParameters struct {
+
+	// (String) Identifier.
+	// Identifier.
+	// +kubebuilder:validation:Optional
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 }
 
 type TrustAccessPolicyIncludeCommonNameInitParameters struct {
@@ -1524,6 +1562,9 @@ type TrustAccessPolicyIncludeInitParameters struct {
 	Certificate *TrustAccessPolicyIncludeCertificateInitParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	CloudflareAccountMember *TrustAccessPolicyIncludeCloudflareAccountMemberInitParameters `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	CommonName *TrustAccessPolicyIncludeCommonNameInitParameters `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -1579,6 +1620,9 @@ type TrustAccessPolicyIncludeInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessPolicyIncludeServiceTokenInitParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	UserRiskScore *TrustAccessPolicyIncludeUserRiskScoreInitParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessPolicyIncludeLinkedAppTokenInitParameters struct {
@@ -1643,6 +1687,9 @@ type TrustAccessPolicyIncludeObservation struct {
 	Certificate *TrustAccessPolicyIncludeCertificateParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	CloudflareAccountMember *TrustAccessPolicyIncludeCloudflareAccountMemberObservation `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	CommonName *TrustAccessPolicyIncludeCommonNameObservation `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -1698,6 +1745,9 @@ type TrustAccessPolicyIncludeObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessPolicyIncludeServiceTokenObservation `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	UserRiskScore *TrustAccessPolicyIncludeUserRiskScoreObservation `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessPolicyIncludeOidcInitParameters struct {
@@ -1807,6 +1857,10 @@ type TrustAccessPolicyIncludeParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
+	CloudflareAccountMember *TrustAccessPolicyIncludeCloudflareAccountMemberParameters `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
 	CommonName *TrustAccessPolicyIncludeCommonNameParameters `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -1880,6 +1934,10 @@ type TrustAccessPolicyIncludeParameters struct {
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ServiceToken *TrustAccessPolicyIncludeServiceTokenParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	UserRiskScore *TrustAccessPolicyIncludeUserRiskScoreParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessPolicyIncludeSAMLInitParameters struct {
@@ -1952,6 +2010,28 @@ type TrustAccessPolicyIncludeServiceTokenParameters struct {
 	TokenID *string `json:"tokenId" tf:"token_id,omitempty"`
 }
 
+type TrustAccessPolicyIncludeUserRiskScoreInitParameters struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	UserRiskScore []*string `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
+}
+
+type TrustAccessPolicyIncludeUserRiskScoreObservation struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	UserRiskScore []*string `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
+}
+
+type TrustAccessPolicyIncludeUserRiskScoreParameters struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	// +kubebuilder:validation:Optional
+	UserRiskScore []*string `json:"userRiskScore" tf:"user_risk_score,omitempty"`
+}
+
 type TrustAccessPolicyInitParameters struct {
 
 	// (String) Identifier.
@@ -1994,7 +2074,7 @@ type TrustAccessPolicyInitParameters struct {
 	IsolationRequired *bool `json:"isolationRequired,omitempty" tf:"isolation_required,omitempty"`
 
 	// factor authentication (MFA) settings. (see below for nested schema)
-	MfaConfig *MfaConfigInitParameters `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
+	MfaConfig *TrustAccessPolicyMfaConfigInitParameters `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
 
 	// (String) The name of the Access policy.
 	// The name of the Access policy.
@@ -2013,6 +2093,54 @@ type TrustAccessPolicyInitParameters struct {
 
 	// (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
 	// The amount of time that tokens issued for the application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h.
+	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+}
+
+type TrustAccessPolicyMfaConfigInitParameters struct {
+
+	// (List of String) Lists the MFA methods that users can authenticate with.
+	// Lists the MFA methods that users can authenticate with.
+	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+
+	// (Boolean) Indicates whether to disable MFA for this resource. This option is available at the application and policy level.
+	// Indicates whether to disable MFA for this resource. This option is available at the application and policy level.
+	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
+
+	// (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+	// Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
+	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+}
+
+type TrustAccessPolicyMfaConfigObservation struct {
+
+	// (List of String) Lists the MFA methods that users can authenticate with.
+	// Lists the MFA methods that users can authenticate with.
+	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+
+	// (Boolean) Indicates whether to disable MFA for this resource. This option is available at the application and policy level.
+	// Indicates whether to disable MFA for this resource. This option is available at the application and policy level.
+	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
+
+	// (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+	// Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
+	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+}
+
+type TrustAccessPolicyMfaConfigParameters struct {
+
+	// (List of String) Lists the MFA methods that users can authenticate with.
+	// Lists the MFA methods that users can authenticate with.
+	// +kubebuilder:validation:Optional
+	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+
+	// (Boolean) Indicates whether to disable MFA for this resource. This option is available at the application and policy level.
+	// Indicates whether to disable MFA for this resource. This option is available at the application and policy level.
+	// +kubebuilder:validation:Optional
+	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
+
+	// (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
+	// Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
+	// +kubebuilder:validation:Optional
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 }
 
@@ -2052,7 +2180,7 @@ type TrustAccessPolicyObservation struct {
 	IsolationRequired *bool `json:"isolationRequired,omitempty" tf:"isolation_required,omitempty"`
 
 	// factor authentication (MFA) settings. (see below for nested schema)
-	MfaConfig *MfaConfigObservation `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
+	MfaConfig *TrustAccessPolicyMfaConfigObservation `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
 
 	// (String) The name of the Access policy.
 	// The name of the Access policy.
@@ -2125,7 +2253,7 @@ type TrustAccessPolicyParameters struct {
 
 	// factor authentication (MFA) settings. (see below for nested schema)
 	// +kubebuilder:validation:Optional
-	MfaConfig *MfaConfigParameters `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
+	MfaConfig *TrustAccessPolicyMfaConfigParameters `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
 
 	// (String) The name of the Access policy.
 	// The name of the Access policy.
@@ -2273,6 +2401,28 @@ type TrustAccessPolicyRequireCertificateObservation struct {
 }
 
 type TrustAccessPolicyRequireCertificateParameters struct {
+}
+
+type TrustAccessPolicyRequireCloudflareAccountMemberInitParameters struct {
+
+	// (String) Identifier.
+	// Identifier.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
+type TrustAccessPolicyRequireCloudflareAccountMemberObservation struct {
+
+	// (String) Identifier.
+	// Identifier.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
+type TrustAccessPolicyRequireCloudflareAccountMemberParameters struct {
+
+	// (String) Identifier.
+	// Identifier.
+	// +kubebuilder:validation:Optional
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 }
 
 type TrustAccessPolicyRequireCommonNameInitParameters struct {
@@ -2618,6 +2768,9 @@ type TrustAccessPolicyRequireInitParameters struct {
 	Certificate *TrustAccessPolicyRequireCertificateInitParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	CloudflareAccountMember *TrustAccessPolicyRequireCloudflareAccountMemberInitParameters `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	CommonName *TrustAccessPolicyRequireCommonNameInitParameters `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -2673,6 +2826,9 @@ type TrustAccessPolicyRequireInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessPolicyRequireServiceTokenInitParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	UserRiskScore *TrustAccessPolicyRequireUserRiskScoreInitParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessPolicyRequireLinkedAppTokenInitParameters struct {
@@ -2737,6 +2893,9 @@ type TrustAccessPolicyRequireObservation struct {
 	Certificate *TrustAccessPolicyRequireCertificateParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	CloudflareAccountMember *TrustAccessPolicyRequireCloudflareAccountMemberObservation `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	CommonName *TrustAccessPolicyRequireCommonNameObservation `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -2792,6 +2951,9 @@ type TrustAccessPolicyRequireObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessPolicyRequireServiceTokenObservation `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	UserRiskScore *TrustAccessPolicyRequireUserRiskScoreObservation `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessPolicyRequireOidcInitParameters struct {
@@ -2901,6 +3063,10 @@ type TrustAccessPolicyRequireParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
+	CloudflareAccountMember *TrustAccessPolicyRequireCloudflareAccountMemberParameters `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
 	CommonName *TrustAccessPolicyRequireCommonNameParameters `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -2974,6 +3140,10 @@ type TrustAccessPolicyRequireParameters struct {
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ServiceToken *TrustAccessPolicyRequireServiceTokenParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	UserRiskScore *TrustAccessPolicyRequireUserRiskScoreParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessPolicyRequireSAMLInitParameters struct {
@@ -3046,6 +3216,28 @@ type TrustAccessPolicyRequireServiceTokenParameters struct {
 	TokenID *string `json:"tokenId" tf:"token_id,omitempty"`
 }
 
+type TrustAccessPolicyRequireUserRiskScoreInitParameters struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	UserRiskScore []*string `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
+}
+
+type TrustAccessPolicyRequireUserRiskScoreObservation struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	UserRiskScore []*string `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
+}
+
+type TrustAccessPolicyRequireUserRiskScoreParameters struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	// +kubebuilder:validation:Optional
+	UserRiskScore []*string `json:"userRiskScore" tf:"user_risk_score,omitempty"`
+}
+
 // TrustAccessPolicySpec defines the desired state of TrustAccessPolicy
 type TrustAccessPolicySpec struct {
 	v2.ManagedResourceSpec `json:",inline"`
@@ -3073,7 +3265,7 @@ type TrustAccessPolicyStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustAccessPolicy is the Schema for the TrustAccessPolicys API.
+// TrustAccessPolicy is the Schema for the TrustAccessPolicys API. Accepted Permissions Access: Apps and Policies ReadAccess: Apps and Policies Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

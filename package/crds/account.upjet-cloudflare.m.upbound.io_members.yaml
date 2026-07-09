@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Member is the Schema for the Members API.
+        description: Member is the Schema for the Members API. Accepted Permissions
+          Account Settings ReadAccount Settings WriteSCIM Provisioning
         properties:
           apiVersion:
             description: |-

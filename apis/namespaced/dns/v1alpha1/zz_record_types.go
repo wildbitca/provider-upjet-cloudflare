@@ -528,6 +528,10 @@ type RecordInitParameters struct {
 	// Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
+	// (Boolean) Enables private network routing to the origin.
+	// Enables private network routing to the origin.
+	PrivateRouting *bool `json:"privateRouting,omitempty" tf:"private_routing,omitempty"`
+
 	// (Boolean) Whether the record is receiving the performance and security benefits of Cloudflare.
 	// Whether the record is receiving the performance and security benefits of Cloudflare.
 	Proxied *bool `json:"proxied,omitempty" tf:"proxied,omitempty"`
@@ -604,6 +608,10 @@ type RecordObservation struct {
 	// Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
+	// (Boolean) Enables private network routing to the origin.
+	// Enables private network routing to the origin.
+	PrivateRouting *bool `json:"privateRouting,omitempty" tf:"private_routing,omitempty"`
+
 	// (Boolean) Whether the record can be proxied by Cloudflare or not.
 	// Whether the record can be proxied by Cloudflare or not.
 	Proxiable *bool `json:"proxiable,omitempty" tf:"proxiable,omitempty"`
@@ -664,6 +672,11 @@ type RecordParameters struct {
 	// Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
 	// +kubebuilder:validation:Optional
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	// (Boolean) Enables private network routing to the origin.
+	// Enables private network routing to the origin.
+	// +kubebuilder:validation:Optional
+	PrivateRouting *bool `json:"privateRouting,omitempty" tf:"private_routing,omitempty"`
 
 	// (Boolean) Whether the record is receiving the performance and security benefits of Cloudflare.
 	// Whether the record is receiving the performance and security benefits of Cloudflare.
@@ -782,7 +795,7 @@ type RecordStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Record is the Schema for the Records API.
+// Record is the Schema for the Records API. Accepted Permissions DNS ReadDNS Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

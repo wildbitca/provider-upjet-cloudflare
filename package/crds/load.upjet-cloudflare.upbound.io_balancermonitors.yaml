@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: BalancerMonitor is the Schema for the BalancerMonitors API.
+        description: 'BalancerMonitor is the Schema for the BalancerMonitors API.
+          Accepted Permissions Load Balancing: Monitors and Pools ReadLoad Balancing:
+          Monitors and Pools Write'
         properties:
           apiVersion:
             description: |-

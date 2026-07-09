@@ -14,6 +14,52 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type DefaultInitParameters struct {
+}
+
+type DefaultObservation struct {
+
+	// (Number) Indicates the progress as a percentage between 0 and 100.
+	// Indicates the progress as a percentage between 0 and 100.
+	PercentComplete *float64 `json:"percentComplete,omitempty" tf:"percent_complete,omitempty"`
+
+	// (String) The status of a generated download.
+	// Available values: "ready", "inprogress", "error".
+	// The status of a generated download.
+	// Available values: "ready", "inprogress", "error".
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// (String) The URL to access the generated download.
+	// The URL to access the generated download.
+	URL *string `json:"url,omitempty" tf:"url,omitempty"`
+}
+
+type DefaultParameters struct {
+}
+
+type DownloadAudioInitParameters struct {
+}
+
+type DownloadAudioObservation struct {
+
+	// (Number) Indicates the progress as a percentage between 0 and 100.
+	// Indicates the progress as a percentage between 0 and 100.
+	PercentComplete *float64 `json:"percentComplete,omitempty" tf:"percent_complete,omitempty"`
+
+	// (String) The status of a generated download.
+	// Available values: "ready", "inprogress", "error".
+	// The status of a generated download.
+	// Available values: "ready", "inprogress", "error".
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// (String) The URL to access the generated download.
+	// The URL to access the generated download.
+	URL *string `json:"url,omitempty" tf:"url,omitempty"`
+}
+
+type DownloadAudioParameters struct {
+}
+
 type DownloadInitParameters struct {
 
 	// (String) Identifier.
@@ -30,6 +76,12 @@ type DownloadObservation struct {
 	// (String) Identifier.
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// only download. Only present if this download type has been created. (see below for nested schema)
+	Audio *DownloadAudioObservation `json:"audio,omitempty" tf:"audio,omitempty"`
+
+	// (Attributes) The default video download. Only present if this download type has been created. (see below for nested schema)
+	Default *DefaultObservation `json:"default,omitempty" tf:"default,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -78,7 +130,7 @@ type DownloadStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Download is the Schema for the Downloads API.
+// Download is the Schema for the Downloads API. Accepted Permissions Stream ReadStream Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

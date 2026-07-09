@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: PolicyWebhooks is the Schema for the PolicyWebhookss API.
+        description: 'PolicyWebhooks is the Schema for the PolicyWebhookss API. Accepted
+          Permissions Account Settings ReadAccount Settings WriteNotifications ReadNotifications
+          WriteZero Trust: PII Read'
         properties:
           apiVersion:
             description: |-

@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SecurityBlockSender is the Schema for the SecurityBlockSenders
-          API.
+        description: 'SecurityBlockSender is the Schema for the SecurityBlockSenders
+          API. Accepted Permissions Cloud Email Security: ReadCloud Email Security:
+          Write'
         properties:
           apiVersion:
             description: |-
@@ -75,8 +76,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Account Identifier
-                      Account Identifier
+                      (String) Identifier.
+                      Identifier.
                     type: string
                   comments:
                     description: (String)
@@ -89,7 +90,11 @@ spec:
                     type: string
                   patternType:
                     description: |-
-                      (String) Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+                      (String) Type of pattern matching.
+                      Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
+                      Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+                      Type of pattern matching.
+                      Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
                       Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
                     type: string
                 type: object
@@ -108,8 +113,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Account Identifier
-                      Account Identifier
+                      (String) Identifier.
+                      Identifier.
                     type: string
                   comments:
                     description: (String)
@@ -122,7 +127,11 @@ spec:
                     type: string
                   patternType:
                     description: |-
-                      (String) Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+                      (String) Type of pattern matching.
+                      Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
+                      Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+                      Type of pattern matching.
+                      Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
                       Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
                     type: string
                 type: object
@@ -236,8 +245,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Account Identifier
-                      Account Identifier
+                      (String) Identifier.
+                      Identifier.
                     type: string
                   comments:
                     description: (String)
@@ -246,12 +255,17 @@ spec:
                     description: (String)
                     type: string
                   id:
-                    description: (Number) The unique identifier for the allow policy.
+                    description: (String) Blocked sender pattern identifier
                     type: string
                   isRegex:
                     description: (Boolean)
                     type: boolean
                   lastModified:
+                    description: |-
+                      (String, Deprecated) Deprecated, use modified_at instead. End of life: November 1, 2026.
+                      Deprecated, use `modified_at` instead. End of life: November 1, 2026.
+                    type: string
+                  modifiedAt:
                     description: (String)
                     type: string
                   pattern:
@@ -259,7 +273,11 @@ spec:
                     type: string
                   patternType:
                     description: |-
-                      (String) Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+                      (String) Type of pattern matching.
+                      Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
+                      Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+                      Type of pattern matching.
+                      Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
                       Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
                     type: string
                 type: object

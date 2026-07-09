@@ -157,7 +157,7 @@ type NetworkMonitoringConfigurationStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// NetworkMonitoringConfiguration is the Schema for the NetworkMonitoringConfigurations API.
+// NetworkMonitoringConfiguration is the Schema for the NetworkMonitoringConfigurations API. Accepted Permissions Magic Network Monitoring AdminMagic Network Monitoring Config ReadMagic Network Monitoring Config Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

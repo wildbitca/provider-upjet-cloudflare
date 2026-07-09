@@ -108,7 +108,7 @@ type TrustDlpEntryObservation struct {
 	// Available values: "empty", "uploading", "pending", "processing", "failed", "complete".
 	UploadStatus *string `json:"uploadStatus,omitempty" tf:"upload_status,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) A Predefined AI prompt classification topic entry. (see below for nested schema)
 	Variant *TrustDlpEntryVariantObservation `json:"variant,omitempty" tf:"variant,omitempty"`
 
 	// (String)
@@ -200,6 +200,7 @@ type TrustDlpEntryVariantInitParameters struct {
 type TrustDlpEntryVariantObservation struct {
 
 	// (String)
+	// A customer-facing explanation of what this predefined AI prompt topic represents.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (String) Available values: "Intent", "Content".
@@ -207,7 +208,7 @@ type TrustDlpEntryVariantObservation struct {
 	TopicType *string `json:"topicType,omitempty" tf:"topic_type,omitempty"`
 
 	// (String) Available values: "custom", "predefined", "integration".
-	// Available values: "PromptTopic".
+	// Available values: "PromptTopic", "General".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -241,7 +242,7 @@ type TrustDlpEntryStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustDlpEntry is the Schema for the TrustDlpEntrys API.
+// TrustDlpEntry is the Schema for the TrustDlpEntrys API. Accepted Permissions Zero Trust ReadZero Trust Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

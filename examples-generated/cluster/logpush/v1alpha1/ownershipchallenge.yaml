@@ -8,5 +8,8 @@ metadata:
   name: example-logpush-ownership-challenge
 spec:
   forProvider:
-    destinationConf: s3://mybucket/logs?region=us-west-2
+    destinationConfSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
     zoneId: zone_id

@@ -19,12 +19,12 @@ type HoldInitParameters struct {
 	// then automatically re-enabled by the system at the time specified
 	// in this RFC3339-formatted timestamp. A past-dated hold_after value will have
 	// no effect on an existing, enabled hold. Providing an empty string will set its value
-	// to the current time.
+	// to the current time. Providing null will disable the hold indefinitely.
 	// If `hold_after` is provided and future-dated, the hold will be temporarily disabled,
 	// then automatically re-enabled by the system at the time specified
 	// in this RFC3339-formatted timestamp. A past-dated `hold_after` value will have
 	// no effect on an existing, enabled hold. Providing an empty string will set its value
-	// to the current time.
+	// to the current time. Providing `null` will disable the hold indefinitely.
 	HoldAfter *string `json:"holdAfter,omitempty" tf:"hold_after,omitempty"`
 
 	// (Boolean) If true, the zone hold will extend to block any subdomain of the given zone, as well
@@ -60,12 +60,12 @@ type HoldObservation struct {
 	// then automatically re-enabled by the system at the time specified
 	// in this RFC3339-formatted timestamp. A past-dated hold_after value will have
 	// no effect on an existing, enabled hold. Providing an empty string will set its value
-	// to the current time.
+	// to the current time. Providing null will disable the hold indefinitely.
 	// If `hold_after` is provided and future-dated, the hold will be temporarily disabled,
 	// then automatically re-enabled by the system at the time specified
 	// in this RFC3339-formatted timestamp. A past-dated `hold_after` value will have
 	// no effect on an existing, enabled hold. Providing an empty string will set its value
-	// to the current time.
+	// to the current time. Providing `null` will disable the hold indefinitely.
 	HoldAfter *string `json:"holdAfter,omitempty" tf:"hold_after,omitempty"`
 
 	// (String) Identifier.
@@ -92,12 +92,12 @@ type HoldParameters struct {
 	// then automatically re-enabled by the system at the time specified
 	// in this RFC3339-formatted timestamp. A past-dated hold_after value will have
 	// no effect on an existing, enabled hold. Providing an empty string will set its value
-	// to the current time.
+	// to the current time. Providing null will disable the hold indefinitely.
 	// If `hold_after` is provided and future-dated, the hold will be temporarily disabled,
 	// then automatically re-enabled by the system at the time specified
 	// in this RFC3339-formatted timestamp. A past-dated `hold_after` value will have
 	// no effect on an existing, enabled hold. Providing an empty string will set its value
-	// to the current time.
+	// to the current time. Providing `null` will disable the hold indefinitely.
 	// +kubebuilder:validation:Optional
 	HoldAfter *string `json:"holdAfter,omitempty" tf:"hold_after,omitempty"`
 
@@ -154,7 +154,7 @@ type HoldStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Hold is the Schema for the Holds API.
+// Hold is the Schema for the Holds API. Accepted Permissions Access: Apps and Policies ReadAccess: Apps and Policies RevokeAccess: Apps and Policies WriteAccess: Mutual TLS Certificates WriteAccess: Organizations, Identity Providers, and Groups WriteAnalytics ReadApps WriteCache PurgeDNS ReadDNS WriteFirewall Services ReadFirewall Services WriteLoad Balancers ReadLoad Balancers WriteLogs ReadLogs WritePage Rules ReadPage Rules WriteSSL and Certificates ReadSSL and Certificates WriteStream ReadStream WriteTrust and Safety ReadTrust and Safety WriteWorkers Routes ReadWorkers Routes WriteWorkers Scripts ReadWorkers Scripts WriteZaraz AdminZaraz EditZaraz ReadZero Trust: PII ReadZone ReadZone Settings ReadZone Settings WriteZone Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

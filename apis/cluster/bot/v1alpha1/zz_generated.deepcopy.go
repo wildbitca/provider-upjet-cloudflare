@@ -62,6 +62,11 @@ func (in *ManagementInitParameters) DeepCopyInto(out *ManagementInitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.ContentBotsProtection != nil {
+		in, out := &in.ContentBotsProtection, &out.ContentBotsProtection
+		*out = new(string)
+		**out = **in
+	}
 	if in.CrawlerProtection != nil {
 		in, out := &in.CrawlerProtection, &out.CrawlerProtection
 		*out = new(string)
@@ -184,6 +189,11 @@ func (in *ManagementObservation) DeepCopyInto(out *ManagementObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ContentBotsProtection != nil {
+		in, out := &in.ContentBotsProtection, &out.ContentBotsProtection
+		*out = new(string)
+		**out = **in
+	}
 	if in.CrawlerProtection != nil {
 		in, out := &in.CrawlerProtection, &out.CrawlerProtection
 		*out = new(string)
@@ -286,6 +296,11 @@ func (in *ManagementParameters) DeepCopyInto(out *ManagementParameters) {
 	}
 	if in.CfRobotsVariant != nil {
 		in, out := &in.CfRobotsVariant, &out.CfRobotsVariant
+		*out = new(string)
+		**out = **in
+	}
+	if in.ContentBotsProtection != nil {
+		in, out := &in.ContentBotsProtection, &out.ContentBotsProtection
 		*out = new(string)
 		**out = **in
 	}

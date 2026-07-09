@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Route is the Schema for the Routes API.
+        description: Route is the Schema for the Routes API. Accepted Permissions
+          Workers Routes ReadWorkers Routes Write
         properties:
           apiVersion:
             description: |-

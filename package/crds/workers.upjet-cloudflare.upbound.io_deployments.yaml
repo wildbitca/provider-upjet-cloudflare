@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Deployment is the Schema for the Deployments API.
+        description: Deployment is the Schema for the Deployments API. Accepted Permissions
+          Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
         properties:
           apiVersion:
             description: |-
@@ -82,8 +83,8 @@ spec:
                     properties:
                       workersMessage:
                         description: |-
-                          readable message about the deployment. Truncated to 100 bytes.
-                          Human-readable message about the deployment. Truncated to 100 bytes.
+                          readable message about the deployment. Truncated to 1000 bytes if longer.
+                          Human-readable message about the deployment. Truncated to 1000 bytes if longer.
                         type: string
                     type: object
                   scriptName:
@@ -132,8 +133,8 @@ spec:
                     properties:
                       workersMessage:
                         description: |-
-                          readable message about the deployment. Truncated to 100 bytes.
-                          Human-readable message about the deployment. Truncated to 100 bytes.
+                          readable message about the deployment. Truncated to 1000 bytes if longer.
+                          Human-readable message about the deployment. Truncated to 1000 bytes if longer.
                         type: string
                     type: object
                   scriptName:
@@ -277,8 +278,8 @@ spec:
                     properties:
                       workersMessage:
                         description: |-
-                          readable message about the deployment. Truncated to 100 bytes.
-                          Human-readable message about the deployment. Truncated to 100 bytes.
+                          readable message about the deployment. Truncated to 1000 bytes if longer.
+                          Human-readable message about the deployment. Truncated to 1000 bytes if longer.
                         type: string
                       workersTriggeredBy:
                         description: |-

@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: List is the Schema for the Lists API.
+        description: List is the Schema for the Lists API. Accepted Permissions Account
+          Filter Lists EditAccount Filter Lists Read
         properties:
           apiVersion:
             description: |-

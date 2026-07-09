@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TransitSiteWan is the Schema for the TransitSiteWans API.
+        description: TransitSiteWan is the Schema for the TransitSiteWans API. Accepted
+          Permissions Magic Transit ReadMagic Transit WriteMagic WAN ReadMagic WAN
+          Write
         properties:
           apiVersion:
             description: |-

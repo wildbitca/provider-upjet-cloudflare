@@ -93,7 +93,7 @@ type SmartRoutingStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SmartRouting is the Schema for the SmartRoutings API.
+// SmartRouting is the Schema for the SmartRoutings API. Accepted Permissions Zone Settings ReadZone Settings Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

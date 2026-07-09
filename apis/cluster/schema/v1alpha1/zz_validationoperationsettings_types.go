@@ -107,7 +107,7 @@ type ValidationOperationSettingsStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// ValidationOperationSettings is the Schema for the ValidationOperationSettingss API.
+// ValidationOperationSettings is the Schema for the ValidationOperationSettingss API. Accepted Permissions Account API GatewayAccount API Gateway ReadDomain API GatewayDomain API Gateway Read
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

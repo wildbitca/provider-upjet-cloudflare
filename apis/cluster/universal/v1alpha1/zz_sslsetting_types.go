@@ -114,7 +114,7 @@ type SSLSettingStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SSLSetting is the Schema for the SSLSettings API.
+// SSLSetting is the Schema for the SSLSettings API. Accepted Permissions SSL and Certificates ReadSSL and Certificates Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

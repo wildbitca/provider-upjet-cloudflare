@@ -91,7 +91,7 @@ type RouteStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Route is the Schema for the Routes API.
+// Route is the Schema for the Routes API. Accepted Permissions Workers Routes ReadWorkers Routes Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

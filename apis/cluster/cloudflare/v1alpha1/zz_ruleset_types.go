@@ -54,6 +54,10 @@ type ActionParametersInitParameters struct {
 	// The response content.
 	Content *string `json:"content,omitempty" tf:"content,omitempty"`
 
+	// (Boolean) Whether to enable content conversion (e.g., HTML to Markdown).
+	// Whether to enable content conversion (e.g., HTML to Markdown).
+	ContentConverter *bool `json:"contentConverter,omitempty" tf:"content_converter,omitempty"`
+
 	// (String) The content type header to set with the error response.
 	// Available values: "application/json", "text/html", "text/plain", "text/xml".
 	// The content type header to set with the error response.
@@ -201,6 +205,10 @@ type ActionParametersInitParameters struct {
 	// A timeout value between two successive read operations to use for your origin server. Historically, the timeout value between two read options from Cloudflare to an origin server is 100 seconds. If you are attempting to reduce HTTP 524 errors because of timeouts from an origin server, try increasing this timeout value.
 	ReadTimeout *float64 `json:"readTimeout,omitempty" tf:"read_timeout,omitempty"`
 
+	// (Boolean) Whether to redirect verified AI training crawlers to canonical URLs.
+	// Whether to redirect verified AI training crawlers to canonical URLs.
+	RedirectsForAITraining *bool `json:"redirectsForAiTraining,omitempty" tf:"redirects_for_ai_training,omitempty"`
+
 	// (String) The request body buffering mode to configure.
 	// Available values: "none", "standard", "full".
 	// The request body buffering mode to configure.
@@ -304,6 +312,9 @@ type ActionParametersInitParameters struct {
 	// (List of String) The cache tag values for set_cache_tags action.
 	// The cache tag values for set_cache_tags action.
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
+
+	// header override. (see below for nested schema)
+	Vary *VaryInitParameters `json:"vary,omitempty" tf:"vary,omitempty"`
 }
 
 type ActionParametersObservation struct {
@@ -346,6 +357,10 @@ type ActionParametersObservation struct {
 	// (String) The response content.
 	// The response content.
 	Content *string `json:"content,omitempty" tf:"content,omitempty"`
+
+	// (Boolean) Whether to enable content conversion (e.g., HTML to Markdown).
+	// Whether to enable content conversion (e.g., HTML to Markdown).
+	ContentConverter *bool `json:"contentConverter,omitempty" tf:"content_converter,omitempty"`
 
 	// (String) The content type header to set with the error response.
 	// Available values: "application/json", "text/html", "text/plain", "text/xml".
@@ -494,6 +509,10 @@ type ActionParametersObservation struct {
 	// A timeout value between two successive read operations to use for your origin server. Historically, the timeout value between two read options from Cloudflare to an origin server is 100 seconds. If you are attempting to reduce HTTP 524 errors because of timeouts from an origin server, try increasing this timeout value.
 	ReadTimeout *float64 `json:"readTimeout,omitempty" tf:"read_timeout,omitempty"`
 
+	// (Boolean) Whether to redirect verified AI training crawlers to canonical URLs.
+	// Whether to redirect verified AI training crawlers to canonical URLs.
+	RedirectsForAITraining *bool `json:"redirectsForAiTraining,omitempty" tf:"redirects_for_ai_training,omitempty"`
+
 	// (String) The request body buffering mode to configure.
 	// Available values: "none", "standard", "full".
 	// The request body buffering mode to configure.
@@ -597,6 +616,9 @@ type ActionParametersObservation struct {
 	// (List of String) The cache tag values for set_cache_tags action.
 	// The cache tag values for set_cache_tags action.
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
+
+	// header override. (see below for nested schema)
+	Vary *VaryObservation `json:"vary,omitempty" tf:"vary,omitempty"`
 }
 
 type ActionParametersParameters struct {
@@ -650,6 +672,11 @@ type ActionParametersParameters struct {
 	// The response content.
 	// +kubebuilder:validation:Optional
 	Content *string `json:"content,omitempty" tf:"content,omitempty"`
+
+	// (Boolean) Whether to enable content conversion (e.g., HTML to Markdown).
+	// Whether to enable content conversion (e.g., HTML to Markdown).
+	// +kubebuilder:validation:Optional
+	ContentConverter *bool `json:"contentConverter,omitempty" tf:"content_converter,omitempty"`
 
 	// (String) The content type header to set with the error response.
 	// Available values: "application/json", "text/html", "text/plain", "text/xml".
@@ -837,6 +864,11 @@ type ActionParametersParameters struct {
 	// +kubebuilder:validation:Optional
 	ReadTimeout *float64 `json:"readTimeout,omitempty" tf:"read_timeout,omitempty"`
 
+	// (Boolean) Whether to redirect verified AI training crawlers to canonical URLs.
+	// Whether to redirect verified AI training crawlers to canonical URLs.
+	// +kubebuilder:validation:Optional
+	RedirectsForAITraining *bool `json:"redirectsForAiTraining,omitempty" tf:"redirects_for_ai_training,omitempty"`
+
 	// (String) The request body buffering mode to configure.
 	// Available values: "none", "standard", "full".
 	// The request body buffering mode to configure.
@@ -966,6 +998,10 @@ type ActionParametersParameters struct {
 	// The cache tag values for set_cache_tags action.
 	// +kubebuilder:validation:Optional
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
+
+	// header override. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Vary *VaryParameters `json:"vary,omitempty" tf:"vary,omitempty"`
 }
 
 type AlgorithmsInitParameters struct {
@@ -1359,6 +1395,34 @@ type CustomKeyParameters struct {
 	// (Attributes) How to use characteristics of the request user agent in the cache key. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	User *UserParameters `json:"user,omitempty" tf:"user,omitempty"`
+}
+
+type DefaultInitParameters struct {
+
+	// (String) The action to perform when the rule matches.
+	// Available values: "block", "challenge", "compress_response", "ddos_dynamic", "execute", "force_connection_close", "js_challenge", "log", "log_custom_field", "managed_challenge", "redirect", "rewrite", "route", "score", "serve_error", "set_cache_control", "set_cache_settings", "set_cache_tags", "set_config", "skip".
+	// How the header value is treated when building the cache key.
+	// Available values: "bypass", "passthrough", "normalize".
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+}
+
+type DefaultObservation struct {
+
+	// (String) The action to perform when the rule matches.
+	// Available values: "block", "challenge", "compress_response", "ddos_dynamic", "execute", "force_connection_close", "js_challenge", "log", "log_custom_field", "managed_challenge", "redirect", "rewrite", "route", "score", "serve_error", "set_cache_control", "set_cache_settings", "set_cache_tags", "set_config", "skip".
+	// How the header value is treated when building the cache key.
+	// Available values: "bypass", "passthrough", "normalize".
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+}
+
+type DefaultParameters struct {
+
+	// (String) The action to perform when the rule matches.
+	// Available values: "block", "challenge", "compress_response", "ddos_dynamic", "execute", "force_connection_close", "js_challenge", "log", "log_custom_field", "managed_challenge", "redirect", "rewrite", "route", "score", "serve_error", "set_cache_control", "set_cache_settings", "set_cache_tags", "set_config", "skip".
+	// How the header value is treated when building the cache key.
+	// Available values: "bypass", "passthrough", "normalize".
+	// +kubebuilder:validation:Optional
+	Action *string `json:"action" tf:"action,omitempty"`
 }
 
 type EdgeTTLInitParameters struct {
@@ -3439,6 +3503,89 @@ type UserParameters struct {
 	// Whether to use the user agent's language in the cache key.
 	// +kubebuilder:validation:Optional
 	Lang *bool `json:"lang,omitempty" tf:"lang,omitempty"`
+}
+
+type VaryHeadersInitParameters struct {
+
+	// (String) The action to perform when the rule matches.
+	// Available values: "block", "challenge", "compress_response", "ddos_dynamic", "execute", "force_connection_close", "js_challenge", "log", "log_custom_field", "managed_challenge", "redirect", "rewrite", "route", "score", "serve_error", "set_cache_control", "set_cache_settings", "set_cache_tags", "set_config", "skip".
+	// How the header value is treated when building the cache key.
+	// Available values: "bypass", "passthrough", "normalize".
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	// language header.
+	// The set of languages to normalize against. Only valid for the `accept-language` header.
+	Languages []*string `json:"languages,omitempty" tf:"languages,omitempty"`
+
+	// (List of String) The set of media types to normalize against. Only valid for the accept header.
+	// The set of media types to normalize against. Only valid for the `accept` header.
+	MediaTypes []*string `json:"mediaTypes,omitempty" tf:"media_types,omitempty"`
+}
+
+type VaryHeadersObservation struct {
+
+	// (String) The action to perform when the rule matches.
+	// Available values: "block", "challenge", "compress_response", "ddos_dynamic", "execute", "force_connection_close", "js_challenge", "log", "log_custom_field", "managed_challenge", "redirect", "rewrite", "route", "score", "serve_error", "set_cache_control", "set_cache_settings", "set_cache_tags", "set_config", "skip".
+	// How the header value is treated when building the cache key.
+	// Available values: "bypass", "passthrough", "normalize".
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	// language header.
+	// The set of languages to normalize against. Only valid for the `accept-language` header.
+	Languages []*string `json:"languages,omitempty" tf:"languages,omitempty"`
+
+	// (List of String) The set of media types to normalize against. Only valid for the accept header.
+	// The set of media types to normalize against. Only valid for the `accept` header.
+	MediaTypes []*string `json:"mediaTypes,omitempty" tf:"media_types,omitempty"`
+}
+
+type VaryHeadersParameters struct {
+
+	// (String) The action to perform when the rule matches.
+	// Available values: "block", "challenge", "compress_response", "ddos_dynamic", "execute", "force_connection_close", "js_challenge", "log", "log_custom_field", "managed_challenge", "redirect", "rewrite", "route", "score", "serve_error", "set_cache_control", "set_cache_settings", "set_cache_tags", "set_config", "skip".
+	// How the header value is treated when building the cache key.
+	// Available values: "bypass", "passthrough", "normalize".
+	// +kubebuilder:validation:Optional
+	Action *string `json:"action" tf:"action,omitempty"`
+
+	// language header.
+	// The set of languages to normalize against. Only valid for the `accept-language` header.
+	// +kubebuilder:validation:Optional
+	Languages []*string `json:"languages,omitempty" tf:"languages,omitempty"`
+
+	// (List of String) The set of media types to normalize against. Only valid for the accept header.
+	// The set of media types to normalize against. Only valid for the `accept` header.
+	// +kubebuilder:validation:Optional
+	MediaTypes []*string `json:"mediaTypes,omitempty" tf:"media_types,omitempty"`
+}
+
+type VaryInitParameters struct {
+
+	// (Number) The browser TTL (in seconds) if you choose the "override_origin" mode.
+	Default *DefaultInitParameters `json:"default,omitempty" tf:"default,omitempty"`
+
+	// (Attributes Map) A map of headers to rewrite. (see below for nested schema)
+	Headers map[string]VaryHeadersInitParameters `json:"headers,omitempty" tf:"headers,omitempty"`
+}
+
+type VaryObservation struct {
+
+	// (Number) The browser TTL (in seconds) if you choose the "override_origin" mode.
+	Default *DefaultObservation `json:"default,omitempty" tf:"default,omitempty"`
+
+	// (Attributes Map) A map of headers to rewrite. (see below for nested schema)
+	Headers map[string]VaryHeadersObservation `json:"headers,omitempty" tf:"headers,omitempty"`
+}
+
+type VaryParameters struct {
+
+	// (Number) The browser TTL (in seconds) if you choose the "override_origin" mode.
+	// +kubebuilder:validation:Optional
+	Default *DefaultParameters `json:"default" tf:"default,omitempty"`
+
+	// (Attributes Map) A map of headers to rewrite. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Headers map[string]VaryHeadersParameters `json:"headers,omitempty" tf:"headers,omitempty"`
 }
 
 // RulesetSpec defines the desired state of Ruleset

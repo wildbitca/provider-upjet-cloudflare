@@ -15,33 +15,41 @@ import (
 )
 
 type ConditionInitParameters struct {
+
+	// (Attributes) Client IP restrictions. (see below for nested schema)
 	RequestIP *RequestIPInitParameters `json:"requestIp,omitempty" tf:"request_ip,omitempty"`
 }
 
 type ConditionObservation struct {
+
+	// (Attributes) Client IP restrictions. (see below for nested schema)
 	RequestIP *RequestIPObservation `json:"requestIp,omitempty" tf:"request_ip,omitempty"`
 }
 
 type ConditionParameters struct {
 
+	// (Attributes) Client IP restrictions. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	RequestIP *RequestIPParameters `json:"requestIp,omitempty" tf:"request_ip,omitempty"`
 }
 
 type PermissionGroupsInitParameters struct {
 
+	// (String) Token identifier tag.
 	// Identifier of the permission group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type PermissionGroupsObservation struct {
 
+	// (String) Token identifier tag.
 	// Identifier of the permission group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type PermissionGroupsParameters struct {
 
+	// (String) Token identifier tag.
 	// Identifier of the permission group.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id" tf:"id,omitempty"`
@@ -49,38 +57,50 @@ type PermissionGroupsParameters struct {
 
 type PoliciesInitParameters struct {
 
+	// (String) Allow or deny operations against the resources.
+	// Available values: "allow", "deny".
 	// Allow or deny operations against the resources.
 	// Available values: "allow", "deny".
 	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
 
+	// (Attributes List) A set of permission groups that are specified to the policy. (see below for nested schema)
 	PermissionGroups []PermissionGroupsInitParameters `json:"permissionGroups,omitempty" tf:"permission_groups,omitempty"`
 
+	// (String) A json object representing the resources that are specified to the policy.
 	// A json object representing the resources that are specified to the policy.
 	Resources *string `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type PoliciesObservation struct {
 
+	// (String) Allow or deny operations against the resources.
+	// Available values: "allow", "deny".
 	// Allow or deny operations against the resources.
 	// Available values: "allow", "deny".
 	Effect *string `json:"effect,omitempty" tf:"effect,omitempty"`
 
+	// (Attributes List) A set of permission groups that are specified to the policy. (see below for nested schema)
 	PermissionGroups []PermissionGroupsObservation `json:"permissionGroups,omitempty" tf:"permission_groups,omitempty"`
 
+	// (String) A json object representing the resources that are specified to the policy.
 	// A json object representing the resources that are specified to the policy.
 	Resources *string `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type PoliciesParameters struct {
 
+	// (String) Allow or deny operations against the resources.
+	// Available values: "allow", "deny".
 	// Allow or deny operations against the resources.
 	// Available values: "allow", "deny".
 	// +kubebuilder:validation:Optional
 	Effect *string `json:"effect" tf:"effect,omitempty"`
 
+	// (Attributes List) A set of permission groups that are specified to the policy. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	PermissionGroups []PermissionGroupsParameters `json:"permissionGroups" tf:"permission_groups,omitempty"`
 
+	// (String) A json object representing the resources that are specified to the policy.
 	// A json object representing the resources that are specified to the policy.
 	// +kubebuilder:validation:Optional
 	Resources *string `json:"resources" tf:"resources,omitempty"`
@@ -88,77 +108,103 @@ type PoliciesParameters struct {
 
 type RequestIPInitParameters struct {
 
+	// (List of String) List of IPv4/IPv6 CIDR addresses.
 	// List of IPv4/IPv6 CIDR addresses.
 	In []*string `json:"in,omitempty" tf:"in,omitempty"`
 
+	// (List of String) List of IPv4/IPv6 CIDR addresses.
 	// List of IPv4/IPv6 CIDR addresses.
 	NotIn []*string `json:"notIn,omitempty" tf:"not_in,omitempty"`
 }
 
 type RequestIPObservation struct {
 
+	// (List of String) List of IPv4/IPv6 CIDR addresses.
 	// List of IPv4/IPv6 CIDR addresses.
 	In []*string `json:"in,omitempty" tf:"in,omitempty"`
 
+	// (List of String) List of IPv4/IPv6 CIDR addresses.
 	// List of IPv4/IPv6 CIDR addresses.
 	NotIn []*string `json:"notIn,omitempty" tf:"not_in,omitempty"`
 }
 
 type RequestIPParameters struct {
 
+	// (List of String) List of IPv4/IPv6 CIDR addresses.
 	// List of IPv4/IPv6 CIDR addresses.
 	// +kubebuilder:validation:Optional
 	In []*string `json:"in,omitempty" tf:"in,omitempty"`
 
+	// (List of String) List of IPv4/IPv6 CIDR addresses.
 	// List of IPv4/IPv6 CIDR addresses.
 	// +kubebuilder:validation:Optional
 	NotIn []*string `json:"notIn,omitempty" tf:"not_in,omitempty"`
 }
 
 type TokenInitParameters struct {
+
+	// (Attributes) (see below for nested schema)
 	Condition *ConditionInitParameters `json:"condition,omitempty" tf:"condition,omitempty"`
 
+	// (String) The expiration time on or after which the JWT MUST NOT be accepted for processing.
 	// The expiration time on or after which the JWT MUST NOT be accepted for processing.
 	ExpiresOn *string `json:"expiresOn,omitempty" tf:"expires_on,omitempty"`
 
+	// (String) Token name.
 	// Token name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) The time before which the token MUST NOT be accepted for processing.
 	// The time before which the token MUST NOT be accepted for processing.
 	NotBefore *string `json:"notBefore,omitempty" tf:"not_before,omitempty"`
 
+	// (Attributes List) Set of access policies assigned to the token. (see below for nested schema)
 	Policies []PoliciesInitParameters `json:"policies,omitempty" tf:"policies,omitempty"`
 
+	// (String) Status of the token.
+	// Available values: "active", "disabled", "expired".
 	// Status of the token.
 	// Available values: "active", "disabled", "expired".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type TokenObservation struct {
+
+	// (Attributes) (see below for nested schema)
 	Condition *ConditionObservation `json:"condition,omitempty" tf:"condition,omitempty"`
 
+	// (String) The expiration time on or after which the JWT MUST NOT be accepted for processing.
 	// The expiration time on or after which the JWT MUST NOT be accepted for processing.
 	ExpiresOn *string `json:"expiresOn,omitempty" tf:"expires_on,omitempty"`
 
+	// (String) Token identifier tag.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (String) The time on which the token was created.
 	// The time on which the token was created.
 	IssuedOn *string `json:"issuedOn,omitempty" tf:"issued_on,omitempty"`
 
+	// (String) Last time the token was used.
 	// Last time the token was used.
 	LastUsedOn *string `json:"lastUsedOn,omitempty" tf:"last_used_on,omitempty"`
 
+	// (String) Last time the token was modified.
 	// Last time the token was modified.
 	ModifiedOn *string `json:"modifiedOn,omitempty" tf:"modified_on,omitempty"`
 
+	// (String) Token name.
 	// Token name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) The time before which the token MUST NOT be accepted for processing.
 	// The time before which the token MUST NOT be accepted for processing.
 	NotBefore *string `json:"notBefore,omitempty" tf:"not_before,omitempty"`
 
+	// (Attributes List) Set of access policies assigned to the token. (see below for nested schema)
 	Policies []PoliciesObservation `json:"policies,omitempty" tf:"policies,omitempty"`
 
+	// (String) Status of the token.
+	// Available values: "active", "disabled", "expired".
 	// Status of the token.
 	// Available values: "active", "disabled", "expired".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
@@ -166,24 +212,31 @@ type TokenObservation struct {
 
 type TokenParameters struct {
 
+	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Condition *ConditionParameters `json:"condition,omitempty" tf:"condition,omitempty"`
 
+	// (String) The expiration time on or after which the JWT MUST NOT be accepted for processing.
 	// The expiration time on or after which the JWT MUST NOT be accepted for processing.
 	// +kubebuilder:validation:Optional
 	ExpiresOn *string `json:"expiresOn,omitempty" tf:"expires_on,omitempty"`
 
+	// (String) Token name.
 	// Token name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) The time before which the token MUST NOT be accepted for processing.
 	// The time before which the token MUST NOT be accepted for processing.
 	// +kubebuilder:validation:Optional
 	NotBefore *string `json:"notBefore,omitempty" tf:"not_before,omitempty"`
 
+	// (Attributes List) Set of access policies assigned to the token. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Policies []PoliciesParameters `json:"policies,omitempty" tf:"policies,omitempty"`
 
+	// (String) Status of the token.
+	// Available values: "active", "disabled", "expired".
 	// Status of the token.
 	// Available values: "active", "disabled", "expired".
 	// +kubebuilder:validation:Optional
@@ -217,7 +270,7 @@ type TokenStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Token is the Schema for the Tokens API. <no value>
+// Token is the Schema for the Tokens API. Accepted Permissions API Tokens ReadAPI Tokens Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

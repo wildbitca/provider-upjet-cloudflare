@@ -164,6 +164,10 @@ type ResultInfoObservation struct {
 	// (Number) Total results available without any search parameters.
 	// Total results available without any search parameters.
 	TotalCount *float64 `json:"totalCount,omitempty" tf:"total_count,omitempty"`
+
+	// (Number) The number of total pages in the entire result set.
+	// The number of total pages in the entire result set.
+	TotalPages *float64 `json:"totalPages,omitempty" tf:"total_pages,omitempty"`
 }
 
 type ResultInfoParameters struct {
@@ -325,7 +329,7 @@ type RoutingDNSStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// RoutingDNS is the Schema for the RoutingDNSs API.
+// RoutingDNS is the Schema for the RoutingDNSs API. Accepted Permissions Zone Settings ReadZone Settings Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

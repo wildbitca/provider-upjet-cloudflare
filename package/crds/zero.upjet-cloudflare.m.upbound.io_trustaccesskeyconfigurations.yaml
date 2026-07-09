@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustAccessKeyConfiguration is the Schema for the TrustAccessKeyConfigurations
-          API.
+        description: 'TrustAccessKeyConfiguration is the Schema for the TrustAccessKeyConfigurations
+          API. Accepted Permissions Access: Organizations, Identity Providers, and
+          Groups ReadAccess: Organizations, Identity Providers, and Groups Write'
         properties:
           apiVersion:
             description: |-

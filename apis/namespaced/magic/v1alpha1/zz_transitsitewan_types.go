@@ -186,7 +186,7 @@ type TransitSiteWanStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TransitSiteWan is the Schema for the TransitSiteWans API.
+// TransitSiteWan is the Schema for the TransitSiteWans API. Accepted Permissions Magic Transit ReadMagic Transit WriteMagic WAN ReadMagic WAN Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -16,24 +16,40 @@ import (
 
 type SecurityImpersonationRegistryInitParameters struct {
 
-	// (String) Account Identifier
-	// Account Identifier
+	// (String) Identifier.
+	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String)
+	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
+
+	// (Number)
+	DirectoryID *float64 `json:"directoryId,omitempty" tf:"directory_id,omitempty"`
+
+	// (Number)
+	DirectoryNodeID *float64 `json:"directoryNodeId,omitempty" tf:"directory_node_id,omitempty"`
+
+	// (String)
 	Email *string `json:"email,omitempty" tf:"email,omitempty"`
+
+	// (String, Deprecated)
+	ExternalDirectoryNodeID *string `json:"externalDirectoryNodeId,omitempty" tf:"external_directory_node_id,omitempty"`
 
 	// (Boolean)
 	IsEmailRegex *bool `json:"isEmailRegex,omitempty" tf:"is_email_regex,omitempty"`
 
 	// (String)
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+	// Available values: "A1S_INTERNAL", "SNOOPY-CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+	Provenance *string `json:"provenance,omitempty" tf:"provenance,omitempty"`
 }
 
 type SecurityImpersonationRegistryObservation struct {
 
-	// (String) Account Identifier
-	// Account Identifier
+	// (String) Identifier.
+	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String)
@@ -54,32 +70,53 @@ type SecurityImpersonationRegistryObservation struct {
 	// (String, Deprecated)
 	ExternalDirectoryNodeID *string `json:"externalDirectoryNodeId,omitempty" tf:"external_directory_node_id,omitempty"`
 
-	// (Number) The ID of this resource.
+	// (String) Impersonation registry entry identifier
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Boolean)
 	IsEmailRegex *bool `json:"isEmailRegex,omitempty" tf:"is_email_regex,omitempty"`
 
-	// (String)
+	// (String, Deprecated) Deprecated, use modified_at instead. End of life: November 1, 2026.
+	// Deprecated, use `modified_at` instead. End of life: November 1, 2026.
 	LastModified *string `json:"lastModified,omitempty" tf:"last_modified,omitempty"`
+
+	// (String)
+	ModifiedAt *string `json:"modifiedAt,omitempty" tf:"modified_at,omitempty"`
 
 	// (String)
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String)
+	// CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+	// Available values: "A1S_INTERNAL", "SNOOPY-CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
 	Provenance *string `json:"provenance,omitempty" tf:"provenance,omitempty"`
 }
 
 type SecurityImpersonationRegistryParameters struct {
 
-	// (String) Account Identifier
-	// Account Identifier
+	// (String) Identifier.
+	// Identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional
+	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
+
+	// (Number)
+	// +kubebuilder:validation:Optional
+	DirectoryID *float64 `json:"directoryId,omitempty" tf:"directory_id,omitempty"`
+
+	// (Number)
+	// +kubebuilder:validation:Optional
+	DirectoryNodeID *float64 `json:"directoryNodeId,omitempty" tf:"directory_node_id,omitempty"`
+
+	// (String)
+	// +kubebuilder:validation:Optional
 	Email *string `json:"email,omitempty" tf:"email,omitempty"`
+
+	// (String, Deprecated)
+	// +kubebuilder:validation:Optional
+	ExternalDirectoryNodeID *string `json:"externalDirectoryNodeId,omitempty" tf:"external_directory_node_id,omitempty"`
 
 	// (Boolean)
 	// +kubebuilder:validation:Optional
@@ -88,6 +125,11 @@ type SecurityImpersonationRegistryParameters struct {
 	// (String)
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+	// Available values: "A1S_INTERNAL", "SNOOPY-CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+	// +kubebuilder:validation:Optional
+	Provenance *string `json:"provenance,omitempty" tf:"provenance,omitempty"`
 }
 
 // SecurityImpersonationRegistrySpec defines the desired state of SecurityImpersonationRegistry
@@ -117,7 +159,7 @@ type SecurityImpersonationRegistryStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SecurityImpersonationRegistry is the Schema for the SecurityImpersonationRegistrys API.
+// SecurityImpersonationRegistry is the Schema for the SecurityImpersonationRegistrys API. Accepted Permissions Cloud Email Security: ReadCloud Email Security: Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

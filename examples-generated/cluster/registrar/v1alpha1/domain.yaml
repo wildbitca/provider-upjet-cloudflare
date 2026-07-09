@@ -10,6 +10,6 @@ spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
     autoRenew: true
-    domainName: cloudflare.com
+    domainName: example.com
     locked: false
     privacy: true

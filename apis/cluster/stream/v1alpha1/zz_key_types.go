@@ -32,6 +32,10 @@ type KeyObservation struct {
 
 	// (String) Identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (String) The unique identifier for the signing key.
+	// The unique identifier for the signing key.
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 }
 
 type KeyParameters struct {
@@ -69,7 +73,7 @@ type KeyStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Key is the Schema for the Keys API.
+// Key is the Schema for the Keys API. Accepted Permissions Stream ReadStream Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

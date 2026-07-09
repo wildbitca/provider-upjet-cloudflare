@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustAccessMtlsCertificate is the Schema for the TrustAccessMtlsCertificates
-          API.
+        description: 'TrustAccessMtlsCertificate is the Schema for the TrustAccessMtlsCertificates
+          API. Accepted Permissions Access: Mutual TLS Certificates ReadAccess: Mutual
+          TLS Certificates Write'
         properties:
           apiVersion:
             description: |-

@@ -36,9 +36,9 @@ type TrustDevicePostureIntegrationConfigInitParameters struct {
 	// The Workspace One client ID provided in the Workspace One Admin Dashboard.
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
 
-	// (String) The Uptycs client secret.
+	// (String, Sensitive) The Uptycs client secret.
 	// The Uptycs client secret.
-	ClientKey *string `json:"clientKey,omitempty" tf:"client_key,omitempty"`
+	ClientKeySecretRef *v1.LocalSecretKeySelector `json:"clientKeySecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) The Workspace One client secret provided in the Workspace One Admin Dashboard.
 	// The Workspace One client secret provided in the Workspace One Admin Dashboard.
@@ -66,10 +66,6 @@ type TrustDevicePostureIntegrationConfigObservation struct {
 	// (String) The Workspace One client ID provided in the Workspace One Admin Dashboard.
 	// The Workspace One client ID provided in the Workspace One Admin Dashboard.
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
-
-	// (String) The Uptycs client secret.
-	// The Uptycs client secret.
-	ClientKey *string `json:"clientKey,omitempty" tf:"client_key,omitempty"`
 
 	// (String) The Crowdstrike customer ID.
 	// The Crowdstrike customer ID.
@@ -103,10 +99,10 @@ type TrustDevicePostureIntegrationConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
 
-	// (String) The Uptycs client secret.
+	// (String, Sensitive) The Uptycs client secret.
 	// The Uptycs client secret.
 	// +kubebuilder:validation:Optional
-	ClientKey *string `json:"clientKey,omitempty" tf:"client_key,omitempty"`
+	ClientKeySecretRef *v1.LocalSecretKeySelector `json:"clientKeySecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) The Workspace One client secret provided in the Workspace One Admin Dashboard.
 	// The Workspace One client secret provided in the Workspace One Admin Dashboard.
@@ -223,7 +219,7 @@ type TrustDevicePostureIntegrationStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustDevicePostureIntegration is the Schema for the TrustDevicePostureIntegrations API.
+// TrustDevicePostureIntegration is the Schema for the TrustDevicePostureIntegrations API. Accepted Permissions Zero Trust Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CacheReserve is the Schema for the CacheReserves API.
+        description: CacheReserve is the Schema for the CacheReserves API. Accepted
+          Permissions Zone ReadZone Settings ReadZone Settings WriteZone Write
         properties:
           apiVersion:
             description: |-

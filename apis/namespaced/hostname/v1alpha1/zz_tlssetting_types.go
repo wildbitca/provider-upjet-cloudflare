@@ -21,19 +21,23 @@ type TLSSettingInitParameters struct {
 	// The hostname for which the tls settings are set.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (String) The TLS Setting name. The value type depends on the setting:
-	// The TLS Setting name. The value type depends on the setting:
-	// - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
-	// - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`)
-	// - `http2`: value is `"on"` or `"off"`
+	// (String) The TLS Setting name.
+	// The value type depends on the setting:
+	// The TLS Setting name.
+	// The value type depends on the setting:
+	// - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`).
+	// - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`).
+	// - `http2`: value is `"on"` or `"off"`.
 	// Available values: "ciphers", "min_tls_version", "http2".
 	SettingID *string `json:"settingId,omitempty" tf:"setting_id,omitempty"`
 
-	// (Dynamic) The TLS setting value. The type depends on the setting_id used in the request path:
-	// The TLS setting value. The type depends on the `setting_id` used in the request path:
-	// - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
-	// - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`)
-	// - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`)
+	// (Dynamic) The TLS setting value.
+	// The type depends on the setting_id used in the request path:
+	// The TLS setting value.
+	// The type depends on the `setting_id` used in the request path:
+	// - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`).
+	// - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`).
+	// - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`).
 	// Available values: "1.0", "1.1", "1.2", "1.3", "on", "off".
 	Value *v1.JSON `json:"value,omitempty" tf:"value,omitempty"`
 
@@ -52,14 +56,17 @@ type TLSSettingObservation struct {
 	// The hostname for which the tls settings are set.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (String) The TLS Setting name. The value type depends on the setting:
+	// (String) The TLS Setting name.
+	// The value type depends on the setting:
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) The TLS Setting name. The value type depends on the setting:
-	// The TLS Setting name. The value type depends on the setting:
-	// - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
-	// - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`)
-	// - `http2`: value is `"on"` or `"off"`
+	// (String) The TLS Setting name.
+	// The value type depends on the setting:
+	// The TLS Setting name.
+	// The value type depends on the setting:
+	// - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`).
+	// - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`).
+	// - `http2`: value is `"on"` or `"off"`.
 	// Available values: "ciphers", "min_tls_version", "http2".
 	SettingID *string `json:"settingId,omitempty" tf:"setting_id,omitempty"`
 
@@ -71,11 +78,13 @@ type TLSSettingObservation struct {
 	// This is the time the tls setting was updated.
 	UpdatedAt *string `json:"updatedAt,omitempty" tf:"updated_at,omitempty"`
 
-	// (Dynamic) The TLS setting value. The type depends on the setting_id used in the request path:
-	// The TLS setting value. The type depends on the `setting_id` used in the request path:
-	// - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
-	// - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`)
-	// - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`)
+	// (Dynamic) The TLS setting value.
+	// The type depends on the setting_id used in the request path:
+	// The TLS setting value.
+	// The type depends on the `setting_id` used in the request path:
+	// - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`).
+	// - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`).
+	// - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`).
 	// Available values: "1.0", "1.1", "1.2", "1.3", "on", "off".
 	Value *v1.JSON `json:"value,omitempty" tf:"value,omitempty"`
 
@@ -91,20 +100,24 @@ type TLSSettingParameters struct {
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (String) The TLS Setting name. The value type depends on the setting:
-	// The TLS Setting name. The value type depends on the setting:
-	// - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
-	// - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`)
-	// - `http2`: value is `"on"` or `"off"`
+	// (String) The TLS Setting name.
+	// The value type depends on the setting:
+	// The TLS Setting name.
+	// The value type depends on the setting:
+	// - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`).
+	// - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`).
+	// - `http2`: value is `"on"` or `"off"`.
 	// Available values: "ciphers", "min_tls_version", "http2".
 	// +kubebuilder:validation:Optional
 	SettingID *string `json:"settingId,omitempty" tf:"setting_id,omitempty"`
 
-	// (Dynamic) The TLS setting value. The type depends on the setting_id used in the request path:
-	// The TLS setting value. The type depends on the `setting_id` used in the request path:
-	// - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
-	// - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`)
-	// - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`)
+	// (Dynamic) The TLS setting value.
+	// The type depends on the setting_id used in the request path:
+	// The TLS setting value.
+	// The type depends on the `setting_id` used in the request path:
+	// - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`).
+	// - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`).
+	// - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`).
 	// Available values: "1.0", "1.1", "1.2", "1.3", "on", "off".
 	// +kubebuilder:validation:Optional
 	Value *v1.JSON `json:"value,omitempty" tf:"value,omitempty"`
@@ -142,7 +155,7 @@ type TLSSettingStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TLSSetting is the Schema for the TLSSettings API.
+// TLSSetting is the Schema for the TLSSettings API. Accepted Permissions SSL and Certificates ReadSSL and Certificates Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

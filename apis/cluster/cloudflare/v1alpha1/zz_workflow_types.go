@@ -31,6 +31,9 @@ type InstancesObservation struct {
 	Queued *float64 `json:"queued,omitempty" tf:"queued,omitempty"`
 
 	// (Number)
+	RollingBack *float64 `json:"rollingBack,omitempty" tf:"rolling_back,omitempty"`
+
+	// (Number)
 	Running *float64 `json:"running,omitempty" tf:"running,omitempty"`
 
 	// (Number)
@@ -46,6 +49,44 @@ type InstancesObservation struct {
 type InstancesParameters struct {
 }
 
+type LimitsInitParameters struct {
+
+	// (Number)
+	Steps *float64 `json:"steps,omitempty" tf:"steps,omitempty"`
+}
+
+type LimitsObservation struct {
+
+	// (Number)
+	Steps *float64 `json:"steps,omitempty" tf:"steps,omitempty"`
+}
+
+type LimitsParameters struct {
+
+	// (Number)
+	// +kubebuilder:validation:Optional
+	Steps *float64 `json:"steps,omitempty" tf:"steps,omitempty"`
+}
+
+type SchedulesInitParameters struct {
+
+	// (String)
+	Cron *string `json:"cron,omitempty" tf:"cron,omitempty"`
+}
+
+type SchedulesObservation struct {
+
+	// (String)
+	Cron *string `json:"cron,omitempty" tf:"cron,omitempty"`
+}
+
+type SchedulesParameters struct {
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	Cron *string `json:"cron" tf:"cron,omitempty"`
+}
+
 type WorkflowInitParameters struct {
 
 	// (String)
@@ -53,6 +94,12 @@ type WorkflowInitParameters struct {
 
 	// (String)
 	ClassName *string `json:"className,omitempty" tf:"class_name,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	Limits *LimitsInitParameters `json:"limits,omitempty" tf:"limits,omitempty"`
+
+	// (Attributes List) (see below for nested schema)
+	Schedules []SchedulesInitParameters `json:"schedules,omitempty" tf:"schedules,omitempty"`
 
 	// (String)
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
@@ -81,11 +128,17 @@ type WorkflowObservation struct {
 	// (Number)
 	IsDeleted *float64 `json:"isDeleted,omitempty" tf:"is_deleted,omitempty"`
 
+	// (Attributes) (see below for nested schema)
+	Limits *LimitsObservation `json:"limits,omitempty" tf:"limits,omitempty"`
+
 	// (String)
 	ModifiedOn *string `json:"modifiedOn,omitempty" tf:"modified_on,omitempty"`
 
 	// (String)
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Attributes List) (see below for nested schema)
+	Schedules []SchedulesObservation `json:"schedules,omitempty" tf:"schedules,omitempty"`
 
 	// (String)
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
@@ -112,6 +165,14 @@ type WorkflowParameters struct {
 	// (String)
 	// +kubebuilder:validation:Optional
 	ClassName *string `json:"className,omitempty" tf:"class_name,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Limits *LimitsParameters `json:"limits,omitempty" tf:"limits,omitempty"`
+
+	// (Attributes List) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Schedules []SchedulesParameters `json:"schedules,omitempty" tf:"schedules,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional
@@ -149,7 +210,7 @@ type WorkflowStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Workflow is the Schema for the Workflows API.
+// Workflow is the Schema for the Workflows API. Accepted Permissions Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -190,7 +190,7 @@ type AccountStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Account is the Schema for the Accounts API.
+// Account is the Schema for the Accounts API. Accepted Permissions Account Firewall Access Rules ReadAccount Firewall Access Rules WriteAccount Settings ReadAccount Settings WriteBilling ReadBilling WriteDDoS Botnet Feed ReadDDoS Botnet Feed WriteDDoS Protection ReadDDoS Protection WriteDNS Firewall ReadDNS Firewall WriteDNS View ReadDNS View WriteLoad Balancers Account ReadLoad Balancers Account WriteLoad Balancing: Monitors and Pools ReadLoad Balancing: Monitors and Pools WriteSCIM ProvisioningTrust and Safety ReadTrust and Safety WriteWorkers KV Storage ReadWorkers KV Storage WriteWorkers R2 Storage ReadWorkers R2 Storage WriteWorkers Scripts ReadWorkers Scripts WriteWorkers Tail ReadZero Trust: PII Read
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

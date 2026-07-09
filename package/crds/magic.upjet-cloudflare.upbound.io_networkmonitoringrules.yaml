@@ -35,7 +35,8 @@ spec:
     schema:
       openAPIV3Schema:
         description: NetworkMonitoringRule is the Schema for the NetworkMonitoringRules
-          API.
+          API. Accepted Permissions Magic Network Monitoring AdminMagic Network Monitoring
+          Config ReadMagic Network Monitoring Config Write
         properties:
           apiVersion:
             description: |-
@@ -81,7 +82,7 @@ spec:
                       (Boolean) Toggle on if you would like Cloudflare to automatically advertise the IP Prefixes within the rule via Magic Transit when the rule is triggered. Only available for users of Magic Transit.
                       Toggle on if you would like Cloudflare to automatically advertise the IP Prefixes within the rule via Magic Transit when the rule is triggered. Only available for users of Magic Transit.
                     type: boolean
-                  bandwidth:
+                  bandwidthThreshold:
                     description: |-
                       (Number) The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
                       The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
@@ -103,11 +104,39 @@ spec:
                       (Number) The number of packets per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
                       The number of packets per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
                     type: number
+                  prefixMatch:
+                    description: |-
+                      (String) Prefix match type to be applied for a prefix auto advertisement when using an advanced_ddos rule.
+                      Available values: "exact", "subnet", "supernet".
+                      Prefix match type to be applied for a prefix auto advertisement when using an advanced_ddos rule.
+                      Available values: "exact", "subnet", "supernet".
+                    type: string
                   prefixes:
                     description: (List of String)
                     items:
                       type: string
                     type: array
+                  type:
+                    description: |-
+                      (String) MNM rule type.
+                      Available values: "threshold", "zscore", "advanced_ddos".
+                      MNM rule type.
+                      Available values: "threshold", "zscore", "advanced_ddos".
+                    type: string
+                  zscoreSensitivity:
+                    description: |-
+                      (String) Level of sensitivity set for zscore rules.
+                      Available values: "low", "medium", "high".
+                      Level of sensitivity set for zscore rules.
+                      Available values: "low", "medium", "high".
+                    type: string
+                  zscoreTarget:
+                    description: |-
+                      (String) Target of the zscore rule analysis.
+                      Available values: "bits", "packets".
+                      Target of the zscore rule analysis.
+                      Available values: "bits", "packets".
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -130,7 +159,7 @@ spec:
                       (Boolean) Toggle on if you would like Cloudflare to automatically advertise the IP Prefixes within the rule via Magic Transit when the rule is triggered. Only available for users of Magic Transit.
                       Toggle on if you would like Cloudflare to automatically advertise the IP Prefixes within the rule via Magic Transit when the rule is triggered. Only available for users of Magic Transit.
                     type: boolean
-                  bandwidth:
+                  bandwidthThreshold:
                     description: |-
                       (Number) The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
                       The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
@@ -152,11 +181,39 @@ spec:
                       (Number) The number of packets per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
                       The number of packets per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
                     type: number
+                  prefixMatch:
+                    description: |-
+                      (String) Prefix match type to be applied for a prefix auto advertisement when using an advanced_ddos rule.
+                      Available values: "exact", "subnet", "supernet".
+                      Prefix match type to be applied for a prefix auto advertisement when using an advanced_ddos rule.
+                      Available values: "exact", "subnet", "supernet".
+                    type: string
                   prefixes:
                     description: (List of String)
                     items:
                       type: string
                     type: array
+                  type:
+                    description: |-
+                      (String) MNM rule type.
+                      Available values: "threshold", "zscore", "advanced_ddos".
+                      MNM rule type.
+                      Available values: "threshold", "zscore", "advanced_ddos".
+                    type: string
+                  zscoreSensitivity:
+                    description: |-
+                      (String) Level of sensitivity set for zscore rules.
+                      Available values: "low", "medium", "high".
+                      Level of sensitivity set for zscore rules.
+                      Available values: "low", "medium", "high".
+                    type: string
+                  zscoreTarget:
+                    description: |-
+                      (String) Target of the zscore rule analysis.
+                      Available values: "bits", "packets".
+                      Target of the zscore rule analysis.
+                      Available values: "bits", "packets".
+                    type: string
                 type: object
               managementPolicies:
                 default:
@@ -249,10 +306,22 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
                 || (has(self.initProvider) && has(self.initProvider.accountId))'
+            - message: spec.forProvider.automaticAdvertisement is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.automaticAdvertisement)
+                || (has(self.initProvider) && has(self.initProvider.automaticAdvertisement))'
             - message: spec.forProvider.name is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
                 || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.prefixes is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.prefixes)
+                || (has(self.initProvider) && has(self.initProvider.prefixes))'
+            - message: spec.forProvider.type is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
           status:
             description: NetworkMonitoringRuleStatus defines the observed state of
               NetworkMonitoringRule.
@@ -267,11 +336,6 @@ spec:
                       (Boolean) Toggle on if you would like Cloudflare to automatically advertise the IP Prefixes within the rule via Magic Transit when the rule is triggered. Only available for users of Magic Transit.
                       Toggle on if you would like Cloudflare to automatically advertise the IP Prefixes within the rule via Magic Transit when the rule is triggered. Only available for users of Magic Transit.
                     type: boolean
-                  bandwidth:
-                    description: |-
-                      (Number) The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
-                      The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
-                    type: number
                   bandwidthThreshold:
                     description: |-
                       (Number) The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.

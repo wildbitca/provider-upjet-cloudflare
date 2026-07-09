@@ -101,7 +101,7 @@ type ShieldDiscoveryOperationStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// ShieldDiscoveryOperation is the Schema for the ShieldDiscoveryOperations API.
+// ShieldDiscoveryOperation is the Schema for the ShieldDiscoveryOperations API. Accepted Permissions Account API GatewayDomain API Gateway
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -111,7 +111,6 @@ type ShieldDiscoveryOperation struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.operationId) || (has(self.initProvider) && has(self.initProvider.operationId))",message="spec.forProvider.operationId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.zoneId) || (has(self.initProvider) && has(self.initProvider.zoneId))",message="spec.forProvider.zoneId is a required parameter"
 	Spec   ShieldDiscoveryOperationSpec   `json:"spec"`
 	Status ShieldDiscoveryOperationStatus `json:"status,omitempty"`
 }

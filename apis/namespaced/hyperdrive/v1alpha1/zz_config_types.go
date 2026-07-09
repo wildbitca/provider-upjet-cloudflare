@@ -71,7 +71,7 @@ type ConfigInitParameters struct {
 	// (Attributes) (see below for nested schema)
 	Caching *CachingInitParameters `json:"caching,omitempty" tf:"caching,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) mTLS configuration for the origin connection. Cannot be used with VPC Service origins; TLS must be managed on the VPC Service. (see below for nested schema)
 	Mtls *MtlsInitParameters `json:"mtls,omitempty" tf:"mtls,omitempty"`
 
 	// (String) The name of the Hyperdrive configuration. Used to identify the configuration in the Cloudflare dashboard and API.
@@ -83,6 +83,10 @@ type ConfigInitParameters struct {
 
 	// (Number) The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
 	// The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
+	//
+	// Maximum allowed: 20 for free tier accounts, 100 for paid tier accounts.
+	// If not specified, defaults to 20 for free tier and 60 for paid tier.
+	// Contact Cloudflare if you need a higher limit.
 	OriginConnectionLimit *float64 `json:"originConnectionLimit,omitempty" tf:"origin_connection_limit,omitempty"`
 }
 
@@ -106,7 +110,7 @@ type ConfigObservation struct {
 	// Defines the last modified time of the Hyperdrive configuration.
 	ModifiedOn *string `json:"modifiedOn,omitempty" tf:"modified_on,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) mTLS configuration for the origin connection. Cannot be used with VPC Service origins; TLS must be managed on the VPC Service. (see below for nested schema)
 	Mtls *MtlsObservation `json:"mtls,omitempty" tf:"mtls,omitempty"`
 
 	// (String) The name of the Hyperdrive configuration. Used to identify the configuration in the Cloudflare dashboard and API.
@@ -118,6 +122,10 @@ type ConfigObservation struct {
 
 	// (Number) The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
 	// The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
+	//
+	// Maximum allowed: 20 for free tier accounts, 100 for paid tier accounts.
+	// If not specified, defaults to 20 for free tier and 60 for paid tier.
+	// Contact Cloudflare if you need a higher limit.
 	OriginConnectionLimit *float64 `json:"originConnectionLimit,omitempty" tf:"origin_connection_limit,omitempty"`
 }
 
@@ -132,7 +140,7 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Caching *CachingParameters `json:"caching,omitempty" tf:"caching,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) mTLS configuration for the origin connection. Cannot be used with VPC Service origins; TLS must be managed on the VPC Service. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Mtls *MtlsParameters `json:"mtls,omitempty" tf:"mtls,omitempty"`
 
@@ -147,6 +155,10 @@ type ConfigParameters struct {
 
 	// (Number) The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
 	// The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
+	//
+	// Maximum allowed: 20 for free tier accounts, 100 for paid tier accounts.
+	// If not specified, defaults to 20 for free tier and 60 for paid tier.
+	// Contact Cloudflare if you need a higher limit.
 	// +kubebuilder:validation:Optional
 	OriginConnectionLimit *float64 `json:"originConnectionLimit,omitempty" tf:"origin_connection_limit,omitempty"`
 }
@@ -231,6 +243,10 @@ type OriginInitParameters struct {
 	// Available values: "postgres", "postgresql", "mysql".
 	Scheme *string `json:"scheme,omitempty" tf:"scheme,omitempty"`
 
+	// (String) The identifier of the Workers VPC Service to connect through. Hyperdrive will egress through the specified VPC Service to reach the origin database.
+	// The identifier of the Workers VPC Service to connect through. Hyperdrive will egress through the specified VPC Service to reach the origin database.
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
 	// (String) Set the user of your origin database.
 	// Set the user of your origin database.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
@@ -260,6 +276,10 @@ type OriginObservation struct {
 	// Available values: "postgres", "postgresql", "mysql".
 	Scheme *string `json:"scheme,omitempty" tf:"scheme,omitempty"`
 
+	// (String) The identifier of the Workers VPC Service to connect through. Hyperdrive will egress through the specified VPC Service to reach the origin database.
+	// The identifier of the Workers VPC Service to connect through. Hyperdrive will egress through the specified VPC Service to reach the origin database.
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
 	// (String) Set the user of your origin database.
 	// Set the user of your origin database.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
@@ -285,7 +305,7 @@ type OriginParameters struct {
 	// (String) Defines the host (hostname or IP) of your origin database.
 	// Defines the host (hostname or IP) of your origin database.
 	// +kubebuilder:validation:Optional
-	Host *string `json:"host" tf:"host,omitempty"`
+	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
 	// only value.
 	// Set the password needed to access your origin database. The API never returns this write-only value.
@@ -303,6 +323,11 @@ type OriginParameters struct {
 	// Available values: "postgres", "postgresql", "mysql".
 	// +kubebuilder:validation:Optional
 	Scheme *string `json:"scheme" tf:"scheme,omitempty"`
+
+	// (String) The identifier of the Workers VPC Service to connect through. Hyperdrive will egress through the specified VPC Service to reach the origin database.
+	// The identifier of the Workers VPC Service to connect through. Hyperdrive will egress through the specified VPC Service to reach the origin database.
+	// +kubebuilder:validation:Optional
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
 
 	// (String) Set the user of your origin database.
 	// Set the user of your origin database.
@@ -337,7 +362,7 @@ type ConfigStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Config is the Schema for the Configs API.
+// Config is the Schema for the Configs API. Accepted Permissions Hyperdrive ReadHyperdrive Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

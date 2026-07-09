@@ -60,6 +60,10 @@ type TrustTunnelWarpConnectorInitParameters struct {
 	// Cloudflare account ID
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// (Boolean) Indicates that the tunnel will be created to be highly available. If omitted, defaults to false.
+	// Indicates that the tunnel will be created to be highly available. If omitted, defaults to false.
+	Ha *bool `json:"ha,omitempty" tf:"ha,omitempty"`
+
 	// friendly name for a tunnel.
 	// A user-friendly name for a tunnel.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -98,6 +102,10 @@ type TrustTunnelWarpConnectorObservation struct {
 	// Timestamp of when the resource was deleted. If `null`, the resource has not been deleted.
 	DeletedAt *string `json:"deletedAt,omitempty" tf:"deleted_at,omitempty"`
 
+	// (Boolean) Indicates that the tunnel will be created to be highly available. If omitted, defaults to false.
+	// Indicates that the tunnel will be created to be highly available. If omitted, defaults to false.
+	Ha *bool `json:"ha,omitempty" tf:"ha,omitempty"`
+
 	// (String) UUID of the tunnel.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -128,6 +136,11 @@ type TrustTunnelWarpConnectorParameters struct {
 	// Cloudflare account ID
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (Boolean) Indicates that the tunnel will be created to be highly available. If omitted, defaults to false.
+	// Indicates that the tunnel will be created to be highly available. If omitted, defaults to false.
+	// +kubebuilder:validation:Optional
+	Ha *bool `json:"ha,omitempty" tf:"ha,omitempty"`
 
 	// friendly name for a tunnel.
 	// A user-friendly name for a tunnel.
@@ -167,7 +180,7 @@ type TrustTunnelWarpConnectorStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustTunnelWarpConnector is the Schema for the TrustTunnelWarpConnectors API.
+// TrustTunnelWarpConnector is the Schema for the TrustTunnelWarpConnectors API. Accepted Permissions Cloudflare One Connector: WARP ReadCloudflare One Connector: WARP WriteCloudflare One Connectors ReadCloudflare One Connectors Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

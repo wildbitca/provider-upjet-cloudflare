@@ -14,116 +14,24 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
-type BodyInitParameters struct {
-
-	// (String)
-	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
-
-	// (Boolean) Select to prevent recently registered domains from triggering a
-	// Suspicious or Malicious disposition.
-	// Select to prevent recently registered domains from triggering a
-	// Suspicious or Malicious disposition.
-	IsRecent *bool `json:"isRecent,omitempty" tf:"is_recent,omitempty"`
-
-	// (Boolean)
-	IsRegex *bool `json:"isRegex,omitempty" tf:"is_regex,omitempty"`
-
-	// (Boolean) Select for partner or other approved domains that have similar
-	// spelling to your connected domains. Prevents listed domains from
-	// triggering a Spoof disposition.
-	// Select for partner or other approved domains that have similar
-	// spelling to your connected domains. Prevents listed domains from
-	// triggering a Spoof disposition.
-	IsSimilarity *bool `json:"isSimilarity,omitempty" tf:"is_similarity,omitempty"`
-
-	// (String)
-	Pattern *string `json:"pattern,omitempty" tf:"pattern,omitempty"`
-}
-
-type BodyObservation struct {
-
-	// (String)
-	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
-
-	// (Boolean) Select to prevent recently registered domains from triggering a
-	// Suspicious or Malicious disposition.
-	// Select to prevent recently registered domains from triggering a
-	// Suspicious or Malicious disposition.
-	IsRecent *bool `json:"isRecent,omitempty" tf:"is_recent,omitempty"`
-
-	// (Boolean)
-	IsRegex *bool `json:"isRegex,omitempty" tf:"is_regex,omitempty"`
-
-	// (Boolean) Select for partner or other approved domains that have similar
-	// spelling to your connected domains. Prevents listed domains from
-	// triggering a Spoof disposition.
-	// Select for partner or other approved domains that have similar
-	// spelling to your connected domains. Prevents listed domains from
-	// triggering a Spoof disposition.
-	IsSimilarity *bool `json:"isSimilarity,omitempty" tf:"is_similarity,omitempty"`
-
-	// (String)
-	Pattern *string `json:"pattern,omitempty" tf:"pattern,omitempty"`
-}
-
-type BodyParameters struct {
-
-	// (String)
-	// +kubebuilder:validation:Optional
-	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
-
-	// (Boolean) Select to prevent recently registered domains from triggering a
-	// Suspicious or Malicious disposition.
-	// Select to prevent recently registered domains from triggering a
-	// Suspicious or Malicious disposition.
-	// +kubebuilder:validation:Optional
-	IsRecent *bool `json:"isRecent" tf:"is_recent,omitempty"`
-
-	// (Boolean)
-	// +kubebuilder:validation:Optional
-	IsRegex *bool `json:"isRegex" tf:"is_regex,omitempty"`
-
-	// (Boolean) Select for partner or other approved domains that have similar
-	// spelling to your connected domains. Prevents listed domains from
-	// triggering a Spoof disposition.
-	// Select for partner or other approved domains that have similar
-	// spelling to your connected domains. Prevents listed domains from
-	// triggering a Spoof disposition.
-	// +kubebuilder:validation:Optional
-	IsSimilarity *bool `json:"isSimilarity" tf:"is_similarity,omitempty"`
-
-	// (String)
-	// +kubebuilder:validation:Optional
-	Pattern *string `json:"pattern" tf:"pattern,omitempty"`
-}
-
 type SecurityTrustedDomainsInitParameters struct {
 
-	// (String) Account Identifier
-	// Account Identifier
+	// (String) Identifier.
+	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
-
-	// (Attributes List) (see below for nested schema)
-	Body []BodyInitParameters `json:"body,omitempty" tf:"body,omitempty"`
 
 	// (String)
 	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
 
-	// (Boolean) Select to prevent recently registered domains from triggering a
-	// Suspicious or Malicious disposition.
-	// Select to prevent recently registered domains from triggering a
-	// Suspicious or Malicious disposition.
+	// (Boolean) Select to prevent recently registered domains from triggering a Suspicious or Malicious disposition.
+	// Select to prevent recently registered domains from triggering a Suspicious or Malicious disposition.
 	IsRecent *bool `json:"isRecent,omitempty" tf:"is_recent,omitempty"`
 
 	// (Boolean)
 	IsRegex *bool `json:"isRegex,omitempty" tf:"is_regex,omitempty"`
 
-	// (Boolean) Select for partner or other approved domains that have similar
-	// spelling to your connected domains. Prevents listed domains from
-	// triggering a Spoof disposition.
-	// Select for partner or other approved domains that have similar
-	// spelling to your connected domains. Prevents listed domains from
-	// triggering a Spoof disposition.
+	// (Boolean) Select for partner or other approved domains that have similar spelling to your connected domains. Prevents listed domains from triggering a Spoof disposition.
+	// Select for partner or other approved domains that have similar spelling to your connected domains. Prevents listed domains from triggering a Spoof disposition.
 	IsSimilarity *bool `json:"isSimilarity,omitempty" tf:"is_similarity,omitempty"`
 
 	// (String)
@@ -132,12 +40,9 @@ type SecurityTrustedDomainsInitParameters struct {
 
 type SecurityTrustedDomainsObservation struct {
 
-	// (String) Account Identifier
-	// Account Identifier
+	// (String) Identifier.
+	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
-
-	// (Attributes List) (see below for nested schema)
-	Body []BodyObservation `json:"body,omitempty" tf:"body,omitempty"`
 
 	// (String)
 	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
@@ -145,28 +50,26 @@ type SecurityTrustedDomainsObservation struct {
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Number) The unique identifier for the trusted domain.
+	// (String) Trusted domain identifier
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Boolean) Select to prevent recently registered domains from triggering a
-	// Suspicious or Malicious disposition.
-	// Select to prevent recently registered domains from triggering a
-	// Suspicious or Malicious disposition.
+	// (Boolean) Select to prevent recently registered domains from triggering a Suspicious or Malicious disposition.
+	// Select to prevent recently registered domains from triggering a Suspicious or Malicious disposition.
 	IsRecent *bool `json:"isRecent,omitempty" tf:"is_recent,omitempty"`
 
 	// (Boolean)
 	IsRegex *bool `json:"isRegex,omitempty" tf:"is_regex,omitempty"`
 
-	// (Boolean) Select for partner or other approved domains that have similar
-	// spelling to your connected domains. Prevents listed domains from
-	// triggering a Spoof disposition.
-	// Select for partner or other approved domains that have similar
-	// spelling to your connected domains. Prevents listed domains from
-	// triggering a Spoof disposition.
+	// (Boolean) Select for partner or other approved domains that have similar spelling to your connected domains. Prevents listed domains from triggering a Spoof disposition.
+	// Select for partner or other approved domains that have similar spelling to your connected domains. Prevents listed domains from triggering a Spoof disposition.
 	IsSimilarity *bool `json:"isSimilarity,omitempty" tf:"is_similarity,omitempty"`
 
-	// (String)
+	// (String, Deprecated) Deprecated, use modified_at instead. End of life: November 1, 2026.
+	// Deprecated, use `modified_at` instead. End of life: November 1, 2026.
 	LastModified *string `json:"lastModified,omitempty" tf:"last_modified,omitempty"`
+
+	// (String)
+	ModifiedAt *string `json:"modifiedAt,omitempty" tf:"modified_at,omitempty"`
 
 	// (String)
 	Pattern *string `json:"pattern,omitempty" tf:"pattern,omitempty"`
@@ -174,23 +77,17 @@ type SecurityTrustedDomainsObservation struct {
 
 type SecurityTrustedDomainsParameters struct {
 
-	// (String) Account Identifier
-	// Account Identifier
+	// (String) Identifier.
+	// Identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
-
-	// (Attributes List) (see below for nested schema)
-	// +kubebuilder:validation:Optional
-	Body []BodyParameters `json:"body,omitempty" tf:"body,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional
 	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
 
-	// (Boolean) Select to prevent recently registered domains from triggering a
-	// Suspicious or Malicious disposition.
-	// Select to prevent recently registered domains from triggering a
-	// Suspicious or Malicious disposition.
+	// (Boolean) Select to prevent recently registered domains from triggering a Suspicious or Malicious disposition.
+	// Select to prevent recently registered domains from triggering a Suspicious or Malicious disposition.
 	// +kubebuilder:validation:Optional
 	IsRecent *bool `json:"isRecent,omitempty" tf:"is_recent,omitempty"`
 
@@ -198,12 +95,8 @@ type SecurityTrustedDomainsParameters struct {
 	// +kubebuilder:validation:Optional
 	IsRegex *bool `json:"isRegex,omitempty" tf:"is_regex,omitempty"`
 
-	// (Boolean) Select for partner or other approved domains that have similar
-	// spelling to your connected domains. Prevents listed domains from
-	// triggering a Spoof disposition.
-	// Select for partner or other approved domains that have similar
-	// spelling to your connected domains. Prevents listed domains from
-	// triggering a Spoof disposition.
+	// (Boolean) Select for partner or other approved domains that have similar spelling to your connected domains. Prevents listed domains from triggering a Spoof disposition.
+	// Select for partner or other approved domains that have similar spelling to your connected domains. Prevents listed domains from triggering a Spoof disposition.
 	// +kubebuilder:validation:Optional
 	IsSimilarity *bool `json:"isSimilarity,omitempty" tf:"is_similarity,omitempty"`
 
@@ -239,7 +132,7 @@ type SecurityTrustedDomainsStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SecurityTrustedDomains is the Schema for the SecurityTrustedDomainss API.
+// SecurityTrustedDomains is the Schema for the SecurityTrustedDomainss API. Accepted Permissions Cloud Email Security: ReadCloud Email Security: Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -249,6 +142,7 @@ type SecurityTrustedDomains struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountId) || (has(self.initProvider) && has(self.initProvider.accountId))",message="spec.forProvider.accountId is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.pattern) || (has(self.initProvider) && has(self.initProvider.pattern))",message="spec.forProvider.pattern is a required parameter"
 	Spec   SecurityTrustedDomainsSpec   `json:"spec"`
 	Status SecurityTrustedDomainsStatus `json:"status,omitempty"`
 }

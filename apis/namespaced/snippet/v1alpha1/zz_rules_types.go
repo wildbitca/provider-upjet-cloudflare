@@ -26,7 +26,7 @@ type RulesInitParameters struct {
 
 type RulesObservation struct {
 
-	// (String) Specify the unique ID of the rule.
+	// (String) Use this field to specify the unique ID of the zone.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Attributes List) Lists snippet rules. (see below for nested schema)
@@ -82,7 +82,7 @@ type RulesRulesObservation struct {
 	// Define the expression that determines which traffic matches the rule.
 	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
 
-	// (String) Specify the unique ID of the rule.
+	// (String) Use this field to specify the unique ID of the zone.
 	// Specify the unique ID of the rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -145,7 +145,7 @@ type RulesStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Rules is the Schema for the Ruless API.
+// Rules is the Schema for the Ruless API. Accepted Permissions Snippets ReadSnippets Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

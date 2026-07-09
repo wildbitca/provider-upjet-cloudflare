@@ -125,5 +125,5 @@ func (tr *TrustAccessAIControlsMcpPortal) LateInitialize(attrs []byte) (bool, er
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *TrustAccessAIControlsMcpPortal) GetTerraformSchemaVersion() int {
-	return 0
+	return 500
 }

@@ -93,6 +93,24 @@ type FeaturesObservation struct {
 type FeaturesParameters struct {
 }
 
+type LearnedInitParameters struct {
+}
+
+type LearnedObservation struct {
+
+	// (List of String) An array containing the learned parameter schemas.
+	// OpenAPI parameter objects describing path, query, header, or cookie parameters.
+	Parameters []map[string]*string `json:"parameters,omitempty" tf:"parameters,omitempty"`
+
+	// (Map of String) OpenAPI request body object describing the expected request payload.
+	// OpenAPI request body object describing the expected request payload.
+	// +mapType=granular
+	RequestBody map[string]*string `json:"requestBody,omitempty" tf:"request_body,omitempty"`
+}
+
+type LearnedParameters struct {
+}
+
 type P90InitParameters struct {
 }
 
@@ -198,6 +216,21 @@ type SchemaInfoObservation struct {
 type SchemaInfoParameters struct {
 }
 
+type SchemasInitParameters struct {
+}
+
+type SchemasObservation struct {
+
+	// (Attributes) An OpenAPI operation object fragment containing schema information for an operation. May include parameter definitions, request body specifications, and a component schema extension. (see below for nested schema)
+	Learned *LearnedObservation `json:"learned,omitempty" tf:"learned,omitempty"`
+
+	// (Attributes) An OpenAPI operation object fragment containing schema information for an operation. May include parameter definitions, request body specifications, and a component schema extension. (see below for nested schema)
+	Uploaded *UploadedObservation `json:"uploaded,omitempty" tf:"uploaded,omitempty"`
+}
+
+type SchemasParameters struct {
+}
+
 type ShieldOperationInitParameters struct {
 
 	// normalized upon insertion. See: https://developers.cloudflare.com/rules/normalization/how-it-works/.
@@ -247,6 +280,9 @@ type ShieldOperationObservation struct {
 	// (String) UUID.
 	// UUID.
 	OperationID *string `json:"operationId,omitempty" tf:"operation_id,omitempty"`
+
+	// uploaded and Cloudflare-learned schemas. (see below for nested schema)
+	Schemas *SchemasObservation `json:"schemas,omitempty" tf:"schemas,omitempty"`
 
 	// (String) Identifier.
 	// Identifier.
@@ -356,6 +392,24 @@ type ThresholdsObservation struct {
 type ThresholdsParameters struct {
 }
 
+type UploadedInitParameters struct {
+}
+
+type UploadedObservation struct {
+
+	// (List of String) An array containing the learned parameter schemas.
+	// OpenAPI parameter objects describing path, query, header, or cookie parameters.
+	Parameters []map[string]*string `json:"parameters,omitempty" tf:"parameters,omitempty"`
+
+	// (Map of String) OpenAPI request body object describing the expected request payload.
+	// OpenAPI request body object describing the expected request payload.
+	// +mapType=granular
+	RequestBody map[string]*string `json:"requestBody,omitempty" tf:"request_body,omitempty"`
+}
+
+type UploadedParameters struct {
+}
+
 // ShieldOperationSpec defines the desired state of ShieldOperation
 type ShieldOperationSpec struct {
 	v2.ManagedResourceSpec `json:",inline"`
@@ -383,7 +437,7 @@ type ShieldOperationStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// ShieldOperation is the Schema for the ShieldOperations API.
+// ShieldOperation is the Schema for the ShieldOperations API. Accepted Permissions Account API GatewayAccount API Gateway ReadDomain API GatewayDomain API Gateway Read
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

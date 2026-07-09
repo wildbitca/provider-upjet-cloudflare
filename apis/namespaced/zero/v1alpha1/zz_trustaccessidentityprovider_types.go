@@ -72,6 +72,19 @@ type ConfigInitParameters struct {
 	// The claim name for email in the id_token response.
 	EmailClaimName *string `json:"emailClaimName,omitempty" tf:"email_claim_name,omitempty"`
 
+	// (Boolean) Enable SAML assertion encryption. When enabled, the Identity Provider will encrypt
+	// SAML assertions using the certificate from the assigned certificate set.
+	// Enable SAML assertion encryption. When enabled, the Identity Provider will encrypt
+	// SAML assertions using the certificate from the assigned certificate set.
+	//
+	// To enable encryption:
+	// 1. Create a certificate set via POST to `/identity_providers/{id}/saml_certificate`
+	// 2. Set this field to `true` and include `saml_certificate_set_id` in the PUT request
+	// 3. Configure the public certificate in your external Identity Provider
+	//
+	// Note: Requires `saml_certificate_set_id` to be set when `true`.
+	EnableEncryption *bool `json:"enableEncryption,omitempty" tf:"enable_encryption,omitempty"`
+
 	// (Attributes List) Add a list of attribute names that will be returned in the response header from the Access callback. (see below for nested schema)
 	HeaderAttributes []HeaderAttributesInitParameters `json:"headerAttributes,omitempty" tf:"header_attributes,omitempty"`
 
@@ -104,6 +117,10 @@ type ConfigInitParameters struct {
 	// Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
 	// Available values: "login", "select_account", "none".
 	Prompt *string `json:"prompt,omitempty" tf:"prompt,omitempty"`
+
+	// (Boolean) When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
+	// When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
+	RestrictToAccountMembers *bool `json:"restrictToAccountMembers,omitempty" tf:"restrict_to_account_members,omitempty"`
 
 	// (List of String) OAuth scopes
 	// OAuth scopes
@@ -180,6 +197,19 @@ type ConfigObservation struct {
 	// The claim name for email in the id_token response.
 	EmailClaimName *string `json:"emailClaimName,omitempty" tf:"email_claim_name,omitempty"`
 
+	// (Boolean) Enable SAML assertion encryption. When enabled, the Identity Provider will encrypt
+	// SAML assertions using the certificate from the assigned certificate set.
+	// Enable SAML assertion encryption. When enabled, the Identity Provider will encrypt
+	// SAML assertions using the certificate from the assigned certificate set.
+	//
+	// To enable encryption:
+	// 1. Create a certificate set via POST to `/identity_providers/{id}/saml_certificate`
+	// 2. Set this field to `true` and include `saml_certificate_set_id` in the PUT request
+	// 3. Configure the public certificate in your external Identity Provider
+	//
+	// Note: Requires `saml_certificate_set_id` to be set when `true`.
+	EnableEncryption *bool `json:"enableEncryption,omitempty" tf:"enable_encryption,omitempty"`
+
 	// (Attributes List) Add a list of attribute names that will be returned in the response header from the Access callback. (see below for nested schema)
 	HeaderAttributes []HeaderAttributesObservation `json:"headerAttributes,omitempty" tf:"header_attributes,omitempty"`
 
@@ -215,6 +245,10 @@ type ConfigObservation struct {
 
 	// (String)
 	RedirectURL *string `json:"redirectUrl,omitempty" tf:"redirect_url,omitempty"`
+
+	// (Boolean) When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
+	// When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
+	RestrictToAccountMembers *bool `json:"restrictToAccountMembers,omitempty" tf:"restrict_to_account_members,omitempty"`
 
 	// (List of String) OAuth scopes
 	// OAuth scopes
@@ -309,6 +343,20 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	EmailClaimName *string `json:"emailClaimName,omitempty" tf:"email_claim_name,omitempty"`
 
+	// (Boolean) Enable SAML assertion encryption. When enabled, the Identity Provider will encrypt
+	// SAML assertions using the certificate from the assigned certificate set.
+	// Enable SAML assertion encryption. When enabled, the Identity Provider will encrypt
+	// SAML assertions using the certificate from the assigned certificate set.
+	//
+	// To enable encryption:
+	// 1. Create a certificate set via POST to `/identity_providers/{id}/saml_certificate`
+	// 2. Set this field to `true` and include `saml_certificate_set_id` in the PUT request
+	// 3. Configure the public certificate in your external Identity Provider
+	//
+	// Note: Requires `saml_certificate_set_id` to be set when `true`.
+	// +kubebuilder:validation:Optional
+	EnableEncryption *bool `json:"enableEncryption,omitempty" tf:"enable_encryption,omitempty"`
+
 	// (Attributes List) Add a list of attribute names that will be returned in the response header from the Access callback. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	HeaderAttributes []HeaderAttributesParameters `json:"headerAttributes,omitempty" tf:"header_attributes,omitempty"`
@@ -350,6 +398,11 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Prompt *string `json:"prompt,omitempty" tf:"prompt,omitempty"`
 
+	// (Boolean) When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
+	// When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
+	// +kubebuilder:validation:Optional
+	RestrictToAccountMembers *bool `json:"restrictToAccountMembers,omitempty" tf:"restrict_to_account_members,omitempty"`
+
 	// (List of String) OAuth scopes
 	// OAuth scopes
 	// +kubebuilder:validation:Optional
@@ -374,6 +427,33 @@ type ConfigParameters struct {
 	// The token_endpoint URL of your IdP
 	// +kubebuilder:validation:Optional
 	TokenURL *string `json:"tokenUrl,omitempty" tf:"token_url,omitempty"`
+}
+
+type CurrentCertificateInitParameters struct {
+}
+
+type CurrentCertificateObservation struct {
+
+	// (Boolean) Indicates whether this is the currently active certificate
+	// Indicates whether this is the currently active certificate
+	IsCurrent *bool `json:"isCurrent,omitempty" tf:"is_current,omitempty"`
+
+	// (String) Certificate expiration date. Certificates are automatically rotated 30 days before expiration.
+	// Certificate expiration date. Certificates are automatically rotated 30 days before expiration.
+	NotAfter *string `json:"notAfter,omitempty" tf:"not_after,omitempty"`
+
+	// encoded X.509 certificate containing the public key.
+	// Configure this certificate in your external SAML Identity Provider to enable encryption.
+	// PEM-encoded X.509 certificate containing the public key.
+	// Configure this certificate in your external SAML Identity Provider to enable encryption.
+	PublicCertificate *string `json:"publicCertificate,omitempty" tf:"public_certificate,omitempty"`
+
+	// (String) Unique identifier for the certificate set
+	// Unique identifier for the certificate
+	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
+}
+
+type CurrentCertificateParameters struct {
 }
 
 type HeaderAttributesInitParameters struct {
@@ -411,6 +491,34 @@ type HeaderAttributesParameters struct {
 	HeaderName *string `json:"headerName,omitempty" tf:"header_name,omitempty"`
 }
 
+type SAMLCertificateSetInitParameters struct {
+}
+
+type SAMLCertificateSetObservation struct {
+
+	// (String) Timestamp when the certificate set was created
+	// Timestamp when the certificate set was created
+	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
+
+	// (Attributes) The currently active certificate used for encrypting SAML assertions (see below for nested schema)
+	CurrentCertificate *CurrentCertificateObservation `json:"currentCertificate,omitempty" tf:"current_certificate,omitempty"`
+
+	// (String) The previous certificate, maintained during rotation to ensure continuity. Null if no rotation has occurred. Mirrors the structure of saml_certificate.
+	// The previous certificate, maintained during rotation to ensure continuity. Null if no rotation has occurred. Mirrors the structure of `saml_certificate`.
+	PreviousCertificate *string `json:"previousCertificate,omitempty" tf:"previous_certificate,omitempty"`
+
+	// (String) Unique identifier for the certificate set
+	// Unique identifier for the certificate set
+	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
+
+	// (String) Timestamp when the certificate set was last updated (e.g., during rotation)
+	// Timestamp when the certificate set was last updated (e.g., during rotation)
+	UpdatedAt *string `json:"updatedAt,omitempty" tf:"updated_at,omitempty"`
+}
+
+type SAMLCertificateSetParameters struct {
+}
+
 type TrustAccessIdentityProviderInitParameters struct {
 
 	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
@@ -433,12 +541,24 @@ type TrustAccessIdentityProviderInitParameters struct {
 	// The name of the identity provider, shown to users on the login page.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Boolean) Indicates that the identity provider is immutable and cannot be updated or deleted via the API.
+	// Indicates that the identity provider is immutable and cannot be updated or deleted via the API.
+	ReadOnly *bool `json:"readOnly,omitempty" tf:"read_only,omitempty"`
+
+	// (String) The UID of the SAML encryption certificate set assigned to this Identity Provider.
+	// Only present for SAML identity providers with encryption configured.
+	// Create a certificate set via POST to /identity_providers/{id}/saml_certificate.
+	// The UID of the SAML encryption certificate set assigned to this Identity Provider.
+	// Only present for SAML identity providers with encryption configured.
+	// Create a certificate set via POST to `/identity_providers/{id}/saml_certificate`.
+	SAMLCertificateSetID *string `json:"samlCertificateSetId,omitempty" tf:"saml_certificate_set_id,omitempty"`
+
 	// Domain Identity Management (SCIM) with the identity provider. (see below for nested schema)
 	ScimConfig *TrustAccessIdentityProviderScimConfigInitParameters `json:"scimConfig,omitempty" tf:"scim_config,omitempty"`
 
-	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
 	// The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -462,12 +582,28 @@ type TrustAccessIdentityProviderObservation struct {
 	// The name of the identity provider, shown to users on the login page.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Boolean) Indicates that the identity provider is immutable and cannot be updated or deleted via the API.
+	// Indicates that the identity provider is immutable and cannot be updated or deleted via the API.
+	ReadOnly *bool `json:"readOnly,omitempty" tf:"read_only,omitempty"`
+
+	// (Attributes) The SAML encryption certificate set details, including current and previous certificates.
+	// Only present for SAML identity providers with a certificate set assigned. (see below for nested schema)
+	SAMLCertificateSet *SAMLCertificateSetObservation `json:"samlCertificateSet,omitempty" tf:"saml_certificate_set,omitempty"`
+
+	// (String) The UID of the SAML encryption certificate set assigned to this Identity Provider.
+	// Only present for SAML identity providers with encryption configured.
+	// Create a certificate set via POST to /identity_providers/{id}/saml_certificate.
+	// The UID of the SAML encryption certificate set assigned to this Identity Provider.
+	// Only present for SAML identity providers with encryption configured.
+	// Create a certificate set via POST to `/identity_providers/{id}/saml_certificate`.
+	SAMLCertificateSetID *string `json:"samlCertificateSetId,omitempty" tf:"saml_certificate_set_id,omitempty"`
+
 	// Domain Identity Management (SCIM) with the identity provider. (see below for nested schema)
 	ScimConfig *TrustAccessIdentityProviderScimConfigObservation `json:"scimConfig,omitempty" tf:"scim_config,omitempty"`
 
-	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
 	// The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -500,13 +636,27 @@ type TrustAccessIdentityProviderParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Boolean) Indicates that the identity provider is immutable and cannot be updated or deleted via the API.
+	// Indicates that the identity provider is immutable and cannot be updated or deleted via the API.
+	// +kubebuilder:validation:Optional
+	ReadOnly *bool `json:"readOnly,omitempty" tf:"read_only,omitempty"`
+
+	// (String) The UID of the SAML encryption certificate set assigned to this Identity Provider.
+	// Only present for SAML identity providers with encryption configured.
+	// Create a certificate set via POST to /identity_providers/{id}/saml_certificate.
+	// The UID of the SAML encryption certificate set assigned to this Identity Provider.
+	// Only present for SAML identity providers with encryption configured.
+	// Create a certificate set via POST to `/identity_providers/{id}/saml_certificate`.
+	// +kubebuilder:validation:Optional
+	SAMLCertificateSetID *string `json:"samlCertificateSetId,omitempty" tf:"saml_certificate_set_id,omitempty"`
+
 	// Domain Identity Management (SCIM) with the identity provider. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ScimConfig *TrustAccessIdentityProviderScimConfigParameters `json:"scimConfig,omitempty" tf:"scim_config,omitempty"`
 
-	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
 	// The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex".
+	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
@@ -614,7 +764,7 @@ type TrustAccessIdentityProviderStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustAccessIdentityProvider is the Schema for the TrustAccessIdentityProviders API.
+// TrustAccessIdentityProvider is the Schema for the TrustAccessIdentityProviders API. Accepted Permissions Access: Organizations, Identity Providers, and Groups ReadAccess: Organizations, Identity Providers, and Groups Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

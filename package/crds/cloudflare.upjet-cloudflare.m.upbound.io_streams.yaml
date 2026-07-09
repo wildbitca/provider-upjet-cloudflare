@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Stream is the Schema for the Streams API.
+        description: Stream is the Schema for the Streams API. Accepted Permissions
+          Stream ReadStream Write
         properties:
           apiVersion:
             description: |-
@@ -170,6 +171,24 @@ spec:
                       value store used to reference other systems of record for managing videos.
                       A user modifiable key-value store used to reference other systems of record for managing videos.
                     type: string
+                  publicDetails:
+                    description: (Attributes) Public details for the video including
+                      title, share link, channel link, and logo. (see below for nested
+                      schema)
+                    properties:
+                      channelLink:
+                        description: (String)
+                        type: string
+                      logo:
+                        description: (String)
+                        type: string
+                      shareLink:
+                        description: (String)
+                        type: string
+                      title:
+                        description: (String)
+                        type: string
+                    type: object
                   requireSignedUrls:
                     description: |-
                       (Boolean) Indicates whether the video can be a accessed using the UID. When set to true, a signed token must be generated with a signing key to view the video.
@@ -185,6 +204,11 @@ spec:
                       wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
                       The timestamp for a thumbnail image calculated as a percentage value of the video's duration. To convert from a second-wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
                     type: number
+                  uid:
+                    description: |-
+                      (String) The unique identifier for the video. Can be used to verify the video being updated.
+                      The unique identifier for the video. Can be used to verify the video being updated.
+                    type: string
                   uploadExpiry:
                     description: |-
                       (String) The date and time when the video upload URL is no longer valid for direct user uploads.
@@ -316,6 +340,24 @@ spec:
                       value store used to reference other systems of record for managing videos.
                       A user modifiable key-value store used to reference other systems of record for managing videos.
                     type: string
+                  publicDetails:
+                    description: (Attributes) Public details for the video including
+                      title, share link, channel link, and logo. (see below for nested
+                      schema)
+                    properties:
+                      channelLink:
+                        description: (String)
+                        type: string
+                      logo:
+                        description: (String)
+                        type: string
+                      shareLink:
+                        description: (String)
+                        type: string
+                      title:
+                        description: (String)
+                        type: string
+                    type: object
                   requireSignedUrls:
                     description: |-
                       (Boolean) Indicates whether the video can be a accessed using the UID. When set to true, a signed token must be generated with a signing key to view the video.
@@ -331,6 +373,11 @@ spec:
                       wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
                       The timestamp for a thumbnail image calculated as a percentage value of the video's duration. To convert from a second-wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
                     type: number
+                  uid:
+                    description: |-
+                      (String) The unique identifier for the video. Can be used to verify the video being updated.
+                      The unique identifier for the video. Can be used to verify the video being updated.
+                    type: string
                   uploadExpiry:
                     description: |-
                       (String) The date and time when the video upload URL is no longer valid for direct user uploads.
@@ -412,6 +459,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  clippedFrom:
+                    description: |-
+                      (String) The unique identifier of the source video this video was clipped from.
+                      The unique identifier of the source video this video was clipped from.
+                    type: string
                   created:
                     description: |-
                       (String) The date and time the media item was created.
@@ -458,6 +510,11 @@ spec:
                       1 means the value is unknown.
                       The maximum duration in seconds for a video upload. Can be set for a video that is not yet uploaded to limit its duration. Uploads that exceed the specified duration will fail during processing. A value of `-1` means the value is unknown.
                     type: number
+                  maxSizeBytes:
+                    description: |-
+                      (Number) The maximum size in bytes for the video upload.
+                      The maximum size in bytes for the video upload.
+                    type: number
                   meta:
                     description: |-
                       value store used to reference other systems of record for managing videos.
@@ -487,6 +544,24 @@ spec:
                       (String) The video's preview page URI. This field is omitted until encoding is complete.
                       The video's preview page URI. This field is omitted until encoding is complete.
                     type: string
+                  publicDetails:
+                    description: (Attributes) Public details for the video including
+                      title, share link, channel link, and logo. (see below for nested
+                      schema)
+                    properties:
+                      channelLink:
+                        description: (String)
+                        type: string
+                      logo:
+                        description: (String)
+                        type: string
+                      shareLink:
+                        description: (String)
+                        type: string
+                      title:
+                        description: (String)
+                        type: string
+                    type: object
                   readyToStream:
                     description: |-
                       (Boolean) Indicates whether the video is playable. The field is empty if the video is not ready for viewing or the live stream is still in progress.
@@ -555,8 +630,8 @@ spec:
                     type: number
                   uid:
                     description: |-
-                      generated unique identifier for a media item.
-                      A Cloudflare-generated unique identifier for a media item.
+                      (String) The unique identifier for the video. Can be used to verify the video being updated.
+                      The unique identifier for the video. Can be used to verify the video being updated.
                     type: string
                   uploadExpiry:
                     description: |-
@@ -618,7 +693,7 @@ spec:
                         type: number
                       uid:
                         description: |-
-                          generated unique identifier for a media item.
+                          (String) The unique identifier for the video. Can be used to verify the video being updated.
                           The unique identifier for a watermark profile.
                         type: string
                       width:

@@ -136,6 +136,35 @@ type EntriesPatternParameters struct {
 	Validation *string `json:"validation,omitempty" tf:"validation,omitempty"`
 }
 
+type SensitivityLevelsInitParameters struct {
+
+	// (String)
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// (String)
+	LevelID *string `json:"levelId,omitempty" tf:"level_id,omitempty"`
+}
+
+type SensitivityLevelsObservation struct {
+
+	// (String)
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// (String)
+	LevelID *string `json:"levelId,omitempty" tf:"level_id,omitempty"`
+}
+
+type SensitivityLevelsParameters struct {
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	GroupID *string `json:"groupId" tf:"group_id,omitempty"`
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	LevelID *string `json:"levelId" tf:"level_id,omitempty"`
+}
+
 type SharedEntriesInitParameters struct {
 
 	// (Boolean) If true, scan the context of predefined entries to only return matches surrounded by keywords.
@@ -218,6 +247,14 @@ type TrustDlpCustomProfileInitParameters struct {
 	// (Attributes, Deprecated) Scan the context of predefined entries to only return matches surrounded by keywords. (see below for nested schema)
 	ContextAwareness *ContextAwarenessInitParameters `json:"contextAwareness,omitempty" tf:"context_awareness,omitempty"`
 
+	// (List of String) Data class IDs to associate with the profile.
+	// Data class IDs to associate with the profile.
+	DataClasses []*string `json:"dataClasses,omitempty" tf:"data_classes,omitempty"`
+
+	// (List of String) Data tag IDs to associate with the profile.
+	// Data tag IDs to associate with the profile.
+	DataTags []*string `json:"dataTags,omitempty" tf:"data_tags,omitempty"`
+
 	// (String) The description of the profile.
 	// The description of the profile.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -231,6 +268,9 @@ type TrustDlpCustomProfileInitParameters struct {
 
 	// (Boolean)
 	OcrEnabled *bool `json:"ocrEnabled,omitempty" tf:"ocr_enabled,omitempty"`
+
+	// (Attributes List) Sensitivity levels to associate with the profile. (see below for nested schema)
+	SensitivityLevels []SensitivityLevelsInitParameters `json:"sensitivityLevels,omitempty" tf:"sensitivity_levels,omitempty"`
 
 	// defined Cloudflare profiles, or your Microsoft Information Protection profiles). (see below for nested schema)
 	SharedEntries []SharedEntriesInitParameters `json:"sharedEntries,omitempty" tf:"shared_entries,omitempty"`
@@ -258,6 +298,14 @@ type TrustDlpCustomProfileObservation struct {
 	// When the profile was created.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// (List of String) Data class IDs to associate with the profile.
+	// Data class IDs to associate with the profile.
+	DataClasses []*string `json:"dataClasses,omitempty" tf:"data_classes,omitempty"`
+
+	// (List of String) Data tag IDs to associate with the profile.
+	// Data tag IDs to associate with the profile.
+	DataTags []*string `json:"dataTags,omitempty" tf:"data_tags,omitempty"`
+
 	// (String) The description of the profile.
 	// The description of the profile.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -278,6 +326,9 @@ type TrustDlpCustomProfileObservation struct {
 	// (Boolean) Whether this profile can be accessed by anyone.
 	// Whether this profile can be accessed by anyone.
 	OpenAccess *bool `json:"openAccess,omitempty" tf:"open_access,omitempty"`
+
+	// (Attributes List) Sensitivity levels to associate with the profile. (see below for nested schema)
+	SensitivityLevels []SensitivityLevelsObservation `json:"sensitivityLevels,omitempty" tf:"sensitivity_levels,omitempty"`
 
 	// defined Cloudflare profiles, or your Microsoft Information Protection profiles). (see below for nested schema)
 	SharedEntries []SharedEntriesObservation `json:"sharedEntries,omitempty" tf:"shared_entries,omitempty"`
@@ -314,6 +365,16 @@ type TrustDlpCustomProfileParameters struct {
 	// +kubebuilder:validation:Optional
 	ContextAwareness *ContextAwarenessParameters `json:"contextAwareness,omitempty" tf:"context_awareness,omitempty"`
 
+	// (List of String) Data class IDs to associate with the profile.
+	// Data class IDs to associate with the profile.
+	// +kubebuilder:validation:Optional
+	DataClasses []*string `json:"dataClasses,omitempty" tf:"data_classes,omitempty"`
+
+	// (List of String) Data tag IDs to associate with the profile.
+	// Data tag IDs to associate with the profile.
+	// +kubebuilder:validation:Optional
+	DataTags []*string `json:"dataTags,omitempty" tf:"data_tags,omitempty"`
+
 	// (String) The description of the profile.
 	// The description of the profile.
 	// +kubebuilder:validation:Optional
@@ -331,6 +392,10 @@ type TrustDlpCustomProfileParameters struct {
 	// (Boolean)
 	// +kubebuilder:validation:Optional
 	OcrEnabled *bool `json:"ocrEnabled,omitempty" tf:"ocr_enabled,omitempty"`
+
+	// (Attributes List) Sensitivity levels to associate with the profile. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	SensitivityLevels []SensitivityLevelsParameters `json:"sensitivityLevels,omitempty" tf:"sensitivity_levels,omitempty"`
 
 	// defined Cloudflare profiles, or your Microsoft Information Protection profiles). (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -364,7 +429,7 @@ type TrustDlpCustomProfileStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustDlpCustomProfile is the Schema for the TrustDlpCustomProfiles API.
+// TrustDlpCustomProfile is the Schema for the TrustDlpCustomProfiles API. Accepted Permissions Zero Trust ReadZero Trust Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

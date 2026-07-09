@@ -133,7 +133,7 @@ type ShieldSchemaValidationSettingsStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// ShieldSchemaValidationSettings is the Schema for the ShieldSchemaValidationSettingss API.
+// ShieldSchemaValidationSettings is the Schema for the ShieldSchemaValidationSettingss API. Accepted Permissions Account API GatewayAccount API Gateway ReadDomain API GatewayDomain API Gateway Read
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

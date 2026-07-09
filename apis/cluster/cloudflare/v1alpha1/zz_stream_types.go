@@ -47,6 +47,55 @@ type PlaybackObservation struct {
 type PlaybackParameters struct {
 }
 
+type PublicDetailsInitParameters struct {
+
+	// (String)
+	ChannelLink *string `json:"channelLink,omitempty" tf:"channel_link,omitempty"`
+
+	// (String)
+	Logo *string `json:"logo,omitempty" tf:"logo,omitempty"`
+
+	// (String)
+	ShareLink *string `json:"shareLink,omitempty" tf:"share_link,omitempty"`
+
+	// (String)
+	Title *string `json:"title,omitempty" tf:"title,omitempty"`
+}
+
+type PublicDetailsObservation struct {
+
+	// (String)
+	ChannelLink *string `json:"channelLink,omitempty" tf:"channel_link,omitempty"`
+
+	// (String)
+	Logo *string `json:"logo,omitempty" tf:"logo,omitempty"`
+
+	// (String)
+	ShareLink *string `json:"shareLink,omitempty" tf:"share_link,omitempty"`
+
+	// (String)
+	Title *string `json:"title,omitempty" tf:"title,omitempty"`
+}
+
+type PublicDetailsParameters struct {
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	ChannelLink *string `json:"channelLink,omitempty" tf:"channel_link,omitempty"`
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	Logo *string `json:"logo,omitempty" tf:"logo,omitempty"`
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	ShareLink *string `json:"shareLink,omitempty" tf:"share_link,omitempty"`
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	Title *string `json:"title,omitempty" tf:"title,omitempty"`
+}
+
 type StatusInitParameters struct {
 }
 
@@ -108,6 +157,9 @@ type StreamInitParameters struct {
 	// A user modifiable key-value store used to reference other systems of record for managing videos.
 	Meta *string `json:"meta,omitempty" tf:"meta,omitempty"`
 
+	// (Attributes) Public details for the video including title, share link, channel link, and logo. (see below for nested schema)
+	PublicDetails *PublicDetailsInitParameters `json:"publicDetails,omitempty" tf:"public_details,omitempty"`
+
 	// (Boolean) Indicates whether the video can be a accessed using the UID. When set to true, a signed token must be generated with a signing key to view the video.
 	// Indicates whether the video can be a accessed using the UID. When set to `true`, a signed token must be generated with a signing key to view the video.
 	RequireSignedUrls *bool `json:"requireSignedUrls,omitempty" tf:"require_signed_urls,omitempty"`
@@ -119,6 +171,10 @@ type StreamInitParameters struct {
 	// wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
 	// The timestamp for a thumbnail image calculated as a percentage value of the video's duration. To convert from a second-wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
 	ThumbnailTimestampPct *float64 `json:"thumbnailTimestampPct,omitempty" tf:"thumbnail_timestamp_pct,omitempty"`
+
+	// (String) The unique identifier for the video. Can be used to verify the video being updated.
+	// The unique identifier for the video. Can be used to verify the video being updated.
+	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
 
 	// (String) The date and time when the video upload URL is no longer valid for direct user uploads.
 	// The date and time when the video upload URL is no longer valid for direct user uploads.
@@ -134,6 +190,10 @@ type StreamObservation struct {
 	// (List of String) Lists the origins allowed to display the video. Enter allowed origin domains in an array and use * for wildcard subdomains. Empty arrays allow the video to be viewed on any origin.
 	// Lists the origins allowed to display the video. Enter allowed origin domains in an array and use `*` for wildcard subdomains. Empty arrays allow the video to be viewed on any origin.
 	AllowedOrigins []*string `json:"allowedOrigins,omitempty" tf:"allowed_origins,omitempty"`
+
+	// (String) The unique identifier of the source video this video was clipped from.
+	// The unique identifier of the source video this video was clipped from.
+	ClippedFrom *string `json:"clippedFrom,omitempty" tf:"clipped_from,omitempty"`
 
 	// (String) The date and time the media item was created.
 	// The date and time the media item was created.
@@ -164,6 +224,10 @@ type StreamObservation struct {
 	// The maximum duration in seconds for a video upload. Can be set for a video that is not yet uploaded to limit its duration. Uploads that exceed the specified duration will fail during processing. A value of `-1` means the value is unknown.
 	MaxDurationSeconds *float64 `json:"maxDurationSeconds,omitempty" tf:"max_duration_seconds,omitempty"`
 
+	// (Number) The maximum size in bytes for the video upload.
+	// The maximum size in bytes for the video upload.
+	MaxSizeBytes *float64 `json:"maxSizeBytes,omitempty" tf:"max_size_bytes,omitempty"`
+
 	// value store used to reference other systems of record for managing videos.
 	// A user modifiable key-value store used to reference other systems of record for managing videos.
 	Meta *string `json:"meta,omitempty" tf:"meta,omitempty"`
@@ -178,6 +242,9 @@ type StreamObservation struct {
 	// (String) The video's preview page URI. This field is omitted until encoding is complete.
 	// The video's preview page URI. This field is omitted until encoding is complete.
 	Preview *string `json:"preview,omitempty" tf:"preview,omitempty"`
+
+	// (Attributes) Public details for the video including title, share link, channel link, and logo. (see below for nested schema)
+	PublicDetails *PublicDetailsObservation `json:"publicDetails,omitempty" tf:"public_details,omitempty"`
 
 	// (Boolean) Indicates whether the video is playable. The field is empty if the video is not ready for viewing or the live stream is still in progress.
 	// Indicates whether the video is playable. The field is empty if the video is not ready for viewing or the live stream is still in progress.
@@ -210,8 +277,8 @@ type StreamObservation struct {
 	// The timestamp for a thumbnail image calculated as a percentage value of the video's duration. To convert from a second-wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
 	ThumbnailTimestampPct *float64 `json:"thumbnailTimestampPct,omitempty" tf:"thumbnail_timestamp_pct,omitempty"`
 
-	// generated unique identifier for a media item.
-	// A Cloudflare-generated unique identifier for a media item.
+	// (String) The unique identifier for the video. Can be used to verify the video being updated.
+	// The unique identifier for the video. Can be used to verify the video being updated.
 	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
 
 	// (String) The date and time when the video upload URL is no longer valid for direct user uploads.
@@ -267,6 +334,10 @@ type StreamParameters struct {
 	// +kubebuilder:validation:Optional
 	Meta *string `json:"meta,omitempty" tf:"meta,omitempty"`
 
+	// (Attributes) Public details for the video including title, share link, channel link, and logo. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	PublicDetails *PublicDetailsParameters `json:"publicDetails,omitempty" tf:"public_details,omitempty"`
+
 	// (Boolean) Indicates whether the video can be a accessed using the UID. When set to true, a signed token must be generated with a signing key to view the video.
 	// Indicates whether the video can be a accessed using the UID. When set to `true`, a signed token must be generated with a signing key to view the video.
 	// +kubebuilder:validation:Optional
@@ -281,6 +352,11 @@ type StreamParameters struct {
 	// The timestamp for a thumbnail image calculated as a percentage value of the video's duration. To convert from a second-wise timestamp to a percentage, divide the desired timestamp by the total duration of the video.  If this value is not set, the default thumbnail image is taken from 0s of the video.
 	// +kubebuilder:validation:Optional
 	ThumbnailTimestampPct *float64 `json:"thumbnailTimestampPct,omitempty" tf:"thumbnail_timestamp_pct,omitempty"`
+
+	// (String) The unique identifier for the video. Can be used to verify the video being updated.
+	// The unique identifier for the video. Can be used to verify the video being updated.
+	// +kubebuilder:validation:Optional
+	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
 
 	// (String) The date and time when the video upload URL is no longer valid for direct user uploads.
 	// The date and time when the video upload URL is no longer valid for direct user uploads.
@@ -329,7 +405,7 @@ type WatermarkObservation struct {
 	// The size of the image in bytes.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
-	// generated unique identifier for a media item.
+	// (String) The unique identifier for the video. Can be used to verify the video being updated.
 	// The unique identifier for a watermark profile.
 	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
 
@@ -368,7 +444,7 @@ type StreamStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Stream is the Schema for the Streams API.
+// Stream is the Schema for the Streams API. Accepted Permissions Stream ReadStream Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -14,6 +14,33 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type AudioInitParameters struct {
+}
+
+type AudioObservation struct {
+
+	// (Boolean) Denotes whether the audio track will be played by default in a player.
+	// Denotes whether the audio track will be played by default in a player.
+	Default *bool `json:"default,omitempty" tf:"default,omitempty"`
+
+	// (String) A string to uniquely identify the track amongst other audio track labels for the specified video.
+	// A string to uniquely identify the track amongst other audio track labels for the specified video.
+	Label *string `json:"label,omitempty" tf:"label,omitempty"`
+
+	// (String) Specifies the processing status of the video.
+	// Available values: "queued", "ready", "error".
+	// Specifies the processing status of the video.
+	// Available values: "queued", "ready", "error".
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// generated unique identifier for a media item.
+	// A Cloudflare-generated unique identifier for a media item.
+	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
+}
+
+type AudioParameters struct {
+}
+
 type AudioTrackInitParameters struct {
 
 	// (String) The account identifier tag.
@@ -42,6 +69,9 @@ type AudioTrackObservation struct {
 	// (String) The account identifier tag.
 	// The account identifier tag.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (Attributes List) Array of audio tracks for the video. (see below for nested schema)
+	Audio []AudioObservation `json:"audio,omitempty" tf:"audio,omitempty"`
 
 	// (String) The unique identifier for an additional audio track.
 	// The unique identifier for an additional audio track.
@@ -127,7 +157,7 @@ type AudioTrackStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// AudioTrack is the Schema for the AudioTracks API.
+// AudioTrack is the Schema for the AudioTracks API. Accepted Permissions Stream ReadStream Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

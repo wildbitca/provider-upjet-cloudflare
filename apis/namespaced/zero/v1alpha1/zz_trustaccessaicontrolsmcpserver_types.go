@@ -14,13 +14,42 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type ErrorDetailsInitParameters struct {
+}
+
+type ErrorDetailsObservation struct {
+
+	// (String) Underlying error message
+	// Underlying error message
+	Cause *string `json:"cause,omitempty" tf:"cause,omitempty"`
+
+	// (Boolean) True = MCP server returned an error. False = couldn't reach the server
+	// True = MCP server returned an error. False = couldn't reach the server
+	IsUpstream *bool `json:"isUpstream,omitempty" tf:"is_upstream,omitempty"`
+
+	// (Number) MCP protocol error code
+	// MCP protocol error code
+	McpCode *float64 `json:"mcpCode,omitempty" tf:"mcp_code,omitempty"`
+
+	// (Boolean) Whether the error is transient and worth retrying
+	// Whether the error is transient and worth retrying
+	Retryable *bool `json:"retryable,omitempty" tf:"retryable,omitempty"`
+
+	// (Number) HTTP status code from the server
+	// HTTP status code from the server
+	StatusCode *float64 `json:"statusCode,omitempty" tf:"status_code,omitempty"`
+}
+
+type ErrorDetailsParameters struct {
+}
+
 type TrustAccessAIControlsMcpServerInitParameters struct {
 
 	// (String)
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String)
-	AuthCredentials *string `json:"authCredentials,omitempty" tf:"auth_credentials,omitempty"`
+	// (String, Sensitive)
+	AuthCredentialsSecretRef *v1.LocalSecretKeySelector `json:"authCredentialsSecretRef,omitempty" tf:"-"`
 
 	// (String) Available values: "oauth", "bearer", "unauthenticated".
 	// Available values: "oauth", "bearer", "unauthenticated".
@@ -32,17 +61,28 @@ type TrustAccessAIControlsMcpServerInitParameters struct {
 	// (String)
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
+	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	IsSharedOauthCallbackEnabled *bool `json:"isSharedOauthCallbackEnabled,omitempty" tf:"is_shared_oauth_callback_enabled,omitempty"`
+
 	// (String)
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
+	// Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
+	SecureWebGateway *bool `json:"secureWebGateway,omitempty" tf:"secure_web_gateway,omitempty"`
+
+	// (Attributes List) (see below for nested schema)
+	UpdatedPrompts []TrustAccessAIControlsMcpServerUpdatedPromptsInitParameters `json:"updatedPrompts,omitempty" tf:"updated_prompts,omitempty"`
+
+	// (Attributes List) (see below for nested schema)
+	UpdatedTools []TrustAccessAIControlsMcpServerUpdatedToolsInitParameters `json:"updatedTools,omitempty" tf:"updated_tools,omitempty"`
 }
 
 type TrustAccessAIControlsMcpServerObservation struct {
 
 	// (String)
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
-
-	// (String)
-	AuthCredentials *string `json:"authCredentials,omitempty" tf:"auth_credentials,omitempty"`
 
 	// (String) Available values: "oauth", "bearer", "unauthenticated".
 	// Available values: "oauth", "bearer", "unauthenticated".
@@ -60,11 +100,18 @@ type TrustAccessAIControlsMcpServerObservation struct {
 	// (String)
 	Error *string `json:"error,omitempty" tf:"error,omitempty"`
 
+	// (Attributes) (see below for nested schema)
+	ErrorDetails *ErrorDetailsObservation `json:"errorDetails,omitempty" tf:"error_details,omitempty"`
+
 	// (String)
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
 	// (String) server id
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	IsSharedOauthCallbackEnabled *bool `json:"isSharedOauthCallbackEnabled,omitempty" tf:"is_shared_oauth_callback_enabled,omitempty"`
 
 	// (String)
 	LastSuccessfulSync *string `json:"lastSuccessfulSync,omitempty" tf:"last_successful_sync,omitempty"`
@@ -84,11 +131,21 @@ type TrustAccessAIControlsMcpServerObservation struct {
 	// (List of Map of String)
 	Prompts []map[string]*string `json:"prompts,omitempty" tf:"prompts,omitempty"`
 
+	// (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
+	// Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
+	SecureWebGateway *bool `json:"secureWebGateway,omitempty" tf:"secure_web_gateway,omitempty"`
+
 	// (String)
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
 	// (List of Map of String)
 	Tools []map[string]*string `json:"tools,omitempty" tf:"tools,omitempty"`
+
+	// (Attributes List) (see below for nested schema)
+	UpdatedPrompts []TrustAccessAIControlsMcpServerUpdatedPromptsObservation `json:"updatedPrompts,omitempty" tf:"updated_prompts,omitempty"`
+
+	// (Attributes List) (see below for nested schema)
+	UpdatedTools []TrustAccessAIControlsMcpServerUpdatedToolsObservation `json:"updatedTools,omitempty" tf:"updated_tools,omitempty"`
 }
 
 type TrustAccessAIControlsMcpServerParameters struct {
@@ -97,9 +154,9 @@ type TrustAccessAIControlsMcpServerParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String)
+	// (String, Sensitive)
 	// +kubebuilder:validation:Optional
-	AuthCredentials *string `json:"authCredentials,omitempty" tf:"auth_credentials,omitempty"`
+	AuthCredentialsSecretRef *v1.LocalSecretKeySelector `json:"authCredentialsSecretRef,omitempty" tf:"-"`
 
 	// (String) Available values: "oauth", "bearer", "unauthenticated".
 	// Available values: "oauth", "bearer", "unauthenticated".
@@ -114,9 +171,125 @@ type TrustAccessAIControlsMcpServerParameters struct {
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
+	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// +kubebuilder:validation:Optional
+	IsSharedOauthCallbackEnabled *bool `json:"isSharedOauthCallbackEnabled,omitempty" tf:"is_shared_oauth_callback_enabled,omitempty"`
+
 	// (String)
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
+	// Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
+	// +kubebuilder:validation:Optional
+	SecureWebGateway *bool `json:"secureWebGateway,omitempty" tf:"secure_web_gateway,omitempty"`
+
+	// (Attributes List) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	UpdatedPrompts []TrustAccessAIControlsMcpServerUpdatedPromptsParameters `json:"updatedPrompts,omitempty" tf:"updated_prompts,omitempty"`
+
+	// (Attributes List) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	UpdatedTools []TrustAccessAIControlsMcpServerUpdatedToolsParameters `json:"updatedTools,omitempty" tf:"updated_tools,omitempty"`
+}
+
+type TrustAccessAIControlsMcpServerUpdatedPromptsInitParameters struct {
+
+	// (String)
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// (String)
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Boolean)
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (String)
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
+type TrustAccessAIControlsMcpServerUpdatedPromptsObservation struct {
+
+	// (String)
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// (String)
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Boolean)
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (String)
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
+type TrustAccessAIControlsMcpServerUpdatedPromptsParameters struct {
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Boolean)
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name" tf:"name,omitempty"`
+}
+
+type TrustAccessAIControlsMcpServerUpdatedToolsInitParameters struct {
+
+	// (String)
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// (String)
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Boolean)
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (String)
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
+type TrustAccessAIControlsMcpServerUpdatedToolsObservation struct {
+
+	// (String)
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// (String)
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Boolean)
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (String)
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
+type TrustAccessAIControlsMcpServerUpdatedToolsParameters struct {
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Boolean)
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name" tf:"name,omitempty"`
 }
 
 // TrustAccessAIControlsMcpServerSpec defines the desired state of TrustAccessAIControlsMcpServer
@@ -146,7 +319,7 @@ type TrustAccessAIControlsMcpServerStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustAccessAIControlsMcpServer is the Schema for the TrustAccessAIControlsMcpServers API.
+// TrustAccessAIControlsMcpServer is the Schema for the TrustAccessAIControlsMcpServers API. Accepted Permissions MCP Portals ReadMCP Portals Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

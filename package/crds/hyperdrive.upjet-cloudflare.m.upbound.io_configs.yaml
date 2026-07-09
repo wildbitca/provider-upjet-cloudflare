@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Config is the Schema for the Configs API.
+        description: Config is the Schema for the Configs API. Accepted Permissions
+          Hyperdrive ReadHyperdrive Write
         properties:
           apiVersion:
             description: |-
@@ -83,7 +84,9 @@ spec:
                         type: number
                     type: object
                   mtls:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) mTLS configuration for the origin connection.
+                      Cannot be used with VPC Service origins; TLS must be managed
+                      on the VPC Service. (see below for nested schema)
                     properties:
                       caCertificateId:
                         description: |-
@@ -164,6 +167,11 @@ spec:
                           Specifies the URL scheme used to connect to your origin database.
                           Available values: "postgres", "postgresql", "mysql".
                         type: string
+                      serviceId:
+                        description: |-
+                          (String) The identifier of the Workers VPC Service to connect through. Hyperdrive will egress through the specified VPC Service to reach the origin database.
+                          The identifier of the Workers VPC Service to connect through. Hyperdrive will egress through the specified VPC Service to reach the origin database.
+                        type: string
                       user:
                         description: |-
                           (String) Set the user of your origin database.
@@ -174,6 +182,10 @@ spec:
                     description: |-
                       (Number) The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
                       The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
+
+                      Maximum allowed: 20 for free tier accounts, 100 for paid tier accounts.
+                      If not specified, defaults to 20 for free tier and 60 for paid tier.
+                      Contact Cloudflare if you need a higher limit.
                     type: number
                 type: object
               initProvider:
@@ -214,7 +226,9 @@ spec:
                         type: number
                     type: object
                   mtls:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) mTLS configuration for the origin connection.
+                      Cannot be used with VPC Service origins; TLS must be managed
+                      on the VPC Service. (see below for nested schema)
                     properties:
                       caCertificateId:
                         description: |-
@@ -295,6 +309,11 @@ spec:
                           Specifies the URL scheme used to connect to your origin database.
                           Available values: "postgres", "postgresql", "mysql".
                         type: string
+                      serviceId:
+                        description: |-
+                          (String) The identifier of the Workers VPC Service to connect through. Hyperdrive will egress through the specified VPC Service to reach the origin database.
+                          The identifier of the Workers VPC Service to connect through. Hyperdrive will egress through the specified VPC Service to reach the origin database.
+                        type: string
                       user:
                         description: |-
                           (String) Set the user of your origin database.
@@ -307,6 +326,10 @@ spec:
                     description: |-
                       (Number) The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
                       The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
+
+                      Maximum allowed: 20 for free tier accounts, 100 for paid tier accounts.
+                      If not specified, defaults to 20 for free tier and 60 for paid tier.
+                      Contact Cloudflare if you need a higher limit.
                     type: number
                 type: object
               managementPolicies:
@@ -424,7 +447,9 @@ spec:
                       Defines the last modified time of the Hyperdrive configuration.
                     type: string
                   mtls:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) mTLS configuration for the origin connection.
+                      Cannot be used with VPC Service origins; TLS must be managed
+                      on the VPC Service. (see below for nested schema)
                     properties:
                       caCertificateId:
                         description: |-
@@ -477,6 +502,11 @@ spec:
                           Specifies the URL scheme used to connect to your origin database.
                           Available values: "postgres", "postgresql", "mysql".
                         type: string
+                      serviceId:
+                        description: |-
+                          (String) The identifier of the Workers VPC Service to connect through. Hyperdrive will egress through the specified VPC Service to reach the origin database.
+                          The identifier of the Workers VPC Service to connect through. Hyperdrive will egress through the specified VPC Service to reach the origin database.
+                        type: string
                       user:
                         description: |-
                           (String) Set the user of your origin database.
@@ -487,6 +517,10 @@ spec:
                     description: |-
                       (Number) The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
                       The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
+
+                      Maximum allowed: 20 for free tier accounts, 100 for paid tier accounts.
+                      If not specified, defaults to 20 for free tier and 60 for paid tier.
+                      Contact Cloudflare if you need a higher limit.
                     type: number
                 type: object
               conditions:

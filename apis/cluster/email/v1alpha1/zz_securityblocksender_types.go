@@ -15,8 +15,8 @@ import (
 
 type SecurityBlockSenderInitParameters struct {
 
-	// (String) Account Identifier
-	// Account Identifier
+	// (String) Identifier.
+	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String)
@@ -28,15 +28,19 @@ type SecurityBlockSenderInitParameters struct {
 	// (String)
 	Pattern *string `json:"pattern,omitempty" tf:"pattern,omitempty"`
 
-	// (String) Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+	// (String) Type of pattern matching.
+	// Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
+	// Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+	// Type of pattern matching.
+	// Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
 	// Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
 	PatternType *string `json:"patternType,omitempty" tf:"pattern_type,omitempty"`
 }
 
 type SecurityBlockSenderObservation struct {
 
-	// (String) Account Identifier
-	// Account Identifier
+	// (String) Identifier.
+	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String)
@@ -45,27 +49,35 @@ type SecurityBlockSenderObservation struct {
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Number) The unique identifier for the allow policy.
+	// (String) Blocked sender pattern identifier
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Boolean)
 	IsRegex *bool `json:"isRegex,omitempty" tf:"is_regex,omitempty"`
 
-	// (String)
+	// (String, Deprecated) Deprecated, use modified_at instead. End of life: November 1, 2026.
+	// Deprecated, use `modified_at` instead. End of life: November 1, 2026.
 	LastModified *string `json:"lastModified,omitempty" tf:"last_modified,omitempty"`
+
+	// (String)
+	ModifiedAt *string `json:"modifiedAt,omitempty" tf:"modified_at,omitempty"`
 
 	// (String)
 	Pattern *string `json:"pattern,omitempty" tf:"pattern,omitempty"`
 
-	// (String) Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+	// (String) Type of pattern matching.
+	// Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
+	// Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+	// Type of pattern matching.
+	// Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
 	// Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
 	PatternType *string `json:"patternType,omitempty" tf:"pattern_type,omitempty"`
 }
 
 type SecurityBlockSenderParameters struct {
 
-	// (String) Account Identifier
-	// Account Identifier
+	// (String) Identifier.
+	// Identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
@@ -81,7 +93,11 @@ type SecurityBlockSenderParameters struct {
 	// +kubebuilder:validation:Optional
 	Pattern *string `json:"pattern,omitempty" tf:"pattern,omitempty"`
 
-	// (String) Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+	// (String) Type of pattern matching.
+	// Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
+	// Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+	// Type of pattern matching.
+	// Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
 	// Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
 	// +kubebuilder:validation:Optional
 	PatternType *string `json:"patternType,omitempty" tf:"pattern_type,omitempty"`
@@ -114,7 +130,7 @@ type SecurityBlockSenderStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SecurityBlockSender is the Schema for the SecurityBlockSenders API.
+// SecurityBlockSender is the Schema for the SecurityBlockSenders API. Accepted Permissions Cloud Email Security: ReadCloud Email Security: Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

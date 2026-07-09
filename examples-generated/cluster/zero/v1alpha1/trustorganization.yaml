@@ -29,9 +29,20 @@ spec:
       - totp
       - biometrics
       - security_key
+      amrMatchingSessionDuration: 12h
+      requiredAaguids: 2fc0579f-8113-47ea-b116-bb5a8db9202a
       sessionDuration: 24h
-    mfaConfigurationAllowed: true
     mfaRequiredForAllApps: false
+    mfaSshPivKeyRequirements:
+      pinPolicy: always
+      requireFipsDevice: true
+      sshKeySize:
+      - 256
+      - 2048
+      sshKeyType:
+      - ecdsa
+      - rsa
+      touchPolicy: always
     name: Widget Corps Internal Applications
     sessionDuration: 24h
     uiReadOnlyToggleReason: Temporarily turn off the UI read only lock to make a change

@@ -125,5 +125,5 @@ func (tr *TLS) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *TLS) GetTerraformSchemaVersion() int {
-	return 1
+	return 500
 }

@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SecurityImpersonationRegistry is the Schema for the SecurityImpersonationRegistrys
-          API.
+        description: 'SecurityImpersonationRegistry is the Schema for the SecurityImpersonationRegistrys
+          API. Accepted Permissions Cloud Email Security: ReadCloud Email Security:
+          Write'
         properties:
           apiVersion:
             description: |-
@@ -62,17 +63,34 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Account Identifier
-                      Account Identifier
+                      (String) Identifier.
+                      Identifier.
                     type: string
+                  comments:
+                    description: (String)
+                    type: string
+                  directoryId:
+                    description: (Number)
+                    type: number
+                  directoryNodeId:
+                    description: (Number)
+                    type: number
                   email:
                     description: (String)
+                    type: string
+                  externalDirectoryNodeId:
+                    description: (String, Deprecated)
                     type: string
                   isEmailRegex:
                     description: (Boolean)
                     type: boolean
                   name:
                     description: (String)
+                    type: string
+                  provenance:
+                    description: |-
+                      CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+                      Available values: "A1S_INTERNAL", "SNOOPY-CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
                     type: string
                 type: object
               initProvider:
@@ -90,17 +108,34 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Account Identifier
-                      Account Identifier
+                      (String) Identifier.
+                      Identifier.
                     type: string
+                  comments:
+                    description: (String)
+                    type: string
+                  directoryId:
+                    description: (Number)
+                    type: number
+                  directoryNodeId:
+                    description: (Number)
+                    type: number
                   email:
                     description: (String)
+                    type: string
+                  externalDirectoryNodeId:
+                    description: (String, Deprecated)
                     type: string
                   isEmailRegex:
                     description: (Boolean)
                     type: boolean
                   name:
                     description: (String)
+                    type: string
+                  provenance:
+                    description: |-
+                      CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+                      Available values: "A1S_INTERNAL", "SNOOPY-CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
                     type: string
                 type: object
               managementPolicies:
@@ -186,8 +221,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Account Identifier
-                      Account Identifier
+                      (String) Identifier.
+                      Identifier.
                     type: string
                   comments:
                     description: (String)
@@ -208,19 +243,26 @@ spec:
                     description: (String, Deprecated)
                     type: string
                   id:
-                    description: (Number) The ID of this resource.
+                    description: (String) Impersonation registry entry identifier
                     type: string
                   isEmailRegex:
                     description: (Boolean)
                     type: boolean
                   lastModified:
+                    description: |-
+                      (String, Deprecated) Deprecated, use modified_at instead. End of life: November 1, 2026.
+                      Deprecated, use `modified_at` instead. End of life: November 1, 2026.
+                    type: string
+                  modifiedAt:
                     description: (String)
                     type: string
                   name:
                     description: (String)
                     type: string
                   provenance:
-                    description: (String)
+                    description: |-
+                      CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+                      Available values: "A1S_INTERNAL", "SNOOPY-CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
                     type: string
                 type: object
               conditions:

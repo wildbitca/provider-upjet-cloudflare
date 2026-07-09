@@ -35,7 +35,8 @@ spec:
     schema:
       openAPIV3Schema:
         description: OriginPullsSettings is the Schema for the OriginPullsSettingss
-          API.
+          API. Accepted Permissions SSL and Certificates ReadSSL and Certificates
+          Write
         properties:
           apiVersion:
             description: |-

@@ -2360,13 +2360,13 @@ func (in *OriginsInitParameters) DeepCopyInto(out *OriginsInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.DisabledAt != nil {
-		in, out := &in.DisabledAt, &out.DisabledAt
-		*out = new(string)
-		**out = **in
-	}
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.FlattenCname != nil {
+		in, out := &in.FlattenCname, &out.FlattenCname
 		*out = new(bool)
 		**out = **in
 	}
@@ -2425,6 +2425,11 @@ func (in *OriginsObservation) DeepCopyInto(out *OriginsObservation) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.FlattenCname != nil {
+		in, out := &in.FlattenCname, &out.FlattenCname
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Header != nil {
 		in, out := &in.Header, &out.Header
 		*out = new(HeaderObservation)
@@ -2470,13 +2475,13 @@ func (in *OriginsParameters) DeepCopyInto(out *OriginsParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.DisabledAt != nil {
-		in, out := &in.DisabledAt, &out.DisabledAt
-		*out = new(string)
-		**out = **in
-	}
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.FlattenCname != nil {
+		in, out := &in.FlattenCname, &out.FlattenCname
 		*out = new(bool)
 		**out = **in
 	}

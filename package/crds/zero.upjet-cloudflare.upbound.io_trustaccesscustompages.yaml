@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustAccessCustomPage is the Schema for the TrustAccessCustomPages
-          API.
+        description: 'TrustAccessCustomPage is the Schema for the TrustAccessCustomPages
+          API. Accepted Permissions Access: Custom Pages ReadAccess: Custom Pages
+          Write'
         properties:
           apiVersion:
             description: |-

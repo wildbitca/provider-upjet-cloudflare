@@ -55,6 +55,7 @@ import (
 	v1alpha1regional "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/regional/v1alpha1"
 	v1alpha1registrar "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/registrar/v1alpha1"
 	v1alpha1schema "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/schema/v1alpha1"
+	v1alpha1secretsstore "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/secretsstore/v1alpha1"
 	v1alpha1snippet "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/snippet/v1alpha1"
 	v1alpha1spectrum "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/spectrum/v1alpha1"
 	v1alpha1sso "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/sso/v1alpha1"
@@ -125,6 +126,7 @@ func init() {
 		v1alpha1regional.SchemeBuilder.AddToScheme,
 		v1alpha1registrar.SchemeBuilder.AddToScheme,
 		v1alpha1schema.SchemeBuilder.AddToScheme,
+		v1alpha1secretsstore.SchemeBuilder.AddToScheme,
 		v1alpha1snippet.SchemeBuilder.AddToScheme,
 		v1alpha1spectrum.SchemeBuilder.AddToScheme,
 		v1alpha1sso.SchemeBuilder.AddToScheme,

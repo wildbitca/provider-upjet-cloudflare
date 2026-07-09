@@ -35,6 +35,8 @@ spec:
     schema:
       openAPIV3Schema:
         description: TrustDNSLocation is the Schema for the TrustDNSLocations API.
+          Accepted Permissions Cloudflare Zero Trust Secure DNS Locations WriteZero
+          Trust ReadZero Trust Write
         properties:
           apiVersion:
             description: |-

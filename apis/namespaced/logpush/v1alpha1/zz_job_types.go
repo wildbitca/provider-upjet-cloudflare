@@ -21,14 +21,14 @@ type JobInitParameters struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
-	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
 	// Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
-	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
 	Dataset *string `json:"dataset,omitempty" tf:"dataset,omitempty"`
 
-	// (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+	// (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
 	// Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-	DestinationConf *string `json:"destinationConf,omitempty" tf:"destination_conf,omitempty"`
+	DestinationConfSecretRef v1.LocalSecretKeySelector `json:"destinationConfSecretRef" tf:"-"`
 
 	// (Boolean) Flag that indicates if the job is enabled.
 	// Flag that indicates if the job is enabled.
@@ -89,14 +89,10 @@ type JobObservation struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
-	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
 	// Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
-	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
 	Dataset *string `json:"dataset,omitempty" tf:"dataset,omitempty"`
-
-	// (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-	// Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-	DestinationConf *string `json:"destinationConf,omitempty" tf:"destination_conf,omitempty"`
 
 	// (Boolean) Flag that indicates if the job is enabled.
 	// Flag that indicates if the job is enabled.
@@ -169,16 +165,16 @@ type JobParameters struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
-	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
 	// Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
-	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
 	// +kubebuilder:validation:Optional
 	Dataset *string `json:"dataset,omitempty" tf:"dataset,omitempty"`
 
-	// (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+	// (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
 	// Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
 	// +kubebuilder:validation:Optional
-	DestinationConf *string `json:"destinationConf,omitempty" tf:"destination_conf,omitempty"`
+	DestinationConfSecretRef v1.LocalSecretKeySelector `json:"destinationConfSecretRef" tf:"-"`
 
 	// (Boolean) Flag that indicates if the job is enabled.
 	// Flag that indicates if the job is enabled.
@@ -266,6 +262,10 @@ type OutputOptionsInitParameters struct {
 	// List of field names to be included in the Logpush output. For the moment, there is no option to add all fields at once, so you must specify all the fields names you are interested in.
 	FieldNames []*string `json:"fieldNames,omitempty" tf:"field_names,omitempty"`
 
+	// (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
+	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
+	MergeSubrequests *bool `json:"mergeSubrequests,omitempty" tf:"merge_subrequests,omitempty"`
+
 	// (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
 	// Available values: "ndjson", "csv".
 	// Specifies the output type, such as `ndjson` or `csv`. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
@@ -292,10 +292,10 @@ type OutputOptionsInitParameters struct {
 	// Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
 	SampleRate *float64 `json:"sampleRate,omitempty" tf:"sample_rate,omitempty"`
 
-	// (String) String to specify the format for timestamps, such as unixnano, unix, or rfc3339.
-	// Available values: "unixnano", "unix", "rfc3339".
-	// String to specify the format for timestamps, such as `unixnano`, `unix`, or `rfc3339`.
-	// Available values: "unixnano", "unix", "rfc3339".
+	// (String) String to specify the format for timestamps, such as unixnano, unix, rfc3339, rfc3339ms or rfc3339ns.
+	// Available values: "unixnano", "unix", "rfc3339", "rfc3339ms", "rfc3339ns".
+	// String to specify the format for timestamps, such as `unixnano`, `unix`, `rfc3339`, `rfc3339ms` or `rfc3339ns`.
+	// Available values: "unixnano", "unix", "rfc3339", "rfc3339ms", "rfc3339ns".
 	TimestampFormat *string `json:"timestampFormat,omitempty" tf:"timestamp_format,omitempty"`
 }
 
@@ -321,6 +321,10 @@ type OutputOptionsObservation struct {
 	// List of field names to be included in the Logpush output. For the moment, there is no option to add all fields at once, so you must specify all the fields names you are interested in.
 	FieldNames []*string `json:"fieldNames,omitempty" tf:"field_names,omitempty"`
 
+	// (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
+	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
+	MergeSubrequests *bool `json:"mergeSubrequests,omitempty" tf:"merge_subrequests,omitempty"`
+
 	// (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
 	// Available values: "ndjson", "csv".
 	// Specifies the output type, such as `ndjson` or `csv`. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
@@ -347,10 +351,10 @@ type OutputOptionsObservation struct {
 	// Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
 	SampleRate *float64 `json:"sampleRate,omitempty" tf:"sample_rate,omitempty"`
 
-	// (String) String to specify the format for timestamps, such as unixnano, unix, or rfc3339.
-	// Available values: "unixnano", "unix", "rfc3339".
-	// String to specify the format for timestamps, such as `unixnano`, `unix`, or `rfc3339`.
-	// Available values: "unixnano", "unix", "rfc3339".
+	// (String) String to specify the format for timestamps, such as unixnano, unix, rfc3339, rfc3339ms or rfc3339ns.
+	// Available values: "unixnano", "unix", "rfc3339", "rfc3339ms", "rfc3339ns".
+	// String to specify the format for timestamps, such as `unixnano`, `unix`, `rfc3339`, `rfc3339ms` or `rfc3339ns`.
+	// Available values: "unixnano", "unix", "rfc3339", "rfc3339ms", "rfc3339ns".
 	TimestampFormat *string `json:"timestampFormat,omitempty" tf:"timestamp_format,omitempty"`
 }
 
@@ -381,6 +385,11 @@ type OutputOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	FieldNames []*string `json:"fieldNames,omitempty" tf:"field_names,omitempty"`
 
+	// (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
+	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
+	// +kubebuilder:validation:Optional
+	MergeSubrequests *bool `json:"mergeSubrequests,omitempty" tf:"merge_subrequests,omitempty"`
+
 	// (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
 	// Available values: "ndjson", "csv".
 	// Specifies the output type, such as `ndjson` or `csv`. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
@@ -413,10 +422,10 @@ type OutputOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	SampleRate *float64 `json:"sampleRate,omitempty" tf:"sample_rate,omitempty"`
 
-	// (String) String to specify the format for timestamps, such as unixnano, unix, or rfc3339.
-	// Available values: "unixnano", "unix", "rfc3339".
-	// String to specify the format for timestamps, such as `unixnano`, `unix`, or `rfc3339`.
-	// Available values: "unixnano", "unix", "rfc3339".
+	// (String) String to specify the format for timestamps, such as unixnano, unix, rfc3339, rfc3339ms or rfc3339ns.
+	// Available values: "unixnano", "unix", "rfc3339", "rfc3339ms", "rfc3339ns".
+	// String to specify the format for timestamps, such as `unixnano`, `unix`, `rfc3339`, `rfc3339ms` or `rfc3339ns`.
+	// Available values: "unixnano", "unix", "rfc3339", "rfc3339ms", "rfc3339ns".
 	// +kubebuilder:validation:Optional
 	TimestampFormat *string `json:"timestampFormat,omitempty" tf:"timestamp_format,omitempty"`
 }
@@ -448,7 +457,7 @@ type JobStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Job is the Schema for the Jobs API.
+// Job is the Schema for the Jobs API. Accepted Permissions Logs Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -457,7 +466,7 @@ type JobStatus struct {
 type Job struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.destinationConf) || (has(self.initProvider) && has(self.initProvider.destinationConf))",message="spec.forProvider.destinationConf is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.destinationConfSecretRef)",message="spec.forProvider.destinationConfSecretRef is a required parameter"
 	Spec   JobSpec   `json:"spec"`
 	Status JobStatus `json:"status,omitempty"`
 }

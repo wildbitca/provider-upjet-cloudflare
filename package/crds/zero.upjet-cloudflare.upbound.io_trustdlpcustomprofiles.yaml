@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: TrustDlpCustomProfile is the Schema for the TrustDlpCustomProfiles
-          API.
+          API. Accepted Permissions Zero Trust ReadZero Trust Write
         properties:
           apiVersion:
             description: |-
@@ -108,6 +108,20 @@ spec:
                             type: boolean
                         type: object
                     type: object
+                  dataClasses:
+                    description: |-
+                      (List of String) Data class IDs to associate with the profile.
+                      Data class IDs to associate with the profile.
+                    items:
+                      type: string
+                    type: array
+                  dataTags:
+                    description: |-
+                      (List of String) Data tag IDs to associate with the profile.
+                      Data tag IDs to associate with the profile.
+                    items:
+                      type: string
+                    type: array
                   description:
                     description: |-
                       (String) The description of the profile.
@@ -152,6 +166,19 @@ spec:
                   ocrEnabled:
                     description: (Boolean)
                     type: boolean
+                  sensitivityLevels:
+                    description: (Attributes List) Sensitivity levels to associate
+                      with the profile. (see below for nested schema)
+                    items:
+                      properties:
+                        groupId:
+                          description: (String)
+                          type: string
+                        levelId:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
                   sharedEntries:
                     description: defined Cloudflare profiles, or your Microsoft Information
                       Protection profiles). (see below for nested schema)
@@ -220,6 +247,20 @@ spec:
                             type: boolean
                         type: object
                     type: object
+                  dataClasses:
+                    description: |-
+                      (List of String) Data class IDs to associate with the profile.
+                      Data class IDs to associate with the profile.
+                    items:
+                      type: string
+                    type: array
+                  dataTags:
+                    description: |-
+                      (List of String) Data tag IDs to associate with the profile.
+                      Data tag IDs to associate with the profile.
+                    items:
+                      type: string
+                    type: array
                   description:
                     description: |-
                       (String) The description of the profile.
@@ -264,6 +305,19 @@ spec:
                   ocrEnabled:
                     description: (Boolean)
                     type: boolean
+                  sensitivityLevels:
+                    description: (Attributes List) Sensitivity levels to associate
+                      with the profile. (see below for nested schema)
+                    items:
+                      properties:
+                        groupId:
+                          description: (String)
+                          type: string
+                        levelId:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
                   sharedEntries:
                     description: defined Cloudflare profiles, or your Microsoft Information
                       Protection profiles). (see below for nested schema)
@@ -425,6 +479,20 @@ spec:
                       (String) When the profile was created.
                       When the profile was created.
                     type: string
+                  dataClasses:
+                    description: |-
+                      (List of String) Data class IDs to associate with the profile.
+                      Data class IDs to associate with the profile.
+                    items:
+                      type: string
+                    type: array
+                  dataTags:
+                    description: |-
+                      (List of String) Data tag IDs to associate with the profile.
+                      Data tag IDs to associate with the profile.
+                    items:
+                      type: string
+                    type: array
                   description:
                     description: |-
                       (String) The description of the profile.
@@ -477,6 +545,19 @@ spec:
                       (Boolean) Whether this profile can be accessed by anyone.
                       Whether this profile can be accessed by anyone.
                     type: boolean
+                  sensitivityLevels:
+                    description: (Attributes List) Sensitivity levels to associate
+                      with the profile. (see below for nested schema)
+                    items:
+                      properties:
+                        groupId:
+                          description: (String)
+                          type: string
+                        levelId:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
                   sharedEntries:
                     description: defined Cloudflare profiles, or your Microsoft Information
                       Protection profiles). (see below for nested schema)

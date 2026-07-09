@@ -141,8 +141,8 @@ type TrustDlpCustomEntryObservation struct {
 	// (Boolean)
 	Secret *bool `json:"secret,omitempty" tf:"secret,omitempty"`
 
-	// (String) Available values: "custom", "predefined", "integration", "exact_data", "document_fingerprint", "word_list".
-	// Available values: "custom", "predefined", "integration", "exact_data", "document_fingerprint", "word_list".
+	// (String) Available values: "custom", "custom_prompt_topic", "predefined", "integration", "exact_data", "document_fingerprint", "word_list".
+	// Available values: "custom", "custom_prompt_topic", "predefined", "integration", "exact_data", "document_fingerprint", "word_list".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (String)
@@ -152,7 +152,7 @@ type TrustDlpCustomEntryObservation struct {
 	// Available values: "empty", "uploading", "pending", "processing", "failed", "complete".
 	UploadStatus *string `json:"uploadStatus,omitempty" tf:"upload_status,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) A Predefined AI prompt classification topic entry. (see below for nested schema)
 	Variant *VariantObservation `json:"variant,omitempty" tf:"variant,omitempty"`
 
 	// (String)
@@ -192,14 +192,15 @@ type VariantInitParameters struct {
 type VariantObservation struct {
 
 	// (String)
+	// A customer-facing explanation of what this predefined AI prompt topic represents.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (String) Available values: "Intent", "Content".
 	// Available values: "Intent", "Content".
 	TopicType *string `json:"topicType,omitempty" tf:"topic_type,omitempty"`
 
-	// (String) Available values: "custom", "predefined", "integration", "exact_data", "document_fingerprint", "word_list".
-	// Available values: "PromptTopic".
+	// (String) Available values: "custom", "custom_prompt_topic", "predefined", "integration", "exact_data", "document_fingerprint", "word_list".
+	// Available values: "PromptTopic", "General".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -233,7 +234,7 @@ type TrustDlpCustomEntryStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustDlpCustomEntry is the Schema for the TrustDlpCustomEntrys API.
+// TrustDlpCustomEntry is the Schema for the TrustDlpCustomEntrys API. Accepted Permissions Zero Trust ReadZero Trust Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -77,11 +77,6 @@ spec:
                       (String) Account ID.
                       Account ID.
                     type: string
-                  bucketName:
-                    description: |-
-                      (String) Name of the bucket.
-                      Name of the bucket.
-                    type: string
                   jurisdiction:
                     description: |-
                       (String) Jurisdiction of the bucket
@@ -143,11 +138,6 @@ spec:
                     description: |-
                       (String) Account ID.
                       Account ID.
-                    type: string
-                  bucketName:
-                    description: |-
-                      (String) Name of the bucket.
-                      Name of the bucket.
                     type: string
                   jurisdiction:
                     description: |-
@@ -284,10 +274,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
                 || (has(self.initProvider) && has(self.initProvider.accountId))'
-            - message: spec.forProvider.bucketName is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.bucketName)
-                || (has(self.initProvider) && has(self.initProvider.bucketName))'
           status:
             description: BucketLockStatus defines the observed state of BucketLock.
             properties:
@@ -297,11 +283,6 @@ spec:
                     description: |-
                       (String) Account ID.
                       Account ID.
-                    type: string
-                  bucketName:
-                    description: |-
-                      (String) Name of the bucket.
-                      Name of the bucket.
                     type: string
                   id:
                     description: (String) Unique identifier for this rule.

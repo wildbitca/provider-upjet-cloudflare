@@ -714,6 +714,11 @@ func (in *FirewallInitParameters) DeepCopyInto(out *FirewallInitParameters) {
 		*out = new(AttackMitigationInitParameters)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.DNSFirewallIPCount != nil {
+		in, out := &in.DNSFirewallIPCount, &out.DNSFirewallIPCount
+		*out = new(float64)
+		**out = **in
+	}
 	if in.DeprecateAnyRequests != nil {
 		in, out := &in.DeprecateAnyRequests, &out.DeprecateAnyRequests
 		*out = new(bool)
@@ -822,6 +827,11 @@ func (in *FirewallObservation) DeepCopyInto(out *FirewallObservation) {
 		*out = new(AttackMitigationObservation)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.DNSFirewallIPCount != nil {
+		in, out := &in.DNSFirewallIPCount, &out.DNSFirewallIPCount
+		*out = new(float64)
+		**out = **in
+	}
 	if in.DNSFirewallIps != nil {
 		in, out := &in.DNSFirewallIps, &out.DNSFirewallIps
 		*out = make([]*string, len(*in))
@@ -918,6 +928,11 @@ func (in *FirewallParameters) DeepCopyInto(out *FirewallParameters) {
 		in, out := &in.AttackMitigation, &out.AttackMitigation
 		*out = new(AttackMitigationParameters)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.DNSFirewallIPCount != nil {
+		in, out := &in.DNSFirewallIPCount, &out.DNSFirewallIPCount
+		*out = new(float64)
+		**out = **in
 	}
 	if in.DeprecateAnyRequests != nil {
 		in, out := &in.DeprecateAnyRequests, &out.DeprecateAnyRequests
@@ -1072,6 +1087,11 @@ func (in *RecordInitParameters) DeepCopyInto(out *RecordInitParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.PrivateRouting != nil {
+		in, out := &in.PrivateRouting, &out.PrivateRouting
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Proxied != nil {
 		in, out := &in.Proxied, &out.Proxied
 		*out = new(bool)
@@ -1215,6 +1235,11 @@ func (in *RecordObservation) DeepCopyInto(out *RecordObservation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.PrivateRouting != nil {
+		in, out := &in.PrivateRouting, &out.PrivateRouting
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Proxiable != nil {
 		in, out := &in.Proxiable, &out.Proxiable
 		*out = new(bool)
@@ -1299,6 +1324,11 @@ func (in *RecordParameters) DeepCopyInto(out *RecordParameters) {
 	if in.Priority != nil {
 		in, out := &in.Priority, &out.Priority
 		*out = new(float64)
+		**out = **in
+	}
+	if in.PrivateRouting != nil {
+		in, out := &in.PrivateRouting, &out.PrivateRouting
+		*out = new(bool)
 		**out = **in
 	}
 	if in.Proxied != nil {

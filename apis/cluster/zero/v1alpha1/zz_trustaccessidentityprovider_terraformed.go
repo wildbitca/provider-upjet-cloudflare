@@ -118,6 +118,7 @@ func (tr *TrustAccessIdentityProvider) LateInitialize(attrs []byte) (bool, error
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
 	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+	opts = append(opts, resource.WithNameFilter("ScimConfig"))
 
 	li := resource.NewGenericLateInitializer(opts...)
 	return li.LateInitialize(&tr.Spec.ForProvider, params)
@@ -125,5 +126,5 @@ func (tr *TrustAccessIdentityProvider) LateInitialize(attrs []byte) (bool, error
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *TrustAccessIdentityProvider) GetTerraformSchemaVersion() int {
-	return 1
+	return 500
 }

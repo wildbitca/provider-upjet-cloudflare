@@ -125,5 +125,5 @@ func (tr *RoutingDNS) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *RoutingDNS) GetTerraformSchemaVersion() int {
-	return 0
+	return 500
 }

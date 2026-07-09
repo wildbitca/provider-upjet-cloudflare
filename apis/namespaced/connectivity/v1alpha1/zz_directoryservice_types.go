@@ -20,6 +20,10 @@ type DirectoryServiceInitParameters struct {
 	// Account identifier
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// (String) Available values: "postgresql", "mysql".
+	// Available values: "postgresql", "mysql".
+	AppProtocol *string `json:"appProtocol,omitempty" tf:"app_protocol,omitempty"`
+
 	// (Number)
 	HTTPPort *float64 `json:"httpPort,omitempty" tf:"http_port,omitempty"`
 
@@ -32,8 +36,14 @@ type DirectoryServiceInitParameters struct {
 	// (String)
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Available values: "http".
-	// Available values: "http".
+	// (Number)
+	TCPPort *float64 `json:"tcpPort,omitempty" tf:"tcp_port,omitempty"`
+
+	// (Attributes) TLS settings for a connectivity service.
+	TLSSettings *TLSSettingsInitParameters `json:"tlsSettings,omitempty" tf:"tls_settings,omitempty"`
+
+	// (String) Available values: "tcp", "http".
+	// Available values: "tcp", "http".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -42,6 +52,10 @@ type DirectoryServiceObservation struct {
 	// (String) Account identifier
 	// Account identifier
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (String) Available values: "postgresql", "mysql".
+	// Available values: "postgresql", "mysql".
+	AppProtocol *string `json:"appProtocol,omitempty" tf:"app_protocol,omitempty"`
 
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
@@ -64,8 +78,14 @@ type DirectoryServiceObservation struct {
 	// (String)
 	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
 
-	// (String) Available values: "http".
-	// Available values: "http".
+	// (Number)
+	TCPPort *float64 `json:"tcpPort,omitempty" tf:"tcp_port,omitempty"`
+
+	// (Attributes) TLS settings for a connectivity service.
+	TLSSettings *TLSSettingsObservation `json:"tlsSettings,omitempty" tf:"tls_settings,omitempty"`
+
+	// (String) Available values: "tcp", "http".
+	// Available values: "tcp", "http".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (String)
@@ -78,6 +98,11 @@ type DirectoryServiceParameters struct {
 	// Account identifier
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (String) Available values: "postgresql", "mysql".
+	// Available values: "postgresql", "mysql".
+	// +kubebuilder:validation:Optional
+	AppProtocol *string `json:"appProtocol,omitempty" tf:"app_protocol,omitempty"`
 
 	// (Number)
 	// +kubebuilder:validation:Optional
@@ -95,8 +120,16 @@ type DirectoryServiceParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Available values: "http".
-	// Available values: "http".
+	// (Number)
+	// +kubebuilder:validation:Optional
+	TCPPort *float64 `json:"tcpPort,omitempty" tf:"tcp_port,omitempty"`
+
+	// (Attributes) TLS settings for a connectivity service.
+	// +kubebuilder:validation:Optional
+	TLSSettings *TLSSettingsParameters `json:"tlsSettings,omitempty" tf:"tls_settings,omitempty"`
+
+	// (String) Available values: "tcp", "http".
+	// Available values: "tcp", "http".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
@@ -206,6 +239,40 @@ type ResolverNetworkParameters struct {
 	// (String)
 	// +kubebuilder:validation:Optional
 	TunnelID *string `json:"tunnelId" tf:"tunnel_id,omitempty"`
+}
+
+type TLSSettingsInitParameters struct {
+
+	// (String) TLS certificate verification mode for the connection to the origin.
+	// TLS certificate verification mode for the connection to the origin.
+	//
+	// - `"verify_full"` — verify certificate chain and hostname (default)
+	// - `"verify_ca"` — verify certificate chain only, skip hostname check
+	// - `"disabled"` — do not verify the server certificate at all
+	CertVerificationMode *string `json:"certVerificationMode,omitempty" tf:"cert_verification_mode,omitempty"`
+}
+
+type TLSSettingsObservation struct {
+
+	// (String) TLS certificate verification mode for the connection to the origin.
+	// TLS certificate verification mode for the connection to the origin.
+	//
+	// - `"verify_full"` — verify certificate chain and hostname (default)
+	// - `"verify_ca"` — verify certificate chain only, skip hostname check
+	// - `"disabled"` — do not verify the server certificate at all
+	CertVerificationMode *string `json:"certVerificationMode,omitempty" tf:"cert_verification_mode,omitempty"`
+}
+
+type TLSSettingsParameters struct {
+
+	// (String) TLS certificate verification mode for the connection to the origin.
+	// TLS certificate verification mode for the connection to the origin.
+	//
+	// - `"verify_full"` — verify certificate chain and hostname (default)
+	// - `"verify_ca"` — verify certificate chain only, skip hostname check
+	// - `"disabled"` — do not verify the server certificate at all
+	// +kubebuilder:validation:Optional
+	CertVerificationMode *string `json:"certVerificationMode" tf:"cert_verification_mode,omitempty"`
 }
 
 // DirectoryServiceSpec defines the desired state of DirectoryService

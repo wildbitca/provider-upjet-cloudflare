@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Variant is the Schema for the Variants API.
+        description: Variant is the Schema for the Variants API. Accepted Permissions
+          Images ReadImages Write
         properties:
           apiVersion:
             description: |-

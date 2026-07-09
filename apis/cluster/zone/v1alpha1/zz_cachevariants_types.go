@@ -253,7 +253,7 @@ type CacheVariantsStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// CacheVariants is the Schema for the CacheVariantss API.
+// CacheVariants is the Schema for the CacheVariantss API. Accepted Permissions Zone ReadZone Settings ReadZone Settings WriteZone Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

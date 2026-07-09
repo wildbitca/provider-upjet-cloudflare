@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: TrustAccessAIControlsMcpPortal is the Schema for the TrustAccessAIControlsMcpPortals
-          API.
+          API. Accepted Permissions MCP Portals ReadMCP Portals Write
         properties:
           apiVersion:
             description: |-
@@ -63,6 +63,11 @@ spec:
                   accountId:
                     description: (String)
                     type: string
+                  allowCodeMode:
+                    description: |-
+                      (Boolean) Allow remote code execution in Dynamic Workers (beta)
+                      Allow remote code execution in Dynamic Workers (beta)
+                    type: boolean
                   description:
                     description: (String)
                     type: string
@@ -96,6 +101,9 @@ spec:
                           description: (Attributes List) (see below for nested schema)
                           items:
                             properties:
+                              alias:
+                                description: (String)
+                                type: string
                               description:
                                 description: (String)
                                 type: string
@@ -111,6 +119,9 @@ spec:
                           description: (Attributes List) (see below for nested schema)
                           items:
                             properties:
+                              alias:
+                                description: (String)
+                                type: string
                               description:
                                 description: (String)
                                 type: string
@@ -141,6 +152,11 @@ spec:
                   accountId:
                     description: (String)
                     type: string
+                  allowCodeMode:
+                    description: |-
+                      (Boolean) Allow remote code execution in Dynamic Workers (beta)
+                      Allow remote code execution in Dynamic Workers (beta)
+                    type: boolean
                   description:
                     description: (String)
                     type: string
@@ -174,6 +190,9 @@ spec:
                           description: (Attributes List) (see below for nested schema)
                           items:
                             properties:
+                              alias:
+                                description: (String)
+                                type: string
                               description:
                                 description: (String)
                                 type: string
@@ -189,6 +208,9 @@ spec:
                           description: (Attributes List) (see below for nested schema)
                           items:
                             properties:
+                              alias:
+                                description: (String)
+                                type: string
                               description:
                                 description: (String)
                                 type: string
@@ -283,6 +305,11 @@ spec:
                   accountId:
                     description: (String)
                     type: string
+                  allowCodeMode:
+                    description: |-
+                      (Boolean) Allow remote code execution in Dynamic Workers (beta)
+                      Allow remote code execution in Dynamic Workers (beta)
+                    type: boolean
                   createdAt:
                     description: (String)
                     type: string
@@ -331,6 +358,9 @@ spec:
                           description: (Attributes List) (see below for nested schema)
                           items:
                             properties:
+                              alias:
+                                description: (String)
+                                type: string
                               description:
                                 description: (String)
                                 type: string
@@ -346,6 +376,9 @@ spec:
                           description: (Attributes List) (see below for nested schema)
                           items:
                             properties:
+                              alias:
+                                description: (String)
+                                type: string
                               description:
                                 description: (String)
                                 type: string

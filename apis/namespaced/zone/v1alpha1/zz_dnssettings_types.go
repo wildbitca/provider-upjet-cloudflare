@@ -360,7 +360,7 @@ type DNSSettingsStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// DNSSettings is the Schema for the DNSSettingss API.
+// DNSSettings is the Schema for the DNSSettingss API. Accepted Permissions DNS ReadDNS WriteZone DNS Settings ReadZone DNS Settings Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

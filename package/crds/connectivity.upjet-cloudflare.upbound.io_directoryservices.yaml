@@ -77,6 +77,11 @@ spec:
                       (String) Account identifier
                       Account identifier
                     type: string
+                  appProtocol:
+                    description: |-
+                      (String) Available values: "postgresql", "mysql".
+                      Available values: "postgresql", "mysql".
+                    type: string
                   host:
                     description: (Attributes) (see below for nested schema)
                     properties:
@@ -118,10 +123,26 @@ spec:
                   name:
                     description: (String)
                     type: string
+                  tcpPort:
+                    description: (Number)
+                    type: number
+                  tlsSettings:
+                    description: (Attributes) TLS settings for a connectivity service.
+                    properties:
+                      certVerificationMode:
+                        description: |-
+                          (String) TLS certificate verification mode for the connection to the origin.
+                          TLS certificate verification mode for the connection to the origin.
+
+                          - `"verify_full"` — verify certificate chain and hostname (default)
+                          - `"verify_ca"` — verify certificate chain only, skip hostname check
+                          - `"disabled"` — do not verify the server certificate at all
+                        type: string
+                    type: object
                   type:
                     description: |-
-                      (String) Available values: "http".
-                      Available values: "http".
+                      (String) Available values: "tcp", "http".
+                      Available values: "tcp", "http".
                     type: string
                 type: object
               initProvider:
@@ -142,6 +163,11 @@ spec:
                       (String) Account identifier
                       Account identifier
                     type: string
+                  appProtocol:
+                    description: |-
+                      (String) Available values: "postgresql", "mysql".
+                      Available values: "postgresql", "mysql".
+                    type: string
                   host:
                     description: (Attributes) (see below for nested schema)
                     properties:
@@ -183,10 +209,26 @@ spec:
                   name:
                     description: (String)
                     type: string
+                  tcpPort:
+                    description: (Number)
+                    type: number
+                  tlsSettings:
+                    description: (Attributes) TLS settings for a connectivity service.
+                    properties:
+                      certVerificationMode:
+                        description: |-
+                          (String) TLS certificate verification mode for the connection to the origin.
+                          TLS certificate verification mode for the connection to the origin.
+
+                          - `"verify_full"` — verify certificate chain and hostname (default)
+                          - `"verify_ca"` — verify certificate chain only, skip hostname check
+                          - `"disabled"` — do not verify the server certificate at all
+                        type: string
+                    type: object
                   type:
                     description: |-
-                      (String) Available values: "http".
-                      Available values: "http".
+                      (String) Available values: "tcp", "http".
+                      Available values: "tcp", "http".
                     type: string
                 type: object
               managementPolicies:
@@ -302,6 +344,11 @@ spec:
                       (String) Account identifier
                       Account identifier
                     type: string
+                  appProtocol:
+                    description: |-
+                      (String) Available values: "postgresql", "mysql".
+                      Available values: "postgresql", "mysql".
+                    type: string
                   createdAt:
                     description: (String)
                     type: string
@@ -352,10 +399,26 @@ spec:
                   serviceId:
                     description: (String)
                     type: string
+                  tcpPort:
+                    description: (Number)
+                    type: number
+                  tlsSettings:
+                    description: (Attributes) TLS settings for a connectivity service.
+                    properties:
+                      certVerificationMode:
+                        description: |-
+                          (String) TLS certificate verification mode for the connection to the origin.
+                          TLS certificate verification mode for the connection to the origin.
+
+                          - `"verify_full"` — verify certificate chain and hostname (default)
+                          - `"verify_ca"` — verify certificate chain only, skip hostname check
+                          - `"disabled"` — do not verify the server certificate at all
+                        type: string
+                    type: object
                   type:
                     description: |-
-                      (String) Available values: "http".
-                      Available values: "http".
+                      (String) Available values: "tcp", "http".
+                      Available values: "tcp", "http".
                     type: string
                   updatedAt:
                     description: (String)

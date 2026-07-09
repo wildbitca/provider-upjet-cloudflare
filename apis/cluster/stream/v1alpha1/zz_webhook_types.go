@@ -32,6 +32,10 @@ type WebhookObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (String) The date and time the webhook was last modified.
+	// The date and time the webhook was last modified.
+	Modified *string `json:"modified,omitempty" tf:"modified,omitempty"`
+
 	// (String) The URL where webhooks will be sent.
 	// The URL where webhooks will be sent.
 	NotificationURL *string `json:"notificationUrl,omitempty" tf:"notification_url,omitempty"`
@@ -77,7 +81,7 @@ type WebhookStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Webhook is the Schema for the Webhooks API.
+// Webhook is the Schema for the Webhooks API. Accepted Permissions Stream ReadStream Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -87,7 +91,6 @@ type Webhook struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountId) || (has(self.initProvider) && has(self.initProvider.accountId))",message="spec.forProvider.accountId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.notificationUrl) || (has(self.initProvider) && has(self.initProvider.notificationUrl))",message="spec.forProvider.notificationUrl is a required parameter"
 	Spec   WebhookSpec   `json:"spec"`
 	Status WebhookStatus `json:"status,omitempty"`
 }

@@ -20,10 +20,6 @@ type BucketSippyInitParameters struct {
 	// Account ID.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) Name of the bucket.
-	// Name of the bucket.
-	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
-
 	// (Attributes) R2 bucket to copy objects to. (see below for nested schema)
 	Destination *DestinationInitParameters `json:"destination,omitempty" tf:"destination,omitempty"`
 
@@ -40,10 +36,6 @@ type BucketSippyObservation struct {
 	// (String) Account ID.
 	// Account ID.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
-
-	// (String) Name of the bucket.
-	// Name of the bucket.
-	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
 	// (Attributes) R2 bucket to copy objects to. (see below for nested schema)
 	Destination *DestinationObservation `json:"destination,omitempty" tf:"destination,omitempty"`
@@ -68,11 +60,6 @@ type BucketSippyParameters struct {
 	// Account ID.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
-
-	// (String) Name of the bucket.
-	// Name of the bucket.
-	// +kubebuilder:validation:Optional
-	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
 	// (Attributes) R2 bucket to copy objects to. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -309,7 +296,7 @@ type BucketSippyStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// BucketSippy is the Schema for the BucketSippys API.
+// BucketSippy is the Schema for the BucketSippys API. Accepted Permissions Workers R2 Storage Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -319,7 +306,6 @@ type BucketSippy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountId) || (has(self.initProvider) && has(self.initProvider.accountId))",message="spec.forProvider.accountId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.bucketName) || (has(self.initProvider) && has(self.initProvider.bucketName))",message="spec.forProvider.bucketName is a required parameter"
 	Spec   BucketSippySpec   `json:"spec"`
 	Status BucketSippyStatus `json:"status,omitempty"`
 }

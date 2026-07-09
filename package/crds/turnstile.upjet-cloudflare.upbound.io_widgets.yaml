@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Widget is the Schema for the Widgets API.
+        description: Widget is the Schema for the Widgets API. Accepted Permissions
+          Account Settings ReadAccount Settings WriteTurnstile Sites ReadTurnstile
+          Sites Write
         properties:
           apiVersion:
             description: |-

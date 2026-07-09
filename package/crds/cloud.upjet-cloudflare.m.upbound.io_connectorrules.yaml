@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ConnectorRules is the Schema for the ConnectorRuless API.
+        description: ConnectorRules is the Schema for the ConnectorRuless API. Accepted
+          Permissions Cloud Connector ReadCloud Connector Write
         properties:
           apiVersion:
             description: |-

@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: BucketSippy is the Schema for the BucketSippys API.
+        description: BucketSippy is the Schema for the BucketSippys API. Accepted
+          Permissions Workers R2 Storage Write
         properties:
           apiVersion:
             description: |-
@@ -76,11 +77,6 @@ spec:
                     description: |-
                       (String) Account ID.
                       Account ID.
-                    type: string
-                  bucketName:
-                    description: |-
-                      (String) Name of the bucket.
-                      Name of the bucket.
                     type: string
                   destination:
                     description: (Attributes) R2 bucket to copy objects to. (see below
@@ -230,11 +226,6 @@ spec:
                     description: |-
                       (String) Account ID.
                       Account ID.
-                    type: string
-                  bucketName:
-                    description: |-
-                      (String) Name of the bucket.
-                      Name of the bucket.
                     type: string
                   destination:
                     description: (Attributes) R2 bucket to copy objects to. (see below
@@ -458,10 +449,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
                 || (has(self.initProvider) && has(self.initProvider.accountId))'
-            - message: spec.forProvider.bucketName is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.bucketName)
-                || (has(self.initProvider) && has(self.initProvider.bucketName))'
           status:
             description: BucketSippyStatus defines the observed state of BucketSippy.
             properties:
@@ -471,11 +458,6 @@ spec:
                     description: |-
                       (String) Account ID.
                       Account ID.
-                    type: string
-                  bucketName:
-                    description: |-
-                      (String) Name of the bucket.
-                      Name of the bucket.
                     type: string
                   destination:
                     description: (Attributes) R2 bucket to copy objects to. (see below

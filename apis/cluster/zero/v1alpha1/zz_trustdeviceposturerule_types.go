@@ -19,6 +19,10 @@ type InputInitParameters struct {
 	// The Number of active threats.
 	ActiveThreats *float64 `json:"activeThreats,omitempty" tf:"active_threats,omitempty"`
 
+	// (List of String) The set of Kolide device authentication states that pass the posture check. Device must match one of the specified states.
+	// The set of Kolide device authentication states that pass the posture check. Device must match one of the specified states.
+	AuthState []*string `json:"authState,omitempty" tf:"auth_state,omitempty"`
+
 	// (String) UUID of Cloudflare managed certificate.
 	// UUID of Cloudflare managed certificate.
 	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
@@ -208,6 +212,10 @@ type InputObservation struct {
 	// (Number) The Number of active threats.
 	// The Number of active threats.
 	ActiveThreats *float64 `json:"activeThreats,omitempty" tf:"active_threats,omitempty"`
+
+	// (List of String) The set of Kolide device authentication states that pass the posture check. Device must match one of the specified states.
+	// The set of Kolide device authentication states that pass the posture check. Device must match one of the specified states.
+	AuthState []*string `json:"authState,omitempty" tf:"auth_state,omitempty"`
 
 	// (String) UUID of Cloudflare managed certificate.
 	// UUID of Cloudflare managed certificate.
@@ -399,6 +407,11 @@ type InputParameters struct {
 	// The Number of active threats.
 	// +kubebuilder:validation:Optional
 	ActiveThreats *float64 `json:"activeThreats,omitempty" tf:"active_threats,omitempty"`
+
+	// (List of String) The set of Kolide device authentication states that pass the posture check. Device must match one of the specified states.
+	// The set of Kolide device authentication states that pass the posture check. Device must match one of the specified states.
+	// +kubebuilder:validation:Optional
+	AuthState []*string `json:"authState,omitempty" tf:"auth_state,omitempty"`
 
 	// (String) UUID of Cloudflare managed certificate.
 	// UUID of Cloudflare managed certificate.
@@ -822,7 +835,7 @@ type TrustDevicePostureRuleStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustDevicePostureRule is the Schema for the TrustDevicePostureRules API.
+// TrustDevicePostureRule is the Schema for the TrustDevicePostureRules API. Accepted Permissions Zero Trust Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

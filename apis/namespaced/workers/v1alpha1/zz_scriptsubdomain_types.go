@@ -105,7 +105,7 @@ type ScriptSubdomainStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// ScriptSubdomain is the Schema for the ScriptSubdomains API.
+// ScriptSubdomain is the Schema for the ScriptSubdomains API. Accepted Permissions Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

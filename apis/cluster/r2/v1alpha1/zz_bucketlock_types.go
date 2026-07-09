@@ -19,10 +19,6 @@ type BucketLockInitParameters struct {
 	// Account ID.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) Name of the bucket.
-	// Name of the bucket.
-	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
-
 	// (String) Jurisdiction of the bucket
 	// Jurisdiction of the bucket
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
@@ -36,10 +32,6 @@ type BucketLockObservation struct {
 	// (String) Account ID.
 	// Account ID.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
-
-	// (String) Name of the bucket.
-	// Name of the bucket.
-	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
 	// (String) Unique identifier for this rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -58,11 +50,6 @@ type BucketLockParameters struct {
 	// Account ID.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
-
-	// (String) Name of the bucket.
-	// Name of the bucket.
-	// +kubebuilder:validation:Optional
-	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
 	// (String) Jurisdiction of the bucket
 	// Jurisdiction of the bucket
@@ -211,7 +198,6 @@ type BucketLock struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountId) || (has(self.initProvider) && has(self.initProvider.accountId))",message="spec.forProvider.accountId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.bucketName) || (has(self.initProvider) && has(self.initProvider.bucketName))",message="spec.forProvider.bucketName is a required parameter"
 	Spec   BucketLockSpec   `json:"spec"`
 	Status BucketLockStatus `json:"status,omitempty"`
 }

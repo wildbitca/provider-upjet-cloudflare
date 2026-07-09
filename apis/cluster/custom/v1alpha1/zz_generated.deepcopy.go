@@ -1176,6 +1176,11 @@ func (in *SSLInitParameters) DeepCopyInto(out *SSLInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CustomCsrID != nil {
+		in, out := &in.CustomCsrID, &out.CustomCsrID
+		*out = new(string)
+		**out = **in
+	}
 	if in.CustomKeySecretRef != nil {
 		in, out := &in.CustomKeySecretRef, &out.CustomKeySecretRef
 		*out = new(v1.SecretKeySelector)
@@ -1223,6 +1228,11 @@ func (in *SSLInitParameters_2) DeepCopyInto(out *SSLInitParameters_2) {
 	}
 	if in.Certificate != nil {
 		in, out := &in.Certificate, &out.Certificate
+		*out = new(string)
+		**out = **in
+	}
+	if in.CustomCsrID != nil {
+		in, out := &in.CustomCsrID, &out.CustomCsrID
 		*out = new(string)
 		**out = **in
 	}
@@ -1336,6 +1346,11 @@ func (in *SSLObservation) DeepCopyInto(out *SSLObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CustomCsrID != nil {
+		in, out := &in.CustomCsrID, &out.CustomCsrID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Method != nil {
 		in, out := &in.Method, &out.Method
 		*out = new(string)
@@ -1378,6 +1393,11 @@ func (in *SSLObservation_2) DeepCopyInto(out *SSLObservation_2) {
 	}
 	if in.Certificate != nil {
 		in, out := &in.Certificate, &out.Certificate
+		*out = new(string)
+		**out = **in
+	}
+	if in.CustomCsrID != nil {
+		in, out := &in.CustomCsrID, &out.CustomCsrID
 		*out = new(string)
 		**out = **in
 	}
@@ -1509,6 +1529,11 @@ func (in *SSLParameters) DeepCopyInto(out *SSLParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CustomCsrID != nil {
+		in, out := &in.CustomCsrID, &out.CustomCsrID
+		*out = new(string)
+		**out = **in
+	}
 	if in.CustomKeySecretRef != nil {
 		in, out := &in.CustomKeySecretRef, &out.CustomKeySecretRef
 		*out = new(v1.SecretKeySelector)
@@ -1556,6 +1581,11 @@ func (in *SSLParameters_2) DeepCopyInto(out *SSLParameters_2) {
 	}
 	if in.Certificate != nil {
 		in, out := &in.Certificate, &out.Certificate
+		*out = new(string)
+		**out = **in
+	}
+	if in.CustomCsrID != nil {
+		in, out := &in.CustomCsrID, &out.CustomCsrID
 		*out = new(string)
 		**out = **in
 	}

@@ -35,7 +35,8 @@ spec:
     schema:
       openAPIV3Schema:
         description: TrustTunnelCloudflaredVirtualNetwork is the Schema for the TrustTunnelCloudflaredVirtualNetworks
-          API.
+          API. Accepted Permissions Cloudflare One Networks WriteCloudflare Tunnel
+          Write
         properties:
           apiVersion:
             description: |-

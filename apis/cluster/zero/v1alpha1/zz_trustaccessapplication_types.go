@@ -749,6 +749,67 @@ type DevicePostureParameters struct {
 	IntegrationUID *string `json:"integrationUid" tf:"integration_uid,omitempty"`
 }
 
+type DynamicClientRegistrationInitParameters struct {
+
+	// (Boolean) Allows any client with redirect URIs on localhost.
+	// Allows any client with redirect URIs on localhost.
+	AllowAnyOnLocalhost *bool `json:"allowAnyOnLocalhost,omitempty" tf:"allow_any_on_localhost,omitempty"`
+
+	// (Boolean) Allows any client with redirect URIs on 127.0.0.1.
+	// Allows any client with redirect URIs on 127.0.0.1.
+	AllowAnyOnLoopback *bool `json:"allowAnyOnLoopback,omitempty" tf:"allow_any_on_loopback,omitempty"`
+
+	// paths.
+	// The URIs that are allowed as redirect URIs for dynamically registered clients. Must use the `https` protocol. Paths may end in `/*` to match all sub-paths.
+	AllowedUris []*string `json:"allowedUris,omitempty" tf:"allowed_uris,omitempty"`
+
+	// (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
+	// Whether dynamic client registration is enabled.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type DynamicClientRegistrationObservation struct {
+
+	// (Boolean) Allows any client with redirect URIs on localhost.
+	// Allows any client with redirect URIs on localhost.
+	AllowAnyOnLocalhost *bool `json:"allowAnyOnLocalhost,omitempty" tf:"allow_any_on_localhost,omitempty"`
+
+	// (Boolean) Allows any client with redirect URIs on 127.0.0.1.
+	// Allows any client with redirect URIs on 127.0.0.1.
+	AllowAnyOnLoopback *bool `json:"allowAnyOnLoopback,omitempty" tf:"allow_any_on_loopback,omitempty"`
+
+	// paths.
+	// The URIs that are allowed as redirect URIs for dynamically registered clients. Must use the `https` protocol. Paths may end in `/*` to match all sub-paths.
+	AllowedUris []*string `json:"allowedUris,omitempty" tf:"allowed_uris,omitempty"`
+
+	// (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
+	// Whether dynamic client registration is enabled.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type DynamicClientRegistrationParameters struct {
+
+	// (Boolean) Allows any client with redirect URIs on localhost.
+	// Allows any client with redirect URIs on localhost.
+	// +kubebuilder:validation:Optional
+	AllowAnyOnLocalhost *bool `json:"allowAnyOnLocalhost,omitempty" tf:"allow_any_on_localhost,omitempty"`
+
+	// (Boolean) Allows any client with redirect URIs on 127.0.0.1.
+	// Allows any client with redirect URIs on 127.0.0.1.
+	// +kubebuilder:validation:Optional
+	AllowAnyOnLoopback *bool `json:"allowAnyOnLoopback,omitempty" tf:"allow_any_on_loopback,omitempty"`
+
+	// paths.
+	// The URIs that are allowed as redirect URIs for dynamically registered clients. Must use the `https` protocol. Paths may end in `/*` to match all sub-paths.
+	// +kubebuilder:validation:Optional
+	AllowedUris []*string `json:"allowedUris,omitempty" tf:"allowed_uris,omitempty"`
+
+	// (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
+	// Whether dynamic client registration is enabled.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type EmailDomainInitParameters struct {
 
 	// (String) The primary hostname and path secured by Access. This domain will be displayed if the app is visible in the App Launcher.
@@ -1211,6 +1272,41 @@ type GithubOrganizationParameters struct {
 	// The name of the team
 	// +kubebuilder:validation:Optional
 	Team *string `json:"team,omitempty" tf:"team,omitempty"`
+}
+
+type GrantInitParameters struct {
+
+	// (String) The lifetime of the access token. Must be in the format 300ms or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h.
+	// The lifetime of the access token. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
+	AccessTokenLifetime *string `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
+
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// The duration of the OAuth session. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
+	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+}
+
+type GrantObservation struct {
+
+	// (String) The lifetime of the access token. Must be in the format 300ms or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h.
+	// The lifetime of the access token. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
+	AccessTokenLifetime *string `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
+
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// The duration of the OAuth session. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
+	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+}
+
+type GrantParameters struct {
+
+	// (String) The lifetime of the access token. Must be in the format 300ms or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h.
+	// The lifetime of the access token. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
+	// +kubebuilder:validation:Optional
+	AccessTokenLifetime *string `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
+
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// The duration of the OAuth session. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
+	// +kubebuilder:validation:Optional
+	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 }
 
 type GroupInitParameters struct {
@@ -2363,7 +2459,7 @@ type LoginMethodParameters struct {
 
 type MappingsInitParameters struct {
 
-	// (Boolean) Whether SCIM provisioning is turned on for this application.
+	// (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
 	// Whether or not this mapping is enabled.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -2391,7 +2487,7 @@ type MappingsInitParameters struct {
 
 type MappingsObservation struct {
 
-	// (Boolean) Whether SCIM provisioning is turned on for this application.
+	// (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
 	// Whether or not this mapping is enabled.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -2419,7 +2515,7 @@ type MappingsObservation struct {
 
 type MappingsParameters struct {
 
-	// (Boolean) Whether SCIM provisioning is turned on for this application.
+	// (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
 	// Whether or not this mapping is enabled.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -2449,6 +2545,60 @@ type MappingsParameters struct {
 	// A [JSONata](https://jsonata.org/) expression that transforms the resource before provisioning it in the application.
 	// +kubebuilder:validation:Optional
 	TransformJsonata *string `json:"transformJsonata,omitempty" tf:"transform_jsonata,omitempty"`
+}
+
+type MfaConfigInitParameters struct {
+
+	// (List of String) The authenticators allowed for MFA.
+	// Available values: "totp", "biometrics", "security_key".
+	// The authenticators allowed for MFA.
+	// Available values: "totp", "biometrics", "security_key".
+	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+
+	// (Boolean) Whether MFA is disabled for this application.
+	// Whether MFA is disabled for this application.
+	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
+
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// How often a user will be forced to re-authenticate with MFA.
+	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+}
+
+type MfaConfigObservation struct {
+
+	// (List of String) The authenticators allowed for MFA.
+	// Available values: "totp", "biometrics", "security_key".
+	// The authenticators allowed for MFA.
+	// Available values: "totp", "biometrics", "security_key".
+	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+
+	// (Boolean) Whether MFA is disabled for this application.
+	// Whether MFA is disabled for this application.
+	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
+
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// How often a user will be forced to re-authenticate with MFA.
+	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+}
+
+type MfaConfigParameters struct {
+
+	// (List of String) The authenticators allowed for MFA.
+	// Available values: "totp", "biometrics", "security_key".
+	// The authenticators allowed for MFA.
+	// Available values: "totp", "biometrics", "security_key".
+	// +kubebuilder:validation:Optional
+	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+
+	// (Boolean) Whether MFA is disabled for this application.
+	// Whether MFA is disabled for this application.
+	// +kubebuilder:validation:Optional
+	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
+
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// How often a user will be forced to re-authenticate with MFA.
+	// +kubebuilder:validation:Optional
+	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 }
 
 type NameByIdpInitParameters struct {
@@ -2484,6 +2634,48 @@ type NameByIdpParameters struct {
 	// The name of the IdP provided attribute.
 	// +kubebuilder:validation:Optional
 	SourceName *string `json:"sourceName,omitempty" tf:"source_name,omitempty"`
+}
+
+type OauthConfigurationInitParameters struct {
+
+	// (Attributes) Settings for OAuth dynamic client registration. (see below for nested schema)
+	DynamicClientRegistration *DynamicClientRegistrationInitParameters `json:"dynamicClientRegistration,omitempty" tf:"dynamic_client_registration,omitempty"`
+
+	// (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
+	// Whether the OAuth configuration is enabled for this application. When set to `false`, Access will not handle OAuth for this application. Defaults to `true` if omitted.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Attributes) Settings for OAuth grant behavior. (see below for nested schema)
+	Grant *GrantInitParameters `json:"grant,omitempty" tf:"grant,omitempty"`
+}
+
+type OauthConfigurationObservation struct {
+
+	// (Attributes) Settings for OAuth dynamic client registration. (see below for nested schema)
+	DynamicClientRegistration *DynamicClientRegistrationObservation `json:"dynamicClientRegistration,omitempty" tf:"dynamic_client_registration,omitempty"`
+
+	// (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
+	// Whether the OAuth configuration is enabled for this application. When set to `false`, Access will not handle OAuth for this application. Defaults to `true` if omitted.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Attributes) Settings for OAuth grant behavior. (see below for nested schema)
+	Grant *GrantObservation `json:"grant,omitempty" tf:"grant,omitempty"`
+}
+
+type OauthConfigurationParameters struct {
+
+	// (Attributes) Settings for OAuth dynamic client registration. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	DynamicClientRegistration *DynamicClientRegistrationParameters `json:"dynamicClientRegistration,omitempty" tf:"dynamic_client_registration,omitempty"`
+
+	// (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
+	// Whether the OAuth configuration is enabled for this application. When set to `false`, Access will not handle OAuth for this application. Defaults to `true` if omitted.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Attributes) Settings for OAuth grant behavior. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Grant *GrantParameters `json:"grant,omitempty" tf:"grant,omitempty"`
 }
 
 type OidcInitParameters struct {
@@ -2638,6 +2830,9 @@ type PoliciesInitParameters struct {
 	// (Attributes Set) Rules evaluated with an OR logical operator. A user needs to meet only one of the Include rules. (see below for nested schema)
 	Include []IncludeInitParameters `json:"include,omitempty" tf:"include,omitempty"`
 
+	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, and rdp application types. (see below for nested schema)
+	MfaConfig *PoliciesMfaConfigInitParameters `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
+
 	// (String) The name of the application.
 	// The name of the Access policy.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -2648,6 +2843,60 @@ type PoliciesInitParameters struct {
 
 	// (Attributes Set) Rules evaluated with an AND logical operator. To match the policy, a user must meet all of the Require rules. (see below for nested schema)
 	Require []RequireInitParameters `json:"require,omitempty" tf:"require,omitempty"`
+}
+
+type PoliciesMfaConfigInitParameters struct {
+
+	// (List of String) The authenticators allowed for MFA.
+	// Available values: "totp", "biometrics", "security_key".
+	// The authenticators allowed for MFA.
+	// Available values: "totp", "biometrics", "security_key", "ssh_piv_key".
+	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+
+	// (Boolean) Whether MFA is disabled for this application.
+	// Whether MFA is disabled for this policy.
+	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
+
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// How often a user will be forced to re-authenticate with MFA.
+	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+}
+
+type PoliciesMfaConfigObservation struct {
+
+	// (List of String) The authenticators allowed for MFA.
+	// Available values: "totp", "biometrics", "security_key".
+	// The authenticators allowed for MFA.
+	// Available values: "totp", "biometrics", "security_key", "ssh_piv_key".
+	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+
+	// (Boolean) Whether MFA is disabled for this application.
+	// Whether MFA is disabled for this policy.
+	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
+
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// How often a user will be forced to re-authenticate with MFA.
+	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+}
+
+type PoliciesMfaConfigParameters struct {
+
+	// (List of String) The authenticators allowed for MFA.
+	// Available values: "totp", "biometrics", "security_key".
+	// The authenticators allowed for MFA.
+	// Available values: "totp", "biometrics", "security_key", "ssh_piv_key".
+	// +kubebuilder:validation:Optional
+	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+
+	// (Boolean) Whether MFA is disabled for this application.
+	// Whether MFA is disabled for this policy.
+	// +kubebuilder:validation:Optional
+	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
+
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// How often a user will be forced to re-authenticate with MFA.
+	// +kubebuilder:validation:Optional
+	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 }
 
 type PoliciesObservation struct {
@@ -2670,6 +2919,9 @@ type PoliciesObservation struct {
 
 	// (Attributes Set) Rules evaluated with an OR logical operator. A user needs to meet only one of the Include rules. (see below for nested schema)
 	Include []IncludeObservation `json:"include,omitempty" tf:"include,omitempty"`
+
+	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, and rdp application types. (see below for nested schema)
+	MfaConfig *PoliciesMfaConfigObservation `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
 
 	// (String) The name of the application.
 	// The name of the Access policy.
@@ -2708,6 +2960,10 @@ type PoliciesParameters struct {
 	// (Attributes Set) Rules evaluated with an OR logical operator. A user needs to meet only one of the Include rules. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Include []IncludeParameters `json:"include,omitempty" tf:"include,omitempty"`
+
+	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, and rdp application types. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	MfaConfig *PoliciesMfaConfigParameters `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
 
 	// (String) The name of the application.
 	// The name of the Access policy.
@@ -3760,7 +4016,7 @@ type SSHParameters struct {
 
 type SaasAppInitParameters struct {
 
-	// (String) The lifetime of the OIDC Access Token after creation. Valid units are m,h. Must be greater than or equal to 1m and less than or equal to 24h.
+	// (String) The lifetime of the access token. Must be in the format 300ms or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h.
 	// The lifetime of the OIDC Access Token after creation. Valid units are m,h. Must be greater than or equal to 1m and less than or equal to 24h.
 	AccessTokenLifetime *string `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
 
@@ -3843,7 +4099,7 @@ type SaasAppInitParameters struct {
 
 type SaasAppObservation struct {
 
-	// (String) The lifetime of the OIDC Access Token after creation. Valid units are m,h. Must be greater than or equal to 1m and less than or equal to 24h.
+	// (String) The lifetime of the access token. Must be in the format 300ms or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h.
 	// The lifetime of the OIDC Access Token after creation. Valid units are m,h. Must be greater than or equal to 1m and less than or equal to 24h.
 	AccessTokenLifetime *string `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
 
@@ -3934,7 +4190,7 @@ type SaasAppObservation struct {
 
 type SaasAppParameters struct {
 
-	// (String) The lifetime of the OIDC Access Token after creation. Valid units are m,h. Must be greater than or equal to 1m and less than or equal to 24h.
+	// (String) The lifetime of the access token. Must be in the format 300ms or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h.
 	// The lifetime of the OIDC Access Token after creation. Valid units are m,h. Must be greater than or equal to 1m and less than or equal to 24h.
 	// +kubebuilder:validation:Optional
 	AccessTokenLifetime *string `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
@@ -4044,7 +4300,7 @@ type ScimConfigInitParameters struct {
 	// If false, propagates DELETE requests to the target application for SCIM resources. If true, sets 'active' to false on the SCIM resource. Note: Some targets do not support DELETE operations.
 	DeactivateOnDelete *bool `json:"deactivateOnDelete,omitempty" tf:"deactivate_on_delete,omitempty"`
 
-	// (Boolean) Whether SCIM provisioning is turned on for this application.
+	// (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
 	// Whether SCIM provisioning is turned on for this application.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -4069,7 +4325,7 @@ type ScimConfigObservation struct {
 	// If false, propagates DELETE requests to the target application for SCIM resources. If true, sets 'active' to false on the SCIM resource. Note: Some targets do not support DELETE operations.
 	DeactivateOnDelete *bool `json:"deactivateOnDelete,omitempty" tf:"deactivate_on_delete,omitempty"`
 
-	// (Boolean) Whether SCIM provisioning is turned on for this application.
+	// (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
 	// Whether SCIM provisioning is turned on for this application.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -4096,7 +4352,7 @@ type ScimConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	DeactivateOnDelete *bool `json:"deactivateOnDelete,omitempty" tf:"deactivate_on_delete,omitempty"`
 
-	// (Boolean) Whether SCIM provisioning is turned on for this application.
+	// (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
 	// Whether SCIM provisioning is turned on for this application.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -4316,9 +4572,15 @@ type TrustAccessApplicationInitParameters struct {
 	// The image URL for the logo shown in the App Launcher dashboard.
 	LogoURL *string `json:"logoUrl,omitempty" tf:"logo_url,omitempty"`
 
+	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, and rdp application types. (see below for nested schema)
+	MfaConfig *MfaConfigInitParameters `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
+
 	// (String) The name of the application.
 	// The name of the application.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Attributes) Optional configuration for managing an OAuth authorization flow controlled by Access. When set, Access will act as the OAuth authorization server for this application. This feature is currently in beta. (see below for nested schema)
+	OauthConfiguration *OauthConfigurationInitParameters `json:"oauthConfiguration,omitempty" tf:"oauth_configuration,omitempty"`
 
 	// (Boolean) Allows options preflight requests to bypass Access authentication and go directly to the origin. Cannot turn on if cors_headers is set.
 	// Allows options preflight requests to bypass Access authentication and go directly to the origin. Cannot turn on if cors_headers is set.
@@ -4486,9 +4748,15 @@ type TrustAccessApplicationObservation struct {
 	// The image URL for the logo shown in the App Launcher dashboard.
 	LogoURL *string `json:"logoUrl,omitempty" tf:"logo_url,omitempty"`
 
+	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, and rdp application types. (see below for nested schema)
+	MfaConfig *MfaConfigObservation `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
+
 	// (String) The name of the application.
 	// The name of the application.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Attributes) Optional configuration for managing an OAuth authorization flow controlled by Access. When set, Access will act as the OAuth authorization server for this application. This feature is currently in beta. (see below for nested schema)
+	OauthConfiguration *OauthConfigurationObservation `json:"oauthConfiguration,omitempty" tf:"oauth_configuration,omitempty"`
 
 	// (Boolean) Allows options preflight requests to bypass Access authentication and go directly to the origin. Cannot turn on if cors_headers is set.
 	// Allows options preflight requests to bypass Access authentication and go directly to the origin. Cannot turn on if cors_headers is set.
@@ -4679,10 +4947,18 @@ type TrustAccessApplicationParameters struct {
 	// +kubebuilder:validation:Optional
 	LogoURL *string `json:"logoUrl,omitempty" tf:"logo_url,omitempty"`
 
+	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, and rdp application types. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	MfaConfig *MfaConfigParameters `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
+
 	// (String) The name of the application.
 	// The name of the application.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Attributes) Optional configuration for managing an OAuth authorization flow controlled by Access. When set, Access will act as the OAuth authorization server for this application. This feature is currently in beta. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	OauthConfiguration *OauthConfigurationParameters `json:"oauthConfiguration,omitempty" tf:"oauth_configuration,omitempty"`
 
 	// (Boolean) Allows options preflight requests to bypass Access authentication and go directly to the origin. Cannot turn on if cors_headers is set.
 	// Allows options preflight requests to bypass Access authentication and go directly to the origin. Cannot turn on if cors_headers is set.

@@ -34,7 +34,16 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Account is the Schema for the Accounts API.
+        description: 'Account is the Schema for the Accounts API. Accepted Permissions
+          Account Firewall Access Rules ReadAccount Firewall Access Rules WriteAccount
+          Settings ReadAccount Settings WriteBilling ReadBilling WriteDDoS Botnet
+          Feed ReadDDoS Botnet Feed WriteDDoS Protection ReadDDoS Protection WriteDNS
+          Firewall ReadDNS Firewall WriteDNS View ReadDNS View WriteLoad Balancers
+          Account ReadLoad Balancers Account WriteLoad Balancing: Monitors and Pools
+          ReadLoad Balancing: Monitors and Pools WriteSCIM ProvisioningTrust and Safety
+          ReadTrust and Safety WriteWorkers KV Storage ReadWorkers KV Storage WriteWorkers
+          R2 Storage ReadWorkers R2 Storage WriteWorkers Scripts ReadWorkers Scripts
+          WriteWorkers Tail ReadZero Trust: PII Read'
         properties:
           apiVersion:
             description: |-

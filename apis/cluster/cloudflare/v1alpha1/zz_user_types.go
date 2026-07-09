@@ -77,6 +77,10 @@ type UserObservation_2 struct {
 	// The country in which the user lives.
 	Country *string `json:"country,omitempty" tf:"country,omitempty"`
 
+	// (String) Current email address of the user.
+	// Current email address of the user.
+	Email *string `json:"email,omitempty" tf:"email,omitempty"`
+
 	// (String) User's first name
 	// User's first name
 	FirstName *string `json:"firstName,omitempty" tf:"first_name,omitempty"`
@@ -179,7 +183,7 @@ type UserStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// User is the Schema for the Users API.
+// User is the Schema for the Users API. Accepted Permissions User Details ReadUser Details Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

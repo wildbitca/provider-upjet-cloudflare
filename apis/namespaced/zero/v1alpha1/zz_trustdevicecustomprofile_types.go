@@ -14,6 +14,41 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type DNSSearchSuffixesInitParameters struct {
+
+	// (String) A description of the policy.
+	// A description of the DNS search suffix.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (String) The DNS search suffix to append when resolving short hostnames.
+	// The DNS search suffix to append when resolving short hostnames.
+	Suffix *string `json:"suffix,omitempty" tf:"suffix,omitempty"`
+}
+
+type DNSSearchSuffixesObservation struct {
+
+	// (String) A description of the policy.
+	// A description of the DNS search suffix.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (String) The DNS search suffix to append when resolving short hostnames.
+	// The DNS search suffix to append when resolving short hostnames.
+	Suffix *string `json:"suffix,omitempty" tf:"suffix,omitempty"`
+}
+
+type DNSSearchSuffixesParameters struct {
+
+	// (String) A description of the policy.
+	// A description of the DNS search suffix.
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (String) The DNS search suffix to append when resolving short hostnames.
+	// The DNS search suffix to append when resolving short hostnames.
+	// +kubebuilder:validation:Optional
+	Suffix *string `json:"suffix" tf:"suffix,omitempty"`
+}
+
 type FallbackDomainsInitParameters struct {
 }
 
@@ -27,7 +62,7 @@ type FallbackDomainsObservation struct {
 	// A description of the fallback domain, displayed in the client UI.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The domain suffix to match when resolving locally.
+	// (String) The DNS search suffix to append when resolving short hostnames.
 	// The domain suffix to match when resolving locally.
 	Suffix *string `json:"suffix,omitempty" tf:"suffix,omitempty"`
 }
@@ -208,6 +243,9 @@ type TrustDeviceCustomProfileInitParameters struct {
 	// Turn on the captive portal after the specified amount of time.
 	CaptivePortal *float64 `json:"captivePortal,omitempty" tf:"captive_portal,omitempty"`
 
+	// (Attributes List) List of DNS search suffixes to apply to clients. Suffixes are evaluated in order. Use an empty array to clear. (see below for nested schema)
+	DNSSearchSuffixes []DNSSearchSuffixesInitParameters `json:"dnsSearchSuffixes,omitempty" tf:"dns_search_suffixes,omitempty"`
+
 	// (String) A description of the policy.
 	// A description of the policy.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -272,6 +310,9 @@ type TrustDeviceCustomProfileInitParameters struct {
 	// (String) Determines which tunnel protocol to use.
 	// Determines which tunnel protocol to use.
 	TunnelProtocol *string `json:"tunnelProtocol,omitempty" tf:"tunnel_protocol,omitempty"`
+
+	// (Attributes) Virtual network access settings for the device. (see below for nested schema)
+	VirtualNetworks *VirtualNetworksInitParameters `json:"virtualNetworks,omitempty" tf:"virtual_networks,omitempty"`
 }
 
 type TrustDeviceCustomProfileObservation struct {
@@ -298,6 +339,9 @@ type TrustDeviceCustomProfileObservation struct {
 	// (Number) Turn on the captive portal after the specified amount of time.
 	// Turn on the captive portal after the specified amount of time.
 	CaptivePortal *float64 `json:"captivePortal,omitempty" tf:"captive_portal,omitempty"`
+
+	// (Attributes List) List of DNS search suffixes to apply to clients. Suffixes are evaluated in order. Use an empty array to clear. (see below for nested schema)
+	DNSSearchSuffixes []DNSSearchSuffixesObservation `json:"dnsSearchSuffixes,omitempty" tf:"dns_search_suffixes,omitempty"`
 
 	// (Boolean) Whether the policy is the default policy for an account.
 	// Whether the policy is the default policy for an account.
@@ -382,6 +426,9 @@ type TrustDeviceCustomProfileObservation struct {
 	// (String) Determines which tunnel protocol to use.
 	// Determines which tunnel protocol to use.
 	TunnelProtocol *string `json:"tunnelProtocol,omitempty" tf:"tunnel_protocol,omitempty"`
+
+	// (Attributes) Virtual network access settings for the device. (see below for nested schema)
+	VirtualNetworks *VirtualNetworksObservation `json:"virtualNetworks,omitempty" tf:"virtual_networks,omitempty"`
 }
 
 type TrustDeviceCustomProfileParameters struct {
@@ -414,6 +461,10 @@ type TrustDeviceCustomProfileParameters struct {
 	// Turn on the captive portal after the specified amount of time.
 	// +kubebuilder:validation:Optional
 	CaptivePortal *float64 `json:"captivePortal,omitempty" tf:"captive_portal,omitempty"`
+
+	// (Attributes List) List of DNS search suffixes to apply to clients. Suffixes are evaluated in order. Use an empty array to clear. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	DNSSearchSuffixes []DNSSearchSuffixesParameters `json:"dnsSearchSuffixes,omitempty" tf:"dns_search_suffixes,omitempty"`
 
 	// (String) A description of the policy.
 	// A description of the policy.
@@ -496,6 +547,45 @@ type TrustDeviceCustomProfileParameters struct {
 	// Determines which tunnel protocol to use.
 	// +kubebuilder:validation:Optional
 	TunnelProtocol *string `json:"tunnelProtocol,omitempty" tf:"tunnel_protocol,omitempty"`
+
+	// (Attributes) Virtual network access settings for the device. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	VirtualNetworks *VirtualNetworksParameters `json:"virtualNetworks,omitempty" tf:"virtual_networks,omitempty"`
+}
+
+type VirtualNetworksInitParameters struct {
+
+	// (List of String) List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+	// List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+	Allowed []*string `json:"allowed,omitempty" tf:"allowed,omitempty"`
+
+	// (Boolean) Whether the policy is the default policy for an account.
+	// The default virtual network ID. Must be included in the `allowed` list.
+	Default *string `json:"default,omitempty" tf:"default,omitempty"`
+}
+
+type VirtualNetworksObservation struct {
+
+	// (List of String) List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+	// List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+	Allowed []*string `json:"allowed,omitempty" tf:"allowed,omitempty"`
+
+	// (Boolean) Whether the policy is the default policy for an account.
+	// The default virtual network ID. Must be included in the `allowed` list.
+	Default *string `json:"default,omitempty" tf:"default,omitempty"`
+}
+
+type VirtualNetworksParameters struct {
+
+	// (List of String) List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+	// List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+	// +kubebuilder:validation:Optional
+	Allowed []*string `json:"allowed" tf:"allowed,omitempty"`
+
+	// (Boolean) Whether the policy is the default policy for an account.
+	// The default virtual network ID. Must be included in the `allowed` list.
+	// +kubebuilder:validation:Optional
+	Default *string `json:"default" tf:"default,omitempty"`
 }
 
 // TrustDeviceCustomProfileSpec defines the desired state of TrustDeviceCustomProfile
@@ -525,7 +615,7 @@ type TrustDeviceCustomProfileStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustDeviceCustomProfile is the Schema for the TrustDeviceCustomProfiles API.
+// TrustDeviceCustomProfile is the Schema for the TrustDeviceCustomProfiles API. Accepted Permissions Zero Trust Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

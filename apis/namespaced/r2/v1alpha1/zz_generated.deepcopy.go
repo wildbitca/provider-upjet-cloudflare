@@ -289,11 +289,6 @@ func (in *BucketCorsInitParameters) DeepCopyInto(out *BucketCorsInitParameters) 
 		*out = new(v1.NamespacedSelector)
 		(*in).DeepCopyInto(*out)
 	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
-		*out = new(string)
-		**out = **in
-	}
 	if in.Jurisdiction != nil {
 		in, out := &in.Jurisdiction, &out.Jurisdiction
 		*out = new(string)
@@ -358,11 +353,6 @@ func (in *BucketCorsObservation) DeepCopyInto(out *BucketCorsObservation) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
-		*out = new(string)
-		**out = **in
-	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -409,11 +399,6 @@ func (in *BucketCorsParameters) DeepCopyInto(out *BucketCorsParameters) {
 		in, out := &in.AccountIDSelector, &out.AccountIDSelector
 		*out = new(v1.NamespacedSelector)
 		(*in).DeepCopyInto(*out)
-	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
-		*out = new(string)
-		**out = **in
 	}
 	if in.Jurisdiction != nil {
 		in, out := &in.Jurisdiction, &out.Jurisdiction
@@ -509,11 +494,6 @@ func (in *BucketEventNotificationInitParameters) DeepCopyInto(out *BucketEventNo
 		*out = new(string)
 		**out = **in
 	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
-		*out = new(string)
-		**out = **in
-	}
 	if in.Jurisdiction != nil {
 		in, out := &in.Jurisdiction, &out.Jurisdiction
 		*out = new(string)
@@ -583,11 +563,6 @@ func (in *BucketEventNotificationObservation) DeepCopyInto(out *BucketEventNotif
 		*out = new(string)
 		**out = **in
 	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
-		*out = new(string)
-		**out = **in
-	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -632,11 +607,6 @@ func (in *BucketEventNotificationParameters) DeepCopyInto(out *BucketEventNotifi
 	*out = *in
 	if in.AccountID != nil {
 		in, out := &in.AccountID, &out.AccountID
-		*out = new(string)
-		**out = **in
-	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
 		*out = new(string)
 		**out = **in
 	}
@@ -922,11 +892,6 @@ func (in *BucketLifecycleInitParameters) DeepCopyInto(out *BucketLifecycleInitPa
 		*out = new(v1.NamespacedSelector)
 		(*in).DeepCopyInto(*out)
 	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
-		*out = new(string)
-		**out = **in
-	}
 	if in.Jurisdiction != nil {
 		in, out := &in.Jurisdiction, &out.Jurisdiction
 		*out = new(string)
@@ -991,11 +956,6 @@ func (in *BucketLifecycleObservation) DeepCopyInto(out *BucketLifecycleObservati
 		*out = new(string)
 		**out = **in
 	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
-		*out = new(string)
-		**out = **in
-	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -1042,11 +1002,6 @@ func (in *BucketLifecycleParameters) DeepCopyInto(out *BucketLifecycleParameters
 		in, out := &in.AccountIDSelector, &out.AccountIDSelector
 		*out = new(v1.NamespacedSelector)
 		(*in).DeepCopyInto(*out)
-	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
-		*out = new(string)
-		**out = **in
 	}
 	if in.Jurisdiction != nil {
 		in, out := &in.Jurisdiction, &out.Jurisdiction
@@ -1315,11 +1270,6 @@ func (in *BucketLockInitParameters) DeepCopyInto(out *BucketLockInitParameters) 
 		*out = new(string)
 		**out = **in
 	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
-		*out = new(string)
-		**out = **in
-	}
 	if in.Jurisdiction != nil {
 		in, out := &in.Jurisdiction, &out.Jurisdiction
 		*out = new(string)
@@ -1384,11 +1334,6 @@ func (in *BucketLockObservation) DeepCopyInto(out *BucketLockObservation) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
-		*out = new(string)
-		**out = **in
-	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -1423,11 +1368,6 @@ func (in *BucketLockParameters) DeepCopyInto(out *BucketLockParameters) {
 	*out = *in
 	if in.AccountID != nil {
 		in, out := &in.AccountID, &out.AccountID
-		*out = new(string)
-		**out = **in
-	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
 		*out = new(string)
 		**out = **in
 	}
@@ -1730,11 +1670,6 @@ func (in *BucketSippyInitParameters) DeepCopyInto(out *BucketSippyInitParameters
 		*out = new(string)
 		**out = **in
 	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
-		*out = new(string)
-		**out = **in
-	}
 	if in.Destination != nil {
 		in, out := &in.Destination, &out.Destination
 		*out = new(DestinationInitParameters)
@@ -1802,11 +1737,6 @@ func (in *BucketSippyObservation) DeepCopyInto(out *BucketSippyObservation) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
-		*out = new(string)
-		**out = **in
-	}
 	if in.Destination != nil {
 		in, out := &in.Destination, &out.Destination
 		*out = new(DestinationObservation)
@@ -1849,11 +1779,6 @@ func (in *BucketSippyParameters) DeepCopyInto(out *BucketSippyParameters) {
 	*out = *in
 	if in.AccountID != nil {
 		in, out := &in.AccountID, &out.AccountID
-		*out = new(string)
-		**out = **in
-	}
-	if in.BucketName != nil {
-		in, out := &in.BucketName, &out.BucketName
 		*out = new(string)
 		**out = **in
 	}

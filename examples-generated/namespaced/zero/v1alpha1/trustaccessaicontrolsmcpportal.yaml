@@ -10,6 +10,7 @@ metadata:
 spec:
   forProvider:
     accountId: a86a8f5c339544d7bdc89926de14fb8c
+    allowCodeMode: true
     description: This is my custom MCP Portal
     hostname: exmaple.com
     name: My MCP Portal
@@ -19,10 +20,12 @@ spec:
       onBehalf: true
       serverId: my-mcp-server
       updatedPrompts:
-      - description: description
+      - alias: my-custom-alias
+        description: description
         enabled: true
         name: name
       updatedTools:
-      - description: description
+      - alias: my-custom-alias
+        description: description
         enabled: true
         name: name

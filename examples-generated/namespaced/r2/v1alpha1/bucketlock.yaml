@@ -10,7 +10,6 @@ metadata:
 spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
-    bucketName: example-bucket
     rules:
     - condition:
         maxAgeSeconds: 100

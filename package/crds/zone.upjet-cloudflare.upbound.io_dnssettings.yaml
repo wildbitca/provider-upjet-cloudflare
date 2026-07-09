@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: DNSSettings is the Schema for the DNSSettingss API.
+        description: DNSSettings is the Schema for the DNSSettingss API. Accepted
+          Permissions DNS ReadDNS WriteZone DNS Settings ReadZone DNS Settings Write
         properties:
           apiVersion:
             description: |-

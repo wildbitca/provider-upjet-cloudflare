@@ -125,5 +125,5 @@ func (tr *NetworkMonitoringRule) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *NetworkMonitoringRule) GetTerraformSchemaVersion() int {
-	return 0
+	return 500
 }

@@ -10,4 +10,5 @@ metadata:
 spec:
   forProvider:
     accountId: 699d98642c564d2e855e9661899b7252
+    ha: true
     name: blog

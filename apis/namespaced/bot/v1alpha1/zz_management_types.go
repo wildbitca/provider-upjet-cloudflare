@@ -36,6 +36,12 @@ type ManagementInitParameters struct {
 	// Available values: "off", "policy_only".
 	CfRobotsVariant *string `json:"cfRobotsVariant,omitempty" tf:"cf_robots_variant,omitempty"`
 
+	// (String) Enable rule to block content bots. When enabled, blocks automated traffic with low bot scores, excluding safe verified bot categories. Exceptions should be managed via skip rules.
+	// Available values: "block", "disabled".
+	// Enable rule to block content bots. When enabled, blocks automated traffic with low bot scores, excluding safe verified bot categories. Exceptions should be managed via skip rules.
+	// Available values: "block", "disabled".
+	ContentBotsProtection *string `json:"contentBotsProtection,omitempty" tf:"content_bots_protection,omitempty"`
+
 	// (String) Enable rule to punish AI Scrapers and Crawlers via a link maze.
 	// Available values: "enabled", "disabled".
 	// Enable rule to punish AI Scrapers and Crawlers via a link maze.
@@ -114,6 +120,12 @@ type ManagementObservation struct {
 	// Specifies the Robots Access Control License variant to use.
 	// Available values: "off", "policy_only".
 	CfRobotsVariant *string `json:"cfRobotsVariant,omitempty" tf:"cf_robots_variant,omitempty"`
+
+	// (String) Enable rule to block content bots. When enabled, blocks automated traffic with low bot scores, excluding safe verified bot categories. Exceptions should be managed via skip rules.
+	// Available values: "block", "disabled".
+	// Enable rule to block content bots. When enabled, blocks automated traffic with low bot scores, excluding safe verified bot categories. Exceptions should be managed via skip rules.
+	// Available values: "block", "disabled".
+	ContentBotsProtection *string `json:"contentBotsProtection,omitempty" tf:"content_bots_protection,omitempty"`
 
 	// (String) Enable rule to punish AI Scrapers and Crawlers via a link maze.
 	// Available values: "enabled", "disabled".
@@ -207,6 +219,13 @@ type ManagementParameters struct {
 	// Available values: "off", "policy_only".
 	// +kubebuilder:validation:Optional
 	CfRobotsVariant *string `json:"cfRobotsVariant,omitempty" tf:"cf_robots_variant,omitempty"`
+
+	// (String) Enable rule to block content bots. When enabled, blocks automated traffic with low bot scores, excluding safe verified bot categories. Exceptions should be managed via skip rules.
+	// Available values: "block", "disabled".
+	// Enable rule to block content bots. When enabled, blocks automated traffic with low bot scores, excluding safe verified bot categories. Exceptions should be managed via skip rules.
+	// Available values: "block", "disabled".
+	// +kubebuilder:validation:Optional
+	ContentBotsProtection *string `json:"contentBotsProtection,omitempty" tf:"content_bots_protection,omitempty"`
 
 	// (String) Enable rule to punish AI Scrapers and Crawlers via a link maze.
 	// Available values: "enabled", "disabled".
@@ -345,7 +364,7 @@ type ManagementStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Management is the Schema for the Managements API.
+// Management is the Schema for the Managements API. Accepted Permissions Bot Management ReadBot Management Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -31,24 +31,21 @@ spec:
         - text
     decision: allow
     exclude:
-    - group:
-        id: aa0a4aab-672b-4bdb-bc33-a59f1130a11f
+    - certificate: {}
     include:
-    - group:
-        id: aa0a4aab-672b-4bdb-bc33-a59f1130a11f
+    - certificate: {}
     isolationRequired: false
     mfaConfig:
       allowedAuthenticators:
       - totp
       - biometrics
       - security_key
-      mfaBypass: false
+      mfaDisabled: false
       sessionDuration: 24h
     name: Allow devs
     purposeJustificationPrompt: Please enter a justification for entering this protected
       domain.
     purposeJustificationRequired: true
     require:
-    - group:
-        id: aa0a4aab-672b-4bdb-bc33-a59f1130a11f
+    - certificate: {}
     sessionDuration: 24h

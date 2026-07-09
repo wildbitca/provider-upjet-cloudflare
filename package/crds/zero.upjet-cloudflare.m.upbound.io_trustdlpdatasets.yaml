@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustDlpDataset is the Schema for the TrustDlpDatasets API.
+        description: TrustDlpDataset is the Schema for the TrustDlpDatasets API. Accepted
+          Permissions Zero Trust ReadZero Trust Write
         properties:
           apiVersion:
             description: |-

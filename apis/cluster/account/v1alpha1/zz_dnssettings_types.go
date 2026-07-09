@@ -19,6 +19,10 @@ type DNSSettingsInitParameters struct {
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// only at the edge, regardless of each record's individual proxy setting. Note that this account-level override does not modify the records themselves; it only affects how they are served at the edge. See more on Enforce DNS-only.
+	// When enabled, forces all proxied DNS records in the account to behave as DNS-only at the edge, regardless of each record's individual proxy setting. Note that this account-level override does not modify the records themselves; it only affects how they are served at the edge. See more on [Enforce DNS-only](https://developers.cloudflare.com/dns/proxy-status/enforce-dns-only).
+	EnforceDNSOnly *bool `json:"enforceDnsOnly,omitempty" tf:"enforce_dns_only,omitempty"`
+
 	// (Attributes) (see below for nested schema)
 	ZoneDefaults *ZoneDefaultsInitParameters `json:"zoneDefaults,omitempty" tf:"zone_defaults,omitempty"`
 }
@@ -28,6 +32,10 @@ type DNSSettingsObservation struct {
 	// (String) Identifier.
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// only at the edge, regardless of each record's individual proxy setting. Note that this account-level override does not modify the records themselves; it only affects how they are served at the edge. See more on Enforce DNS-only.
+	// When enabled, forces all proxied DNS records in the account to behave as DNS-only at the edge, regardless of each record's individual proxy setting. Note that this account-level override does not modify the records themselves; it only affects how they are served at the edge. See more on [Enforce DNS-only](https://developers.cloudflare.com/dns/proxy-status/enforce-dns-only).
+	EnforceDNSOnly *bool `json:"enforceDnsOnly,omitempty" tf:"enforce_dns_only,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -41,6 +49,11 @@ type DNSSettingsParameters struct {
 	// Identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// only at the edge, regardless of each record's individual proxy setting. Note that this account-level override does not modify the records themselves; it only affects how they are served at the edge. See more on Enforce DNS-only.
+	// When enabled, forces all proxied DNS records in the account to behave as DNS-only at the edge, regardless of each record's individual proxy setting. Note that this account-level override does not modify the records themselves; it only affects how they are served at the edge. See more on [Enforce DNS-only](https://developers.cloudflare.com/dns/proxy-status/enforce-dns-only).
+	// +kubebuilder:validation:Optional
+	EnforceDNSOnly *bool `json:"enforceDnsOnly,omitempty" tf:"enforce_dns_only,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -347,7 +360,7 @@ type DNSSettingsStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// DNSSettings is the Schema for the DNSSettingss API.
+// DNSSettings is the Schema for the DNSSettingss API. Accepted Permissions Account DNS Settings ReadAccount DNS Settings Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

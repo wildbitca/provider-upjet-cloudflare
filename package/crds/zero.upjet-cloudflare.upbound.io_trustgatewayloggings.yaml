@@ -304,6 +304,7 @@ spec:
                     description: (String)
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   redactPii:
                     description: |-

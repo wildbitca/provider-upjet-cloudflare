@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Workflow is the Schema for the Workflows API.
+        description: Workflow is the Schema for the Workflows API. Accepted Permissions
+          Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
         properties:
           apiVersion:
             description: |-
@@ -78,6 +79,22 @@ spec:
                   className:
                     description: (String)
                     type: string
+                  limits:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      steps:
+                        description: (Number)
+                        type: number
+                    type: object
+                  schedules:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        cron:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
                   scriptName:
                     description: (String)
                     type: string
@@ -104,6 +121,22 @@ spec:
                   className:
                     description: (String)
                     type: string
+                  limits:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      steps:
+                        description: (Number)
+                        type: number
+                    type: object
+                  schedules:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        cron:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
                   scriptName:
                     description: (String)
                     type: string
@@ -246,6 +279,9 @@ spec:
                       queued:
                         description: (Number)
                         type: number
+                      rollingBack:
+                        description: (Number)
+                        type: number
                       running:
                         description: (Number)
                         type: number
@@ -262,12 +298,28 @@ spec:
                   isDeleted:
                     description: (Number)
                     type: number
+                  limits:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      steps:
+                        description: (Number)
+                        type: number
+                    type: object
                   modifiedOn:
                     description: (String)
                     type: string
                   name:
                     description: (String)
                     type: string
+                  schedules:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        cron:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
                   scriptName:
                     description: (String)
                     type: string

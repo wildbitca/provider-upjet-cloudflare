@@ -278,21 +278,6 @@ spec:
                               (Boolean) Specify whether to log activity.
                               Specify whether to match all variants of user emails (with + or . modifiers) used as criteria in Firewall policies.
                             type: boolean
-                          readOnly:
-                            description: |-
-                              (Boolean) Indicate that this setting was shared via the Orgs API and read only for the current account.
-                              Indicate that this setting was shared via the Orgs API and read only for the current account.
-                            type: boolean
-                          sourceAccount:
-                            description: |-
-                              (String) Indicate the account tag of the account that shared this setting.
-                              Indicate the account tag of the account that shared this setting.
-                            type: string
-                          version:
-                            description: |-
-                              (Number) Indicate the version number of the setting.
-                              Indicate the version number of the setting.
-                            type: number
                         type: object
                       fips:
                         description: (Attributes) Specify FIPS settings. (see below
@@ -598,21 +583,6 @@ spec:
                               (Boolean) Specify whether to log activity.
                               Specify whether to match all variants of user emails (with + or . modifiers) used as criteria in Firewall policies.
                             type: boolean
-                          readOnly:
-                            description: |-
-                              (Boolean) Indicate that this setting was shared via the Orgs API and read only for the current account.
-                              Indicate that this setting was shared via the Orgs API and read only for the current account.
-                            type: boolean
-                          sourceAccount:
-                            description: |-
-                              (String) Indicate the account tag of the account that shared this setting.
-                              Indicate the account tag of the account that shared this setting.
-                            type: string
-                          version:
-                            description: |-
-                              (Number) Indicate the version number of the setting.
-                              Indicate the version number of the setting.
-                            type: number
                         type: object
                       fips:
                         description: (Attributes) Specify FIPS settings. (see below

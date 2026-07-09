@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TLSSetting is the Schema for the TLSSettings API.
+        description: TLSSetting is the Schema for the TLSSettings API. Accepted Permissions
+          SSL and Certificates ReadSSL and Certificates Write
         properties:
           apiVersion:
             description: |-
@@ -79,20 +80,24 @@ spec:
                     type: string
                   settingId:
                     description: |-
-                      (String) The TLS Setting name. The value type depends on the setting:
-                      The TLS Setting name. The value type depends on the setting:
-                      - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
-                      - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`)
-                      - `http2`: value is `"on"` or `"off"`
+                      (String) The TLS Setting name.
+                      The value type depends on the setting:
+                      The TLS Setting name.
+                      The value type depends on the setting:
+                      - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`).
+                      - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`).
+                      - `http2`: value is `"on"` or `"off"`.
                       Available values: "ciphers", "min_tls_version", "http2".
                     type: string
                   value:
                     description: |-
-                      (Dynamic) The TLS setting value. The type depends on the setting_id used in the request path:
-                      The TLS setting value. The type depends on the `setting_id` used in the request path:
-                      - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
-                      - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`)
-                      - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`)
+                      (Dynamic) The TLS setting value.
+                      The type depends on the setting_id used in the request path:
+                      The TLS setting value.
+                      The type depends on the `setting_id` used in the request path:
+                      - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`).
+                      - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`).
+                      - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`).
                       Available values: "1.0", "1.1", "1.2", "1.3", "on", "off".
                     x-kubernetes-preserve-unknown-fields: true
                   zoneId:
@@ -121,20 +126,24 @@ spec:
                     type: string
                   settingId:
                     description: |-
-                      (String) The TLS Setting name. The value type depends on the setting:
-                      The TLS Setting name. The value type depends on the setting:
-                      - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
-                      - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`)
-                      - `http2`: value is `"on"` or `"off"`
+                      (String) The TLS Setting name.
+                      The value type depends on the setting:
+                      The TLS Setting name.
+                      The value type depends on the setting:
+                      - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`).
+                      - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`).
+                      - `http2`: value is `"on"` or `"off"`.
                       Available values: "ciphers", "min_tls_version", "http2".
                     type: string
                   value:
                     description: |-
-                      (Dynamic) The TLS setting value. The type depends on the setting_id used in the request path:
-                      The TLS setting value. The type depends on the `setting_id` used in the request path:
-                      - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
-                      - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`)
-                      - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`)
+                      (Dynamic) The TLS setting value.
+                      The type depends on the setting_id used in the request path:
+                      The TLS setting value.
+                      The type depends on the `setting_id` used in the request path:
+                      - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`).
+                      - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`).
+                      - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`).
                       Available values: "1.0", "1.1", "1.2", "1.3", "on", "off".
                     x-kubernetes-preserve-unknown-fields: true
                   zoneId:
@@ -262,16 +271,19 @@ spec:
                       The hostname for which the tls settings are set.
                     type: string
                   id:
-                    description: '(String) The TLS Setting name. The value type depends
-                      on the setting:'
+                    description: |-
+                      (String) The TLS Setting name.
+                      The value type depends on the setting:
                     type: string
                   settingId:
                     description: |-
-                      (String) The TLS Setting name. The value type depends on the setting:
-                      The TLS Setting name. The value type depends on the setting:
-                      - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
-                      - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`)
-                      - `http2`: value is `"on"` or `"off"`
+                      (String) The TLS Setting name.
+                      The value type depends on the setting:
+                      The TLS Setting name.
+                      The value type depends on the setting:
+                      - `ciphers`: value is an array of cipher suite strings (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`).
+                      - `min_tls_version`: value is a TLS version string (`"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"`).
+                      - `http2`: value is `"on"` or `"off"`.
                       Available values: "ciphers", "min_tls_version", "http2".
                     type: string
                   status:
@@ -286,11 +298,13 @@ spec:
                     type: string
                   value:
                     description: |-
-                      (Dynamic) The TLS setting value. The type depends on the setting_id used in the request path:
-                      The TLS setting value. The type depends on the `setting_id` used in the request path:
-                      - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`)
-                      - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`)
-                      - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`)
+                      (Dynamic) The TLS setting value.
+                      The type depends on the setting_id used in the request path:
+                      The TLS setting value.
+                      The type depends on the `setting_id` used in the request path:
+                      - `ciphers`: an array of allowed cipher suite strings in BoringSSL format (e.g., `["ECDHE-RSA-AES128-GCM-SHA256", "AES128-GCM-SHA256"]`).
+                      - `min_tls_version`: a string indicating the minimum TLS version — one of `"1.0"`, `"1.1"`, `"1.2"`, or `"1.3"` (e.g., `"1.2"`).
+                      - `http2`: a string indicating whether HTTP/2 is enabled — `"on"` or `"off"` (e.g., `"on"`).
                       Available values: "1.0", "1.1", "1.2", "1.3", "on", "off".
                     x-kubernetes-preserve-unknown-fields: true
                   zoneId:

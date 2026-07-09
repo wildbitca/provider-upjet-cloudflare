@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Hostname is the Schema for the Hostnames API.
+        description: Hostname is the Schema for the Hostnames API. Accepted Permissions
+          Web3 Hostnames ReadWeb3 Hostnames Write
         properties:
           apiVersion:
             description: |-

@@ -125,5 +125,5 @@ func (tr *SecurityImpersonationRegistry) LateInitialize(attrs []byte) (bool, err
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *SecurityImpersonationRegistry) GetTerraformSchemaVersion() int {
-	return 0
+	return 500
 }

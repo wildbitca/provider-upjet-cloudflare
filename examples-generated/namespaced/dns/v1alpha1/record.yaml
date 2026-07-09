@@ -12,6 +12,7 @@ spec:
     comment: Domain verification record
     content: 198.51.100.4
     name: example.com
+    privateRouting: true
     proxied: true
     settings:
       ipv4Only: true

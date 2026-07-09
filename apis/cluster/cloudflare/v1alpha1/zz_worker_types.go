@@ -94,6 +94,10 @@ type DurableObjectsParameters struct {
 
 type LogsInitParameters struct {
 
+	// (List of String) A list of destinations where logs will be exported to.
+	// A list of destinations where logs will be exported to.
+	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
 	// (Boolean) Whether observability is enabled for the Worker.
 	// Whether logs are enabled for the Worker.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -105,10 +109,18 @@ type LogsInitParameters struct {
 	// (Boolean) Whether invocation logs are enabled for the Worker.
 	// Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
 	InvocationLogs *bool `json:"invocationLogs,omitempty" tf:"invocation_logs,omitempty"`
+
+	// (Boolean) Whether log persistence is enabled for the Worker.
+	// Whether log persistence is enabled for the Worker.
+	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
 }
 
 type LogsObservation struct {
 
+	// (List of String) A list of destinations where logs will be exported to.
+	// A list of destinations where logs will be exported to.
+	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
 	// (Boolean) Whether observability is enabled for the Worker.
 	// Whether logs are enabled for the Worker.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -120,10 +132,19 @@ type LogsObservation struct {
 	// (Boolean) Whether invocation logs are enabled for the Worker.
 	// Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
 	InvocationLogs *bool `json:"invocationLogs,omitempty" tf:"invocation_logs,omitempty"`
+
+	// (Boolean) Whether log persistence is enabled for the Worker.
+	// Whether log persistence is enabled for the Worker.
+	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
 }
 
 type LogsParameters struct {
 
+	// (List of String) A list of destinations where logs will be exported to.
+	// A list of destinations where logs will be exported to.
+	// +kubebuilder:validation:Optional
+	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
 	// (Boolean) Whether observability is enabled for the Worker.
 	// Whether logs are enabled for the Worker.
 	// +kubebuilder:validation:Optional
@@ -138,6 +159,11 @@ type LogsParameters struct {
 	// Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
 	// +kubebuilder:validation:Optional
 	InvocationLogs *bool `json:"invocationLogs,omitempty" tf:"invocation_logs,omitempty"`
+
+	// (Boolean) Whether log persistence is enabled for the Worker.
+	// Whether log persistence is enabled for the Worker.
+	// +kubebuilder:validation:Optional
+	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
 }
 
 type ObservabilityInitParameters struct {
@@ -152,6 +178,9 @@ type ObservabilityInitParameters struct {
 
 	// (Attributes) Log settings for the Worker. (see below for nested schema)
 	Logs *LogsInitParameters `json:"logs,omitempty" tf:"logs,omitempty"`
+
+	// (Attributes) Trace settings for the Worker. (see below for nested schema)
+	Traces *TracesInitParameters `json:"traces,omitempty" tf:"traces,omitempty"`
 }
 
 type ObservabilityObservation struct {
@@ -166,6 +195,9 @@ type ObservabilityObservation struct {
 
 	// (Attributes) Log settings for the Worker. (see below for nested schema)
 	Logs *LogsObservation `json:"logs,omitempty" tf:"logs,omitempty"`
+
+	// (Attributes) Trace settings for the Worker. (see below for nested schema)
+	Traces *TracesObservation `json:"traces,omitempty" tf:"traces,omitempty"`
 }
 
 type ObservabilityParameters struct {
@@ -183,6 +215,10 @@ type ObservabilityParameters struct {
 	// (Attributes) Log settings for the Worker. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Logs *LogsParameters `json:"logs,omitempty" tf:"logs,omitempty"`
+
+	// (Attributes) Trace settings for the Worker. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Traces *TracesParameters `json:"traces,omitempty" tf:"traces,omitempty"`
 }
 
 type QueuesInitParameters struct {
@@ -287,6 +323,86 @@ type TailConsumersParameters struct {
 	Name *string `json:"name" tf:"name,omitempty"`
 }
 
+type TracesInitParameters struct {
+
+	// (List of String) A list of destinations where logs will be exported to.
+	// A list of destinations where traces will be exported to.
+	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether traces are enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// The sampling rate for traces. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// (Boolean) Whether log persistence is enabled for the Worker.
+	// Whether trace persistence is enabled for the Worker.
+	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
+
+	// (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+	// Available values: "authenticated", "accept".
+	// Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+	// Available values: "authenticated", "accept".
+	PropagationPolicy *string `json:"propagationPolicy,omitempty" tf:"propagation_policy,omitempty"`
+}
+
+type TracesObservation struct {
+
+	// (List of String) A list of destinations where logs will be exported to.
+	// A list of destinations where traces will be exported to.
+	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether traces are enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// The sampling rate for traces. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// (Boolean) Whether log persistence is enabled for the Worker.
+	// Whether trace persistence is enabled for the Worker.
+	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
+
+	// (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+	// Available values: "authenticated", "accept".
+	// Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+	// Available values: "authenticated", "accept".
+	PropagationPolicy *string `json:"propagationPolicy,omitempty" tf:"propagation_policy,omitempty"`
+}
+
+type TracesParameters struct {
+
+	// (List of String) A list of destinations where logs will be exported to.
+	// A list of destinations where traces will be exported to.
+	// +kubebuilder:validation:Optional
+	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether traces are enabled for the Worker.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// The sampling rate for traces. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// +kubebuilder:validation:Optional
+	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// (Boolean) Whether log persistence is enabled for the Worker.
+	// Whether trace persistence is enabled for the Worker.
+	// +kubebuilder:validation:Optional
+	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
+
+	// (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+	// Available values: "authenticated", "accept".
+	// Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+	// Available values: "authenticated", "accept".
+	// +kubebuilder:validation:Optional
+	PropagationPolicy *string `json:"propagationPolicy,omitempty" tf:"propagation_policy,omitempty"`
+}
+
 type WorkerInitParameters struct {
 
 	// (String) Identifier.
@@ -334,6 +450,10 @@ type WorkerObservation struct {
 	// (String) When the Worker was created.
 	// When the Worker was created.
 	CreatedOn *string `json:"createdOn,omitempty" tf:"created_on,omitempty"`
+
+	// (String) When the Worker's most recent deployment was created. null if the Worker has never been deployed.
+	// When the Worker's most recent deployment was created. `null` if the Worker has never been deployed.
+	DeployedOn *string `json:"deployedOn,omitempty" tf:"deployed_on,omitempty"`
 
 	// (String) Immutable ID of the Worker.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -457,7 +577,7 @@ type WorkerStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Worker is the Schema for the Workers API.
+// Worker is the Schema for the Workers API. Accepted Permissions Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

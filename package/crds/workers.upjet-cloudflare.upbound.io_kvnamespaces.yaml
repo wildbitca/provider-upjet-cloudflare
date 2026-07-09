@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: KvNamespace is the Schema for the KvNamespaces API.
+        description: KvNamespace is the Schema for the KvNamespaces API. Accepted
+          Permissions Workers KV Storage ReadWorkers KV Storage Write
         properties:
           apiVersion:
             description: |-

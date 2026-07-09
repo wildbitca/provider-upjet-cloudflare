@@ -125,5 +125,5 @@ func (tr *TrustAccessMtlsHostnameSettings) LateInitialize(attrs []byte) (bool, e
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *TrustAccessMtlsHostnameSettings) GetTerraformSchemaVersion() int {
-	return 1
+	return 500
 }

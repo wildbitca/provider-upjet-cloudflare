@@ -24,8 +24,14 @@ type DomainInitParameters struct {
 	// Auto-renew controls whether subscription is automatically renewed upon domain expiration.
 	AutoRenew *bool `json:"autoRenew,omitempty" tf:"auto_renew,omitempty"`
 
-	// (String) Domain name.
-	// Domain name.
+	// (String) Fully qualified domain name (FQDN) including the extension
+	// (e.g., example.com, mybrand.app). The domain name uniquely
+	// identifies a registration — the same domain cannot be registered
+	// twice, making it a natural idempotency key for registration requests.
+	// Fully qualified domain name (FQDN) including the extension
+	// (e.g., `example.com`, `mybrand.app`). The domain name uniquely
+	// identifies a registration — the same domain cannot be registered
+	// twice, making it a natural idempotency key for registration requests.
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
 
 	// (Boolean) Shows whether a registrar lock is in place for a domain.
@@ -47,8 +53,14 @@ type DomainObservation struct {
 	// Auto-renew controls whether subscription is automatically renewed upon domain expiration.
 	AutoRenew *bool `json:"autoRenew,omitempty" tf:"auto_renew,omitempty"`
 
-	// (String) Domain name.
-	// Domain name.
+	// (String) Fully qualified domain name (FQDN) including the extension
+	// (e.g., example.com, mybrand.app). The domain name uniquely
+	// identifies a registration — the same domain cannot be registered
+	// twice, making it a natural idempotency key for registration requests.
+	// Fully qualified domain name (FQDN) including the extension
+	// (e.g., `example.com`, `mybrand.app`). The domain name uniquely
+	// identifies a registration — the same domain cannot be registered
+	// twice, making it a natural idempotency key for registration requests.
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -74,8 +86,14 @@ type DomainParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoRenew *bool `json:"autoRenew,omitempty" tf:"auto_renew,omitempty"`
 
-	// (String) Domain name.
-	// Domain name.
+	// (String) Fully qualified domain name (FQDN) including the extension
+	// (e.g., example.com, mybrand.app). The domain name uniquely
+	// identifies a registration — the same domain cannot be registered
+	// twice, making it a natural idempotency key for registration requests.
+	// Fully qualified domain name (FQDN) including the extension
+	// (e.g., `example.com`, `mybrand.app`). The domain name uniquely
+	// identifies a registration — the same domain cannot be registered
+	// twice, making it a natural idempotency key for registration requests.
 	// +kubebuilder:validation:Optional
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
 

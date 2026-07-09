@@ -144,7 +144,7 @@ type TrustDeviceManagedNetworksStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustDeviceManagedNetworks is the Schema for the TrustDeviceManagedNetworkss API.
+// TrustDeviceManagedNetworks is the Schema for the TrustDeviceManagedNetworkss API. Accepted Permissions Zero Trust Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

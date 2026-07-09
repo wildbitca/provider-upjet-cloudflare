@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Hostname is the Schema for the Hostnames API.
+        description: Hostname is the Schema for the Hostnames API. Accepted Permissions
+          SSL and Certificates ReadSSL and Certificates Write
         properties:
           apiVersion:
             description: |-
@@ -108,19 +109,19 @@ spec:
                         type: string
                       certificateAuthority:
                         description: |-
-                          (String) The Certificate Authority that will issue the certificate
+                          (String) The Certificate Authority that will issue the certificate.
                           Available values: "digicert", "google", "lets_encrypt", "ssl_com".
-                          The Certificate Authority that will issue the certificate
+                          The Certificate Authority that will issue the certificate.
                           Available values: "digicert", "google", "lets_encrypt", "ssl_com".
                         type: string
                       cloudflareBranding:
                         description: |-
-                          (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
-                          Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
+                          (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true.
+                          Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true.
                         type: boolean
                       customCertBundle:
                         description: (Attributes List) Array of custom certificate
-                          and key pairs (1 or 2 pairs allowed) (see below for nested
+                          and key pairs (1 or 2 pairs allowed). (see below for nested
                           schema)
                         items:
                           properties:
@@ -154,6 +155,11 @@ spec:
                         description: |-
                           (String) If a custom uploaded certificate is used.
                           If a custom uploaded certificate is used.
+                        type: string
+                      customCsrId:
+                        description: |-
+                          (String) The identifier for the Custom CSR that was used.
+                          The identifier for the Custom CSR that was used.
                         type: string
                       customKeySecretRef:
                         description: |-
@@ -289,19 +295,19 @@ spec:
                         type: string
                       certificateAuthority:
                         description: |-
-                          (String) The Certificate Authority that will issue the certificate
+                          (String) The Certificate Authority that will issue the certificate.
                           Available values: "digicert", "google", "lets_encrypt", "ssl_com".
-                          The Certificate Authority that will issue the certificate
+                          The Certificate Authority that will issue the certificate.
                           Available values: "digicert", "google", "lets_encrypt", "ssl_com".
                         type: string
                       cloudflareBranding:
                         description: |-
-                          (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
-                          Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
+                          (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true.
+                          Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true.
                         type: boolean
                       customCertBundle:
                         description: (Attributes List) Array of custom certificate
-                          and key pairs (1 or 2 pairs allowed) (see below for nested
+                          and key pairs (1 or 2 pairs allowed). (see below for nested
                           schema)
                         items:
                           properties:
@@ -337,6 +343,11 @@ spec:
                         description: |-
                           (String) If a custom uploaded certificate is used.
                           If a custom uploaded certificate is used.
+                        type: string
+                      customCsrId:
+                        description: |-
+                          (String) The identifier for the Custom CSR that was used.
+                          The identifier for the Custom CSR that was used.
                         type: string
                       customKeySecretRef:
                         description: |-
@@ -514,10 +525,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.hostname)
                 || (has(self.initProvider) && has(self.initProvider.hostname))'
-            - message: spec.forProvider.ssl is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.ssl)
-                || (has(self.initProvider) && has(self.initProvider.ssl))'
             - message: spec.forProvider.zoneId is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.zoneId)
@@ -609,19 +616,19 @@ spec:
                         type: string
                       certificateAuthority:
                         description: |-
-                          (String) The Certificate Authority that will issue the certificate
+                          (String) The Certificate Authority that will issue the certificate.
                           Available values: "digicert", "google", "lets_encrypt", "ssl_com".
-                          The Certificate Authority that will issue the certificate
+                          The Certificate Authority that will issue the certificate.
                           Available values: "digicert", "google", "lets_encrypt", "ssl_com".
                         type: string
                       cloudflareBranding:
                         description: |-
-                          (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
-                          Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
+                          (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true.
+                          Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true.
                         type: boolean
                       customCertBundle:
                         description: (Attributes List) Array of custom certificate
-                          and key pairs (1 or 2 pairs allowed) (see below for nested
+                          and key pairs (1 or 2 pairs allowed). (see below for nested
                           schema)
                         items:
                           properties:
@@ -636,6 +643,11 @@ spec:
                         description: |-
                           (String) If a custom uploaded certificate is used.
                           If a custom uploaded certificate is used.
+                        type: string
+                      customCsrId:
+                        description: |-
+                          (String) The identifier for the Custom CSR that was used.
+                          The identifier for the Custom CSR that was used.
                         type: string
                       method:
                         description: |-

@@ -58,6 +58,10 @@ type FirewallInitParameters struct {
 	// (Attributes) Attack mitigation settings (see below for nested schema)
 	AttackMitigation *AttackMitigationInitParameters `json:"attackMitigation,omitempty" tf:"attack_mitigation,omitempty"`
 
+	// (Number) Number of IPv4 addresses to assign to the DNS Firewall cluster. Only used during cluster creation and cannot be changed later.
+	// Number of IPv4 addresses to assign to the DNS Firewall cluster. Only used during cluster creation and cannot be changed later.
+	DNSFirewallIPCount *float64 `json:"dnsFirewallIpCount,omitempty" tf:"dns_firewall_ip_count,omitempty"`
+
 	// (Boolean) Whether to refuse to answer queries for the ANY type
 	// Whether to refuse to answer queries for the ANY type
 	DeprecateAnyRequests *bool `json:"deprecateAnyRequests,omitempty" tf:"deprecate_any_requests,omitempty"`
@@ -113,8 +117,8 @@ type FirewallInitParameters struct {
 	// value received from upstream nameservers.
 	NegativeCacheTTL *float64 `json:"negativeCacheTtl,omitempty" tf:"negative_cache_ttl,omitempty"`
 
-	// (Number) Ratelimit in queries per second per datacenter (applies to DNS queries sent to the upstream nameservers configured on the cluster)
-	// Ratelimit in queries per second per datacenter (applies to DNS queries sent to the upstream nameservers configured on the cluster)
+	// (Number) Maximum number of DNS queries per second that will be forwarded to your upstream nameservers. The limit is enforced per server, where each server receives a fraction of the configured value. The actual aggregate rate for a data center may vary depending on how many servers are present. Responses served from cache do not count toward this limit. Set to null to disable rate limiting.
+	// Maximum number of DNS queries per second that will be forwarded to your upstream nameservers. The limit is enforced per server, where each server receives a fraction of the configured value. The actual aggregate rate for a data center may vary depending on how many servers are present. Responses served from cache do not count toward this limit. Set to null to disable rate limiting.
 	Ratelimit *float64 `json:"ratelimit,omitempty" tf:"ratelimit,omitempty"`
 
 	// (Number) Number of retries for fetching DNS responses from upstream nameservers (not counting the initial attempt)
@@ -134,6 +138,10 @@ type FirewallObservation struct {
 
 	// (Attributes) Attack mitigation settings (see below for nested schema)
 	AttackMitigation *AttackMitigationObservation `json:"attackMitigation,omitempty" tf:"attack_mitigation,omitempty"`
+
+	// (Number) Number of IPv4 addresses to assign to the DNS Firewall cluster. Only used during cluster creation and cannot be changed later.
+	// Number of IPv4 addresses to assign to the DNS Firewall cluster. Only used during cluster creation and cannot be changed later.
+	DNSFirewallIPCount *float64 `json:"dnsFirewallIpCount,omitempty" tf:"dns_firewall_ip_count,omitempty"`
 
 	// (Set of String)
 	// +listType=set
@@ -201,8 +209,8 @@ type FirewallObservation struct {
 	// value received from upstream nameservers.
 	NegativeCacheTTL *float64 `json:"negativeCacheTtl,omitempty" tf:"negative_cache_ttl,omitempty"`
 
-	// (Number) Ratelimit in queries per second per datacenter (applies to DNS queries sent to the upstream nameservers configured on the cluster)
-	// Ratelimit in queries per second per datacenter (applies to DNS queries sent to the upstream nameservers configured on the cluster)
+	// (Number) Maximum number of DNS queries per second that will be forwarded to your upstream nameservers. The limit is enforced per server, where each server receives a fraction of the configured value. The actual aggregate rate for a data center may vary depending on how many servers are present. Responses served from cache do not count toward this limit. Set to null to disable rate limiting.
+	// Maximum number of DNS queries per second that will be forwarded to your upstream nameservers. The limit is enforced per server, where each server receives a fraction of the configured value. The actual aggregate rate for a data center may vary depending on how many servers are present. Responses served from cache do not count toward this limit. Set to null to disable rate limiting.
 	Ratelimit *float64 `json:"ratelimit,omitempty" tf:"ratelimit,omitempty"`
 
 	// (Number) Number of retries for fetching DNS responses from upstream nameservers (not counting the initial attempt)
@@ -224,6 +232,11 @@ type FirewallParameters struct {
 	// (Attributes) Attack mitigation settings (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	AttackMitigation *AttackMitigationParameters `json:"attackMitigation,omitempty" tf:"attack_mitigation,omitempty"`
+
+	// (Number) Number of IPv4 addresses to assign to the DNS Firewall cluster. Only used during cluster creation and cannot be changed later.
+	// Number of IPv4 addresses to assign to the DNS Firewall cluster. Only used during cluster creation and cannot be changed later.
+	// +kubebuilder:validation:Optional
+	DNSFirewallIPCount *float64 `json:"dnsFirewallIpCount,omitempty" tf:"dns_firewall_ip_count,omitempty"`
 
 	// (Boolean) Whether to refuse to answer queries for the ANY type
 	// Whether to refuse to answer queries for the ANY type
@@ -286,8 +299,8 @@ type FirewallParameters struct {
 	// +kubebuilder:validation:Optional
 	NegativeCacheTTL *float64 `json:"negativeCacheTtl,omitempty" tf:"negative_cache_ttl,omitempty"`
 
-	// (Number) Ratelimit in queries per second per datacenter (applies to DNS queries sent to the upstream nameservers configured on the cluster)
-	// Ratelimit in queries per second per datacenter (applies to DNS queries sent to the upstream nameservers configured on the cluster)
+	// (Number) Maximum number of DNS queries per second that will be forwarded to your upstream nameservers. The limit is enforced per server, where each server receives a fraction of the configured value. The actual aggregate rate for a data center may vary depending on how many servers are present. Responses served from cache do not count toward this limit. Set to null to disable rate limiting.
+	// Maximum number of DNS queries per second that will be forwarded to your upstream nameservers. The limit is enforced per server, where each server receives a fraction of the configured value. The actual aggregate rate for a data center may vary depending on how many servers are present. Responses served from cache do not count toward this limit. Set to null to disable rate limiting.
 	// +kubebuilder:validation:Optional
 	Ratelimit *float64 `json:"ratelimit,omitempty" tf:"ratelimit,omitempty"`
 
@@ -329,7 +342,7 @@ type FirewallStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Firewall is the Schema for the Firewalls API.
+// Firewall is the Schema for the Firewalls API. Accepted Permissions DNS Firewall ReadDNS Firewall Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

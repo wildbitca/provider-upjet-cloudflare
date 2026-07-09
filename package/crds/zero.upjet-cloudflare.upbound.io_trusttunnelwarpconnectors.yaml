@@ -34,8 +34,10 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustTunnelWarpConnector is the Schema for the TrustTunnelWarpConnectors
-          API.
+        description: 'TrustTunnelWarpConnector is the Schema for the TrustTunnelWarpConnectors
+          API. Accepted Permissions Cloudflare One Connector: WARP ReadCloudflare
+          One Connector: WARP WriteCloudflare One Connectors ReadCloudflare One Connectors
+          Write'
         properties:
           apiVersion:
             description: |-
@@ -79,6 +81,11 @@ spec:
                       (String) Cloudflare account ID
                       Cloudflare account ID
                     type: string
+                  ha:
+                    description: |-
+                      (Boolean) Indicates that the tunnel will be created to be highly available. If omitted, defaults to false.
+                      Indicates that the tunnel will be created to be highly available. If omitted, defaults to false.
+                    type: boolean
                   name:
                     description: |-
                       friendly name for a tunnel.
@@ -122,6 +129,11 @@ spec:
                       (String) Cloudflare account ID
                       Cloudflare account ID
                     type: string
+                  ha:
+                    description: |-
+                      (Boolean) Indicates that the tunnel will be created to be highly available. If omitted, defaults to false.
+                      Indicates that the tunnel will be created to be highly available. If omitted, defaults to false.
+                    type: boolean
                   name:
                     description: |-
                       friendly name for a tunnel.
@@ -326,6 +338,11 @@ spec:
                       (String) Timestamp of when the resource was deleted. If null, the resource has not been deleted.
                       Timestamp of when the resource was deleted. If `null`, the resource has not been deleted.
                     type: string
+                  ha:
+                    description: |-
+                      (Boolean) Indicates that the tunnel will be created to be highly available. If omitted, defaults to false.
+                      Indicates that the tunnel will be created to be highly available. If omitted, defaults to false.
+                    type: boolean
                   id:
                     description: (String) UUID of the tunnel.
                     type: string

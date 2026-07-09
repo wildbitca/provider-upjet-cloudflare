@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Cache is the Schema for the Caches API.
+        description: Cache is the Schema for the Caches API. Accepted Permissions
+          Zone ReadZone Settings ReadZone Settings WriteZone Write
         properties:
           apiVersion:
             description: |-

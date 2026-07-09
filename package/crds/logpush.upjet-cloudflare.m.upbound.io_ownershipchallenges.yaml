@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: OwnershipChallenge is the Schema for the OwnershipChallenges
-          API.
+          API. Accepted Permissions Logs Write
         properties:
           apiVersion:
             description: |-
@@ -64,11 +64,20 @@ spec:
                       (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
                       The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
                     type: string
-                  destinationConf:
+                  destinationConfSecretRef:
                     description: |-
-                      (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+                      (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
                       Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-                    type: string
+                    properties:
+                      key:
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
                   zoneId:
                     description: |-
                       (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -93,16 +102,27 @@ spec:
                       (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
                       The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
                     type: string
-                  destinationConf:
+                  destinationConfSecretRef:
                     description: |-
-                      (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+                      (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
                       Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-                    type: string
+                    properties:
+                      key:
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
                   zoneId:
                     description: |-
                       (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
                       The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
                     type: string
+                required:
+                - destinationConfSecretRef
                 type: object
               managementPolicies:
                 default:
@@ -163,10 +183,9 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: spec.forProvider.destinationConf is a required parameter
+            - message: spec.forProvider.destinationConfSecretRef is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.destinationConf)
-                || (has(self.initProvider) && has(self.initProvider.destinationConf))'
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.destinationConfSecretRef)'
           status:
             description: OwnershipChallengeStatus defines the observed state of OwnershipChallenge.
             properties:
@@ -176,11 +195,6 @@ spec:
                     description: |-
                       (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
                       The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-                    type: string
-                  destinationConf:
-                    description: |-
-                      (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-                      Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
                     type: string
                   filename:
                     description: (String)

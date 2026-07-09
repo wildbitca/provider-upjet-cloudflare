@@ -125,5 +125,5 @@ func (tr *Image) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *Image) GetTerraformSchemaVersion() int {
-	return 0
+	return 500
 }

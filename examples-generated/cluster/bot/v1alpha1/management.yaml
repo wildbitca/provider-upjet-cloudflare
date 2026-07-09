@@ -10,6 +10,7 @@ spec:
   forProvider:
     aiBotsProtection: block
     cfRobotsVariant: policy_only
+    contentBotsProtection: disabled
     crawlerProtection: enabled
     enableJs: true
     fightMode: true

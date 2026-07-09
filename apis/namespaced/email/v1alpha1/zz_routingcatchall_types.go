@@ -182,7 +182,7 @@ type RoutingCatchAllStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// RoutingCatchAll is the Schema for the RoutingCatchAlls API.
+// RoutingCatchAll is the Schema for the RoutingCatchAlls API. Accepted Permissions Email Routing Rules ReadEmail Routing Rules Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

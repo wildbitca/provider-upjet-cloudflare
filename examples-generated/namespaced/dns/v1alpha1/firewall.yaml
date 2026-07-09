@@ -14,6 +14,7 @@ spec:
       enabled: true
       onlyWhenUpstreamUnhealthy: false
     deprecateAnyRequests: true
+    dnsFirewallIpCount: 2
     ecsFallback: false
     maximumCacheTtl: 900
     minimumCacheTtl: 60

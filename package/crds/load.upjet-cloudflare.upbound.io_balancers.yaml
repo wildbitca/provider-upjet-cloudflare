@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Balancer is the Schema for the Balancers API.
+        description: Balancer is the Schema for the Balancers API. Accepted Permissions
+          Load Balancers ReadLoad Balancers Write
         properties:
           apiVersion:
             description: |-

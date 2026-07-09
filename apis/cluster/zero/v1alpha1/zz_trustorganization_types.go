@@ -122,11 +122,93 @@ type LoginDesignParameters struct {
 	TextColor *string `json:"textColor,omitempty" tf:"text_color,omitempty"`
 }
 
-type TrustOrganizationInitParameters struct {
+type MfaSSHPivKeyRequirementsInitParameters struct {
 
-	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-	// The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+	// (String) Defines when a PIN is required to use the SSH key. Valid values: never (no PIN required), once (PIN required once per session), always (PIN required for each use).
+	// Available values: "never", "once", "always".
+	// Defines when a PIN is required to use the SSH key. Valid values: `never` (no PIN required), `once` (PIN required once per session), `always` (PIN required for each use).
+	// Available values: "never", "once", "always".
+	PinPolicy *string `json:"pinPolicy,omitempty" tf:"pin_policy,omitempty"`
+
+	// 2 Level 1 or higher validated device.
+	// Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+	RequireFipsDevice *bool `json:"requireFipsDevice,omitempty" tf:"require_fips_device,omitempty"`
+
+	// (List of Number) Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
+	// Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
+	SSHKeySize []*float64 `json:"sshKeySize,omitempty" tf:"ssh_key_size,omitempty"`
+
+	// (List of String) Specifies the allowed SSH key types. Valid values are ecdsa, ed25519, and rsa.
+	// Specifies the allowed SSH key types. Valid values are `ecdsa`, `ed25519`, and `rsa`.
+	SSHKeyType []*string `json:"sshKeyType,omitempty" tf:"ssh_key_type,omitempty"`
+
+	// (String) Defines when physical touch is required to use the SSH key. Valid values: never (no touch required), always (touch required for each use), cached (touch cached for 15 seconds).
+	// Available values: "never", "always", "cached".
+	// Defines when physical touch is required to use the SSH key. Valid values: `never` (no touch required), `always` (touch required for each use), `cached` (touch cached for 15 seconds).
+	// Available values: "never", "always", "cached".
+	TouchPolicy *string `json:"touchPolicy,omitempty" tf:"touch_policy,omitempty"`
+}
+
+type MfaSSHPivKeyRequirementsObservation struct {
+
+	// (String) Defines when a PIN is required to use the SSH key. Valid values: never (no PIN required), once (PIN required once per session), always (PIN required for each use).
+	// Available values: "never", "once", "always".
+	// Defines when a PIN is required to use the SSH key. Valid values: `never` (no PIN required), `once` (PIN required once per session), `always` (PIN required for each use).
+	// Available values: "never", "once", "always".
+	PinPolicy *string `json:"pinPolicy,omitempty" tf:"pin_policy,omitempty"`
+
+	// 2 Level 1 or higher validated device.
+	// Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+	RequireFipsDevice *bool `json:"requireFipsDevice,omitempty" tf:"require_fips_device,omitempty"`
+
+	// (List of Number) Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
+	// Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
+	SSHKeySize []*float64 `json:"sshKeySize,omitempty" tf:"ssh_key_size,omitempty"`
+
+	// (List of String) Specifies the allowed SSH key types. Valid values are ecdsa, ed25519, and rsa.
+	// Specifies the allowed SSH key types. Valid values are `ecdsa`, `ed25519`, and `rsa`.
+	SSHKeyType []*string `json:"sshKeyType,omitempty" tf:"ssh_key_type,omitempty"`
+
+	// (String) Defines when physical touch is required to use the SSH key. Valid values: never (no touch required), always (touch required for each use), cached (touch cached for 15 seconds).
+	// Available values: "never", "always", "cached".
+	// Defines when physical touch is required to use the SSH key. Valid values: `never` (no touch required), `always` (touch required for each use), `cached` (touch cached for 15 seconds).
+	// Available values: "never", "always", "cached".
+	TouchPolicy *string `json:"touchPolicy,omitempty" tf:"touch_policy,omitempty"`
+}
+
+type MfaSSHPivKeyRequirementsParameters struct {
+
+	// (String) Defines when a PIN is required to use the SSH key. Valid values: never (no PIN required), once (PIN required once per session), always (PIN required for each use).
+	// Available values: "never", "once", "always".
+	// Defines when a PIN is required to use the SSH key. Valid values: `never` (no PIN required), `once` (PIN required once per session), `always` (PIN required for each use).
+	// Available values: "never", "once", "always".
+	// +kubebuilder:validation:Optional
+	PinPolicy *string `json:"pinPolicy,omitempty" tf:"pin_policy,omitempty"`
+
+	// 2 Level 1 or higher validated device.
+	// Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+	// +kubebuilder:validation:Optional
+	RequireFipsDevice *bool `json:"requireFipsDevice,omitempty" tf:"require_fips_device,omitempty"`
+
+	// (List of Number) Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
+	// Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
+	// +kubebuilder:validation:Optional
+	SSHKeySize []*float64 `json:"sshKeySize,omitempty" tf:"ssh_key_size,omitempty"`
+
+	// (List of String) Specifies the allowed SSH key types. Valid values are ecdsa, ed25519, and rsa.
+	// Specifies the allowed SSH key types. Valid values are `ecdsa`, `ed25519`, and `rsa`.
+	// +kubebuilder:validation:Optional
+	SSHKeyType []*string `json:"sshKeyType,omitempty" tf:"ssh_key_type,omitempty"`
+
+	// (String) Defines when physical touch is required to use the SSH key. Valid values: never (no touch required), always (touch required for each use), cached (touch cached for 15 seconds).
+	// Available values: "never", "always", "cached".
+	// Defines when physical touch is required to use the SSH key. Valid values: `never` (no touch required), `always` (touch required for each use), `cached` (touch cached for 15 seconds).
+	// Available values: "never", "always", "cached".
+	// +kubebuilder:validation:Optional
+	TouchPolicy *string `json:"touchPolicy,omitempty" tf:"touch_policy,omitempty"`
+}
+
+type TrustOrganizationInitParameters struct {
 
 	// (Boolean) When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
 	// When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
@@ -165,9 +247,12 @@ type TrustOrganizationInitParameters struct {
 	// Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
 	MfaConfigurationAllowed *bool `json:"mfaConfigurationAllowed,omitempty" tf:"mfa_configuration_allowed,omitempty"`
 
-	// (Boolean) Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
-	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
+	// infrastructure applications because PIV keys are only compatible with infrastructure apps.
+	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot only contain 'ssh_piv_key' if the organization has any non-infrastructure applications because PIV keys are only compatible with infrastructure apps.
 	MfaRequiredForAllApps *bool `json:"mfaRequiredForAllApps,omitempty" tf:"mfa_required_for_all_apps,omitempty"`
+
+	// (Attributes) Configures SSH PIV key requirements for MFA using hardware security keys. (see below for nested schema)
+	MfaSSHPivKeyRequirements *MfaSSHPivKeyRequirementsInitParameters `json:"mfaSshPivKeyRequirements,omitempty" tf:"mfa_ssh_piv_key_requirements,omitempty"`
 
 	// (String) The name of your Zero Trust organization.
 	// The name of your Zero Trust organization.
@@ -196,9 +281,17 @@ type TrustOrganizationInitParameters struct {
 
 type TrustOrganizationMfaConfigInitParameters struct {
 
-	// (List of String) Lists the MFA methods that users can authenticate with.
-	// Lists the MFA methods that users can authenticate with.
+	// (List of String) Lists the MFA methods that users can authenticate with. ssh_piv_key is only relevant for infrastructure applications.
+	// Lists the MFA methods that users can authenticate with. `ssh_piv_key` is only relevant for infrastructure applications.
 	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+
+	// (String) Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
+	// Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
+	AmrMatchingSessionDuration *string `json:"amrMatchingSessionDuration,omitempty" tf:"amr_matching_session_duration,omitempty"`
+
+	// (String) Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
+	// Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
+	RequiredAaguids *string `json:"requiredAaguids,omitempty" tf:"required_aaguids,omitempty"`
 
 	// (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
 	// Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
@@ -207,9 +300,17 @@ type TrustOrganizationMfaConfigInitParameters struct {
 
 type TrustOrganizationMfaConfigObservation struct {
 
-	// (List of String) Lists the MFA methods that users can authenticate with.
-	// Lists the MFA methods that users can authenticate with.
+	// (List of String) Lists the MFA methods that users can authenticate with. ssh_piv_key is only relevant for infrastructure applications.
+	// Lists the MFA methods that users can authenticate with. `ssh_piv_key` is only relevant for infrastructure applications.
 	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+
+	// (String) Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
+	// Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
+	AmrMatchingSessionDuration *string `json:"amrMatchingSessionDuration,omitempty" tf:"amr_matching_session_duration,omitempty"`
+
+	// (String) Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
+	// Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
+	RequiredAaguids *string `json:"requiredAaguids,omitempty" tf:"required_aaguids,omitempty"`
 
 	// (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
 	// Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
@@ -218,10 +319,20 @@ type TrustOrganizationMfaConfigObservation struct {
 
 type TrustOrganizationMfaConfigParameters struct {
 
-	// (List of String) Lists the MFA methods that users can authenticate with.
-	// Lists the MFA methods that users can authenticate with.
+	// (List of String) Lists the MFA methods that users can authenticate with. ssh_piv_key is only relevant for infrastructure applications.
+	// Lists the MFA methods that users can authenticate with. `ssh_piv_key` is only relevant for infrastructure applications.
 	// +kubebuilder:validation:Optional
 	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
+
+	// (String) Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
+	// Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
+	// +kubebuilder:validation:Optional
+	AmrMatchingSessionDuration *string `json:"amrMatchingSessionDuration,omitempty" tf:"amr_matching_session_duration,omitempty"`
+
+	// (String) Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
+	// Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
+	// +kubebuilder:validation:Optional
+	RequiredAaguids *string `json:"requiredAaguids,omitempty" tf:"required_aaguids,omitempty"`
 
 	// (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
 	// Defines the duration of an MFA session. Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days). Examples:`5m` or `24h`.
@@ -230,10 +341,6 @@ type TrustOrganizationMfaConfigParameters struct {
 }
 
 type TrustOrganizationObservation struct {
-
-	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-	// The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (Boolean) When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
 	// When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
@@ -274,9 +381,12 @@ type TrustOrganizationObservation struct {
 	// Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
 	MfaConfigurationAllowed *bool `json:"mfaConfigurationAllowed,omitempty" tf:"mfa_configuration_allowed,omitempty"`
 
-	// (Boolean) Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
-	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
+	// infrastructure applications because PIV keys are only compatible with infrastructure apps.
+	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot only contain 'ssh_piv_key' if the organization has any non-infrastructure applications because PIV keys are only compatible with infrastructure apps.
 	MfaRequiredForAllApps *bool `json:"mfaRequiredForAllApps,omitempty" tf:"mfa_required_for_all_apps,omitempty"`
+
+	// (Attributes) Configures SSH PIV key requirements for MFA using hardware security keys. (see below for nested schema)
+	MfaSSHPivKeyRequirements *MfaSSHPivKeyRequirementsObservation `json:"mfaSshPivKeyRequirements,omitempty" tf:"mfa_ssh_piv_key_requirements,omitempty"`
 
 	// (String) The name of your Zero Trust organization.
 	// The name of your Zero Trust organization.
@@ -304,11 +414,6 @@ type TrustOrganizationObservation struct {
 }
 
 type TrustOrganizationParameters struct {
-
-	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-	// The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-	// +kubebuilder:validation:Optional
-	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (Boolean) When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
 	// When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
@@ -357,10 +462,14 @@ type TrustOrganizationParameters struct {
 	// +kubebuilder:validation:Optional
 	MfaConfigurationAllowed *bool `json:"mfaConfigurationAllowed,omitempty" tf:"mfa_configuration_allowed,omitempty"`
 
-	// (Boolean) Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
-	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
+	// infrastructure applications because PIV keys are only compatible with infrastructure apps.
+	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot only contain 'ssh_piv_key' if the organization has any non-infrastructure applications because PIV keys are only compatible with infrastructure apps.
 	// +kubebuilder:validation:Optional
 	MfaRequiredForAllApps *bool `json:"mfaRequiredForAllApps,omitempty" tf:"mfa_required_for_all_apps,omitempty"`
+
+	// (Attributes) Configures SSH PIV key requirements for MFA using hardware security keys. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	MfaSSHPivKeyRequirements *MfaSSHPivKeyRequirementsParameters `json:"mfaSshPivKeyRequirements,omitempty" tf:"mfa_ssh_piv_key_requirements,omitempty"`
 
 	// (String) The name of your Zero Trust organization.
 	// The name of your Zero Trust organization.
@@ -420,7 +529,7 @@ type TrustOrganizationStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustOrganization is the Schema for the TrustOrganizations API.
+// TrustOrganization is the Schema for the TrustOrganizations API. Accepted Permissions Access: Organizations, Identity Providers, and Groups ReadAccess: Organizations, Identity Providers, and Groups RevokeAccess: Organizations, Identity Providers, and Groups Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

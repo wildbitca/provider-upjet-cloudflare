@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: TrustDlpPredefinedProfile is the Schema for the TrustDlpPredefinedProfiles
-          API.
+          API. Accepted Permissions Zero Trust ReadZero Trust Write
         properties:
           apiVersion:
             description: |-

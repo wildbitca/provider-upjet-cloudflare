@@ -57,6 +57,12 @@ type TrustNetworkHostnameRouteObservation struct {
 	// (String) The hostname route ID.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (String) The type of tunnel.
+	// Available values: "cfd_tunnel", "warp_connector", "warp", "magic", "ip_sec", "gre", "cni".
+	// The type of tunnel.
+	// Available values: "cfd_tunnel", "warp_connector", "warp", "magic", "ip_sec", "gre", "cni".
+	TunType *string `json:"tunType,omitempty" tf:"tun_type,omitempty"`
+
 	// (String) UUID of the tunnel.
 	// UUID of the tunnel.
 	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
@@ -116,7 +122,7 @@ type TrustNetworkHostnameRouteStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustNetworkHostnameRoute is the Schema for the TrustNetworkHostnameRoutes API.
+// TrustNetworkHostnameRoute is the Schema for the TrustNetworkHostnameRoutes API. Accepted Permissions Cloudflare One Networks ReadCloudflare One Networks WriteCloudflare Tunnel ReadCloudflare Tunnel Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

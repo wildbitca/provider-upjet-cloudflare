@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: AddressMap is the Schema for the AddressMaps API.
+        description: AddressMap is the Schema for the AddressMaps API. Accepted Permissions
+          Address Maps ReadAddress Maps Write
         properties:
           apiVersion:
             description: |-

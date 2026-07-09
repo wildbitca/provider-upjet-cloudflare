@@ -32,6 +32,7 @@ spec:
             OeH8gMJ+FuwtXYEPa4hBf38M5eU5xWG7
             -----END CERTIFICATE-----
 
+      customCsrId: 7b163417-1d2b-4c84-a38a-2fb7a0cd7752
       customKeySecretRef:
         key: example-key
         name: example-secret

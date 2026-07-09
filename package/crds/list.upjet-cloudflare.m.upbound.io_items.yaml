@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Item is the Schema for the Items API.
+        description: Item is the Schema for the Items API. Accepted Permissions Account
+          Filter Lists EditAccount Filter Lists Read
         properties:
           apiVersion:
             description: |-

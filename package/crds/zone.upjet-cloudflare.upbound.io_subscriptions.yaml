@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Subscription is the Schema for the Subscriptions API.
+        description: Subscription is the Schema for the Subscriptions API. Accepted
+          Permissions Billing ReadBilling Write
         properties:
           apiVersion:
             description: |-

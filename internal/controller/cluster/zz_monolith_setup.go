@@ -130,6 +130,8 @@ import (
 	validationoperationsettings "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/cluster/schema/validationoperationsettings"
 	validationschemas "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/cluster/schema/validationschemas"
 	validationsettings "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/cluster/schema/validationsettings"
+	store "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/cluster/secretsstore/store"
+	storesecret "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/cluster/secretsstore/storesecret"
 	rules "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/cluster/snippet/rules"
 	application "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/cluster/spectrum/application"
 	connector "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/cluster/sso/connector"
@@ -348,6 +350,8 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		validationoperationsettings.Setup,
 		validationschemas.Setup,
 		validationsettings.Setup,
+		store.Setup,
+		storesecret.Setup,
 		rules.Setup,
 		application.Setup,
 		connector.Setup,
@@ -572,6 +576,8 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		validationoperationsettings.SetupGated,
 		validationschemas.SetupGated,
 		validationsettings.SetupGated,
+		store.SetupGated,
+		storesecret.SetupGated,
 		rules.SetupGated,
 		application.SetupGated,
 		connector.SetupGated,

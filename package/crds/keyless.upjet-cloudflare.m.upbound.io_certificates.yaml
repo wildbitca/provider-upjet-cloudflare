@@ -34,7 +34,16 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Certificate is the Schema for the Certificates API.
+        description: 'Certificate is the Schema for the Certificates API. Accepted
+          Permissions Access: Apps and Policies ReadAccess: Apps and Policies RevokeAccess:
+          Apps and Policies WriteAccess: Mutual TLS Certificates WriteAccess: Organizations,
+          Identity Providers, and Groups WriteAnalytics ReadApps WriteCache PurgeDNS
+          ReadDNS WriteFirewall Services ReadFirewall Services WriteLoad Balancers
+          ReadLoad Balancers WriteLogs ReadLogs WritePage Rules ReadPage Rules WriteSSL
+          and Certificates ReadSSL and Certificates WriteStream ReadStream WriteTrust
+          and Safety ReadTrust and Safety WriteWorkers Routes ReadWorkers Routes WriteWorkers
+          Scripts ReadWorkers Scripts WriteZaraz AdminZaraz EditZaraz ReadZero Trust:
+          PII ReadZone ReadZone Settings ReadZone Settings WriteZone Write'
         properties:
           apiVersion:
             description: |-
@@ -92,17 +101,17 @@ spec:
                     type: number
                   tunnel:
                     description: (Attributes) Configuration for using Keyless SSL
-                      through a Cloudflare Tunnel (see below for nested schema)
+                      through a Cloudflare Tunnel. (see below for nested schema)
                     properties:
                       privateIp:
                         description: |-
-                          (String) Private IP of the Key Server Host
-                          Private IP of the Key Server Host
+                          (String) Private IP of the Key Server Host.
+                          Private IP of the Key Server Host.
                         type: string
                       vnetId:
                         description: |-
-                          (String) Cloudflare Tunnel Virtual Network ID
-                          Cloudflare Tunnel Virtual Network ID
+                          (String) Cloudflare Tunnel Virtual Network ID.
+                          Cloudflare Tunnel Virtual Network ID.
                         type: string
                     type: object
                   zoneId:
@@ -158,17 +167,17 @@ spec:
                     type: number
                   tunnel:
                     description: (Attributes) Configuration for using Keyless SSL
-                      through a Cloudflare Tunnel (see below for nested schema)
+                      through a Cloudflare Tunnel. (see below for nested schema)
                     properties:
                       privateIp:
                         description: |-
-                          (String) Private IP of the Key Server Host
-                          Private IP of the Key Server Host
+                          (String) Private IP of the Key Server Host.
+                          Private IP of the Key Server Host.
                         type: string
                       vnetId:
                         description: |-
-                          (String) Cloudflare Tunnel Virtual Network ID
-                          Cloudflare Tunnel Virtual Network ID
+                          (String) Cloudflare Tunnel Virtual Network ID.
+                          Cloudflare Tunnel Virtual Network ID.
                         type: string
                     type: object
                   zoneId:
@@ -314,17 +323,17 @@ spec:
                     type: string
                   tunnel:
                     description: (Attributes) Configuration for using Keyless SSL
-                      through a Cloudflare Tunnel (see below for nested schema)
+                      through a Cloudflare Tunnel. (see below for nested schema)
                     properties:
                       privateIp:
                         description: |-
-                          (String) Private IP of the Key Server Host
-                          Private IP of the Key Server Host
+                          (String) Private IP of the Key Server Host.
+                          Private IP of the Key Server Host.
                         type: string
                       vnetId:
                         description: |-
-                          (String) Cloudflare Tunnel Virtual Network ID
-                          Cloudflare Tunnel Virtual Network ID
+                          (String) Cloudflare Tunnel Virtual Network ID.
+                          Cloudflare Tunnel Virtual Network ID.
                         type: string
                     type: object
                   zoneId:

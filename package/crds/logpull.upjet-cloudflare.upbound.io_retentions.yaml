@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Retention is the Schema for the Retentions API.
+        description: Retention is the Schema for the Retentions API. Accepted Permissions
+          Logs ReadLogs Write
         properties:
           apiVersion:
             description: |-

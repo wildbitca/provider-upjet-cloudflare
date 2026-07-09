@@ -11,11 +11,13 @@ import (
 	accountCluster "github.com/wildbitca/provider-upjet-cloudflare/config/cluster/account"
 	addressCluster "github.com/wildbitca/provider-upjet-cloudflare/config/cluster/address"
 	dnsCluster "github.com/wildbitca/provider-upjet-cloudflare/config/cluster/dns"
+	secretsstoreCluster "github.com/wildbitca/provider-upjet-cloudflare/config/cluster/secretsstore"
 	zeroCluster "github.com/wildbitca/provider-upjet-cloudflare/config/cluster/zero"
 	zoneCluster "github.com/wildbitca/provider-upjet-cloudflare/config/cluster/zone"
 	accountNamespaced "github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/account"
 	addressNamespaced "github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/address"
 	dnsNamespaced "github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/dns"
+	secretsstoreNamespaced "github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/secretsstore"
 	zeroNamespaced "github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/zero"
 	zoneNamespaced "github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/zone"
 )
@@ -48,6 +50,7 @@ func GetProvider() *ujconfig.Provider {
 		dnsCluster.Configure,
 		accountCluster.Configure,
 		zeroCluster.Configure,
+		secretsstoreCluster.Configure,
 	} {
 		configure(pc)
 	}
@@ -76,6 +79,7 @@ func GetProviderNamespaced() *ujconfig.Provider {
 		dnsNamespaced.Configure,
 		accountNamespaced.Configure,
 		zeroNamespaced.Configure,
+		secretsstoreNamespaced.Configure,
 	} {
 		configure(pc)
 	}

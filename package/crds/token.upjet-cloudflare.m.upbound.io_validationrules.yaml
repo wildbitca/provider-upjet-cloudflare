@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ValidationRules is the Schema for the ValidationRuless API.
+        description: ValidationRules is the Schema for the ValidationRuless API. Accepted
+          Permissions Account API GatewayAccount API Gateway ReadDomain API GatewayDomain
+          API Gateway Read
         properties:
           apiVersion:
             description: |-

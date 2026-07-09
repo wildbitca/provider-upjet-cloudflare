@@ -16,83 +16,96 @@ import (
 
 type CustomDomainInitParameters struct {
 
-	// (String) Identifer of the account.
-	// Identifer of the account.
+	// (String) Identifier.
+	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String, Deprecated) Worker environment associated with the zone and hostname.
-	// Worker environment associated with the zone and hostname.
+	// (String, Deprecated) Worker environment associated with the domain.
+	// Worker environment associated with the domain.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// (String) Hostname of the Worker Domain.
-	// Hostname of the Worker Domain.
+	// (String) Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
+	// Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (String) Worker service associated with the zone and hostname.
-	// Worker service associated with the zone and hostname.
+	// (String) Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
+	// Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
-	// (String) Identifier of the zone.
-	// Identifier of the zone.
+	// (String) ID of the zone containing the domain hostname.
+	// ID of the zone containing the domain hostname.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// (String) Name of the zone containing the domain hostname.
+	// Name of the zone containing the domain hostname.
+	ZoneName *string `json:"zoneName,omitempty" tf:"zone_name,omitempty"`
 }
 
 type CustomDomainObservation struct {
 
-	// (String) Identifer of the account.
-	// Identifer of the account.
+	// (String) Identifier.
+	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String, Deprecated) Worker environment associated with the zone and hostname.
-	// Worker environment associated with the zone and hostname.
+	// (String) ID of the TLS certificate issued for the domain.
+	// ID of the TLS certificate issued for the domain.
+	CertID *string `json:"certId,omitempty" tf:"cert_id,omitempty"`
+
+	// (String, Deprecated) Worker environment associated with the domain.
+	// Worker environment associated with the domain.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// (String) Hostname of the Worker Domain.
-	// Hostname of the Worker Domain.
+	// (String) Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
+	// Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (String) Identifer of the Worker Domain.
+	// (String) Immutable ID of the domain.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) Worker service associated with the zone and hostname.
-	// Worker service associated with the zone and hostname.
+	// (String) Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
+	// Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
-	// (String) Identifier of the zone.
-	// Identifier of the zone.
+	// (String) ID of the zone containing the domain hostname.
+	// ID of the zone containing the domain hostname.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 
-	// (String) Name of the zone.
-	// Name of the zone.
+	// (String) Name of the zone containing the domain hostname.
+	// Name of the zone containing the domain hostname.
 	ZoneName *string `json:"zoneName,omitempty" tf:"zone_name,omitempty"`
 }
 
 type CustomDomainParameters struct {
 
-	// (String) Identifer of the account.
-	// Identifer of the account.
+	// (String) Identifier.
+	// Identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String, Deprecated) Worker environment associated with the zone and hostname.
-	// Worker environment associated with the zone and hostname.
+	// (String, Deprecated) Worker environment associated with the domain.
+	// Worker environment associated with the domain.
 	// +kubebuilder:validation:Optional
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// (String) Hostname of the Worker Domain.
-	// Hostname of the Worker Domain.
+	// (String) Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
+	// Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (String) Worker service associated with the zone and hostname.
-	// Worker service associated with the zone and hostname.
+	// (String) Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
+	// Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
 	// +kubebuilder:validation:Optional
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
-	// (String) Identifier of the zone.
-	// Identifier of the zone.
+	// (String) ID of the zone containing the domain hostname.
+	// ID of the zone containing the domain hostname.
 	// +kubebuilder:validation:Optional
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// (String) Name of the zone containing the domain hostname.
+	// Name of the zone containing the domain hostname.
+	// +kubebuilder:validation:Optional
+	ZoneName *string `json:"zoneName,omitempty" tf:"zone_name,omitempty"`
 }
 
 // CustomDomainSpec defines the desired state of CustomDomain
@@ -122,7 +135,7 @@ type CustomDomainStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// CustomDomain is the Schema for the CustomDomains API.
+// CustomDomain is the Schema for the CustomDomains API. Accepted Permissions Workers Scripts ReadWorkers Scripts Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -134,7 +147,6 @@ type CustomDomain struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountId) || (has(self.initProvider) && has(self.initProvider.accountId))",message="spec.forProvider.accountId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.hostname) || (has(self.initProvider) && has(self.initProvider.hostname))",message="spec.forProvider.hostname is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.service) || (has(self.initProvider) && has(self.initProvider.service))",message="spec.forProvider.service is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.zoneId) || (has(self.initProvider) && has(self.initProvider.zoneId))",message="spec.forProvider.zoneId is a required parameter"
 	Spec   CustomDomainSpec   `json:"spec"`
 	Status CustomDomainStatus `json:"status,omitempty"`
 }

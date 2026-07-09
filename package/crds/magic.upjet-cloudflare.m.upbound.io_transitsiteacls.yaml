@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TransitSiteACL is the Schema for the TransitSiteACLs API.
+        description: TransitSiteACL is the Schema for the TransitSiteACLs API. Accepted
+          Permissions Magic Transit ReadMagic Transit WriteMagic WAN ReadMagic WAN
+          Write
         properties:
           apiVersion:
             description: |-

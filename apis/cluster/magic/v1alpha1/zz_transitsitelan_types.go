@@ -13,6 +13,60 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
+type DHCPOptionsInitParameters struct {
+
+	// 254). Options 0 and 255 are reserved by RFC 2132. Options 3, 6, and 51 are not allowed because they conflict with connector-managed configuration.
+	// DHCP option number (1-254). Options 0 and 255 are reserved by RFC 2132. Options 3, 6, and 51 are not allowed because they conflict with connector-managed configuration.
+	Code *float64 `json:"code,omitempty" tf:"code,omitempty"`
+
+	// separated hex bytes (e.g. "01:04:aa:bb:cc", max 255 bytes). ip: an IPv4 address (e.g. "10.20.30.40"). byte: an unsigned integer 0-255 (1 byte). short: an unsigned integer 0-65535 (2 bytes). integer: an unsigned integer 0-4294967295 (4 bytes).
+	// Available values: "text", "hex", "ip", "byte", "short", "integer".
+	// The type of the option value. text: a string (max 255 bytes). hex: colon-separated hex bytes (e.g. "01:04:aa:bb:cc", max 255 bytes). ip: an IPv4 address (e.g. "10.20.30.40"). byte: an unsigned integer 0-255 (1 byte). short: an unsigned integer 0-65535 (2 bytes). integer: an unsigned integer 0-4294967295 (4 bytes).
+	// Available values: "text", "hex", "ip", "byte", "short", "integer".
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// (String) The option value, interpreted according to the type field.
+	// The option value, interpreted according to the type field.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type DHCPOptionsObservation struct {
+
+	// 254). Options 0 and 255 are reserved by RFC 2132. Options 3, 6, and 51 are not allowed because they conflict with connector-managed configuration.
+	// DHCP option number (1-254). Options 0 and 255 are reserved by RFC 2132. Options 3, 6, and 51 are not allowed because they conflict with connector-managed configuration.
+	Code *float64 `json:"code,omitempty" tf:"code,omitempty"`
+
+	// separated hex bytes (e.g. "01:04:aa:bb:cc", max 255 bytes). ip: an IPv4 address (e.g. "10.20.30.40"). byte: an unsigned integer 0-255 (1 byte). short: an unsigned integer 0-65535 (2 bytes). integer: an unsigned integer 0-4294967295 (4 bytes).
+	// Available values: "text", "hex", "ip", "byte", "short", "integer".
+	// The type of the option value. text: a string (max 255 bytes). hex: colon-separated hex bytes (e.g. "01:04:aa:bb:cc", max 255 bytes). ip: an IPv4 address (e.g. "10.20.30.40"). byte: an unsigned integer 0-255 (1 byte). short: an unsigned integer 0-65535 (2 bytes). integer: an unsigned integer 0-4294967295 (4 bytes).
+	// Available values: "text", "hex", "ip", "byte", "short", "integer".
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// (String) The option value, interpreted according to the type field.
+	// The option value, interpreted according to the type field.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type DHCPOptionsParameters struct {
+
+	// 254). Options 0 and 255 are reserved by RFC 2132. Options 3, 6, and 51 are not allowed because they conflict with connector-managed configuration.
+	// DHCP option number (1-254). Options 0 and 255 are reserved by RFC 2132. Options 3, 6, and 51 are not allowed because they conflict with connector-managed configuration.
+	// +kubebuilder:validation:Optional
+	Code *float64 `json:"code" tf:"code,omitempty"`
+
+	// separated hex bytes (e.g. "01:04:aa:bb:cc", max 255 bytes). ip: an IPv4 address (e.g. "10.20.30.40"). byte: an unsigned integer 0-255 (1 byte). short: an unsigned integer 0-65535 (2 bytes). integer: an unsigned integer 0-4294967295 (4 bytes).
+	// Available values: "text", "hex", "ip", "byte", "short", "integer".
+	// The type of the option value. text: a string (max 255 bytes). hex: colon-separated hex bytes (e.g. "01:04:aa:bb:cc", max 255 bytes). ip: an IPv4 address (e.g. "10.20.30.40"). byte: an unsigned integer 0-255 (1 byte). short: an unsigned integer 0-65535 (2 bytes). integer: an unsigned integer 0-4294967295 (4 bytes).
+	// Available values: "text", "hex", "ip", "byte", "short", "integer".
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+
+	// (String) The option value, interpreted according to the type field.
+	// The option value, interpreted according to the type field.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
+}
+
 type DHCPRelayInitParameters struct {
 
 	// (List of String) List of DHCP server IPs.
@@ -37,6 +91,9 @@ type DHCPRelayParameters struct {
 
 type DHCPServerInitParameters struct {
 
+	// (Attributes List) Optional list of custom DHCP options to include in DHCP responses. Only valid when DHCP server is enabled. (see below for nested schema)
+	DHCPOptions []DHCPOptionsInitParameters `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
+
 	// (String) A valid IPv4 address.
 	// A valid IPv4 address.
 	DHCPPoolEnd *string `json:"dhcpPoolEnd,omitempty" tf:"dhcp_pool_end,omitempty"`
@@ -60,6 +117,9 @@ type DHCPServerInitParameters struct {
 
 type DHCPServerObservation struct {
 
+	// (Attributes List) Optional list of custom DHCP options to include in DHCP responses. Only valid when DHCP server is enabled. (see below for nested schema)
+	DHCPOptions []DHCPOptionsObservation `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
+
 	// (String) A valid IPv4 address.
 	// A valid IPv4 address.
 	DHCPPoolEnd *string `json:"dhcpPoolEnd,omitempty" tf:"dhcp_pool_end,omitempty"`
@@ -82,6 +142,10 @@ type DHCPServerObservation struct {
 }
 
 type DHCPServerParameters struct {
+
+	// (Attributes List) Optional list of custom DHCP options to include in DHCP responses. Only valid when DHCP server is enabled. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	DHCPOptions []DHCPOptionsParameters `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
 	// (String) A valid IPv4 address.
 	// A valid IPv4 address.
@@ -279,6 +343,14 @@ type TransitSiteLanInitParameters struct {
 	// mark true to use this LAN for HA probing. only works for site with HA turned on. only one LAN can be set as the ha_link.
 	HaLink *bool `json:"haLink,omitempty" tf:"ha_link,omitempty"`
 
+	// based breakout traffic
+	// mark true to use this LAN for source-based breakout traffic
+	IsBreakout *bool `json:"isBreakout,omitempty" tf:"is_breakout,omitempty"`
+
+	// based prioritized traffic
+	// mark true to use this LAN for source-based prioritized traffic
+	IsPrioritized *bool `json:"isPrioritized,omitempty" tf:"is_prioritized,omitempty"`
+
 	// (Attributes) (see below for nested schema)
 	NAT *NATInitParameters `json:"nat,omitempty" tf:"nat,omitempty"`
 
@@ -319,6 +391,14 @@ type TransitSiteLanObservation struct {
 	// (String) Identifier
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// based breakout traffic
+	// mark true to use this LAN for source-based breakout traffic
+	IsBreakout *bool `json:"isBreakout,omitempty" tf:"is_breakout,omitempty"`
+
+	// based prioritized traffic
+	// mark true to use this LAN for source-based prioritized traffic
+	IsPrioritized *bool `json:"isPrioritized,omitempty" tf:"is_prioritized,omitempty"`
+
 	// (Attributes) (see below for nested schema)
 	NAT *NATObservation `json:"nat,omitempty" tf:"nat,omitempty"`
 
@@ -358,6 +438,16 @@ type TransitSiteLanParameters struct {
 	// mark true to use this LAN for HA probing. only works for site with HA turned on. only one LAN can be set as the ha_link.
 	// +kubebuilder:validation:Optional
 	HaLink *bool `json:"haLink,omitempty" tf:"ha_link,omitempty"`
+
+	// based breakout traffic
+	// mark true to use this LAN for source-based breakout traffic
+	// +kubebuilder:validation:Optional
+	IsBreakout *bool `json:"isBreakout,omitempty" tf:"is_breakout,omitempty"`
+
+	// based prioritized traffic
+	// mark true to use this LAN for source-based prioritized traffic
+	// +kubebuilder:validation:Optional
+	IsPrioritized *bool `json:"isPrioritized,omitempty" tf:"is_prioritized,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -417,7 +507,7 @@ type TransitSiteLanStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TransitSiteLan is the Schema for the TransitSiteLans API.
+// TransitSiteLan is the Schema for the TransitSiteLans API. Accepted Permissions Magic Transit ReadMagic Transit WriteMagic WAN ReadMagic WAN Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

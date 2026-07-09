@@ -694,7 +694,7 @@ type TrustTunnelCloudflaredConfigStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustTunnelCloudflaredConfig is the Schema for the TrustTunnelCloudflaredConfigs API.
+// TrustTunnelCloudflaredConfig is the Schema for the TrustTunnelCloudflaredConfigs API. Accepted Permissions Cloudflare One Connector: cloudflared ReadCloudflare One Connector: cloudflared WriteCloudflare One Connectors ReadCloudflare One Connectors WriteCloudflare Tunnel ReadCloudflare Tunnel Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

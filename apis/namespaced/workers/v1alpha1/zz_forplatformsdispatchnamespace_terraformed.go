@@ -125,5 +125,5 @@ func (tr *ForPlatformsDispatchNamespace) LateInitialize(attrs []byte) (bool, err
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *ForPlatformsDispatchNamespace) GetTerraformSchemaVersion() int {
-	return 1
+	return 500
 }

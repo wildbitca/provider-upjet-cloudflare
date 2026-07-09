@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Download is the Schema for the Downloads API.
+        description: Download is the Schema for the Downloads API. Accepted Permissions
+          Stream ReadStream Write
         properties:
           apiVersion:
             description: |-
@@ -212,6 +213,51 @@ spec:
                       (String) Identifier.
                       Identifier.
                     type: string
+                  audio:
+                    description: only download. Only present if this download type
+                      has been created. (see below for nested schema)
+                    properties:
+                      percentComplete:
+                        description: |-
+                          (Number) Indicates the progress as a percentage between 0 and 100.
+                          Indicates the progress as a percentage between 0 and 100.
+                        type: number
+                      status:
+                        description: |-
+                          (String) The status of a generated download.
+                          Available values: "ready", "inprogress", "error".
+                          The status of a generated download.
+                          Available values: "ready", "inprogress", "error".
+                        type: string
+                      url:
+                        description: |-
+                          (String) The URL to access the generated download.
+                          The URL to access the generated download.
+                        type: string
+                    type: object
+                  default:
+                    description: (Attributes) The default video download. Only present
+                      if this download type has been created. (see below for nested
+                      schema)
+                    properties:
+                      percentComplete:
+                        description: |-
+                          (Number) Indicates the progress as a percentage between 0 and 100.
+                          Indicates the progress as a percentage between 0 and 100.
+                        type: number
+                      status:
+                        description: |-
+                          (String) The status of a generated download.
+                          Available values: "ready", "inprogress", "error".
+                          The status of a generated download.
+                          Available values: "ready", "inprogress", "error".
+                        type: string
+                      url:
+                        description: |-
+                          (String) The URL to access the generated download.
+                          The URL to access the generated download.
+                        type: string
+                    type: object
                   id:
                     type: string
                   identifier:

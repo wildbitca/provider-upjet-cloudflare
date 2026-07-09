@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Connector is the Schema for the Connectors API.
+        description: Connector is the Schema for the Connectors API. Accepted Permissions
+          SSO Connector ReadSSO Connector Write
         properties:
           apiVersion:
             description: |-

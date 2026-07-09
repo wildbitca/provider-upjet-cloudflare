@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TieredCache is the Schema for the TieredCaches API.
+        description: TieredCache is the Schema for the TieredCaches API. Accepted
+          Permissions Zone ReadZone Settings ReadZone Settings WriteZone Write
         properties:
           apiVersion:
             description: |-

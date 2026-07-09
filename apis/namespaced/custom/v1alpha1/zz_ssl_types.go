@@ -79,7 +79,7 @@ type KeylessServerObservation struct {
 	// Available values: "active", "deleted".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// (Attributes) Configuration for using Keyless SSL through a Cloudflare Tunnel (see below for nested schema)
+	// (Attributes) Configuration for using Keyless SSL through a Cloudflare Tunnel. (see below for nested schema)
 	Tunnel *TunnelObservation `json:"tunnel,omitempty" tf:"tunnel,omitempty"`
 }
 
@@ -97,6 +97,10 @@ type SSLInitParameters_2 struct {
 	// (String) The zone's SSL certificate or certificate and the intermediate(s).
 	// The zone's SSL certificate or certificate and the intermediate(s).
 	Certificate *string `json:"certificate,omitempty" tf:"certificate,omitempty"`
+
+	// (String) The identifier for the Custom CSR that was used.
+	// The identifier for the Custom CSR that was used.
+	CustomCsrID *string `json:"customCsrId,omitempty" tf:"custom_csr_id,omitempty"`
 
 	// (String) The environment to deploy the certificate to.
 	// Available values: "staging", "production".
@@ -148,6 +152,10 @@ type SSLObservation_2 struct {
 	// (String) The zone's SSL certificate or certificate and the intermediate(s).
 	// The zone's SSL certificate or certificate and the intermediate(s).
 	Certificate *string `json:"certificate,omitempty" tf:"certificate,omitempty"`
+
+	// (String) The identifier for the Custom CSR that was used.
+	// The identifier for the Custom CSR that was used.
+	CustomCsrID *string `json:"customCsrId,omitempty" tf:"custom_csr_id,omitempty"`
 
 	// (String) The environment to deploy the certificate to.
 	// Available values: "staging", "production".
@@ -240,6 +248,11 @@ type SSLParameters_2 struct {
 	// +kubebuilder:validation:Optional
 	Certificate *string `json:"certificate,omitempty" tf:"certificate,omitempty"`
 
+	// (String) The identifier for the Custom CSR that was used.
+	// The identifier for the Custom CSR that was used.
+	// +kubebuilder:validation:Optional
+	CustomCsrID *string `json:"customCsrId,omitempty" tf:"custom_csr_id,omitempty"`
+
 	// (String) The environment to deploy the certificate to.
 	// Available values: "staging", "production".
 	// The environment to deploy the certificate to.
@@ -290,12 +303,12 @@ type TunnelInitParameters struct {
 
 type TunnelObservation struct {
 
-	// (String) Private IP of the Key Server Host
-	// Private IP of the Key Server Host
+	// (String) Private IP of the Key Server Host.
+	// Private IP of the Key Server Host.
 	PrivateIP *string `json:"privateIp,omitempty" tf:"private_ip,omitempty"`
 
-	// (String) Cloudflare Tunnel Virtual Network ID
-	// Cloudflare Tunnel Virtual Network ID
+	// (String) Cloudflare Tunnel Virtual Network ID.
+	// Cloudflare Tunnel Virtual Network ID.
 	VnetID *string `json:"vnetId,omitempty" tf:"vnet_id,omitempty"`
 }
 
@@ -329,7 +342,7 @@ type SSLStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SSL is the Schema for the SSLs API.
+// SSL is the Schema for the SSLs API. Accepted Permissions Access: Mutual TLS Certificates ReadAccess: Mutual TLS Certificates WriteSSL and Certificates ReadSSL and Certificates Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

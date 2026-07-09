@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Domain is the Schema for the Domains API.
+        description: Domain is the Schema for the Domains API. Accepted Permissions
+          Pages ReadPages Write
         properties:
           apiVersion:
             description: |-

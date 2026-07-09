@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ScriptSubdomain is the Schema for the ScriptSubdomains API.
+        description: ScriptSubdomain is the Schema for the ScriptSubdomains API. Accepted
+          Permissions Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
         properties:
           apiVersion:
             description: |-

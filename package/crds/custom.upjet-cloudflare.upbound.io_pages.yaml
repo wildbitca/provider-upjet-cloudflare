@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Pages is the Schema for the Pagess API.
+        description: 'Pages is the Schema for the Pagess API. Accepted Permissions
+          Account Custom Pages ReadAccount Custom Pages WriteAccount Settings ReadAccount
+          Settings WriteZero Trust: PII Read'
         properties:
           apiVersion:
             description: |-

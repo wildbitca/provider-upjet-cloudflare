@@ -9,14 +9,11 @@ metadata:
 spec:
   forProvider:
     exclude:
-    - group:
-        id: aa0a4aab-672b-4bdb-bc33-a59f1130a11f
+    - certificate: {}
     include:
-    - group:
-        id: aa0a4aab-672b-4bdb-bc33-a59f1130a11f
+    - certificate: {}
     isDefault: true
     name: Allow devs
     require:
-    - group:
-        id: aa0a4aab-672b-4bdb-bc33-a59f1130a11f
+    - certificate: {}
     zoneId: zone_id

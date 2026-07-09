@@ -332,6 +332,11 @@ func (in *DNSSettingsInitParameters) DeepCopyInto(out *DNSSettingsInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.EnforceDNSOnly != nil {
+		in, out := &in.EnforceDNSOnly, &out.EnforceDNSOnly
+		*out = new(bool)
+		**out = **in
+	}
 	if in.ZoneDefaults != nil {
 		in, out := &in.ZoneDefaults, &out.ZoneDefaults
 		*out = new(ZoneDefaultsInitParameters)
@@ -606,6 +611,11 @@ func (in *DNSSettingsObservation) DeepCopyInto(out *DNSSettingsObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.EnforceDNSOnly != nil {
+		in, out := &in.EnforceDNSOnly, &out.EnforceDNSOnly
+		*out = new(bool)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -634,6 +644,11 @@ func (in *DNSSettingsParameters) DeepCopyInto(out *DNSSettingsParameters) {
 	if in.AccountID != nil {
 		in, out := &in.AccountID, &out.AccountID
 		*out = new(string)
+		**out = **in
+	}
+	if in.EnforceDNSOnly != nil {
+		in, out := &in.EnforceDNSOnly, &out.EnforceDNSOnly
+		*out = new(bool)
 		**out = **in
 	}
 	if in.ZoneDefaults != nil {

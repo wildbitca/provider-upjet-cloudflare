@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Pack is the Schema for the Packs API.
+        description: Pack is the Schema for the Packs API. Accepted Permissions SSL
+          and Certificates ReadSSL and Certificates Write
         properties:
           apiVersion:
             description: |-
@@ -76,7 +77,7 @@ spec:
                     description: |-
                       (String) Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions see this page for more details.
                       Available values: "google", "lets_encrypt", "ssl_com".
-                      Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions [see this page for more details.](https://developers.cloudflare.com/ssl/reference/certificate-authorities)
+                      Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions [see this page for more details](https://developers.cloudflare.com/ssl/reference/certificate-authorities).
                       Available values: "google", "lets_encrypt", "ssl_com".
                     type: string
                   cloudflareBranding:
@@ -136,7 +137,7 @@ spec:
                     description: |-
                       (String) Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions see this page for more details.
                       Available values: "google", "lets_encrypt", "ssl_com".
-                      Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions [see this page for more details.](https://developers.cloudflare.com/ssl/reference/certificate-authorities)
+                      Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions [see this page for more details](https://developers.cloudflare.com/ssl/reference/certificate-authorities).
                       Available values: "google", "lets_encrypt", "ssl_com".
                     type: string
                   cloudflareBranding:
@@ -295,7 +296,7 @@ spec:
                     description: |-
                       (String) Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions see this page for more details.
                       Available values: "google", "lets_encrypt", "ssl_com".
-                      Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions [see this page for more details.](https://developers.cloudflare.com/ssl/reference/certificate-authorities)
+                      Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions [see this page for more details](https://developers.cloudflare.com/ssl/reference/certificate-authorities).
                       Available values: "google", "lets_encrypt", "ssl_com".
                     type: string
                   certificates:

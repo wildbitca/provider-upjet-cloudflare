@@ -20,10 +20,6 @@ type WatermarkInitParameters struct {
 	// The account identifier tag.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) The image file to upload.
-	// The image file to upload.
-	File *string `json:"file,omitempty" tf:"file,omitempty"`
-
 	// (String) The unique identifier for a watermark profile.
 	// The unique identifier for a watermark profile.
 	Identifier *string `json:"identifier,omitempty" tf:"identifier,omitempty"`
@@ -47,6 +43,10 @@ type WatermarkInitParameters struct {
 	// is), and 1.0 fills the entire video.
 	// The size of the image relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. `0.0` indicates no scaling (use the size of the image as-is), and `1.0 `fills the entire video.
 	Scale *float64 `json:"scale,omitempty" tf:"scale,omitempty"`
+
+	// (String) URL of the watermark image to copy.
+	// URL of the watermark image to copy.
+	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
 
 type WatermarkObservation struct {
@@ -62,10 +62,6 @@ type WatermarkObservation struct {
 	// (String) The source URL for a downloaded image. If the watermark profile was created via direct upload, this field is null.
 	// The source URL for a downloaded image. If the watermark profile was created via direct upload, this field is null.
 	DownloadedFrom *string `json:"downloadedFrom,omitempty" tf:"downloaded_from,omitempty"`
-
-	// (String) The image file to upload.
-	// The image file to upload.
-	File *string `json:"file,omitempty" tf:"file,omitempty"`
 
 	// (Number) The height of the image in pixels.
 	// The height of the image in pixels.
@@ -105,6 +101,10 @@ type WatermarkObservation struct {
 	// The unique identifier for a watermark profile.
 	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
 
+	// (String) URL of the watermark image to copy.
+	// URL of the watermark image to copy.
+	URL *string `json:"url,omitempty" tf:"url,omitempty"`
+
 	// (Number) The width of the image in pixels.
 	// The width of the image in pixels.
 	Width *float64 `json:"width,omitempty" tf:"width,omitempty"`
@@ -116,11 +116,6 @@ type WatermarkParameters struct {
 	// The account identifier tag.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
-
-	// (String) The image file to upload.
-	// The image file to upload.
-	// +kubebuilder:validation:Optional
-	File *string `json:"file,omitempty" tf:"file,omitempty"`
 
 	// (String) The unique identifier for a watermark profile.
 	// The unique identifier for a watermark profile.
@@ -151,6 +146,11 @@ type WatermarkParameters struct {
 	// The size of the image relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. `0.0` indicates no scaling (use the size of the image as-is), and `1.0 `fills the entire video.
 	// +kubebuilder:validation:Optional
 	Scale *float64 `json:"scale,omitempty" tf:"scale,omitempty"`
+
+	// (String) URL of the watermark image to copy.
+	// URL of the watermark image to copy.
+	// +kubebuilder:validation:Optional
+	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
 
 // WatermarkSpec defines the desired state of Watermark
@@ -180,7 +180,7 @@ type WatermarkStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Watermark is the Schema for the Watermarks API.
+// Watermark is the Schema for the Watermarks API. Accepted Permissions Stream ReadStream Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -190,7 +190,6 @@ type Watermark struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountId) || (has(self.initProvider) && has(self.initProvider.accountId))",message="spec.forProvider.accountId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.file) || (has(self.initProvider) && has(self.initProvider.file))",message="spec.forProvider.file is a required parameter"
 	Spec   WatermarkSpec   `json:"spec"`
 	Status WatermarkStatus `json:"status,omitempty"`
 }

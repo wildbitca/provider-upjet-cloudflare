@@ -209,7 +209,7 @@ type VariantStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Variant is the Schema for the Variants API.
+// Variant is the Schema for the Variants API. Accepted Permissions Images ReadImages Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

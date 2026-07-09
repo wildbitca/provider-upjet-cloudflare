@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: ShieldDiscoveryOperation is the Schema for the ShieldDiscoveryOperations
-          API.
+          API. Accepted Permissions Account API GatewayDomain API Gateway
         properties:
           apiVersion:
             description: |-
@@ -174,10 +174,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.operationId)
                 || (has(self.initProvider) && has(self.initProvider.operationId))'
-            - message: spec.forProvider.zoneId is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.zoneId)
-                || (has(self.initProvider) && has(self.initProvider.zoneId))'
           status:
             description: ShieldDiscoveryOperationStatus defines the observed state
               of ShieldDiscoveryOperation.

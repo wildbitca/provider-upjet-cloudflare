@@ -9,5 +9,7 @@ metadata:
   namespace: crossplane-system
 spec:
   forProvider:
-    destinationConf: s3://mybucket/logs?region=us-west-2
+    destinationConfSecretRef:
+      key: example-key
+      name: example-secret
     zoneId: zone_id

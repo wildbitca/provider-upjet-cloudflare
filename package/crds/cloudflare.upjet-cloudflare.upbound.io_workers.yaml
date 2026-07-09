@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Worker is the Schema for the Workers API.
+        description: Worker is the Schema for the Workers API. Accepted Permissions
+          Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
         properties:
           apiVersion:
             description: |-
@@ -179,6 +180,13 @@ spec:
                         description: (Attributes) Log settings for the Worker. (see
                           below for nested schema)
                         properties:
+                          destinations:
+                            description: |-
+                              (List of String) A list of destinations where logs will be exported to.
+                              A list of destinations where logs will be exported to.
+                            items:
+                              type: string
+                            type: array
                           enabled:
                             description: |-
                               (Boolean) Whether observability is enabled for the Worker.
@@ -194,6 +202,45 @@ spec:
                               (Boolean) Whether invocation logs are enabled for the Worker.
                               Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
                             type: boolean
+                          persist:
+                            description: |-
+                              (Boolean) Whether log persistence is enabled for the Worker.
+                              Whether log persistence is enabled for the Worker.
+                            type: boolean
+                        type: object
+                      traces:
+                        description: (Attributes) Trace settings for the Worker. (see
+                          below for nested schema)
+                        properties:
+                          destinations:
+                            description: |-
+                              (List of String) A list of destinations where logs will be exported to.
+                              A list of destinations where traces will be exported to.
+                            items:
+                              type: string
+                            type: array
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether traces are enabled for the Worker.
+                            type: boolean
+                          headSamplingRate:
+                            description: |-
+                              (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                              The sampling rate for traces. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                            type: number
+                          persist:
+                            description: |-
+                              (Boolean) Whether log persistence is enabled for the Worker.
+                              Whether trace persistence is enabled for the Worker.
+                            type: boolean
+                          propagationPolicy:
+                            description: |-
+                              (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+                              Available values: "authenticated", "accept".
+                              Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+                              Available values: "authenticated", "accept".
+                            type: string
                         type: object
                     type: object
                   subdomain:
@@ -352,6 +399,13 @@ spec:
                         description: (Attributes) Log settings for the Worker. (see
                           below for nested schema)
                         properties:
+                          destinations:
+                            description: |-
+                              (List of String) A list of destinations where logs will be exported to.
+                              A list of destinations where logs will be exported to.
+                            items:
+                              type: string
+                            type: array
                           enabled:
                             description: |-
                               (Boolean) Whether observability is enabled for the Worker.
@@ -367,6 +421,45 @@ spec:
                               (Boolean) Whether invocation logs are enabled for the Worker.
                               Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
                             type: boolean
+                          persist:
+                            description: |-
+                              (Boolean) Whether log persistence is enabled for the Worker.
+                              Whether log persistence is enabled for the Worker.
+                            type: boolean
+                        type: object
+                      traces:
+                        description: (Attributes) Trace settings for the Worker. (see
+                          below for nested schema)
+                        properties:
+                          destinations:
+                            description: |-
+                              (List of String) A list of destinations where logs will be exported to.
+                              A list of destinations where traces will be exported to.
+                            items:
+                              type: string
+                            type: array
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether traces are enabled for the Worker.
+                            type: boolean
+                          headSamplingRate:
+                            description: |-
+                              (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                              The sampling rate for traces. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                            type: number
+                          persist:
+                            description: |-
+                              (Boolean) Whether log persistence is enabled for the Worker.
+                              Whether trace persistence is enabled for the Worker.
+                            type: boolean
+                          propagationPolicy:
+                            description: |-
+                              (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+                              Available values: "authenticated", "accept".
+                              Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+                              Available values: "authenticated", "accept".
+                            type: string
                         type: object
                     type: object
                   subdomain:
@@ -511,6 +604,11 @@ spec:
                       (String) When the Worker was created.
                       When the Worker was created.
                     type: string
+                  deployedOn:
+                    description: |-
+                      (String) When the Worker's most recent deployment was created. null if the Worker has never been deployed.
+                      When the Worker's most recent deployment was created. `null` if the Worker has never been deployed.
+                    type: string
                   id:
                     description: (String) Immutable ID of the Worker.
                     type: string
@@ -542,6 +640,13 @@ spec:
                         description: (Attributes) Log settings for the Worker. (see
                           below for nested schema)
                         properties:
+                          destinations:
+                            description: |-
+                              (List of String) A list of destinations where logs will be exported to.
+                              A list of destinations where logs will be exported to.
+                            items:
+                              type: string
+                            type: array
                           enabled:
                             description: |-
                               (Boolean) Whether observability is enabled for the Worker.
@@ -557,6 +662,45 @@ spec:
                               (Boolean) Whether invocation logs are enabled for the Worker.
                               Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
                             type: boolean
+                          persist:
+                            description: |-
+                              (Boolean) Whether log persistence is enabled for the Worker.
+                              Whether log persistence is enabled for the Worker.
+                            type: boolean
+                        type: object
+                      traces:
+                        description: (Attributes) Trace settings for the Worker. (see
+                          below for nested schema)
+                        properties:
+                          destinations:
+                            description: |-
+                              (List of String) A list of destinations where logs will be exported to.
+                              A list of destinations where traces will be exported to.
+                            items:
+                              type: string
+                            type: array
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether traces are enabled for the Worker.
+                            type: boolean
+                          headSamplingRate:
+                            description: |-
+                              (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                              The sampling rate for traces. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                            type: number
+                          persist:
+                            description: |-
+                              (Boolean) Whether log persistence is enabled for the Worker.
+                              Whether trace persistence is enabled for the Worker.
+                            type: boolean
+                          propagationPolicy:
+                            description: |-
+                              (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+                              Available values: "authenticated", "accept".
+                              Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+                              Available values: "authenticated", "accept".
+                            type: string
                         type: object
                     type: object
                   references:

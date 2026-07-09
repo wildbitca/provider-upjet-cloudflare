@@ -17,23 +17,23 @@ import (
 
 type AnnotationsInitParameters struct {
 
-	// readable message about the version.
-	// Human-readable message about the version.
+	// readable message about the version. Truncated to 1000 bytes if longer.
+	// Human-readable message about the version. Truncated to 1000 bytes if longer.
 	WorkersMessage *string `json:"workersMessage,omitempty" tf:"workers_message,omitempty"`
 
-	// provided identifier for the version.
-	// User-provided identifier for the version.
+	// provided identifier for the version. Maximum 100 bytes.
+	// User-provided identifier for the version. Maximum 100 bytes.
 	WorkersTag *string `json:"workersTag,omitempty" tf:"workers_tag,omitempty"`
 }
 
 type AnnotationsObservation struct {
 
-	// readable message about the version.
-	// Human-readable message about the version.
+	// readable message about the version. Truncated to 1000 bytes if longer.
+	// Human-readable message about the version. Truncated to 1000 bytes if longer.
 	WorkersMessage *string `json:"workersMessage,omitempty" tf:"workers_message,omitempty"`
 
-	// provided identifier for the version.
-	// User-provided identifier for the version.
+	// provided identifier for the version. Maximum 100 bytes.
+	// User-provided identifier for the version. Maximum 100 bytes.
 	WorkersTag *string `json:"workersTag,omitempty" tf:"workers_tag,omitempty"`
 
 	// (String) Operation that triggered the creation of the version.
@@ -43,13 +43,13 @@ type AnnotationsObservation struct {
 
 type AnnotationsParameters struct {
 
-	// readable message about the version.
-	// Human-readable message about the version.
+	// readable message about the version. Truncated to 1000 bytes if longer.
+	// Human-readable message about the version. Truncated to 1000 bytes if longer.
 	// +kubebuilder:validation:Optional
 	WorkersMessage *string `json:"workersMessage,omitempty" tf:"workers_message,omitempty"`
 
-	// provided identifier for the version.
-	// User-provided identifier for the version.
+	// provided identifier for the version. Maximum 100 bytes.
+	// User-provided identifier for the version. Maximum 100 bytes.
 	// +kubebuilder:validation:Optional
 	WorkersTag *string `json:"workersTag,omitempty" tf:"workers_tag,omitempty"`
 }
@@ -113,6 +113,10 @@ type BindingsInitParameters struct {
 	// List of allowed sender addresses.
 	AllowedSenderAddresses []*string `json:"allowedSenderAddresses,omitempty" tf:"allowed_sender_addresses,omitempty"`
 
+	// (String) ID of the Flagship app to bind to for feature flag evaluation.
+	// ID of the Flagship app to bind to for feature flag evaluation.
+	AppID *string `json:"appId,omitempty" tf:"app_id,omitempty"`
+
 	// (String) R2 bucket to bind to.
 	// R2 bucket to bind to.
 	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
@@ -125,6 +129,10 @@ type BindingsInitParameters struct {
 	// The exported class name of the Durable Object.
 	ClassName *string `json:"className,omitempty" tf:"class_name,omitempty"`
 
+	// (String) Identifier of the D1 database to bind to.
+	// Identifier of the D1 database to bind to.
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
 	// (String) The name of the dataset to bind to.
 	// The name of the dataset to bind to.
 	Dataset *string `json:"dataset,omitempty" tf:"dataset,omitempty"`
@@ -132,6 +140,14 @@ type BindingsInitParameters struct {
 	// (String) Destination address for the email.
 	// Destination address for the email.
 	DestinationAddress *string `json:"destinationAddress,omitempty" tf:"destination_address,omitempty"`
+
+	// (String) The dispatch namespace the Durable Object script belongs to.
+	// The dispatch namespace the Durable Object script belongs to.
+	DispatchNamespace *string `json:"dispatchNamespace,omitempty" tf:"dispatch_namespace,omitempty"`
+
+	// (String) Entrypoint to invoke on the target Worker.
+	// Entrypoint to invoke on the target Worker.
+	Entrypoint *string `json:"entrypoint,omitempty" tf:"entrypoint,omitempty"`
 
 	// (String) The environment of the script_name to bind to.
 	// The environment of the script_name to bind to.
@@ -151,14 +167,17 @@ type BindingsInitParameters struct {
 	// Name of the Vectorize index to bind to.
 	IndexName *string `json:"indexName,omitempty" tf:"index_name,omitempty"`
 
+	// chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
+	// The user-chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
+	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
 	// (String) JSON data to use.
 	// JSON data to use.
 	JSON *string `json:"json,omitempty" tf:"json,omitempty"`
 
-	// (String) The jurisdiction of the R2 bucket.
-	// Available values: "eu", "fedramp".
+	// high".
 	// The [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) of the R2 bucket.
-	// Available values: "eu", "fedramp".
+	// Available values: "eu", "fedramp", "fedramp-high".
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
 	// encoded key data. Required if format is "raw", "pkcs8", or "spki".
@@ -173,13 +192,17 @@ type BindingsInitParameters struct {
 	// A JavaScript variable name for the binding.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The name of the dispatch namespace.
-	// The name of the dispatch namespace.
+	// (String) The namespace the instance belongs to. Defaults to "default" if omitted. Customers who don't use namespaces can simply omit this field.
+	// The namespace the instance belongs to. Defaults to "default" if omitted. Customers who don't use namespaces can simply omit this field.
 	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
 
 	// (String) Namespace identifier tag.
 	// Namespace identifier tag.
 	NamespaceID *string `json:"namespaceId,omitempty" tf:"namespace_id,omitempty"`
+
+	// (String) Identifier of the network to bind to. Only "cf1:network" is currently supported. Mutually exclusive with tunnel_id.
+	// Identifier of the network to bind to. Only "cf1:network" is currently supported. Mutually exclusive with tunnel_id.
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
 	// (String) The old name of the inherited binding. If set, the binding will be renamed from old_name to name in the new version. If not set, the binding will keep the same name between versions.
 	// The old name of the inherited binding. If set, the binding will be renamed from `old_name` to `name` in the new version. If not set, the binding will keep the same name between versions.
@@ -212,6 +235,10 @@ type BindingsInitParameters struct {
 	// Name of Worker to bind to.
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
+	// (String) Identifier of the VPC service to bind to.
+	// Identifier of the VPC service to bind to.
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
 	// (Attributes) The rate limit configuration. (see below for nested schema)
 	Simple *SimpleInitParameters `json:"simple,omitempty" tf:"simple,omitempty"`
 
@@ -223,10 +250,14 @@ type BindingsInitParameters struct {
 	// The text value to use.
 	TextSecretRef *v1.LocalSecretKeySelector `json:"textSecretRef,omitempty" tf:"-"`
 
+	// (String) UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
+	// UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
+	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
+
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of resource that the binding provides.
-	// Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (Set of String) Allowed operations with the key. Learn more.
@@ -257,6 +288,10 @@ type BindingsObservation struct {
 	// List of allowed sender addresses.
 	AllowedSenderAddresses []*string `json:"allowedSenderAddresses,omitempty" tf:"allowed_sender_addresses,omitempty"`
 
+	// (String) ID of the Flagship app to bind to for feature flag evaluation.
+	// ID of the Flagship app to bind to for feature flag evaluation.
+	AppID *string `json:"appId,omitempty" tf:"app_id,omitempty"`
+
 	// (String) R2 bucket to bind to.
 	// R2 bucket to bind to.
 	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
@@ -269,6 +304,10 @@ type BindingsObservation struct {
 	// The exported class name of the Durable Object.
 	ClassName *string `json:"className,omitempty" tf:"class_name,omitempty"`
 
+	// (String) Identifier of the D1 database to bind to.
+	// Identifier of the D1 database to bind to.
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
 	// (String) The name of the dataset to bind to.
 	// The name of the dataset to bind to.
 	Dataset *string `json:"dataset,omitempty" tf:"dataset,omitempty"`
@@ -276,6 +315,14 @@ type BindingsObservation struct {
 	// (String) Destination address for the email.
 	// Destination address for the email.
 	DestinationAddress *string `json:"destinationAddress,omitempty" tf:"destination_address,omitempty"`
+
+	// (String) The dispatch namespace the Durable Object script belongs to.
+	// The dispatch namespace the Durable Object script belongs to.
+	DispatchNamespace *string `json:"dispatchNamespace,omitempty" tf:"dispatch_namespace,omitempty"`
+
+	// (String) Entrypoint to invoke on the target Worker.
+	// Entrypoint to invoke on the target Worker.
+	Entrypoint *string `json:"entrypoint,omitempty" tf:"entrypoint,omitempty"`
 
 	// (String) The environment of the script_name to bind to.
 	// The environment of the script_name to bind to.
@@ -295,27 +342,34 @@ type BindingsObservation struct {
 	// Name of the Vectorize index to bind to.
 	IndexName *string `json:"indexName,omitempty" tf:"index_name,omitempty"`
 
+	// chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
+	// The user-chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
+	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
 	// (String) JSON data to use.
 	// JSON data to use.
 	JSON *string `json:"json,omitempty" tf:"json,omitempty"`
 
-	// (String) The jurisdiction of the R2 bucket.
-	// Available values: "eu", "fedramp".
+	// high".
 	// The [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) of the R2 bucket.
-	// Available values: "eu", "fedramp".
+	// Available values: "eu", "fedramp", "fedramp-high".
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
 	// (String) A JavaScript variable name for the binding.
 	// A JavaScript variable name for the binding.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The name of the dispatch namespace.
-	// The name of the dispatch namespace.
+	// (String) The namespace the instance belongs to. Defaults to "default" if omitted. Customers who don't use namespaces can simply omit this field.
+	// The namespace the instance belongs to. Defaults to "default" if omitted. Customers who don't use namespaces can simply omit this field.
 	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
 
 	// (String) Namespace identifier tag.
 	// Namespace identifier tag.
 	NamespaceID *string `json:"namespaceId,omitempty" tf:"namespace_id,omitempty"`
+
+	// (String) Identifier of the network to bind to. Only "cf1:network" is currently supported. Mutually exclusive with tunnel_id.
+	// Identifier of the network to bind to. Only "cf1:network" is currently supported. Mutually exclusive with tunnel_id.
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
 	// (String) The old name of the inherited binding. If set, the binding will be renamed from old_name to name in the new version. If not set, the binding will keep the same name between versions.
 	// The old name of the inherited binding. If set, the binding will be renamed from `old_name` to `name` in the new version. If not set, the binding will keep the same name between versions.
@@ -348,6 +402,10 @@ type BindingsObservation struct {
 	// Name of Worker to bind to.
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
+	// (String) Identifier of the VPC service to bind to.
+	// Identifier of the VPC service to bind to.
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
 	// (Attributes) The rate limit configuration. (see below for nested schema)
 	Simple *SimpleObservation `json:"simple,omitempty" tf:"simple,omitempty"`
 
@@ -355,10 +413,14 @@ type BindingsObservation struct {
 	// ID of the store containing the secret.
 	StoreID *string `json:"storeId,omitempty" tf:"store_id,omitempty"`
 
+	// (String) UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
+	// UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
+	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
+
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of resource that the binding provides.
-	// Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (Set of String) Allowed operations with the key. Learn more.
@@ -392,6 +454,11 @@ type BindingsParameters struct {
 	// +kubebuilder:validation:Optional
 	AllowedSenderAddresses []*string `json:"allowedSenderAddresses,omitempty" tf:"allowed_sender_addresses,omitempty"`
 
+	// (String) ID of the Flagship app to bind to for feature flag evaluation.
+	// ID of the Flagship app to bind to for feature flag evaluation.
+	// +kubebuilder:validation:Optional
+	AppID *string `json:"appId,omitempty" tf:"app_id,omitempty"`
+
 	// (String) R2 bucket to bind to.
 	// R2 bucket to bind to.
 	// +kubebuilder:validation:Optional
@@ -407,6 +474,11 @@ type BindingsParameters struct {
 	// +kubebuilder:validation:Optional
 	ClassName *string `json:"className,omitempty" tf:"class_name,omitempty"`
 
+	// (String) Identifier of the D1 database to bind to.
+	// Identifier of the D1 database to bind to.
+	// +kubebuilder:validation:Optional
+	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
 	// (String) The name of the dataset to bind to.
 	// The name of the dataset to bind to.
 	// +kubebuilder:validation:Optional
@@ -416,6 +488,16 @@ type BindingsParameters struct {
 	// Destination address for the email.
 	// +kubebuilder:validation:Optional
 	DestinationAddress *string `json:"destinationAddress,omitempty" tf:"destination_address,omitempty"`
+
+	// (String) The dispatch namespace the Durable Object script belongs to.
+	// The dispatch namespace the Durable Object script belongs to.
+	// +kubebuilder:validation:Optional
+	DispatchNamespace *string `json:"dispatchNamespace,omitempty" tf:"dispatch_namespace,omitempty"`
+
+	// (String) Entrypoint to invoke on the target Worker.
+	// Entrypoint to invoke on the target Worker.
+	// +kubebuilder:validation:Optional
+	Entrypoint *string `json:"entrypoint,omitempty" tf:"entrypoint,omitempty"`
 
 	// (String) The environment of the script_name to bind to.
 	// The environment of the script_name to bind to.
@@ -439,15 +521,19 @@ type BindingsParameters struct {
 	// +kubebuilder:validation:Optional
 	IndexName *string `json:"indexName,omitempty" tf:"index_name,omitempty"`
 
+	// chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
+	// The user-chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
+	// +kubebuilder:validation:Optional
+	InstanceName *string `json:"instanceName,omitempty" tf:"instance_name,omitempty"`
+
 	// (String) JSON data to use.
 	// JSON data to use.
 	// +kubebuilder:validation:Optional
 	JSON *string `json:"json,omitempty" tf:"json,omitempty"`
 
-	// (String) The jurisdiction of the R2 bucket.
-	// Available values: "eu", "fedramp".
+	// high".
 	// The [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) of the R2 bucket.
-	// Available values: "eu", "fedramp".
+	// Available values: "eu", "fedramp", "fedramp-high".
 	// +kubebuilder:validation:Optional
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
@@ -466,8 +552,8 @@ type BindingsParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// (String) The name of the dispatch namespace.
-	// The name of the dispatch namespace.
+	// (String) The namespace the instance belongs to. Defaults to "default" if omitted. Customers who don't use namespaces can simply omit this field.
+	// The namespace the instance belongs to. Defaults to "default" if omitted. Customers who don't use namespaces can simply omit this field.
 	// +kubebuilder:validation:Optional
 	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
 
@@ -475,6 +561,11 @@ type BindingsParameters struct {
 	// Namespace identifier tag.
 	// +kubebuilder:validation:Optional
 	NamespaceID *string `json:"namespaceId,omitempty" tf:"namespace_id,omitempty"`
+
+	// (String) Identifier of the network to bind to. Only "cf1:network" is currently supported. Mutually exclusive with tunnel_id.
+	// Identifier of the network to bind to. Only "cf1:network" is currently supported. Mutually exclusive with tunnel_id.
+	// +kubebuilder:validation:Optional
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
 	// (String) The old name of the inherited binding. If set, the binding will be renamed from old_name to name in the new version. If not set, the binding will keep the same name between versions.
 	// The old name of the inherited binding. If set, the binding will be renamed from `old_name` to `name` in the new version. If not set, the binding will keep the same name between versions.
@@ -515,6 +606,11 @@ type BindingsParameters struct {
 	// +kubebuilder:validation:Optional
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
+	// (String) Identifier of the VPC service to bind to.
+	// Identifier of the VPC service to bind to.
+	// +kubebuilder:validation:Optional
+	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
 	// (Attributes) The rate limit configuration. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Simple *SimpleParameters `json:"simple,omitempty" tf:"simple,omitempty"`
@@ -529,10 +625,15 @@ type BindingsParameters struct {
 	// +kubebuilder:validation:Optional
 	TextSecretRef *v1.LocalSecretKeySelector `json:"textSecretRef,omitempty" tf:"-"`
 
+	// (String) UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
+	// UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
+	// +kubebuilder:validation:Optional
+	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
+
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of resource that the binding provides.
-	// Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
@@ -607,11 +708,37 @@ type ConfigParameters struct {
 	RunWorkerFirst *v1apiextensions.JSON `json:"runWorkerFirst,omitempty" tf:"run_worker_first,omitempty"`
 }
 
+type ContainersInitParameters struct {
+
+	// (String) The exported class name of the Durable Object.
+	// Select which Durable Object class should get this container attached.
+	ClassName *string `json:"className,omitempty" tf:"class_name,omitempty"`
+}
+
+type ContainersObservation struct {
+
+	// (String) The exported class name of the Durable Object.
+	// Select which Durable Object class should get this container attached.
+	ClassName *string `json:"className,omitempty" tf:"class_name,omitempty"`
+}
+
+type ContainersParameters struct {
+
+	// (String) The exported class name of the Durable Object.
+	// Select which Durable Object class should get this container attached.
+	// +kubebuilder:validation:Optional
+	ClassName *string `json:"className" tf:"class_name,omitempty"`
+}
+
 type LimitsInitParameters struct {
 
 	// (Number) CPU time limit in milliseconds.
 	// CPU time limit in milliseconds.
 	CPUMs *float64 `json:"cpuMs,omitempty" tf:"cpu_ms,omitempty"`
+
+	// (Number) Subrequest limit per request.
+	// Subrequest limit per request.
+	Subrequests *float64 `json:"subrequests,omitempty" tf:"subrequests,omitempty"`
 }
 
 type LimitsObservation struct {
@@ -619,6 +746,10 @@ type LimitsObservation struct {
 	// (Number) CPU time limit in milliseconds.
 	// CPU time limit in milliseconds.
 	CPUMs *float64 `json:"cpuMs,omitempty" tf:"cpu_ms,omitempty"`
+
+	// (Number) Subrequest limit per request.
+	// Subrequest limit per request.
+	Subrequests *float64 `json:"subrequests,omitempty" tf:"subrequests,omitempty"`
 }
 
 type LimitsParameters struct {
@@ -626,7 +757,12 @@ type LimitsParameters struct {
 	// (Number) CPU time limit in milliseconds.
 	// CPU time limit in milliseconds.
 	// +kubebuilder:validation:Optional
-	CPUMs *float64 `json:"cpuMs" tf:"cpu_ms,omitempty"`
+	CPUMs *float64 `json:"cpuMs,omitempty" tf:"cpu_ms,omitempty"`
+
+	// (Number) Subrequest limit per request.
+	// Subrequest limit per request.
+	// +kubebuilder:validation:Optional
+	Subrequests *float64 `json:"subrequests,omitempty" tf:"subrequests,omitempty"`
 }
 
 type MigrationsInitParameters struct {
@@ -1000,6 +1136,10 @@ type SimpleInitParameters struct {
 	// The limit (requests per period).
 	Limit *float64 `json:"limit,omitempty" tf:"limit,omitempty"`
 
+	// zero.
+	// Duration in seconds to apply the mitigation action after the rate limit is exceeded. Valid values are 0 (disabled), 10, or multiples of 60 up to 86400. Must be greater than or equal to the period when non-zero.
+	MitigationTimeout *float64 `json:"mitigationTimeout,omitempty" tf:"mitigation_timeout,omitempty"`
+
 	// (Number) The period in seconds.
 	// The period in seconds.
 	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
@@ -1010,6 +1150,10 @@ type SimpleObservation struct {
 	// (Number) The limit (requests per period).
 	// The limit (requests per period).
 	Limit *float64 `json:"limit,omitempty" tf:"limit,omitempty"`
+
+	// zero.
+	// Duration in seconds to apply the mitigation action after the rate limit is exceeded. Valid values are 0 (disabled), 10, or multiples of 60 up to 86400. Must be greater than or equal to the period when non-zero.
+	MitigationTimeout *float64 `json:"mitigationTimeout,omitempty" tf:"mitigation_timeout,omitempty"`
 
 	// (Number) The period in seconds.
 	// The period in seconds.
@@ -1022,6 +1166,11 @@ type SimpleParameters struct {
 	// The limit (requests per period).
 	// +kubebuilder:validation:Optional
 	Limit *float64 `json:"limit" tf:"limit,omitempty"`
+
+	// zero.
+	// Duration in seconds to apply the mitigation action after the rate limit is exceeded. Valid values are 0 (disabled), 10, or multiples of 60 up to 86400. Must be greater than or equal to the period when non-zero.
+	// +kubebuilder:validation:Optional
+	MitigationTimeout *float64 `json:"mitigationTimeout,omitempty" tf:"mitigation_timeout,omitempty"`
 
 	// (Number) The period in seconds.
 	// The period in seconds.
@@ -1237,6 +1386,9 @@ type VersionInitParameters struct {
 	// +listType=set
 	CompatibilityFlags []*string `json:"compatibilityFlags,omitempty" tf:"compatibility_flags,omitempty"`
 
+	// (Attributes Set) List of containers attached to a Worker. Containers can only be attached to Durable Object classes of this Worker script. (see below for nested schema)
+	Containers []ContainersInitParameters `json:"containers,omitempty" tf:"containers,omitempty"`
+
 	// (Attributes) Resource limits enforced at runtime. (see below for nested schema)
 	Limits *LimitsInitParameters `json:"limits,omitempty" tf:"limits,omitempty"`
 
@@ -1288,6 +1440,9 @@ type VersionObservation struct {
 	// +listType=set
 	CompatibilityFlags []*string `json:"compatibilityFlags,omitempty" tf:"compatibility_flags,omitempty"`
 
+	// (Attributes Set) List of containers attached to a Worker. Containers can only be attached to Durable Object classes of this Worker script. (see below for nested schema)
+	Containers []ContainersObservation `json:"containers,omitempty" tf:"containers,omitempty"`
+
 	// (String) When the version was created.
 	// When the version was created.
 	CreatedOn *string `json:"createdOn,omitempty" tf:"created_on,omitempty"`
@@ -1305,6 +1460,10 @@ type VersionObservation struct {
 	// encoded main script content. This is only returned for service worker syntax workers (not ES modules). Used when importing existing workers that use the older service worker syntax.
 	// The base64-encoded main script content. This is only returned for service worker syntax workers (not ES modules). Used when importing existing workers that use the older service worker syntax.
 	MainScriptBase64 *string `json:"mainScriptBase64,omitempty" tf:"main_script_base64,omitempty"`
+
+	// (String) Durable Object migration tag. Set when the version is deployed. Omitted if the version has not been deployed or the Worker does not use Durable Objects.
+	// Durable Object migration tag. Set when the version is deployed. Omitted if the version has not been deployed or the Worker does not use Durable Objects.
+	MigrationTag *string `json:"migrationTag,omitempty" tf:"migration_tag,omitempty"`
 
 	// (Attributes) Migrations for Durable Objects associated with the version. Migrations are applied when the version is deployed. (see below for nested schema)
 	Migrations *MigrationsObservation `json:"migrations,omitempty" tf:"migrations,omitempty"`
@@ -1326,6 +1485,10 @@ type VersionObservation struct {
 	// (Number) Time in milliseconds spent on Worker startup.
 	// Time in milliseconds spent on [Worker startup](https://developers.cloudflare.com/workers/platform/limits/#worker-startup-time).
 	StartupTimeMs *float64 `json:"startupTimeMs,omitempty" tf:"startup_time_ms,omitempty"`
+
+	// (List of String) All routable URLs that always point to this version. Does not include alias URLs, since aliases can be updated to point to a different version.
+	// All routable URLs that always point to this version. Does not include alias URLs, since aliases can be updated to point to a different version.
+	Urls []*string `json:"urls,omitempty" tf:"urls,omitempty"`
 
 	// (String, Deprecated) Usage model for the version.
 	// Available values: "standard", "bundled", "unbound".
@@ -1368,6 +1531,10 @@ type VersionParameters struct {
 	// +listType=set
 	CompatibilityFlags []*string `json:"compatibilityFlags,omitempty" tf:"compatibility_flags,omitempty"`
 
+	// (Attributes Set) List of containers attached to a Worker. Containers can only be attached to Durable Object classes of this Worker script. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Containers []ContainersParameters `json:"containers,omitempty" tf:"containers,omitempty"`
+
 	// (Attributes) Resource limits enforced at runtime. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Limits *LimitsParameters `json:"limits,omitempty" tf:"limits,omitempty"`
@@ -1404,7 +1571,7 @@ type VersionParameters struct {
 
 type WorkerInitParameters struct {
 
-	// (String) Entrypoint to invoke on the outbound worker.
+	// (String) Entrypoint to invoke on the target Worker.
 	// Entrypoint to invoke on the outbound worker.
 	Entrypoint *string `json:"entrypoint,omitempty" tf:"entrypoint,omitempty"`
 
@@ -1419,7 +1586,7 @@ type WorkerInitParameters struct {
 
 type WorkerObservation struct {
 
-	// (String) Entrypoint to invoke on the outbound worker.
+	// (String) Entrypoint to invoke on the target Worker.
 	// Entrypoint to invoke on the outbound worker.
 	Entrypoint *string `json:"entrypoint,omitempty" tf:"entrypoint,omitempty"`
 
@@ -1434,7 +1601,7 @@ type WorkerObservation struct {
 
 type WorkerParameters struct {
 
-	// (String) Entrypoint to invoke on the outbound worker.
+	// (String) Entrypoint to invoke on the target Worker.
 	// Entrypoint to invoke on the outbound worker.
 	// +kubebuilder:validation:Optional
 	Entrypoint *string `json:"entrypoint,omitempty" tf:"entrypoint,omitempty"`
@@ -1477,7 +1644,7 @@ type VersionStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Version is the Schema for the Versions API.
+// Version is the Schema for the Versions API. Accepted Permissions Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

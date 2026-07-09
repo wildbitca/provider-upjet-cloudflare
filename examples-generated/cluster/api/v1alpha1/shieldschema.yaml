@@ -8,7 +8,7 @@ metadata:
   name: example-api-shield-schema
 spec:
   forProvider:
-    file: null
+    file: Example data
     kind: openapi_v3
     name: petstore schema
     validationEnabled: "true"

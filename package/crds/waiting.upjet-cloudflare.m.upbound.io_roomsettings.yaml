@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: RoomSettings is the Schema for the RoomSettingss API.
+        description: RoomSettings is the Schema for the RoomSettingss API. Accepted
+          Permissions Waiting Rooms ReadWaiting Rooms Write
         properties:
           apiVersion:
             description: |-

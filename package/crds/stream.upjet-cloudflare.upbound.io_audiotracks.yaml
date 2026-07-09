@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: AudioTrack is the Schema for the AudioTracks API.
+        description: AudioTrack is the Schema for the AudioTracks API. Accepted Permissions
+          Stream ReadStream Write
         properties:
           apiVersion:
             description: |-
@@ -242,6 +243,35 @@ spec:
                       (String) The account identifier tag.
                       The account identifier tag.
                     type: string
+                  audio:
+                    description: (Attributes List) Array of audio tracks for the video.
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        default:
+                          description: |-
+                            (Boolean) Denotes whether the audio track will be played by default in a player.
+                            Denotes whether the audio track will be played by default in a player.
+                          type: boolean
+                        label:
+                          description: |-
+                            (String) A string to uniquely identify the track amongst other audio track labels for the specified video.
+                            A string to uniquely identify the track amongst other audio track labels for the specified video.
+                          type: string
+                        status:
+                          description: |-
+                            (String) Specifies the processing status of the video.
+                            Available values: "queued", "ready", "error".
+                            Specifies the processing status of the video.
+                            Available values: "queued", "ready", "error".
+                          type: string
+                        uid:
+                          description: |-
+                            generated unique identifier for a media item.
+                            A Cloudflare-generated unique identifier for a media item.
+                          type: string
+                      type: object
+                    type: array
                   audioIdentifier:
                     description: |-
                       (String) The unique identifier for an additional audio track.

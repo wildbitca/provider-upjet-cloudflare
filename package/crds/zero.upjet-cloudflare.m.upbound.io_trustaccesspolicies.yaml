@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustAccessPolicy is the Schema for the TrustAccessPolicys API.
+        description: 'TrustAccessPolicy is the Schema for the TrustAccessPolicys API.
+          Accepted Permissions Access: Apps and Policies ReadAccess: Apps and Policies
+          Write'
         properties:
           apiVersion:
             description: |-
@@ -259,6 +261,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -469,6 +480,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -527,6 +549,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -738,6 +769,17 @@ spec:
                                 The ID of a Service Token.
                               type: string
                           type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
+                          type: object
                       type: object
                     type: array
                   isolationRequired:
@@ -756,10 +798,10 @@ spec:
                         items:
                           type: string
                         type: array
-                      mfaBypass:
+                      mfaDisabled:
                         description: |-
-                          (Boolean) Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
-                          Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
+                          (Boolean) Indicates whether to disable MFA for this resource. This option is available at the application and policy level.
+                          Indicates whether to disable MFA for this resource. This option is available at the application and policy level.
                         type: boolean
                       sessionDuration:
                         description: |-
@@ -837,6 +879,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -1047,6 +1098,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -1270,6 +1332,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -1480,6 +1551,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -1538,6 +1620,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -1749,6 +1840,17 @@ spec:
                                 The ID of a Service Token.
                               type: string
                           type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
+                          type: object
                       type: object
                     type: array
                   isolationRequired:
@@ -1767,10 +1869,10 @@ spec:
                         items:
                           type: string
                         type: array
-                      mfaBypass:
+                      mfaDisabled:
                         description: |-
-                          (Boolean) Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
-                          Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
+                          (Boolean) Indicates whether to disable MFA for this resource. This option is available at the application and policy level.
+                          Indicates whether to disable MFA for this resource. This option is available at the application and policy level.
                         type: boolean
                       sessionDuration:
                         description: |-
@@ -1848,6 +1950,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -2058,6 +2169,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -2260,6 +2382,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -2470,6 +2601,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -2531,6 +2673,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -2742,6 +2893,17 @@ spec:
                                 The ID of a Service Token.
                               type: string
                           type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
+                          type: object
                       type: object
                     type: array
                   isolationRequired:
@@ -2760,10 +2922,10 @@ spec:
                         items:
                           type: string
                         type: array
-                      mfaBypass:
+                      mfaDisabled:
                         description: |-
-                          (Boolean) Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
-                          Indicates whether to bypass MFA for this resource. This option is available at the application and policy level.
+                          (Boolean) Indicates whether to disable MFA for this resource. This option is available at the application and policy level.
+                          Indicates whether to disable MFA for this resource. This option is available at the application and policy level.
                         type: boolean
                       sessionDuration:
                         description: |-
@@ -2841,6 +3003,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -3051,6 +3222,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array

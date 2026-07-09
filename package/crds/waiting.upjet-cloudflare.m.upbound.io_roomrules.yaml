@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: RoomRules is the Schema for the RoomRuless API.
+        description: RoomRules is the Schema for the RoomRuless API. Accepted Permissions
+          Waiting Rooms ReadWaiting Rooms Write
         properties:
           apiVersion:
             description: |-

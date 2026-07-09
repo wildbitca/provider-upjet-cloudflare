@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Project is the Schema for the Projects API.
+        description: Project is the Schema for the Projects API. Accepted Permissions
+          Pages ReadPages Write
         properties:
           apiVersion:
             description: |-

@@ -125,5 +125,5 @@ func (tr *Lockdown) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *Lockdown) GetTerraformSchemaVersion() int {
-	return 1
+	return 500
 }

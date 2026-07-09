@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Token is the Schema for the Tokens API. <no value>
+        description: Token is the Schema for the Tokens API. Accepted Permissions
+          Account API Tokens ReadAccount API Tokens Write
         properties:
           apiVersion:
             description: |-
@@ -73,59 +74,84 @@ spec:
               forProvider:
                 properties:
                   accountId:
-                    description: Account identifier tag.
+                    description: |-
+                      (String) Account identifier tag.
+                      Account identifier tag.
                     type: string
                   condition:
+                    description: (Attributes) (see below for nested schema)
                     properties:
                       requestIp:
+                        description: (Attributes) Client IP restrictions. (see below
+                          for nested schema)
                         properties:
                           in:
-                            description: List of IPv4/IPv6 CIDR addresses.
+                            description: |-
+                              (List of String) List of IPv4/IPv6 CIDR addresses.
+                              List of IPv4/IPv6 CIDR addresses.
                             items:
                               type: string
                             type: array
                           notIn:
-                            description: List of IPv4/IPv6 CIDR addresses.
+                            description: |-
+                              (List of String) List of IPv4/IPv6 CIDR addresses.
+                              List of IPv4/IPv6 CIDR addresses.
                             items:
                               type: string
                             type: array
                         type: object
                     type: object
                   expiresOn:
-                    description: The expiration time on or after which the JWT MUST
-                      NOT be accepted for processing.
+                    description: |-
+                      (String) The expiration time on or after which the JWT MUST NOT be accepted for processing.
+                      The expiration time on or after which the JWT MUST NOT be accepted for processing.
                     type: string
                   name:
-                    description: Token name.
+                    description: |-
+                      (String) Token name.
+                      Token name.
                     type: string
                   notBefore:
-                    description: The time before which the token MUST NOT be accepted
-                      for processing.
+                    description: |-
+                      (String) The time before which the token MUST NOT be accepted for processing.
+                      The time before which the token MUST NOT be accepted for processing.
                     type: string
                   policies:
+                    description: (Attributes List) Set of access policies assigned
+                      to the token. (see below for nested schema)
                     items:
                       properties:
                         effect:
                           description: |-
+                            (String) Allow or deny operations against the resources.
+                            Available values: "allow", "deny".
                             Allow or deny operations against the resources.
                             Available values: "allow", "deny".
                           type: string
                         permissionGroups:
+                          description: (Attributes List) A set of permission groups
+                            that are specified to the policy. (see below for nested
+                            schema)
                           items:
                             properties:
                               id:
-                                description: Identifier of the permission group.
+                                description: |-
+                                  (String) Token identifier tag.
+                                  Identifier of the permission group.
                                 type: string
                             type: object
                           type: array
                         resources:
-                          description: A json object representing the resources that
-                            are specified to the policy.
+                          description: |-
+                            (String) A json object representing the resources that are specified to the policy.
+                            A json object representing the resources that are specified to the policy.
                           type: string
                       type: object
                     type: array
                   status:
                     description: |-
+                      (String) Status of the token.
+                      Available values: "active", "disabled", "expired".
                       Status of the token.
                       Available values: "active", "disabled", "expired".
                     type: string
@@ -144,59 +170,84 @@ spec:
                   autoscaler.
                 properties:
                   accountId:
-                    description: Account identifier tag.
+                    description: |-
+                      (String) Account identifier tag.
+                      Account identifier tag.
                     type: string
                   condition:
+                    description: (Attributes) (see below for nested schema)
                     properties:
                       requestIp:
+                        description: (Attributes) Client IP restrictions. (see below
+                          for nested schema)
                         properties:
                           in:
-                            description: List of IPv4/IPv6 CIDR addresses.
+                            description: |-
+                              (List of String) List of IPv4/IPv6 CIDR addresses.
+                              List of IPv4/IPv6 CIDR addresses.
                             items:
                               type: string
                             type: array
                           notIn:
-                            description: List of IPv4/IPv6 CIDR addresses.
+                            description: |-
+                              (List of String) List of IPv4/IPv6 CIDR addresses.
+                              List of IPv4/IPv6 CIDR addresses.
                             items:
                               type: string
                             type: array
                         type: object
                     type: object
                   expiresOn:
-                    description: The expiration time on or after which the JWT MUST
-                      NOT be accepted for processing.
+                    description: |-
+                      (String) The expiration time on or after which the JWT MUST NOT be accepted for processing.
+                      The expiration time on or after which the JWT MUST NOT be accepted for processing.
                     type: string
                   name:
-                    description: Token name.
+                    description: |-
+                      (String) Token name.
+                      Token name.
                     type: string
                   notBefore:
-                    description: The time before which the token MUST NOT be accepted
-                      for processing.
+                    description: |-
+                      (String) The time before which the token MUST NOT be accepted for processing.
+                      The time before which the token MUST NOT be accepted for processing.
                     type: string
                   policies:
+                    description: (Attributes List) Set of access policies assigned
+                      to the token. (see below for nested schema)
                     items:
                       properties:
                         effect:
                           description: |-
+                            (String) Allow or deny operations against the resources.
+                            Available values: "allow", "deny".
                             Allow or deny operations against the resources.
                             Available values: "allow", "deny".
                           type: string
                         permissionGroups:
+                          description: (Attributes List) A set of permission groups
+                            that are specified to the policy. (see below for nested
+                            schema)
                           items:
                             properties:
                               id:
-                                description: Identifier of the permission group.
+                                description: |-
+                                  (String) Token identifier tag.
+                                  Identifier of the permission group.
                                 type: string
                             type: object
                           type: array
                         resources:
-                          description: A json object representing the resources that
-                            are specified to the policy.
+                          description: |-
+                            (String) A json object representing the resources that are specified to the policy.
+                            A json object representing the resources that are specified to the policy.
                           type: string
                       type: object
                     type: array
                   status:
                     description: |-
+                      (String) Status of the token.
+                      Available values: "active", "disabled", "expired".
                       Status of the token.
                       Available values: "active", "disabled", "expired".
                     type: string
@@ -306,70 +357,102 @@ spec:
               atProvider:
                 properties:
                   accountId:
-                    description: Account identifier tag.
+                    description: |-
+                      (String) Account identifier tag.
+                      Account identifier tag.
                     type: string
                   condition:
+                    description: (Attributes) (see below for nested schema)
                     properties:
                       requestIp:
+                        description: (Attributes) Client IP restrictions. (see below
+                          for nested schema)
                         properties:
                           in:
-                            description: List of IPv4/IPv6 CIDR addresses.
+                            description: |-
+                              (List of String) List of IPv4/IPv6 CIDR addresses.
+                              List of IPv4/IPv6 CIDR addresses.
                             items:
                               type: string
                             type: array
                           notIn:
-                            description: List of IPv4/IPv6 CIDR addresses.
+                            description: |-
+                              (List of String) List of IPv4/IPv6 CIDR addresses.
+                              List of IPv4/IPv6 CIDR addresses.
                             items:
                               type: string
                             type: array
                         type: object
                     type: object
                   expiresOn:
-                    description: The expiration time on or after which the JWT MUST
-                      NOT be accepted for processing.
+                    description: |-
+                      (String) The expiration time on or after which the JWT MUST NOT be accepted for processing.
+                      The expiration time on or after which the JWT MUST NOT be accepted for processing.
                     type: string
                   id:
+                    description: (String) Token identifier tag.
                     type: string
                   issuedOn:
-                    description: The time on which the token was created.
+                    description: |-
+                      (String) The time on which the token was created.
+                      The time on which the token was created.
                     type: string
                   lastUsedOn:
-                    description: Last time the token was used.
+                    description: |-
+                      (String) Last time the token was used.
+                      Last time the token was used.
                     type: string
                   modifiedOn:
-                    description: Last time the token was modified.
+                    description: |-
+                      (String) Last time the token was modified.
+                      Last time the token was modified.
                     type: string
                   name:
-                    description: Token name.
+                    description: |-
+                      (String) Token name.
+                      Token name.
                     type: string
                   notBefore:
-                    description: The time before which the token MUST NOT be accepted
-                      for processing.
+                    description: |-
+                      (String) The time before which the token MUST NOT be accepted for processing.
+                      The time before which the token MUST NOT be accepted for processing.
                     type: string
                   policies:
+                    description: (Attributes List) Set of access policies assigned
+                      to the token. (see below for nested schema)
                     items:
                       properties:
                         effect:
                           description: |-
+                            (String) Allow or deny operations against the resources.
+                            Available values: "allow", "deny".
                             Allow or deny operations against the resources.
                             Available values: "allow", "deny".
                           type: string
                         permissionGroups:
+                          description: (Attributes List) A set of permission groups
+                            that are specified to the policy. (see below for nested
+                            schema)
                           items:
                             properties:
                               id:
-                                description: Identifier of the permission group.
+                                description: |-
+                                  (String) Token identifier tag.
+                                  Identifier of the permission group.
                                 type: string
                             type: object
                           type: array
                         resources:
-                          description: A json object representing the resources that
-                            are specified to the policy.
+                          description: |-
+                            (String) A json object representing the resources that are specified to the policy.
+                            A json object representing the resources that are specified to the policy.
                           type: string
                       type: object
                     type: array
                   status:
                     description: |-
+                      (String) Status of the token.
+                      Available values: "active", "disabled", "expired".
                       Status of the token.
                       Available values: "active", "disabled", "expired".
                     type: string

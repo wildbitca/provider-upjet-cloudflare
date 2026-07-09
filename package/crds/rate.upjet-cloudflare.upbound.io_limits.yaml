@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Limit is the Schema for the Limits API.
+        description: Limit is the Schema for the Limits API. Accepted Permissions
+          Firewall Services ReadFirewall Services Write
         properties:
           apiVersion:
             description: |-

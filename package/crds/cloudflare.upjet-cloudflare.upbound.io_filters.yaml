@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Filter is the Schema for the Filters API.
+        description: Filter is the Schema for the Filters API. Accepted Permissions
+          Firewall Services ReadFirewall Services Write
         properties:
           apiVersion:
             description: |-

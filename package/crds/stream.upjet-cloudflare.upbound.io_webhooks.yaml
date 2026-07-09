@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Webhook is the Schema for the Webhooks API.
+        description: Webhook is the Schema for the Webhooks API. Accepted Permissions
+          Stream ReadStream Write
         properties:
           apiVersion:
             description: |-
@@ -198,10 +199,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
                 || (has(self.initProvider) && has(self.initProvider.accountId))'
-            - message: spec.forProvider.notificationUrl is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.notificationUrl)
-                || (has(self.initProvider) && has(self.initProvider.notificationUrl))'
           status:
             description: WebhookStatus defines the observed state of Webhook.
             properties:
@@ -213,6 +210,11 @@ spec:
                       The account identifier tag.
                     type: string
                   id:
+                    type: string
+                  modified:
+                    description: |-
+                      (String) The date and time the webhook was last modified.
+                      The date and time the webhook was last modified.
                     type: string
                   notificationUrl:
                     description: |-

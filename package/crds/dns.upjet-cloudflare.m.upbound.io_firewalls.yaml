@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Firewall is the Schema for the Firewalls API.
+        description: Firewall is the Schema for the Firewalls API. Accepted Permissions
+          DNS Firewall ReadDNS Firewall Write
         properties:
           apiVersion:
             description: |-
@@ -83,6 +84,11 @@ spec:
                       (Boolean) Whether to refuse to answer queries for the ANY type
                       Whether to refuse to answer queries for the ANY type
                     type: boolean
+                  dnsFirewallIpCount:
+                    description: |-
+                      (Number) Number of IPv4 addresses to assign to the DNS Firewall cluster. Only used during cluster creation and cannot be changed later.
+                      Number of IPv4 addresses to assign to the DNS Firewall cluster. Only used during cluster creation and cannot be changed later.
+                    type: number
                   ecsFallback:
                     description: |-
                       (Boolean) Whether to forward client IP (resolver) subnet if no EDNS Client Subnet is sent
@@ -141,8 +147,8 @@ spec:
                     type: number
                   ratelimit:
                     description: |-
-                      (Number) Ratelimit in queries per second per datacenter (applies to DNS queries sent to the upstream nameservers configured on the cluster)
-                      Ratelimit in queries per second per datacenter (applies to DNS queries sent to the upstream nameservers configured on the cluster)
+                      (Number) Maximum number of DNS queries per second that will be forwarded to your upstream nameservers. The limit is enforced per server, where each server receives a fraction of the configured value. The actual aggregate rate for a data center may vary depending on how many servers are present. Responses served from cache do not count toward this limit. Set to null to disable rate limiting.
+                      Maximum number of DNS queries per second that will be forwarded to your upstream nameservers. The limit is enforced per server, where each server receives a fraction of the configured value. The actual aggregate rate for a data center may vary depending on how many servers are present. Responses served from cache do not count toward this limit. Set to null to disable rate limiting.
                     type: number
                   retries:
                     description: |-
@@ -194,6 +200,11 @@ spec:
                       (Boolean) Whether to refuse to answer queries for the ANY type
                       Whether to refuse to answer queries for the ANY type
                     type: boolean
+                  dnsFirewallIpCount:
+                    description: |-
+                      (Number) Number of IPv4 addresses to assign to the DNS Firewall cluster. Only used during cluster creation and cannot be changed later.
+                      Number of IPv4 addresses to assign to the DNS Firewall cluster. Only used during cluster creation and cannot be changed later.
+                    type: number
                   ecsFallback:
                     description: |-
                       (Boolean) Whether to forward client IP (resolver) subnet if no EDNS Client Subnet is sent
@@ -252,8 +263,8 @@ spec:
                     type: number
                   ratelimit:
                     description: |-
-                      (Number) Ratelimit in queries per second per datacenter (applies to DNS queries sent to the upstream nameservers configured on the cluster)
-                      Ratelimit in queries per second per datacenter (applies to DNS queries sent to the upstream nameservers configured on the cluster)
+                      (Number) Maximum number of DNS queries per second that will be forwarded to your upstream nameservers. The limit is enforced per server, where each server receives a fraction of the configured value. The actual aggregate rate for a data center may vary depending on how many servers are present. Responses served from cache do not count toward this limit. Set to null to disable rate limiting.
+                      Maximum number of DNS queries per second that will be forwarded to your upstream nameservers. The limit is enforced per server, where each server receives a fraction of the configured value. The actual aggregate rate for a data center may vary depending on how many servers are present. Responses served from cache do not count toward this limit. Set to null to disable rate limiting.
                     type: number
                   retries:
                     description: |-
@@ -368,6 +379,11 @@ spec:
                       (Boolean) Whether to refuse to answer queries for the ANY type
                       Whether to refuse to answer queries for the ANY type
                     type: boolean
+                  dnsFirewallIpCount:
+                    description: |-
+                      (Number) Number of IPv4 addresses to assign to the DNS Firewall cluster. Only used during cluster creation and cannot be changed later.
+                      Number of IPv4 addresses to assign to the DNS Firewall cluster. Only used during cluster creation and cannot be changed later.
+                    type: number
                   dnsFirewallIps:
                     description: (Set of String)
                     items:
@@ -440,8 +456,8 @@ spec:
                     type: number
                   ratelimit:
                     description: |-
-                      (Number) Ratelimit in queries per second per datacenter (applies to DNS queries sent to the upstream nameservers configured on the cluster)
-                      Ratelimit in queries per second per datacenter (applies to DNS queries sent to the upstream nameservers configured on the cluster)
+                      (Number) Maximum number of DNS queries per second that will be forwarded to your upstream nameservers. The limit is enforced per server, where each server receives a fraction of the configured value. The actual aggregate rate for a data center may vary depending on how many servers are present. Responses served from cache do not count toward this limit. Set to null to disable rate limiting.
+                      Maximum number of DNS queries per second that will be forwarded to your upstream nameservers. The limit is enforced per server, where each server receives a fraction of the configured value. The actual aggregate rate for a data center may vary depending on how many servers are present. Responses served from cache do not count toward this limit. Set to null to disable rate limiting.
                     type: number
                   retries:
                     description: |-

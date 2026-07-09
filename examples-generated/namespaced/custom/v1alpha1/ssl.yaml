@@ -34,6 +34,7 @@ spec:
         YbjM2rxXiyLGxB4Bol7QTv4zHif7Zt89FReT/NBy4rzaskDJY5L6xmY=
         -----END CERTIFICATE-----
 
+    customCsrId: 7b163417-1d2b-4c84-a38a-2fb7a0cd7752
     deploy: staging
     geoRestrictions:
       label: us

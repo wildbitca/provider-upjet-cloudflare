@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Database is the Schema for the Databases API.
+        description: Database is the Schema for the Databases API. Accepted Permissions
+          D1 ReadD1 Write
         properties:
           apiVersion:
             description: |-

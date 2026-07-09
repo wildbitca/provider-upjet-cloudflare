@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Setting is the Schema for the Settings API.
+        description: Setting is the Schema for the Settings API. Accepted Permissions
+          Zone Settings ReadZone Settings Write
         properties:
           apiVersion:
             description: |-

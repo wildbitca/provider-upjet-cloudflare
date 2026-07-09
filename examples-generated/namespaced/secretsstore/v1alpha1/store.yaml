@@ -1,0 +1,15 @@
+apiVersion: secretsstore.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Store
+metadata:
+  annotations:
+    meta.upbound.io/example-id: secretsstore/v1alpha1/store
+  labels:
+    testing.upbound.io/example-name: example_secrets_store
+  name: example-secrets-store
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: service_x_keys

@@ -11,7 +11,6 @@ spec:
     accountIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    bucketName: example-bucket
     rules:
     - abortMultipartUploadsTransition:
         condition:

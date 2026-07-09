@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: ScanningExpression is the Schema for the ScanningExpressions
-          API.
+          API. Accepted Permissions Account WAF WriteZone WAF Write
         properties:
           apiVersion:
             description: |-

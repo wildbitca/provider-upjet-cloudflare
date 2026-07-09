@@ -21,6 +21,8 @@ type SearchTokenInitParameters struct {
 
 	CfAPIKeySecretRef v1.LocalSecretKeySelector `json:"cfApiKeySecretRef" tf:"-"`
 
+	Legacy *bool `json:"legacy,omitempty" tf:"legacy,omitempty"`
+
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
@@ -56,6 +58,9 @@ type SearchTokenParameters struct {
 
 	// +kubebuilder:validation:Optional
 	CfAPIKeySecretRef v1.LocalSecretKeySelector `json:"cfApiKeySecretRef" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	Legacy *bool `json:"legacy,omitempty" tf:"legacy,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`

@@ -68,7 +68,7 @@ type BalancerPoolInitParameters struct {
 	// (Attributes) Configures origin steering for the pool. Controls how origins are selected for new sessions and traffic without session affinity. (see below for nested schema)
 	OriginSteering *OriginSteeringInitParameters `json:"originSteering,omitempty" tf:"origin_steering,omitempty"`
 
-	// (Attributes Set) The list of origins within this pool. Traffic directed at this pool is balanced across all currently healthy origins, provided the pool itself is healthy. (see below for nested schema)
+	// (Attributes List) The list of origins within this pool. Traffic directed at this pool is balanced across all currently healthy origins, provided the pool itself is healthy. (see below for nested schema)
 	Origins []OriginsInitParameters `json:"origins,omitempty" tf:"origins,omitempty"`
 }
 
@@ -144,7 +144,7 @@ type BalancerPoolObservation struct {
 	// (Attributes) Configures origin steering for the pool. Controls how origins are selected for new sessions and traffic without session affinity. (see below for nested schema)
 	OriginSteering *OriginSteeringObservation `json:"originSteering,omitempty" tf:"origin_steering,omitempty"`
 
-	// (Attributes Set) The list of origins within this pool. Traffic directed at this pool is balanced across all currently healthy origins, provided the pool itself is healthy. (see below for nested schema)
+	// (Attributes List) The list of origins within this pool. Traffic directed at this pool is balanced across all currently healthy origins, provided the pool itself is healthy. (see below for nested schema)
 	Origins []OriginsObservation `json:"origins,omitempty" tf:"origins,omitempty"`
 }
 
@@ -217,7 +217,7 @@ type BalancerPoolParameters struct {
 	// +kubebuilder:validation:Optional
 	OriginSteering *OriginSteeringParameters `json:"originSteering,omitempty" tf:"origin_steering,omitempty"`
 
-	// (Attributes Set) The list of origins within this pool. Traffic directed at this pool is balanced across all currently healthy origins, provided the pool itself is healthy. (see below for nested schema)
+	// (Attributes List) The list of origins within this pool. Traffic directed at this pool is balanced across all currently healthy origins, provided the pool itself is healthy. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Origins []OriginsParameters `json:"origins,omitempty" tf:"origins,omitempty"`
 }
@@ -424,13 +424,13 @@ type OriginsInitParameters struct {
 	// The IP address (IPv4 or IPv6) of the origin, or its publicly addressable hostname. Hostnames entered here should resolve directly to the origin, and not be a hostname proxied by Cloudflare. To set an internal/reserved address, virtual_network_id must also be set.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// (String) This field shows up only if the pool is disabled. This field is set with the time the pool was disabled at.
-	// This field shows up only if the origin is disabled. This field is set with the time the origin was disabled.
-	DisabledAt *string `json:"disabledAt,omitempty" tf:"disabled_at,omitempty"`
-
 	// (Boolean) Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
 	// Whether to enable (the default) this origin within the pool. Disabled origins will not receive traffic and are excluded from health checks. The origin will only be disabled for the current pool.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Boolean) Whether to flatten CNAME records for this origin, resolving them to A/AAAA records before returning to the client. When true (the default), the director resolves CNAME addresses to their underlying A/AAAA records. When false, the origin address is returned as a raw CNAME record without resolution. This setting mirrors the DNS API record flatten_cname setting.
+	// Whether to flatten CNAME records for this origin, resolving them to A/AAAA records before returning to the client. When true (the default), the director resolves CNAME addresses to their underlying A/AAAA records. When false, the origin address is returned as a raw CNAME record without resolution. This setting mirrors the DNS API record flatten_cname setting.
+	FlattenCname *bool `json:"flattenCname,omitempty" tf:"flatten_cname,omitempty"`
 
 	// (Attributes) The request header is used to pass additional information with an HTTP request. Currently supported header is 'Host'. (see below for nested schema)
 	Header *HeaderInitParameters `json:"header,omitempty" tf:"header,omitempty"`
@@ -468,6 +468,10 @@ type OriginsObservation struct {
 	// Whether to enable (the default) this origin within the pool. Disabled origins will not receive traffic and are excluded from health checks. The origin will only be disabled for the current pool.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// (Boolean) Whether to flatten CNAME records for this origin, resolving them to A/AAAA records before returning to the client. When true (the default), the director resolves CNAME addresses to their underlying A/AAAA records. When false, the origin address is returned as a raw CNAME record without resolution. This setting mirrors the DNS API record flatten_cname setting.
+	// Whether to flatten CNAME records for this origin, resolving them to A/AAAA records before returning to the client. When true (the default), the director resolves CNAME addresses to their underlying A/AAAA records. When false, the origin address is returned as a raw CNAME record without resolution. This setting mirrors the DNS API record flatten_cname setting.
+	FlattenCname *bool `json:"flattenCname,omitempty" tf:"flatten_cname,omitempty"`
+
 	// (Attributes) The request header is used to pass additional information with an HTTP request. Currently supported header is 'Host'. (see below for nested schema)
 	Header *HeaderObservation `json:"header,omitempty" tf:"header,omitempty"`
 
@@ -497,15 +501,15 @@ type OriginsParameters struct {
 	// +kubebuilder:validation:Optional
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// (String) This field shows up only if the pool is disabled. This field is set with the time the pool was disabled at.
-	// This field shows up only if the origin is disabled. This field is set with the time the origin was disabled.
-	// +kubebuilder:validation:Optional
-	DisabledAt *string `json:"disabledAt,omitempty" tf:"disabled_at,omitempty"`
-
 	// (Boolean) Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
 	// Whether to enable (the default) this origin within the pool. Disabled origins will not receive traffic and are excluded from health checks. The origin will only be disabled for the current pool.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Boolean) Whether to flatten CNAME records for this origin, resolving them to A/AAAA records before returning to the client. When true (the default), the director resolves CNAME addresses to their underlying A/AAAA records. When false, the origin address is returned as a raw CNAME record without resolution. This setting mirrors the DNS API record flatten_cname setting.
+	// Whether to flatten CNAME records for this origin, resolving them to A/AAAA records before returning to the client. When true (the default), the director resolves CNAME addresses to their underlying A/AAAA records. When false, the origin address is returned as a raw CNAME record without resolution. This setting mirrors the DNS API record flatten_cname setting.
+	// +kubebuilder:validation:Optional
+	FlattenCname *bool `json:"flattenCname,omitempty" tf:"flatten_cname,omitempty"`
 
 	// (Attributes) The request header is used to pass additional information with an HTTP request. Currently supported header is 'Host'. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -596,7 +600,7 @@ type BalancerPoolStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// BalancerPool is the Schema for the BalancerPools API.
+// BalancerPool is the Schema for the BalancerPools API. Accepted Permissions Load Balancing: Monitors and Pools ReadLoad Balancing: Monitors and Pools Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

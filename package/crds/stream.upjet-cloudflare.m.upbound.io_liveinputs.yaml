@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: LiveInput is the Schema for the LiveInputs API.
+        description: LiveInput is the Schema for the LiveInputs API. Accepted Permissions
+          Stream ReadStream Write
         properties:
           apiVersion:
             description: |-

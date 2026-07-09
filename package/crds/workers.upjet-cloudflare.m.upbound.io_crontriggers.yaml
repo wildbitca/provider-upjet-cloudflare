@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CronTrigger is the Schema for the CronTriggers API.
+        description: CronTrigger is the Schema for the CronTriggers API. Accepted
+          Permissions Workers Scripts ReadWorkers Scripts Write
         properties:
           apiVersion:
             description: |-

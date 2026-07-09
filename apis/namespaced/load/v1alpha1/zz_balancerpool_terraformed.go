@@ -125,5 +125,5 @@ func (tr *BalancerPool) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *BalancerPool) GetTerraformSchemaVersion() int {
-	return 1
+	return 500
 }

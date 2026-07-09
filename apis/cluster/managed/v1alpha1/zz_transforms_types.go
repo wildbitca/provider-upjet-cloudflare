@@ -155,7 +155,7 @@ type TransformsStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Transforms is the Schema for the Transformss API.
+// Transforms is the Schema for the Transformss API. Accepted Permissions Account Rulesets ReadAccount Rulesets WriteAccount WAF ReadAccount WAF WriteBot Management ReadBot Management WriteCache Settings ReadCache Settings WriteConfig Settings ReadConfig Settings WriteCustom Errors ReadCustom Errors WriteDynamic URL Redirects ReadDynamic URL Redirects WriteHTTP DDoS Managed Ruleset ReadHTTP DDoS Managed Ruleset WriteL4 DDoS Managed Ruleset ReadL4 DDoS Managed Ruleset WriteLogs ReadLogs WriteMagic Firewall ReadMagic Firewall WriteManaged headers ReadManaged headers WriteMass URL Redirects ReadMass URL Redirects WriteOrigin ReadOrigin WriteResponse Compression ReadResponse Compression WriteSanitize ReadSanitize WriteSelect Configuration ReadSelect Configuration WriteTransform Rules ReadTransform Rules WriteZone Transform Rules ReadZone Transform Rules WriteZone WAF ReadZone WAF Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

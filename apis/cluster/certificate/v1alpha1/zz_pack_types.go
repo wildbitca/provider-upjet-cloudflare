@@ -129,7 +129,7 @@ type PackInitParameters struct {
 
 	// (String) Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions see this page for more details.
 	// Available values: "google", "lets_encrypt", "ssl_com".
-	// Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions [see this page for more details.](https://developers.cloudflare.com/ssl/reference/certificate-authorities)
+	// Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions [see this page for more details](https://developers.cloudflare.com/ssl/reference/certificate-authorities).
 	// Available values: "google", "lets_encrypt", "ssl_com".
 	CertificateAuthority *string `json:"certificateAuthority,omitempty" tf:"certificate_authority,omitempty"`
 
@@ -169,7 +169,7 @@ type PackObservation struct {
 
 	// (String) Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions see this page for more details.
 	// Available values: "google", "lets_encrypt", "ssl_com".
-	// Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions [see this page for more details.](https://developers.cloudflare.com/ssl/reference/certificate-authorities)
+	// Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions [see this page for more details](https://developers.cloudflare.com/ssl/reference/certificate-authorities).
 	// Available values: "google", "lets_encrypt", "ssl_com".
 	CertificateAuthority *string `json:"certificateAuthority,omitempty" tf:"certificate_authority,omitempty"`
 
@@ -234,7 +234,7 @@ type PackParameters struct {
 
 	// (String) Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions see this page for more details.
 	// Available values: "google", "lets_encrypt", "ssl_com".
-	// Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions [see this page for more details.](https://developers.cloudflare.com/ssl/reference/certificate-authorities)
+	// Certificate Authority selected for the order.  For information on any certificate authority specific details or restrictions [see this page for more details](https://developers.cloudflare.com/ssl/reference/certificate-authorities).
 	// Available values: "google", "lets_encrypt", "ssl_com".
 	// +kubebuilder:validation:Optional
 	CertificateAuthority *string `json:"certificateAuthority,omitempty" tf:"certificate_authority,omitempty"`
@@ -359,7 +359,7 @@ type PackStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Pack is the Schema for the Packs API.
+// Pack is the Schema for the Packs API. Accepted Permissions SSL and Certificates ReadSSL and Certificates Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

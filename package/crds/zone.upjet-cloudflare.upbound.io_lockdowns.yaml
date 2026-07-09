@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Lockdown is the Schema for the Lockdowns API.
+        description: Lockdown is the Schema for the Lockdowns API. Accepted Permissions
+          Firewall Services ReadFirewall Services Write
         properties:
           apiVersion:
             description: |-

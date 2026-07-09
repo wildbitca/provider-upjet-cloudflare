@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: IPPrefix is the Schema for the IPPrefixs API.
+        description: 'IPPrefix is the Schema for the IPPrefixs API. Accepted Permissions
+          IP Prefixes: BGP On Demand ReadIP Prefixes: BGP On Demand WriteIP Prefixes:
+          ReadIP Prefixes: WriteMagic Transit ReadMagic Transit Write'
         properties:
           apiVersion:
             description: |-

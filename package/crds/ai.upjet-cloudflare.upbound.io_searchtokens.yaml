@@ -94,6 +94,8 @@ spec:
                     - name
                     - namespace
                     type: object
+                  legacy:
+                    type: boolean
                   name:
                     type: string
                 type: object
@@ -132,6 +134,8 @@ spec:
                     - name
                     - namespace
                     type: object
+                  legacy:
+                    type: boolean
                   name:
                     type: string
                 required:

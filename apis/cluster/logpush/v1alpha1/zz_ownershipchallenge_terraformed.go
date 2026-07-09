@@ -21,7 +21,7 @@ func (mg *OwnershipChallenge) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this OwnershipChallenge
 func (tr *OwnershipChallenge) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"destination_conf": "destinationConfSecretRef"}
 }
 
 // GetObservation of this OwnershipChallenge
@@ -125,5 +125,5 @@ func (tr *OwnershipChallenge) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *OwnershipChallenge) GetTerraformSchemaVersion() int {
-	return 1
+	return 500
 }

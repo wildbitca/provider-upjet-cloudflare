@@ -21,7 +21,7 @@ func (mg *TrustDevicePostureIntegration) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this TrustDevicePostureIntegration
 func (tr *TrustDevicePostureIntegration) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"config.access_client_secret": "config.accessClientSecretSecretRef", "config.client_secret": "config.clientSecretSecretRef"}
+	return map[string]string{"config.access_client_secret": "config.accessClientSecretSecretRef", "config.client_key": "config.clientKeySecretRef", "config.client_secret": "config.clientSecretSecretRef"}
 }
 
 // GetObservation of this TrustDevicePostureIntegration
@@ -125,5 +125,5 @@ func (tr *TrustDevicePostureIntegration) LateInitialize(attrs []byte) (bool, err
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *TrustDevicePostureIntegration) GetTerraformSchemaVersion() int {
-	return 1
+	return 500
 }

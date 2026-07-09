@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: OneRequestPriority is the Schema for the OneRequestPrioritys
-          API.
+          API. Accepted Permissions Cloudforce One ReadCloudforce One Write
         properties:
           apiVersion:
             description: |-

@@ -125,5 +125,5 @@ func (tr *TrustDNSLocation) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *TrustDNSLocation) GetTerraformSchemaVersion() int {
-	return 1
+	return 500
 }

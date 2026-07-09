@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: AnalyticsSite is the Schema for the AnalyticsSites API.
+        description: AnalyticsSite is the Schema for the AnalyticsSites API. Accepted
+          Permissions Account Settings ReadAccount Settings Write
         properties:
           apiVersion:
             description: |-

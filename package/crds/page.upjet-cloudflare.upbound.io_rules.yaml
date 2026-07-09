@@ -34,7 +34,16 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Rule is the Schema for the Rules API.
+        description: 'Rule is the Schema for the Rules API. Accepted Permissions Access:
+          Apps and Policies ReadAccess: Apps and Policies RevokeAccess: Apps and Policies
+          WriteAccess: Mutual TLS Certificates WriteAccess: Organizations, Identity
+          Providers, and Groups WriteAnalytics ReadApps WriteCache PurgeDNS ReadDNS
+          WriteFirewall Services ReadFirewall Services WriteLoad Balancers ReadLoad
+          Balancers WriteLogs ReadLogs WritePage Rules ReadPage Rules WriteSSL and
+          Certificates ReadSSL and Certificates WriteStream ReadStream WriteTrust
+          and Safety ReadTrust and Safety WriteWorkers Routes ReadWorkers Routes WriteWorkers
+          Scripts ReadWorkers Scripts WriteZaraz AdminZaraz EditZaraz ReadZero Trust:
+          PII ReadZone ReadZone Settings ReadZone Settings WriteZone Write'
         properties:
           apiVersion:
             description: |-

@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: RoutingSettings is the Schema for the RoutingSettingss API.
+        description: RoutingSettings is the Schema for the RoutingSettingss API. Accepted
+          Permissions Zone Settings ReadZone Settings Write
         properties:
           apiVersion:
             description: |-

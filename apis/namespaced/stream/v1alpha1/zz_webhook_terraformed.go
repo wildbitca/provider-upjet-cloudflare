@@ -21,7 +21,7 @@ func (mg *Webhook) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Webhook
 func (tr *Webhook) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"secret": "status.atProvider.secret"}
 }
 
 // GetObservation of this Webhook
@@ -125,5 +125,5 @@ func (tr *Webhook) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *Webhook) GetTerraformSchemaVersion() int {
-	return 0
+	return 500
 }

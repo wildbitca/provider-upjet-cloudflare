@@ -10,7 +10,9 @@ metadata:
 spec:
   forProvider:
     dataset: gateway_dns
-    destinationConf: s3://mybucket/logs?region=us-west-2
+    destinationConfSecretRef:
+      key: example-key
+      name: example-secret
     enabled: false
     filter: '{"where":{"and":[{"key":"ClientRequestPath","operator":"contains","value":"/static"},{"key":"ClientRequestHost","operator":"eq","value":"example.com"}]}}'
     frequency: high
@@ -29,6 +31,7 @@ spec:
       - Datetime
       - DstIP
       - SrcIP
+      mergeSubrequests: true
       outputType: ndjson
       recordDelimiter: ""
       recordPrefix: '{'

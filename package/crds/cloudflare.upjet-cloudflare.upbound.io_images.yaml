@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Image is the Schema for the Images API.
+        description: Image is the Schema for the Images API. Accepted Permissions
+          Images ReadImages Write
         properties:
           apiVersion:
             description: |-

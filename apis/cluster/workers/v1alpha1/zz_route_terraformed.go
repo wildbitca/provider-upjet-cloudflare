@@ -125,5 +125,5 @@ func (tr *Route) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *Route) GetTerraformSchemaVersion() int {
-	return 2
+	return 500
 }

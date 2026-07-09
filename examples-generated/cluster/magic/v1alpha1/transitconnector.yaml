@@ -14,7 +14,11 @@ spec:
       id: id
       provisionLicense: true
       serialNumber: serial_number
-    interruptWindowDurationHours: 0
+    interrupt_window_days_of_week:
+    - Sunday
+    interrupt_window_embargo_dates:
+    - string
+    interruptWindowDurationHours: 1
     interruptWindowHourOfDay: 0
     notes: notes
     timezone: timezone

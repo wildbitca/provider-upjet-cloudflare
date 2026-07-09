@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Version is the Schema for the Versions API.
+        description: Version is the Schema for the Versions API. Accepted Permissions
+          Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
         properties:
           apiVersion:
             description: |-
@@ -69,13 +70,13 @@ spec:
                     properties:
                       workersMessage:
                         description: |-
-                          readable message about the version.
-                          Human-readable message about the version.
+                          readable message about the version. Truncated to 1000 bytes if longer.
+                          Human-readable message about the version. Truncated to 1000 bytes if longer.
                         type: string
                       workersTag:
                         description: |-
-                          provided identifier for the version.
-                          User-provided identifier for the version.
+                          provided identifier for the version. Maximum 100 bytes.
+                          User-provided identifier for the version. Maximum 100 bytes.
                         type: string
                     type: object
                   assets:
@@ -147,6 +148,11 @@ spec:
                           items:
                             type: string
                           type: array
+                        appId:
+                          description: |-
+                            (String) ID of the Flagship app to bind to for feature flag evaluation.
+                            ID of the Flagship app to bind to for feature flag evaluation.
+                          type: string
                         bucketName:
                           description: |-
                             (String) R2 bucket to bind to.
@@ -162,6 +168,11 @@ spec:
                             (String) The exported class name of the Durable Object.
                             The exported class name of the Durable Object.
                           type: string
+                        databaseId:
+                          description: |-
+                            (String) Identifier of the D1 database to bind to.
+                            Identifier of the D1 database to bind to.
+                          type: string
                         dataset:
                           description: |-
                             (String) The name of the dataset to bind to.
@@ -171,6 +182,16 @@ spec:
                           description: |-
                             (String) Destination address for the email.
                             Destination address for the email.
+                          type: string
+                        dispatchNamespace:
+                          description: |-
+                            (String) The dispatch namespace the Durable Object script belongs to.
+                            The dispatch namespace the Durable Object script belongs to.
+                          type: string
+                        entrypoint:
+                          description: |-
+                            (String) Entrypoint to invoke on the target Worker.
+                            Entrypoint to invoke on the target Worker.
                           type: string
                         environment:
                           description: |-
@@ -194,6 +215,11 @@ spec:
                             (String) Name of the Vectorize index to bind to.
                             Name of the Vectorize index to bind to.
                           type: string
+                        instanceName:
+                          description: |-
+                            chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
+                            The user-chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
+                          type: string
                         json:
                           description: |-
                             (String) JSON data to use.
@@ -201,10 +227,9 @@ spec:
                           type: string
                         jurisdiction:
                           description: |-
-                            (String) The jurisdiction of the R2 bucket.
-                            Available values: "eu", "fedramp".
+                            high".
                             The [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) of the R2 bucket.
-                            Available values: "eu", "fedramp".
+                            Available values: "eu", "fedramp", "fedramp-high".
                           type: string
                         keyBase64SecretRef:
                           description: |-
@@ -241,13 +266,18 @@ spec:
                           type: string
                         namespace:
                           description: |-
-                            (String) The name of the dispatch namespace.
-                            The name of the dispatch namespace.
+                            (String) The namespace the instance belongs to. Defaults to "default" if omitted. Customers who don't use namespaces can simply omit this field.
+                            The namespace the instance belongs to. Defaults to "default" if omitted. Customers who don't use namespaces can simply omit this field.
                           type: string
                         namespaceId:
                           description: |-
                             (String) Namespace identifier tag.
                             Namespace identifier tag.
+                          type: string
+                        networkId:
+                          description: |-
+                            (String) Identifier of the network to bind to. Only "cf1:network" is currently supported. Mutually exclusive with tunnel_id.
+                            Identifier of the network to bind to. Only "cf1:network" is currently supported. Mutually exclusive with tunnel_id.
                           type: string
                         oldName:
                           description: |-
@@ -277,7 +307,7 @@ spec:
                               properties:
                                 entrypoint:
                                   description: |-
-                                    (String) Entrypoint to invoke on the outbound worker.
+                                    (String) Entrypoint to invoke on the target Worker.
                                     Entrypoint to invoke on the outbound worker.
                                   type: string
                                 environment:
@@ -322,6 +352,11 @@ spec:
                             (String) Name of Worker to bind to.
                             Name of Worker to bind to.
                           type: string
+                        serviceId:
+                          description: |-
+                            (String) Identifier of the VPC service to bind to.
+                            Identifier of the VPC service to bind to.
+                          type: string
                         simple:
                           description: (Attributes) The rate limit configuration.
                             (see below for nested schema)
@@ -330,6 +365,11 @@ spec:
                               description: |-
                                 (Number) The limit (requests per period).
                                 The limit (requests per period).
+                              type: number
+                            mitigationTimeout:
+                              description: |-
+                                zero.
+                                Duration in seconds to apply the mitigation action after the rate limit is exceeded. Valid values are 0 (disabled), 10, or multiples of 60 up to 86400. Must be greater than or equal to the period when non-zero.
                               type: number
                             period:
                               description: |-
@@ -356,12 +396,17 @@ spec:
                           - key
                           - name
                           type: object
+                        tunnelId:
+                          description: |-
+                            (String) UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
+                            UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
+                          type: string
                         type:
                           description: |-
                             (String) The kind of resource that the binding provides.
-                            Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                             The kind of resource that the binding provides.
-                            Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                           type: string
                         usages:
                           description: |-
@@ -396,6 +441,19 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  containers:
+                    description: (Attributes Set) List of containers attached to a
+                      Worker. Containers can only be attached to Durable Object classes
+                      of this Worker script. (see below for nested schema)
+                    items:
+                      properties:
+                        className:
+                          description: |-
+                            (String) The exported class name of the Durable Object.
+                            Select which Durable Object class should get this container attached.
+                          type: string
+                      type: object
+                    type: array
                   limits:
                     description: (Attributes) Resource limits enforced at runtime.
                       (see below for nested schema)
@@ -404,6 +462,11 @@ spec:
                         description: |-
                           (Number) CPU time limit in milliseconds.
                           CPU time limit in milliseconds.
+                        type: number
+                      subrequests:
+                        description: |-
+                          (Number) Subrequest limit per request.
+                          Subrequest limit per request.
                         type: number
                     type: object
                   mainModule:
@@ -654,13 +717,13 @@ spec:
                     properties:
                       workersMessage:
                         description: |-
-                          readable message about the version.
-                          Human-readable message about the version.
+                          readable message about the version. Truncated to 1000 bytes if longer.
+                          Human-readable message about the version. Truncated to 1000 bytes if longer.
                         type: string
                       workersTag:
                         description: |-
-                          provided identifier for the version.
-                          User-provided identifier for the version.
+                          provided identifier for the version. Maximum 100 bytes.
+                          User-provided identifier for the version. Maximum 100 bytes.
                         type: string
                     type: object
                   assets:
@@ -732,6 +795,11 @@ spec:
                           items:
                             type: string
                           type: array
+                        appId:
+                          description: |-
+                            (String) ID of the Flagship app to bind to for feature flag evaluation.
+                            ID of the Flagship app to bind to for feature flag evaluation.
+                          type: string
                         bucketName:
                           description: |-
                             (String) R2 bucket to bind to.
@@ -747,6 +815,11 @@ spec:
                             (String) The exported class name of the Durable Object.
                             The exported class name of the Durable Object.
                           type: string
+                        databaseId:
+                          description: |-
+                            (String) Identifier of the D1 database to bind to.
+                            Identifier of the D1 database to bind to.
+                          type: string
                         dataset:
                           description: |-
                             (String) The name of the dataset to bind to.
@@ -756,6 +829,16 @@ spec:
                           description: |-
                             (String) Destination address for the email.
                             Destination address for the email.
+                          type: string
+                        dispatchNamespace:
+                          description: |-
+                            (String) The dispatch namespace the Durable Object script belongs to.
+                            The dispatch namespace the Durable Object script belongs to.
+                          type: string
+                        entrypoint:
+                          description: |-
+                            (String) Entrypoint to invoke on the target Worker.
+                            Entrypoint to invoke on the target Worker.
                           type: string
                         environment:
                           description: |-
@@ -779,6 +862,11 @@ spec:
                             (String) Name of the Vectorize index to bind to.
                             Name of the Vectorize index to bind to.
                           type: string
+                        instanceName:
+                          description: |-
+                            chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
+                            The user-chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
+                          type: string
                         json:
                           description: |-
                             (String) JSON data to use.
@@ -786,10 +874,9 @@ spec:
                           type: string
                         jurisdiction:
                           description: |-
-                            (String) The jurisdiction of the R2 bucket.
-                            Available values: "eu", "fedramp".
+                            high".
                             The [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) of the R2 bucket.
-                            Available values: "eu", "fedramp".
+                            Available values: "eu", "fedramp", "fedramp-high".
                           type: string
                         keyBase64SecretRef:
                           description: |-
@@ -826,13 +913,18 @@ spec:
                           type: string
                         namespace:
                           description: |-
-                            (String) The name of the dispatch namespace.
-                            The name of the dispatch namespace.
+                            (String) The namespace the instance belongs to. Defaults to "default" if omitted. Customers who don't use namespaces can simply omit this field.
+                            The namespace the instance belongs to. Defaults to "default" if omitted. Customers who don't use namespaces can simply omit this field.
                           type: string
                         namespaceId:
                           description: |-
                             (String) Namespace identifier tag.
                             Namespace identifier tag.
+                          type: string
+                        networkId:
+                          description: |-
+                            (String) Identifier of the network to bind to. Only "cf1:network" is currently supported. Mutually exclusive with tunnel_id.
+                            Identifier of the network to bind to. Only "cf1:network" is currently supported. Mutually exclusive with tunnel_id.
                           type: string
                         oldName:
                           description: |-
@@ -862,7 +954,7 @@ spec:
                               properties:
                                 entrypoint:
                                   description: |-
-                                    (String) Entrypoint to invoke on the outbound worker.
+                                    (String) Entrypoint to invoke on the target Worker.
                                     Entrypoint to invoke on the outbound worker.
                                   type: string
                                 environment:
@@ -907,6 +999,11 @@ spec:
                             (String) Name of Worker to bind to.
                             Name of Worker to bind to.
                           type: string
+                        serviceId:
+                          description: |-
+                            (String) Identifier of the VPC service to bind to.
+                            Identifier of the VPC service to bind to.
+                          type: string
                         simple:
                           description: (Attributes) The rate limit configuration.
                             (see below for nested schema)
@@ -915,6 +1012,11 @@ spec:
                               description: |-
                                 (Number) The limit (requests per period).
                                 The limit (requests per period).
+                              type: number
+                            mitigationTimeout:
+                              description: |-
+                                zero.
+                                Duration in seconds to apply the mitigation action after the rate limit is exceeded. Valid values are 0 (disabled), 10, or multiples of 60 up to 86400. Must be greater than or equal to the period when non-zero.
                               type: number
                             period:
                               description: |-
@@ -941,12 +1043,17 @@ spec:
                           - key
                           - name
                           type: object
+                        tunnelId:
+                          description: |-
+                            (String) UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
+                            UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
+                          type: string
                         type:
                           description: |-
                             (String) The kind of resource that the binding provides.
-                            Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                             The kind of resource that the binding provides.
-                            Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                           type: string
                         usages:
                           description: |-
@@ -981,6 +1088,19 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  containers:
+                    description: (Attributes Set) List of containers attached to a
+                      Worker. Containers can only be attached to Durable Object classes
+                      of this Worker script. (see below for nested schema)
+                    items:
+                      properties:
+                        className:
+                          description: |-
+                            (String) The exported class name of the Durable Object.
+                            Select which Durable Object class should get this container attached.
+                          type: string
+                      type: object
+                    type: array
                   limits:
                     description: (Attributes) Resource limits enforced at runtime.
                       (see below for nested schema)
@@ -989,6 +1109,11 @@ spec:
                         description: |-
                           (Number) CPU time limit in milliseconds.
                           CPU time limit in milliseconds.
+                        type: number
+                      subrequests:
+                        description: |-
+                          (Number) Subrequest limit per request.
+                          Subrequest limit per request.
                         type: number
                     type: object
                   mainModule:
@@ -1298,13 +1423,13 @@ spec:
                     properties:
                       workersMessage:
                         description: |-
-                          readable message about the version.
-                          Human-readable message about the version.
+                          readable message about the version. Truncated to 1000 bytes if longer.
+                          Human-readable message about the version. Truncated to 1000 bytes if longer.
                         type: string
                       workersTag:
                         description: |-
-                          provided identifier for the version.
-                          User-provided identifier for the version.
+                          provided identifier for the version. Maximum 100 bytes.
+                          User-provided identifier for the version. Maximum 100 bytes.
                         type: string
                       workersTriggeredBy:
                         description: |-
@@ -1372,6 +1497,11 @@ spec:
                           items:
                             type: string
                           type: array
+                        appId:
+                          description: |-
+                            (String) ID of the Flagship app to bind to for feature flag evaluation.
+                            ID of the Flagship app to bind to for feature flag evaluation.
+                          type: string
                         bucketName:
                           description: |-
                             (String) R2 bucket to bind to.
@@ -1387,6 +1517,11 @@ spec:
                             (String) The exported class name of the Durable Object.
                             The exported class name of the Durable Object.
                           type: string
+                        databaseId:
+                          description: |-
+                            (String) Identifier of the D1 database to bind to.
+                            Identifier of the D1 database to bind to.
+                          type: string
                         dataset:
                           description: |-
                             (String) The name of the dataset to bind to.
@@ -1396,6 +1531,16 @@ spec:
                           description: |-
                             (String) Destination address for the email.
                             Destination address for the email.
+                          type: string
+                        dispatchNamespace:
+                          description: |-
+                            (String) The dispatch namespace the Durable Object script belongs to.
+                            The dispatch namespace the Durable Object script belongs to.
+                          type: string
+                        entrypoint:
+                          description: |-
+                            (String) Entrypoint to invoke on the target Worker.
+                            Entrypoint to invoke on the target Worker.
                           type: string
                         environment:
                           description: |-
@@ -1419,6 +1564,11 @@ spec:
                             (String) Name of the Vectorize index to bind to.
                             Name of the Vectorize index to bind to.
                           type: string
+                        instanceName:
+                          description: |-
+                            chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
+                            The user-chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
+                          type: string
                         json:
                           description: |-
                             (String) JSON data to use.
@@ -1426,10 +1576,9 @@ spec:
                           type: string
                         jurisdiction:
                           description: |-
-                            (String) The jurisdiction of the R2 bucket.
-                            Available values: "eu", "fedramp".
+                            high".
                             The [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) of the R2 bucket.
-                            Available values: "eu", "fedramp".
+                            Available values: "eu", "fedramp", "fedramp-high".
                           type: string
                         name:
                           description: |-
@@ -1438,13 +1587,18 @@ spec:
                           type: string
                         namespace:
                           description: |-
-                            (String) The name of the dispatch namespace.
-                            The name of the dispatch namespace.
+                            (String) The namespace the instance belongs to. Defaults to "default" if omitted. Customers who don't use namespaces can simply omit this field.
+                            The namespace the instance belongs to. Defaults to "default" if omitted. Customers who don't use namespaces can simply omit this field.
                           type: string
                         namespaceId:
                           description: |-
                             (String) Namespace identifier tag.
                             Namespace identifier tag.
+                          type: string
+                        networkId:
+                          description: |-
+                            (String) Identifier of the network to bind to. Only "cf1:network" is currently supported. Mutually exclusive with tunnel_id.
+                            Identifier of the network to bind to. Only "cf1:network" is currently supported. Mutually exclusive with tunnel_id.
                           type: string
                         oldName:
                           description: |-
@@ -1474,7 +1628,7 @@ spec:
                               properties:
                                 entrypoint:
                                   description: |-
-                                    (String) Entrypoint to invoke on the outbound worker.
+                                    (String) Entrypoint to invoke on the target Worker.
                                     Entrypoint to invoke on the outbound worker.
                                   type: string
                                 environment:
@@ -1519,6 +1673,11 @@ spec:
                             (String) Name of Worker to bind to.
                             Name of Worker to bind to.
                           type: string
+                        serviceId:
+                          description: |-
+                            (String) Identifier of the VPC service to bind to.
+                            Identifier of the VPC service to bind to.
+                          type: string
                         simple:
                           description: (Attributes) The rate limit configuration.
                             (see below for nested schema)
@@ -1527,6 +1686,11 @@ spec:
                               description: |-
                                 (Number) The limit (requests per period).
                                 The limit (requests per period).
+                              type: number
+                            mitigationTimeout:
+                              description: |-
+                                zero.
+                                Duration in seconds to apply the mitigation action after the rate limit is exceeded. Valid values are 0 (disabled), 10, or multiples of 60 up to 86400. Must be greater than or equal to the period when non-zero.
                               type: number
                             period:
                               description: |-
@@ -1539,12 +1703,17 @@ spec:
                             (String) ID of the store containing the secret.
                             ID of the store containing the secret.
                           type: string
+                        tunnelId:
+                          description: |-
+                            (String) UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
+                            UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
+                          type: string
                         type:
                           description: |-
                             (String) The kind of resource that the binding provides.
-                            Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                             The kind of resource that the binding provides.
-                            Available values: "ai", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                           type: string
                         usages:
                           description: |-
@@ -1579,6 +1748,19 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  containers:
+                    description: (Attributes Set) List of containers attached to a
+                      Worker. Containers can only be attached to Durable Object classes
+                      of this Worker script. (see below for nested schema)
+                    items:
+                      properties:
+                        className:
+                          description: |-
+                            (String) The exported class name of the Durable Object.
+                            Select which Durable Object class should get this container attached.
+                          type: string
+                      type: object
+                    type: array
                   createdOn:
                     description: |-
                       (String) When the version was created.
@@ -1596,6 +1778,11 @@ spec:
                           (Number) CPU time limit in milliseconds.
                           CPU time limit in milliseconds.
                         type: number
+                      subrequests:
+                        description: |-
+                          (Number) Subrequest limit per request.
+                          Subrequest limit per request.
+                        type: number
                     type: object
                   mainModule:
                     description: |-
@@ -1606,6 +1793,11 @@ spec:
                     description: |-
                       encoded main script content. This is only returned for service worker syntax workers (not ES modules). Used when importing existing workers that use the older service worker syntax.
                       The base64-encoded main script content. This is only returned for service worker syntax workers (not ES modules). Used when importing existing workers that use the older service worker syntax.
+                    type: string
+                  migrationTag:
+                    description: |-
+                      (String) Durable Object migration tag. Set when the version is deployed. Omitted if the version has not been deployed or the Worker does not use Durable Objects.
+                      Durable Object migration tag. Set when the version is deployed. Omitted if the version has not been deployed or the Worker does not use Durable Objects.
                     type: string
                   migrations:
                     description: (Attributes) Migrations for Durable Objects associated
@@ -1833,6 +2025,13 @@ spec:
                       (Number) Time in milliseconds spent on Worker startup.
                       Time in milliseconds spent on [Worker startup](https://developers.cloudflare.com/workers/platform/limits/#worker-startup-time).
                     type: number
+                  urls:
+                    description: |-
+                      (List of String) All routable URLs that always point to this version. Does not include alias URLs, since aliases can be updated to point to a different version.
+                      All routable URLs that always point to this version. Does not include alias URLs, since aliases can be updated to point to a different version.
+                    items:
+                      type: string
+                    type: array
                   usageModel:
                     description: |-
                       (String, Deprecated) Usage model for the version.

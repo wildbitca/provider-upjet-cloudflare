@@ -10,5 +10,7 @@ spec:
   forProvider:
     hostname: app.example.com
     settingId: ciphers
-    value: "1.0"
+    value:
+    - ECDHE-RSA-AES128-GCM-SHA256
+    - AES128-GCM-SHA256
     zoneId: 023e105f4ecef8ad9ca31a8372d0c353

@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SfuApp is the Schema for the SfuApps API.
+        description: SfuApp is the Schema for the SfuApps API. Accepted Permissions
+          Calls ReadCalls Write
         properties:
           apiVersion:
             description: |-

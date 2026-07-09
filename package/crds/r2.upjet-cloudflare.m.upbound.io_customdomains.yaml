@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CustomDomain is the Schema for the CustomDomains API.
+        description: CustomDomain is the Schema for the CustomDomains API. Accepted
+          Permissions Workers R2 Storage ReadWorkers R2 Storage Write
         properties:
           apiVersion:
             description: |-

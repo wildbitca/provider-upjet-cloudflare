@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Healthcheck is the Schema for the Healthchecks API.
+        description: Healthcheck is the Schema for the Healthchecks API. Accepted
+          Permissions Health Checks ReadHealth Checks Write
         properties:
           apiVersion:
             description: |-

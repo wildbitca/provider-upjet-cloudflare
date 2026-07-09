@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: RoutingDNS is the Schema for the RoutingDNSs API.
+        description: RoutingDNS is the Schema for the RoutingDNSs API. Accepted Permissions
+          Zone Settings ReadZone Settings Write
         properties:
           apiVersion:
             description: |-
@@ -356,6 +357,11 @@ spec:
                         description: |-
                           (Number) Total results available without any search parameters.
                           Total results available without any search parameters.
+                        type: number
+                      totalPages:
+                        description: |-
+                          (Number) The number of total pages in the entire result set.
+                          The number of total pages in the entire result set.
                         type: number
                     type: object
                   skipWizard:

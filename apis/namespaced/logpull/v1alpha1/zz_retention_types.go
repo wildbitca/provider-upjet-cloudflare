@@ -79,7 +79,7 @@ type RetentionStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Retention is the Schema for the Retentions API.
+// Retention is the Schema for the Retentions API. Accepted Permissions Logs ReadLogs Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

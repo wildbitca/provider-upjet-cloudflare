@@ -35,6 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: AgentBlockingRule is the Schema for the AgentBlockingRules API.
+          Accepted Permissions Firewall Services ReadFirewall Services Write
         properties:
           apiVersion:
             description: |-

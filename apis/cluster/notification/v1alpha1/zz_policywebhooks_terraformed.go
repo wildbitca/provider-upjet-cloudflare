@@ -125,5 +125,5 @@ func (tr *PolicyWebhooks) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *PolicyWebhooks) GetTerraformSchemaVersion() int {
-	return 1
+	return 500
 }

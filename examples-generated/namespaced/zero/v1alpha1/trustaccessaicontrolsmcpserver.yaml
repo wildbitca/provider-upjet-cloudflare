@@ -10,8 +10,22 @@ metadata:
 spec:
   forProvider:
     accountId: a86a8f5c339544d7bdc89926de14fb8c
-    authCredentials: auth_credentials
+    authCredentialsSecretRef:
+      key: example-key
+      name: example-secret
     authType: unauthenticated
     description: This is one remote mcp server
-    hostname: https://exmaple.com/mcp
+    hostname: https://example.com/mcp
+    isSharedOauthCallbackEnabled: true
     name: My MCP Server
+    secureWebGateway: false
+    updatedPrompts:
+    - alias: my-custom-alias
+      description: description
+      enabled: true
+      name: name
+    updatedTools:
+    - alias: my-custom-alias
+      description: description
+      enabled: true
+      name: name

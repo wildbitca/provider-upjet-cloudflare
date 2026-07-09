@@ -190,7 +190,7 @@ type CustomDomainStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// CustomDomain is the Schema for the CustomDomains API.
+// CustomDomain is the Schema for the CustomDomains API. Accepted Permissions Workers R2 Storage ReadWorkers R2 Storage Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -14,13 +14,48 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type TrustDeviceDefaultProfileDNSSearchSuffixesInitParameters struct {
+
+	// (String) A description of the DNS search suffix.
+	// A description of the DNS search suffix.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (String) The DNS search suffix to append when resolving short hostnames.
+	// The DNS search suffix to append when resolving short hostnames.
+	Suffix *string `json:"suffix,omitempty" tf:"suffix,omitempty"`
+}
+
+type TrustDeviceDefaultProfileDNSSearchSuffixesObservation struct {
+
+	// (String) A description of the DNS search suffix.
+	// A description of the DNS search suffix.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (String) The DNS search suffix to append when resolving short hostnames.
+	// The DNS search suffix to append when resolving short hostnames.
+	Suffix *string `json:"suffix,omitempty" tf:"suffix,omitempty"`
+}
+
+type TrustDeviceDefaultProfileDNSSearchSuffixesParameters struct {
+
+	// (String) A description of the DNS search suffix.
+	// A description of the DNS search suffix.
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (String) The DNS search suffix to append when resolving short hostnames.
+	// The DNS search suffix to append when resolving short hostnames.
+	// +kubebuilder:validation:Optional
+	Suffix *string `json:"suffix" tf:"suffix,omitempty"`
+}
+
 type TrustDeviceDefaultProfileExcludeInitParameters struct {
 
 	// (String) The address in CIDR format to exclude from the tunnel. If address is present, host must not be present.
 	// The address in CIDR format to exclude from the tunnel. If `address` is present, `host` must not be present.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// (String) A description of the Split Tunnel item, displayed in the client UI.
+	// (String) A description of the DNS search suffix.
 	// A description of the Split Tunnel item, displayed in the client UI.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -35,7 +70,7 @@ type TrustDeviceDefaultProfileExcludeObservation struct {
 	// The address in CIDR format to exclude from the tunnel. If `address` is present, `host` must not be present.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// (String) A description of the Split Tunnel item, displayed in the client UI.
+	// (String) A description of the DNS search suffix.
 	// A description of the Split Tunnel item, displayed in the client UI.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -51,7 +86,7 @@ type TrustDeviceDefaultProfileExcludeParameters struct {
 	// +kubebuilder:validation:Optional
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// (String) A description of the Split Tunnel item, displayed in the client UI.
+	// (String) A description of the DNS search suffix.
 	// A description of the Split Tunnel item, displayed in the client UI.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -71,11 +106,11 @@ type TrustDeviceDefaultProfileFallbackDomainsObservation struct {
 	// A list of IP addresses to handle domain resolution.
 	DNSServer []*string `json:"dnsServer,omitempty" tf:"dns_server,omitempty"`
 
-	// (String) A description of the Split Tunnel item, displayed in the client UI.
+	// (String) A description of the DNS search suffix.
 	// A description of the fallback domain, displayed in the client UI.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The domain suffix to match when resolving locally.
+	// (String) The DNS search suffix to append when resolving short hostnames.
 	// The domain suffix to match when resolving locally.
 	Suffix *string `json:"suffix,omitempty" tf:"suffix,omitempty"`
 }
@@ -89,7 +124,7 @@ type TrustDeviceDefaultProfileIncludeInitParameters struct {
 	// The address in CIDR format to include in the tunnel. If `address` is present, `host` must not be present.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// (String) A description of the Split Tunnel item, displayed in the client UI.
+	// (String) A description of the DNS search suffix.
 	// A description of the Split Tunnel item, displayed in the client UI.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -104,7 +139,7 @@ type TrustDeviceDefaultProfileIncludeObservation struct {
 	// The address in CIDR format to include in the tunnel. If `address` is present, `host` must not be present.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// (String) A description of the Split Tunnel item, displayed in the client UI.
+	// (String) A description of the DNS search suffix.
 	// A description of the Split Tunnel item, displayed in the client UI.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -120,7 +155,7 @@ type TrustDeviceDefaultProfileIncludeParameters struct {
 	// +kubebuilder:validation:Optional
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// (String) A description of the Split Tunnel item, displayed in the client UI.
+	// (String) A description of the DNS search suffix.
 	// A description of the Split Tunnel item, displayed in the client UI.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -155,6 +190,9 @@ type TrustDeviceDefaultProfileInitParameters struct {
 	// (Number) Turn on the captive portal after the specified amount of time.
 	// Turn on the captive portal after the specified amount of time.
 	CaptivePortal *float64 `json:"captivePortal,omitempty" tf:"captive_portal,omitempty"`
+
+	// (Attributes List) List of DNS search suffixes to apply to clients. Suffixes are evaluated in order. Use an empty array to clear. (see below for nested schema)
+	DNSSearchSuffixes []TrustDeviceDefaultProfileDNSSearchSuffixesInitParameters `json:"dnsSearchSuffixes,omitempty" tf:"dns_search_suffixes,omitempty"`
 
 	// (Boolean) If the dns_server field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to true.
 	// If the `dns_server` field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to `true`.
@@ -200,6 +238,9 @@ type TrustDeviceDefaultProfileInitParameters struct {
 	// (String) Determines which tunnel protocol to use.
 	// Determines which tunnel protocol to use.
 	TunnelProtocol *string `json:"tunnelProtocol,omitempty" tf:"tunnel_protocol,omitempty"`
+
+	// (Attributes) Virtual network access settings for the device. (see below for nested schema)
+	VirtualNetworks *TrustDeviceDefaultProfileVirtualNetworksInitParameters `json:"virtualNetworks,omitempty" tf:"virtual_networks,omitempty"`
 }
 
 type TrustDeviceDefaultProfileObservation struct {
@@ -226,6 +267,9 @@ type TrustDeviceDefaultProfileObservation struct {
 	// (Number) Turn on the captive portal after the specified amount of time.
 	// Turn on the captive portal after the specified amount of time.
 	CaptivePortal *float64 `json:"captivePortal,omitempty" tf:"captive_portal,omitempty"`
+
+	// (Attributes List) List of DNS search suffixes to apply to clients. Suffixes are evaluated in order. Use an empty array to clear. (see below for nested schema)
+	DNSSearchSuffixes []TrustDeviceDefaultProfileDNSSearchSuffixesObservation `json:"dnsSearchSuffixes,omitempty" tf:"dns_search_suffixes,omitempty"`
 
 	// (Boolean) Whether the policy will be applied to matching devices.
 	// Whether the policy will be applied to matching devices.
@@ -266,6 +310,9 @@ type TrustDeviceDefaultProfileObservation struct {
 	// The size of the subnet for the local access network. Note that this field is omitted from the response if null or unset.
 	LanAllowSubnetSize *float64 `json:"lanAllowSubnetSize,omitempty" tf:"lan_allow_subnet_size,omitempty"`
 
+	// (String)
+	PolicyID *string `json:"policyId,omitempty" tf:"policy_id,omitempty"`
+
 	// premises DNS server.
 	// Determines if the operating system will register WARP's local interface IP with your on-premises DNS server.
 	RegisterInterfaceIPWithDNS *bool `json:"registerInterfaceIpWithDns,omitempty" tf:"register_interface_ip_with_dns,omitempty"`
@@ -288,6 +335,9 @@ type TrustDeviceDefaultProfileObservation struct {
 	// (String) Determines which tunnel protocol to use.
 	// Determines which tunnel protocol to use.
 	TunnelProtocol *string `json:"tunnelProtocol,omitempty" tf:"tunnel_protocol,omitempty"`
+
+	// (Attributes) Virtual network access settings for the device. (see below for nested schema)
+	VirtualNetworks *TrustDeviceDefaultProfileVirtualNetworksObservation `json:"virtualNetworks,omitempty" tf:"virtual_networks,omitempty"`
 }
 
 type TrustDeviceDefaultProfileParameters struct {
@@ -320,6 +370,10 @@ type TrustDeviceDefaultProfileParameters struct {
 	// Turn on the captive portal after the specified amount of time.
 	// +kubebuilder:validation:Optional
 	CaptivePortal *float64 `json:"captivePortal,omitempty" tf:"captive_portal,omitempty"`
+
+	// (Attributes List) List of DNS search suffixes to apply to clients. Suffixes are evaluated in order. Use an empty array to clear. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	DNSSearchSuffixes []TrustDeviceDefaultProfileDNSSearchSuffixesParameters `json:"dnsSearchSuffixes,omitempty" tf:"dns_search_suffixes,omitempty"`
 
 	// (Boolean) If the dns_server field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to true.
 	// If the `dns_server` field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to `true`.
@@ -377,6 +431,10 @@ type TrustDeviceDefaultProfileParameters struct {
 	// Determines which tunnel protocol to use.
 	// +kubebuilder:validation:Optional
 	TunnelProtocol *string `json:"tunnelProtocol,omitempty" tf:"tunnel_protocol,omitempty"`
+
+	// (Attributes) Virtual network access settings for the device. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	VirtualNetworks *TrustDeviceDefaultProfileVirtualNetworksParameters `json:"virtualNetworks,omitempty" tf:"virtual_networks,omitempty"`
 }
 
 type TrustDeviceDefaultProfileServiceModeV2InitParameters struct {
@@ -414,6 +472,41 @@ type TrustDeviceDefaultProfileServiceModeV2Parameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
 
+type TrustDeviceDefaultProfileVirtualNetworksInitParameters struct {
+
+	// (List of String) List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+	// List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+	Allowed []*string `json:"allowed,omitempty" tf:"allowed,omitempty"`
+
+	// (Boolean) Whether the policy will be applied to matching devices.
+	// The default virtual network ID. Must be included in the `allowed` list.
+	Default *string `json:"default,omitempty" tf:"default,omitempty"`
+}
+
+type TrustDeviceDefaultProfileVirtualNetworksObservation struct {
+
+	// (List of String) List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+	// List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+	Allowed []*string `json:"allowed,omitempty" tf:"allowed,omitempty"`
+
+	// (Boolean) Whether the policy will be applied to matching devices.
+	// The default virtual network ID. Must be included in the `allowed` list.
+	Default *string `json:"default,omitempty" tf:"default,omitempty"`
+}
+
+type TrustDeviceDefaultProfileVirtualNetworksParameters struct {
+
+	// (List of String) List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+	// List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+	// +kubebuilder:validation:Optional
+	Allowed []*string `json:"allowed" tf:"allowed,omitempty"`
+
+	// (Boolean) Whether the policy will be applied to matching devices.
+	// The default virtual network ID. Must be included in the `allowed` list.
+	// +kubebuilder:validation:Optional
+	Default *string `json:"default" tf:"default,omitempty"`
+}
+
 // TrustDeviceDefaultProfileSpec defines the desired state of TrustDeviceDefaultProfile
 type TrustDeviceDefaultProfileSpec struct {
 	v2.ManagedResourceSpec `json:",inline"`
@@ -441,7 +534,7 @@ type TrustDeviceDefaultProfileStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustDeviceDefaultProfile is the Schema for the TrustDeviceDefaultProfiles API.
+// TrustDeviceDefaultProfile is the Schema for the TrustDeviceDefaultProfiles API. Accepted Permissions Zero Trust Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

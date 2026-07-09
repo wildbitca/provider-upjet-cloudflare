@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Watermark is the Schema for the Watermarks API.
+        description: Watermark is the Schema for the Watermarks API. Accepted Permissions
+          Stream ReadStream Write
         properties:
           apiVersion:
             description: |-
@@ -63,11 +64,6 @@ spec:
                       (String) The account identifier tag.
                       The account identifier tag.
                     type: string
-                  file:
-                    description: |-
-                      (String) The image file to upload.
-                      The image file to upload.
-                    type: string
                   identifier:
                     description: |-
                       (String) The unique identifier for a watermark profile.
@@ -98,6 +94,11 @@ spec:
                       is), and 1.0 fills the entire video.
                       The size of the image relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. `0.0` indicates no scaling (use the size of the image as-is), and `1.0 `fills the entire video.
                     type: number
+                  url:
+                    description: |-
+                      (String) URL of the watermark image to copy.
+                      URL of the watermark image to copy.
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -117,11 +118,6 @@ spec:
                       (String) The account identifier tag.
                       The account identifier tag.
                     type: string
-                  file:
-                    description: |-
-                      (String) The image file to upload.
-                      The image file to upload.
-                    type: string
                   identifier:
                     description: |-
                       (String) The unique identifier for a watermark profile.
@@ -152,6 +148,11 @@ spec:
                       is), and 1.0 fills the entire video.
                       The size of the image relative to the overall size of the video. This parameter will adapt to horizontal and vertical videos automatically. `0.0` indicates no scaling (use the size of the image as-is), and `1.0 `fills the entire video.
                     type: number
+                  url:
+                    description: |-
+                      (String) URL of the watermark image to copy.
+                      URL of the watermark image to copy.
+                    type: string
                 type: object
               managementPolicies:
                 default:
@@ -216,10 +217,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
                 || (has(self.initProvider) && has(self.initProvider.accountId))'
-            - message: spec.forProvider.file is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.file)
-                || (has(self.initProvider) && has(self.initProvider.file))'
           status:
             description: WatermarkStatus defines the observed state of Watermark.
             properties:
@@ -239,11 +236,6 @@ spec:
                     description: |-
                       (String) The source URL for a downloaded image. If the watermark profile was created via direct upload, this field is null.
                       The source URL for a downloaded image. If the watermark profile was created via direct upload, this field is null.
-                    type: string
-                  file:
-                    description: |-
-                      (String) The image file to upload.
-                      The image file to upload.
                     type: string
                   height:
                     description: |-
@@ -291,6 +283,11 @@ spec:
                     description: |-
                       (String) The unique identifier for a watermark profile.
                       The unique identifier for a watermark profile.
+                    type: string
+                  url:
+                    description: |-
+                      (String) URL of the watermark image to copy.
+                      URL of the watermark image to copy.
                     type: string
                   width:
                     description: |-

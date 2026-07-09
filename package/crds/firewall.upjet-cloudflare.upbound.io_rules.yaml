@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Rule is the Schema for the Rules API.
+        description: Rule is the Schema for the Rules API. Accepted Permissions Firewall
+          Services ReadFirewall Services Write
         properties:
           apiVersion:
             description: |-

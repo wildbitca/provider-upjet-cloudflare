@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: RoutingAddress is the Schema for the RoutingAddresss API.
+        description: RoutingAddress is the Schema for the RoutingAddresss API. Accepted
+          Permissions Email Routing Addresses ReadEmail Routing Addresses Write
         properties:
           apiVersion:
             description: |-

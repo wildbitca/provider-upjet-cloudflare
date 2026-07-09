@@ -10,12 +10,12 @@ spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
     host:
-      hostname: api.example.com
-      resolverNetwork:
-        resolverIps:
-        - string
+      ipv4: 10.0.0.1
+      network:
         tunnelId: 0191dce4-9ab4-7fce-b660-8e5dec5172da
     httpPort: 8080
     httpsPort: 8443
-    name: web-server
+    name: web-app
+    tlsSettings:
+      certVerificationMode: verify_full
     type: http

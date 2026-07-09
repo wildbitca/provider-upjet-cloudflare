@@ -80,6 +80,10 @@ type TrustAccessAIControlsMcpPortalInitParameters struct {
 	// (String)
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// (Boolean) Allow remote code execution in Dynamic Workers (beta)
+	// Allow remote code execution in Dynamic Workers (beta)
+	AllowCodeMode *bool `json:"allowCodeMode,omitempty" tf:"allow_code_mode,omitempty"`
+
 	// (String)
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -101,6 +105,10 @@ type TrustAccessAIControlsMcpPortalObservation struct {
 
 	// (String)
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (Boolean) Allow remote code execution in Dynamic Workers (beta)
+	// Allow remote code execution in Dynamic Workers (beta)
+	AllowCodeMode *bool `json:"allowCodeMode,omitempty" tf:"allow_code_mode,omitempty"`
 
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
@@ -140,6 +148,11 @@ type TrustAccessAIControlsMcpPortalParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// (Boolean) Allow remote code execution in Dynamic Workers (beta)
+	// Allow remote code execution in Dynamic Workers (beta)
+	// +kubebuilder:validation:Optional
+	AllowCodeMode *bool `json:"allowCodeMode,omitempty" tf:"allow_code_mode,omitempty"`
+
 	// (String)
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -165,6 +178,9 @@ type TrustAccessAIControlsMcpPortalParameters struct {
 type UpdatedPromptsInitParameters struct {
 
 	// (String)
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// (String)
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (Boolean)
@@ -177,6 +193,9 @@ type UpdatedPromptsInitParameters struct {
 type UpdatedPromptsObservation struct {
 
 	// (String)
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// (String)
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (Boolean)
@@ -187,6 +206,10 @@ type UpdatedPromptsObservation struct {
 }
 
 type UpdatedPromptsParameters struct {
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional
@@ -204,6 +227,9 @@ type UpdatedPromptsParameters struct {
 type UpdatedToolsInitParameters struct {
 
 	// (String)
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// (String)
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (Boolean)
@@ -216,6 +242,9 @@ type UpdatedToolsInitParameters struct {
 type UpdatedToolsObservation struct {
 
 	// (String)
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
+
+	// (String)
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (Boolean)
@@ -226,6 +255,10 @@ type UpdatedToolsObservation struct {
 }
 
 type UpdatedToolsParameters struct {
+
+	// (String)
+	// +kubebuilder:validation:Optional
+	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional
@@ -267,7 +300,7 @@ type TrustAccessAIControlsMcpPortalStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustAccessAIControlsMcpPortal is the Schema for the TrustAccessAIControlsMcpPortals API.
+// TrustAccessAIControlsMcpPortal is the Schema for the TrustAccessAIControlsMcpPortals API. Accepted Permissions MCP Portals ReadMCP Portals Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Kv is the Schema for the Kvs API.
+        description: Kv is the Schema for the Kvs API. Accepted Permissions Workers
+          KV Storage ReadWorkers KV Storage Write
         properties:
           apiVersion:
             description: |-

@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: TrustDeviceDefaultProfile is the Schema for the TrustDeviceDefaultProfiles
-          API.
+          API. Accepted Permissions Zero Trust Write
         properties:
           apiVersion:
             description: |-
@@ -107,6 +107,24 @@ spec:
                       (Boolean) If the dns_server field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to true.
                       If the `dns_server` field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to `true`.
                     type: boolean
+                  dnsSearchSuffixes:
+                    description: (Attributes List) List of DNS search suffixes to
+                      apply to clients. Suffixes are evaluated in order. Use an empty
+                      array to clear. (see below for nested schema)
+                    items:
+                      properties:
+                        description:
+                          description: |-
+                            (String) A description of the DNS search suffix.
+                            A description of the DNS search suffix.
+                          type: string
+                        suffix:
+                          description: |-
+                            (String) The DNS search suffix to append when resolving short hostnames.
+                            The DNS search suffix to append when resolving short hostnames.
+                          type: string
+                      type: object
+                    type: array
                   exclude:
                     description: (Attributes List) List of routes excluded in the
                       WARP client's tunnel. Both 'exclude' and 'include' cannot be
@@ -120,7 +138,7 @@ spec:
                           type: string
                         description:
                           description: |-
-                            (String) A description of the Split Tunnel item, displayed in the client UI.
+                            (String) A description of the DNS search suffix.
                             A description of the Split Tunnel item, displayed in the client UI.
                           type: string
                         host:
@@ -148,7 +166,7 @@ spec:
                           type: string
                         description:
                           description: |-
-                            (String) A description of the Split Tunnel item, displayed in the client UI.
+                            (String) A description of the DNS search suffix.
                             A description of the Split Tunnel item, displayed in the client UI.
                           type: string
                         host:
@@ -207,6 +225,23 @@ spec:
                       (String) Determines which tunnel protocol to use.
                       Determines which tunnel protocol to use.
                     type: string
+                  virtualNetworks:
+                    description: (Attributes) Virtual network access settings for
+                      the device. (see below for nested schema)
+                    properties:
+                      allowed:
+                        description: |-
+                          (List of String) List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+                          List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+                        items:
+                          type: string
+                        type: array
+                      default:
+                        description: |-
+                          (Boolean) Whether the policy will be applied to matching devices.
+                          The default virtual network ID. Must be included in the `allowed` list.
+                        type: string
+                    type: object
                 type: object
               initProvider:
                 description: |-
@@ -254,6 +289,24 @@ spec:
                       (Boolean) If the dns_server field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to true.
                       If the `dns_server` field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to `true`.
                     type: boolean
+                  dnsSearchSuffixes:
+                    description: (Attributes List) List of DNS search suffixes to
+                      apply to clients. Suffixes are evaluated in order. Use an empty
+                      array to clear. (see below for nested schema)
+                    items:
+                      properties:
+                        description:
+                          description: |-
+                            (String) A description of the DNS search suffix.
+                            A description of the DNS search suffix.
+                          type: string
+                        suffix:
+                          description: |-
+                            (String) The DNS search suffix to append when resolving short hostnames.
+                            The DNS search suffix to append when resolving short hostnames.
+                          type: string
+                      type: object
+                    type: array
                   exclude:
                     description: (Attributes List) List of routes excluded in the
                       WARP client's tunnel. Both 'exclude' and 'include' cannot be
@@ -267,7 +320,7 @@ spec:
                           type: string
                         description:
                           description: |-
-                            (String) A description of the Split Tunnel item, displayed in the client UI.
+                            (String) A description of the DNS search suffix.
                             A description of the Split Tunnel item, displayed in the client UI.
                           type: string
                         host:
@@ -295,7 +348,7 @@ spec:
                           type: string
                         description:
                           description: |-
-                            (String) A description of the Split Tunnel item, displayed in the client UI.
+                            (String) A description of the DNS search suffix.
                             A description of the Split Tunnel item, displayed in the client UI.
                           type: string
                         host:
@@ -354,6 +407,23 @@ spec:
                       (String) Determines which tunnel protocol to use.
                       Determines which tunnel protocol to use.
                     type: string
+                  virtualNetworks:
+                    description: (Attributes) Virtual network access settings for
+                      the device. (see below for nested schema)
+                    properties:
+                      allowed:
+                        description: |-
+                          (List of String) List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+                          List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+                        items:
+                          type: string
+                        type: array
+                      default:
+                        description: |-
+                          (Boolean) Whether the policy will be applied to matching devices.
+                          The default virtual network ID. Must be included in the `allowed` list.
+                        type: string
+                    type: object
                 type: object
               managementPolicies:
                 default:
@@ -490,6 +560,24 @@ spec:
                       (Boolean) If the dns_server field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to true.
                       If the `dns_server` field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to `true`.
                     type: boolean
+                  dnsSearchSuffixes:
+                    description: (Attributes List) List of DNS search suffixes to
+                      apply to clients. Suffixes are evaluated in order. Use an empty
+                      array to clear. (see below for nested schema)
+                    items:
+                      properties:
+                        description:
+                          description: |-
+                            (String) A description of the DNS search suffix.
+                            A description of the DNS search suffix.
+                          type: string
+                        suffix:
+                          description: |-
+                            (String) The DNS search suffix to append when resolving short hostnames.
+                            The DNS search suffix to append when resolving short hostnames.
+                          type: string
+                      type: object
+                    type: array
                   enabled:
                     description: |-
                       (Boolean) Whether the policy will be applied to matching devices.
@@ -508,7 +596,7 @@ spec:
                           type: string
                         description:
                           description: |-
-                            (String) A description of the Split Tunnel item, displayed in the client UI.
+                            (String) A description of the DNS search suffix.
                             A description of the Split Tunnel item, displayed in the client UI.
                           type: string
                         host:
@@ -529,7 +617,7 @@ spec:
                       properties:
                         description:
                           description: |-
-                            (String) A description of the Split Tunnel item, displayed in the client UI.
+                            (String) A description of the DNS search suffix.
                             A description of the fallback domain, displayed in the client UI.
                           type: string
                         dnsServer:
@@ -541,7 +629,7 @@ spec:
                           type: array
                         suffix:
                           description: |-
-                            (String) The domain suffix to match when resolving locally.
+                            (String) The DNS search suffix to append when resolving short hostnames.
                             The domain suffix to match when resolving locally.
                           type: string
                       type: object
@@ -565,7 +653,7 @@ spec:
                           type: string
                         description:
                           description: |-
-                            (String) A description of the Split Tunnel item, displayed in the client UI.
+                            (String) A description of the DNS search suffix.
                             A description of the Split Tunnel item, displayed in the client UI.
                           type: string
                         host:
@@ -585,6 +673,9 @@ spec:
                       (Number) The size of the subnet for the local access network. Note that this field is omitted from the response if null or unset.
                       The size of the subnet for the local access network. Note that this field is omitted from the response if null or unset.
                     type: number
+                  policyId:
+                    description: (String)
+                    type: string
                   registerInterfaceIpWithDns:
                     description: |-
                       premises DNS server.
@@ -624,6 +715,23 @@ spec:
                       (String) Determines which tunnel protocol to use.
                       Determines which tunnel protocol to use.
                     type: string
+                  virtualNetworks:
+                    description: (Attributes) Virtual network access settings for
+                      the device. (see below for nested schema)
+                    properties:
+                      allowed:
+                        description: |-
+                          (List of String) List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+                          List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
+                        items:
+                          type: string
+                        type: array
+                      default:
+                        description: |-
+                          (Boolean) Whether the policy will be applied to matching devices.
+                          The default virtual network ID. Must be included in the `allowed` list.
+                        type: string
+                    type: object
                 type: object
               conditions:
                 description: Conditions of the resource.

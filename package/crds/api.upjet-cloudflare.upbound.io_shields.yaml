@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Shield is the Schema for the Shields API. Manages API Shield
-          configuration properties for a zone, specifically auth ID characteristics.
+        description: Shield is the Schema for the Shields API. Accepted Permissions
+          Account API GatewayAccount API Gateway ReadDomain API GatewayDomain API
+          Gateway Read
         properties:
           apiVersion:
             description: |-

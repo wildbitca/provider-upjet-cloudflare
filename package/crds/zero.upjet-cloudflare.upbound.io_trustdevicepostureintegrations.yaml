@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: TrustDevicePostureIntegration is the Schema for the TrustDevicePostureIntegrations
-          API.
+          API. Accepted Permissions Zero Trust Write
         properties:
           apiVersion:
             description: |-
@@ -120,11 +120,25 @@ spec:
                           (String) The Workspace One client ID provided in the Workspace One Admin Dashboard.
                           The Workspace One client ID provided in the Workspace One Admin Dashboard.
                         type: string
-                      clientKey:
+                      clientKeySecretRef:
                         description: |-
-                          (String) The Uptycs client secret.
+                          (String, Sensitive) The Uptycs client secret.
                           The Uptycs client secret.
-                        type: string
+                        properties:
+                          key:
+                            description: The key to select.
+                            type: string
+                          name:
+                            description: Name of the secret.
+                            type: string
+                          namespace:
+                            description: Namespace of the secret.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        - namespace
+                        type: object
                       clientSecretSecretRef:
                         description: |-
                           (String, Sensitive) The Workspace One client secret provided in the Workspace One Admin Dashboard.
@@ -227,11 +241,25 @@ spec:
                           (String) The Workspace One client ID provided in the Workspace One Admin Dashboard.
                           The Workspace One client ID provided in the Workspace One Admin Dashboard.
                         type: string
-                      clientKey:
+                      clientKeySecretRef:
                         description: |-
-                          (String) The Uptycs client secret.
+                          (String, Sensitive) The Uptycs client secret.
                           The Uptycs client secret.
-                        type: string
+                        properties:
+                          key:
+                            description: The key to select.
+                            type: string
+                          name:
+                            description: Name of the secret.
+                            type: string
+                          namespace:
+                            description: Namespace of the secret.
+                            type: string
+                        required:
+                        - key
+                        - name
+                        - namespace
+                        type: object
                       clientSecretSecretRef:
                         description: |-
                           (String, Sensitive) The Workspace One client secret provided in the Workspace One Admin Dashboard.
@@ -414,11 +442,6 @@ spec:
                         description: |-
                           (String) The Workspace One client ID provided in the Workspace One Admin Dashboard.
                           The Workspace One client ID provided in the Workspace One Admin Dashboard.
-                        type: string
-                      clientKey:
-                        description: |-
-                          (String) The Uptycs client secret.
-                          The Uptycs client secret.
                         type: string
                       customerId:
                         description: |-

@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Bucket is the Schema for the Buckets API.
+        description: Bucket is the Schema for the Buckets API. Accepted Permissions
+          Workers R2 Storage Write
         properties:
           apiVersion:
             description: |-

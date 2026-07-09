@@ -196,9 +196,9 @@ spec:
                             type: boolean
                           download:
                             description: |-
-                              (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+                              (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. If this field is absent, downloading remains enabled. Applies only when version == "v2".
                               Available values: "enabled", "disabled", "remote_only".
-                              Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+                              Configure download behavior. When set to remote_only, users can view downloads but cannot save them. If this field is absent, downloading remains enabled. Applies only when version == "v2".
                               Available values: "enabled", "disabled", "remote_only".
                             type: string
                           dp:
@@ -244,6 +244,11 @@ spec:
                               only).
                               Indicate which version of the browser isolation controls should apply.
                               Available values: "v1", "v2".
+                            type: string
+                          wmId:
+                            description: |-
+                              (String) Specify the watermark ID (UUID) to apply to the isolated browser session. When present, enables watermark rendering in the isolated browser.
+                              Specify the watermark ID (UUID) to apply to the isolated browser session. When present, enables watermark rendering in the isolated browser.
                             type: string
                         type: object
                       blockPage:
@@ -738,9 +743,9 @@ spec:
                             type: boolean
                           download:
                             description: |-
-                              (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+                              (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. If this field is absent, downloading remains enabled. Applies only when version == "v2".
                               Available values: "enabled", "disabled", "remote_only".
-                              Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+                              Configure download behavior. When set to remote_only, users can view downloads but cannot save them. If this field is absent, downloading remains enabled. Applies only when version == "v2".
                               Available values: "enabled", "disabled", "remote_only".
                             type: string
                           dp:
@@ -786,6 +791,11 @@ spec:
                               only).
                               Indicate which version of the browser isolation controls should apply.
                               Available values: "v1", "v2".
+                            type: string
+                          wmId:
+                            description: |-
+                              (String) Specify the watermark ID (UUID) to apply to the isolated browser session. When present, enables watermark rendering in the isolated browser.
+                              Specify the watermark ID (UUID) to apply to the isolated browser session. When present, enables watermark rendering in the isolated browser.
                             type: string
                         type: object
                       blockPage:
@@ -1392,9 +1402,9 @@ spec:
                             type: boolean
                           download:
                             description: |-
-                              (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+                              (String) Configure download behavior. When set to remote_only, users can view downloads but cannot save them. If this field is absent, downloading remains enabled. Applies only when version == "v2".
                               Available values: "enabled", "disabled", "remote_only".
-                              Configure download behavior. When set to remote_only, users can view downloads but cannot save them. Applies only when version == "v2".
+                              Configure download behavior. When set to remote_only, users can view downloads but cannot save them. If this field is absent, downloading remains enabled. Applies only when version == "v2".
                               Available values: "enabled", "disabled", "remote_only".
                             type: string
                           dp:
@@ -1440,6 +1450,11 @@ spec:
                               only).
                               Indicate which version of the browser isolation controls should apply.
                               Available values: "v1", "v2".
+                            type: string
+                          wmId:
+                            description: |-
+                              (String) Specify the watermark ID (UUID) to apply to the isolated browser session. When present, enables watermark rendering in the isolated browser.
+                              Specify the watermark ID (UUID) to apply to the isolated browser session. When present, enables watermark rendering in the isolated browser.
                             type: string
                         type: object
                       blockPage:

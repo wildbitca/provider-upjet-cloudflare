@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustAccessServiceToken is the Schema for the TrustAccessServiceTokens
-          API.
+        description: 'TrustAccessServiceToken is the Schema for the TrustAccessServiceTokens
+          API. Accepted Permissions Access: Service Tokens ReadAccess: Service Tokens
+          Write'
         properties:
           apiVersion:
             description: |-

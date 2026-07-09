@@ -21,7 +21,7 @@ func (mg *TrustAccessAIControlsMcpServer) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this TrustAccessAIControlsMcpServer
 func (tr *TrustAccessAIControlsMcpServer) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"auth_credentials": "authCredentialsSecretRef"}
 }
 
 // GetObservation of this TrustAccessAIControlsMcpServer
@@ -125,5 +125,5 @@ func (tr *TrustAccessAIControlsMcpServer) LateInitialize(attrs []byte) (bool, er
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *TrustAccessAIControlsMcpServer) GetTerraformSchemaVersion() int {
-	return 0
+	return 500
 }

@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Room is the Schema for the Rooms API.
+        description: Room is the Schema for the Rooms API. Accepted Permissions Waiting
+          Rooms ReadWaiting Rooms Write
         properties:
           apiVersion:
             description: |-

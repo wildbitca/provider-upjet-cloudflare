@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: BalancerPool is the Schema for the BalancerPools API.
+        description: 'BalancerPool is the Schema for the BalancerPools API. Accepted
+          Permissions Load Balancing: Monitors and Pools ReadLoad Balancing: Monitors
+          and Pools Write'
         properties:
           apiVersion:
             description: |-
@@ -213,7 +215,7 @@ spec:
                         type: string
                     type: object
                   origins:
-                    description: (Attributes Set) The list of origins within this
+                    description: (Attributes List) The list of origins within this
                       pool. Traffic directed at this pool is balanced across all currently
                       healthy origins, provided the pool itself is healthy. (see below
                       for nested schema)
@@ -224,15 +226,15 @@ spec:
                             (String) The IP address (IPv4 or IPv6) of the origin, or its publicly addressable hostname. Hostnames entered here should resolve directly to the origin, and not be a hostname proxied by Cloudflare. To set an internal/reserved address, virtual_network_id must also be set.
                             The IP address (IPv4 or IPv6) of the origin, or its publicly addressable hostname. Hostnames entered here should resolve directly to the origin, and not be a hostname proxied by Cloudflare. To set an internal/reserved address, virtual_network_id must also be set.
                           type: string
-                        disabledAt:
-                          description: |-
-                            (String) This field shows up only if the pool is disabled. This field is set with the time the pool was disabled at.
-                            This field shows up only if the origin is disabled. This field is set with the time the origin was disabled.
-                          type: string
                         enabled:
                           description: |-
                             (Boolean) Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
                             Whether to enable (the default) this origin within the pool. Disabled origins will not receive traffic and are excluded from health checks. The origin will only be disabled for the current pool.
+                          type: boolean
+                        flattenCname:
+                          description: |-
+                            (Boolean) Whether to flatten CNAME records for this origin, resolving them to A/AAAA records before returning to the client. When true (the default), the director resolves CNAME addresses to their underlying A/AAAA records. When false, the origin address is returned as a raw CNAME record without resolution. This setting mirrors the DNS API record flatten_cname setting.
+                            Whether to flatten CNAME records for this origin, resolving them to A/AAAA records before returning to the client. When true (the default), the director resolves CNAME addresses to their underlying A/AAAA records. When false, the origin address is returned as a raw CNAME record without resolution. This setting mirrors the DNS API record flatten_cname setting.
                           type: boolean
                         header:
                           description: (Attributes) The request header is used to
@@ -426,7 +428,7 @@ spec:
                         type: string
                     type: object
                   origins:
-                    description: (Attributes Set) The list of origins within this
+                    description: (Attributes List) The list of origins within this
                       pool. Traffic directed at this pool is balanced across all currently
                       healthy origins, provided the pool itself is healthy. (see below
                       for nested schema)
@@ -437,15 +439,15 @@ spec:
                             (String) The IP address (IPv4 or IPv6) of the origin, or its publicly addressable hostname. Hostnames entered here should resolve directly to the origin, and not be a hostname proxied by Cloudflare. To set an internal/reserved address, virtual_network_id must also be set.
                             The IP address (IPv4 or IPv6) of the origin, or its publicly addressable hostname. Hostnames entered here should resolve directly to the origin, and not be a hostname proxied by Cloudflare. To set an internal/reserved address, virtual_network_id must also be set.
                           type: string
-                        disabledAt:
-                          description: |-
-                            (String) This field shows up only if the pool is disabled. This field is set with the time the pool was disabled at.
-                            This field shows up only if the origin is disabled. This field is set with the time the origin was disabled.
-                          type: string
                         enabled:
                           description: |-
                             (Boolean) Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
                             Whether to enable (the default) this origin within the pool. Disabled origins will not receive traffic and are excluded from health checks. The origin will only be disabled for the current pool.
+                          type: boolean
+                        flattenCname:
+                          description: |-
+                            (Boolean) Whether to flatten CNAME records for this origin, resolving them to A/AAAA records before returning to the client. When true (the default), the director resolves CNAME addresses to their underlying A/AAAA records. When false, the origin address is returned as a raw CNAME record without resolution. This setting mirrors the DNS API record flatten_cname setting.
+                            Whether to flatten CNAME records for this origin, resolving them to A/AAAA records before returning to the client. When true (the default), the director resolves CNAME addresses to their underlying A/AAAA records. When false, the origin address is returned as a raw CNAME record without resolution. This setting mirrors the DNS API record flatten_cname setting.
                           type: boolean
                         header:
                           description: (Attributes) The request header is used to
@@ -751,7 +753,7 @@ spec:
                         type: string
                     type: object
                   origins:
-                    description: (Attributes Set) The list of origins within this
+                    description: (Attributes List) The list of origins within this
                       pool. Traffic directed at this pool is balanced across all currently
                       healthy origins, provided the pool itself is healthy. (see below
                       for nested schema)
@@ -771,6 +773,11 @@ spec:
                           description: |-
                             (Boolean) Whether to enable (the default) or disable this pool. Disabled pools will not receive traffic and are excluded from health checks. Disabling a pool will cause any load balancers using it to failover to the next pool (if any).
                             Whether to enable (the default) this origin within the pool. Disabled origins will not receive traffic and are excluded from health checks. The origin will only be disabled for the current pool.
+                          type: boolean
+                        flattenCname:
+                          description: |-
+                            (Boolean) Whether to flatten CNAME records for this origin, resolving them to A/AAAA records before returning to the client. When true (the default), the director resolves CNAME addresses to their underlying A/AAAA records. When false, the origin address is returned as a raw CNAME record without resolution. This setting mirrors the DNS API record flatten_cname setting.
+                            Whether to flatten CNAME records for this origin, resolving them to A/AAAA records before returning to the client. When true (the default), the director resolves CNAME addresses to their underlying A/AAAA records. When false, the origin address is returned as a raw CNAME record without resolution. This setting mirrors the DNS API record flatten_cname setting.
                           type: boolean
                         header:
                           description: (Attributes) The request header is used to

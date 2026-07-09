@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustDexTest is the Schema for the TrustDexTests API.
+        description: TrustDexTest is the Schema for the TrustDexTests API. Accepted
+          Permissions Cloudflare DEX ReadCloudflare DEX WriteZero Trust ReadZero Trust
+          Report
         properties:
           apiVersion:
             description: |-

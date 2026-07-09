@@ -391,11 +391,90 @@ spec:
                       (String) The image URL for the logo shown in the App Launcher dashboard.
                       The image URL for the logo shown in the App Launcher dashboard.
                     type: string
+                  mfaConfig:
+                    description: factor authentication (MFA) settings for the application.
+                      Only valid for self_hosted, ssh, vnc, and rdp application types.
+                      (see below for nested schema)
+                    properties:
+                      allowedAuthenticators:
+                        description: |-
+                          (List of String) The authenticators allowed for MFA.
+                          Available values: "totp", "biometrics", "security_key".
+                          The authenticators allowed for MFA.
+                          Available values: "totp", "biometrics", "security_key".
+                        items:
+                          type: string
+                        type: array
+                      mfaDisabled:
+                        description: |-
+                          (Boolean) Whether MFA is disabled for this application.
+                          Whether MFA is disabled for this application.
+                        type: boolean
+                      sessionDuration:
+                        description: |-
+                          (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                          How often a user will be forced to re-authenticate with MFA.
+                        type: string
+                    type: object
                   name:
                     description: |-
                       (String) The name of the application.
                       The name of the application.
                     type: string
+                  oauthConfiguration:
+                    description: (Attributes) Optional configuration for managing
+                      an OAuth authorization flow controlled by Access. When set,
+                      Access will act as the OAuth authorization server for this application.
+                      This feature is currently in beta. (see below for nested schema)
+                    properties:
+                      dynamicClientRegistration:
+                        description: (Attributes) Settings for OAuth dynamic client
+                          registration. (see below for nested schema)
+                        properties:
+                          allowAnyOnLocalhost:
+                            description: |-
+                              (Boolean) Allows any client with redirect URIs on localhost.
+                              Allows any client with redirect URIs on localhost.
+                            type: boolean
+                          allowAnyOnLoopback:
+                            description: |-
+                              (Boolean) Allows any client with redirect URIs on 127.0.0.1.
+                              Allows any client with redirect URIs on 127.0.0.1.
+                            type: boolean
+                          allowedUris:
+                            description: |-
+                              paths.
+                              The URIs that are allowed as redirect URIs for dynamically registered clients. Must use the `https` protocol. Paths may end in `/*` to match all sub-paths.
+                            items:
+                              type: string
+                            type: array
+                          enabled:
+                            description: |-
+                              (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
+                              Whether dynamic client registration is enabled.
+                            type: boolean
+                        type: object
+                      enabled:
+                        description: |-
+                          (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
+                          Whether the OAuth configuration is enabled for this application. When set to `false`, Access will not handle OAuth for this application. Defaults to `true` if omitted.
+                        type: boolean
+                      grant:
+                        description: (Attributes) Settings for OAuth grant behavior.
+                          (see below for nested schema)
+                        properties:
+                          accessTokenLifetime:
+                            description: |-
+                              (String) The lifetime of the access token. Must be in the format 300ms or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h.
+                              The lifetime of the access token. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
+                            type: string
+                          sessionDuration:
+                            description: |-
+                              (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                              The duration of the OAuth session. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
+                            type: string
+                        type: object
+                    type: object
                   optionsPreflightBypass:
                     description: |-
                       (Boolean) Allows options preflight requests to bypass Access authentication and go directly to the origin. Cannot turn on if cors_headers is set.
@@ -1004,6 +1083,31 @@ spec:
                                 type: object
                             type: object
                           type: array
+                        mfaConfig:
+                          description: factor authentication (MFA) settings for the
+                            application. Only valid for self_hosted, ssh, vnc, and
+                            rdp application types. (see below for nested schema)
+                          properties:
+                            allowedAuthenticators:
+                              description: |-
+                                (List of String) The authenticators allowed for MFA.
+                                Available values: "totp", "biometrics", "security_key".
+                                The authenticators allowed for MFA.
+                                Available values: "totp", "biometrics", "security_key", "ssh_piv_key".
+                              items:
+                                type: string
+                              type: array
+                            mfaDisabled:
+                              description: |-
+                                (Boolean) Whether MFA is disabled for this application.
+                                Whether MFA is disabled for this policy.
+                              type: boolean
+                            sessionDuration:
+                              description: |-
+                                (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                                How often a user will be forced to re-authenticate with MFA.
+                              type: string
+                          type: object
                         name:
                           description: |-
                             (String) The name of the application.
@@ -1305,7 +1409,7 @@ spec:
                     properties:
                       accessTokenLifetime:
                         description: |-
-                          (String) The lifetime of the OIDC Access Token after creation. Valid units are m,h. Must be greater than or equal to 1m and less than or equal to 24h.
+                          (String) The lifetime of the access token. Must be in the format 300ms or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h.
                           The lifetime of the OIDC Access Token after creation. Valid units are m,h. Must be greater than or equal to 1m and less than or equal to 24h.
                         type: string
                       allowPkceWithoutClientSecret:
@@ -1624,7 +1728,7 @@ spec:
                         type: boolean
                       enabled:
                         description: |-
-                          (Boolean) Whether SCIM provisioning is turned on for this application.
+                          (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
                           Whether SCIM provisioning is turned on for this application.
                         type: boolean
                       idpUid:
@@ -1641,7 +1745,7 @@ spec:
                           properties:
                             enabled:
                               description: |-
-                                (Boolean) Whether SCIM provisioning is turned on for this application.
+                                (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
                                 Whether or not this mapping is enabled.
                               type: boolean
                             filter:
@@ -2102,11 +2206,90 @@ spec:
                       (String) The image URL for the logo shown in the App Launcher dashboard.
                       The image URL for the logo shown in the App Launcher dashboard.
                     type: string
+                  mfaConfig:
+                    description: factor authentication (MFA) settings for the application.
+                      Only valid for self_hosted, ssh, vnc, and rdp application types.
+                      (see below for nested schema)
+                    properties:
+                      allowedAuthenticators:
+                        description: |-
+                          (List of String) The authenticators allowed for MFA.
+                          Available values: "totp", "biometrics", "security_key".
+                          The authenticators allowed for MFA.
+                          Available values: "totp", "biometrics", "security_key".
+                        items:
+                          type: string
+                        type: array
+                      mfaDisabled:
+                        description: |-
+                          (Boolean) Whether MFA is disabled for this application.
+                          Whether MFA is disabled for this application.
+                        type: boolean
+                      sessionDuration:
+                        description: |-
+                          (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                          How often a user will be forced to re-authenticate with MFA.
+                        type: string
+                    type: object
                   name:
                     description: |-
                       (String) The name of the application.
                       The name of the application.
                     type: string
+                  oauthConfiguration:
+                    description: (Attributes) Optional configuration for managing
+                      an OAuth authorization flow controlled by Access. When set,
+                      Access will act as the OAuth authorization server for this application.
+                      This feature is currently in beta. (see below for nested schema)
+                    properties:
+                      dynamicClientRegistration:
+                        description: (Attributes) Settings for OAuth dynamic client
+                          registration. (see below for nested schema)
+                        properties:
+                          allowAnyOnLocalhost:
+                            description: |-
+                              (Boolean) Allows any client with redirect URIs on localhost.
+                              Allows any client with redirect URIs on localhost.
+                            type: boolean
+                          allowAnyOnLoopback:
+                            description: |-
+                              (Boolean) Allows any client with redirect URIs on 127.0.0.1.
+                              Allows any client with redirect URIs on 127.0.0.1.
+                            type: boolean
+                          allowedUris:
+                            description: |-
+                              paths.
+                              The URIs that are allowed as redirect URIs for dynamically registered clients. Must use the `https` protocol. Paths may end in `/*` to match all sub-paths.
+                            items:
+                              type: string
+                            type: array
+                          enabled:
+                            description: |-
+                              (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
+                              Whether dynamic client registration is enabled.
+                            type: boolean
+                        type: object
+                      enabled:
+                        description: |-
+                          (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
+                          Whether the OAuth configuration is enabled for this application. When set to `false`, Access will not handle OAuth for this application. Defaults to `true` if omitted.
+                        type: boolean
+                      grant:
+                        description: (Attributes) Settings for OAuth grant behavior.
+                          (see below for nested schema)
+                        properties:
+                          accessTokenLifetime:
+                            description: |-
+                              (String) The lifetime of the access token. Must be in the format 300ms or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h.
+                              The lifetime of the access token. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
+                            type: string
+                          sessionDuration:
+                            description: |-
+                              (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                              The duration of the OAuth session. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
+                            type: string
+                        type: object
+                    type: object
                   optionsPreflightBypass:
                     description: |-
                       (Boolean) Allows options preflight requests to bypass Access authentication and go directly to the origin. Cannot turn on if cors_headers is set.
@@ -2715,6 +2898,31 @@ spec:
                                 type: object
                             type: object
                           type: array
+                        mfaConfig:
+                          description: factor authentication (MFA) settings for the
+                            application. Only valid for self_hosted, ssh, vnc, and
+                            rdp application types. (see below for nested schema)
+                          properties:
+                            allowedAuthenticators:
+                              description: |-
+                                (List of String) The authenticators allowed for MFA.
+                                Available values: "totp", "biometrics", "security_key".
+                                The authenticators allowed for MFA.
+                                Available values: "totp", "biometrics", "security_key", "ssh_piv_key".
+                              items:
+                                type: string
+                              type: array
+                            mfaDisabled:
+                              description: |-
+                                (Boolean) Whether MFA is disabled for this application.
+                                Whether MFA is disabled for this policy.
+                              type: boolean
+                            sessionDuration:
+                              description: |-
+                                (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                                How often a user will be forced to re-authenticate with MFA.
+                              type: string
+                          type: object
                         name:
                           description: |-
                             (String) The name of the application.
@@ -3016,7 +3224,7 @@ spec:
                     properties:
                       accessTokenLifetime:
                         description: |-
-                          (String) The lifetime of the OIDC Access Token after creation. Valid units are m,h. Must be greater than or equal to 1m and less than or equal to 24h.
+                          (String) The lifetime of the access token. Must be in the format 300ms or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h.
                           The lifetime of the OIDC Access Token after creation. Valid units are m,h. Must be greater than or equal to 1m and less than or equal to 24h.
                         type: string
                       allowPkceWithoutClientSecret:
@@ -3335,7 +3543,7 @@ spec:
                         type: boolean
                       enabled:
                         description: |-
-                          (Boolean) Whether SCIM provisioning is turned on for this application.
+                          (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
                           Whether SCIM provisioning is turned on for this application.
                         type: boolean
                       idpUid:
@@ -3352,7 +3560,7 @@ spec:
                           properties:
                             enabled:
                               description: |-
-                                (Boolean) Whether SCIM provisioning is turned on for this application.
+                                (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
                                 Whether or not this mapping is enabled.
                               type: boolean
                             filter:
@@ -3826,11 +4034,90 @@ spec:
                       (String) The image URL for the logo shown in the App Launcher dashboard.
                       The image URL for the logo shown in the App Launcher dashboard.
                     type: string
+                  mfaConfig:
+                    description: factor authentication (MFA) settings for the application.
+                      Only valid for self_hosted, ssh, vnc, and rdp application types.
+                      (see below for nested schema)
+                    properties:
+                      allowedAuthenticators:
+                        description: |-
+                          (List of String) The authenticators allowed for MFA.
+                          Available values: "totp", "biometrics", "security_key".
+                          The authenticators allowed for MFA.
+                          Available values: "totp", "biometrics", "security_key".
+                        items:
+                          type: string
+                        type: array
+                      mfaDisabled:
+                        description: |-
+                          (Boolean) Whether MFA is disabled for this application.
+                          Whether MFA is disabled for this application.
+                        type: boolean
+                      sessionDuration:
+                        description: |-
+                          (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                          How often a user will be forced to re-authenticate with MFA.
+                        type: string
+                    type: object
                   name:
                     description: |-
                       (String) The name of the application.
                       The name of the application.
                     type: string
+                  oauthConfiguration:
+                    description: (Attributes) Optional configuration for managing
+                      an OAuth authorization flow controlled by Access. When set,
+                      Access will act as the OAuth authorization server for this application.
+                      This feature is currently in beta. (see below for nested schema)
+                    properties:
+                      dynamicClientRegistration:
+                        description: (Attributes) Settings for OAuth dynamic client
+                          registration. (see below for nested schema)
+                        properties:
+                          allowAnyOnLocalhost:
+                            description: |-
+                              (Boolean) Allows any client with redirect URIs on localhost.
+                              Allows any client with redirect URIs on localhost.
+                            type: boolean
+                          allowAnyOnLoopback:
+                            description: |-
+                              (Boolean) Allows any client with redirect URIs on 127.0.0.1.
+                              Allows any client with redirect URIs on 127.0.0.1.
+                            type: boolean
+                          allowedUris:
+                            description: |-
+                              paths.
+                              The URIs that are allowed as redirect URIs for dynamically registered clients. Must use the `https` protocol. Paths may end in `/*` to match all sub-paths.
+                            items:
+                              type: string
+                            type: array
+                          enabled:
+                            description: |-
+                              (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
+                              Whether dynamic client registration is enabled.
+                            type: boolean
+                        type: object
+                      enabled:
+                        description: |-
+                          (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
+                          Whether the OAuth configuration is enabled for this application. When set to `false`, Access will not handle OAuth for this application. Defaults to `true` if omitted.
+                        type: boolean
+                      grant:
+                        description: (Attributes) Settings for OAuth grant behavior.
+                          (see below for nested schema)
+                        properties:
+                          accessTokenLifetime:
+                            description: |-
+                              (String) The lifetime of the access token. Must be in the format 300ms or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h.
+                              The lifetime of the access token. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
+                            type: string
+                          sessionDuration:
+                            description: |-
+                              (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                              The duration of the OAuth session. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
+                            type: string
+                        type: object
+                    type: object
                   optionsPreflightBypass:
                     description: |-
                       (Boolean) Allows options preflight requests to bypass Access authentication and go directly to the origin. Cannot turn on if cors_headers is set.
@@ -4439,6 +4726,31 @@ spec:
                                 type: object
                             type: object
                           type: array
+                        mfaConfig:
+                          description: factor authentication (MFA) settings for the
+                            application. Only valid for self_hosted, ssh, vnc, and
+                            rdp application types. (see below for nested schema)
+                          properties:
+                            allowedAuthenticators:
+                              description: |-
+                                (List of String) The authenticators allowed for MFA.
+                                Available values: "totp", "biometrics", "security_key".
+                                The authenticators allowed for MFA.
+                                Available values: "totp", "biometrics", "security_key", "ssh_piv_key".
+                              items:
+                                type: string
+                              type: array
+                            mfaDisabled:
+                              description: |-
+                                (Boolean) Whether MFA is disabled for this application.
+                                Whether MFA is disabled for this policy.
+                              type: boolean
+                            sessionDuration:
+                              description: |-
+                                (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                                How often a user will be forced to re-authenticate with MFA.
+                              type: string
+                          type: object
                         name:
                           description: |-
                             (String) The name of the application.
@@ -4740,7 +5052,7 @@ spec:
                     properties:
                       accessTokenLifetime:
                         description: |-
-                          (String) The lifetime of the OIDC Access Token after creation. Valid units are m,h. Must be greater than or equal to 1m and less than or equal to 24h.
+                          (String) The lifetime of the access token. Must be in the format 300ms or 2h45m. Valid time units are ns, us (or µs), ms, s, m, h.
                           The lifetime of the OIDC Access Token after creation. Valid units are m,h. Must be greater than or equal to 1m and less than or equal to 24h.
                         type: string
                       allowPkceWithoutClientSecret:
@@ -5012,7 +5324,7 @@ spec:
                         type: boolean
                       enabled:
                         description: |-
-                          (Boolean) Whether SCIM provisioning is turned on for this application.
+                          (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
                           Whether SCIM provisioning is turned on for this application.
                         type: boolean
                       idpUid:
@@ -5029,7 +5341,7 @@ spec:
                           properties:
                             enabled:
                               description: |-
-                                (Boolean) Whether SCIM provisioning is turned on for this application.
+                                (Boolean) Whether the OAuth configuration is enabled for this application. When set to false, Access will not handle OAuth for this application. Defaults to true if omitted.
                                 Whether or not this mapping is enabled.
                               type: boolean
                             filter:

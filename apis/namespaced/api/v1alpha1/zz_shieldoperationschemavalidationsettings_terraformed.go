@@ -125,5 +125,5 @@ func (tr *ShieldOperationSchemaValidationSettings) LateInitialize(attrs []byte) 
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *ShieldOperationSchemaValidationSettings) GetTerraformSchemaVersion() int {
-	return 0
+	return 500
 }

@@ -35,7 +35,8 @@ spec:
     schema:
       openAPIV3Schema:
         description: TrustTunnelCloudflaredRoute is the Schema for the TrustTunnelCloudflaredRoutes
-          API.
+          API. Accepted Permissions Cloudflare One Networks WriteCloudflare Tunnel
+          Write
         properties:
           apiVersion:
             description: |-

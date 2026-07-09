@@ -92,6 +92,7 @@ type SnippetObservation struct {
 	// The list of files belonging to the snippet.
 	Files []FilesObservation `json:"files,omitempty" tf:"files,omitempty"`
 
+	// (String) Identify the snippet.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Attributes) Provide metadata about the snippet. (see below for nested schema)
@@ -159,7 +160,7 @@ type SnippetStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Snippet is the Schema for the Snippets API.
+// Snippet is the Schema for the Snippets API. Accepted Permissions Snippets ReadSnippets Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

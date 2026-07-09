@@ -125,5 +125,5 @@ func (tr *TrustGatewayCertificate) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *TrustGatewayCertificate) GetTerraformSchemaVersion() int {
-	return 0
+	return 500
 }

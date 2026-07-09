@@ -70,6 +70,10 @@ type ApplicationInitParameters struct {
 	// Available values: "direct", "http", "https".
 	TrafficType *string `json:"trafficType,omitempty" tf:"traffic_type,omitempty"`
 
+	// (String) Optional UUID of a virtual network for routing origin traffic through tunnel virtual networks.
+	// Optional UUID of a virtual network for routing origin traffic through tunnel virtual networks.
+	VirtualNetworkID *string `json:"virtualNetworkId,omitempty" tf:"virtual_network_id,omitempty"`
+
 	// (String) Zone identifier.
 	// Zone identifier.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
@@ -141,6 +145,10 @@ type ApplicationObservation struct {
 	// Available values: "direct", "http", "https".
 	TrafficType *string `json:"trafficType,omitempty" tf:"traffic_type,omitempty"`
 
+	// (String) Optional UUID of a virtual network for routing origin traffic through tunnel virtual networks.
+	// Optional UUID of a virtual network for routing origin traffic through tunnel virtual networks.
+	VirtualNetworkID *string `json:"virtualNetworkId,omitempty" tf:"virtual_network_id,omitempty"`
+
 	// (String) Zone identifier.
 	// Zone identifier.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
@@ -211,6 +219,11 @@ type ApplicationParameters struct {
 	// Available values: "direct", "http", "https".
 	// +kubebuilder:validation:Optional
 	TrafficType *string `json:"trafficType,omitempty" tf:"traffic_type,omitempty"`
+
+	// (String) Optional UUID of a virtual network for routing origin traffic through tunnel virtual networks.
+	// Optional UUID of a virtual network for routing origin traffic through tunnel virtual networks.
+	// +kubebuilder:validation:Optional
+	VirtualNetworkID *string `json:"virtualNetworkId,omitempty" tf:"virtual_network_id,omitempty"`
 
 	// (String) Zone identifier.
 	// Zone identifier.
@@ -400,7 +413,7 @@ type ApplicationStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Application is the Schema for the Applications API.
+// Application is the Schema for the Applications API. Accepted Permissions Zone Settings ReadZone Settings Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

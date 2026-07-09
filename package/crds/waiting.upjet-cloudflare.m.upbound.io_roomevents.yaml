@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: RoomEvent is the Schema for the RoomEvents API.
+        description: RoomEvent is the Schema for the RoomEvents API. Accepted Permissions
+          Waiting Rooms ReadWaiting Rooms Write
         properties:
           apiVersion:
             description: |-

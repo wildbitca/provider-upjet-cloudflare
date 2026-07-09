@@ -13,6 +13,28 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
+type CloudflareAccountMemberInitParameters struct {
+
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// Identifier.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
+type CloudflareAccountMemberObservation struct {
+
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// Identifier.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
+type CloudflareAccountMemberParameters struct {
+
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// Identifier.
+	// +kubebuilder:validation:Optional
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
 type ExcludeAnyValidServiceTokenInitParameters struct {
 }
 
@@ -658,6 +680,94 @@ type ExcludeServiceTokenParameters struct {
 	TokenID *string `json:"tokenId" tf:"token_id,omitempty"`
 }
 
+type IncludeCloudflareAccountMemberInitParameters struct {
+
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// Identifier.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
+type IncludeCloudflareAccountMemberObservation struct {
+
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// Identifier.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
+type IncludeCloudflareAccountMemberParameters struct {
+
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// Identifier.
+	// +kubebuilder:validation:Optional
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
+type IncludeUserRiskScoreInitParameters struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	UserRiskScore []*string `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
+}
+
+type IncludeUserRiskScoreObservation struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	UserRiskScore []*string `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
+}
+
+type IncludeUserRiskScoreParameters struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	// +kubebuilder:validation:Optional
+	UserRiskScore []*string `json:"userRiskScore" tf:"user_risk_score,omitempty"`
+}
+
+type RequireCloudflareAccountMemberInitParameters struct {
+
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// Identifier.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
+type RequireCloudflareAccountMemberObservation struct {
+
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// Identifier.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
+type RequireCloudflareAccountMemberParameters struct {
+
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// Identifier.
+	// +kubebuilder:validation:Optional
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+}
+
+type RequireUserRiskScoreInitParameters struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	UserRiskScore []*string `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
+}
+
+type RequireUserRiskScoreObservation struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	UserRiskScore []*string `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
+}
+
+type RequireUserRiskScoreParameters struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	// +kubebuilder:validation:Optional
+	UserRiskScore []*string `json:"userRiskScore" tf:"user_risk_score,omitempty"`
+}
+
 type TrustAccessGroupExcludeInitParameters struct {
 
 	// (Attributes) An empty object which matches on all service tokens. (see below for nested schema)
@@ -674,6 +784,9 @@ type TrustAccessGroupExcludeInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	Certificate *ExcludeCertificateInitParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	CloudflareAccountMember *CloudflareAccountMemberInitParameters `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	CommonName *ExcludeCommonNameInitParameters `json:"commonName,omitempty" tf:"common_name,omitempty"`
@@ -731,6 +844,9 @@ type TrustAccessGroupExcludeInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *ExcludeServiceTokenInitParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	UserRiskScore *UserRiskScoreInitParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessGroupExcludeObservation struct {
@@ -749,6 +865,9 @@ type TrustAccessGroupExcludeObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	Certificate *ExcludeCertificateParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	CloudflareAccountMember *CloudflareAccountMemberObservation `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	CommonName *ExcludeCommonNameObservation `json:"commonName,omitempty" tf:"common_name,omitempty"`
@@ -806,6 +925,9 @@ type TrustAccessGroupExcludeObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *ExcludeServiceTokenObservation `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	UserRiskScore *UserRiskScoreObservation `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessGroupExcludeParameters struct {
@@ -829,6 +951,10 @@ type TrustAccessGroupExcludeParameters struct {
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Certificate *ExcludeCertificateParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	CloudflareAccountMember *CloudflareAccountMemberParameters `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -905,6 +1031,10 @@ type TrustAccessGroupExcludeParameters struct {
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ServiceToken *ExcludeServiceTokenParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	UserRiskScore *UserRiskScoreParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessGroupIncludeAnyValidServiceTokenInitParameters struct {
@@ -1373,6 +1503,9 @@ type TrustAccessGroupIncludeInitParameters struct {
 	Certificate *TrustAccessGroupIncludeCertificateInitParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	CloudflareAccountMember *IncludeCloudflareAccountMemberInitParameters `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	CommonName *TrustAccessGroupIncludeCommonNameInitParameters `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -1428,6 +1561,9 @@ type TrustAccessGroupIncludeInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessGroupIncludeServiceTokenInitParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	UserRiskScore *IncludeUserRiskScoreInitParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessGroupIncludeLinkedAppTokenInitParameters struct {
@@ -1492,6 +1628,9 @@ type TrustAccessGroupIncludeObservation struct {
 	Certificate *TrustAccessGroupIncludeCertificateParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	CloudflareAccountMember *IncludeCloudflareAccountMemberObservation `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	CommonName *TrustAccessGroupIncludeCommonNameObservation `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -1547,6 +1686,9 @@ type TrustAccessGroupIncludeObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessGroupIncludeServiceTokenObservation `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	UserRiskScore *IncludeUserRiskScoreObservation `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessGroupIncludeOidcInitParameters struct {
@@ -1656,6 +1798,10 @@ type TrustAccessGroupIncludeParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
+	CloudflareAccountMember *IncludeCloudflareAccountMemberParameters `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
 	CommonName *TrustAccessGroupIncludeCommonNameParameters `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -1729,6 +1875,10 @@ type TrustAccessGroupIncludeParameters struct {
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ServiceToken *TrustAccessGroupIncludeServiceTokenParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	UserRiskScore *IncludeUserRiskScoreParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessGroupIncludeSAMLInitParameters struct {
@@ -2379,6 +2529,9 @@ type TrustAccessGroupRequireInitParameters struct {
 	Certificate *TrustAccessGroupRequireCertificateInitParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	CloudflareAccountMember *RequireCloudflareAccountMemberInitParameters `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	CommonName *TrustAccessGroupRequireCommonNameInitParameters `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -2434,6 +2587,9 @@ type TrustAccessGroupRequireInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessGroupRequireServiceTokenInitParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	UserRiskScore *RequireUserRiskScoreInitParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessGroupRequireLinkedAppTokenInitParameters struct {
@@ -2498,6 +2654,9 @@ type TrustAccessGroupRequireObservation struct {
 	Certificate *TrustAccessGroupRequireCertificateParameters `json:"certificate,omitempty" tf:"certificate,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	CloudflareAccountMember *RequireCloudflareAccountMemberObservation `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	CommonName *TrustAccessGroupRequireCommonNameObservation `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -2553,6 +2712,9 @@ type TrustAccessGroupRequireObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessGroupRequireServiceTokenObservation `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	UserRiskScore *RequireUserRiskScoreObservation `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessGroupRequireOidcInitParameters struct {
@@ -2662,6 +2824,10 @@ type TrustAccessGroupRequireParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
+	CloudflareAccountMember *RequireCloudflareAccountMemberParameters `json:"cloudflareAccountMember,omitempty" tf:"cloudflare_account_member,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
 	CommonName *TrustAccessGroupRequireCommonNameParameters `json:"commonName,omitempty" tf:"common_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -2735,6 +2901,10 @@ type TrustAccessGroupRequireParameters struct {
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ServiceToken *TrustAccessGroupRequireServiceTokenParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	UserRiskScore *RequireUserRiskScoreParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
 type TrustAccessGroupRequireSAMLInitParameters struct {
@@ -2807,6 +2977,28 @@ type TrustAccessGroupRequireServiceTokenParameters struct {
 	TokenID *string `json:"tokenId" tf:"token_id,omitempty"`
 }
 
+type UserRiskScoreInitParameters struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	UserRiskScore []*string `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
+}
+
+type UserRiskScoreObservation struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	UserRiskScore []*string `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
+}
+
+type UserRiskScoreParameters struct {
+
+	// (Attributes) (see below for nested schema)
+	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
+	// +kubebuilder:validation:Optional
+	UserRiskScore []*string `json:"userRiskScore" tf:"user_risk_score,omitempty"`
+}
+
 // TrustAccessGroupSpec defines the desired state of TrustAccessGroup
 type TrustAccessGroupSpec struct {
 	v1.ResourceSpec `json:",inline"`
@@ -2834,7 +3026,7 @@ type TrustAccessGroupStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustAccessGroup is the Schema for the TrustAccessGroups API.
+// TrustAccessGroup is the Schema for the TrustAccessGroups API. Accepted Permissions Access: Organizations, Identity Providers, and Groups ReadAccess: Organizations, Identity Providers, and Groups Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

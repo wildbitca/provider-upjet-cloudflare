@@ -125,5 +125,5 @@ func (tr *OriginPullsHostnameCertificate) LateInitialize(attrs []byte) (bool, er
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *OriginPullsHostnameCertificate) GetTerraformSchemaVersion() int {
-	return 0
+	return 500
 }

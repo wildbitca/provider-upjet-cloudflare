@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ShieldOperation is the Schema for the ShieldOperations API.
+        description: ShieldOperation is the Schema for the ShieldOperations API. Accepted
+          Permissions Account API GatewayAccount API Gateway ReadDomain API GatewayDomain
+          API Gateway Read
         properties:
           apiVersion:
             description: |-
@@ -461,6 +463,59 @@ spec:
                       (String) UUID.
                       UUID.
                     type: string
+                  schemas:
+                    description: uploaded and Cloudflare-learned schemas. (see below
+                      for nested schema)
+                    properties:
+                      learned:
+                        description: (Attributes) An OpenAPI operation object fragment
+                          containing schema information for an operation. May include
+                          parameter definitions, request body specifications, and
+                          a component schema extension. (see below for nested schema)
+                        properties:
+                          parameters:
+                            description: |-
+                              (List of String) An array containing the learned parameter schemas.
+                              OpenAPI parameter objects describing path, query, header, or cookie parameters.
+                            items:
+                              additionalProperties:
+                                type: string
+                              type: object
+                            type: array
+                          requestBody:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              (Map of String) OpenAPI request body object describing the expected request payload.
+                              OpenAPI request body object describing the expected request payload.
+                            type: object
+                            x-kubernetes-map-type: granular
+                        type: object
+                      uploaded:
+                        description: (Attributes) An OpenAPI operation object fragment
+                          containing schema information for an operation. May include
+                          parameter definitions, request body specifications, and
+                          a component schema extension. (see below for nested schema)
+                        properties:
+                          parameters:
+                            description: |-
+                              (List of String) An array containing the learned parameter schemas.
+                              OpenAPI parameter objects describing path, query, header, or cookie parameters.
+                            items:
+                              additionalProperties:
+                                type: string
+                              type: object
+                            type: array
+                          requestBody:
+                            additionalProperties:
+                              type: string
+                            description: |-
+                              (Map of String) OpenAPI request body object describing the expected request payload.
+                              OpenAPI request body object describing the expected request payload.
+                            type: object
+                            x-kubernetes-map-type: granular
+                        type: object
+                    type: object
                   zoneId:
                     description: |-
                       (String) Identifier.

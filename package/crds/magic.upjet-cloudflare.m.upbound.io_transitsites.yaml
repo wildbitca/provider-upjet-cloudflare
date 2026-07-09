@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TransitSite is the Schema for the TransitSites API.
+        description: TransitSite is the Schema for the TransitSites API. Accepted
+          Permissions Magic Transit ReadMagic Transit WriteMagic WAN ReadMagic WAN
+          Write
         properties:
           apiVersion:
             description: |-

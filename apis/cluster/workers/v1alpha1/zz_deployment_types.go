@@ -15,15 +15,15 @@ import (
 
 type AnnotationsInitParameters struct {
 
-	// readable message about the deployment. Truncated to 100 bytes.
-	// Human-readable message about the deployment. Truncated to 100 bytes.
+	// readable message about the deployment. Truncated to 1000 bytes if longer.
+	// Human-readable message about the deployment. Truncated to 1000 bytes if longer.
 	WorkersMessage *string `json:"workersMessage,omitempty" tf:"workers_message,omitempty"`
 }
 
 type AnnotationsObservation struct {
 
-	// readable message about the deployment. Truncated to 100 bytes.
-	// Human-readable message about the deployment. Truncated to 100 bytes.
+	// readable message about the deployment. Truncated to 1000 bytes if longer.
+	// Human-readable message about the deployment. Truncated to 1000 bytes if longer.
 	WorkersMessage *string `json:"workersMessage,omitempty" tf:"workers_message,omitempty"`
 
 	// (String) Operation that triggered the creation of the deployment.
@@ -33,8 +33,8 @@ type AnnotationsObservation struct {
 
 type AnnotationsParameters struct {
 
-	// readable message about the deployment. Truncated to 100 bytes.
-	// Human-readable message about the deployment. Truncated to 100 bytes.
+	// readable message about the deployment. Truncated to 1000 bytes if longer.
+	// Human-readable message about the deployment. Truncated to 1000 bytes if longer.
 	// +kubebuilder:validation:Optional
 	WorkersMessage *string `json:"workersMessage,omitempty" tf:"workers_message,omitempty"`
 }
@@ -175,7 +175,7 @@ type DeploymentStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Deployment is the Schema for the Deployments API.
+// Deployment is the Schema for the Deployments API. Accepted Permissions Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

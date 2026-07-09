@@ -44,6 +44,7 @@ spec:
         printing: enabled
         upload: enabled
         version: v1
+        wmId: 475345dc-5299-4b6e-8f6a-3d3e4c8e9f1a
       blockPage:
         includeContext: true
         targetUri: https://example.com

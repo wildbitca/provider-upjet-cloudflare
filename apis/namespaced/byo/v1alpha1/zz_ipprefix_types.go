@@ -173,7 +173,7 @@ type IPPrefixStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// IPPrefix is the Schema for the IPPrefixs API.
+// IPPrefix is the Schema for the IPPrefixs API. Accepted Permissions IP Prefixes: BGP On Demand ReadIP Prefixes: BGP On Demand WriteIP Prefixes: ReadIP Prefixes: WriteMagic Transit ReadMagic Transit Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

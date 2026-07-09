@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Record is the Schema for the Records API.
+        description: Record is the Schema for the Records API. Accepted Permissions
+          DNS ReadDNS Write
         properties:
           apiVersion:
             description: |-
@@ -268,6 +269,11 @@ spec:
                       (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
                       Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
                     type: number
+                  privateRouting:
+                    description: |-
+                      (Boolean) Enables private network routing to the origin.
+                      Enables private network routing to the origin.
+                    type: boolean
                   proxied:
                     description: |-
                       (Boolean) Whether the record is receiving the performance and security benefits of Cloudflare.
@@ -622,6 +628,11 @@ spec:
                       (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
                       Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
                     type: number
+                  privateRouting:
+                    description: |-
+                      (Boolean) Enables private network routing to the origin.
+                      Enables private network routing to the origin.
+                    type: boolean
                   proxied:
                     description: |-
                       (Boolean) Whether the record is receiving the performance and security benefits of Cloudflare.
@@ -1062,6 +1073,11 @@ spec:
                       (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
                       Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
                     type: number
+                  privateRouting:
+                    description: |-
+                      (Boolean) Enables private network routing to the origin.
+                      Enables private network routing to the origin.
+                    type: boolean
                   proxiable:
                     description: |-
                       (Boolean) Whether the record can be proxied by Cloudflare or not.

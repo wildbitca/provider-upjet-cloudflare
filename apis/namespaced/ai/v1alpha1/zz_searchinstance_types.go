@@ -14,6 +14,38 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type BoostByInitParameters struct {
+
+	// Boost direction. 'desc' = higher values rank higher (e.g. newer timestamps). 'asc' = lower values rank higher. 'exists' = boost chunks that have the field. 'not_exists' = boost chunks that lack the field. Optional — defaults to 'asc' for numeric/datetime fields, 'exists' for text/boolean fields.
+	// Available values: "asc", "desc", "exists", "not_exists".
+	Direction *string `json:"direction,omitempty" tf:"direction,omitempty"`
+
+	// Metadata field name to boost by. Use 'timestamp' for document freshness, or any custom_metadata field. Numeric and datetime fields support all four directions (asc, desc, exists, not_exists); text/boolean fields only support exists/not_exists.
+	Field *string `json:"field,omitempty" tf:"field,omitempty"`
+}
+
+type BoostByObservation struct {
+
+	// Boost direction. 'desc' = higher values rank higher (e.g. newer timestamps). 'asc' = lower values rank higher. 'exists' = boost chunks that have the field. 'not_exists' = boost chunks that lack the field. Optional — defaults to 'asc' for numeric/datetime fields, 'exists' for text/boolean fields.
+	// Available values: "asc", "desc", "exists", "not_exists".
+	Direction *string `json:"direction,omitempty" tf:"direction,omitempty"`
+
+	// Metadata field name to boost by. Use 'timestamp' for document freshness, or any custom_metadata field. Numeric and datetime fields support all four directions (asc, desc, exists, not_exists); text/boolean fields only support exists/not_exists.
+	Field *string `json:"field,omitempty" tf:"field,omitempty"`
+}
+
+type BoostByParameters struct {
+
+	// Boost direction. 'desc' = higher values rank higher (e.g. newer timestamps). 'asc' = lower values rank higher. 'exists' = boost chunks that have the field. 'not_exists' = boost chunks that lack the field. Optional — defaults to 'asc' for numeric/datetime fields, 'exists' for text/boolean fields.
+	// Available values: "asc", "desc", "exists", "not_exists".
+	// +kubebuilder:validation:Optional
+	Direction *string `json:"direction,omitempty" tf:"direction,omitempty"`
+
+	// Metadata field name to boost by. Use 'timestamp' for document freshness, or any custom_metadata field. Numeric and datetime fields support all four directions (asc, desc, exists, not_exists); text/boolean fields only support exists/not_exists.
+	// +kubebuilder:validation:Optional
+	Field *string `json:"field" tf:"field,omitempty"`
+}
+
 type ChatCompletionsEndpointInitParameters struct {
 
 	// Disable chat completions endpoint for this public endpoint
@@ -33,9 +65,83 @@ type ChatCompletionsEndpointParameters struct {
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 }
 
+type ContentSelectorInitParameters struct {
+
+	// Glob pattern to match against the page URL path. Uses standard glob syntax: * matches within a segment, ** crosses directories.
+	Path *string `json:"path,omitempty" tf:"path,omitempty"`
+
+	// CSS selector to extract content from pages matching the path pattern. Must not contain disallowed characters (;, `, $, {, }, \). Must target a single element; if multiple elements match, the selector is ignored and the full page is used.
+	Selector *string `json:"selector,omitempty" tf:"selector,omitempty"`
+}
+
+type ContentSelectorObservation struct {
+
+	// Glob pattern to match against the page URL path. Uses standard glob syntax: * matches within a segment, ** crosses directories.
+	Path *string `json:"path,omitempty" tf:"path,omitempty"`
+
+	// CSS selector to extract content from pages matching the path pattern. Must not contain disallowed characters (;, `, $, {, }, \). Must target a single element; if multiple elements match, the selector is ignored and the full page is used.
+	Selector *string `json:"selector,omitempty" tf:"selector,omitempty"`
+}
+
+type ContentSelectorParameters struct {
+
+	// Glob pattern to match against the page URL path. Uses standard glob syntax: * matches within a segment, ** crosses directories.
+	// +kubebuilder:validation:Optional
+	Path *string `json:"path" tf:"path,omitempty"`
+
+	// CSS selector to extract content from pages matching the path pattern. Must not contain disallowed characters (;, `, $, {, }, \). Must target a single element; if multiple elements match, the selector is ignored and the full page is used.
+	// +kubebuilder:validation:Optional
+	Selector *string `json:"selector" tf:"selector,omitempty"`
+}
+
+type CrawlOptionsInitParameters struct {
+	Depth *float64 `json:"depth,omitempty" tf:"depth,omitempty"`
+
+	IncludeExternalLinks *bool `json:"includeExternalLinks,omitempty" tf:"include_external_links,omitempty"`
+
+	IncludeSubdomains *bool `json:"includeSubdomains,omitempty" tf:"include_subdomains,omitempty"`
+
+	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
+
+	// Available values: "all", "sitemaps", "links".
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+}
+
+type CrawlOptionsObservation struct {
+	Depth *float64 `json:"depth,omitempty" tf:"depth,omitempty"`
+
+	IncludeExternalLinks *bool `json:"includeExternalLinks,omitempty" tf:"include_external_links,omitempty"`
+
+	IncludeSubdomains *bool `json:"includeSubdomains,omitempty" tf:"include_subdomains,omitempty"`
+
+	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
+
+	// Available values: "all", "sitemaps", "links".
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+}
+
+type CrawlOptionsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Depth *float64 `json:"depth,omitempty" tf:"depth,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IncludeExternalLinks *bool `json:"includeExternalLinks,omitempty" tf:"include_external_links,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IncludeSubdomains *bool `json:"includeSubdomains,omitempty" tf:"include_subdomains,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
+
+	// Available values: "all", "sitemaps", "links".
+	// +kubebuilder:validation:Optional
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+}
+
 type CustomMetadataInitParameters struct {
 
-	// Available values: "text", "number", "boolean".
+	// Available values: "text", "number", "boolean", "datetime".
 	DataType *string `json:"dataType,omitempty" tf:"data_type,omitempty"`
 
 	FieldName *string `json:"fieldName,omitempty" tf:"field_name,omitempty"`
@@ -43,7 +149,7 @@ type CustomMetadataInitParameters struct {
 
 type CustomMetadataObservation struct {
 
-	// Available values: "text", "number", "boolean".
+	// Available values: "text", "number", "boolean", "datetime".
 	DataType *string `json:"dataType,omitempty" tf:"data_type,omitempty"`
 
 	FieldName *string `json:"fieldName,omitempty" tf:"field_name,omitempty"`
@@ -51,12 +157,63 @@ type CustomMetadataObservation struct {
 
 type CustomMetadataParameters struct {
 
-	// Available values: "text", "number", "boolean".
+	// Available values: "text", "number", "boolean", "datetime".
 	// +kubebuilder:validation:Optional
 	DataType *string `json:"dataType" tf:"data_type,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	FieldName *string `json:"fieldName" tf:"field_name,omitempty"`
+}
+
+type IndexMethodInitParameters struct {
+
+	// Enable keyword (BM25) storage backend.
+	Keyword *bool `json:"keyword,omitempty" tf:"keyword,omitempty"`
+
+	// Enable vector (embedding) storage backend.
+	Vector *bool `json:"vector,omitempty" tf:"vector,omitempty"`
+}
+
+type IndexMethodObservation struct {
+
+	// Enable keyword (BM25) storage backend.
+	Keyword *bool `json:"keyword,omitempty" tf:"keyword,omitempty"`
+
+	// Enable vector (embedding) storage backend.
+	Vector *bool `json:"vector,omitempty" tf:"vector,omitempty"`
+}
+
+type IndexMethodParameters struct {
+
+	// Enable keyword (BM25) storage backend.
+	// +kubebuilder:validation:Optional
+	Keyword *bool `json:"keyword" tf:"keyword,omitempty"`
+
+	// Enable vector (embedding) storage backend.
+	// +kubebuilder:validation:Optional
+	Vector *bool `json:"vector" tf:"vector,omitempty"`
+}
+
+type IndexingOptionsInitParameters struct {
+
+	// Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
+	// Available values: "porter", "trigram".
+	KeywordTokenizer *string `json:"keywordTokenizer,omitempty" tf:"keyword_tokenizer,omitempty"`
+}
+
+type IndexingOptionsObservation struct {
+
+	// Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
+	// Available values: "porter", "trigram".
+	KeywordTokenizer *string `json:"keywordTokenizer,omitempty" tf:"keyword_tokenizer,omitempty"`
+}
+
+type IndexingOptionsParameters struct {
+
+	// Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
+	// Available values: "porter", "trigram".
+	// +kubebuilder:validation:Optional
+	KeywordTokenizer *string `json:"keywordTokenizer,omitempty" tf:"keyword_tokenizer,omitempty"`
 }
 
 type McpInitParameters struct {
@@ -105,7 +262,9 @@ type MetadataParameters struct {
 }
 
 type ParseOptionsInitParameters struct {
+	ContentSelector []ContentSelectorInitParameters `json:"contentSelector,omitempty" tf:"content_selector,omitempty"`
 
+	// Up to 5 custom HTTP headers sent with each crawl request. Names must be RFC-7230 token characters (no spaces, colons, or control characters); values must be HTAB + printable ASCII (no CR/LF).
 	// +mapType=granular
 	IncludeHeaders map[string]*string `json:"includeHeaders,omitempty" tf:"include_headers,omitempty"`
 
@@ -118,7 +277,9 @@ type ParseOptionsInitParameters struct {
 }
 
 type ParseOptionsObservation struct {
+	ContentSelector []ContentSelectorObservation `json:"contentSelector,omitempty" tf:"content_selector,omitempty"`
 
+	// Up to 5 custom HTTP headers sent with each crawl request. Names must be RFC-7230 token characters (no spaces, colons, or control characters); values must be HTAB + printable ASCII (no CR/LF).
 	// +mapType=granular
 	IncludeHeaders map[string]*string `json:"includeHeaders,omitempty" tf:"include_headers,omitempty"`
 
@@ -132,6 +293,10 @@ type ParseOptionsObservation struct {
 
 type ParseOptionsParameters struct {
 
+	// +kubebuilder:validation:Optional
+	ContentSelector []ContentSelectorParameters `json:"contentSelector,omitempty" tf:"content_selector,omitempty"`
+
+	// Up to 5 custom HTTP headers sent with each crawl request. Names must be RFC-7230 token characters (no spaces, colons, or control characters); values must be HTAB + printable ASCII (no CR/LF).
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	IncludeHeaders map[string]*string `json:"includeHeaders,omitempty" tf:"include_headers,omitempty"`
@@ -228,23 +393,28 @@ type RateLimitParameters struct {
 }
 
 type RetrievalOptionsInitParameters struct {
+	BoostBy []BoostByInitParameters `json:"boostBy,omitempty" tf:"boost_by,omitempty"`
 
-	// Controls how keyword search terms are matched. exact_match requires all terms to appear (AND); fuzzy_match returns results containing any term (OR). Defaults to exact_match.
-	// Available values: "exact_match", "fuzzy_match".
+	// Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. Defaults to 'and'.
+	// Available values: "and", "or".
 	KeywordMatchMode *string `json:"keywordMatchMode,omitempty" tf:"keyword_match_mode,omitempty"`
 }
 
 type RetrievalOptionsObservation struct {
+	BoostBy []BoostByObservation `json:"boostBy,omitempty" tf:"boost_by,omitempty"`
 
-	// Controls how keyword search terms are matched. exact_match requires all terms to appear (AND); fuzzy_match returns results containing any term (OR). Defaults to exact_match.
-	// Available values: "exact_match", "fuzzy_match".
+	// Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. Defaults to 'and'.
+	// Available values: "and", "or".
 	KeywordMatchMode *string `json:"keywordMatchMode,omitempty" tf:"keyword_match_mode,omitempty"`
 }
 
 type RetrievalOptionsParameters struct {
 
-	// Controls how keyword search terms are matched. exact_match requires all terms to appear (AND); fuzzy_match returns results containing any term (OR). Defaults to exact_match.
-	// Available values: "exact_match", "fuzzy_match".
+	// +kubebuilder:validation:Optional
+	BoostBy []BoostByParameters `json:"boostBy,omitempty" tf:"boost_by,omitempty"`
+
+	// Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. Defaults to 'and'.
+	// Available values: "and", "or".
 	// +kubebuilder:validation:Optional
 	KeywordMatchMode *string `json:"keywordMatchMode,omitempty" tf:"keyword_match_mode,omitempty"`
 }
@@ -273,10 +443,14 @@ type SearchInstanceInitParameters struct {
 
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
 	AisearchModel *string `json:"aisearchModel,omitempty" tf:"aisearch_model,omitempty"`
 
 	Cache *bool `json:"cache,omitempty" tf:"cache,omitempty"`
+
+	// Cache entry TTL in seconds. Allowed values: 600 (10min), 1800 (30min), 3600 (1h), 7200 (2h), 21600 (6h), 43200 (12h), 86400 (24h), 172800 (48h), 259200 (72h), 518400 (6d).
+	// Available values: 600, 1800, 3600, 7200, 21600, 43200, 86400, 172800, 259200, 518400.
+	CacheTTL *float64 `json:"cacheTtl,omitempty" tf:"cache_ttl,omitempty"`
 
 	// Available values: "super_strict_match", "close_enough", "flexible_friend", "anything_goes".
 	CacheThreshold *string `json:"cacheThreshold,omitempty" tf:"cache_threshold,omitempty"`
@@ -289,13 +463,18 @@ type SearchInstanceInitParameters struct {
 
 	CustomMetadata []CustomMetadataInitParameters `json:"customMetadata,omitempty" tf:"custom_metadata,omitempty"`
 
-	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
+	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
 	EmbeddingModel *string `json:"embeddingModel,omitempty" tf:"embedding_model,omitempty"`
 
 	// Available values: "max", "rrf".
 	FusionMethod *string `json:"fusionMethod,omitempty" tf:"fusion_method,omitempty"`
 
+	// Deprecated — use index_method instead.
 	HybridSearchEnabled *bool `json:"hybridSearchEnabled,omitempty" tf:"hybrid_search_enabled,omitempty"`
+
+	IndexMethod *IndexMethodInitParameters `json:"indexMethod,omitempty" tf:"index_method,omitempty"`
+
+	IndexingOptions *IndexingOptionsInitParameters `json:"indexingOptions,omitempty" tf:"indexing_options,omitempty"`
 
 	MaxNumResults *float64 `json:"maxNumResults,omitempty" tf:"max_num_results,omitempty"`
 
@@ -312,7 +491,7 @@ type SearchInstanceInitParameters struct {
 
 	RetrievalOptions *RetrievalOptionsInitParameters `json:"retrievalOptions,omitempty" tf:"retrieval_options,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
 	RewriteModel *string `json:"rewriteModel,omitempty" tf:"rewrite_model,omitempty"`
 
 	RewriteQuery *bool `json:"rewriteQuery,omitempty" tf:"rewrite_query,omitempty"`
@@ -325,8 +504,12 @@ type SearchInstanceInitParameters struct {
 
 	Summarization *bool `json:"summarization,omitempty" tf:"summarization,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
 	SummarizationModel *string `json:"summarizationModel,omitempty" tf:"summarization_model,omitempty"`
+
+	// Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
+	// Available values: 900, 1800, 3600, 7200, 14400, 21600, 43200, 86400.
+	SyncInterval *float64 `json:"syncInterval,omitempty" tf:"sync_interval,omitempty"`
 
 	SystemPromptAisearch *string `json:"systemPromptAisearch,omitempty" tf:"system_prompt_aisearch,omitempty"`
 
@@ -345,10 +528,14 @@ type SearchInstanceObservation struct {
 
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
 	AisearchModel *string `json:"aisearchModel,omitempty" tf:"aisearch_model,omitempty"`
 
 	Cache *bool `json:"cache,omitempty" tf:"cache,omitempty"`
+
+	// Cache entry TTL in seconds. Allowed values: 600 (10min), 1800 (30min), 3600 (1h), 7200 (2h), 21600 (6h), 43200 (12h), 86400 (24h), 172800 (48h), 259200 (72h), 518400 (6d).
+	// Available values: 600, 1800, 3600, 7200, 21600, 43200, 86400, 172800, 259200, 518400.
+	CacheTTL *float64 `json:"cacheTtl,omitempty" tf:"cache_ttl,omitempty"`
 
 	// Available values: "super_strict_match", "close_enough", "flexible_friend", "anything_goes".
 	CacheThreshold *string `json:"cacheThreshold,omitempty" tf:"cache_threshold,omitempty"`
@@ -365,17 +552,24 @@ type SearchInstanceObservation struct {
 
 	CustomMetadata []CustomMetadataObservation `json:"customMetadata,omitempty" tf:"custom_metadata,omitempty"`
 
-	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
+	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
 	EmbeddingModel *string `json:"embeddingModel,omitempty" tf:"embedding_model,omitempty"`
 
 	Enable *bool `json:"enable,omitempty" tf:"enable,omitempty"`
 
+	EngineVersion *float64 `json:"engineVersion,omitempty" tf:"engine_version,omitempty"`
+
 	// Available values: "max", "rrf".
 	FusionMethod *string `json:"fusionMethod,omitempty" tf:"fusion_method,omitempty"`
 
+	// Deprecated — use index_method instead.
 	HybridSearchEnabled *bool `json:"hybridSearchEnabled,omitempty" tf:"hybrid_search_enabled,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	IndexMethod *IndexMethodObservation `json:"indexMethod,omitempty" tf:"index_method,omitempty"`
+
+	IndexingOptions *IndexingOptionsObservation `json:"indexingOptions,omitempty" tf:"indexing_options,omitempty"`
 
 	LastActivity *string `json:"lastActivity,omitempty" tf:"last_activity,omitempty"`
 
@@ -386,6 +580,8 @@ type SearchInstanceObservation struct {
 	ModifiedAt *string `json:"modifiedAt,omitempty" tf:"modified_at,omitempty"`
 
 	ModifiedBy *string `json:"modifiedBy,omitempty" tf:"modified_by,omitempty"`
+
+	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
 
 	Paused *bool `json:"paused,omitempty" tf:"paused,omitempty"`
 
@@ -400,7 +596,7 @@ type SearchInstanceObservation struct {
 
 	RetrievalOptions *RetrievalOptionsObservation `json:"retrievalOptions,omitempty" tf:"retrieval_options,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
 	RewriteModel *string `json:"rewriteModel,omitempty" tf:"rewrite_model,omitempty"`
 
 	RewriteQuery *bool `json:"rewriteQuery,omitempty" tf:"rewrite_query,omitempty"`
@@ -415,8 +611,12 @@ type SearchInstanceObservation struct {
 
 	Summarization *bool `json:"summarization,omitempty" tf:"summarization,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
 	SummarizationModel *string `json:"summarizationModel,omitempty" tf:"summarization_model,omitempty"`
+
+	// Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
+	// Available values: 900, 1800, 3600, 7200, 14400, 21600, 43200, 86400.
+	SyncInterval *float64 `json:"syncInterval,omitempty" tf:"sync_interval,omitempty"`
 
 	SystemPromptAisearch *string `json:"systemPromptAisearch,omitempty" tf:"system_prompt_aisearch,omitempty"`
 
@@ -440,12 +640,17 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
 	// +kubebuilder:validation:Optional
 	AisearchModel *string `json:"aisearchModel,omitempty" tf:"aisearch_model,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Cache *bool `json:"cache,omitempty" tf:"cache,omitempty"`
+
+	// Cache entry TTL in seconds. Allowed values: 600 (10min), 1800 (30min), 3600 (1h), 7200 (2h), 21600 (6h), 43200 (12h), 86400 (24h), 172800 (48h), 259200 (72h), 518400 (6d).
+	// Available values: 600, 1800, 3600, 7200, 21600, 43200, 86400, 172800, 259200, 518400.
+	// +kubebuilder:validation:Optional
+	CacheTTL *float64 `json:"cacheTtl,omitempty" tf:"cache_ttl,omitempty"`
 
 	// Available values: "super_strict_match", "close_enough", "flexible_friend", "anything_goes".
 	// +kubebuilder:validation:Optional
@@ -463,7 +668,7 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	CustomMetadata []CustomMetadataParameters `json:"customMetadata,omitempty" tf:"custom_metadata,omitempty"`
 
-	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
+	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
 	// +kubebuilder:validation:Optional
 	EmbeddingModel *string `json:"embeddingModel,omitempty" tf:"embedding_model,omitempty"`
 
@@ -471,8 +676,15 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	FusionMethod *string `json:"fusionMethod,omitempty" tf:"fusion_method,omitempty"`
 
+	// Deprecated — use index_method instead.
 	// +kubebuilder:validation:Optional
 	HybridSearchEnabled *bool `json:"hybridSearchEnabled,omitempty" tf:"hybrid_search_enabled,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IndexMethod *IndexMethodParameters `json:"indexMethod,omitempty" tf:"index_method,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IndexingOptions *IndexingOptionsParameters `json:"indexingOptions,omitempty" tf:"indexing_options,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	MaxNumResults *float64 `json:"maxNumResults,omitempty" tf:"max_num_results,omitempty"`
@@ -496,7 +708,7 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	RetrievalOptions *RetrievalOptionsParameters `json:"retrievalOptions,omitempty" tf:"retrieval_options,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
 	// +kubebuilder:validation:Optional
 	RewriteModel *string `json:"rewriteModel,omitempty" tf:"rewrite_model,omitempty"`
 
@@ -515,9 +727,14 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Summarization *bool `json:"summarization,omitempty" tf:"summarization,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
 	// +kubebuilder:validation:Optional
 	SummarizationModel *string `json:"summarizationModel,omitempty" tf:"summarization_model,omitempty"`
+
+	// Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
+	// Available values: 900, 1800, 3600, 7200, 14400, 21600, 43200, 86400.
+	// +kubebuilder:validation:Optional
+	SyncInterval *float64 `json:"syncInterval,omitempty" tf:"sync_interval,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	SystemPromptAisearch *string `json:"systemPromptAisearch,omitempty" tf:"system_prompt_aisearch,omitempty"`
@@ -618,18 +835,22 @@ type StoreOptionsParameters struct {
 }
 
 type WebCrawlerInitParameters struct {
+	CrawlOptions *CrawlOptionsInitParameters `json:"crawlOptions,omitempty" tf:"crawl_options,omitempty"`
+
 	ParseOptions *ParseOptionsInitParameters `json:"parseOptions,omitempty" tf:"parse_options,omitempty"`
 
-	// Available values: "sitemap", "feed-rss".
+	// Available values: "sitemap", "feed-rss", "crawl".
 	ParseType *string `json:"parseType,omitempty" tf:"parse_type,omitempty"`
 
 	StoreOptions *StoreOptionsInitParameters `json:"storeOptions,omitempty" tf:"store_options,omitempty"`
 }
 
 type WebCrawlerObservation struct {
+	CrawlOptions *CrawlOptionsObservation `json:"crawlOptions,omitempty" tf:"crawl_options,omitempty"`
+
 	ParseOptions *ParseOptionsObservation `json:"parseOptions,omitempty" tf:"parse_options,omitempty"`
 
-	// Available values: "sitemap", "feed-rss".
+	// Available values: "sitemap", "feed-rss", "crawl".
 	ParseType *string `json:"parseType,omitempty" tf:"parse_type,omitempty"`
 
 	StoreOptions *StoreOptionsObservation `json:"storeOptions,omitempty" tf:"store_options,omitempty"`
@@ -638,9 +859,12 @@ type WebCrawlerObservation struct {
 type WebCrawlerParameters struct {
 
 	// +kubebuilder:validation:Optional
+	CrawlOptions *CrawlOptionsParameters `json:"crawlOptions,omitempty" tf:"crawl_options,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	ParseOptions *ParseOptionsParameters `json:"parseOptions,omitempty" tf:"parse_options,omitempty"`
 
-	// Available values: "sitemap", "feed-rss".
+	// Available values: "sitemap", "feed-rss", "crawl".
 	// +kubebuilder:validation:Optional
 	ParseType *string `json:"parseType,omitempty" tf:"parse_type,omitempty"`
 
@@ -685,8 +909,6 @@ type SearchInstance struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountId) || (has(self.initProvider) && has(self.initProvider.accountId))",message="spec.forProvider.accountId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.source) || (has(self.initProvider) && has(self.initProvider.source))",message="spec.forProvider.source is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
 	Spec   SearchInstanceSpec   `json:"spec"`
 	Status SearchInstanceStatus `json:"status,omitempty"`
 }

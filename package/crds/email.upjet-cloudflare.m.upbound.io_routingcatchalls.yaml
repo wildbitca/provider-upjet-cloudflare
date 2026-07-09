@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: RoutingCatchAll is the Schema for the RoutingCatchAlls API.
+        description: RoutingCatchAll is the Schema for the RoutingCatchAlls API. Accepted
+          Permissions Email Routing Rules ReadEmail Routing Rules Write
         properties:
           apiVersion:
             description: |-

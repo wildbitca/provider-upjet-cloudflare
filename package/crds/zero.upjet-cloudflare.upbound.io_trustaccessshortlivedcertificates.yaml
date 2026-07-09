@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustAccessShortLivedCertificate is the Schema for the TrustAccessShortLivedCertificates
-          API.
+        description: 'TrustAccessShortLivedCertificate is the Schema for the TrustAccessShortLivedCertificates
+          API. Accepted Permissions Access: Apps and Policies ReadAccess: Apps and
+          Policies Write'
         properties:
           apiVersion:
             description: |-

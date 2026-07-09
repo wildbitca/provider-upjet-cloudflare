@@ -163,7 +163,7 @@ type PagesStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Pages is the Schema for the Pagess API.
+// Pages is the Schema for the Pagess API. Accepted Permissions Account Custom Pages ReadAccount Custom Pages WriteAccount Settings ReadAccount Settings WriteZero Trust: PII Read
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

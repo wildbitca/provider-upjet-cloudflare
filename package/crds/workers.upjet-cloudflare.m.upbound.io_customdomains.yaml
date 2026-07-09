@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CustomDomain is the Schema for the CustomDomains API.
+        description: CustomDomain is the Schema for the CustomDomains API. Accepted
+          Permissions Workers Scripts ReadWorkers Scripts Write
         properties:
           apiVersion:
             description: |-
@@ -60,28 +61,33 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifer of the account.
-                      Identifer of the account.
+                      (String) Identifier.
+                      Identifier.
                     type: string
                   environment:
                     description: |-
-                      (String, Deprecated) Worker environment associated with the zone and hostname.
-                      Worker environment associated with the zone and hostname.
+                      (String, Deprecated) Worker environment associated with the domain.
+                      Worker environment associated with the domain.
                     type: string
                   hostname:
                     description: |-
-                      (String) Hostname of the Worker Domain.
-                      Hostname of the Worker Domain.
+                      (String) Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
+                      Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
                     type: string
                   service:
                     description: |-
-                      (String) Worker service associated with the zone and hostname.
-                      Worker service associated with the zone and hostname.
+                      (String) Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
+                      Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
                     type: string
                   zoneId:
                     description: |-
-                      (String) Identifier of the zone.
-                      Identifier of the zone.
+                      (String) ID of the zone containing the domain hostname.
+                      ID of the zone containing the domain hostname.
+                    type: string
+                  zoneName:
+                    description: |-
+                      (String) Name of the zone containing the domain hostname.
+                      Name of the zone containing the domain hostname.
                     type: string
                 type: object
               initProvider:
@@ -99,28 +105,33 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifer of the account.
-                      Identifer of the account.
+                      (String) Identifier.
+                      Identifier.
                     type: string
                   environment:
                     description: |-
-                      (String, Deprecated) Worker environment associated with the zone and hostname.
-                      Worker environment associated with the zone and hostname.
+                      (String, Deprecated) Worker environment associated with the domain.
+                      Worker environment associated with the domain.
                     type: string
                   hostname:
                     description: |-
-                      (String) Hostname of the Worker Domain.
-                      Hostname of the Worker Domain.
+                      (String) Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
+                      Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
                     type: string
                   service:
                     description: |-
-                      (String) Worker service associated with the zone and hostname.
-                      Worker service associated with the zone and hostname.
+                      (String) Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
+                      Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
                     type: string
                   zoneId:
                     description: |-
-                      (String) Identifier of the zone.
-                      Identifier of the zone.
+                      (String) ID of the zone containing the domain hostname.
+                      ID of the zone containing the domain hostname.
+                    type: string
+                  zoneName:
+                    description: |-
+                      (String) Name of the zone containing the domain hostname.
+                      Name of the zone containing the domain hostname.
                     type: string
                 type: object
               managementPolicies:
@@ -194,10 +205,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.service)
                 || (has(self.initProvider) && has(self.initProvider.service))'
-            - message: spec.forProvider.zoneId is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.zoneId)
-                || (has(self.initProvider) && has(self.initProvider.zoneId))'
           status:
             description: CustomDomainStatus defines the observed state of CustomDomain.
             properties:
@@ -205,36 +212,41 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifer of the account.
-                      Identifer of the account.
+                      (String) Identifier.
+                      Identifier.
+                    type: string
+                  certId:
+                    description: |-
+                      (String) ID of the TLS certificate issued for the domain.
+                      ID of the TLS certificate issued for the domain.
                     type: string
                   environment:
                     description: |-
-                      (String, Deprecated) Worker environment associated with the zone and hostname.
-                      Worker environment associated with the zone and hostname.
+                      (String, Deprecated) Worker environment associated with the domain.
+                      Worker environment associated with the domain.
                     type: string
                   hostname:
                     description: |-
-                      (String) Hostname of the Worker Domain.
-                      Hostname of the Worker Domain.
+                      (String) Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
+                      Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
                     type: string
                   id:
-                    description: (String) Identifer of the Worker Domain.
+                    description: (String) Immutable ID of the domain.
                     type: string
                   service:
                     description: |-
-                      (String) Worker service associated with the zone and hostname.
-                      Worker service associated with the zone and hostname.
+                      (String) Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
+                      Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
                     type: string
                   zoneId:
                     description: |-
-                      (String) Identifier of the zone.
-                      Identifier of the zone.
+                      (String) ID of the zone containing the domain hostname.
+                      ID of the zone containing the domain hostname.
                     type: string
                   zoneName:
                     description: |-
-                      (String) Name of the zone.
-                      Name of the zone.
+                      (String) Name of the zone containing the domain hostname.
+                      Name of the zone containing the domain hostname.
                     type: string
                 type: object
               conditions:

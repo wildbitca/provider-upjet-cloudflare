@@ -114,7 +114,7 @@ type CronTriggerStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// CronTrigger is the Schema for the CronTriggers API.
+// CronTrigger is the Schema for the CronTriggers API. Accepted Permissions Workers Scripts ReadWorkers Scripts Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

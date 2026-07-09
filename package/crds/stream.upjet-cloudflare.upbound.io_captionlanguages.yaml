@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CaptionLanguage is the Schema for the CaptionLanguages API.
+        description: CaptionLanguage is the Schema for the CaptionLanguages API. Accepted
+          Permissions Stream ReadStream Write
         properties:
           apiVersion:
             description: |-

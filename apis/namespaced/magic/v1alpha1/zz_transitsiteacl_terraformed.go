@@ -125,5 +125,5 @@ func (tr *TransitSiteACL) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *TransitSiteACL) GetTerraformSchemaVersion() int {
-	return 0
+	return 500
 }

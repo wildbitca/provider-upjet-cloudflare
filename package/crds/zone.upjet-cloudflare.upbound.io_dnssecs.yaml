@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: DNSSEC is the Schema for the DNSSECs API.
+        description: DNSSEC is the Schema for the DNSSECs API. Accepted Permissions
+          DNS ReadDNS Write
         properties:
           apiVersion:
             description: |-

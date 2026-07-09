@@ -214,6 +214,11 @@ func (in *BindingsInitParameters) DeepCopyInto(out *BindingsInitParameters) {
 			}
 		}
 	}
+	if in.AppID != nil {
+		in, out := &in.AppID, &out.AppID
+		*out = new(string)
+		**out = **in
+	}
 	if in.BucketName != nil {
 		in, out := &in.BucketName, &out.BucketName
 		*out = new(string)
@@ -229,6 +234,11 @@ func (in *BindingsInitParameters) DeepCopyInto(out *BindingsInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DatabaseID != nil {
+		in, out := &in.DatabaseID, &out.DatabaseID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Dataset != nil {
 		in, out := &in.Dataset, &out.Dataset
 		*out = new(string)
@@ -236,6 +246,16 @@ func (in *BindingsInitParameters) DeepCopyInto(out *BindingsInitParameters) {
 	}
 	if in.DestinationAddress != nil {
 		in, out := &in.DestinationAddress, &out.DestinationAddress
+		*out = new(string)
+		**out = **in
+	}
+	if in.DispatchNamespace != nil {
+		in, out := &in.DispatchNamespace, &out.DispatchNamespace
+		*out = new(string)
+		**out = **in
+	}
+	if in.Entrypoint != nil {
+		in, out := &in.Entrypoint, &out.Entrypoint
 		*out = new(string)
 		**out = **in
 	}
@@ -256,6 +276,11 @@ func (in *BindingsInitParameters) DeepCopyInto(out *BindingsInitParameters) {
 	}
 	if in.IndexName != nil {
 		in, out := &in.IndexName, &out.IndexName
+		*out = new(string)
+		**out = **in
+	}
+	if in.InstanceName != nil {
+		in, out := &in.InstanceName, &out.InstanceName
 		*out = new(string)
 		**out = **in
 	}
@@ -291,6 +316,11 @@ func (in *BindingsInitParameters) DeepCopyInto(out *BindingsInitParameters) {
 	}
 	if in.NamespaceID != nil {
 		in, out := &in.NamespaceID, &out.NamespaceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.NetworkID != nil {
+		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
 		**out = **in
 	}
@@ -334,6 +364,11 @@ func (in *BindingsInitParameters) DeepCopyInto(out *BindingsInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ServiceID != nil {
+		in, out := &in.ServiceID, &out.ServiceID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Simple != nil {
 		in, out := &in.Simple, &out.Simple
 		*out = new(SimpleInitParameters)
@@ -347,6 +382,11 @@ func (in *BindingsInitParameters) DeepCopyInto(out *BindingsInitParameters) {
 	if in.TextSecretRef != nil {
 		in, out := &in.TextSecretRef, &out.TextSecretRef
 		*out = new(v1.LocalSecretKeySelector)
+		**out = **in
+	}
+	if in.TunnelID != nil {
+		in, out := &in.TunnelID, &out.TunnelID
+		*out = new(string)
 		**out = **in
 	}
 	if in.Type != nil {
@@ -417,6 +457,11 @@ func (in *BindingsObservation) DeepCopyInto(out *BindingsObservation) {
 			}
 		}
 	}
+	if in.AppID != nil {
+		in, out := &in.AppID, &out.AppID
+		*out = new(string)
+		**out = **in
+	}
 	if in.BucketName != nil {
 		in, out := &in.BucketName, &out.BucketName
 		*out = new(string)
@@ -432,6 +477,11 @@ func (in *BindingsObservation) DeepCopyInto(out *BindingsObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DatabaseID != nil {
+		in, out := &in.DatabaseID, &out.DatabaseID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Dataset != nil {
 		in, out := &in.Dataset, &out.Dataset
 		*out = new(string)
@@ -439,6 +489,16 @@ func (in *BindingsObservation) DeepCopyInto(out *BindingsObservation) {
 	}
 	if in.DestinationAddress != nil {
 		in, out := &in.DestinationAddress, &out.DestinationAddress
+		*out = new(string)
+		**out = **in
+	}
+	if in.DispatchNamespace != nil {
+		in, out := &in.DispatchNamespace, &out.DispatchNamespace
+		*out = new(string)
+		**out = **in
+	}
+	if in.Entrypoint != nil {
+		in, out := &in.Entrypoint, &out.Entrypoint
 		*out = new(string)
 		**out = **in
 	}
@@ -459,6 +519,11 @@ func (in *BindingsObservation) DeepCopyInto(out *BindingsObservation) {
 	}
 	if in.IndexName != nil {
 		in, out := &in.IndexName, &out.IndexName
+		*out = new(string)
+		**out = **in
+	}
+	if in.InstanceName != nil {
+		in, out := &in.InstanceName, &out.InstanceName
 		*out = new(string)
 		**out = **in
 	}
@@ -484,6 +549,11 @@ func (in *BindingsObservation) DeepCopyInto(out *BindingsObservation) {
 	}
 	if in.NamespaceID != nil {
 		in, out := &in.NamespaceID, &out.NamespaceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.NetworkID != nil {
+		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
 		**out = **in
 	}
@@ -527,6 +597,11 @@ func (in *BindingsObservation) DeepCopyInto(out *BindingsObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ServiceID != nil {
+		in, out := &in.ServiceID, &out.ServiceID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Simple != nil {
 		in, out := &in.Simple, &out.Simple
 		*out = new(SimpleObservation)
@@ -534,6 +609,11 @@ func (in *BindingsObservation) DeepCopyInto(out *BindingsObservation) {
 	}
 	if in.StoreID != nil {
 		in, out := &in.StoreID, &out.StoreID
+		*out = new(string)
+		**out = **in
+	}
+	if in.TunnelID != nil {
+		in, out := &in.TunnelID, &out.TunnelID
 		*out = new(string)
 		**out = **in
 	}
@@ -605,6 +685,11 @@ func (in *BindingsParameters) DeepCopyInto(out *BindingsParameters) {
 			}
 		}
 	}
+	if in.AppID != nil {
+		in, out := &in.AppID, &out.AppID
+		*out = new(string)
+		**out = **in
+	}
 	if in.BucketName != nil {
 		in, out := &in.BucketName, &out.BucketName
 		*out = new(string)
@@ -620,6 +705,11 @@ func (in *BindingsParameters) DeepCopyInto(out *BindingsParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DatabaseID != nil {
+		in, out := &in.DatabaseID, &out.DatabaseID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Dataset != nil {
 		in, out := &in.Dataset, &out.Dataset
 		*out = new(string)
@@ -627,6 +717,16 @@ func (in *BindingsParameters) DeepCopyInto(out *BindingsParameters) {
 	}
 	if in.DestinationAddress != nil {
 		in, out := &in.DestinationAddress, &out.DestinationAddress
+		*out = new(string)
+		**out = **in
+	}
+	if in.DispatchNamespace != nil {
+		in, out := &in.DispatchNamespace, &out.DispatchNamespace
+		*out = new(string)
+		**out = **in
+	}
+	if in.Entrypoint != nil {
+		in, out := &in.Entrypoint, &out.Entrypoint
 		*out = new(string)
 		**out = **in
 	}
@@ -647,6 +747,11 @@ func (in *BindingsParameters) DeepCopyInto(out *BindingsParameters) {
 	}
 	if in.IndexName != nil {
 		in, out := &in.IndexName, &out.IndexName
+		*out = new(string)
+		**out = **in
+	}
+	if in.InstanceName != nil {
+		in, out := &in.InstanceName, &out.InstanceName
 		*out = new(string)
 		**out = **in
 	}
@@ -682,6 +787,11 @@ func (in *BindingsParameters) DeepCopyInto(out *BindingsParameters) {
 	}
 	if in.NamespaceID != nil {
 		in, out := &in.NamespaceID, &out.NamespaceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.NetworkID != nil {
+		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
 		**out = **in
 	}
@@ -725,6 +835,11 @@ func (in *BindingsParameters) DeepCopyInto(out *BindingsParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ServiceID != nil {
+		in, out := &in.ServiceID, &out.ServiceID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Simple != nil {
 		in, out := &in.Simple, &out.Simple
 		*out = new(SimpleParameters)
@@ -738,6 +853,11 @@ func (in *BindingsParameters) DeepCopyInto(out *BindingsParameters) {
 	if in.TextSecretRef != nil {
 		in, out := &in.TextSecretRef, &out.TextSecretRef
 		*out = new(v1.LocalSecretKeySelector)
+		**out = **in
+	}
+	if in.TunnelID != nil {
+		in, out := &in.TunnelID, &out.TunnelID
+		*out = new(string)
 		**out = **in
 	}
 	if in.Type != nil {
@@ -869,10 +989,75 @@ func (in *ConfigParameters) DeepCopy() *ConfigParameters {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *ContainersInitParameters) DeepCopyInto(out *ContainersInitParameters) {
+	*out = *in
+	if in.ClassName != nil {
+		in, out := &in.ClassName, &out.ClassName
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new ContainersInitParameters.
+func (in *ContainersInitParameters) DeepCopy() *ContainersInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(ContainersInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *ContainersObservation) DeepCopyInto(out *ContainersObservation) {
+	*out = *in
+	if in.ClassName != nil {
+		in, out := &in.ClassName, &out.ClassName
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new ContainersObservation.
+func (in *ContainersObservation) DeepCopy() *ContainersObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(ContainersObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *ContainersParameters) DeepCopyInto(out *ContainersParameters) {
+	*out = *in
+	if in.ClassName != nil {
+		in, out := &in.ClassName, &out.ClassName
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new ContainersParameters.
+func (in *ContainersParameters) DeepCopy() *ContainersParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(ContainersParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *LimitsInitParameters) DeepCopyInto(out *LimitsInitParameters) {
 	*out = *in
 	if in.CPUMs != nil {
 		in, out := &in.CPUMs, &out.CPUMs
+		*out = new(float64)
+		**out = **in
+	}
+	if in.Subrequests != nil {
+		in, out := &in.Subrequests, &out.Subrequests
 		*out = new(float64)
 		**out = **in
 	}
@@ -896,6 +1081,11 @@ func (in *LimitsObservation) DeepCopyInto(out *LimitsObservation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.Subrequests != nil {
+		in, out := &in.Subrequests, &out.Subrequests
+		*out = new(float64)
+		**out = **in
+	}
 }
 
 // DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LimitsObservation.
@@ -913,6 +1103,11 @@ func (in *LimitsParameters) DeepCopyInto(out *LimitsParameters) {
 	*out = *in
 	if in.CPUMs != nil {
 		in, out := &in.CPUMs, &out.CPUMs
+		*out = new(float64)
+		**out = **in
+	}
+	if in.Subrequests != nil {
+		in, out := &in.Subrequests, &out.Subrequests
 		*out = new(float64)
 		**out = **in
 	}
@@ -1715,6 +1910,11 @@ func (in *SimpleInitParameters) DeepCopyInto(out *SimpleInitParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.MitigationTimeout != nil {
+		in, out := &in.MitigationTimeout, &out.MitigationTimeout
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Period != nil {
 		in, out := &in.Period, &out.Period
 		*out = new(float64)
@@ -1740,6 +1940,11 @@ func (in *SimpleObservation) DeepCopyInto(out *SimpleObservation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.MitigationTimeout != nil {
+		in, out := &in.MitigationTimeout, &out.MitigationTimeout
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Period != nil {
 		in, out := &in.Period, &out.Period
 		*out = new(float64)
@@ -1762,6 +1967,11 @@ func (in *SimpleParameters) DeepCopyInto(out *SimpleParameters) {
 	*out = *in
 	if in.Limit != nil {
 		in, out := &in.Limit, &out.Limit
+		*out = new(float64)
+		**out = **in
+	}
+	if in.MitigationTimeout != nil {
+		in, out := &in.MitigationTimeout, &out.MitigationTimeout
 		*out = new(float64)
 		**out = **in
 	}
@@ -2291,6 +2501,13 @@ func (in *VersionInitParameters) DeepCopyInto(out *VersionInitParameters) {
 			}
 		}
 	}
+	if in.Containers != nil {
+		in, out := &in.Containers, &out.Containers
+		*out = make([]ContainersInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
 	if in.Limits != nil {
 		in, out := &in.Limits, &out.Limits
 		*out = new(LimitsInitParameters)
@@ -2413,6 +2630,13 @@ func (in *VersionObservation) DeepCopyInto(out *VersionObservation) {
 			}
 		}
 	}
+	if in.Containers != nil {
+		in, out := &in.Containers, &out.Containers
+		*out = make([]ContainersObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
 	if in.CreatedOn != nil {
 		in, out := &in.CreatedOn, &out.CreatedOn
 		*out = new(string)
@@ -2435,6 +2659,11 @@ func (in *VersionObservation) DeepCopyInto(out *VersionObservation) {
 	}
 	if in.MainScriptBase64 != nil {
 		in, out := &in.MainScriptBase64, &out.MainScriptBase64
+		*out = new(string)
+		**out = **in
+	}
+	if in.MigrationTag != nil {
+		in, out := &in.MigrationTag, &out.MigrationTag
 		*out = new(string)
 		**out = **in
 	}
@@ -2469,6 +2698,17 @@ func (in *VersionObservation) DeepCopyInto(out *VersionObservation) {
 		in, out := &in.StartupTimeMs, &out.StartupTimeMs
 		*out = new(float64)
 		**out = **in
+	}
+	if in.Urls != nil {
+		in, out := &in.Urls, &out.Urls
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.UsageModel != nil {
 		in, out := &in.UsageModel, &out.UsageModel
@@ -2531,6 +2771,13 @@ func (in *VersionParameters) DeepCopyInto(out *VersionParameters) {
 				*out = new(string)
 				**out = **in
 			}
+		}
+	}
+	if in.Containers != nil {
+		in, out := &in.Containers, &out.Containers
+		*out = make([]ContainersParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
 	if in.Limits != nil {

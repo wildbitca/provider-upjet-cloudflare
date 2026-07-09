@@ -10,6 +10,7 @@ metadata:
 spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    enforceDnsOnly: false
     zoneDefaults:
       flattenAllCnames: false
       foundationDns: false

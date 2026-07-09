@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Job is the Schema for the Jobs API.
+        description: Job is the Schema for the Jobs API. Accepted Permissions Logs
+          Write
         properties:
           apiVersion:
             description: |-
@@ -66,15 +67,24 @@ spec:
                   dataset:
                     description: |-
                       (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
-                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
                       Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
-                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
                     type: string
-                  destinationConf:
+                  destinationConfSecretRef:
                     description: |-
-                      (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+                      (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
                       Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-                    type: string
+                    properties:
+                      key:
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
                   enabled:
                     description: |-
                       (Boolean) Flag that indicates if the job is enabled.
@@ -156,6 +166,11 @@ spec:
                         items:
                           type: string
                         type: array
+                      mergeSubrequests:
+                        description: |-
+                          (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
+                          If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
+                        type: boolean
                       outputType:
                         description: |-
                           (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
@@ -190,10 +205,10 @@ spec:
                         type: number
                       timestampFormat:
                         description: |-
-                          (String) String to specify the format for timestamps, such as unixnano, unix, or rfc3339.
-                          Available values: "unixnano", "unix", "rfc3339".
-                          String to specify the format for timestamps, such as `unixnano`, `unix`, or `rfc3339`.
-                          Available values: "unixnano", "unix", "rfc3339".
+                          (String) String to specify the format for timestamps, such as unixnano, unix, rfc3339, rfc3339ms or rfc3339ns.
+                          Available values: "unixnano", "unix", "rfc3339", "rfc3339ms", "rfc3339ns".
+                          String to specify the format for timestamps, such as `unixnano`, `unix`, `rfc3339`, `rfc3339ms` or `rfc3339ns`.
+                          Available values: "unixnano", "unix", "rfc3339", "rfc3339ms", "rfc3339ns".
                         type: string
                     type: object
                   ownershipChallengeSecretRef:
@@ -237,15 +252,24 @@ spec:
                   dataset:
                     description: |-
                       (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
-                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
                       Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
-                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
                     type: string
-                  destinationConf:
+                  destinationConfSecretRef:
                     description: |-
-                      (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+                      (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
                       Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-                    type: string
+                    properties:
+                      key:
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
                   enabled:
                     description: |-
                       (Boolean) Flag that indicates if the job is enabled.
@@ -327,6 +351,11 @@ spec:
                         items:
                           type: string
                         type: array
+                      mergeSubrequests:
+                        description: |-
+                          (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
+                          If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
+                        type: boolean
                       outputType:
                         description: |-
                           (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
@@ -361,10 +390,10 @@ spec:
                         type: number
                       timestampFormat:
                         description: |-
-                          (String) String to specify the format for timestamps, such as unixnano, unix, or rfc3339.
-                          Available values: "unixnano", "unix", "rfc3339".
-                          String to specify the format for timestamps, such as `unixnano`, `unix`, or `rfc3339`.
-                          Available values: "unixnano", "unix", "rfc3339".
+                          (String) String to specify the format for timestamps, such as unixnano, unix, rfc3339, rfc3339ms or rfc3339ns.
+                          Available values: "unixnano", "unix", "rfc3339", "rfc3339ms", "rfc3339ns".
+                          String to specify the format for timestamps, such as `unixnano`, `unix`, `rfc3339`, `rfc3339ms` or `rfc3339ns`.
+                          Available values: "unixnano", "unix", "rfc3339", "rfc3339ms", "rfc3339ns".
                         type: string
                     type: object
                   ownershipChallengeSecretRef:
@@ -386,6 +415,8 @@ spec:
                       (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
                       The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
                     type: string
+                required:
+                - destinationConfSecretRef
                 type: object
               managementPolicies:
                 default:
@@ -446,10 +477,9 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: spec.forProvider.destinationConf is a required parameter
+            - message: spec.forProvider.destinationConfSecretRef is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.destinationConf)
-                || (has(self.initProvider) && has(self.initProvider.destinationConf))'
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.destinationConfSecretRef)'
           status:
             description: JobStatus defines the observed state of Job.
             properties:
@@ -463,14 +493,9 @@ spec:
                   dataset:
                     description: |-
                       (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
-                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
                       Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
-                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "warp_config_changes", "warp_toggle_changes", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
-                    type: string
-                  destinationConf:
-                    description: |-
-                      (String) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-                      Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
+                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
                     type: string
                   enabled:
                     description: |-
@@ -571,6 +596,11 @@ spec:
                         items:
                           type: string
                         type: array
+                      mergeSubrequests:
+                        description: |-
+                          (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
+                          If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
+                        type: boolean
                       outputType:
                         description: |-
                           (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
@@ -605,10 +635,10 @@ spec:
                         type: number
                       timestampFormat:
                         description: |-
-                          (String) String to specify the format for timestamps, such as unixnano, unix, or rfc3339.
-                          Available values: "unixnano", "unix", "rfc3339".
-                          String to specify the format for timestamps, such as `unixnano`, `unix`, or `rfc3339`.
-                          Available values: "unixnano", "unix", "rfc3339".
+                          (String) String to specify the format for timestamps, such as unixnano, unix, rfc3339, rfc3339ms or rfc3339ns.
+                          Available values: "unixnano", "unix", "rfc3339", "rfc3339ms", "rfc3339ns".
+                          String to specify the format for timestamps, such as `unixnano`, `unix`, `rfc3339`, `rfc3339ms` or `rfc3339ns`.
+                          Available values: "unixnano", "unix", "rfc3339", "rfc3339ms", "rfc3339ns".
                         type: string
                     type: object
                   zoneId:

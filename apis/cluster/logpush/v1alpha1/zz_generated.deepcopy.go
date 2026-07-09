@@ -53,11 +53,7 @@ func (in *JobInitParameters) DeepCopyInto(out *JobInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.DestinationConf != nil {
-		in, out := &in.DestinationConf, &out.DestinationConf
-		*out = new(string)
-		**out = **in
-	}
+	in.DestinationConfSecretRef.DeepCopyInto(&out.DestinationConfSecretRef)
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled
 		*out = new(bool)
@@ -175,11 +171,6 @@ func (in *JobObservation) DeepCopyInto(out *JobObservation) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.DestinationConf != nil {
-		in, out := &in.DestinationConf, &out.DestinationConf
-		*out = new(string)
-		**out = **in
-	}
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled
 		*out = new(bool)
@@ -280,11 +271,7 @@ func (in *JobParameters) DeepCopyInto(out *JobParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.DestinationConf != nil {
-		in, out := &in.DestinationConf, &out.DestinationConf
-		*out = new(string)
-		**out = **in
-	}
+	in.DestinationConfSecretRef.DeepCopyInto(&out.DestinationConfSecretRef)
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled
 		*out = new(bool)
@@ -426,6 +413,11 @@ func (in *OutputOptionsInitParameters) DeepCopyInto(out *OutputOptionsInitParame
 			}
 		}
 	}
+	if in.MergeSubrequests != nil {
+		in, out := &in.MergeSubrequests, &out.MergeSubrequests
+		*out = new(bool)
+		**out = **in
+	}
 	if in.OutputType != nil {
 		in, out := &in.OutputType, &out.OutputType
 		*out = new(string)
@@ -507,6 +499,11 @@ func (in *OutputOptionsObservation) DeepCopyInto(out *OutputOptionsObservation) 
 			}
 		}
 	}
+	if in.MergeSubrequests != nil {
+		in, out := &in.MergeSubrequests, &out.MergeSubrequests
+		*out = new(bool)
+		**out = **in
+	}
 	if in.OutputType != nil {
 		in, out := &in.OutputType, &out.OutputType
 		*out = new(string)
@@ -587,6 +584,11 @@ func (in *OutputOptionsParameters) DeepCopyInto(out *OutputOptionsParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.MergeSubrequests != nil {
+		in, out := &in.MergeSubrequests, &out.MergeSubrequests
+		*out = new(bool)
+		**out = **in
 	}
 	if in.OutputType != nil {
 		in, out := &in.OutputType, &out.OutputType
@@ -670,11 +672,7 @@ func (in *OwnershipChallengeInitParameters) DeepCopyInto(out *OwnershipChallenge
 		*out = new(string)
 		**out = **in
 	}
-	if in.DestinationConf != nil {
-		in, out := &in.DestinationConf, &out.DestinationConf
-		*out = new(string)
-		**out = **in
-	}
+	in.DestinationConfSecretRef.DeepCopyInto(&out.DestinationConfSecretRef)
 	if in.ZoneID != nil {
 		in, out := &in.ZoneID, &out.ZoneID
 		*out = new(string)
@@ -732,11 +730,6 @@ func (in *OwnershipChallengeObservation) DeepCopyInto(out *OwnershipChallengeObs
 		*out = new(string)
 		**out = **in
 	}
-	if in.DestinationConf != nil {
-		in, out := &in.DestinationConf, &out.DestinationConf
-		*out = new(string)
-		**out = **in
-	}
 	if in.Filename != nil {
 		in, out := &in.Filename, &out.Filename
 		*out = new(string)
@@ -782,11 +775,7 @@ func (in *OwnershipChallengeParameters) DeepCopyInto(out *OwnershipChallengePara
 		*out = new(string)
 		**out = **in
 	}
-	if in.DestinationConf != nil {
-		in, out := &in.DestinationConf, &out.DestinationConf
-		*out = new(string)
-		**out = **in
-	}
+	in.DestinationConfSecretRef.DeepCopyInto(&out.DestinationConfSecretRef)
 	if in.ZoneID != nil {
 		in, out := &in.ZoneID, &out.ZoneID
 		*out = new(string)

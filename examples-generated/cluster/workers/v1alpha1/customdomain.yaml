@@ -8,8 +8,9 @@ metadata:
   name: example-workers-custom-domain
 spec:
   forProvider:
-    accountId: 9a7806061c88ada191ed06f989cc3dac
+    accountId: 023e105f4ecef8ad9ca31a8372d0c353
     environment: production
-    hostname: foo.example.com
-    service: foo
+    hostname: app.example.com
+    service: my-worker
     zoneId: 593c9c94de529bbbfaac7c53ced0447d
+    zoneName: example.com

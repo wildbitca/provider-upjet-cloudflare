@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: OneRequestAsset is the Schema for the OneRequestAssets API.
+        description: OneRequestAsset is the Schema for the OneRequestAssets API. Accepted
+          Permissions Cloudforce One ReadCloudforce One Write
         properties:
           apiVersion:
             description: |-

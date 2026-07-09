@@ -34,7 +34,10 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustOrganization is the Schema for the TrustOrganizations API.
+        description: 'TrustOrganization is the Schema for the TrustOrganizations API.
+          Accepted Permissions Access: Organizations, Identity Providers, and Groups
+          ReadAccess: Organizations, Identity Providers, and Groups RevokeAccess:
+          Organizations, Identity Providers, and Groups Write'
         properties:
           apiVersion:
             description: |-
@@ -72,11 +75,6 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  accountId:
-                    description: |-
-                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-                    type: string
                   allowAuthenticateViaWarp:
                     description: |-
                       (Boolean) When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
@@ -158,11 +156,21 @@ spec:
                     properties:
                       allowedAuthenticators:
                         description: |-
-                          (List of String) Lists the MFA methods that users can authenticate with.
-                          Lists the MFA methods that users can authenticate with.
+                          (List of String) Lists the MFA methods that users can authenticate with. ssh_piv_key is only relevant for infrastructure applications.
+                          Lists the MFA methods that users can authenticate with. `ssh_piv_key` is only relevant for infrastructure applications.
                         items:
                           type: string
                         type: array
+                      amrMatchingSessionDuration:
+                        description: |-
+                          (String) Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
+                          Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
+                        type: string
+                      requiredAaguids:
+                        description: |-
+                          (String) Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
+                          Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
+                        type: string
                       sessionDuration:
                         description: |-
                           (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
@@ -176,9 +184,48 @@ spec:
                     type: boolean
                   mfaRequiredForAllApps:
                     description: |-
-                      (Boolean) Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
-                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
+                      infrastructure applications because PIV keys are only compatible with infrastructure apps.
+                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot only contain 'ssh_piv_key' if the organization has any non-infrastructure applications because PIV keys are only compatible with infrastructure apps.
                     type: boolean
+                  mfaSshPivKeyRequirements:
+                    description: (Attributes) Configures SSH PIV key requirements
+                      for MFA using hardware security keys. (see below for nested
+                      schema)
+                    properties:
+                      pinPolicy:
+                        description: |-
+                          (String) Defines when a PIN is required to use the SSH key. Valid values: never (no PIN required), once (PIN required once per session), always (PIN required for each use).
+                          Available values: "never", "once", "always".
+                          Defines when a PIN is required to use the SSH key. Valid values: `never` (no PIN required), `once` (PIN required once per session), `always` (PIN required for each use).
+                          Available values: "never", "once", "always".
+                        type: string
+                      requireFipsDevice:
+                        description: |-
+                          2 Level 1 or higher validated device.
+                          Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+                        type: boolean
+                      sshKeySize:
+                        description: |-
+                          (List of Number) Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
+                          Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
+                        items:
+                          type: number
+                        type: array
+                      sshKeyType:
+                        description: |-
+                          (List of String) Specifies the allowed SSH key types. Valid values are ecdsa, ed25519, and rsa.
+                          Specifies the allowed SSH key types. Valid values are `ecdsa`, `ed25519`, and `rsa`.
+                        items:
+                          type: string
+                        type: array
+                      touchPolicy:
+                        description: |-
+                          (String) Defines when physical touch is required to use the SSH key. Valid values: never (no touch required), always (touch required for each use), cached (touch cached for 15 seconds).
+                          Available values: "never", "always", "cached".
+                          Defines when physical touch is required to use the SSH key. Valid values: `never` (no touch required), `always` (touch required for each use), `cached` (touch cached for 15 seconds).
+                          Available values: "never", "always", "cached".
+                        type: string
+                    type: object
                   name:
                     description: |-
                       (String) The name of your Zero Trust organization.
@@ -223,11 +270,6 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
-                  accountId:
-                    description: |-
-                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-                    type: string
                   allowAuthenticateViaWarp:
                     description: |-
                       (Boolean) When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
@@ -309,11 +351,21 @@ spec:
                     properties:
                       allowedAuthenticators:
                         description: |-
-                          (List of String) Lists the MFA methods that users can authenticate with.
-                          Lists the MFA methods that users can authenticate with.
+                          (List of String) Lists the MFA methods that users can authenticate with. ssh_piv_key is only relevant for infrastructure applications.
+                          Lists the MFA methods that users can authenticate with. `ssh_piv_key` is only relevant for infrastructure applications.
                         items:
                           type: string
                         type: array
+                      amrMatchingSessionDuration:
+                        description: |-
+                          (String) Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
+                          Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
+                        type: string
+                      requiredAaguids:
+                        description: |-
+                          (String) Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
+                          Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
+                        type: string
                       sessionDuration:
                         description: |-
                           (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
@@ -327,9 +379,48 @@ spec:
                     type: boolean
                   mfaRequiredForAllApps:
                     description: |-
-                      (Boolean) Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
-                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
+                      infrastructure applications because PIV keys are only compatible with infrastructure apps.
+                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot only contain 'ssh_piv_key' if the organization has any non-infrastructure applications because PIV keys are only compatible with infrastructure apps.
                     type: boolean
+                  mfaSshPivKeyRequirements:
+                    description: (Attributes) Configures SSH PIV key requirements
+                      for MFA using hardware security keys. (see below for nested
+                      schema)
+                    properties:
+                      pinPolicy:
+                        description: |-
+                          (String) Defines when a PIN is required to use the SSH key. Valid values: never (no PIN required), once (PIN required once per session), always (PIN required for each use).
+                          Available values: "never", "once", "always".
+                          Defines when a PIN is required to use the SSH key. Valid values: `never` (no PIN required), `once` (PIN required once per session), `always` (PIN required for each use).
+                          Available values: "never", "once", "always".
+                        type: string
+                      requireFipsDevice:
+                        description: |-
+                          2 Level 1 or higher validated device.
+                          Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+                        type: boolean
+                      sshKeySize:
+                        description: |-
+                          (List of Number) Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
+                          Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
+                        items:
+                          type: number
+                        type: array
+                      sshKeyType:
+                        description: |-
+                          (List of String) Specifies the allowed SSH key types. Valid values are ecdsa, ed25519, and rsa.
+                          Specifies the allowed SSH key types. Valid values are `ecdsa`, `ed25519`, and `rsa`.
+                        items:
+                          type: string
+                        type: array
+                      touchPolicy:
+                        description: |-
+                          (String) Defines when physical touch is required to use the SSH key. Valid values: never (no touch required), always (touch required for each use), cached (touch cached for 15 seconds).
+                          Available values: "never", "always", "cached".
+                          Defines when physical touch is required to use the SSH key. Valid values: `never` (no touch required), `always` (touch required for each use), `cached` (touch cached for 15 seconds).
+                          Available values: "never", "always", "cached".
+                        type: string
+                    type: object
                   name:
                     description: |-
                       (String) The name of your Zero Trust organization.
@@ -452,11 +543,6 @@ spec:
             properties:
               atProvider:
                 properties:
-                  accountId:
-                    description: |-
-                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
-                    type: string
                   allowAuthenticateViaWarp:
                     description: |-
                       (Boolean) When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
@@ -540,11 +626,21 @@ spec:
                     properties:
                       allowedAuthenticators:
                         description: |-
-                          (List of String) Lists the MFA methods that users can authenticate with.
-                          Lists the MFA methods that users can authenticate with.
+                          (List of String) Lists the MFA methods that users can authenticate with. ssh_piv_key is only relevant for infrastructure applications.
+                          Lists the MFA methods that users can authenticate with. `ssh_piv_key` is only relevant for infrastructure applications.
                         items:
                           type: string
                         type: array
+                      amrMatchingSessionDuration:
+                        description: |-
+                          (String) Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
+                          Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
+                        type: string
+                      requiredAaguids:
+                        description: |-
+                          (String) Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
+                          Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
+                        type: string
                       sessionDuration:
                         description: |-
                           (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
@@ -558,9 +654,48 @@ spec:
                     type: boolean
                   mfaRequiredForAllApps:
                     description: |-
-                      (Boolean) Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
-                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured.
+                      infrastructure applications because PIV keys are only compatible with infrastructure apps.
+                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot only contain 'ssh_piv_key' if the organization has any non-infrastructure applications because PIV keys are only compatible with infrastructure apps.
                     type: boolean
+                  mfaSshPivKeyRequirements:
+                    description: (Attributes) Configures SSH PIV key requirements
+                      for MFA using hardware security keys. (see below for nested
+                      schema)
+                    properties:
+                      pinPolicy:
+                        description: |-
+                          (String) Defines when a PIN is required to use the SSH key. Valid values: never (no PIN required), once (PIN required once per session), always (PIN required for each use).
+                          Available values: "never", "once", "always".
+                          Defines when a PIN is required to use the SSH key. Valid values: `never` (no PIN required), `once` (PIN required once per session), `always` (PIN required for each use).
+                          Available values: "never", "once", "always".
+                        type: string
+                      requireFipsDevice:
+                        description: |-
+                          2 Level 1 or higher validated device.
+                          Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+                        type: boolean
+                      sshKeySize:
+                        description: |-
+                          (List of Number) Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
+                          Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
+                        items:
+                          type: number
+                        type: array
+                      sshKeyType:
+                        description: |-
+                          (List of String) Specifies the allowed SSH key types. Valid values are ecdsa, ed25519, and rsa.
+                          Specifies the allowed SSH key types. Valid values are `ecdsa`, `ed25519`, and `rsa`.
+                        items:
+                          type: string
+                        type: array
+                      touchPolicy:
+                        description: |-
+                          (String) Defines when physical touch is required to use the SSH key. Valid values: never (no touch required), always (touch required for each use), cached (touch cached for 15 seconds).
+                          Available values: "never", "always", "cached".
+                          Defines when physical touch is required to use the SSH key. Valid values: `never` (no touch required), `always` (touch required for each use), `cached` (touch cached for 15 seconds).
+                          Available values: "never", "always", "cached".
+                        type: string
+                    type: object
                   name:
                     description: |-
                       (String) The name of your Zero Trust organization.

@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: User is the Schema for the Users API.
+        description: User is the Schema for the Users API. Accepted Permissions User
+          Details ReadUser Details Write
         properties:
           apiVersion:
             description: |-
@@ -239,6 +240,11 @@ spec:
                     description: |-
                       (String) The country in which the user lives.
                       The country in which the user lives.
+                    type: string
+                  email:
+                    description: |-
+                      (String) Current email address of the user.
+                      Current email address of the user.
                     type: string
                   firstName:
                     description: |-

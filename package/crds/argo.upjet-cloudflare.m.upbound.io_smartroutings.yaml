@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SmartRouting is the Schema for the SmartRoutings API.
+        description: SmartRouting is the Schema for the SmartRoutings API. Accepted
+          Permissions Zone Settings ReadZone Settings Write
         properties:
           apiVersion:
             description: |-

@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SSL is the Schema for the SSLs API.
+        description: 'SSL is the Schema for the SSLs API. Accepted Permissions Access:
+          Mutual TLS Certificates ReadAccess: Mutual TLS Certificates WriteSSL and
+          Certificates ReadSSL and Certificates Write'
         properties:
           apiVersion:
             description: |-
@@ -69,6 +71,11 @@ spec:
                     description: |-
                       (String) The zone's SSL certificate or certificate and the intermediate(s).
                       The zone's SSL certificate or certificate and the intermediate(s).
+                    type: string
+                  customCsrId:
+                    description: |-
+                      (String) The identifier for the Custom CSR that was used.
+                      The identifier for the Custom CSR that was used.
                     type: string
                   deploy:
                     description: |-
@@ -232,6 +239,11 @@ spec:
                     description: |-
                       (String) The zone's SSL certificate or certificate and the intermediate(s).
                       The zone's SSL certificate or certificate and the intermediate(s).
+                    type: string
+                  customCsrId:
+                    description: |-
+                      (String) The identifier for the Custom CSR that was used.
+                      The identifier for the Custom CSR that was used.
                     type: string
                   deploy:
                     description: |-
@@ -456,6 +468,11 @@ spec:
                       (String) The zone's SSL certificate or certificate and the intermediate(s).
                       The zone's SSL certificate or certificate and the intermediate(s).
                     type: string
+                  customCsrId:
+                    description: |-
+                      (String) The identifier for the Custom CSR that was used.
+                      The identifier for the Custom CSR that was used.
+                    type: string
                   deploy:
                     description: |-
                       (String) The environment to deploy the certificate to.
@@ -552,17 +569,17 @@ spec:
                         type: string
                       tunnel:
                         description: (Attributes) Configuration for using Keyless
-                          SSL through a Cloudflare Tunnel (see below for nested schema)
+                          SSL through a Cloudflare Tunnel. (see below for nested schema)
                         properties:
                           privateIp:
                             description: |-
-                              (String) Private IP of the Key Server Host
-                              Private IP of the Key Server Host
+                              (String) Private IP of the Key Server Host.
+                              Private IP of the Key Server Host.
                             type: string
                           vnetId:
                             description: |-
-                              (String) Cloudflare Tunnel Virtual Network ID
-                              Cloudflare Tunnel Virtual Network ID
+                              (String) Cloudflare Tunnel Virtual Network ID.
+                              Cloudflare Tunnel Virtual Network ID.
                             type: string
                         type: object
                     type: object

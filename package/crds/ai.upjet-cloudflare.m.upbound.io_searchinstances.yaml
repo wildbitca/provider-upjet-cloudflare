@@ -69,6 +69,7 @@ spec:
                       "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
                       "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
                       "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
                       "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
                       "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
                       "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
@@ -84,6 +85,11 @@ spec:
                     description: 'Available values: "super_strict_match", "close_enough",
                       "flexible_friend", "anything_goes".'
                     type: string
+                  cacheTtl:
+                    description: |-
+                      Cache entry TTL in seconds. Allowed values: 600 (10min), 1800 (30min), 3600 (1h), 7200 (2h), 21600 (6h), 43200 (12h), 86400 (24h), 172800 (48h), 259200 (72h), 518400 (6d).
+                      Available values: 600, 1800, 3600, 7200, 21600, 43200, 86400, 172800, 259200, 518400.
+                    type: number
                   chunk:
                     type: boolean
                   chunkOverlap:
@@ -94,7 +100,8 @@ spec:
                     items:
                       properties:
                         dataType:
-                          description: 'Available values: "text", "number", "boolean".'
+                          description: 'Available values: "text", "number", "boolean",
+                            "datetime".'
                           type: string
                         fieldName:
                           type: string
@@ -103,14 +110,33 @@ spec:
                   embeddingModel:
                     description: 'Available values: "@cf/qwen/qwen3-embedding-0.6b",
                       "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m",
-                      "google-ai-studio/gemini-embedding-001", "openai/text-embedding-3-small",
-                      "openai/text-embedding-3-large", "".'
+                      "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview",
+                      "openai/text-embedding-3-small", "openai/text-embedding-3-large",
+                      "".'
                     type: string
                   fusionMethod:
                     description: 'Available values: "max", "rrf".'
                     type: string
                   hybridSearchEnabled:
+                    description: Deprecated — use index_method instead.
                     type: boolean
+                  indexMethod:
+                    properties:
+                      keyword:
+                        description: Enable keyword (BM25) storage backend.
+                        type: boolean
+                      vector:
+                        description: Enable vector (embedding) storage backend.
+                        type: boolean
+                    type: object
+                  indexingOptions:
+                    properties:
+                      keywordTokenizer:
+                        description: |-
+                          Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
+                          Available values: "porter", "trigram".
+                        type: string
+                    type: object
                   maxNumResults:
                     type: number
                   metadata:
@@ -170,10 +196,27 @@ spec:
                     type: string
                   retrievalOptions:
                     properties:
+                      boostBy:
+                        items:
+                          properties:
+                            direction:
+                              description: |-
+                                Boost direction. 'desc' = higher values rank higher (e.g. newer timestamps). 'asc' = lower values rank higher. 'exists' = boost chunks that have the field. 'not_exists' = boost chunks that lack the field. Optional — defaults to 'asc' for numeric/datetime fields, 'exists' for text/boolean fields.
+                                Available values: "asc", "desc", "exists", "not_exists".
+                              type: string
+                            field:
+                              description: Metadata field name to boost by. Use 'timestamp'
+                                for document freshness, or any custom_metadata field.
+                                Numeric and datetime fields support all four directions
+                                (asc, desc, exists, not_exists); text/boolean fields
+                                only support exists/not_exists.
+                              type: string
+                          type: object
+                        type: array
                       keywordMatchMode:
                         description: |-
-                          Controls how keyword search terms are matched. exact_match requires all terms to appear (AND); fuzzy_match returns results containing any term (OR). Defaults to exact_match.
-                          Available values: "exact_match", "fuzzy_match".
+                          Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. Defaults to 'and'.
+                          Available values: "and", "or".
                         type: string
                     type: object
                   rewriteModel:
@@ -182,6 +225,7 @@ spec:
                       "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
                       "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
                       "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
                       "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
                       "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
                       "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
@@ -221,11 +265,48 @@ spec:
                         type: string
                       webCrawler:
                         properties:
+                          crawlOptions:
+                            properties:
+                              depth:
+                                type: number
+                              includeExternalLinks:
+                                type: boolean
+                              includeSubdomains:
+                                type: boolean
+                              maxAge:
+                                type: number
+                              source:
+                                description: 'Available values: "all", "sitemaps",
+                                  "links".'
+                                type: string
+                            type: object
                           parseOptions:
                             properties:
+                              contentSelector:
+                                items:
+                                  properties:
+                                    path:
+                                      description: 'Glob pattern to match against
+                                        the page URL path. Uses standard glob syntax:
+                                        * matches within a segment, ** crosses directories.'
+                                      type: string
+                                    selector:
+                                      description: CSS selector to extract content
+                                        from pages matching the path pattern. Must
+                                        not contain disallowed characters (;, `, $,
+                                        {, }, \). Must target a single element; if
+                                        multiple elements match, the selector is ignored
+                                        and the full page is used.
+                                      type: string
+                                  type: object
+                                type: array
                               includeHeaders:
                                 additionalProperties:
                                   type: string
+                                description: Up to 5 custom HTTP headers sent with
+                                  each crawl request. Names must be RFC-7230 token
+                                  characters (no spaces, colons, or control characters);
+                                  values must be HTAB + printable ASCII (no CR/LF).
                                 type: object
                                 x-kubernetes-map-type: granular
                               includeImages:
@@ -240,7 +321,8 @@ spec:
                                 type: boolean
                             type: object
                           parseType:
-                            description: 'Available values: "sitemap", "feed-rss".'
+                            description: 'Available values: "sitemap", "feed-rss",
+                              "crawl".'
                             type: string
                           storeOptions:
                             properties:
@@ -262,6 +344,7 @@ spec:
                       "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
                       "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
                       "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
                       "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
                       "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
                       "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
@@ -271,6 +354,11 @@ spec:
                       "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
                       "openai/gpt-5-nano", "".'
                     type: string
+                  syncInterval:
+                    description: |-
+                      Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
+                      Available values: 900, 1800, 3600, 7200, 14400, 21600, 43200, 86400.
+                    type: number
                   systemPromptAisearch:
                     type: string
                   systemPromptIndexSummarization:
@@ -306,6 +394,7 @@ spec:
                       "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
                       "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
                       "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
                       "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
                       "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
                       "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
@@ -321,6 +410,11 @@ spec:
                     description: 'Available values: "super_strict_match", "close_enough",
                       "flexible_friend", "anything_goes".'
                     type: string
+                  cacheTtl:
+                    description: |-
+                      Cache entry TTL in seconds. Allowed values: 600 (10min), 1800 (30min), 3600 (1h), 7200 (2h), 21600 (6h), 43200 (12h), 86400 (24h), 172800 (48h), 259200 (72h), 518400 (6d).
+                      Available values: 600, 1800, 3600, 7200, 21600, 43200, 86400, 172800, 259200, 518400.
+                    type: number
                   chunk:
                     type: boolean
                   chunkOverlap:
@@ -331,7 +425,8 @@ spec:
                     items:
                       properties:
                         dataType:
-                          description: 'Available values: "text", "number", "boolean".'
+                          description: 'Available values: "text", "number", "boolean",
+                            "datetime".'
                           type: string
                         fieldName:
                           type: string
@@ -340,14 +435,33 @@ spec:
                   embeddingModel:
                     description: 'Available values: "@cf/qwen/qwen3-embedding-0.6b",
                       "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m",
-                      "google-ai-studio/gemini-embedding-001", "openai/text-embedding-3-small",
-                      "openai/text-embedding-3-large", "".'
+                      "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview",
+                      "openai/text-embedding-3-small", "openai/text-embedding-3-large",
+                      "".'
                     type: string
                   fusionMethod:
                     description: 'Available values: "max", "rrf".'
                     type: string
                   hybridSearchEnabled:
+                    description: Deprecated — use index_method instead.
                     type: boolean
+                  indexMethod:
+                    properties:
+                      keyword:
+                        description: Enable keyword (BM25) storage backend.
+                        type: boolean
+                      vector:
+                        description: Enable vector (embedding) storage backend.
+                        type: boolean
+                    type: object
+                  indexingOptions:
+                    properties:
+                      keywordTokenizer:
+                        description: |-
+                          Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
+                          Available values: "porter", "trigram".
+                        type: string
+                    type: object
                   maxNumResults:
                     type: number
                   metadata:
@@ -407,10 +521,27 @@ spec:
                     type: string
                   retrievalOptions:
                     properties:
+                      boostBy:
+                        items:
+                          properties:
+                            direction:
+                              description: |-
+                                Boost direction. 'desc' = higher values rank higher (e.g. newer timestamps). 'asc' = lower values rank higher. 'exists' = boost chunks that have the field. 'not_exists' = boost chunks that lack the field. Optional — defaults to 'asc' for numeric/datetime fields, 'exists' for text/boolean fields.
+                                Available values: "asc", "desc", "exists", "not_exists".
+                              type: string
+                            field:
+                              description: Metadata field name to boost by. Use 'timestamp'
+                                for document freshness, or any custom_metadata field.
+                                Numeric and datetime fields support all four directions
+                                (asc, desc, exists, not_exists); text/boolean fields
+                                only support exists/not_exists.
+                              type: string
+                          type: object
+                        type: array
                       keywordMatchMode:
                         description: |-
-                          Controls how keyword search terms are matched. exact_match requires all terms to appear (AND); fuzzy_match returns results containing any term (OR). Defaults to exact_match.
-                          Available values: "exact_match", "fuzzy_match".
+                          Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. Defaults to 'and'.
+                          Available values: "and", "or".
                         type: string
                     type: object
                   rewriteModel:
@@ -419,6 +550,7 @@ spec:
                       "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
                       "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
                       "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
                       "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
                       "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
                       "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
@@ -458,11 +590,48 @@ spec:
                         type: string
                       webCrawler:
                         properties:
+                          crawlOptions:
+                            properties:
+                              depth:
+                                type: number
+                              includeExternalLinks:
+                                type: boolean
+                              includeSubdomains:
+                                type: boolean
+                              maxAge:
+                                type: number
+                              source:
+                                description: 'Available values: "all", "sitemaps",
+                                  "links".'
+                                type: string
+                            type: object
                           parseOptions:
                             properties:
+                              contentSelector:
+                                items:
+                                  properties:
+                                    path:
+                                      description: 'Glob pattern to match against
+                                        the page URL path. Uses standard glob syntax:
+                                        * matches within a segment, ** crosses directories.'
+                                      type: string
+                                    selector:
+                                      description: CSS selector to extract content
+                                        from pages matching the path pattern. Must
+                                        not contain disallowed characters (;, `, $,
+                                        {, }, \). Must target a single element; if
+                                        multiple elements match, the selector is ignored
+                                        and the full page is used.
+                                      type: string
+                                  type: object
+                                type: array
                               includeHeaders:
                                 additionalProperties:
                                   type: string
+                                description: Up to 5 custom HTTP headers sent with
+                                  each crawl request. Names must be RFC-7230 token
+                                  characters (no spaces, colons, or control characters);
+                                  values must be HTAB + printable ASCII (no CR/LF).
                                 type: object
                                 x-kubernetes-map-type: granular
                               includeImages:
@@ -477,7 +646,8 @@ spec:
                                 type: boolean
                             type: object
                           parseType:
-                            description: 'Available values: "sitemap", "feed-rss".'
+                            description: 'Available values: "sitemap", "feed-rss",
+                              "crawl".'
                             type: string
                           storeOptions:
                             properties:
@@ -499,6 +669,7 @@ spec:
                       "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
                       "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
                       "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
                       "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
                       "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
                       "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
@@ -508,6 +679,11 @@ spec:
                       "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
                       "openai/gpt-5-nano", "".'
                     type: string
+                  syncInterval:
+                    description: |-
+                      Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
+                      Available values: 900, 1800, 3600, 7200, 14400, 21600, 43200, 86400.
+                    type: number
                   systemPromptAisearch:
                     type: string
                   systemPromptIndexSummarization:
@@ -583,14 +759,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
                 || (has(self.initProvider) && has(self.initProvider.accountId))'
-            - message: spec.forProvider.source is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.source)
-                || (has(self.initProvider) && has(self.initProvider.source))'
-            - message: spec.forProvider.type is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
-                || (has(self.initProvider) && has(self.initProvider.type))'
           status:
             description: SearchInstanceStatus defines the observed state of SearchInstance.
             properties:
@@ -606,6 +774,7 @@ spec:
                       "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
                       "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
                       "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
                       "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
                       "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
                       "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
@@ -621,6 +790,11 @@ spec:
                     description: 'Available values: "super_strict_match", "close_enough",
                       "flexible_friend", "anything_goes".'
                     type: string
+                  cacheTtl:
+                    description: |-
+                      Cache entry TTL in seconds. Allowed values: 600 (10min), 1800 (30min), 3600 (1h), 7200 (2h), 21600 (6h), 43200 (12h), 86400 (24h), 172800 (48h), 259200 (72h), 518400 (6d).
+                      Available values: 600, 1800, 3600, 7200, 21600, 43200, 86400, 172800, 259200, 518400.
+                    type: number
                   chunk:
                     type: boolean
                   chunkOverlap:
@@ -635,7 +809,8 @@ spec:
                     items:
                       properties:
                         dataType:
-                          description: 'Available values: "text", "number", "boolean".'
+                          description: 'Available values: "text", "number", "boolean",
+                            "datetime".'
                           type: string
                         fieldName:
                           type: string
@@ -644,18 +819,39 @@ spec:
                   embeddingModel:
                     description: 'Available values: "@cf/qwen/qwen3-embedding-0.6b",
                       "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m",
-                      "google-ai-studio/gemini-embedding-001", "openai/text-embedding-3-small",
-                      "openai/text-embedding-3-large", "".'
+                      "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview",
+                      "openai/text-embedding-3-small", "openai/text-embedding-3-large",
+                      "".'
                     type: string
                   enable:
                     type: boolean
+                  engineVersion:
+                    type: number
                   fusionMethod:
                     description: 'Available values: "max", "rrf".'
                     type: string
                   hybridSearchEnabled:
+                    description: Deprecated — use index_method instead.
                     type: boolean
                   id:
                     type: string
+                  indexMethod:
+                    properties:
+                      keyword:
+                        description: Enable keyword (BM25) storage backend.
+                        type: boolean
+                      vector:
+                        description: Enable vector (embedding) storage backend.
+                        type: boolean
+                    type: object
+                  indexingOptions:
+                    properties:
+                      keywordTokenizer:
+                        description: |-
+                          Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
+                          Available values: "porter", "trigram".
+                        type: string
+                    type: object
                   lastActivity:
                     type: string
                   maxNumResults:
@@ -670,6 +866,8 @@ spec:
                   modifiedAt:
                     type: string
                   modifiedBy:
+                    type: string
+                  namespace:
                     type: string
                   paused:
                     type: boolean
@@ -723,10 +921,27 @@ spec:
                     type: string
                   retrievalOptions:
                     properties:
+                      boostBy:
+                        items:
+                          properties:
+                            direction:
+                              description: |-
+                                Boost direction. 'desc' = higher values rank higher (e.g. newer timestamps). 'asc' = lower values rank higher. 'exists' = boost chunks that have the field. 'not_exists' = boost chunks that lack the field. Optional — defaults to 'asc' for numeric/datetime fields, 'exists' for text/boolean fields.
+                                Available values: "asc", "desc", "exists", "not_exists".
+                              type: string
+                            field:
+                              description: Metadata field name to boost by. Use 'timestamp'
+                                for document freshness, or any custom_metadata field.
+                                Numeric and datetime fields support all four directions
+                                (asc, desc, exists, not_exists); text/boolean fields
+                                only support exists/not_exists.
+                              type: string
+                          type: object
+                        type: array
                       keywordMatchMode:
                         description: |-
-                          Controls how keyword search terms are matched. exact_match requires all terms to appear (AND); fuzzy_match returns results containing any term (OR). Defaults to exact_match.
-                          Available values: "exact_match", "fuzzy_match".
+                          Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. Defaults to 'and'.
+                          Available values: "and", "or".
                         type: string
                     type: object
                   rewriteModel:
@@ -735,6 +950,7 @@ spec:
                       "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
                       "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
                       "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
                       "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
                       "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
                       "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
@@ -774,11 +990,48 @@ spec:
                         type: string
                       webCrawler:
                         properties:
+                          crawlOptions:
+                            properties:
+                              depth:
+                                type: number
+                              includeExternalLinks:
+                                type: boolean
+                              includeSubdomains:
+                                type: boolean
+                              maxAge:
+                                type: number
+                              source:
+                                description: 'Available values: "all", "sitemaps",
+                                  "links".'
+                                type: string
+                            type: object
                           parseOptions:
                             properties:
+                              contentSelector:
+                                items:
+                                  properties:
+                                    path:
+                                      description: 'Glob pattern to match against
+                                        the page URL path. Uses standard glob syntax:
+                                        * matches within a segment, ** crosses directories.'
+                                      type: string
+                                    selector:
+                                      description: CSS selector to extract content
+                                        from pages matching the path pattern. Must
+                                        not contain disallowed characters (;, `, $,
+                                        {, }, \). Must target a single element; if
+                                        multiple elements match, the selector is ignored
+                                        and the full page is used.
+                                      type: string
+                                  type: object
+                                type: array
                               includeHeaders:
                                 additionalProperties:
                                   type: string
+                                description: Up to 5 custom HTTP headers sent with
+                                  each crawl request. Names must be RFC-7230 token
+                                  characters (no spaces, colons, or control characters);
+                                  values must be HTAB + printable ASCII (no CR/LF).
                                 type: object
                                 x-kubernetes-map-type: granular
                               includeImages:
@@ -793,7 +1046,8 @@ spec:
                                 type: boolean
                             type: object
                           parseType:
-                            description: 'Available values: "sitemap", "feed-rss".'
+                            description: 'Available values: "sitemap", "feed-rss",
+                              "crawl".'
                             type: string
                           storeOptions:
                             properties:
@@ -817,6 +1071,7 @@ spec:
                       "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
                       "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
                       "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
+                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
                       "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
                       "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
                       "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
@@ -826,6 +1081,11 @@ spec:
                       "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
                       "openai/gpt-5-nano", "".'
                     type: string
+                  syncInterval:
+                    description: |-
+                      Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
+                      Available values: 900, 1800, 3600, 7200, 14400, 21600, 43200, 86400.
+                    type: number
                   systemPromptAisearch:
                     type: string
                   systemPromptIndexSummarization:

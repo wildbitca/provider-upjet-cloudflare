@@ -429,7 +429,7 @@ type TrustDNSLocationStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustDNSLocation is the Schema for the TrustDNSLocations API.
+// TrustDNSLocation is the Schema for the TrustDNSLocations API. Accepted Permissions Cloudflare Zero Trust Secure DNS Locations WriteZero Trust ReadZero Trust Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

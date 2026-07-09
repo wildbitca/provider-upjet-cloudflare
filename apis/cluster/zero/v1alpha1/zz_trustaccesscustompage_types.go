@@ -114,7 +114,7 @@ type TrustAccessCustomPageStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustAccessCustomPage is the Schema for the TrustAccessCustomPages API.
+// TrustAccessCustomPage is the Schema for the TrustAccessCustomPages API. Accepted Permissions Access: Custom Pages ReadAccess: Custom Pages Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

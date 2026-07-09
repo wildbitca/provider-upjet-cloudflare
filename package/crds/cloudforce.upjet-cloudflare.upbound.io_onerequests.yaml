@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: OneRequest is the Schema for the OneRequests API.
+        description: OneRequest is the Schema for the OneRequests API. Accepted Permissions
+          Cloudforce One ReadCloudforce One Write
         properties:
           apiVersion:
             description: |-

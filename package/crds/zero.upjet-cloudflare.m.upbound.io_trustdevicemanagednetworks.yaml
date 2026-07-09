@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: TrustDeviceManagedNetworks is the Schema for the TrustDeviceManagedNetworkss
-          API.
+          API. Accepted Permissions Zero Trust Write
         properties:
           apiVersion:
             description: |-

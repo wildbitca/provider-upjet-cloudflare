@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Key is the Schema for the Keys API.
+        description: Key is the Schema for the Keys API. Accepted Permissions Stream
+          ReadStream Write
         properties:
           apiVersion:
             description: |-
@@ -163,6 +164,11 @@ spec:
                     type: string
                   id:
                     description: (String) Identifier.
+                    type: string
+                  keyId:
+                    description: |-
+                      (String) The unique identifier for the signing key.
+                      The unique identifier for the signing key.
                     type: string
                 type: object
               conditions:

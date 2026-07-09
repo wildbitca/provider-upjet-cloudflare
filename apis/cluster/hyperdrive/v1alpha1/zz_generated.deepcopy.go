@@ -471,6 +471,11 @@ func (in *OriginInitParameters) DeepCopyInto(out *OriginInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ServiceID != nil {
+		in, out := &in.ServiceID, &out.ServiceID
+		*out = new(string)
+		**out = **in
+	}
 	if in.User != nil {
 		in, out := &in.User, &out.User
 		*out = new(string)
@@ -513,6 +518,11 @@ func (in *OriginObservation) DeepCopyInto(out *OriginObservation) {
 	}
 	if in.Scheme != nil {
 		in, out := &in.Scheme, &out.Scheme
+		*out = new(string)
+		**out = **in
+	}
+	if in.ServiceID != nil {
+		in, out := &in.ServiceID, &out.ServiceID
 		*out = new(string)
 		**out = **in
 	}
@@ -564,6 +574,11 @@ func (in *OriginParameters) DeepCopyInto(out *OriginParameters) {
 	}
 	if in.Scheme != nil {
 		in, out := &in.Scheme, &out.Scheme
+		*out = new(string)
+		**out = **in
+	}
+	if in.ServiceID != nil {
+		in, out := &in.ServiceID, &out.ServiceID
 		*out = new(string)
 		**out = **in
 	}

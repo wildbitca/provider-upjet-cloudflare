@@ -75,7 +75,7 @@ type TrustDeviceDefaultProfileCertificatesStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TrustDeviceDefaultProfileCertificates is the Schema for the TrustDeviceDefaultProfileCertificatess API.
+// TrustDeviceDefaultProfileCertificates is the Schema for the TrustDeviceDefaultProfileCertificatess API. Accepted Permissions SSL and Certificates ReadSSL and Certificates Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

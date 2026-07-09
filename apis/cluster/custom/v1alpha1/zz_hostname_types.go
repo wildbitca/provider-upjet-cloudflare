@@ -202,22 +202,26 @@ type SSLInitParameters struct {
 	// Available values: "ubiquitous", "optimal", "force".
 	BundleMethod *string `json:"bundleMethod,omitempty" tf:"bundle_method,omitempty"`
 
-	// (String) The Certificate Authority that will issue the certificate
+	// (String) The Certificate Authority that will issue the certificate.
 	// Available values: "digicert", "google", "lets_encrypt", "ssl_com".
-	// The Certificate Authority that will issue the certificate
+	// The Certificate Authority that will issue the certificate.
 	// Available values: "digicert", "google", "lets_encrypt", "ssl_com".
 	CertificateAuthority *string `json:"certificateAuthority,omitempty" tf:"certificate_authority,omitempty"`
 
-	// (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
-	// Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
+	// (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true.
+	// Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true.
 	CloudflareBranding *bool `json:"cloudflareBranding,omitempty" tf:"cloudflare_branding,omitempty"`
 
-	// (Attributes List) Array of custom certificate and key pairs (1 or 2 pairs allowed) (see below for nested schema)
+	// (Attributes List) Array of custom certificate and key pairs (1 or 2 pairs allowed). (see below for nested schema)
 	CustomCertBundle []CustomCertBundleInitParameters `json:"customCertBundle,omitempty" tf:"custom_cert_bundle,omitempty"`
 
 	// (String) If a custom uploaded certificate is used.
 	// If a custom uploaded certificate is used.
 	CustomCertificate *string `json:"customCertificate,omitempty" tf:"custom_certificate,omitempty"`
+
+	// (String) The identifier for the Custom CSR that was used.
+	// The identifier for the Custom CSR that was used.
+	CustomCsrID *string `json:"customCsrId,omitempty" tf:"custom_csr_id,omitempty"`
 
 	// (String, Sensitive) The key for a custom uploaded certificate.
 	// The key for a custom uploaded certificate.
@@ -251,22 +255,26 @@ type SSLObservation struct {
 	// Available values: "ubiquitous", "optimal", "force".
 	BundleMethod *string `json:"bundleMethod,omitempty" tf:"bundle_method,omitempty"`
 
-	// (String) The Certificate Authority that will issue the certificate
+	// (String) The Certificate Authority that will issue the certificate.
 	// Available values: "digicert", "google", "lets_encrypt", "ssl_com".
-	// The Certificate Authority that will issue the certificate
+	// The Certificate Authority that will issue the certificate.
 	// Available values: "digicert", "google", "lets_encrypt", "ssl_com".
 	CertificateAuthority *string `json:"certificateAuthority,omitempty" tf:"certificate_authority,omitempty"`
 
-	// (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
-	// Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
+	// (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true.
+	// Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true.
 	CloudflareBranding *bool `json:"cloudflareBranding,omitempty" tf:"cloudflare_branding,omitempty"`
 
-	// (Attributes List) Array of custom certificate and key pairs (1 or 2 pairs allowed) (see below for nested schema)
+	// (Attributes List) Array of custom certificate and key pairs (1 or 2 pairs allowed). (see below for nested schema)
 	CustomCertBundle []CustomCertBundleObservation `json:"customCertBundle,omitempty" tf:"custom_cert_bundle,omitempty"`
 
 	// (String) If a custom uploaded certificate is used.
 	// If a custom uploaded certificate is used.
 	CustomCertificate *string `json:"customCertificate,omitempty" tf:"custom_certificate,omitempty"`
+
+	// (String) The identifier for the Custom CSR that was used.
+	// The identifier for the Custom CSR that was used.
+	CustomCsrID *string `json:"customCsrId,omitempty" tf:"custom_csr_id,omitempty"`
 
 	// (String) Domain control validation (DCV) method used for this hostname.
 	// Available values: "http", "txt", "email".
@@ -297,19 +305,19 @@ type SSLParameters struct {
 	// +kubebuilder:validation:Optional
 	BundleMethod *string `json:"bundleMethod,omitempty" tf:"bundle_method,omitempty"`
 
-	// (String) The Certificate Authority that will issue the certificate
+	// (String) The Certificate Authority that will issue the certificate.
 	// Available values: "digicert", "google", "lets_encrypt", "ssl_com".
-	// The Certificate Authority that will issue the certificate
+	// The Certificate Authority that will issue the certificate.
 	// Available values: "digicert", "google", "lets_encrypt", "ssl_com".
 	// +kubebuilder:validation:Optional
 	CertificateAuthority *string `json:"certificateAuthority,omitempty" tf:"certificate_authority,omitempty"`
 
-	// (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
-	// Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true
+	// (Boolean) Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true.
+	// Whether or not to add Cloudflare Branding for the order.  This will add a subdomain of sni.cloudflaressl.com as the Common Name if set to true.
 	// +kubebuilder:validation:Optional
 	CloudflareBranding *bool `json:"cloudflareBranding,omitempty" tf:"cloudflare_branding,omitempty"`
 
-	// (Attributes List) Array of custom certificate and key pairs (1 or 2 pairs allowed) (see below for nested schema)
+	// (Attributes List) Array of custom certificate and key pairs (1 or 2 pairs allowed). (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	CustomCertBundle []CustomCertBundleParameters `json:"customCertBundle,omitempty" tf:"custom_cert_bundle,omitempty"`
 
@@ -317,6 +325,11 @@ type SSLParameters struct {
 	// If a custom uploaded certificate is used.
 	// +kubebuilder:validation:Optional
 	CustomCertificate *string `json:"customCertificate,omitempty" tf:"custom_certificate,omitempty"`
+
+	// (String) The identifier for the Custom CSR that was used.
+	// The identifier for the Custom CSR that was used.
+	// +kubebuilder:validation:Optional
+	CustomCsrID *string `json:"customCsrId,omitempty" tf:"custom_csr_id,omitempty"`
 
 	// (String, Sensitive) The key for a custom uploaded certificate.
 	// The key for a custom uploaded certificate.
@@ -472,7 +485,7 @@ type HostnameStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Hostname is the Schema for the Hostnames API.
+// Hostname is the Schema for the Hostnames API. Accepted Permissions SSL and Certificates ReadSSL and Certificates Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -482,7 +495,6 @@ type Hostname struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.hostname) || (has(self.initProvider) && has(self.initProvider.hostname))",message="spec.forProvider.hostname is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.ssl) || (has(self.initProvider) && has(self.initProvider.ssl))",message="spec.forProvider.ssl is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.zoneId) || (has(self.initProvider) && has(self.initProvider.zoneId))",message="spec.forProvider.zoneId is a required parameter"
 	Spec   HostnameSpec   `json:"spec"`
 	Status HostnameStatus `json:"status,omitempty"`

@@ -17,9 +17,18 @@ spec:
       enabled: true
       headSamplingRate: 1
       logs:
+        destinations:
+        - string
         enabled: true
         headSamplingRate: 1
         invocationLogs: true
+        persist: true
+      traces:
+        destinations:
+        - string
+        enabled: true
+        headSamplingRate: 1
+        persist: true
     subdomain:
       enabled: true
       previewsEnabled: true

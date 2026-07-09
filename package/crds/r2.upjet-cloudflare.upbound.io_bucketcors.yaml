@@ -151,11 +151,6 @@ spec:
                             type: string
                         type: object
                     type: object
-                  bucketName:
-                    description: |-
-                      (String) Name of the bucket.
-                      Name of the bucket.
-                    type: string
                   jurisdiction:
                     description: |-
                       (String) Jurisdiction of the bucket
@@ -304,11 +299,6 @@ spec:
                             type: string
                         type: object
                     type: object
-                  bucketName:
-                    description: |-
-                      (String) Name of the bucket.
-                      Name of the bucket.
-                    type: string
                   jurisdiction:
                     description: |-
                       (String) Jurisdiction of the bucket
@@ -451,11 +441,6 @@ spec:
             required:
             - forProvider
             type: object
-            x-kubernetes-validations:
-            - message: spec.forProvider.bucketName is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.bucketName)
-                || (has(self.initProvider) && has(self.initProvider.bucketName))'
           status:
             description: BucketCorsStatus defines the observed state of BucketCors.
             properties:
@@ -465,11 +450,6 @@ spec:
                     description: |-
                       (String) Account ID.
                       Account ID.
-                    type: string
-                  bucketName:
-                    description: |-
-                      (String) Name of the bucket.
-                      Name of the bucket.
                     type: string
                   id:
                     description: (String) Identifier for this rule.

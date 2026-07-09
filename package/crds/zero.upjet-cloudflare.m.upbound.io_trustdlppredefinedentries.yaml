@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: TrustDlpPredefinedEntry is the Schema for the TrustDlpPredefinedEntrys
-          API.
+          API. Accepted Permissions Zero Trust ReadZero Trust Write
         properties:
           apiVersion:
             description: |-
@@ -263,8 +263,8 @@ spec:
                     type: boolean
                   type:
                     description: |-
-                      (String) Available values: "custom", "predefined", "integration", "exact_data", "document_fingerprint", "word_list".
-                      Available values: "custom", "predefined", "integration", "exact_data", "document_fingerprint", "word_list".
+                      (String) Available values: "custom", "custom_prompt_topic", "predefined", "integration", "exact_data", "document_fingerprint", "word_list".
+                      Available values: "custom", "custom_prompt_topic", "predefined", "integration", "exact_data", "document_fingerprint", "word_list".
                     type: string
                   updatedAt:
                     description: (String)
@@ -275,10 +275,13 @@ spec:
                       Available values: "empty", "uploading", "pending", "processing", "failed", "complete".
                     type: string
                   variant:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) A Predefined AI prompt classification
+                      topic entry. (see below for nested schema)
                     properties:
                       description:
-                        description: (String)
+                        description: |-
+                          (String)
+                          A customer-facing explanation of what this predefined AI prompt topic represents.
                         type: string
                       topicType:
                         description: |-
@@ -287,8 +290,8 @@ spec:
                         type: string
                       type:
                         description: |-
-                          (String) Available values: "custom", "predefined", "integration", "exact_data", "document_fingerprint", "word_list".
-                          Available values: "PromptTopic".
+                          (String) Available values: "custom", "custom_prompt_topic", "predefined", "integration", "exact_data", "document_fingerprint", "word_list".
+                          Available values: "PromptTopic", "General".
                         type: string
                     type: object
                   wordList:

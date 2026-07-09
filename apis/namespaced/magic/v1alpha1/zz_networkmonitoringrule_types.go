@@ -25,7 +25,7 @@ type NetworkMonitoringRuleInitParameters struct {
 
 	// (Number) The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
 	// The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
-	Bandwidth *float64 `json:"bandwidth,omitempty" tf:"bandwidth,omitempty"`
+	BandwidthThreshold *float64 `json:"bandwidthThreshold,omitempty" tf:"bandwidth_threshold,omitempty"`
 
 	// (String) The amount of time that the rule threshold must be exceeded to send an alert notification. The final value must be equivalent to one of the following 8 values ["1m","5m","10m","15m","20m","30m","45m","60m"].
 	// Available values: "1m", "5m", "10m", "15m", "20m", "30m", "45m", "60m".
@@ -41,8 +41,32 @@ type NetworkMonitoringRuleInitParameters struct {
 	// The number of packets per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
 	PacketThreshold *float64 `json:"packetThreshold,omitempty" tf:"packet_threshold,omitempty"`
 
+	// (String) Prefix match type to be applied for a prefix auto advertisement when using an advanced_ddos rule.
+	// Available values: "exact", "subnet", "supernet".
+	// Prefix match type to be applied for a prefix auto advertisement when using an advanced_ddos rule.
+	// Available values: "exact", "subnet", "supernet".
+	PrefixMatch *string `json:"prefixMatch,omitempty" tf:"prefix_match,omitempty"`
+
 	// (List of String)
 	Prefixes []*string `json:"prefixes,omitempty" tf:"prefixes,omitempty"`
+
+	// (String) MNM rule type.
+	// Available values: "threshold", "zscore", "advanced_ddos".
+	// MNM rule type.
+	// Available values: "threshold", "zscore", "advanced_ddos".
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// (String) Level of sensitivity set for zscore rules.
+	// Available values: "low", "medium", "high".
+	// Level of sensitivity set for zscore rules.
+	// Available values: "low", "medium", "high".
+	ZscoreSensitivity *string `json:"zscoreSensitivity,omitempty" tf:"zscore_sensitivity,omitempty"`
+
+	// (String) Target of the zscore rule analysis.
+	// Available values: "bits", "packets".
+	// Target of the zscore rule analysis.
+	// Available values: "bits", "packets".
+	ZscoreTarget *string `json:"zscoreTarget,omitempty" tf:"zscore_target,omitempty"`
 }
 
 type NetworkMonitoringRuleObservation struct {
@@ -53,10 +77,6 @@ type NetworkMonitoringRuleObservation struct {
 	// (Boolean) Toggle on if you would like Cloudflare to automatically advertise the IP Prefixes within the rule via Magic Transit when the rule is triggered. Only available for users of Magic Transit.
 	// Toggle on if you would like Cloudflare to automatically advertise the IP Prefixes within the rule via Magic Transit when the rule is triggered. Only available for users of Magic Transit.
 	AutomaticAdvertisement *bool `json:"automaticAdvertisement,omitempty" tf:"automatic_advertisement,omitempty"`
-
-	// (Number) The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
-	// The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
-	Bandwidth *float64 `json:"bandwidth,omitempty" tf:"bandwidth,omitempty"`
 
 	// (Number) The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
 	// The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
@@ -121,7 +141,7 @@ type NetworkMonitoringRuleParameters struct {
 	// (Number) The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
 	// The number of bits per second for the rule. When this value is exceeded for the set duration, an alert notification is sent. Minimum of 1 and no maximum.
 	// +kubebuilder:validation:Optional
-	Bandwidth *float64 `json:"bandwidth,omitempty" tf:"bandwidth,omitempty"`
+	BandwidthThreshold *float64 `json:"bandwidthThreshold,omitempty" tf:"bandwidth_threshold,omitempty"`
 
 	// (String) The amount of time that the rule threshold must be exceeded to send an alert notification. The final value must be equivalent to one of the following 8 values ["1m","5m","10m","15m","20m","30m","45m","60m"].
 	// Available values: "1m", "5m", "10m", "15m", "20m", "30m", "45m", "60m".
@@ -140,9 +160,37 @@ type NetworkMonitoringRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	PacketThreshold *float64 `json:"packetThreshold,omitempty" tf:"packet_threshold,omitempty"`
 
+	// (String) Prefix match type to be applied for a prefix auto advertisement when using an advanced_ddos rule.
+	// Available values: "exact", "subnet", "supernet".
+	// Prefix match type to be applied for a prefix auto advertisement when using an advanced_ddos rule.
+	// Available values: "exact", "subnet", "supernet".
+	// +kubebuilder:validation:Optional
+	PrefixMatch *string `json:"prefixMatch,omitempty" tf:"prefix_match,omitempty"`
+
 	// (List of String)
 	// +kubebuilder:validation:Optional
 	Prefixes []*string `json:"prefixes,omitempty" tf:"prefixes,omitempty"`
+
+	// (String) MNM rule type.
+	// Available values: "threshold", "zscore", "advanced_ddos".
+	// MNM rule type.
+	// Available values: "threshold", "zscore", "advanced_ddos".
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// (String) Level of sensitivity set for zscore rules.
+	// Available values: "low", "medium", "high".
+	// Level of sensitivity set for zscore rules.
+	// Available values: "low", "medium", "high".
+	// +kubebuilder:validation:Optional
+	ZscoreSensitivity *string `json:"zscoreSensitivity,omitempty" tf:"zscore_sensitivity,omitempty"`
+
+	// (String) Target of the zscore rule analysis.
+	// Available values: "bits", "packets".
+	// Target of the zscore rule analysis.
+	// Available values: "bits", "packets".
+	// +kubebuilder:validation:Optional
+	ZscoreTarget *string `json:"zscoreTarget,omitempty" tf:"zscore_target,omitempty"`
 }
 
 // NetworkMonitoringRuleSpec defines the desired state of NetworkMonitoringRule
@@ -172,7 +220,7 @@ type NetworkMonitoringRuleStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// NetworkMonitoringRule is the Schema for the NetworkMonitoringRules API.
+// NetworkMonitoringRule is the Schema for the NetworkMonitoringRules API. Accepted Permissions Magic Network Monitoring AdminMagic Network Monitoring Config ReadMagic Network Monitoring Config Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -182,7 +230,10 @@ type NetworkMonitoringRule struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountId) || (has(self.initProvider) && has(self.initProvider.accountId))",message="spec.forProvider.accountId is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.automaticAdvertisement) || (has(self.initProvider) && has(self.initProvider.automaticAdvertisement))",message="spec.forProvider.automaticAdvertisement is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.prefixes) || (has(self.initProvider) && has(self.initProvider.prefixes))",message="spec.forProvider.prefixes is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
 	Spec   NetworkMonitoringRuleSpec   `json:"spec"`
 	Status NetworkMonitoringRuleStatus `json:"status,omitempty"`
 }

@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TrustAccessGroup is the Schema for the TrustAccessGroups API.
+        description: 'TrustAccessGroup is the Schema for the TrustAccessGroups API.
+          Accepted Permissions Access: Organizations, Identity Providers, and Groups
+          ReadAccess: Organizations, Identity Providers, and Groups Write'
         properties:
           apiVersion:
             description: |-
@@ -206,6 +208,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -416,6 +427,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -474,6 +496,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -684,6 +715,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -752,6 +794,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -962,6 +1013,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -1118,6 +1180,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -1328,6 +1399,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -1386,6 +1468,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -1596,6 +1687,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -1664,6 +1766,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -1874,6 +1985,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -2043,6 +2165,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -2253,6 +2384,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -2314,6 +2456,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -2524,6 +2675,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array
@@ -2592,6 +2754,15 @@ spec:
                         certificate:
                           description: (Attributes) (see below for nested schema)
                           type: object
+                        cloudflareAccountMember:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            accountId:
+                              description: |-
+                                (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                                Identifier.
+                              type: string
+                          type: object
                         commonName:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -2802,6 +2973,17 @@ spec:
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
                               type: string
+                          type: object
+                        userRiskScore:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            userRiskScore:
+                              description: |-
+                                (Attributes) (see below for nested schema)
+                                A list of risk score levels to match. Values can be low, medium, high, or unscored.
+                              items:
+                                type: string
+                              type: array
                           type: object
                       type: object
                     type: array

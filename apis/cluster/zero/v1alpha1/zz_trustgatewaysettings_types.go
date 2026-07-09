@@ -280,18 +280,6 @@ type ExtendedEmailMatchingInitParameters struct {
 	// (Boolean) Specify whether to log activity.
 	// Specify whether to match all variants of user emails (with + or . modifiers) used as criteria in Firewall policies.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
-
-	// (Boolean) Indicate that this setting was shared via the Orgs API and read only for the current account.
-	// Indicate that this setting was shared via the Orgs API and read only for the current account.
-	ReadOnly *bool `json:"readOnly,omitempty" tf:"read_only,omitempty"`
-
-	// (String) Indicate the account tag of the account that shared this setting.
-	// Indicate the account tag of the account that shared this setting.
-	SourceAccount *string `json:"sourceAccount,omitempty" tf:"source_account,omitempty"`
-
-	// (Number) Indicate the version number of the setting.
-	// Indicate the version number of the setting.
-	Version *float64 `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type ExtendedEmailMatchingObservation struct {
@@ -319,21 +307,6 @@ type ExtendedEmailMatchingParameters struct {
 	// Specify whether to match all variants of user emails (with + or . modifiers) used as criteria in Firewall policies.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
-
-	// (Boolean) Indicate that this setting was shared via the Orgs API and read only for the current account.
-	// Indicate that this setting was shared via the Orgs API and read only for the current account.
-	// +kubebuilder:validation:Optional
-	ReadOnly *bool `json:"readOnly,omitempty" tf:"read_only,omitempty"`
-
-	// (String) Indicate the account tag of the account that shared this setting.
-	// Indicate the account tag of the account that shared this setting.
-	// +kubebuilder:validation:Optional
-	SourceAccount *string `json:"sourceAccount,omitempty" tf:"source_account,omitempty"`
-
-	// (Number) Indicate the version number of the setting.
-	// Indicate the version number of the setting.
-	// +kubebuilder:validation:Optional
-	Version *float64 `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type FipsInitParameters struct {

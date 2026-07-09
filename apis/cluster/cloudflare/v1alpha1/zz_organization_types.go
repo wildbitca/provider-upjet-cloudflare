@@ -45,6 +45,18 @@ type MetaObservation struct {
 	// (Attributes) Enable features for Organizations. (see below for nested schema)
 	Flags *FlagsObservation `json:"flags,omitempty" tf:"flags,omitempty"`
 
+	// element array containing their own tag; sub-organizations return
+	// [rootTag, ...intermediateTags, parentTag, selfTag]. Useful for
+	// constructing authorization scopes that need to cover every ancestor
+	// in the hierarchy.
+	// Ordered chain of organization tags from the root organization down to
+	// (and including) this organization itself. Root organizations return a
+	// single-element array containing their own tag; sub-organizations return
+	// `[rootTag, ...intermediateTags, parentTag, selfTag]`. Useful for
+	// constructing authorization scopes that need to cover every ancestor
+	// in the hierarchy.
+	HierarchyTags []*string `json:"hierarchyTags,omitempty" tf:"hierarchy_tags,omitempty"`
+
 	// (String)
 	ManagedBy *string `json:"managedBy,omitempty" tf:"managed_by,omitempty"`
 }
@@ -208,7 +220,7 @@ type OrganizationStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Organization is the Schema for the Organizations API.
+// Organization is the Schema for the Organizations API. Accepted Permissions User Details Write
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

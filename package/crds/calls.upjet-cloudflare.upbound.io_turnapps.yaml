@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TurnApp is the Schema for the TurnApps API.
+        description: TurnApp is the Schema for the TurnApps API. Accepted Permissions
+          Calls ReadCalls Write
         properties:
           apiVersion:
             description: |-
