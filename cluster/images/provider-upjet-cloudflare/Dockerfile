@@ -1,5 +1,13 @@
 FROM alpine:3.23.3
-RUN apk --no-cache add ca-certificates bash
+# Retry apk to tolerate transient Alpine mirror timeouts. With ~65 image builds
+# running in parallel in the publish matrix, a single flaky mirror fetch would
+# otherwise fail an individual sub-provider at random (exit code 2).
+RUN for i in 1 2 3 4 5; do \
+      apk --no-cache add ca-certificates bash && break; \
+      echo "apk add attempt $i failed; retrying in 5s..."; \
+      sleep 5; \
+    done; \
+    apk --no-cache add ca-certificates bash
 
 ARG TARGETOS
 ARG TARGETARCH
