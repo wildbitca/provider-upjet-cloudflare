@@ -75,7 +75,9 @@ spec:
               forProvider:
                 properties:
                   accountId:
-                    description: (String)
+                    description: |-
+                      (String) Unique identifier linked to an account.
+                      Unique identifier linked to an account.
                     type: string
                   data:
                     description: (Attributes) The configuration object which contains
@@ -126,7 +128,7 @@ spec:
                         id:
                           description: |-
                             (String) The unique identifier for the test.
-                            The id of the DEX rule
+                            The id of the DEX rule.
                           type: string
                       type: object
                     type: array
@@ -145,7 +147,9 @@ spec:
                   autoscaler.
                 properties:
                   accountId:
-                    description: (String)
+                    description: |-
+                      (String) Unique identifier linked to an account.
+                      Unique identifier linked to an account.
                     type: string
                   data:
                     description: (Attributes) The configuration object which contains
@@ -196,7 +200,7 @@ spec:
                         id:
                           description: |-
                             (String) The unique identifier for the test.
-                            The id of the DEX rule
+                            The id of the DEX rule.
                           type: string
                       type: object
                     type: array
@@ -314,7 +318,9 @@ spec:
               atProvider:
                 properties:
                   accountId:
-                    description: (String)
+                    description: |-
+                      (String) Unique identifier linked to an account.
+                      Unique identifier linked to an account.
                     type: string
                   data:
                     description: (Attributes) The configuration object which contains
@@ -367,18 +373,18 @@ spec:
                       properties:
                         default:
                           description: |-
-                            (Boolean) Whether the DEX rule is the account default
-                            Whether the DEX rule is the account default
+                            (Boolean) Whether the DEX rule is the account default.
+                            Whether the DEX rule is the account default.
                           type: boolean
                         id:
                           description: |-
                             (String) The unique identifier for the test.
-                            The id of the DEX rule
+                            The id of the DEX rule.
                           type: string
                         name:
                           description: |-
                             (String) The name of the DEX test. Must be unique.
-                            The name of the DEX rule
+                            The name of the DEX rule.
                           type: string
                       type: object
                     type: array

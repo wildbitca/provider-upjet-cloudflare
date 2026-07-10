@@ -653,6 +653,59 @@ type BindingsParameters struct {
 	WorkflowName *string `json:"workflowName,omitempty" tf:"workflow_name,omitempty"`
 }
 
+type CacheOptionsInitParameters struct {
+
+	// (Boolean) Whether cached responses are shared across Worker version
+	// uploads. This is independent of enabled. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	// Whether cached responses are shared across Worker version
+	// uploads. This is independent of `enabled`. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	CrossVersionCache *bool `json:"crossVersionCache,omitempty" tf:"cross_version_cache,omitempty"`
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether caching is enabled for this Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CacheOptionsObservation struct {
+
+	// (Boolean) Whether cached responses are shared across Worker version
+	// uploads. This is independent of enabled. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	// Whether cached responses are shared across Worker version
+	// uploads. This is independent of `enabled`. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	CrossVersionCache *bool `json:"crossVersionCache,omitempty" tf:"cross_version_cache,omitempty"`
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether caching is enabled for this Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CacheOptionsParameters struct {
+
+	// (Boolean) Whether cached responses are shared across Worker version
+	// uploads. This is independent of enabled. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	// Whether cached responses are shared across Worker version
+	// uploads. This is independent of `enabled`. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	// +kubebuilder:validation:Optional
+	CrossVersionCache *bool `json:"crossVersionCache,omitempty" tf:"cross_version_cache,omitempty"`
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether caching is enabled for this Worker.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type ConfigInitParameters struct {
 
 	// trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
@@ -999,6 +1052,54 @@ type OutboundParameters struct {
 	// (Attributes) Outbound worker. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Worker *WorkerParameters `json:"worker,omitempty" tf:"worker,omitempty"`
+}
+
+type PackageDependenciesInitParameters struct {
+
+	// (String) The exact version that was resolved and installed by the package manager.
+	// The exact version that was resolved and installed by the package manager.
+	InstalledVersion *string `json:"installedVersion,omitempty" tf:"installed_version,omitempty"`
+
+	// (String) A JavaScript variable name for the binding.
+	// The npm package name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (String) The version constraint as written in package.json.
+	// The version constraint as written in package.json.
+	PackageJSONVersion *string `json:"packageJsonVersion,omitempty" tf:"package_json_version,omitempty"`
+}
+
+type PackageDependenciesObservation struct {
+
+	// (String) The exact version that was resolved and installed by the package manager.
+	// The exact version that was resolved and installed by the package manager.
+	InstalledVersion *string `json:"installedVersion,omitempty" tf:"installed_version,omitempty"`
+
+	// (String) A JavaScript variable name for the binding.
+	// The npm package name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (String) The version constraint as written in package.json.
+	// The version constraint as written in package.json.
+	PackageJSONVersion *string `json:"packageJsonVersion,omitempty" tf:"package_json_version,omitempty"`
+}
+
+type PackageDependenciesParameters struct {
+
+	// (String) The exact version that was resolved and installed by the package manager.
+	// The exact version that was resolved and installed by the package manager.
+	// +kubebuilder:validation:Optional
+	InstalledVersion *string `json:"installedVersion" tf:"installed_version,omitempty"`
+
+	// (String) A JavaScript variable name for the binding.
+	// The npm package name.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// (String) The version constraint as written in package.json.
+	// The version constraint as written in package.json.
+	// +kubebuilder:validation:Optional
+	PackageJSONVersion *string `json:"packageJsonVersion" tf:"package_json_version,omitempty"`
 }
 
 type ParamsInitParameters struct {
@@ -1376,6 +1477,12 @@ type VersionInitParameters struct {
 	// upload-metadata/#bindings. (see below for nested schema)
 	Bindings []BindingsInitParameters `json:"bindings,omitempty" tf:"bindings,omitempty"`
 
+	// (Attributes) Global CacheW configuration for the Worker. When caching is on,
+	// the platform provisions a cloudflare.app zone for the Worker.
+	// A type: worker entry in the exports map can override this
+	// value for a single entrypoint. (see below for nested schema)
+	CacheOptions *CacheOptionsInitParameters `json:"cacheOptions,omitempty" tf:"cache_options,omitempty"`
+
 	// (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
 	// Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
 	CompatibilityDate *string `json:"compatibilityDate,omitempty" tf:"compatibility_date,omitempty"`
@@ -1400,6 +1507,10 @@ type VersionInitParameters struct {
 
 	// (Attributes Set) Code, sourcemaps, and other content used at runtime.
 	Modules []ModulesInitParameters `json:"modules,omitempty" tf:"modules,omitempty"`
+
+	// (Attributes List) The list of npm packages that were installed and used when this Worker
+	// version was built. (see below for nested schema)
+	PackageDependencies []PackageDependenciesInitParameters `json:"packageDependencies,omitempty" tf:"package_dependencies,omitempty"`
 
 	// (Attributes) Configuration for Smart Placement. Specify mode='smart' for Smart Placement, or one of region/hostname/host. (see below for nested schema)
 	Placement *PlacementInitParameters `json:"placement,omitempty" tf:"placement,omitempty"`
@@ -1429,6 +1540,12 @@ type VersionObservation struct {
 
 	// upload-metadata/#bindings. (see below for nested schema)
 	Bindings []BindingsObservation `json:"bindings,omitempty" tf:"bindings,omitempty"`
+
+	// (Attributes) Global CacheW configuration for the Worker. When caching is on,
+	// the platform provisions a cloudflare.app zone for the Worker.
+	// A type: worker entry in the exports map can override this
+	// value for a single entrypoint. (see below for nested schema)
+	CacheOptions *CacheOptionsObservation `json:"cacheOptions,omitempty" tf:"cache_options,omitempty"`
 
 	// (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
 	// Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
@@ -1473,6 +1590,10 @@ type VersionObservation struct {
 	// (Number) The integer version number, starting from one.
 	// The integer version number, starting from one.
 	Number *float64 `json:"number,omitempty" tf:"number,omitempty"`
+
+	// (Attributes List) The list of npm packages that were installed and used when this Worker
+	// version was built. (see below for nested schema)
+	PackageDependencies []PackageDependenciesObservation `json:"packageDependencies,omitempty" tf:"package_dependencies,omitempty"`
 
 	// (Attributes) Configuration for Smart Placement. Specify mode='smart' for Smart Placement, or one of region/hostname/host. (see below for nested schema)
 	Placement *PlacementObservation `json:"placement,omitempty" tf:"placement,omitempty"`
@@ -1519,6 +1640,13 @@ type VersionParameters struct {
 	// +kubebuilder:validation:Optional
 	Bindings []BindingsParameters `json:"bindings,omitempty" tf:"bindings,omitempty"`
 
+	// (Attributes) Global CacheW configuration for the Worker. When caching is on,
+	// the platform provisions a cloudflare.app zone for the Worker.
+	// A type: worker entry in the exports map can override this
+	// value for a single entrypoint. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	CacheOptions *CacheOptionsParameters `json:"cacheOptions,omitempty" tf:"cache_options,omitempty"`
+
 	// (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
 	// Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
 	// +kubebuilder:validation:Optional
@@ -1550,6 +1678,11 @@ type VersionParameters struct {
 	// (Attributes Set) Code, sourcemaps, and other content used at runtime.
 	// +kubebuilder:validation:Optional
 	Modules []ModulesParameters `json:"modules,omitempty" tf:"modules,omitempty"`
+
+	// (Attributes List) The list of npm packages that were installed and used when this Worker
+	// version was built. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	PackageDependencies []PackageDependenciesParameters `json:"packageDependencies,omitempty" tf:"package_dependencies,omitempty"`
 
 	// (Attributes) Configuration for Smart Placement. Specify mode='smart' for Smart Placement, or one of region/hostname/host. (see below for nested schema)
 	// +kubebuilder:validation:Optional

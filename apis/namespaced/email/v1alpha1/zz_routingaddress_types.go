@@ -23,6 +23,12 @@ type RoutingAddressInitParameters struct {
 	// (String) The contact email address of the user.
 	// The contact email address of the user.
 	Email *string `json:"email,omitempty" tf:"email,omitempty"`
+
+	// admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+	// Available values: "unverified", "verified".
+	// Destination address status. Non-admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+	// Available values: "unverified", "verified".
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type RoutingAddressObservation struct {
@@ -46,6 +52,12 @@ type RoutingAddressObservation struct {
 	// The date and time the destination address was last modified.
 	Modified *string `json:"modified,omitempty" tf:"modified,omitempty"`
 
+	// admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+	// Available values: "unverified", "verified".
+	// Destination address status. Non-admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+	// Available values: "unverified", "verified".
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
 	// (String, Deprecated) Destination address tag. (Deprecated, replaced by destination address identifier)
 	// Destination address tag. (Deprecated, replaced by destination address identifier)
 	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
@@ -66,6 +78,13 @@ type RoutingAddressParameters struct {
 	// The contact email address of the user.
 	// +kubebuilder:validation:Optional
 	Email *string `json:"email,omitempty" tf:"email,omitempty"`
+
+	// admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+	// Available values: "unverified", "verified".
+	// Destination address status. Non-admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+	// Available values: "unverified", "verified".
+	// +kubebuilder:validation:Optional
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 // RoutingAddressSpec defines the desired state of RoutingAddress

@@ -772,6 +772,10 @@ type TrustGatewaySettingsSettingsInitParameters struct {
 	// (Attributes) Define the proxy inspection mode. (see below for nested schema)
 	Inspection *InspectionInitParameters `json:"inspection,omitempty" tf:"inspection,omitempty"`
 
+	// level cap on DNS response TTLs, in seconds. Gateway rewrites DNS responses so returned record TTLs do not exceed this value. Null means no cap. Each DNS location can inherit, override, or disable it through the location max_ttl setting.
+	// Account-level cap on DNS response TTLs, in seconds. Gateway rewrites DNS responses so returned record TTLs do not exceed this value. Null means no cap. Each DNS location can inherit, override, or disable it through the location `max_ttl` setting.
+	MaxTTLSecs *float64 `json:"maxTtlSecs,omitempty" tf:"max_ttl_secs,omitempty"`
+
 	// (Attributes) Specify whether to detect protocols from the initial bytes of client traffic. (see below for nested schema)
 	ProtocolDetection *ProtocolDetectionInitParameters `json:"protocolDetection,omitempty" tf:"protocol_detection,omitempty"`
 
@@ -816,6 +820,10 @@ type TrustGatewaySettingsSettingsObservation struct {
 
 	// (Attributes) Define the proxy inspection mode. (see below for nested schema)
 	Inspection *InspectionObservation `json:"inspection,omitempty" tf:"inspection,omitempty"`
+
+	// level cap on DNS response TTLs, in seconds. Gateway rewrites DNS responses so returned record TTLs do not exceed this value. Null means no cap. Each DNS location can inherit, override, or disable it through the location max_ttl setting.
+	// Account-level cap on DNS response TTLs, in seconds. Gateway rewrites DNS responses so returned record TTLs do not exceed this value. Null means no cap. Each DNS location can inherit, override, or disable it through the location `max_ttl` setting.
+	MaxTTLSecs *float64 `json:"maxTtlSecs,omitempty" tf:"max_ttl_secs,omitempty"`
 
 	// (Attributes) Specify whether to detect protocols from the initial bytes of client traffic. (see below for nested schema)
 	ProtocolDetection *ProtocolDetectionObservation `json:"protocolDetection,omitempty" tf:"protocol_detection,omitempty"`
@@ -872,6 +880,11 @@ type TrustGatewaySettingsSettingsParameters struct {
 	// (Attributes) Define the proxy inspection mode. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Inspection *InspectionParameters `json:"inspection,omitempty" tf:"inspection,omitempty"`
+
+	// level cap on DNS response TTLs, in seconds. Gateway rewrites DNS responses so returned record TTLs do not exceed this value. Null means no cap. Each DNS location can inherit, override, or disable it through the location max_ttl setting.
+	// Account-level cap on DNS response TTLs, in seconds. Gateway rewrites DNS responses so returned record TTLs do not exceed this value. Null means no cap. Each DNS location can inherit, override, or disable it through the location `max_ttl` setting.
+	// +kubebuilder:validation:Optional
+	MaxTTLSecs *float64 `json:"maxTtlSecs,omitempty" tf:"max_ttl_secs,omitempty"`
 
 	// (Attributes) Specify whether to detect protocols from the initial bytes of client traffic. (see below for nested schema)
 	// +kubebuilder:validation:Optional

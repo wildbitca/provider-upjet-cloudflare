@@ -19,5 +19,7 @@ spec:
       type: literal
       value: test@example.com
     name: Send to user@example.net rule.
+    ownerWorkerTag: a7e6fb77503c41d8a7f3113c6918f10c
     priority: 0
+    source: api
     zoneId: 023e105f4ecef8ad9ca31a8372d0c353

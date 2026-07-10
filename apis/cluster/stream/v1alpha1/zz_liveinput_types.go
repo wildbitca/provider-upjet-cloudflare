@@ -39,6 +39,10 @@ type LiveInputInitParameters struct {
 	// A user modifiable key-value store used to reference other systems of record for managing live inputs.
 	Meta *string `json:"meta,omitempty" tf:"meta,omitempty"`
 
+	// Latency HLS (LL-HLS), reducing glass-to-glass latency for viewers at the cost of reduced player compatibility.
+	// When enabled, the live stream is delivered using Low-Latency HLS (LL-HLS), reducing glass-to-glass latency for viewers at the cost of reduced player compatibility.
+	PreferLowLatency *bool `json:"preferLowLatency,omitempty" tf:"prefer_low_latency,omitempty"`
+
 	// demand after a condition is satisfied. (see below for nested schema)
 	Recording *RecordingInitParameters `json:"recording,omitempty" tf:"recording,omitempty"`
 }
@@ -67,6 +71,10 @@ type LiveInputObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (String) The date and time the live input keys were last rotated. Omitted for live inputs that have never had their keys rotated.
+	// The date and time the live input keys were last rotated. Omitted for live inputs that have never had their keys rotated.
+	KeysRotatedAt *string `json:"keysRotatedAt,omitempty" tf:"keys_rotated_at,omitempty"`
+
 	// (String) A unique identifier for a live input.
 	// A unique identifier for a live input.
 	LiveInputIdentifier *string `json:"liveInputIdentifier,omitempty" tf:"live_input_identifier,omitempty"`
@@ -78,6 +86,10 @@ type LiveInputObservation struct {
 	// (String) The date and time the live input was last modified.
 	// The date and time the live input was last modified.
 	Modified *string `json:"modified,omitempty" tf:"modified,omitempty"`
+
+	// Latency HLS (LL-HLS), reducing glass-to-glass latency for viewers at the cost of reduced player compatibility.
+	// When enabled, the live stream is delivered using Low-Latency HLS (LL-HLS), reducing glass-to-glass latency for viewers at the cost of reduced player compatibility.
+	PreferLowLatency *bool `json:"preferLowLatency,omitempty" tf:"prefer_low_latency,omitempty"`
 
 	// demand after a condition is satisfied. (see below for nested schema)
 	Recording *RecordingObservation `json:"recording,omitempty" tf:"recording,omitempty"`
@@ -142,6 +154,11 @@ type LiveInputParameters struct {
 	// A user modifiable key-value store used to reference other systems of record for managing live inputs.
 	// +kubebuilder:validation:Optional
 	Meta *string `json:"meta,omitempty" tf:"meta,omitempty"`
+
+	// Latency HLS (LL-HLS), reducing glass-to-glass latency for viewers at the cost of reduced player compatibility.
+	// When enabled, the live stream is delivered using Low-Latency HLS (LL-HLS), reducing glass-to-glass latency for viewers at the cost of reduced player compatibility.
+	// +kubebuilder:validation:Optional
+	PreferLowLatency *bool `json:"preferLowLatency,omitempty" tf:"prefer_low_latency,omitempty"`
 
 	// demand after a condition is satisfied. (see below for nested schema)
 	// +kubebuilder:validation:Optional

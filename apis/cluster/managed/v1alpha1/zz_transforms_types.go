@@ -164,8 +164,6 @@ type TransformsStatus struct {
 type Transforms struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.managedRequestHeaders) || (has(self.initProvider) && has(self.initProvider.managedRequestHeaders))",message="spec.forProvider.managedRequestHeaders is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.managedResponseHeaders) || (has(self.initProvider) && has(self.initProvider.managedResponseHeaders))",message="spec.forProvider.managedResponseHeaders is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.zoneId) || (has(self.initProvider) && has(self.initProvider.zoneId))",message="spec.forProvider.zoneId is a required parameter"
 	Spec   TransformsSpec   `json:"spec"`
 	Status TransformsStatus `json:"status,omitempty"`

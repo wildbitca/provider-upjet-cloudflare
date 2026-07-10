@@ -69,6 +69,13 @@ spec:
                       (String) The contact email address of the user.
                       The contact email address of the user.
                     type: string
+                  status:
+                    description: |-
+                      admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+                      Available values: "unverified", "verified".
+                      Destination address status. Non-admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+                      Available values: "unverified", "verified".
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -92,6 +99,13 @@ spec:
                     description: |-
                       (String) The contact email address of the user.
                       The contact email address of the user.
+                    type: string
+                  status:
+                    description: |-
+                      admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+                      Available values: "unverified", "verified".
+                      Destination address status. Non-admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+                      Available values: "unverified", "verified".
                     type: string
                 type: object
               managementPolicies:
@@ -188,6 +202,13 @@ spec:
                     description: |-
                       (String) The date and time the destination address was last modified.
                       The date and time the destination address was last modified.
+                    type: string
+                  status:
+                    description: |-
+                      admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+                      Available values: "unverified", "verified".
+                      Destination address status. Non-admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+                      Available values: "unverified", "verified".
                     type: string
                   tag:
                     description: |-

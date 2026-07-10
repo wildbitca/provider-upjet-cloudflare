@@ -614,6 +614,81 @@ type BindingsParameters struct {
 	WorkflowName *string `json:"workflowName,omitempty" tf:"workflow_name,omitempty"`
 }
 
+type CacheInitParameters struct {
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether caching is enabled for this entrypoint.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CacheObservation struct {
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether caching is enabled for this entrypoint.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CacheOptionsInitParameters struct {
+
+	// (Boolean) Whether cached responses are shared across Worker version
+	// uploads. This is independent of enabled. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	// Whether cached responses are shared across Worker version
+	// uploads. This is independent of `enabled`. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	CrossVersionCache *bool `json:"crossVersionCache,omitempty" tf:"cross_version_cache,omitempty"`
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether caching is enabled for this Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CacheOptionsObservation struct {
+
+	// (Boolean) Whether cached responses are shared across Worker version
+	// uploads. This is independent of enabled. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	// Whether cached responses are shared across Worker version
+	// uploads. This is independent of `enabled`. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	CrossVersionCache *bool `json:"crossVersionCache,omitempty" tf:"cross_version_cache,omitempty"`
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether caching is enabled for this Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CacheOptionsParameters struct {
+
+	// (Boolean) Whether cached responses are shared across Worker version
+	// uploads. This is independent of enabled. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	// Whether cached responses are shared across Worker version
+	// uploads. This is independent of `enabled`. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	// +kubebuilder:validation:Optional
+	CrossVersionCache *bool `json:"crossVersionCache,omitempty" tf:"cross_version_cache,omitempty"`
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether caching is enabled for this Worker.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CacheParameters struct {
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether caching is enabled for this entrypoint.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
+}
+
 type ConfigInitParameters struct {
 
 	// trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
@@ -707,6 +782,41 @@ type ConfigParameters struct {
 	ServeDirectly *bool `json:"serveDirectly,omitempty" tf:"serve_directly,omitempty"`
 }
 
+type ExportsInitParameters struct {
+
+	// entrypoint cache override. When present, this overrides the top-level cache_options for this specific entrypoint. (see below for nested schema)
+	Cache *CacheInitParameters `json:"cache,omitempty" tf:"cache,omitempty"`
+
+	// (String) The kind of resource that the binding provides.
+	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// The kind of entrypoint. A `type: worker` entry overrides the top-level `cache_options` for this specific entrypoint.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ExportsObservation struct {
+
+	// entrypoint cache override. When present, this overrides the top-level cache_options for this specific entrypoint. (see below for nested schema)
+	Cache *CacheObservation `json:"cache,omitempty" tf:"cache,omitempty"`
+
+	// (String) The kind of resource that the binding provides.
+	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// The kind of entrypoint. A `type: worker` entry overrides the top-level `cache_options` for this specific entrypoint.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ExportsParameters struct {
+
+	// entrypoint cache override. When present, this overrides the top-level cache_options for this specific entrypoint. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Cache *CacheParameters `json:"cache,omitempty" tf:"cache,omitempty"`
+
+	// (String) The kind of resource that the binding provides.
+	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// The kind of entrypoint. A `type: worker` entry overrides the top-level `cache_options` for this specific entrypoint.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
 type LimitsInitParameters struct {
 
 	// (Number) The amount of CPU time this Worker can use in milliseconds.
@@ -748,7 +858,7 @@ type LogsInitParameters struct {
 	// A list of destinations where logs will be exported to.
 	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
 
-	// (Boolean) Whether observability is enabled for the Worker.
+	// (Boolean) Whether caching is enabled for this Worker.
 	// Whether logs are enabled for the Worker.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -771,7 +881,7 @@ type LogsObservation struct {
 	// A list of destinations where logs will be exported to.
 	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
 
-	// (Boolean) Whether observability is enabled for the Worker.
+	// (Boolean) Whether caching is enabled for this Worker.
 	// Whether logs are enabled for the Worker.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -795,7 +905,7 @@ type LogsParameters struct {
 	// +kubebuilder:validation:Optional
 	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
 
-	// (Boolean) Whether observability is enabled for the Worker.
+	// (Boolean) Whether caching is enabled for this Worker.
 	// Whether logs are enabled for the Worker.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
@@ -978,7 +1088,7 @@ type NamedHandlersParameters struct {
 
 type ObservabilityInitParameters struct {
 
-	// (Boolean) Whether observability is enabled for the Worker.
+	// (Boolean) Whether caching is enabled for this Worker.
 	// Whether observability is enabled for the Worker.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -995,7 +1105,7 @@ type ObservabilityInitParameters struct {
 
 type ObservabilityObservation struct {
 
-	// (Boolean) Whether observability is enabled for the Worker.
+	// (Boolean) Whether caching is enabled for this Worker.
 	// Whether observability is enabled for the Worker.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -1012,7 +1122,7 @@ type ObservabilityObservation struct {
 
 type ObservabilityParameters struct {
 
-	// (Boolean) Whether observability is enabled for the Worker.
+	// (Boolean) Whether caching is enabled for this Worker.
 	// Whether observability is enabled for the Worker.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
@@ -1061,6 +1171,54 @@ type OutboundParameters struct {
 	// (Attributes) Outbound worker. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Worker *WorkerParameters `json:"worker,omitempty" tf:"worker,omitempty"`
+}
+
+type PackageDependenciesInitParameters struct {
+
+	// (String) The exact version that was resolved and installed by the package manager.
+	// The exact version that was resolved and installed by the package manager.
+	InstalledVersion *string `json:"installedVersion,omitempty" tf:"installed_version,omitempty"`
+
+	// (String) A JavaScript variable name for the binding.
+	// The npm package name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (String) The version constraint as written in package.json.
+	// The version constraint as written in package.json.
+	PackageJSONVersion *string `json:"packageJsonVersion,omitempty" tf:"package_json_version,omitempty"`
+}
+
+type PackageDependenciesObservation struct {
+
+	// (String) The exact version that was resolved and installed by the package manager.
+	// The exact version that was resolved and installed by the package manager.
+	InstalledVersion *string `json:"installedVersion,omitempty" tf:"installed_version,omitempty"`
+
+	// (String) A JavaScript variable name for the binding.
+	// The npm package name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (String) The version constraint as written in package.json.
+	// The version constraint as written in package.json.
+	PackageJSONVersion *string `json:"packageJsonVersion,omitempty" tf:"package_json_version,omitempty"`
+}
+
+type PackageDependenciesParameters struct {
+
+	// (String) The exact version that was resolved and installed by the package manager.
+	// The exact version that was resolved and installed by the package manager.
+	// +kubebuilder:validation:Optional
+	InstalledVersion *string `json:"installedVersion" tf:"installed_version,omitempty"`
+
+	// (String) A JavaScript variable name for the binding.
+	// The npm package name.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// (String) The version constraint as written in package.json.
+	// The version constraint as written in package.json.
+	// +kubebuilder:validation:Optional
+	PackageJSONVersion *string `json:"packageJsonVersion" tf:"package_json_version,omitempty"`
 }
 
 type PlacementInitParameters struct {
@@ -1203,6 +1361,12 @@ type ScriptInitParameters struct {
 	// Name of the uploaded file that contains the script (e.g. the file adding a listener to the `fetch` event). Indicates a `service worker syntax` Worker.
 	BodyPart *string `json:"bodyPart,omitempty" tf:"body_part,omitempty"`
 
+	// (Attributes) Global CacheW configuration for the Worker. When caching is on,
+	// the platform provisions a cloudflare.app zone for the Worker.
+	// A type: worker entry in the exports map can override this
+	// value for a single entrypoint. (see below for nested schema)
+	CacheOptions *CacheOptionsInitParameters `json:"cacheOptions,omitempty" tf:"cache_options,omitempty"`
+
 	// (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
 	// Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
 	CompatibilityDate *string `json:"compatibilityDate,omitempty" tf:"compatibility_date,omitempty"`
@@ -1228,8 +1392,11 @@ type ScriptInitParameters struct {
 	// Content-Type of the Worker. Required if uploading a non-JavaScript Worker (e.g. "text/x-python").
 	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
 
-	// (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
-	// Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
+	// entrypoint export configuration. Keys are the export names; values describe the entrypoint's kind and per-entrypoint cache behavior. (see below for nested schema)
+	Exports map[string]ExportsInitParameters `json:"exports,omitempty" tf:"exports,omitempty"`
+
+	// (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit assets upload takes precedence over keep_assets.
+	// Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit `assets` upload takes precedence over `keep_assets`.
 	KeepAssets *bool `json:"keepAssets,omitempty" tf:"keep_assets,omitempty"`
 
 	// (Set of String) List of binding types to keep from previous_upload.
@@ -1253,6 +1420,9 @@ type ScriptInitParameters struct {
 
 	// (Attributes) Observability settings for the Worker. (see below for nested schema)
 	Observability *ObservabilityInitParameters `json:"observability,omitempty" tf:"observability,omitempty"`
+
+	// (Attributes List) The list of npm packages that were installed and used when this Worker was built. (see below for nested schema)
+	PackageDependencies []PackageDependenciesInitParameters `json:"packageDependencies,omitempty" tf:"package_dependencies,omitempty"`
 
 	// (Attributes) Configuration for Smart Placement. Specify mode='smart' for Smart Placement, or one of region/hostname/host. (see below for nested schema)
 	Placement *PlacementInitParameters `json:"placement,omitempty" tf:"placement,omitempty"`
@@ -1290,6 +1460,12 @@ type ScriptObservation struct {
 	// Name of the uploaded file that contains the script (e.g. the file adding a listener to the `fetch` event). Indicates a `service worker syntax` Worker.
 	BodyPart *string `json:"bodyPart,omitempty" tf:"body_part,omitempty"`
 
+	// (Attributes) Global CacheW configuration for the Worker. When caching is on,
+	// the platform provisions a cloudflare.app zone for the Worker.
+	// A type: worker entry in the exports map can override this
+	// value for a single entrypoint. (see below for nested schema)
+	CacheOptions *CacheOptionsObservation `json:"cacheOptions,omitempty" tf:"cache_options,omitempty"`
+
 	// (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
 	// Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
 	CompatibilityDate *string `json:"compatibilityDate,omitempty" tf:"compatibility_date,omitempty"`
@@ -1323,6 +1499,9 @@ type ScriptObservation struct {
 	// Hashed script content, can be used in a If-None-Match header when updating.
 	Etag *string `json:"etag,omitempty" tf:"etag,omitempty"`
 
+	// entrypoint export configuration. Keys are the export names; values describe the entrypoint's kind and per-entrypoint cache behavior. (see below for nested schema)
+	Exports map[string]ExportsObservation `json:"exports,omitempty" tf:"exports,omitempty"`
+
 	// (List of String) The names of handlers exported as part of the default export.
 	// The names of handlers exported as part of the default export.
 	Handlers []*string `json:"handlers,omitempty" tf:"handlers,omitempty"`
@@ -1338,8 +1517,8 @@ type ScriptObservation struct {
 	// (String) Name of the script, used in URLs and route configuration.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
-	// Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
+	// (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit assets upload takes precedence over keep_assets.
+	// Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit `assets` upload takes precedence over `keep_assets`.
 	KeepAssets *bool `json:"keepAssets,omitempty" tf:"keep_assets,omitempty"`
 
 	// (Set of String) List of binding types to keep from previous_upload.
@@ -1378,6 +1557,9 @@ type ScriptObservation struct {
 
 	// (Attributes) Observability settings for the Worker. (see below for nested schema)
 	Observability *ObservabilityObservation `json:"observability,omitempty" tf:"observability,omitempty"`
+
+	// (Attributes List) The list of npm packages that were installed and used when this Worker was built. (see below for nested schema)
+	PackageDependencies []PackageDependenciesObservation `json:"packageDependencies,omitempty" tf:"package_dependencies,omitempty"`
 
 	// (Attributes) Configuration for Smart Placement. Specify mode='smart' for Smart Placement, or one of region/hostname/host. (see below for nested schema)
 	Placement *PlacementObservation `json:"placement,omitempty" tf:"placement,omitempty"`
@@ -1431,6 +1613,13 @@ type ScriptParameters struct {
 	// +kubebuilder:validation:Optional
 	BodyPart *string `json:"bodyPart,omitempty" tf:"body_part,omitempty"`
 
+	// (Attributes) Global CacheW configuration for the Worker. When caching is on,
+	// the platform provisions a cloudflare.app zone for the Worker.
+	// A type: worker entry in the exports map can override this
+	// value for a single entrypoint. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	CacheOptions *CacheOptionsParameters `json:"cacheOptions,omitempty" tf:"cache_options,omitempty"`
+
 	// (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
 	// Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
 	// +kubebuilder:validation:Optional
@@ -1462,8 +1651,12 @@ type ScriptParameters struct {
 	// +kubebuilder:validation:Optional
 	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
 
-	// (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
-	// Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
+	// entrypoint export configuration. Keys are the export names; values describe the entrypoint's kind and per-entrypoint cache behavior. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Exports map[string]ExportsParameters `json:"exports,omitempty" tf:"exports,omitempty"`
+
+	// (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit assets upload takes precedence over keep_assets.
+	// Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit `assets` upload takes precedence over `keep_assets`.
 	// +kubebuilder:validation:Optional
 	KeepAssets *bool `json:"keepAssets,omitempty" tf:"keep_assets,omitempty"`
 
@@ -1494,6 +1687,10 @@ type ScriptParameters struct {
 	// (Attributes) Observability settings for the Worker. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Observability *ObservabilityParameters `json:"observability,omitempty" tf:"observability,omitempty"`
+
+	// (Attributes List) The list of npm packages that were installed and used when this Worker was built. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	PackageDependencies []PackageDependenciesParameters `json:"packageDependencies,omitempty" tf:"package_dependencies,omitempty"`
 
 	// (Attributes) Configuration for Smart Placement. Specify mode='smart' for Smart Placement, or one of region/hostname/host. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -1736,7 +1933,7 @@ type TracesInitParameters struct {
 	// A list of destinations where traces will be exported to.
 	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
 
-	// (Boolean) Whether observability is enabled for the Worker.
+	// (Boolean) Whether caching is enabled for this Worker.
 	// Whether traces are enabled for the Worker.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -1759,7 +1956,7 @@ type TracesObservation struct {
 	// A list of destinations where traces will be exported to.
 	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
 
-	// (Boolean) Whether observability is enabled for the Worker.
+	// (Boolean) Whether caching is enabled for this Worker.
 	// Whether traces are enabled for the Worker.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -1783,7 +1980,7 @@ type TracesParameters struct {
 	// +kubebuilder:validation:Optional
 	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
 
-	// (Boolean) Whether observability is enabled for the Worker.
+	// (Boolean) Whether caching is enabled for this Worker.
 	// Whether traces are enabled for the Worker.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`

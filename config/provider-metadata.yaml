@@ -523,19 +523,18 @@ resources:
             chunk_overlap: (Number)
             chunk_size: (Number)
             content_selector: (Attributes List) List of path-to-selector mappings for extracting specific content from crawled pages. Each entry pairs a URL glob pattern with a CSS selector. The first matching path wins. Only the matched HTML fragment is stored and indexed. Omit the field to disable content selection — empty arrays are rejected. (see below for nested schema)
-            crawl_options: (Attributes) (see below for nested schema)
             created_at: (String)
             created_by: (String)
             created_from_aisearch_wizard: (Boolean)
+            custom_domains: (List of String) Custom domain hostnames that alias this public endpoint. GET and create responses return the current set; on update (PUT) this field is only echoed back when supplied in the request body, otherwise it is null (omit it to leave domains unchanged).
             custom_metadata: (Attributes List) (see below for nested schema)
             data_type: '(String) Available values: "text", "number", "boolean", "datetime".'
-            depth: (Number)
             description: (String)
             direction: |-
                 (String) Boost direction. 'desc' = higher values rank higher (e.g. newer timestamps). 'asc' = lower values rank higher. 'exists' = boost chunks that have the field. 'not_exists' = boost chunks that lack the field. Optional — defaults to 'asc' for numeric/datetime fields, 'exists' for text/boolean fields.
                 Available values: "asc", "desc", "exists", "not_exists".
             disabled: (Boolean) Disable chat completions endpoint for this public endpoint
-            embedding_model: '(String) Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".'
+            embedding_model: '(String) Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "google-ai-studio/gemini-embedding-2", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".'
             enable: (Boolean)
             enabled: (Boolean)
             engine_version: (Number)
@@ -545,11 +544,9 @@ resources:
             fusion_method: '(String) Available values: "max", "rrf".'
             hybrid_search_enabled: (Boolean, Deprecated) Deprecated — use index_method instead.
             id: (String) AI Search instance ID. Lowercase alphanumeric, hyphens, and underscores.
-            include_external_links: (Boolean)
             include_headers: (Map of String) Up to 5 custom HTTP headers sent with each crawl request. Names must be RFC-7230 token characters (no spaces, colons, or control characters); values must be HTAB + printable ASCII (no CR/LF).
             include_images: (Boolean)
             include_items: '(List of String) List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post)'
-            include_subdomains: (Boolean)
             index_method: (Attributes) Controls which storage backends are used during indexing. Defaults to vector-only. (see below for nested schema)
             indexing_options: (Attributes) (see below for nested schema)
             keyword: (Boolean) Enable keyword (BM25) storage backend.
@@ -560,7 +557,6 @@ resources:
                 (String) Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
                 Available values: "porter", "trigram".
             last_activity: (String)
-            max_age: (Number)
             max_num_results: (Number)
             mcp: (Attributes) (see below for nested schema)
             metadata: (Attributes) (see below for nested schema)
@@ -1138,7 +1134,7 @@ resources:
                 }
         argumentDocs:
             ai_bots_protection: |-
-                (String) Enable rule to block AI Scrapers and Crawlers. Please note the value only_on_ad_pages is currently not available for Enterprise customers.
+                (String) Enable rule to block AI Scrapers and Crawlers.
                 Available values: "block", "disabled", "only_on_ad_pages".
             auto_update_model: (Boolean) Automatically update to the newest bot detection models created by Cloudflare as they are released. Learn more.
             bm_cookie_enabled: (Boolean) Indicates that the bot management cookie can be placed on end user devices accessing the site. Defaults to true
@@ -2298,6 +2294,9 @@ resources:
             email: (String) The contact email address of the user.
             id: (String) Destination address identifier.
             modified: (String) The date and time the destination address was last modified.
+            status: |-
+                (String) Destination address status. Non-admin callers may only set verified addresses back to unverified; setting to verified requires admin privileges.
+                Available values: "unverified", "verified".
             tag: (String, Deprecated) Destination address tag. (Deprecated, replaced by destination address identifier)
             verified: (String) The date and time the destination address has been verified. Null means not verified yet.
         importStatements:
@@ -2326,6 +2325,8 @@ resources:
                     }
                   ],
                   "name": "Send to user@example.net rule.",
+                  "owner_worker_tag": "a7e6fb77503c41d8a7f3113c6918f10c",
+                  "source": "api",
                   "zone_id": "023e105f4ecef8ad9ca31a8372d0c353"
                 }
         argumentDocs:
@@ -2334,6 +2335,14 @@ resources:
             id: (String) Identifier.
             matchers: (Attributes List) List of matchers for the catch-all routing rule. (see below for nested schema)
             name: (String) Routing rule name.
+            owner_worker_tag: |-
+                (String) Public tag (script_tag) of the Worker that owns this rule. Required when
+                source is wrangler.
+            source: |-
+                (String) Who manages the rule. api covers dashboard, generic API, and Terraform;
+                wrangler means the rule is managed by a Worker's wrangler.jsonc. Defaults
+                to api when omitted on write.
+                Available values: "api", "wrangler".
             tag: (String, Deprecated) Routing rule tag. (Deprecated, replaced by routing rule identifier)
             type: |-
                 (String) Type of action for catch-all rule.
@@ -2417,7 +2426,9 @@ resources:
                     }
                   ],
                   "name": "Send to user@example.net rule.",
+                  "owner_worker_tag": "a7e6fb77503c41d8a7f3113c6918f10c",
                   "priority": 0,
+                  "source": "api",
                   "zone_id": "023e105f4ecef8ad9ca31a8372d0c353"
                 }
         argumentDocs:
@@ -2429,7 +2440,15 @@ resources:
             id: (String) Routing rule identifier.
             matchers: (Attributes List) Matching patterns to forward to your actions. (see below for nested schema)
             name: (String) Routing rule name.
+            owner_worker_tag: |-
+                (String) Public tag (script_tag) of the Worker that owns this rule. Required when
+                source is wrangler.
             priority: (Number) Priority of the routing rule.
+            source: |-
+                (String) Who manages the rule. api covers dashboard, generic API, and Terraform;
+                wrangler means the rule is managed by a Worker's wrangler.jsonc. Defaults
+                to api when omitted on write.
+                Available values: "api", "wrangler".
             tag: (String, Deprecated) Routing rule tag. (Deprecated, replaced by routing rule identifier)
             type: |-
                 (String) Type of supported action.
@@ -2632,7 +2651,7 @@ resources:
             - $ terraform import cloudflare_firewall_rule.example '<zone_id>/<rule_id>'
     cloudflare_flagship_app:
         subCategory: ""
-        description: 'Accepted Permissions Account Firewall Access Rules ReadAccount Firewall Access Rules WriteAccount Settings ReadAccount Settings WriteBilling ReadBilling WriteDDoS Botnet Feed ReadDDoS Botnet Feed WriteDDoS Protection ReadDDoS Protection WriteDNS Firewall ReadDNS Firewall WriteDNS View ReadDNS View WriteLoad Balancers Account ReadLoad Balancers Account WriteLoad Balancing: Monitors and Pools ReadLoad Balancing: Monitors and Pools WriteSCIM ProvisioningTrust and Safety ReadTrust and Safety WriteWorkers KV Storage ReadWorkers KV Storage WriteWorkers R2 Storage ReadWorkers R2 Storage WriteWorkers Scripts ReadWorkers Scripts WriteWorkers Tail ReadZero Trust: PII Read'
+        description: Accepted Permissions Flagship ReadFlagship Write
         name: cloudflare_flagship_app
         title: cloudflare_flagship_app Resource - Cloudflare
         examples:
@@ -2653,7 +2672,7 @@ resources:
             - $ terraform import cloudflare_flagship_app.example '<account_id>/<app_id>'
     cloudflare_flagship_flag:
         subCategory: ""
-        description: 'Accepted Permissions Account Firewall Access Rules ReadAccount Firewall Access Rules WriteAccount Settings ReadAccount Settings WriteBilling ReadBilling WriteDDoS Botnet Feed ReadDDoS Botnet Feed WriteDDoS Protection ReadDDoS Protection WriteDNS Firewall ReadDNS Firewall WriteDNS View ReadDNS View WriteLoad Balancers Account ReadLoad Balancers Account WriteLoad Balancing: Monitors and Pools ReadLoad Balancing: Monitors and Pools WriteSCIM ProvisioningTrust and Safety ReadTrust and Safety WriteWorkers KV Storage ReadWorkers KV Storage WriteWorkers R2 Storage ReadWorkers R2 Storage WriteWorkers Scripts ReadWorkers Scripts WriteWorkers Tail ReadZero Trust: PII Read'
+        description: Accepted Permissions Flagship ReadFlagship Write
         name: cloudflare_flagship_flag
         title: cloudflare_flagship_flag Resource - Cloudflare
         examples:
@@ -3081,6 +3100,9 @@ resources:
                     },
                     {
                       "ip": "1.1.1.2"
+                    },
+                    {
+                      "ip": "1.1.1.3"
                     }
                   ],
                   "kind": "ip",
@@ -4329,6 +4351,32 @@ resources:
             zone_id: (String) The unique ID of the zone.
         importStatements:
             - $ terraform import cloudflare_managed_transforms.example '<zone_id>'
+    cloudflare_moq_relay Resource - Cloudflare:
+        subCategory: ""
+        name: cloudflare_moq_relay Resource - Cloudflare
+        title: cloudflare_moq_relay Resource - Cloudflare
+        argumentDocs:
+            account_id: (String) Cloudflare account identifier.
+            config: (Attributes) upstreams and lingering_subscribe are mutually exclusive. (see below for nested schema)
+            created: (String)
+            enabled: (Boolean)
+            id: (String) Server-generated unique identifier (32 hex chars).
+            lingering_subscribe: (Attributes) (see below for nested schema)
+            max_timeout_ms: (Number) Relay-level ceiling on lingering subscribe timeout (ms). Default 30000.
+            modified: (String)
+            name: (String) Human-readable name for the relay.
+            status: |-
+                (String) "connected" when active, omitted otherwise.
+                Available values: "connected".
+            token_publish_subscribe: (String, Sensitive) Full access token (publish + subscribe). Treat as sensitive.
+            token_subscribe: (String, Sensitive) Subscribe-only token. Treat as sensitive.
+            uid: (String) Server-generated unique identifier (32 hex chars).
+            upstreams: |-
+                (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+                to when it has no local publisher for a requested namespace/track. (see below for nested schema)
+            url: (String) Upstream MOQT server publisher URL.
+        importStatements:
+            - $ terraform import cloudflare_moq_relay.example '<account_id>/<relay_id>'
     cloudflare_mtls_certificate:
         subCategory: ""
         name: cloudflare_mtls_certificate
@@ -6622,7 +6670,8 @@ resources:
             name: (String)
             snippet_name: (String) Identify the snippet.
             zone_id: (String) Use this field to specify the unique ID of the zone.
-        importStatements: []
+        importStatements:
+            - $ terraform import cloudflare_snippet.example '<zone_id>/<snippet_name>'
     cloudflare_snippet_rules:
         subCategory: ""
         description: Accepted Permissions Snippets ReadSnippets Write
@@ -6651,7 +6700,8 @@ resources:
             rules: (Attributes List) Lists snippet rules. (see below for nested schema)
             snippet_name: (String) Identify the snippet.
             zone_id: (String) Use this field to specify the unique ID of the zone.
-        importStatements: []
+        importStatements:
+            - $ terraform import cloudflare_snippet_rules.example '<zone_id>'
     cloudflare_snippets Resource - Cloudflare:
         subCategory: ""
         name: cloudflare_snippets Resource - Cloudflare
@@ -6940,6 +6990,7 @@ resources:
                   "meta": {
                     "name": "test stream 1"
                   },
+                  "prefer_low_latency": true,
                   "recording": {
                     "allowed_origins": [
                       "example.com"
@@ -6958,6 +7009,7 @@ resources:
             delete_recording_after_days: (Number) Indicates the number of days after which the live inputs recordings will be deleted. When a stream completes and the recording is ready, the value is used to calculate a scheduled deletion date for that recording. Omit the field to indicate no change, or include with a null value to remove an existing scheduled deletion.
             enabled: (Boolean) Indicates whether the live input is enabled and can accept streams.
             hide_live_viewer_count: (Boolean) Disables reporting the number of live viewers when this property is set to true.
+            keys_rotated_at: (String) The date and time the live input keys were last rotated. Omitted for live inputs that have never had their keys rotated.
             live_input_identifier: (String) A unique identifier for a live input.
             meta: (String) A user modifiable key-value store used to reference other systems of record for managing live inputs.
             mode: |-
@@ -6965,6 +7017,7 @@ resources:
                 Available values: "off", "automatic".
             modified: (String) The date and time the live input was last modified.
             passphrase: (String, Sensitive) The secret key to use when streaming via SRT to a live input.
+            prefer_low_latency: (Boolean) When enabled, the live stream is delivered using Low-Latency HLS (LL-HLS), reducing glass-to-glass latency for viewers at the cost of reduced player compatibility.
             recording: (Attributes) Records the input to a Cloudflare Stream video. Behavior depends on the mode. In most cases, the video will initially be viewable as a live video and transition to on-demand after a condition is satisfied. (see below for nested schema)
             require_signed_urls: (Boolean) Indicates if a video using the live input has the requireSignedURLs property set. Also enforces access controls on any video recording of the livestream with the live input.
             rtmps: (Attributes) Details for streaming to an live input using RTMPS. (see below for nested schema)
@@ -7915,6 +7968,10 @@ resources:
                       "type": "plain_text"
                     }
                   ],
+                  "cache_options": {
+                    "cross_version_cache": true,
+                    "enabled": true
+                  },
                   "compatibility_date": "2021-01-01",
                   "compatibility_flags": [
                     "nodejs_compat"
@@ -7962,6 +8019,13 @@ resources:
                       "name": "index.js"
                     }
                   ],
+                  "package_dependencies": [
+                    {
+                      "installed_version": "4.17.22",
+                      "name": "lodash",
+                      "package_json_version": "^4.17.21"
+                    }
+                  ],
                   "placement": {
                     "mode": "smart"
                   },
@@ -7978,6 +8042,11 @@ resources:
             assets: (Attributes) Configuration for assets within a Worker.
             bindings: '(Attributes List) List of bindings attached to a Worker. You can find more about bindings on our docs: https://developers.cloudflare.com/workers/configuration/multipart-upload-metadata/#bindings. (see below for nested schema)'
             bucket_name: (String) R2 bucket to bind to.
+            cache_options: |-
+                (Attributes) Global CacheW configuration for the Worker. When caching is on,
+                the platform provisions a cloudflare.app zone for the Worker.
+                A type: worker entry in the exports map can override this
+                value for a single entrypoint. (see below for nested schema)
             certificate_id: (String) Identifier of the certificate to bind to.
             class_name: (String) The exported class name of the Durable Object.
             compatibility_date: (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
@@ -7990,12 +8059,18 @@ resources:
             content_type: (String) The content type of the module.
             cpu_ms: (Number) CPU time limit in milliseconds.
             created_on: (String) When the version was created.
+            cross_version_cache: |-
+                (Boolean) Whether cached responses are shared across Worker version
+                uploads. This is independent of enabled. It can stay true
+                while caching is off, so the preference survives turning
+                caching off and back on.
             database_id: (String) Identifier of the D1 database to bind to.
             dataset: (String) The name of the dataset to bind to.
             deleted_classes: (List of String) A list of classes to delete Durable Object namespaces from.
             destination_address: (String) Destination address for the email.
             directory: (String) Path to the directory containing asset files to upload.
             dispatch_namespace: (String) The dispatch namespace the Durable Object script belongs to.
+            enabled: (Boolean) Whether caching is enabled for this Worker.
             entrypoint: (String) Entrypoint to invoke on the target Worker.
             environment: (String) The environment of the script_name to bind to.
             format: |-
@@ -8010,6 +8085,7 @@ resources:
                 Available values: "auto-trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
             id: (String) Version identifier.
             index_name: (String) Name of the Vectorize index to bind to.
+            installed_version: (String) The exact version that was resolved and installed by the package manager.
             instance_name: (String) The user-chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
             json: (String) JSON data to use.
             jurisdiction: |-
@@ -8043,6 +8119,10 @@ resources:
             old_name: (String) The old name of the inherited binding. If set, the binding will be renamed from old_name to name in the new version. If not set, the binding will keep the same name between versions.
             old_tag: (String) Tag used to verify against the latest migration tag for this Worker. If they don't match, the upload is rejected.
             outbound: (Attributes) Outbound worker. (see below for nested schema)
+            package_dependencies: |-
+                (Attributes List) The list of npm packages that were installed and used when this Worker
+                version was built. (see below for nested schema)
+            package_json_version: (String) The version constraint as written in package.json.
             params: (Attributes List) Pass information from the Dispatch Worker to the Outbound Worker through the parameters. (see below for nested schema)
             part: (String) The name of the file containing the data content. Only accepted for service worker syntax Workers.
             period: (Number) The period in seconds.
@@ -8294,10 +8374,28 @@ resources:
                     }
                   ],
                   "body_part": "worker.js",
+                  "cache_options": {
+                    "cross_version_cache": true,
+                    "enabled": true
+                  },
                   "compatibility_date": "2021-01-01",
                   "compatibility_flags": [
                     "nodejs_compat"
                   ],
+                  "exports": {
+                    "Admin": {
+                      "cache": {
+                        "enabled": true
+                      },
+                      "type": "worker"
+                    },
+                    "default": {
+                      "cache": {
+                        "enabled": false
+                      },
+                      "type": "worker"
+                    }
+                  },
                   "keep_assets": false,
                   "keep_bindings": [
                     "string"
@@ -8355,6 +8453,13 @@ resources:
                       "persist": true
                     }
                   },
+                  "package_dependencies": [
+                    {
+                      "installed_version": "4.17.22",
+                      "name": "lodash",
+                      "package_json_version": "^4.17.21"
+                    }
+                  ],
                   "placement": {
                     "mode": "smart"
                   },
@@ -8383,6 +8488,12 @@ resources:
             bindings: '(Attributes List) List of bindings attached to a Worker. You can find more about bindings on our docs: https://developers.cloudflare.com/workers/configuration/multipart-upload-metadata/#bindings. (see below for nested schema)'
             body_part: (String) Name of the uploaded file that contains the script (e.g. the file adding a listener to the fetch event). Indicates a service worker syntax Worker.
             bucket_name: (String) R2 bucket to bind to.
+            cache: (Attributes) Per-entrypoint cache override. When present, this overrides the top-level cache_options for this specific entrypoint. (see below for nested schema)
+            cache_options: |-
+                (Attributes) Global CacheW configuration for the Worker. When caching is on,
+                the platform provisions a cloudflare.app zone for the Worker.
+                A type: worker entry in the exports map can override this
+                value for a single entrypoint. (see below for nested schema)
             certificate_id: (String) Identifier of the certificate to bind to.
             class_name: (String) The exported class name of the Durable Object.
             compatibility_date: (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
@@ -8394,6 +8505,11 @@ resources:
             content_type: (String) Content-Type of the Worker. Required if uploading a non-JavaScript Worker (e.g. "text/x-python").
             cpu_ms: (Number) The amount of CPU time this Worker can use in milliseconds.
             created_on: (String) When the script was created.
+            cross_version_cache: |-
+                (Boolean) Whether cached responses are shared across Worker version
+                uploads. This is independent of enabled. It can stay true
+                while caching is off, so the preference survives turning
+                caching off and back on.
             database_id: (String) Identifier of the D1 database to bind to.
             dataset: (String) The name of the dataset to bind to.
             deleted_classes: (List of String) A list of classes to delete Durable Object namespaces from.
@@ -8401,10 +8517,11 @@ resources:
             destinations: (List of String) A list of destinations where logs will be exported to.
             directory: (String) Path to the directory containing asset files to upload.
             dispatch_namespace: (String) The dispatch namespace the Durable Object script belongs to.
-            enabled: (Boolean) Whether observability is enabled for the Worker.
+            enabled: (Boolean) Whether caching is enabled for this Worker.
             entrypoint: (String) Entrypoint to invoke on the target Worker.
             environment: (String) The environment of the script_name to bind to.
             etag: (String) Hashed script content, can be used in a If-None-Match header when updating.
+            exports: (Attributes Map) Per-entrypoint export configuration. Keys are the export names; values describe the entrypoint's kind and per-entrypoint cache behavior. (see below for nested schema)
             format: |-
                 (String) Data format of the key. Learn more.
                 Available values: "raw", "pkcs8", "spki", "jwk".
@@ -8422,6 +8539,7 @@ resources:
                 Available values: "auto-trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
             id: (String) Name of the script, used in URLs and route configuration.
             index_name: (String) Name of the Vectorize index to bind to.
+            installed_version: (String) The exact version that was resolved and installed by the package manager.
             instance_name: (String) The user-chosen instance name. Must exist at deploy time. The worker can search, chat, update, and manage items/jobs on this instance.
             invocation_logs: (Boolean) Whether invocation logs are enabled for the Worker.
             json: (String) JSON data to use.
@@ -8429,7 +8547,7 @@ resources:
                 (String) The jurisdiction of the R2 bucket.
                 Available values: "eu", "fedramp", "fedramp-high".
             jwt: (String, Sensitive) Token provided upon successful upload of all files from a registered manifest.
-            keep_assets: (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
+            keep_assets: (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit assets upload takes precedence over keep_assets.
             keep_bindings: (Set of String) List of binding types to keep from previous_upload.
             key_base64: (String, Sensitive) Base64-encoded key data. Required if format is "raw", "pkcs8", or "spki".
             key_jwk: (String, Sensitive) Key data in JSON Web Key format. Required if format is "jwk".
@@ -8462,6 +8580,8 @@ resources:
             old_name: (String) The old name of the inherited binding. If set, the binding will be renamed from old_name to name in the new version. If not set, the binding will keep the same name between versions.
             old_tag: (String) Tag used to verify against the latest migration tag for this Worker. If they don't match, the upload is rejected.
             outbound: (Attributes) Outbound worker. (see below for nested schema)
+            package_dependencies: (Attributes List) The list of npm packages that were installed and used when this Worker was built. (see below for nested schema)
+            package_json_version: (String) The version constraint as written in package.json.
             params: (List of String) Pass information from the Dispatch Worker to the Outbound Worker through the parameters.
             part: (String) The name of the file containing the data content. Only accepted for service worker syntax Workers.
             period: (Number) The rate limit period in seconds.
@@ -8640,7 +8760,7 @@ resources:
             on_behalf: (Boolean)
             secure_web_gateway: (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway
             server_id: (String) server id
-            servers: (Attributes List) (see below for nested schema)
+            servers: (Attributes Set) (see below for nested schema)
             updated_prompts: (Attributes List) (see below for nested schema)
             updated_tools: (Attributes List) (see below for nested schema)
         importStatements:
@@ -9827,7 +9947,7 @@ resources:
                   "version_config": [
                     {
                       "target_environment": "windows",
-                      "version": "2026.5.234.0"
+                      "version": "2026.6.234.0"
                     }
                   ]
                 }
@@ -10125,7 +10245,7 @@ resources:
                   "name": "name"
                 }
         argumentDocs:
-            account_id: (String)
+            account_id: (String) Unique identifier linked to an account.
             created_at: (String)
             data: (Attributes) The configuration object which contains the details for the WARP client to conduct the test. (see below for nested schema)
             description: (String)
@@ -10173,9 +10293,9 @@ resources:
                   ]
                 }
         argumentDocs:
-            account_id: (String)
+            account_id: (String) Unique identifier linked to an account.
             data: (Attributes) The configuration object which contains the details for the WARP client to conduct the test. (see below for nested schema)
-            default: (Boolean) Whether the DEX rule is the account default
+            default: (Boolean) Whether the DEX rule is the account default.
             description: (String) Additional details about the test.
             enabled: (Boolean) Determines whether or not the test is active.
             host: (String) The desired endpoint to test.
@@ -10755,6 +10875,10 @@ resources:
                       ]
                     }
                   },
+                  "max_ttl": {
+                    "mode": "override",
+                    "ttl_secs": 3600
+                  },
                   "name": "Austin Office Location",
                   "networks": [
                     {
@@ -10780,10 +10904,15 @@ resources:
             ipv4_destination: (String) Show the primary destination IPv4 address from the pair identified dns_destination_ips_id. This field read-only.
             ipv4_destination_backup: (String) Show the backup destination IPv4 address from the pair identified dns_destination_ips_id. This field read-only.
             ipv6: (Attributes) (see below for nested schema)
+            max_ttl: (Attributes) Controls how DNS response TTLs are capped for this location relative to the account max_ttl_secs setting. Omitting max_ttl on update resets it to inherit. (see below for nested schema)
+            mode: |-
+                (String) inherit uses the account max_ttl_secs. override uses this location's ttl_secs. disabled leaves returned TTLs unchanged.
+                Available values: "inherit", "override", "disabled".
             name: (String) Specify the location name.
             network: (String) Specify the IP address or IP CIDR.
             networks: (Attributes List) Specify the list of network ranges from which requests at this location originate. The list takes effect only if it is non-empty and the IPv4 endpoint is enabled for this location. (see below for nested schema)
             require_token: (Boolean) Specify whether the DOH endpoint requires user identity authentication.
+            ttl_secs: (Number) Location-specific cap on DNS response TTLs, in seconds. Required when mode is override. Must be omitted when mode is inherit or disabled.
             updated_at: (String)
         importStatements:
             - $ terraform import cloudflare_zero_trust_dns_location.example '<account_id>/<location_id>'
@@ -11222,6 +11351,7 @@ resources:
                     "inspection": {
                       "mode": "static"
                     },
+                    "max_ttl_secs": 3600,
                     "protocol_detection": {
                       "enabled": true
                     },
@@ -11267,6 +11397,7 @@ resources:
             logo_path: (String) Specify the full URL to the logo file when the mode is customized_block_page.
             mailto_address: (String) Specify the admin email for users to contact when the mode is customized_block_page.
             mailto_subject: (String) Specify the subject line for emails created from the block page when the mode is customized_block_page.
+            max_ttl_secs: (Number) Account-level cap on DNS response TTLs, in seconds. Gateway rewrites DNS responses so returned record TTLs do not exceed this value. Null means no cap. Each DNS location can inherit, override, or disable it through the location max_ttl setting.
             mode: |-
                 (String) Specify whether to redirect users to a Cloudflare-hosted block page or a customer-provided URI.
                 Available values: "", "customized_block_page", "redirect_uri".

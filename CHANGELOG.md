@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.11] - 2026-07-10
+
+Upgrades the upstream Cloudflare Terraform provider from `v5.21.1` to `v5.22.0`
+and regenerates the provider schema, CRDs, and controllers. This is a minor
+upstream release and is almost entirely additive (many resources gained new
+optional fields). One managed resource has a **breaking** schema change — see
+below.
+
+### Changed
+
+- Upgraded the upstream Cloudflare Terraform provider from `v5.21.1` to `v5.22.0`; provider schema, CRDs, and controllers were regenerated. No sub-providers were added or removed (213 managed resources per scope, unchanged).
+- **BREAKING** — `SearchInstance` (`ai` group, from `cloudflare_ai_search_instance`): the `crawlOptions` block (`spec.forProvider.crawlOptions` with `depth`, `includeExternalLinks`, `includeSubdomains`, `maxAge`, `source`) was removed upstream and replaced by a new optional `customDomains` (`custom_domains`) string list. Any resource that set `crawlOptions` must migrate to `customDomains`.
+- Relaxed from required to optional (non-breaking): `Transforms` (`managed` group) — `managedRequestHeaders` and `managedResponseHeaders` are no longer required.
+- Additive new optional fields across many resources, notably `workers` `Script` and `worker` `Version` (e.g. `cacheOptions`, `packageDependencies`), `stream` `LiveInput` (`keysRotatedAt`), and several `zero` trust resources.
+
 ## [0.2.10] - 2026-07-09
 
 Upgrades the upstream Cloudflare Terraform provider from `v5.18.0` to `v5.21.1`

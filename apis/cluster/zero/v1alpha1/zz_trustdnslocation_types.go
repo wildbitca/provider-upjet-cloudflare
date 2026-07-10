@@ -237,6 +237,47 @@ type IPv6NetworksParameters struct {
 	Network *string `json:"network" tf:"network,omitempty"`
 }
 
+type MaxTTLInitParameters struct {
+
+	// (String) inherit uses the account max_ttl_secs. override uses this location's ttl_secs. disabled leaves returned TTLs unchanged.
+	// Available values: "inherit", "override", "disabled".
+	// `inherit` uses the account `max_ttl_secs`. `override` uses this location's `ttl_secs`. `disabled` leaves returned TTLs unchanged.
+	// Available values: "inherit", "override", "disabled".
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// specific cap on DNS response TTLs, in seconds. Required when mode is override. Must be omitted when mode is inherit or disabled.
+	// Location-specific cap on DNS response TTLs, in seconds. Required when `mode` is `override`. Must be omitted when `mode` is `inherit` or `disabled`.
+	TTLSecs *float64 `json:"ttlSecs,omitempty" tf:"ttl_secs,omitempty"`
+}
+
+type MaxTTLObservation struct {
+
+	// (String) inherit uses the account max_ttl_secs. override uses this location's ttl_secs. disabled leaves returned TTLs unchanged.
+	// Available values: "inherit", "override", "disabled".
+	// `inherit` uses the account `max_ttl_secs`. `override` uses this location's `ttl_secs`. `disabled` leaves returned TTLs unchanged.
+	// Available values: "inherit", "override", "disabled".
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// specific cap on DNS response TTLs, in seconds. Required when mode is override. Must be omitted when mode is inherit or disabled.
+	// Location-specific cap on DNS response TTLs, in seconds. Required when `mode` is `override`. Must be omitted when `mode` is `inherit` or `disabled`.
+	TTLSecs *float64 `json:"ttlSecs,omitempty" tf:"ttl_secs,omitempty"`
+}
+
+type MaxTTLParameters struct {
+
+	// (String) inherit uses the account max_ttl_secs. override uses this location's ttl_secs. disabled leaves returned TTLs unchanged.
+	// Available values: "inherit", "override", "disabled".
+	// `inherit` uses the account `max_ttl_secs`. `override` uses this location's `ttl_secs`. `disabled` leaves returned TTLs unchanged.
+	// Available values: "inherit", "override", "disabled".
+	// +kubebuilder:validation:Optional
+	Mode *string `json:"mode" tf:"mode,omitempty"`
+
+	// specific cap on DNS response TTLs, in seconds. Required when mode is override. Must be omitted when mode is inherit or disabled.
+	// Location-specific cap on DNS response TTLs, in seconds. Required when `mode` is `override`. Must be omitted when `mode` is `inherit` or `disabled`.
+	// +kubebuilder:validation:Optional
+	TTLSecs *float64 `json:"ttlSecs,omitempty" tf:"ttl_secs,omitempty"`
+}
+
 type NetworksInitParameters struct {
 
 	// (String) Specify the IP address or IP CIDR.
@@ -278,6 +319,9 @@ type TrustDNSLocationInitParameters struct {
 
 	// (Attributes) Configure the destination endpoints for this location. (see below for nested schema)
 	Endpoints *EndpointsInitParameters `json:"endpoints,omitempty" tf:"endpoints,omitempty"`
+
+	// (Attributes) Controls how DNS response TTLs are capped for this location relative to the account max_ttl_secs setting. Omitting max_ttl on update resets it to inherit. (see below for nested schema)
+	MaxTTL *MaxTTLInitParameters `json:"maxTtl,omitempty" tf:"max_ttl,omitempty"`
 
 	// (String) Specify the location name.
 	// Specify the location name.
@@ -355,6 +399,9 @@ type TrustDNSLocationObservation struct {
 	// Show the backup destination IPv4 address from the pair identified dns_destination_ips_id. This field read-only.
 	IPv4DestinationBackup *string `json:"ipv4DestinationBackup,omitempty" tf:"ipv4_destination_backup,omitempty"`
 
+	// (Attributes) Controls how DNS response TTLs are capped for this location relative to the account max_ttl_secs setting. Omitting max_ttl on update resets it to inherit. (see below for nested schema)
+	MaxTTL *MaxTTLObservation `json:"maxTtl,omitempty" tf:"max_ttl,omitempty"`
+
 	// (String) Specify the location name.
 	// Specify the location name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -390,6 +437,10 @@ type TrustDNSLocationParameters struct {
 	// (Attributes) Configure the destination endpoints for this location. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Endpoints *EndpointsParameters `json:"endpoints,omitempty" tf:"endpoints,omitempty"`
+
+	// (Attributes) Controls how DNS response TTLs are capped for this location relative to the account max_ttl_secs setting. Omitting max_ttl on update resets it to inherit. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	MaxTTL *MaxTTLParameters `json:"maxTtl,omitempty" tf:"max_ttl,omitempty"`
 
 	// (String) Specify the location name.
 	// Specify the location name.

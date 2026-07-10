@@ -94,51 +94,6 @@ type ContentSelectorParameters struct {
 	Selector *string `json:"selector" tf:"selector,omitempty"`
 }
 
-type CrawlOptionsInitParameters struct {
-	Depth *float64 `json:"depth,omitempty" tf:"depth,omitempty"`
-
-	IncludeExternalLinks *bool `json:"includeExternalLinks,omitempty" tf:"include_external_links,omitempty"`
-
-	IncludeSubdomains *bool `json:"includeSubdomains,omitempty" tf:"include_subdomains,omitempty"`
-
-	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
-
-	// Available values: "all", "sitemaps", "links".
-	Source *string `json:"source,omitempty" tf:"source,omitempty"`
-}
-
-type CrawlOptionsObservation struct {
-	Depth *float64 `json:"depth,omitempty" tf:"depth,omitempty"`
-
-	IncludeExternalLinks *bool `json:"includeExternalLinks,omitempty" tf:"include_external_links,omitempty"`
-
-	IncludeSubdomains *bool `json:"includeSubdomains,omitempty" tf:"include_subdomains,omitempty"`
-
-	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
-
-	// Available values: "all", "sitemaps", "links".
-	Source *string `json:"source,omitempty" tf:"source,omitempty"`
-}
-
-type CrawlOptionsParameters struct {
-
-	// +kubebuilder:validation:Optional
-	Depth *float64 `json:"depth,omitempty" tf:"depth,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	IncludeExternalLinks *bool `json:"includeExternalLinks,omitempty" tf:"include_external_links,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	IncludeSubdomains *bool `json:"includeSubdomains,omitempty" tf:"include_subdomains,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
-
-	// Available values: "all", "sitemaps", "links".
-	// +kubebuilder:validation:Optional
-	Source *string `json:"source,omitempty" tf:"source,omitempty"`
-}
-
 type CustomMetadataInitParameters struct {
 
 	// Available values: "text", "number", "boolean", "datetime".
@@ -317,6 +272,9 @@ type PublicEndpointParamsInitParameters struct {
 
 	ChatCompletionsEndpoint *ChatCompletionsEndpointInitParameters `json:"chatCompletionsEndpoint,omitempty" tf:"chat_completions_endpoint,omitempty"`
 
+	// Custom domain hostnames that alias this public endpoint. GET and create responses return the current set; on update (PUT) this field is only echoed back when supplied in the request body, otherwise it is null (omit it to leave domains unchanged).
+	CustomDomains []*string `json:"customDomains,omitempty" tf:"custom_domains,omitempty"`
+
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	Mcp *McpInitParameters `json:"mcp,omitempty" tf:"mcp,omitempty"`
@@ -330,6 +288,9 @@ type PublicEndpointParamsObservation struct {
 	AuthorizedHosts []*string `json:"authorizedHosts,omitempty" tf:"authorized_hosts,omitempty"`
 
 	ChatCompletionsEndpoint *ChatCompletionsEndpointObservation `json:"chatCompletionsEndpoint,omitempty" tf:"chat_completions_endpoint,omitempty"`
+
+	// Custom domain hostnames that alias this public endpoint. GET and create responses return the current set; on update (PUT) this field is only echoed back when supplied in the request body, otherwise it is null (omit it to leave domains unchanged).
+	CustomDomains []*string `json:"customDomains,omitempty" tf:"custom_domains,omitempty"`
 
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -347,6 +308,10 @@ type PublicEndpointParamsParameters struct {
 
 	// +kubebuilder:validation:Optional
 	ChatCompletionsEndpoint *ChatCompletionsEndpointParameters `json:"chatCompletionsEndpoint,omitempty" tf:"chat_completions_endpoint,omitempty"`
+
+	// Custom domain hostnames that alias this public endpoint. GET and create responses return the current set; on update (PUT) this field is only echoed back when supplied in the request body, otherwise it is null (omit it to leave domains unchanged).
+	// +kubebuilder:validation:Optional
+	CustomDomains []*string `json:"customDomains,omitempty" tf:"custom_domains,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -463,7 +428,7 @@ type SearchInstanceInitParameters struct {
 
 	CustomMetadata []CustomMetadataInitParameters `json:"customMetadata,omitempty" tf:"custom_metadata,omitempty"`
 
-	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
+	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "google-ai-studio/gemini-embedding-2", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
 	EmbeddingModel *string `json:"embeddingModel,omitempty" tf:"embedding_model,omitempty"`
 
 	// Available values: "max", "rrf".
@@ -552,7 +517,7 @@ type SearchInstanceObservation struct {
 
 	CustomMetadata []CustomMetadataObservation `json:"customMetadata,omitempty" tf:"custom_metadata,omitempty"`
 
-	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
+	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "google-ai-studio/gemini-embedding-2", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
 	EmbeddingModel *string `json:"embeddingModel,omitempty" tf:"embedding_model,omitempty"`
 
 	Enable *bool `json:"enable,omitempty" tf:"enable,omitempty"`
@@ -668,7 +633,7 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	CustomMetadata []CustomMetadataParameters `json:"customMetadata,omitempty" tf:"custom_metadata,omitempty"`
 
-	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
+	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "google-ai-studio/gemini-embedding-2", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
 	// +kubebuilder:validation:Optional
 	EmbeddingModel *string `json:"embeddingModel,omitempty" tf:"embedding_model,omitempty"`
 
@@ -835,8 +800,6 @@ type StoreOptionsParameters struct {
 }
 
 type WebCrawlerInitParameters struct {
-	CrawlOptions *CrawlOptionsInitParameters `json:"crawlOptions,omitempty" tf:"crawl_options,omitempty"`
-
 	ParseOptions *ParseOptionsInitParameters `json:"parseOptions,omitempty" tf:"parse_options,omitempty"`
 
 	// Available values: "sitemap", "feed-rss", "crawl".
@@ -846,8 +809,6 @@ type WebCrawlerInitParameters struct {
 }
 
 type WebCrawlerObservation struct {
-	CrawlOptions *CrawlOptionsObservation `json:"crawlOptions,omitempty" tf:"crawl_options,omitempty"`
-
 	ParseOptions *ParseOptionsObservation `json:"parseOptions,omitempty" tf:"parse_options,omitempty"`
 
 	// Available values: "sitemap", "feed-rss", "crawl".
@@ -857,9 +818,6 @@ type WebCrawlerObservation struct {
 }
 
 type WebCrawlerParameters struct {
-
-	// +kubebuilder:validation:Optional
-	CrawlOptions *CrawlOptionsParameters `json:"crawlOptions,omitempty" tf:"crawl_options,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	ParseOptions *ParseOptionsParameters `json:"parseOptions,omitempty" tf:"parse_options,omitempty"`

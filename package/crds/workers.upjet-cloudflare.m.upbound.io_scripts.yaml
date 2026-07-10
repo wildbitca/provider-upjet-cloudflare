@@ -438,6 +438,30 @@ spec:
                       (String) Name of the uploaded file that contains the script (e.g. the file adding a listener to the fetch event). Indicates a service worker syntax Worker.
                       Name of the uploaded file that contains the script (e.g. the file adding a listener to the `fetch` event). Indicates a `service worker syntax` Worker.
                     type: string
+                  cacheOptions:
+                    description: |-
+                      (Attributes) Global CacheW configuration for the Worker. When caching is on,
+                      the platform provisions a cloudflare.app zone for the Worker.
+                      A type: worker entry in the exports map can override this
+                      value for a single entrypoint. (see below for nested schema)
+                    properties:
+                      crossVersionCache:
+                        description: |-
+                          (Boolean) Whether cached responses are shared across Worker version
+                          uploads. This is independent of enabled. It can stay true
+                          while caching is off, so the preference survives turning
+                          caching off and back on.
+                          Whether cached responses are shared across Worker version
+                          uploads. This is independent of `enabled`. It can stay true
+                          while caching is off, so the preference survives turning
+                          caching off and back on.
+                        type: boolean
+                      enabled:
+                        description: |-
+                          (Boolean) Whether caching is enabled for this Worker.
+                          Whether caching is enabled for this Worker.
+                        type: boolean
+                    type: object
                   compatibilityDate:
                     description: |-
                       (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
@@ -471,10 +495,35 @@ spec:
                       Type of the Worker. Required if uploading a non-JavaScript Worker (e.g. "text/x-python").
                       Content-Type of the Worker. Required if uploading a non-JavaScript Worker (e.g. "text/x-python").
                     type: string
+                  exports:
+                    additionalProperties:
+                      properties:
+                        cache:
+                          description: entrypoint cache override. When present, this
+                            overrides the top-level cache_options for this specific
+                            entrypoint. (see below for nested schema)
+                          properties:
+                            enabled:
+                              description: |-
+                                (Boolean) Whether caching is enabled for this Worker.
+                                Whether caching is enabled for this entrypoint.
+                              type: boolean
+                          type: object
+                        type:
+                          description: |-
+                            (String) The kind of resource that the binding provides.
+                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            The kind of entrypoint. A `type: worker` entry overrides the top-level `cache_options` for this specific entrypoint.
+                          type: string
+                      type: object
+                    description: entrypoint export configuration. Keys are the export
+                      names; values describe the entrypoint's kind and per-entrypoint
+                      cache behavior. (see below for nested schema)
+                    type: object
                   keepAssets:
                     description: |-
-                      (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
-                      Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
+                      (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit assets upload takes precedence over keep_assets.
+                      Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit `assets` upload takes precedence over `keep_assets`.
                     type: boolean
                   keepBindings:
                     description: |-
@@ -642,7 +691,7 @@ spec:
                     properties:
                       enabled:
                         description: |-
-                          (Boolean) Whether observability is enabled for the Worker.
+                          (Boolean) Whether caching is enabled for this Worker.
                           Whether observability is enabled for the Worker.
                         type: boolean
                       headSamplingRate:
@@ -663,7 +712,7 @@ spec:
                             type: array
                           enabled:
                             description: |-
-                              (Boolean) Whether observability is enabled for the Worker.
+                              (Boolean) Whether caching is enabled for this Worker.
                               Whether logs are enabled for the Worker.
                             type: boolean
                           headSamplingRate:
@@ -695,7 +744,7 @@ spec:
                             type: array
                           enabled:
                             description: |-
-                              (Boolean) Whether observability is enabled for the Worker.
+                              (Boolean) Whether caching is enabled for this Worker.
                               Whether traces are enabled for the Worker.
                             type: boolean
                           headSamplingRate:
@@ -715,6 +764,29 @@ spec:
                             type: string
                         type: object
                     type: object
+                  packageDependencies:
+                    description: (Attributes List) The list of npm packages that were
+                      installed and used when this Worker was built. (see below for
+                      nested schema)
+                    items:
+                      properties:
+                        installedVersion:
+                          description: |-
+                            (String) The exact version that was resolved and installed by the package manager.
+                            The exact version that was resolved and installed by the package manager.
+                          type: string
+                        name:
+                          description: |-
+                            (String) A JavaScript variable name for the binding.
+                            The npm package name.
+                          type: string
+                        packageJsonVersion:
+                          description: |-
+                            (String) The version constraint as written in package.json.
+                            The version constraint as written in package.json.
+                          type: string
+                      type: object
+                    type: array
                   placement:
                     description: (Attributes) Configuration for Smart Placement. Specify
                       mode='smart' for Smart Placement, or one of region/hostname/host.
@@ -1155,6 +1227,30 @@ spec:
                       (String) Name of the uploaded file that contains the script (e.g. the file adding a listener to the fetch event). Indicates a service worker syntax Worker.
                       Name of the uploaded file that contains the script (e.g. the file adding a listener to the `fetch` event). Indicates a `service worker syntax` Worker.
                     type: string
+                  cacheOptions:
+                    description: |-
+                      (Attributes) Global CacheW configuration for the Worker. When caching is on,
+                      the platform provisions a cloudflare.app zone for the Worker.
+                      A type: worker entry in the exports map can override this
+                      value for a single entrypoint. (see below for nested schema)
+                    properties:
+                      crossVersionCache:
+                        description: |-
+                          (Boolean) Whether cached responses are shared across Worker version
+                          uploads. This is independent of enabled. It can stay true
+                          while caching is off, so the preference survives turning
+                          caching off and back on.
+                          Whether cached responses are shared across Worker version
+                          uploads. This is independent of `enabled`. It can stay true
+                          while caching is off, so the preference survives turning
+                          caching off and back on.
+                        type: boolean
+                      enabled:
+                        description: |-
+                          (Boolean) Whether caching is enabled for this Worker.
+                          Whether caching is enabled for this Worker.
+                        type: boolean
+                    type: object
                   compatibilityDate:
                     description: |-
                       (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
@@ -1188,10 +1284,35 @@ spec:
                       Type of the Worker. Required if uploading a non-JavaScript Worker (e.g. "text/x-python").
                       Content-Type of the Worker. Required if uploading a non-JavaScript Worker (e.g. "text/x-python").
                     type: string
+                  exports:
+                    additionalProperties:
+                      properties:
+                        cache:
+                          description: entrypoint cache override. When present, this
+                            overrides the top-level cache_options for this specific
+                            entrypoint. (see below for nested schema)
+                          properties:
+                            enabled:
+                              description: |-
+                                (Boolean) Whether caching is enabled for this Worker.
+                                Whether caching is enabled for this entrypoint.
+                              type: boolean
+                          type: object
+                        type:
+                          description: |-
+                            (String) The kind of resource that the binding provides.
+                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            The kind of entrypoint. A `type: worker` entry overrides the top-level `cache_options` for this specific entrypoint.
+                          type: string
+                      type: object
+                    description: entrypoint export configuration. Keys are the export
+                      names; values describe the entrypoint's kind and per-entrypoint
+                      cache behavior. (see below for nested schema)
+                    type: object
                   keepAssets:
                     description: |-
-                      (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
-                      Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
+                      (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit assets upload takes precedence over keep_assets.
+                      Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit `assets` upload takes precedence over `keep_assets`.
                     type: boolean
                   keepBindings:
                     description: |-
@@ -1359,7 +1480,7 @@ spec:
                     properties:
                       enabled:
                         description: |-
-                          (Boolean) Whether observability is enabled for the Worker.
+                          (Boolean) Whether caching is enabled for this Worker.
                           Whether observability is enabled for the Worker.
                         type: boolean
                       headSamplingRate:
@@ -1380,7 +1501,7 @@ spec:
                             type: array
                           enabled:
                             description: |-
-                              (Boolean) Whether observability is enabled for the Worker.
+                              (Boolean) Whether caching is enabled for this Worker.
                               Whether logs are enabled for the Worker.
                             type: boolean
                           headSamplingRate:
@@ -1412,7 +1533,7 @@ spec:
                             type: array
                           enabled:
                             description: |-
-                              (Boolean) Whether observability is enabled for the Worker.
+                              (Boolean) Whether caching is enabled for this Worker.
                               Whether traces are enabled for the Worker.
                             type: boolean
                           headSamplingRate:
@@ -1432,6 +1553,29 @@ spec:
                             type: string
                         type: object
                     type: object
+                  packageDependencies:
+                    description: (Attributes List) The list of npm packages that were
+                      installed and used when this Worker was built. (see below for
+                      nested schema)
+                    items:
+                      properties:
+                        installedVersion:
+                          description: |-
+                            (String) The exact version that was resolved and installed by the package manager.
+                            The exact version that was resolved and installed by the package manager.
+                          type: string
+                        name:
+                          description: |-
+                            (String) A JavaScript variable name for the binding.
+                            The npm package name.
+                          type: string
+                        packageJsonVersion:
+                          description: |-
+                            (String) The version constraint as written in package.json.
+                            The version constraint as written in package.json.
+                          type: string
+                      type: object
+                    type: array
                   placement:
                     description: (Attributes) Configuration for Smart Placement. Specify
                       mode='smart' for Smart Placement, or one of region/hostname/host.
@@ -1885,6 +2029,30 @@ spec:
                       (String) Name of the uploaded file that contains the script (e.g. the file adding a listener to the fetch event). Indicates a service worker syntax Worker.
                       Name of the uploaded file that contains the script (e.g. the file adding a listener to the `fetch` event). Indicates a `service worker syntax` Worker.
                     type: string
+                  cacheOptions:
+                    description: |-
+                      (Attributes) Global CacheW configuration for the Worker. When caching is on,
+                      the platform provisions a cloudflare.app zone for the Worker.
+                      A type: worker entry in the exports map can override this
+                      value for a single entrypoint. (see below for nested schema)
+                    properties:
+                      crossVersionCache:
+                        description: |-
+                          (Boolean) Whether cached responses are shared across Worker version
+                          uploads. This is independent of enabled. It can stay true
+                          while caching is off, so the preference survives turning
+                          caching off and back on.
+                          Whether cached responses are shared across Worker version
+                          uploads. This is independent of `enabled`. It can stay true
+                          while caching is off, so the preference survives turning
+                          caching off and back on.
+                        type: boolean
+                      enabled:
+                        description: |-
+                          (Boolean) Whether caching is enabled for this Worker.
+                          Whether caching is enabled for this Worker.
+                        type: boolean
+                    type: object
                   compatibilityDate:
                     description: |-
                       (String) Date indicating targeted support in the Workers runtime. Backwards incompatible fixes to the runtime following this date will not affect this Worker.
@@ -1928,6 +2096,31 @@ spec:
                       None-Match header when updating.
                       Hashed script content, can be used in a If-None-Match header when updating.
                     type: string
+                  exports:
+                    additionalProperties:
+                      properties:
+                        cache:
+                          description: entrypoint cache override. When present, this
+                            overrides the top-level cache_options for this specific
+                            entrypoint. (see below for nested schema)
+                          properties:
+                            enabled:
+                              description: |-
+                                (Boolean) Whether caching is enabled for this Worker.
+                                Whether caching is enabled for this entrypoint.
+                              type: boolean
+                          type: object
+                        type:
+                          description: |-
+                            (String) The kind of resource that the binding provides.
+                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            The kind of entrypoint. A `type: worker` entry overrides the top-level `cache_options` for this specific entrypoint.
+                          type: string
+                      type: object
+                    description: entrypoint export configuration. Keys are the export
+                      names; values describe the entrypoint's kind and per-entrypoint
+                      cache behavior. (see below for nested schema)
+                    type: object
                   handlers:
                     description: |-
                       (List of String) The names of handlers exported as part of the default export.
@@ -1951,8 +2144,8 @@ spec:
                     type: string
                   keepAssets:
                     description: |-
-                      (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
-                      Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token.
+                      (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit assets upload takes precedence over keep_assets.
+                      Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit `assets` upload takes precedence over `keep_assets`.
                     type: boolean
                   keepBindings:
                     description: |-
@@ -2155,7 +2348,7 @@ spec:
                     properties:
                       enabled:
                         description: |-
-                          (Boolean) Whether observability is enabled for the Worker.
+                          (Boolean) Whether caching is enabled for this Worker.
                           Whether observability is enabled for the Worker.
                         type: boolean
                       headSamplingRate:
@@ -2176,7 +2369,7 @@ spec:
                             type: array
                           enabled:
                             description: |-
-                              (Boolean) Whether observability is enabled for the Worker.
+                              (Boolean) Whether caching is enabled for this Worker.
                               Whether logs are enabled for the Worker.
                             type: boolean
                           headSamplingRate:
@@ -2208,7 +2401,7 @@ spec:
                             type: array
                           enabled:
                             description: |-
-                              (Boolean) Whether observability is enabled for the Worker.
+                              (Boolean) Whether caching is enabled for this Worker.
                               Whether traces are enabled for the Worker.
                             type: boolean
                           headSamplingRate:
@@ -2228,6 +2421,29 @@ spec:
                             type: string
                         type: object
                     type: object
+                  packageDependencies:
+                    description: (Attributes List) The list of npm packages that were
+                      installed and used when this Worker was built. (see below for
+                      nested schema)
+                    items:
+                      properties:
+                        installedVersion:
+                          description: |-
+                            (String) The exact version that was resolved and installed by the package manager.
+                            The exact version that was resolved and installed by the package manager.
+                          type: string
+                        name:
+                          description: |-
+                            (String) A JavaScript variable name for the binding.
+                            The npm package name.
+                          type: string
+                        packageJsonVersion:
+                          description: |-
+                            (String) The version constraint as written in package.json.
+                            The version constraint as written in package.json.
+                          type: string
+                      type: object
+                    type: array
                   placement:
                     description: (Attributes) Configuration for Smart Placement. Specify
                       mode='smart' for Smart Placement, or one of region/hostname/host.

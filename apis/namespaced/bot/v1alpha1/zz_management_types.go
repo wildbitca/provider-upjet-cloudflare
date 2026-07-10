@@ -16,9 +16,9 @@ import (
 
 type ManagementInitParameters struct {
 
-	// (String) Enable rule to block AI Scrapers and Crawlers. Please note the value only_on_ad_pages is currently not available for Enterprise customers.
+	// (String) Enable rule to block AI Scrapers and Crawlers.
 	// Available values: "block", "disabled", "only_on_ad_pages".
-	// Enable rule to block AI Scrapers and Crawlers. Please note the value `only_on_ad_pages` is currently not available for Enterprise customers.
+	// Enable rule to block AI Scrapers and Crawlers.
 	// Available values: "block", "disabled", "only_on_ad_pages".
 	AIBotsProtection *string `json:"aiBotsProtection,omitempty" tf:"ai_bots_protection,omitempty"`
 
@@ -101,9 +101,9 @@ type ManagementInitParameters struct {
 
 type ManagementObservation struct {
 
-	// (String) Enable rule to block AI Scrapers and Crawlers. Please note the value only_on_ad_pages is currently not available for Enterprise customers.
+	// (String) Enable rule to block AI Scrapers and Crawlers.
 	// Available values: "block", "disabled", "only_on_ad_pages".
-	// Enable rule to block AI Scrapers and Crawlers. Please note the value `only_on_ad_pages` is currently not available for Enterprise customers.
+	// Enable rule to block AI Scrapers and Crawlers.
 	// Available values: "block", "disabled", "only_on_ad_pages".
 	AIBotsProtection *string `json:"aiBotsProtection,omitempty" tf:"ai_bots_protection,omitempty"`
 
@@ -196,9 +196,9 @@ type ManagementObservation struct {
 
 type ManagementParameters struct {
 
-	// (String) Enable rule to block AI Scrapers and Crawlers. Please note the value only_on_ad_pages is currently not available for Enterprise customers.
+	// (String) Enable rule to block AI Scrapers and Crawlers.
 	// Available values: "block", "disabled", "only_on_ad_pages".
-	// Enable rule to block AI Scrapers and Crawlers. Please note the value `only_on_ad_pages` is currently not available for Enterprise customers.
+	// Enable rule to block AI Scrapers and Crawlers.
 	// Available values: "block", "disabled", "only_on_ad_pages".
 	// +kubebuilder:validation:Optional
 	AIBotsProtection *string `json:"aiBotsProtection,omitempty" tf:"ai_bots_protection,omitempty"`

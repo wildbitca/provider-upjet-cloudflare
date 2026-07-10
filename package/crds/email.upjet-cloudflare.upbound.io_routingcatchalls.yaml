@@ -114,6 +114,22 @@ spec:
                       (String) Routing rule name.
                       Routing rule name.
                     type: string
+                  ownerWorkerTag:
+                    description: |-
+                      (String) Public tag (script_tag) of the Worker that owns this rule. Required when
+                      source is wrangler.
+                      Public tag (script_tag) of the Worker that owns this rule. Required when
+                      `source` is `wrangler`.
+                    type: string
+                  source:
+                    description: |-
+                      (String) Who manages the rule.jsonc. Defaults
+                      to api when omitted on write.
+                      Available values: "api", "wrangler".
+                      Who manages the rule.jsonc. Defaults
+                      to `api` when omitted on write.
+                      Available values: "api", "wrangler".
+                    type: string
                   zoneId:
                     description: |-
                       (String) Identifier.
@@ -173,6 +189,22 @@ spec:
                     description: |-
                       (String) Routing rule name.
                       Routing rule name.
+                    type: string
+                  ownerWorkerTag:
+                    description: |-
+                      (String) Public tag (script_tag) of the Worker that owns this rule. Required when
+                      source is wrangler.
+                      Public tag (script_tag) of the Worker that owns this rule. Required when
+                      `source` is `wrangler`.
+                    type: string
+                  source:
+                    description: |-
+                      (String) Who manages the rule.jsonc. Defaults
+                      to api when omitted on write.
+                      Available values: "api", "wrangler".
+                      Who manages the rule.jsonc. Defaults
+                      to `api` when omitted on write.
+                      Available values: "api", "wrangler".
                     type: string
                   zoneId:
                     description: |-
@@ -327,6 +359,22 @@ spec:
                     description: |-
                       (String) Routing rule name.
                       Routing rule name.
+                    type: string
+                  ownerWorkerTag:
+                    description: |-
+                      (String) Public tag (script_tag) of the Worker that owns this rule. Required when
+                      source is wrangler.
+                      Public tag (script_tag) of the Worker that owns this rule. Required when
+                      `source` is `wrangler`.
+                    type: string
+                  source:
+                    description: |-
+                      (String) Who manages the rule.jsonc. Defaults
+                      to api when omitted on write.
+                      Available values: "api", "wrangler".
+                      Who manages the rule.jsonc. Defaults
+                      to `api` when omitted on write.
+                      Available values: "api", "wrangler".
                     type: string
                   tag:
                     description: |-

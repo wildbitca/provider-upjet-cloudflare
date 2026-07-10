@@ -67,9 +67,23 @@ type RoutingRuleInitParameters struct {
 	// Routing rule name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) Public tag (script_tag) of the Worker that owns this rule. Required when
+	// source is wrangler.
+	// Public tag (script_tag) of the Worker that owns this rule. Required when
+	// `source` is `wrangler`.
+	OwnerWorkerTag *string `json:"ownerWorkerTag,omitempty" tf:"owner_worker_tag,omitempty"`
+
 	// (Number) Priority of the routing rule.
 	// Priority of the routing rule.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	// (String) Who manages the rule.jsonc. Defaults
+	// to api when omitted on write.
+	// Available values: "api", "wrangler".
+	// Who manages the rule.jsonc. Defaults
+	// to `api` when omitted on write.
+	// Available values: "api", "wrangler".
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 
 	// (String) Identifier.
 	// Identifier.
@@ -155,9 +169,23 @@ type RoutingRuleObservation struct {
 	// Routing rule name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) Public tag (script_tag) of the Worker that owns this rule. Required when
+	// source is wrangler.
+	// Public tag (script_tag) of the Worker that owns this rule. Required when
+	// `source` is `wrangler`.
+	OwnerWorkerTag *string `json:"ownerWorkerTag,omitempty" tf:"owner_worker_tag,omitempty"`
+
 	// (Number) Priority of the routing rule.
 	// Priority of the routing rule.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	// (String) Who manages the rule.jsonc. Defaults
+	// to api when omitted on write.
+	// Available values: "api", "wrangler".
+	// Who manages the rule.jsonc. Defaults
+	// to `api` when omitted on write.
+	// Available values: "api", "wrangler".
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 
 	// (String, Deprecated) Routing rule tag. (Deprecated, replaced by routing rule identifier)
 	// Routing rule tag. (Deprecated, replaced by routing rule identifier)
@@ -188,10 +216,26 @@ type RoutingRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) Public tag (script_tag) of the Worker that owns this rule. Required when
+	// source is wrangler.
+	// Public tag (script_tag) of the Worker that owns this rule. Required when
+	// `source` is `wrangler`.
+	// +kubebuilder:validation:Optional
+	OwnerWorkerTag *string `json:"ownerWorkerTag,omitempty" tf:"owner_worker_tag,omitempty"`
+
 	// (Number) Priority of the routing rule.
 	// Priority of the routing rule.
 	// +kubebuilder:validation:Optional
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	// (String) Who manages the rule.jsonc. Defaults
+	// to api when omitted on write.
+	// Available values: "api", "wrangler".
+	// Who manages the rule.jsonc. Defaults
+	// to `api` when omitted on write.
+	// Available values: "api", "wrangler".
+	// +kubebuilder:validation:Optional
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 
 	// (String) Identifier.
 	// Identifier.

@@ -174,6 +174,25 @@ spec:
                             type: array
                         type: object
                     type: object
+                  maxTtl:
+                    description: (Attributes) Controls how DNS response TTLs are capped
+                      for this location relative to the account max_ttl_secs setting.
+                      Omitting max_ttl on update resets it to inherit. (see below
+                      for nested schema)
+                    properties:
+                      mode:
+                        description: |-
+                          (String) inherit uses the account max_ttl_secs. override uses this location's ttl_secs. disabled leaves returned TTLs unchanged.
+                          Available values: "inherit", "override", "disabled".
+                          `inherit` uses the account `max_ttl_secs`. `override` uses this location's `ttl_secs`. `disabled` leaves returned TTLs unchanged.
+                          Available values: "inherit", "override", "disabled".
+                        type: string
+                      ttlSecs:
+                        description: |-
+                          specific cap on DNS response TTLs, in seconds. Required when mode is override. Must be omitted when mode is inherit or disabled.
+                          Location-specific cap on DNS response TTLs, in seconds. Required when `mode` is `override`. Must be omitted when `mode` is `inherit` or `disabled`.
+                        type: number
+                    type: object
                   name:
                     description: |-
                       (String) Specify the location name.
@@ -304,6 +323,25 @@ spec:
                               type: object
                             type: array
                         type: object
+                    type: object
+                  maxTtl:
+                    description: (Attributes) Controls how DNS response TTLs are capped
+                      for this location relative to the account max_ttl_secs setting.
+                      Omitting max_ttl on update resets it to inherit. (see below
+                      for nested schema)
+                    properties:
+                      mode:
+                        description: |-
+                          (String) inherit uses the account max_ttl_secs. override uses this location's ttl_secs. disabled leaves returned TTLs unchanged.
+                          Available values: "inherit", "override", "disabled".
+                          `inherit` uses the account `max_ttl_secs`. `override` uses this location's `ttl_secs`. `disabled` leaves returned TTLs unchanged.
+                          Available values: "inherit", "override", "disabled".
+                        type: string
+                      ttlSecs:
+                        description: |-
+                          specific cap on DNS response TTLs, in seconds. Required when mode is override. Must be omitted when mode is inherit or disabled.
+                          Location-specific cap on DNS response TTLs, in seconds. Required when `mode` is `override`. Must be omitted when `mode` is `inherit` or `disabled`.
+                        type: number
                     type: object
                   name:
                     description: |-
@@ -554,6 +592,25 @@ spec:
                       only.
                       Show the backup destination IPv4 address from the pair identified dns_destination_ips_id. This field read-only.
                     type: string
+                  maxTtl:
+                    description: (Attributes) Controls how DNS response TTLs are capped
+                      for this location relative to the account max_ttl_secs setting.
+                      Omitting max_ttl on update resets it to inherit. (see below
+                      for nested schema)
+                    properties:
+                      mode:
+                        description: |-
+                          (String) inherit uses the account max_ttl_secs. override uses this location's ttl_secs. disabled leaves returned TTLs unchanged.
+                          Available values: "inherit", "override", "disabled".
+                          `inherit` uses the account `max_ttl_secs`. `override` uses this location's `ttl_secs`. `disabled` leaves returned TTLs unchanged.
+                          Available values: "inherit", "override", "disabled".
+                        type: string
+                      ttlSecs:
+                        description: |-
+                          specific cap on DNS response TTLs, in seconds. Required when mode is override. Must be omitted when mode is inherit or disabled.
+                          Location-specific cap on DNS response TTLs, in seconds. Required when `mode` is `override`. Must be omitted when `mode` is `inherit` or `disabled`.
+                        type: number
+                    type: object
                   name:
                     description: |-
                       (String) Specify the location name.

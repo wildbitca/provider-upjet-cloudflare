@@ -263,14 +263,6 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: spec.forProvider.managedRequestHeaders is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.managedRequestHeaders)
-                || (has(self.initProvider) && has(self.initProvider.managedRequestHeaders))'
-            - message: spec.forProvider.managedResponseHeaders is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.managedResponseHeaders)
-                || (has(self.initProvider) && has(self.initProvider.managedResponseHeaders))'
             - message: spec.forProvider.zoneId is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.zoneId)

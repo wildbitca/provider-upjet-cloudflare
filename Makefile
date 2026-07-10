@@ -8,11 +8,11 @@ export OPENTOFU_VERSION ?= 1.11.5
 
 export TERRAFORM_PROVIDER_SOURCE ?= cloudflare/cloudflare
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/cloudflare/terraform-provider-cloudflare
-export TERRAFORM_PROVIDER_VERSION ?= 5.21.1
+export TERRAFORM_PROVIDER_VERSION ?= 5.22.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-cloudflare
 # Cloudflare provider releases are on GitHub; HashiCorp releases URL returns 404 for 5.18+
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://github.com/cloudflare/terraform-provider-cloudflare/releases/download/v$(TERRAFORM_PROVIDER_VERSION)
-export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-cloudflare_v5.21.1
+export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-cloudflare_v5.22.0
 export TERRAFORM_DOCS_PATH ?= docs/resources
 
 

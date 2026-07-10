@@ -65,36 +65,37 @@ type DataParameters struct {
 type TargetPoliciesInitParameters struct {
 
 	// (String) The unique identifier for the test.
-	// The id of the DEX rule
+	// The id of the DEX rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type TargetPoliciesObservation struct {
 
-	// (Boolean) Whether the DEX rule is the account default
-	// Whether the DEX rule is the account default
+	// (Boolean) Whether the DEX rule is the account default.
+	// Whether the DEX rule is the account default.
 	Default *bool `json:"default,omitempty" tf:"default,omitempty"`
 
 	// (String) The unique identifier for the test.
-	// The id of the DEX rule
+	// The id of the DEX rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String) The name of the DEX test. Must be unique.
-	// The name of the DEX rule
+	// The name of the DEX rule.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type TargetPoliciesParameters struct {
 
 	// (String) The unique identifier for the test.
-	// The id of the DEX rule
+	// The id of the DEX rule.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id" tf:"id,omitempty"`
 }
 
 type TrustDexTestInitParameters struct {
 
-	// (String)
+	// (String) Unique identifier linked to an account.
+	// Unique identifier linked to an account.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (Attributes) The configuration object which contains the details for the WARP client to conduct the test. (see below for nested schema)
@@ -122,7 +123,8 @@ type TrustDexTestInitParameters struct {
 
 type TrustDexTestObservation struct {
 
-	// (String)
+	// (String) Unique identifier linked to an account.
+	// Unique identifier linked to an account.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (Attributes) The configuration object which contains the details for the WARP client to conduct the test. (see below for nested schema)
@@ -160,7 +162,8 @@ type TrustDexTestObservation struct {
 
 type TrustDexTestParameters struct {
 
-	// (String)
+	// (String) Unique identifier linked to an account.
+	// Unique identifier linked to an account.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 

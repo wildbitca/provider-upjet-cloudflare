@@ -1065,6 +1065,11 @@ func (in *LiveInputInitParameters) DeepCopyInto(out *LiveInputInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.PreferLowLatency != nil {
+		in, out := &in.PreferLowLatency, &out.PreferLowLatency
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Recording != nil {
 		in, out := &in.Recording, &out.Recording
 		*out = new(RecordingInitParameters)
@@ -1147,6 +1152,11 @@ func (in *LiveInputObservation) DeepCopyInto(out *LiveInputObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.KeysRotatedAt != nil {
+		in, out := &in.KeysRotatedAt, &out.KeysRotatedAt
+		*out = new(string)
+		**out = **in
+	}
 	if in.LiveInputIdentifier != nil {
 		in, out := &in.LiveInputIdentifier, &out.LiveInputIdentifier
 		*out = new(string)
@@ -1160,6 +1170,11 @@ func (in *LiveInputObservation) DeepCopyInto(out *LiveInputObservation) {
 	if in.Modified != nil {
 		in, out := &in.Modified, &out.Modified
 		*out = new(string)
+		**out = **in
+	}
+	if in.PreferLowLatency != nil {
+		in, out := &in.PreferLowLatency, &out.PreferLowLatency
+		*out = new(bool)
 		**out = **in
 	}
 	if in.Recording != nil {
@@ -1250,6 +1265,11 @@ func (in *LiveInputParameters) DeepCopyInto(out *LiveInputParameters) {
 	if in.Meta != nil {
 		in, out := &in.Meta, &out.Meta
 		*out = new(string)
+		**out = **in
+	}
+	if in.PreferLowLatency != nil {
+		in, out := &in.PreferLowLatency, &out.PreferLowLatency
+		*out = new(bool)
 		**out = **in
 	}
 	if in.Recording != nil {
