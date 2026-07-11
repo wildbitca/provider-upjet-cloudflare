@@ -22,6 +22,9 @@ func (tr *Key) Hub() {}
 func (tr *LiveInput) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *MOQRelay) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Watermark) Hub() {}
 
 // Hub marks this type as a conversion hub.

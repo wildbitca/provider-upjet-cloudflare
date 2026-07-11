@@ -23,4 +23,16 @@ func Configure(p *config.Provider) {
 			}
 		})
 	}
+	// cloudflare_oauth_client gained full CRUD in cloudflare provider 5.22.0.
+	// It is an account-scoped OAuth application; home it in the account group
+	// with an explicit Kind so the "OAuth" identity is not lost (the default
+	// kind would strip the leading "oauth" segment and yield an ambiguous
+	// "Client").
+	p.AddResourceConfigurator("cloudflare_oauth_client", func(r *config.Resource) {
+		r.ShortGroup = "account"
+		r.Kind = "OAuthClient"
+		r.References["account_id"] = config.Reference{
+			TerraformName: "cloudflare_account",
+		}
+	})
 }

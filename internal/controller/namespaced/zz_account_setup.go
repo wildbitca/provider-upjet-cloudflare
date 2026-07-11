@@ -13,6 +13,7 @@ import (
 	dnssettings "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/account/dnssettings"
 	dnssettingsinternalview "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/account/dnssettingsinternalview"
 	member "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/account/member"
+	oauthclient "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/account/oauthclient"
 	subscription "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/account/subscription"
 	token "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/account/token"
 )
@@ -25,6 +26,7 @@ func Setup_account(mgr ctrl.Manager, o controller.Options) error {
 		dnssettings.Setup,
 		dnssettingsinternalview.Setup,
 		member.Setup,
+		oauthclient.Setup,
 		subscription.Setup,
 		token.Setup,
 	} {
@@ -43,6 +45,7 @@ func SetupGated_account(mgr ctrl.Manager, o controller.Options) error {
 		dnssettings.SetupGated,
 		dnssettingsinternalview.SetupGated,
 		member.SetupGated,
+		oauthclient.SetupGated,
 		subscription.SetupGated,
 		token.SetupGated,
 	} {

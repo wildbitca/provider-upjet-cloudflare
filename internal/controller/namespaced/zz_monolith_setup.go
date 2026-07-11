@@ -14,6 +14,7 @@ import (
 	dnssettings "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/account/dnssettings"
 	dnssettingsinternalview "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/account/dnssettingsinternalview"
 	member "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/account/member"
+	oauthclient "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/account/oauthclient"
 	subscription "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/account/subscription"
 	token "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/account/token"
 	addressmap "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/address/addressmap"
@@ -140,6 +141,7 @@ import (
 	download "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/stream/download"
 	key "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/stream/key"
 	liveinput "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/stream/liveinput"
+	moqrelay "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/stream/moqrelay"
 	watermark "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/stream/watermark"
 	webhook "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/stream/webhook"
 	cache "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/tiered/cache"
@@ -234,6 +236,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		dnssettings.Setup,
 		dnssettingsinternalview.Setup,
 		member.Setup,
+		oauthclient.Setup,
 		subscription.Setup,
 		token.Setup,
 		addressmap.Setup,
@@ -360,6 +363,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		download.Setup,
 		key.Setup,
 		liveinput.Setup,
+		moqrelay.Setup,
 		watermark.Setup,
 		webhook.Setup,
 		cache.Setup,
@@ -460,6 +464,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		dnssettings.SetupGated,
 		dnssettingsinternalview.SetupGated,
 		member.SetupGated,
+		oauthclient.SetupGated,
 		subscription.SetupGated,
 		token.SetupGated,
 		addressmap.SetupGated,
@@ -586,6 +591,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		download.SetupGated,
 		key.SetupGated,
 		liveinput.SetupGated,
+		moqrelay.SetupGated,
 		watermark.SetupGated,
 		webhook.SetupGated,
 		cache.SetupGated,

@@ -19,6 +19,9 @@ func (tr *DNSSettingsInternalView) Hub() {}
 func (tr *Member) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *OAuthClient) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Subscription) Hub() {}
 
 // Hub marks this type as a conversion hub.

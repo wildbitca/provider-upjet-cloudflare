@@ -1,0 +1,33 @@
+apiVersion: account.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: OAuthClient
+metadata:
+  annotations:
+    meta.upbound.io/example-id: account/v1alpha1/oauthclient
+  labels:
+    testing.upbound.io/example-name: example_oauth_client
+  name: example-oauth-client
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accountIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    allowedCorsOrigins:
+    - https://example.com
+    clientName: My OAuth App
+    clientUri: https://example.com
+    grantTypes:
+    - authorization_code
+    - refresh_token
+    logoUri: https://example.com/logo.png
+    policyUri: https://example.com/privacy
+    postLogoutRedirectUris:
+    - https://example.com/logout
+    redirectUris:
+    - https://example.com/callback
+    responseTypes:
+    - code
+    scopes:
+    - account.read
+    tokenEndpointAuthMethod: client_secret_post
+    tosUri: https://example.com/tos

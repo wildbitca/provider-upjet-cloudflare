@@ -14,6 +14,7 @@ import (
 	download "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/stream/download"
 	key "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/stream/key"
 	liveinput "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/stream/liveinput"
+	moqrelay "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/stream/moqrelay"
 	watermark "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/stream/watermark"
 	webhook "github.com/wildbitca/provider-upjet-cloudflare/internal/controller/namespaced/stream/webhook"
 )
@@ -27,6 +28,7 @@ func Setup_stream(mgr ctrl.Manager, o controller.Options) error {
 		download.Setup,
 		key.Setup,
 		liveinput.Setup,
+		moqrelay.Setup,
 		watermark.Setup,
 		webhook.Setup,
 	} {
@@ -46,6 +48,7 @@ func SetupGated_stream(mgr ctrl.Manager, o controller.Options) error {
 		download.SetupGated,
 		key.SetupGated,
 		liveinput.SetupGated,
+		moqrelay.SetupGated,
 		watermark.SetupGated,
 		webhook.SetupGated,
 	} {

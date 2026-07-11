@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.12] - 2026-07-10
+
+Exposes two managed resources that the upstream Cloudflare Terraform provider
+`v5.22.0` made available. Both are folded into existing sub-providers, so no new
+family package or cluster wiring is introduced. Purely additive.
+
+### Added
+
+- `MOQRelay` (from `cloudflare_moq_relay`) — a Media over QUIC (MoQ) relay, new in upstream `v5.22.0`. It is homed in the existing `stream` sub-provider (`xpkg.upbound.io/wildbitca/provider-cloudflare-stream`) rather than a standalone group, so no new package/wiring is required. Account-scoped; `accountId` supports cross-resource references/selectors (`accountIdRef`/`accountIdSelector`). Available in both the cluster-scoped (`stream.upjet-cloudflare.upbound.io`) and namespaced (`stream.upjet-cloudflare.m.upbound.io`) API groups.
+- `OAuthClient` (from `cloudflare_oauth_client`) — an account-scoped OAuth application. The upstream resource gained full CRUD in `v5.22.0` (it was previously incomplete and therefore not exposed), so it is now included. It is homed in the existing `account` sub-provider (`xpkg.upbound.io/wildbitca/provider-cloudflare-account`); `accountId` supports references/selectors. Available in both `account.upjet-cloudflare.upbound.io` and `account.upjet-cloudflare.m.upbound.io` groups.
+- Managed resource count increased from 213 to 215 per scope. No sub-providers were added or removed.
+
 ## [0.2.11] - 2026-07-10
 
 Upgrades the upstream Cloudflare Terraform provider from `v5.21.1` to `v5.22.0`
