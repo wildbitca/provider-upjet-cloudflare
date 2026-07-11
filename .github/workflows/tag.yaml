@@ -17,17 +17,31 @@ jobs:
   tag:
     runs-on: ubuntu-24.04
     steps:
+      # Verify GH_TOKEN is available BEFORE checkout. The default GITHUB_TOKEN
+      # is blocked by the tag-creation ruleset, so this workflow relies on the
+      # privileged org PAT GH_TOKEN (visibility=all) to bypass it. If the
+      # secret is empty/unavailable, checkout's auth would otherwise fail with
+      # a cryptic "could not read Username" — fail fast with a clear message.
+      - name: Verify GH_TOKEN is present
+        env:
+          GH_TOKEN_SECRET: ${{ secrets.GH_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN_SECRET" ]; then
+            echo "::error::GH_TOKEN secret is empty/unavailable in this repository. The default GITHUB_TOKEN cannot create tags (blocked by the tag ruleset). Set a privileged GH_TOKEN secret."
+            exit 1
+          fi
+          echo "GH_TOKEN is present (${#GH_TOKEN_SECRET} chars)."
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN }}
       - name: Create and push annotated tag
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+          MESSAGE: ${{ github.event.inputs.message }}
         run: |
-          if [ -z "${{ secrets.GH_TOKEN }}" ]; then
-            echo "::error::GH_TOKEN secret not set; default GITHUB_TOKEN is blocked by the tag ruleset"; exit 1
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag -a "${{ github.event.inputs.version }}" -m "${{ github.event.inputs.message }}"
-          git push origin "${{ github.event.inputs.version }}"
+          git tag -a "$VERSION" -m "$MESSAGE"
+          git push origin "$VERSION"
