@@ -13,9 +13,11 @@ cover.out
 # Cursor agentic — do not version agent outputs (local only)
 .cursor/agents/
 
-# Compiled Go binaries accidentally built in repo root
+# Compiled Go binaries accidentally built in repo root.
+# NOTE: do not add `/config` here — it collides with the `config/` source
+# package directory and silently drops newly added config source files from
+# commits (git ignores untracked files even inside a tracked dir).
 /dns
-/config
 /monolith
 /zone
 /cloudflare
