@@ -10,38 +10,37 @@ on:
         description: 'Tag message'
         required: true
 
+# No contents:write here — the default GITHUB_TOKEN is blocked by the tag
+# ruleset anyway. We mint a short-lived GitHub App token (wildbit-ci) instead,
+# matching how pacha/elinvo pipelines authenticate. No static PAT.
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   tag:
     runs-on: ubuntu-24.04
     steps:
-      # Verify GH_TOKEN is available BEFORE checkout. The default GITHUB_TOKEN
-      # is blocked by the tag-creation ruleset, so this workflow relies on the
-      # privileged org PAT GH_TOKEN (visibility=all) to bypass it. If the
-      # secret is empty/unavailable, checkout's auth would otherwise fail with
-      # a cryptic "could not read Username" — fail fast with a clear message.
-      - name: Verify GH_TOKEN is present
-        env:
-          GH_TOKEN_SECRET: ${{ secrets.GH_TOKEN }}
-        run: |
-          if [ -z "$GH_TOKEN_SECRET" ]; then
-            echo "::error::GH_TOKEN secret is empty/unavailable in this repository. The default GITHUB_TOKEN cannot create tags (blocked by the tag ruleset). Set a privileged GH_TOKEN secret."
-            exit 1
-          fi
-          echo "GH_TOKEN is present (${#GH_TOKEN_SECRET} chars)."
+      - name: Mint GitHub App token (wildbit-ci)
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.WILDBIT_CI_APP_ID }}
+          private-key: ${{ secrets.WILDBIT_CI_APP_KEY }}
+          owner: wildbitca
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
       - name: Create and push annotated tag
         env:
           VERSION: ${{ github.event.inputs.version }}
           MESSAGE: ${{ github.event.inputs.message }}
+          GIT_AUTHOR: ${{ steps.app-token.outputs.app-slug }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "${GIT_AUTHOR}[bot]"
+          git config user.email "${GIT_AUTHOR}[bot]@users.noreply.github.com"
           git tag -a "$VERSION" -m "$MESSAGE"
           git push origin "$VERSION"
