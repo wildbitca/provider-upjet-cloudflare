@@ -161,7 +161,19 @@ jobs:
           submodules: true
 
       - name: Fetch History
-        run: git fetch --prune --unshallow
+        run: |
+          # `git fetch --unshallow` intermittently returns a transient 403 from
+          # GitHub; retry so a flaky fetch doesn't red-fail the whole run.
+          n=0
+          until git fetch --prune --unshallow; do
+            n=$((n + 1))
+            if [ "$n" -ge 5 ]; then
+              echo "git fetch --unshallow failed after $n attempts" >&2
+              exit 1
+            fi
+            echo "unshallow attempt $n failed; retrying in $((n * 10))s" >&2
+            sleep $((n * 10))
+          done
 
       - name: Setup Go
         uses: actions/setup-go@v6
@@ -210,7 +222,19 @@ jobs:
           submodules: true
 
       - name: Fetch History
-        run: git fetch --prune --unshallow
+        run: |
+          # `git fetch --unshallow` intermittently returns a transient 403 from
+          # GitHub; retry so a flaky fetch doesn't red-fail the whole run.
+          n=0
+          until git fetch --prune --unshallow; do
+            n=$((n + 1))
+            if [ "$n" -ge 5 ]; then
+              echo "git fetch --unshallow failed after $n attempts" >&2
+              exit 1
+            fi
+            echo "unshallow attempt $n failed; retrying in $((n * 10))s" >&2
+            sleep $((n * 10))
+          done
 
       - name: Setup Go
         uses: actions/setup-go@v6
