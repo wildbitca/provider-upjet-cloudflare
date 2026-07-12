@@ -108,15 +108,28 @@ jobs:
           # Only create + publish repos that don't exist yet. Running
           # `up repository update` for all ~60 repos on every publish trips
           # Upbound's "Repository Update Rate Limit". Existing repos are already
-          # public+publish, so a get-and-skip is enough.
+          # public+publish, so a get-and-skip is enough. A short retry absorbs
+          # transient "Rate Limit Exceeded" responses on create/update.
+          retry() {
+            local n=0
+            until "$@"; do
+              n=$((n + 1))
+              if [ "$n" -ge 5 ]; then
+                echo "command failed after $n attempts: $*" >&2
+                return 1
+              fi
+              echo "attempt $n failed, retrying in $((n * 15))s: $*" >&2
+              sleep $((n * 15))
+            done
+          }
           for repo in "${REPOS[@]}"; do
             if up repository get "$repo" >/dev/null 2>&1; then
               echo "= $repo (exists)"
               continue
             fi
             echo "Creating $repo..."
-            up repository create "$repo"
-            up repository update --private=false --publish --force "$repo"
+            retry up repository create "$repo"
+            retry up repository update --private=false --publish --force "$repo"
             echo "✓ $repo (created)"
           done
 
