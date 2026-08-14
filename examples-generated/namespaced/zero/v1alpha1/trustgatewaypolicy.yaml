@@ -55,6 +55,9 @@ spec:
       checkSession:
         duration: 300s
         enforce: true
+      deleteHeaders:
+      - X-Old-Header
+      - X-Remove-Me
       dnsResolvers:
         ipv4:
         - ip: 2.2.2.2
@@ -101,6 +104,9 @@ spec:
         fallback: none
         viewId: view_id
       resolveDnsThroughCloudflare: true
+      setHeaders:
+        X-User-Identity:
+        - user=@{identity.name}
       untrustedCert:
         action: error
     schedule:

@@ -1227,8 +1227,6 @@ spec:
                                 type: string
                               type: array
                             vary:
-                              description: header override. (see below for nested
-                                schema)
                               properties:
                                 default:
                                   description: (Number) The browser TTL (in seconds)
@@ -1253,16 +1251,15 @@ spec:
                                           Available values: "bypass", "passthrough", "normalize".
                                         type: string
                                       languages:
-                                        description: |-
-                                          language header.
-                                          The set of languages to normalize against. Only valid for the `accept-language` header.
+                                        description: The set of languages to normalize
+                                          against. Only valid for the `accept-language`
+                                          header.
                                         items:
                                           type: string
                                         type: array
                                       mediaTypes:
-                                        description: |-
-                                          (List of String) The set of media types to normalize against. Only valid for the accept header.
-                                          The set of media types to normalize against. Only valid for the `accept` header.
+                                        description: The set of media types to normalize
+                                          against. Only valid for the `accept` header.
                                         items:
                                           type: string
                                         type: array
@@ -2540,8 +2537,6 @@ spec:
                                 type: string
                               type: array
                             vary:
-                              description: header override. (see below for nested
-                                schema)
                               properties:
                                 default:
                                   description: (Number) The browser TTL (in seconds)
@@ -2566,16 +2561,15 @@ spec:
                                           Available values: "bypass", "passthrough", "normalize".
                                         type: string
                                       languages:
-                                        description: |-
-                                          language header.
-                                          The set of languages to normalize against. Only valid for the `accept-language` header.
+                                        description: The set of languages to normalize
+                                          against. Only valid for the `accept-language`
+                                          header.
                                         items:
                                           type: string
                                         type: array
                                       mediaTypes:
-                                        description: |-
-                                          (List of String) The set of media types to normalize against. Only valid for the accept header.
-                                          The set of media types to normalize against. Only valid for the `accept` header.
+                                        description: The set of media types to normalize
+                                          against. Only valid for the `accept` header.
                                         items:
                                           type: string
                                         type: array
@@ -3952,8 +3946,6 @@ spec:
                                 type: string
                               type: array
                             vary:
-                              description: header override. (see below for nested
-                                schema)
                               properties:
                                 default:
                                   description: (Number) The browser TTL (in seconds)
@@ -3978,16 +3970,15 @@ spec:
                                           Available values: "bypass", "passthrough", "normalize".
                                         type: string
                                       languages:
-                                        description: |-
-                                          language header.
-                                          The set of languages to normalize against. Only valid for the `accept-language` header.
+                                        description: The set of languages to normalize
+                                          against. Only valid for the `accept-language`
+                                          header.
                                         items:
                                           type: string
                                         type: array
                                       mediaTypes:
-                                        description: |-
-                                          (List of String) The set of media types to normalize against. Only valid for the accept header.
-                                          The set of media types to normalize against. Only valid for the `accept` header.
+                                        description: The set of media types to normalize
+                                          against. Only valid for the `accept` header.
                                         items:
                                           type: string
                                         type: array

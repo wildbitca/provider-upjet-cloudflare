@@ -79,6 +79,22 @@ spec:
                   className:
                     description: (String)
                     type: string
+                  defaultRetention:
+                    description: (Attributes) Default retention applied to instances
+                      of this version when they do not set their own retention. (see
+                      below for nested schema)
+                    properties:
+                      errorRetention:
+                        description: |-
+                          (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
+                          Specifies the duration in milliseconds or as a string like '5 minutes'.
+                        x-kubernetes-preserve-unknown-fields: true
+                      successRetention:
+                        description: |-
+                          (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
+                          Specifies the duration in milliseconds or as a string like '5 minutes'.
+                        x-kubernetes-preserve-unknown-fields: true
+                    type: object
                   limits:
                     description: (Attributes) (see below for nested schema)
                     properties:
@@ -121,6 +137,22 @@ spec:
                   className:
                     description: (String)
                     type: string
+                  defaultRetention:
+                    description: (Attributes) Default retention applied to instances
+                      of this version when they do not set their own retention. (see
+                      below for nested schema)
+                    properties:
+                      errorRetention:
+                        description: |-
+                          (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
+                          Specifies the duration in milliseconds or as a string like '5 minutes'.
+                        x-kubernetes-preserve-unknown-fields: true
+                      successRetention:
+                        description: |-
+                          (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
+                          Specifies the duration in milliseconds or as a string like '5 minutes'.
+                        x-kubernetes-preserve-unknown-fields: true
+                    type: object
                   limits:
                     description: (Attributes) (see below for nested schema)
                     properties:
@@ -261,6 +293,22 @@ spec:
                   createdOn:
                     description: (String)
                     type: string
+                  defaultRetention:
+                    description: (Attributes) Default retention applied to instances
+                      of this version when they do not set their own retention. (see
+                      below for nested schema)
+                    properties:
+                      errorRetention:
+                        description: |-
+                          (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
+                          Specifies the duration in milliseconds or as a string like '5 minutes'.
+                        x-kubernetes-preserve-unknown-fields: true
+                      successRetention:
+                        description: |-
+                          (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
+                          Specifies the duration in milliseconds or as a string like '5 minutes'.
+                        x-kubernetes-preserve-unknown-fields: true
+                    type: object
                   id:
                     description: (String) The ID of this resource.
                     type: string

@@ -30,9 +30,9 @@ type BucketInitParameters struct {
 	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (String) Jurisdiction where objects in this bucket are guaranteed to be stored.
-	// Available values: "default", "eu", "fedramp".
+	// Available values: "default", "eu", "fedramp", "us".
 	// Jurisdiction where objects in this bucket are guaranteed to be stored.
-	// Available values: "default", "eu", "fedramp".
+	// Available values: "default", "eu", "fedramp", "us".
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
 	// effort, not a guarantee, of bucket location.
@@ -65,9 +65,9 @@ type BucketObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String) Jurisdiction where objects in this bucket are guaranteed to be stored.
-	// Available values: "default", "eu", "fedramp".
+	// Available values: "default", "eu", "fedramp", "us".
 	// Jurisdiction where objects in this bucket are guaranteed to be stored.
-	// Available values: "default", "eu", "fedramp".
+	// Available values: "default", "eu", "fedramp", "us".
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
 	// effort, not a guarantee, of bucket location.
@@ -103,9 +103,9 @@ type BucketParameters struct {
 	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (String) Jurisdiction where objects in this bucket are guaranteed to be stored.
-	// Available values: "default", "eu", "fedramp".
+	// Available values: "default", "eu", "fedramp", "us".
 	// Jurisdiction where objects in this bucket are guaranteed to be stored.
-	// Available values: "default", "eu", "fedramp".
+	// Available values: "default", "eu", "fedramp", "us".
 	// +kubebuilder:validation:Optional
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 

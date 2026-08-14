@@ -8,11 +8,11 @@ export OPENTOFU_VERSION ?= 1.11.5
 
 export TERRAFORM_PROVIDER_SOURCE ?= cloudflare/cloudflare
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/cloudflare/terraform-provider-cloudflare
-export TERRAFORM_PROVIDER_VERSION ?= 5.22.0
+export TERRAFORM_PROVIDER_VERSION ?= 5.23.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-cloudflare
 # Cloudflare provider releases are on GitHub; HashiCorp releases URL returns 404 for 5.18+
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://github.com/cloudflare/terraform-provider-cloudflare/releases/download/v$(TERRAFORM_PROVIDER_VERSION)
-export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-cloudflare_v5.22.0
+export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-cloudflare_v5.23.0
 export TERRAFORM_DOCS_PATH ?= docs/resources
 
 
@@ -202,7 +202,10 @@ $(TERRAFORM_PROVIDER_SCHEMA): $(TOFU)
 	@$(INFO) generating provider schema for $(TERRAFORM_PROVIDER_SOURCE) $(TERRAFORM_PROVIDER_VERSION)
 	@mkdir -p $(TOFU_WORKDIR)
 	@echo '{"terraform":[{"required_providers":[{"provider":{"source":"'"$(TERRAFORM_PROVIDER_SOURCE)"'","version":"'"$(TERRAFORM_PROVIDER_VERSION)"'"}}]}]}' > $(TOFU_WORKDIR)/main.tf.json
-	@$(TOFU) -chdir=$(TOFU_WORKDIR) init > $(TOFU_WORKDIR)/tofu-logs.txt 2>&1
+	# -upgrade: sin esto, un .terraform.lock.hcl de una versión anterior en la caché
+	# local hace fallar el init al bumpear ("locked provider ... does not match
+	# configured version constraint"). CI no lo ve porque arranca en frío.
+	@$(TOFU) -chdir=$(TOFU_WORKDIR) init -upgrade > $(TOFU_WORKDIR)/tofu-logs.txt 2>&1
 	@$(TOFU) -chdir=$(TOFU_WORKDIR) providers schema -json=true > $(TERRAFORM_PROVIDER_SCHEMA) 2>> $(TOFU_WORKDIR)/tofu-logs.txt
 	@$(OK) generating provider schema for $(TERRAFORM_PROVIDER_SOURCE) $(TERRAFORM_PROVIDER_VERSION)
 

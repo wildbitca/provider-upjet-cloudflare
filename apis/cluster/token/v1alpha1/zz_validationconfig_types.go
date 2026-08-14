@@ -35,9 +35,9 @@ type CredentialsParameters struct {
 type KeysInitParameters struct {
 
 	// (String) Algorithm
-	// Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+	// Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
 	// Algorithm
-	// Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+	// Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
 	Alg *string `json:"alg,omitempty" tf:"alg,omitempty"`
 
 	// 256", "P-384".
@@ -49,14 +49,18 @@ type KeysInitParameters struct {
 	// RSA exponent
 	E *string `json:"e,omitempty" tf:"e,omitempty"`
 
+	// (String) Symmetric key material. Required for create and PUT update requests.
+	// Symmetric key material. Required for create and PUT update requests.
+	K *string `json:"k,omitempty" tf:"k,omitempty"`
+
 	// (String) Key ID
 	// Key ID
 	Kid *string `json:"kid,omitempty" tf:"kid,omitempty"`
 
 	// (String) Key Type
-	// Available values: "RSA", "EC".
+	// Available values: "RSA", "EC", "oct".
 	// Key Type
-	// Available values: "RSA", "EC".
+	// Available values: "RSA", "EC", "oct".
 	Kty *string `json:"kty,omitempty" tf:"kty,omitempty"`
 
 	// (String) RSA modulus
@@ -75,9 +79,9 @@ type KeysInitParameters struct {
 type KeysObservation struct {
 
 	// (String) Algorithm
-	// Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+	// Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
 	// Algorithm
-	// Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+	// Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
 	Alg *string `json:"alg,omitempty" tf:"alg,omitempty"`
 
 	// 256", "P-384".
@@ -89,14 +93,18 @@ type KeysObservation struct {
 	// RSA exponent
 	E *string `json:"e,omitempty" tf:"e,omitempty"`
 
+	// (String) Symmetric key material. Required for create and PUT update requests.
+	// Symmetric key material. Required for create and PUT update requests.
+	K *string `json:"k,omitempty" tf:"k,omitempty"`
+
 	// (String) Key ID
 	// Key ID
 	Kid *string `json:"kid,omitempty" tf:"kid,omitempty"`
 
 	// (String) Key Type
-	// Available values: "RSA", "EC".
+	// Available values: "RSA", "EC", "oct".
 	// Key Type
-	// Available values: "RSA", "EC".
+	// Available values: "RSA", "EC", "oct".
 	Kty *string `json:"kty,omitempty" tf:"kty,omitempty"`
 
 	// (String) RSA modulus
@@ -115,9 +123,9 @@ type KeysObservation struct {
 type KeysParameters struct {
 
 	// (String) Algorithm
-	// Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+	// Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
 	// Algorithm
-	// Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+	// Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
 	// +kubebuilder:validation:Optional
 	Alg *string `json:"alg" tf:"alg,omitempty"`
 
@@ -132,15 +140,20 @@ type KeysParameters struct {
 	// +kubebuilder:validation:Optional
 	E *string `json:"e,omitempty" tf:"e,omitempty"`
 
+	// (String) Symmetric key material. Required for create and PUT update requests.
+	// Symmetric key material. Required for create and PUT update requests.
+	// +kubebuilder:validation:Optional
+	K *string `json:"k,omitempty" tf:"k,omitempty"`
+
 	// (String) Key ID
 	// Key ID
 	// +kubebuilder:validation:Optional
 	Kid *string `json:"kid" tf:"kid,omitempty"`
 
 	// (String) Key Type
-	// Available values: "RSA", "EC".
+	// Available values: "RSA", "EC", "oct".
 	// Key Type
-	// Available values: "RSA", "EC".
+	// Available values: "RSA", "EC", "oct".
 	// +kubebuilder:validation:Optional
 	Kty *string `json:"kty" tf:"kty,omitempty"`
 
@@ -162,7 +175,7 @@ type KeysParameters struct {
 
 type ValidationConfigInitParameters struct {
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) Request payload for create and PUT credentials operations. Provided keys define the complete stored key set. Key identities ({alg,kid}) must be unique. (see below for nested schema)
 	Credentials *CredentialsInitParameters `json:"credentials,omitempty" tf:"credentials,omitempty"`
 
 	// (String)
@@ -188,7 +201,7 @@ type ValidationConfigObservation struct {
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) Request payload for create and PUT credentials operations. Provided keys define the complete stored key set. Key identities ({alg,kid}) must be unique. (see below for nested schema)
 	Credentials *CredentialsObservation `json:"credentials,omitempty" tf:"credentials,omitempty"`
 
 	// (String)
@@ -217,7 +230,7 @@ type ValidationConfigObservation struct {
 
 type ValidationConfigParameters struct {
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) Request payload for create and PUT credentials operations. Provided keys define the complete stored key set. Key identities ({alg,kid}) must be unique. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Credentials *CredentialsParameters `json:"credentials,omitempty" tf:"credentials,omitempty"`
 

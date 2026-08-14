@@ -127,6 +127,10 @@ type ConfigObservation struct {
 	// If not specified, defaults to 20 for free tier and 60 for paid tier.
 	// Contact Cloudflare if you need a higher limit.
 	OriginConnectionLimit *float64 `json:"originConnectionLimit,omitempty" tf:"origin_connection_limit,omitempty"`
+
+	// (String) Defines the last time the Hyperdrive connection pool was explicitly restarted via the restart endpoint. Omitted if the pool has never been explicitly restarted.
+	// Defines the last time the Hyperdrive connection pool was explicitly restarted via the restart endpoint. Omitted if the pool has never been explicitly restarted.
+	RestartedOn *string `json:"restartedOn,omitempty" tf:"restarted_on,omitempty"`
 }
 
 type ConfigParameters struct {

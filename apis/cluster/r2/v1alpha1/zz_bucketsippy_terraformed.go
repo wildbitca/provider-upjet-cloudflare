@@ -21,7 +21,7 @@ func (mg *BucketSippy) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this BucketSippy
 func (tr *BucketSippy) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"destination.secret_access_key": "destination.secretAccessKeySecretRef", "source.private_key": "source.privateKeySecretRef", "source.secret_access_key": "source.secretAccessKeySecretRef"}
+	return map[string]string{"destination.secret_access_key": "destination.secretAccessKeySecretRef", "source.account_key": "source.accountKeySecretRef", "source.private_key": "source.privateKeySecretRef", "source.sas_token": "source.sasTokenSecretRef", "source.secret_access_key": "source.secretAccessKeySecretRef"}
 }
 
 // GetObservation of this BucketSippy

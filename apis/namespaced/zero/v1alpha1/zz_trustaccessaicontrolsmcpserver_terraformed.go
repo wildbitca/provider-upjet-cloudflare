@@ -21,7 +21,7 @@ func (mg *TrustAccessAIControlsMcpServer) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this TrustAccessAIControlsMcpServer
 func (tr *TrustAccessAIControlsMcpServer) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"auth_credentials": "authCredentialsSecretRef"}
+	return map[string]string{"auth_credentials": "authCredentialsSecretRef", "client_secret": "clientSecretSecretRef"}
 }
 
 // GetObservation of this TrustAccessAIControlsMcpServer

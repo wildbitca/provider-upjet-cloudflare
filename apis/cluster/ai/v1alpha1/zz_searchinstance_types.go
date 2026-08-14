@@ -274,6 +274,9 @@ type PublicEndpointParamsInitParameters struct {
 	// Custom domain hostnames that alias this public endpoint. GET and create responses return the current set; on update (PUT) this field is only echoed back when supplied in the request body, otherwise it is null (omit it to leave domains unchanged).
 	CustomDomains []*string `json:"customDomains,omitempty" tf:"custom_domains,omitempty"`
 
+	// When false, the instance is reachable only via a registered custom domain and the default <public_endpoint_id>.search.ai.cloudflare.com host returns 404. Requires at least one custom domain. Defaults to true. public_endpoint_params is replaced wholesale on update, so resend default_domain_enabled on every update to keep the default host off — omitting it resets to true.
+	DefaultDomainEnabled *bool `json:"defaultDomainEnabled,omitempty" tf:"default_domain_enabled,omitempty"`
+
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	Mcp *McpInitParameters `json:"mcp,omitempty" tf:"mcp,omitempty"`
@@ -290,6 +293,9 @@ type PublicEndpointParamsObservation struct {
 
 	// Custom domain hostnames that alias this public endpoint. GET and create responses return the current set; on update (PUT) this field is only echoed back when supplied in the request body, otherwise it is null (omit it to leave domains unchanged).
 	CustomDomains []*string `json:"customDomains,omitempty" tf:"custom_domains,omitempty"`
+
+	// When false, the instance is reachable only via a registered custom domain and the default <public_endpoint_id>.search.ai.cloudflare.com host returns 404. Requires at least one custom domain. Defaults to true. public_endpoint_params is replaced wholesale on update, so resend default_domain_enabled on every update to keep the default host off — omitting it resets to true.
+	DefaultDomainEnabled *bool `json:"defaultDomainEnabled,omitempty" tf:"default_domain_enabled,omitempty"`
 
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -311,6 +317,10 @@ type PublicEndpointParamsParameters struct {
 	// Custom domain hostnames that alias this public endpoint. GET and create responses return the current set; on update (PUT) this field is only echoed back when supplied in the request body, otherwise it is null (omit it to leave domains unchanged).
 	// +kubebuilder:validation:Optional
 	CustomDomains []*string `json:"customDomains,omitempty" tf:"custom_domains,omitempty"`
+
+	// When false, the instance is reachable only via a registered custom domain and the default <public_endpoint_id>.search.ai.cloudflare.com host returns 404. Requires at least one custom domain. Defaults to true. public_endpoint_params is replaced wholesale on update, so resend default_domain_enabled on every update to keep the default host off — omitting it resets to true.
+	// +kubebuilder:validation:Optional
+	DefaultDomainEnabled *bool `json:"defaultDomainEnabled,omitempty" tf:"default_domain_enabled,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -359,7 +369,7 @@ type RateLimitParameters struct {
 type RetrievalOptionsInitParameters struct {
 	BoostBy []BoostByInitParameters `json:"boostBy,omitempty" tf:"boost_by,omitempty"`
 
-	// Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. Defaults to 'and'.
+	// Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. When omitted on an update, the existing stored value is preserved; when never set, search falls back to 'and'.
 	// Available values: "and", "or".
 	KeywordMatchMode *string `json:"keywordMatchMode,omitempty" tf:"keyword_match_mode,omitempty"`
 }
@@ -367,7 +377,7 @@ type RetrievalOptionsInitParameters struct {
 type RetrievalOptionsObservation struct {
 	BoostBy []BoostByObservation `json:"boostBy,omitempty" tf:"boost_by,omitempty"`
 
-	// Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. Defaults to 'and'.
+	// Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. When omitted on an update, the existing stored value is preserved; when never set, search falls back to 'and'.
 	// Available values: "and", "or".
 	KeywordMatchMode *string `json:"keywordMatchMode,omitempty" tf:"keyword_match_mode,omitempty"`
 }
@@ -377,7 +387,7 @@ type RetrievalOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	BoostBy []BoostByParameters `json:"boostBy,omitempty" tf:"boost_by,omitempty"`
 
-	// Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. Defaults to 'and'.
+	// Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. When omitted on an update, the existing stored value is preserved; when never set, search falls back to 'and'.
 	// Available values: "and", "or".
 	// +kubebuilder:validation:Optional
 	KeywordMatchMode *string `json:"keywordMatchMode,omitempty" tf:"keyword_match_mode,omitempty"`

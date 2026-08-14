@@ -789,6 +789,11 @@ func (in *PublicEndpointParamsInitParameters) DeepCopyInto(out *PublicEndpointPa
 			}
 		}
 	}
+	if in.DefaultDomainEnabled != nil {
+		in, out := &in.DefaultDomainEnabled, &out.DefaultDomainEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled
 		*out = new(bool)
@@ -851,6 +856,11 @@ func (in *PublicEndpointParamsObservation) DeepCopyInto(out *PublicEndpointParam
 			}
 		}
 	}
+	if in.DefaultDomainEnabled != nil {
+		in, out := &in.DefaultDomainEnabled, &out.DefaultDomainEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled
 		*out = new(bool)
@@ -912,6 +922,11 @@ func (in *PublicEndpointParamsParameters) DeepCopyInto(out *PublicEndpointParams
 				**out = **in
 			}
 		}
+	}
+	if in.DefaultDomainEnabled != nil {
+		in, out := &in.DefaultDomainEnabled, &out.DefaultDomainEnabled
+		*out = new(bool)
+		**out = **in
 	}
 	if in.Enabled != nil {
 		in, out := &in.Enabled, &out.Enabled

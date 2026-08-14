@@ -16,7 +16,7 @@ import (
 
 type StoreSecretInitParameters struct {
 
-	// (String) Account Identifier
+	// (String)
 	// Account Identifier
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/account/v1alpha1.Account
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
@@ -29,7 +29,7 @@ type StoreSecretInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
-	// (String) Freeform text describing the secret
+	// (String) Freeform text describing the secret.
 	// Freeform text describing the secret
 	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
 
@@ -37,11 +37,11 @@ type StoreSecretInitParameters struct {
 	// The name of the secret
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (List of String) The list of services that can use this secret. Valid values are workers, ai_gateway, dex, and access. Must be listed in alphabetical order.
+	// (List of String) The list of services that can use this secret.
 	// The list of services that can use this secret. Valid values are `workers`, `ai_gateway`, `dex`, and `access`. Must be listed in alphabetical order.
 	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
-	// (String) Store Identifier
+	// (String)
 	// Store Identifier
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/secretsstore/v1alpha1.Store
 	StoreID *string `json:"storeId,omitempty" tf:"store_id,omitempty"`
@@ -61,16 +61,16 @@ type StoreSecretInitParameters struct {
 
 type StoreSecretObservation struct {
 
-	// (String) Account Identifier
+	// (String)
 	// Account Identifier
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) Freeform text describing the secret
+	// (String) Freeform text describing the secret.
 	// Freeform text describing the secret
 	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
 
-	// (String) Whenthe secret was created.
-	// Whenthe secret was created.
+	// (String) When the secret was created.
+	// When the secret was created.
 	Created *string `json:"created,omitempty" tf:"created,omitempty"`
 
 	// (String) Secret identifier tag.
@@ -84,7 +84,7 @@ type StoreSecretObservation struct {
 	// The name of the secret
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (List of String) The list of services that can use this secret. Valid values are workers, ai_gateway, dex, and access. Must be listed in alphabetical order.
+	// (List of String) The list of services that can use this secret.
 	// The list of services that can use this secret. Valid values are `workers`, `ai_gateway`, `dex`, and `access`. Must be listed in alphabetical order.
 	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
@@ -92,14 +92,14 @@ type StoreSecretObservation struct {
 	// Available values: "pending", "active", "deleted".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// (String) Store Identifier
+	// (String)
 	// Store Identifier
 	StoreID *string `json:"storeId,omitempty" tf:"store_id,omitempty"`
 }
 
 type StoreSecretParameters struct {
 
-	// (String) Account Identifier
+	// (String)
 	// Account Identifier
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/account/v1alpha1.Account
 	// +kubebuilder:validation:Optional
@@ -113,7 +113,7 @@ type StoreSecretParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
-	// (String) Freeform text describing the secret
+	// (String) Freeform text describing the secret.
 	// Freeform text describing the secret
 	// +kubebuilder:validation:Optional
 	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
@@ -123,12 +123,12 @@ type StoreSecretParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (List of String) The list of services that can use this secret. Valid values are workers, ai_gateway, dex, and access. Must be listed in alphabetical order.
+	// (List of String) The list of services that can use this secret.
 	// The list of services that can use this secret. Valid values are `workers`, `ai_gateway`, `dex`, and `access`. Must be listed in alphabetical order.
 	// +kubebuilder:validation:Optional
 	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
-	// (String) Store Identifier
+	// (String)
 	// Store Identifier
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/secretsstore/v1alpha1.Store
 	// +kubebuilder:validation:Optional

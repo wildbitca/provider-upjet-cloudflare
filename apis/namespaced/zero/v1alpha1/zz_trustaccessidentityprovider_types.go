@@ -14,7 +14,97 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
-type ConfigInitParameters struct {
+type CurrentCertificateInitParameters struct {
+}
+
+type CurrentCertificateObservation struct {
+
+	// (Boolean) Indicates whether this is the currently active certificate
+	// Indicates whether this is the currently active certificate
+	IsCurrent *bool `json:"isCurrent,omitempty" tf:"is_current,omitempty"`
+
+	// (String) Certificate expiration date. Certificates are automatically rotated 30 days before expiration.
+	// Certificate expiration date. Certificates are automatically rotated 30 days before expiration.
+	NotAfter *string `json:"notAfter,omitempty" tf:"not_after,omitempty"`
+
+	// encoded X.509 certificate containing the public key.
+	// Configure this certificate in your external SAML Identity Provider to enable encryption.
+	// PEM-encoded X.509 certificate containing the public key.
+	// Configure this certificate in your external SAML Identity Provider to enable encryption.
+	PublicCertificate *string `json:"publicCertificate,omitempty" tf:"public_certificate,omitempty"`
+
+	// (String) Unique identifier for the certificate set
+	// Unique identifier for the certificate
+	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
+}
+
+type CurrentCertificateParameters struct {
+}
+
+type HeaderAttributesInitParameters struct {
+
+	// (String) attribute name from the IDP
+	// attribute name from the IDP
+	AttributeName *string `json:"attributeName,omitempty" tf:"attribute_name,omitempty"`
+
+	// (String) header that will be added on the request to the origin
+	// header that will be added on the request to the origin
+	HeaderName *string `json:"headerName,omitempty" tf:"header_name,omitempty"`
+}
+
+type HeaderAttributesObservation struct {
+
+	// (String) attribute name from the IDP
+	// attribute name from the IDP
+	AttributeName *string `json:"attributeName,omitempty" tf:"attribute_name,omitempty"`
+
+	// (String) header that will be added on the request to the origin
+	// header that will be added on the request to the origin
+	HeaderName *string `json:"headerName,omitempty" tf:"header_name,omitempty"`
+}
+
+type HeaderAttributesParameters struct {
+
+	// (String) attribute name from the IDP
+	// attribute name from the IDP
+	// +kubebuilder:validation:Optional
+	AttributeName *string `json:"attributeName,omitempty" tf:"attribute_name,omitempty"`
+
+	// (String) header that will be added on the request to the origin
+	// header that will be added on the request to the origin
+	// +kubebuilder:validation:Optional
+	HeaderName *string `json:"headerName,omitempty" tf:"header_name,omitempty"`
+}
+
+type SAMLCertificateSetInitParameters struct {
+}
+
+type SAMLCertificateSetObservation struct {
+
+	// (String) Timestamp when the certificate set was created
+	// Timestamp when the certificate set was created
+	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
+
+	// (Attributes) The currently active certificate used for encrypting SAML assertions (see below for nested schema)
+	CurrentCertificate *CurrentCertificateObservation `json:"currentCertificate,omitempty" tf:"current_certificate,omitempty"`
+
+	// (String) The previous certificate, maintained during rotation to ensure continuity. Null if no rotation has occurred. Mirrors the structure of saml_certificate.
+	// The previous certificate, maintained during rotation to ensure continuity. Null if no rotation has occurred. Mirrors the structure of `saml_certificate`.
+	PreviousCertificate *string `json:"previousCertificate,omitempty" tf:"previous_certificate,omitempty"`
+
+	// (String) Unique identifier for the certificate set
+	// Unique identifier for the certificate set
+	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
+
+	// (String) Timestamp when the certificate set was last updated (e.g., during rotation)
+	// Timestamp when the certificate set was last updated (e.g., during rotation)
+	UpdatedAt *string `json:"updatedAt,omitempty" tf:"updated_at,omitempty"`
+}
+
+type SAMLCertificateSetParameters struct {
+}
+
+type TrustAccessIdentityProviderConfigInitParameters struct {
 
 	// (String) Your companies TLD
 	// Your companies TLD
@@ -143,7 +233,7 @@ type ConfigInitParameters struct {
 	TokenURL *string `json:"tokenUrl,omitempty" tf:"token_url,omitempty"`
 }
 
-type ConfigObservation struct {
+type TrustAccessIdentityProviderConfigObservation struct {
 
 	// (String) Your companies TLD
 	// Your companies TLD
@@ -271,7 +361,7 @@ type ConfigObservation struct {
 	TokenURL *string `json:"tokenUrl,omitempty" tf:"token_url,omitempty"`
 }
 
-type ConfigParameters struct {
+type TrustAccessIdentityProviderConfigParameters struct {
 
 	// (String) Your companies TLD
 	// Your companies TLD
@@ -429,96 +519,6 @@ type ConfigParameters struct {
 	TokenURL *string `json:"tokenUrl,omitempty" tf:"token_url,omitempty"`
 }
 
-type CurrentCertificateInitParameters struct {
-}
-
-type CurrentCertificateObservation struct {
-
-	// (Boolean) Indicates whether this is the currently active certificate
-	// Indicates whether this is the currently active certificate
-	IsCurrent *bool `json:"isCurrent,omitempty" tf:"is_current,omitempty"`
-
-	// (String) Certificate expiration date. Certificates are automatically rotated 30 days before expiration.
-	// Certificate expiration date. Certificates are automatically rotated 30 days before expiration.
-	NotAfter *string `json:"notAfter,omitempty" tf:"not_after,omitempty"`
-
-	// encoded X.509 certificate containing the public key.
-	// Configure this certificate in your external SAML Identity Provider to enable encryption.
-	// PEM-encoded X.509 certificate containing the public key.
-	// Configure this certificate in your external SAML Identity Provider to enable encryption.
-	PublicCertificate *string `json:"publicCertificate,omitempty" tf:"public_certificate,omitempty"`
-
-	// (String) Unique identifier for the certificate set
-	// Unique identifier for the certificate
-	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
-}
-
-type CurrentCertificateParameters struct {
-}
-
-type HeaderAttributesInitParameters struct {
-
-	// (String) attribute name from the IDP
-	// attribute name from the IDP
-	AttributeName *string `json:"attributeName,omitempty" tf:"attribute_name,omitempty"`
-
-	// (String) header that will be added on the request to the origin
-	// header that will be added on the request to the origin
-	HeaderName *string `json:"headerName,omitempty" tf:"header_name,omitempty"`
-}
-
-type HeaderAttributesObservation struct {
-
-	// (String) attribute name from the IDP
-	// attribute name from the IDP
-	AttributeName *string `json:"attributeName,omitempty" tf:"attribute_name,omitempty"`
-
-	// (String) header that will be added on the request to the origin
-	// header that will be added on the request to the origin
-	HeaderName *string `json:"headerName,omitempty" tf:"header_name,omitempty"`
-}
-
-type HeaderAttributesParameters struct {
-
-	// (String) attribute name from the IDP
-	// attribute name from the IDP
-	// +kubebuilder:validation:Optional
-	AttributeName *string `json:"attributeName,omitempty" tf:"attribute_name,omitempty"`
-
-	// (String) header that will be added on the request to the origin
-	// header that will be added on the request to the origin
-	// +kubebuilder:validation:Optional
-	HeaderName *string `json:"headerName,omitempty" tf:"header_name,omitempty"`
-}
-
-type SAMLCertificateSetInitParameters struct {
-}
-
-type SAMLCertificateSetObservation struct {
-
-	// (String) Timestamp when the certificate set was created
-	// Timestamp when the certificate set was created
-	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
-
-	// (Attributes) The currently active certificate used for encrypting SAML assertions (see below for nested schema)
-	CurrentCertificate *CurrentCertificateObservation `json:"currentCertificate,omitempty" tf:"current_certificate,omitempty"`
-
-	// (String) The previous certificate, maintained during rotation to ensure continuity. Null if no rotation has occurred. Mirrors the structure of saml_certificate.
-	// The previous certificate, maintained during rotation to ensure continuity. Null if no rotation has occurred. Mirrors the structure of `saml_certificate`.
-	PreviousCertificate *string `json:"previousCertificate,omitempty" tf:"previous_certificate,omitempty"`
-
-	// (String) Unique identifier for the certificate set
-	// Unique identifier for the certificate set
-	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
-
-	// (String) Timestamp when the certificate set was last updated (e.g., during rotation)
-	// Timestamp when the certificate set was last updated (e.g., during rotation)
-	UpdatedAt *string `json:"updatedAt,omitempty" tf:"updated_at,omitempty"`
-}
-
-type SAMLCertificateSetParameters struct {
-}
-
 type TrustAccessIdentityProviderInitParameters struct {
 
 	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
@@ -535,7 +535,7 @@ type TrustAccessIdentityProviderInitParameters struct {
 	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (Attributes) The configuration parameters for the identity provider. To view the required parameters for a specific provider, refer to our developer documentation. (see below for nested schema)
-	Config *ConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
+	Config *TrustAccessIdentityProviderConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
 
 	// (String) The name of the identity provider, shown to users on the login page.
 	// The name of the identity provider, shown to users on the login page.
@@ -573,7 +573,7 @@ type TrustAccessIdentityProviderObservation struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (Attributes) The configuration parameters for the identity provider. To view the required parameters for a specific provider, refer to our developer documentation. (see below for nested schema)
-	Config *ConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
+	Config *TrustAccessIdentityProviderConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
 
 	// (String) UUID.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -629,7 +629,7 @@ type TrustAccessIdentityProviderParameters struct {
 
 	// (Attributes) The configuration parameters for the identity provider. To view the required parameters for a specific provider, refer to our developer documentation. (see below for nested schema)
 	// +kubebuilder:validation:Optional
-	Config *ConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
+	Config *TrustAccessIdentityProviderConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
 
 	// (String) The name of the identity provider, shown to users on the login page.
 	// The name of the identity provider, shown to users on the login page.

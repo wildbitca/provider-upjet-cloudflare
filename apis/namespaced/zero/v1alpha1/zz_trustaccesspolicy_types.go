@@ -2150,6 +2150,10 @@ type TrustAccessPolicyObservation struct {
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// (Number) Number of access applications currently using this policy.
+	// Number of access applications currently using this policy.
+	AppCount *float64 `json:"appCount,omitempty" tf:"app_count,omitempty"`
+
 	// (Attributes Set) Administrators who can approve a temporary authentication request. (see below for nested schema)
 	ApprovalGroups []ApprovalGroupsObservation `json:"approvalGroups,omitempty" tf:"approval_groups,omitempty"`
 
@@ -2159,6 +2163,9 @@ type TrustAccessPolicyObservation struct {
 
 	// (Attributes) The rules that define how users may connect to targets secured by your application. (see below for nested schema)
 	ConnectionRules *TrustAccessPolicyConnectionRulesObservation `json:"connectionRules,omitempty" tf:"connection_rules,omitempty"`
+
+	// (String)
+	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
 	// (String) The action Access will take if a user matches this policy. Infrastructure application policies can only use the Allow action.
 	// Available values: "allow", "deny", "non_identity", "bypass".
@@ -2197,9 +2204,15 @@ type TrustAccessPolicyObservation struct {
 	// (Attributes Set) Rules evaluated with an AND logical operator. To match the policy, a user must meet all of the Require rules. (see below for nested schema)
 	Require []TrustAccessPolicyRequireObservation `json:"require,omitempty" tf:"require,omitempty"`
 
+	// (Boolean)
+	Reusable *bool `json:"reusable,omitempty" tf:"reusable,omitempty"`
+
 	// (String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
 	// The amount of time that tokens issued for the application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h.
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+
+	// (String)
+	UpdatedAt *string `json:"updatedAt,omitempty" tf:"updated_at,omitempty"`
 }
 
 type TrustAccessPolicyParameters struct {

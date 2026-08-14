@@ -63,7 +63,7 @@ type InputInitParameters struct {
 	// For more details on eid last seen, refer to the Tanium documentation.
 	EidLastSeen *string `json:"eidLastSeen,omitempty" tf:"eid_last_seen,omitempty"`
 
-	// (Boolean) Enabled.
+	// only value. It is false for deprecated Kolide posture rules that still use the issue_count input, and true otherwise.
 	// Enabled.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -257,7 +257,7 @@ type InputObservation struct {
 	// For more details on eid last seen, refer to the Tanium documentation.
 	EidLastSeen *string `json:"eidLastSeen,omitempty" tf:"eid_last_seen,omitempty"`
 
-	// (Boolean) Enabled.
+	// only value. It is false for deprecated Kolide posture rules that still use the issue_count input, and true otherwise.
 	// Enabled.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
@@ -462,7 +462,7 @@ type InputParameters struct {
 	// +kubebuilder:validation:Optional
 	EidLastSeen *string `json:"eidLastSeen,omitempty" tf:"eid_last_seen,omitempty"`
 
-	// (Boolean) Enabled.
+	// only value. It is false for deprecated Kolide posture rules that still use the issue_count input, and true otherwise.
 	// Enabled.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -737,6 +737,10 @@ type TrustDevicePostureRuleObservation struct {
 	// (String) The description of the device posture rule.
 	// The description of the device posture rule.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// only value. It is false for deprecated Kolide posture rules that still use the issue_count input, and true otherwise.
+	// Whether the rule is enabled. This is a computed, read-only value. It is false for deprecated Kolide posture rules that still use the issue_count input, and true otherwise.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	// (String) Sets the expiration time for a posture check result. If empty, the result remains valid until it is overwritten by new data from the WARP client.
 	// Sets the expiration time for a posture check result. If empty, the result remains valid until it is overwritten by new data from the WARP client.

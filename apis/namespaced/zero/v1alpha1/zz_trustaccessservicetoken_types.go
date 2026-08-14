@@ -24,8 +24,8 @@ type TrustAccessServiceTokenInitParameters struct {
 	// A version number identifying the current `client_secret` associated with the service token. Incrementing it triggers a rotation; the previous secret will still be accepted until the time indicated by `previous_client_secret_expires_at`.
 	ClientSecretVersion *float64 `json:"clientSecretVersion,omitempty" tf:"client_secret_version,omitempty"`
 
-	// (String) The duration for how long the service token will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
-	// The duration for how long the service token will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
+	// expiring tokens. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
+	// The duration for how long the service token will be valid. Must be in the format `300ms` or `2h45m`, or the special value `forever` for non-expiring tokens. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
 	Duration *string `json:"duration,omitempty" tf:"duration,omitempty"`
 
 	// (String) The name of the service token.
@@ -55,8 +55,8 @@ type TrustAccessServiceTokenObservation struct {
 	// A version number identifying the current `client_secret` associated with the service token. Incrementing it triggers a rotation; the previous secret will still be accepted until the time indicated by `previous_client_secret_expires_at`.
 	ClientSecretVersion *float64 `json:"clientSecretVersion,omitempty" tf:"client_secret_version,omitempty"`
 
-	// (String) The duration for how long the service token will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
-	// The duration for how long the service token will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
+	// expiring tokens. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
+	// The duration for how long the service token will be valid. Must be in the format `300ms` or `2h45m`, or the special value `forever` for non-expiring tokens. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
 	Duration *string `json:"duration,omitempty" tf:"duration,omitempty"`
 
 	// (String)
@@ -90,8 +90,8 @@ type TrustAccessServiceTokenParameters struct {
 	// +kubebuilder:validation:Optional
 	ClientSecretVersion *float64 `json:"clientSecretVersion,omitempty" tf:"client_secret_version,omitempty"`
 
-	// (String) The duration for how long the service token will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
-	// The duration for how long the service token will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
+	// expiring tokens. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
+	// The duration for how long the service token will be valid. Must be in the format `300ms` or `2h45m`, or the special value `forever` for non-expiring tokens. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
 	// +kubebuilder:validation:Optional
 	Duration *string `json:"duration,omitempty" tf:"duration,omitempty"`
 

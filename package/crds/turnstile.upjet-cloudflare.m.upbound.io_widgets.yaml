@@ -297,6 +297,18 @@ spec:
                       (String) When the widget was created.
                       When the widget was created.
                     type: string
+                  deployedVia:
+                    description: |-
+                      derived from the create request; not
+                      client-settable. Omitted from the response for widgets created
+                      before this field existed.
+                      Available values: "wrangler", "dashboard", "spin", "api", "unknown".
+                      Origin that created this widget, recorded at creation time and
+                      immutable afterward. Server-derived from the create request; not
+                      client-settable. Omitted from the response for widgets created
+                      before this field existed.
+                      Available values: "wrangler", "dashboard", "spin", "api", "unknown".
+                    type: string
                   domains:
                     description: (List of String)
                     items:
@@ -309,6 +321,16 @@ spec:
                     type: boolean
                   id:
                     description: (String) Widget item identifier tag.
+                    type: string
+                  lastModifiedVia:
+                    description: |-
+                      derived; not client-settable. Omitted for
+                      widgets last mutated before this field existed.
+                      Available values: "wrangler", "dashboard", "spin", "api", "unknown".
+                      Origin of the most recent mutation (create, update, delete, or
+                      secret rotation). Server-derived; not client-settable. Omitted for
+                      widgets last mutated before this field existed.
+                      Available values: "wrangler", "dashboard", "spin", "api", "unknown".
                     type: string
                   mode:
                     description: |-

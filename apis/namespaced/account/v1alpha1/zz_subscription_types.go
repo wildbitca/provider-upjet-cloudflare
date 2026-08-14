@@ -71,8 +71,8 @@ type RatePlanParameters struct {
 
 type SubscriptionInitParameters struct {
 
-	// (String) Identifier
-	// Identifier
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/account/v1alpha1.Account
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
@@ -96,8 +96,8 @@ type SubscriptionInitParameters struct {
 
 type SubscriptionObservation struct {
 
-	// (String) Identifier
-	// Identifier
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) The monetary unit in which pricing information is displayed.
@@ -137,8 +137,8 @@ type SubscriptionObservation struct {
 
 type SubscriptionParameters struct {
 
-	// (String) Identifier
-	// Identifier
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/account/v1alpha1.Account
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`

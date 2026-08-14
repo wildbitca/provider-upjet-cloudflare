@@ -14,6 +14,10 @@ spec:
       name: example-secret
       namespace: upbound-system
     authType: unauthenticated
+    clientSecretSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
     description: This is one remote mcp server
     hostname: https://example.com/mcp
     isSharedOauthCallbackEnabled: true

@@ -89,6 +89,17 @@ type WidgetObservation struct {
 	// When the widget was created.
 	CreatedOn *string `json:"createdOn,omitempty" tf:"created_on,omitempty"`
 
+	// derived from the create request; not
+	// client-settable. Omitted from the response for widgets created
+	// before this field existed.
+	// Available values: "wrangler", "dashboard", "spin", "api", "unknown".
+	// Origin that created this widget, recorded at creation time and
+	// immutable afterward. Server-derived from the create request; not
+	// client-settable. Omitted from the response for widgets created
+	// before this field existed.
+	// Available values: "wrangler", "dashboard", "spin", "api", "unknown".
+	DeployedVia *string `json:"deployedVia,omitempty" tf:"deployed_via,omitempty"`
+
 	// (List of String)
 	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
 
@@ -98,6 +109,15 @@ type WidgetObservation struct {
 
 	// (String) Widget item identifier tag.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// derived; not client-settable. Omitted for
+	// widgets last mutated before this field existed.
+	// Available values: "wrangler", "dashboard", "spin", "api", "unknown".
+	// Origin of the most recent mutation (create, update, delete, or
+	// secret rotation). Server-derived; not client-settable. Omitted for
+	// widgets last mutated before this field existed.
+	// Available values: "wrangler", "dashboard", "spin", "api", "unknown".
+	LastModifiedVia *string `json:"lastModifiedVia,omitempty" tf:"last_modified_via,omitempty"`
 
 	// interactive", "invisible", "managed".
 	// Widget Mode

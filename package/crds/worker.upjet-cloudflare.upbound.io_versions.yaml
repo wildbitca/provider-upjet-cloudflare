@@ -512,6 +512,92 @@ spec:
                           type: string
                       type: object
                     type: array
+                  exports:
+                    additionalProperties:
+                      properties:
+                        cache:
+                          description: |-
+                            (Attributes) Cache override for this entrypoint. It applies only to
+                            type: worker entries and overrides the Worker's global
+                            cache_options.enabled for that entrypoint. (see below for nested schema)
+                          properties:
+                            enabled:
+                              description: |-
+                                (Boolean) Whether caching is enabled for this Worker.
+                                Whether caching is enabled for this entrypoint.
+                              type: boolean
+                          type: object
+                        renamedTo:
+                          description: |-
+                            only: never present in GET responses.
+                            Destination class name for a `state: renamed` tombstone. The
+                            target must appear as a live (`created`) entry in the same
+                            `exports` map. Write-only: never present in GET responses.
+                          type: string
+                        state:
+                          description: |-
+                            (String) Lifecycle state of the export entry. Defaults to created
+                            (a normal, live export) when omitted.
+                            Lifecycle state of the export entry. Defaults to `created`
+                            (a normal, live export) when omitted.
+
+                            `deleted`, `renamed`, and `transferred` are tombstones:
+                            write-only lifecycle operations that retire, rename, or hand
+                            off a provisioned Durable Object namespace. They are applied
+                            at upload and are filtered out of GET responses, so a read
+                            only ever returns `created` or `expecting-transfer`.
+
+                            `expecting-transfer` is a live export whose data is being
+                            received from another script via the two-phase transfer flow;
+                            it carries `storage` and `transfer_from`.
+                            Available values: "created", "deleted", "renamed", "transferred", "expecting-transfer".
+                          type: string
+                        storage:
+                          description: |-
+                            object export. Required
+                            for live Durable Object entries (created and
+                            expecting-transfer). sqlite selects SQLite-backed storage;
+                            legacy-kv selects the legacy key-value storage.
+                            Available values: "sqlite", "legacy-kv".
+                            Storage backend for a `type: durable-object` export. Required
+                            for live Durable Object entries (`created` and
+                            `expecting-transfer`). `sqlite` selects SQLite-backed storage;
+                            `legacy-kv` selects the legacy key-value storage.
+                            Available values: "sqlite", "legacy-kv".
+                          type: string
+                        transferFrom:
+                          description: |-
+                            transfer entry. The
+                            namespace on this script is materialised from the source
+                            script's data via the pending-transfer flow. Present on reads
+                            for expecting-transfer entries.
+                            Source script for a `state: expecting-transfer` entry. The
+                            namespace on this script is materialised from the source
+                            script's data via the pending-transfer flow. Present on reads
+                            for `expecting-transfer` entries.
+                          type: string
+                        transferredTo:
+                          description: |-
+                            dispatch-namespace
+                            transfers are rejected. Write-only: never present in GET
+                            responses.
+                            Destination script for a `state: transferred` tombstone. Must
+                            reference a script in the same account; cross-dispatch-namespace
+                            transfers are rejected. Write-only: never present in GET
+                            responses.
+                          type: string
+                        type:
+                          description: |-
+                            (String) The kind of resource that the binding provides.
+                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            The kind of export.
+                            Available values: "worker", "durable-object".
+                          type: string
+                      type: object
+                    description: |-
+                      transfer) are returned. exports and migrations
+                      are mutually exclusive on upload. (see below for nested schema)
+                    type: object
                   limits:
                     description: (Attributes) Resource limits enforced at runtime.
                       (see below for nested schema)
@@ -1226,6 +1312,92 @@ spec:
                           type: string
                       type: object
                     type: array
+                  exports:
+                    additionalProperties:
+                      properties:
+                        cache:
+                          description: |-
+                            (Attributes) Cache override for this entrypoint. It applies only to
+                            type: worker entries and overrides the Worker's global
+                            cache_options.enabled for that entrypoint. (see below for nested schema)
+                          properties:
+                            enabled:
+                              description: |-
+                                (Boolean) Whether caching is enabled for this Worker.
+                                Whether caching is enabled for this entrypoint.
+                              type: boolean
+                          type: object
+                        renamedTo:
+                          description: |-
+                            only: never present in GET responses.
+                            Destination class name for a `state: renamed` tombstone. The
+                            target must appear as a live (`created`) entry in the same
+                            `exports` map. Write-only: never present in GET responses.
+                          type: string
+                        state:
+                          description: |-
+                            (String) Lifecycle state of the export entry. Defaults to created
+                            (a normal, live export) when omitted.
+                            Lifecycle state of the export entry. Defaults to `created`
+                            (a normal, live export) when omitted.
+
+                            `deleted`, `renamed`, and `transferred` are tombstones:
+                            write-only lifecycle operations that retire, rename, or hand
+                            off a provisioned Durable Object namespace. They are applied
+                            at upload and are filtered out of GET responses, so a read
+                            only ever returns `created` or `expecting-transfer`.
+
+                            `expecting-transfer` is a live export whose data is being
+                            received from another script via the two-phase transfer flow;
+                            it carries `storage` and `transfer_from`.
+                            Available values: "created", "deleted", "renamed", "transferred", "expecting-transfer".
+                          type: string
+                        storage:
+                          description: |-
+                            object export. Required
+                            for live Durable Object entries (created and
+                            expecting-transfer). sqlite selects SQLite-backed storage;
+                            legacy-kv selects the legacy key-value storage.
+                            Available values: "sqlite", "legacy-kv".
+                            Storage backend for a `type: durable-object` export. Required
+                            for live Durable Object entries (`created` and
+                            `expecting-transfer`). `sqlite` selects SQLite-backed storage;
+                            `legacy-kv` selects the legacy key-value storage.
+                            Available values: "sqlite", "legacy-kv".
+                          type: string
+                        transferFrom:
+                          description: |-
+                            transfer entry. The
+                            namespace on this script is materialised from the source
+                            script's data via the pending-transfer flow. Present on reads
+                            for expecting-transfer entries.
+                            Source script for a `state: expecting-transfer` entry. The
+                            namespace on this script is materialised from the source
+                            script's data via the pending-transfer flow. Present on reads
+                            for `expecting-transfer` entries.
+                          type: string
+                        transferredTo:
+                          description: |-
+                            dispatch-namespace
+                            transfers are rejected. Write-only: never present in GET
+                            responses.
+                            Destination script for a `state: transferred` tombstone. Must
+                            reference a script in the same account; cross-dispatch-namespace
+                            transfers are rejected. Write-only: never present in GET
+                            responses.
+                          type: string
+                        type:
+                          description: |-
+                            (String) The kind of resource that the binding provides.
+                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            The kind of export.
+                            Available values: "worker", "durable-object".
+                          type: string
+                      type: object
+                    description: |-
+                      transfer) are returned. exports and migrations
+                      are mutually exclusive on upload. (see below for nested schema)
+                    type: object
                   limits:
                     description: (Attributes) Resource limits enforced at runtime.
                       (see below for nested schema)
@@ -1966,6 +2138,92 @@ spec:
                       (String) When the version was created.
                       When the version was created.
                     type: string
+                  exports:
+                    additionalProperties:
+                      properties:
+                        cache:
+                          description: |-
+                            (Attributes) Cache override for this entrypoint. It applies only to
+                            type: worker entries and overrides the Worker's global
+                            cache_options.enabled for that entrypoint. (see below for nested schema)
+                          properties:
+                            enabled:
+                              description: |-
+                                (Boolean) Whether caching is enabled for this Worker.
+                                Whether caching is enabled for this entrypoint.
+                              type: boolean
+                          type: object
+                        renamedTo:
+                          description: |-
+                            only: never present in GET responses.
+                            Destination class name for a `state: renamed` tombstone. The
+                            target must appear as a live (`created`) entry in the same
+                            `exports` map. Write-only: never present in GET responses.
+                          type: string
+                        state:
+                          description: |-
+                            (String) Lifecycle state of the export entry. Defaults to created
+                            (a normal, live export) when omitted.
+                            Lifecycle state of the export entry. Defaults to `created`
+                            (a normal, live export) when omitted.
+
+                            `deleted`, `renamed`, and `transferred` are tombstones:
+                            write-only lifecycle operations that retire, rename, or hand
+                            off a provisioned Durable Object namespace. They are applied
+                            at upload and are filtered out of GET responses, so a read
+                            only ever returns `created` or `expecting-transfer`.
+
+                            `expecting-transfer` is a live export whose data is being
+                            received from another script via the two-phase transfer flow;
+                            it carries `storage` and `transfer_from`.
+                            Available values: "created", "deleted", "renamed", "transferred", "expecting-transfer".
+                          type: string
+                        storage:
+                          description: |-
+                            object export. Required
+                            for live Durable Object entries (created and
+                            expecting-transfer). sqlite selects SQLite-backed storage;
+                            legacy-kv selects the legacy key-value storage.
+                            Available values: "sqlite", "legacy-kv".
+                            Storage backend for a `type: durable-object` export. Required
+                            for live Durable Object entries (`created` and
+                            `expecting-transfer`). `sqlite` selects SQLite-backed storage;
+                            `legacy-kv` selects the legacy key-value storage.
+                            Available values: "sqlite", "legacy-kv".
+                          type: string
+                        transferFrom:
+                          description: |-
+                            transfer entry. The
+                            namespace on this script is materialised from the source
+                            script's data via the pending-transfer flow. Present on reads
+                            for expecting-transfer entries.
+                            Source script for a `state: expecting-transfer` entry. The
+                            namespace on this script is materialised from the source
+                            script's data via the pending-transfer flow. Present on reads
+                            for `expecting-transfer` entries.
+                          type: string
+                        transferredTo:
+                          description: |-
+                            dispatch-namespace
+                            transfers are rejected. Write-only: never present in GET
+                            responses.
+                            Destination script for a `state: transferred` tombstone. Must
+                            reference a script in the same account; cross-dispatch-namespace
+                            transfers are rejected. Write-only: never present in GET
+                            responses.
+                          type: string
+                        type:
+                          description: |-
+                            (String) The kind of resource that the binding provides.
+                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            The kind of export.
+                            Available values: "worker", "durable-object".
+                          type: string
+                      type: object
+                    description: |-
+                      transfer) are returned. exports and migrations
+                      are mutually exclusive on upload. (see below for nested schema)
+                    type: object
                   id:
                     description: (String) Version identifier.
                     type: string

@@ -27,8 +27,10 @@ spec:
       rdp:
         allowedClipboardLocalToRemoteFormats:
         - text
+        - file
         allowedClipboardRemoteToLocalFormats:
         - text
+        - file
     decision: allow
     exclude:
     - certificate: {}

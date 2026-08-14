@@ -147,9 +147,9 @@ spec:
                   jurisdiction:
                     description: |-
                       (String) Jurisdiction where objects in this bucket are guaranteed to be stored.
-                      Available values: "default", "eu", "fedramp".
+                      Available values: "default", "eu", "fedramp", "us".
                       Jurisdiction where objects in this bucket are guaranteed to be stored.
-                      Available values: "default", "eu", "fedramp".
+                      Available values: "default", "eu", "fedramp", "us".
                     type: string
                   location:
                     description: |-
@@ -271,9 +271,9 @@ spec:
                   jurisdiction:
                     description: |-
                       (String) Jurisdiction where objects in this bucket are guaranteed to be stored.
-                      Available values: "default", "eu", "fedramp".
+                      Available values: "default", "eu", "fedramp", "us".
                       Jurisdiction where objects in this bucket are guaranteed to be stored.
-                      Available values: "default", "eu", "fedramp".
+                      Available values: "default", "eu", "fedramp", "us".
                     type: string
                   location:
                     description: |-
@@ -378,9 +378,9 @@ spec:
                   jurisdiction:
                     description: |-
                       (String) Jurisdiction where objects in this bucket are guaranteed to be stored.
-                      Available values: "default", "eu", "fedramp".
+                      Available values: "default", "eu", "fedramp", "us".
                       Jurisdiction where objects in this bucket are guaranteed to be stored.
-                      Available values: "default", "eu", "fedramp".
+                      Available values: "default", "eu", "fedramp", "us".
                     type: string
                   location:
                     description: |-

@@ -252,6 +252,11 @@ func (in *KeysInitParameters) DeepCopyInto(out *KeysInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.K != nil {
+		in, out := &in.K, &out.K
+		*out = new(string)
+		**out = **in
+	}
 	if in.Kid != nil {
 		in, out := &in.Kid, &out.Kid
 		*out = new(string)
@@ -307,6 +312,11 @@ func (in *KeysObservation) DeepCopyInto(out *KeysObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.K != nil {
+		in, out := &in.K, &out.K
+		*out = new(string)
+		**out = **in
+	}
 	if in.Kid != nil {
 		in, out := &in.Kid, &out.Kid
 		*out = new(string)
@@ -359,6 +369,11 @@ func (in *KeysParameters) DeepCopyInto(out *KeysParameters) {
 	}
 	if in.E != nil {
 		in, out := &in.E, &out.E
+		*out = new(string)
+		**out = **in
+	}
+	if in.K != nil {
+		in, out := &in.K, &out.K
 		*out = new(string)
 		**out = **in
 	}

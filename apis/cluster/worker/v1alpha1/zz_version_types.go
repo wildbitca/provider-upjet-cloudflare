@@ -653,6 +653,20 @@ type BindingsParameters struct {
 	WorkflowName *string `json:"workflowName,omitempty" tf:"workflow_name,omitempty"`
 }
 
+type CacheInitParameters struct {
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether caching is enabled for this entrypoint.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CacheObservation struct {
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether caching is enabled for this entrypoint.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type CacheOptionsInitParameters struct {
 
 	// (Boolean) Whether cached responses are shared across Worker version
@@ -704,6 +718,14 @@ type CacheOptionsParameters struct {
 	// Whether caching is enabled for this Worker.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CacheParameters struct {
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether caching is enabled for this entrypoint.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
 }
 
 type ConfigInitParameters struct {
@@ -780,6 +802,217 @@ type ContainersParameters struct {
 	// Select which Durable Object class should get this container attached.
 	// +kubebuilder:validation:Optional
 	ClassName *string `json:"className" tf:"class_name,omitempty"`
+}
+
+type ExportsInitParameters struct {
+
+	// (Attributes) Cache override for this entrypoint. It applies only to
+	// type: worker entries and overrides the Worker's global
+	// cache_options.enabled for that entrypoint. (see below for nested schema)
+	Cache *CacheInitParameters `json:"cache,omitempty" tf:"cache,omitempty"`
+
+	// only: never present in GET responses.
+	// Destination class name for a `state: renamed` tombstone. The
+	// target must appear as a live (`created`) entry in the same
+	// `exports` map. Write-only: never present in GET responses.
+	RenamedTo *string `json:"renamedTo,omitempty" tf:"renamed_to,omitempty"`
+
+	// (String) Lifecycle state of the export entry. Defaults to created
+	// (a normal, live export) when omitted.
+	// Lifecycle state of the export entry. Defaults to `created`
+	// (a normal, live export) when omitted.
+	//
+	// `deleted`, `renamed`, and `transferred` are tombstones:
+	// write-only lifecycle operations that retire, rename, or hand
+	// off a provisioned Durable Object namespace. They are applied
+	// at upload and are filtered out of GET responses, so a read
+	// only ever returns `created` or `expecting-transfer`.
+	//
+	// `expecting-transfer` is a live export whose data is being
+	// received from another script via the two-phase transfer flow;
+	// it carries `storage` and `transfer_from`.
+	// Available values: "created", "deleted", "renamed", "transferred", "expecting-transfer".
+	State *string `json:"state,omitempty" tf:"state,omitempty"`
+
+	// object export. Required
+	// for live Durable Object entries (created and
+	// expecting-transfer). sqlite selects SQLite-backed storage;
+	// legacy-kv selects the legacy key-value storage.
+	// Available values: "sqlite", "legacy-kv".
+	// Storage backend for a `type: durable-object` export. Required
+	// for live Durable Object entries (`created` and
+	// `expecting-transfer`). `sqlite` selects SQLite-backed storage;
+	// `legacy-kv` selects the legacy key-value storage.
+	// Available values: "sqlite", "legacy-kv".
+	Storage *string `json:"storage,omitempty" tf:"storage,omitempty"`
+
+	// transfer entry. The
+	// namespace on this script is materialised from the source
+	// script's data via the pending-transfer flow. Present on reads
+	// for expecting-transfer entries.
+	// Source script for a `state: expecting-transfer` entry. The
+	// namespace on this script is materialised from the source
+	// script's data via the pending-transfer flow. Present on reads
+	// for `expecting-transfer` entries.
+	TransferFrom *string `json:"transferFrom,omitempty" tf:"transfer_from,omitempty"`
+
+	// dispatch-namespace
+	// transfers are rejected. Write-only: never present in GET
+	// responses.
+	// Destination script for a `state: transferred` tombstone. Must
+	// reference a script in the same account; cross-dispatch-namespace
+	// transfers are rejected. Write-only: never present in GET
+	// responses.
+	TransferredTo *string `json:"transferredTo,omitempty" tf:"transferred_to,omitempty"`
+
+	// (String) The kind of resource that the binding provides.
+	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// The kind of export.
+	// Available values: "worker", "durable-object".
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ExportsObservation struct {
+
+	// (Attributes) Cache override for this entrypoint. It applies only to
+	// type: worker entries and overrides the Worker's global
+	// cache_options.enabled for that entrypoint. (see below for nested schema)
+	Cache *CacheObservation `json:"cache,omitempty" tf:"cache,omitempty"`
+
+	// only: never present in GET responses.
+	// Destination class name for a `state: renamed` tombstone. The
+	// target must appear as a live (`created`) entry in the same
+	// `exports` map. Write-only: never present in GET responses.
+	RenamedTo *string `json:"renamedTo,omitempty" tf:"renamed_to,omitempty"`
+
+	// (String) Lifecycle state of the export entry. Defaults to created
+	// (a normal, live export) when omitted.
+	// Lifecycle state of the export entry. Defaults to `created`
+	// (a normal, live export) when omitted.
+	//
+	// `deleted`, `renamed`, and `transferred` are tombstones:
+	// write-only lifecycle operations that retire, rename, or hand
+	// off a provisioned Durable Object namespace. They are applied
+	// at upload and are filtered out of GET responses, so a read
+	// only ever returns `created` or `expecting-transfer`.
+	//
+	// `expecting-transfer` is a live export whose data is being
+	// received from another script via the two-phase transfer flow;
+	// it carries `storage` and `transfer_from`.
+	// Available values: "created", "deleted", "renamed", "transferred", "expecting-transfer".
+	State *string `json:"state,omitempty" tf:"state,omitempty"`
+
+	// object export. Required
+	// for live Durable Object entries (created and
+	// expecting-transfer). sqlite selects SQLite-backed storage;
+	// legacy-kv selects the legacy key-value storage.
+	// Available values: "sqlite", "legacy-kv".
+	// Storage backend for a `type: durable-object` export. Required
+	// for live Durable Object entries (`created` and
+	// `expecting-transfer`). `sqlite` selects SQLite-backed storage;
+	// `legacy-kv` selects the legacy key-value storage.
+	// Available values: "sqlite", "legacy-kv".
+	Storage *string `json:"storage,omitempty" tf:"storage,omitempty"`
+
+	// transfer entry. The
+	// namespace on this script is materialised from the source
+	// script's data via the pending-transfer flow. Present on reads
+	// for expecting-transfer entries.
+	// Source script for a `state: expecting-transfer` entry. The
+	// namespace on this script is materialised from the source
+	// script's data via the pending-transfer flow. Present on reads
+	// for `expecting-transfer` entries.
+	TransferFrom *string `json:"transferFrom,omitempty" tf:"transfer_from,omitempty"`
+
+	// dispatch-namespace
+	// transfers are rejected. Write-only: never present in GET
+	// responses.
+	// Destination script for a `state: transferred` tombstone. Must
+	// reference a script in the same account; cross-dispatch-namespace
+	// transfers are rejected. Write-only: never present in GET
+	// responses.
+	TransferredTo *string `json:"transferredTo,omitempty" tf:"transferred_to,omitempty"`
+
+	// (String) The kind of resource that the binding provides.
+	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// The kind of export.
+	// Available values: "worker", "durable-object".
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ExportsParameters struct {
+
+	// (Attributes) Cache override for this entrypoint. It applies only to
+	// type: worker entries and overrides the Worker's global
+	// cache_options.enabled for that entrypoint. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Cache *CacheParameters `json:"cache,omitempty" tf:"cache,omitempty"`
+
+	// only: never present in GET responses.
+	// Destination class name for a `state: renamed` tombstone. The
+	// target must appear as a live (`created`) entry in the same
+	// `exports` map. Write-only: never present in GET responses.
+	// +kubebuilder:validation:Optional
+	RenamedTo *string `json:"renamedTo,omitempty" tf:"renamed_to,omitempty"`
+
+	// (String) Lifecycle state of the export entry. Defaults to created
+	// (a normal, live export) when omitted.
+	// Lifecycle state of the export entry. Defaults to `created`
+	// (a normal, live export) when omitted.
+	//
+	// `deleted`, `renamed`, and `transferred` are tombstones:
+	// write-only lifecycle operations that retire, rename, or hand
+	// off a provisioned Durable Object namespace. They are applied
+	// at upload and are filtered out of GET responses, so a read
+	// only ever returns `created` or `expecting-transfer`.
+	//
+	// `expecting-transfer` is a live export whose data is being
+	// received from another script via the two-phase transfer flow;
+	// it carries `storage` and `transfer_from`.
+	// Available values: "created", "deleted", "renamed", "transferred", "expecting-transfer".
+	// +kubebuilder:validation:Optional
+	State *string `json:"state,omitempty" tf:"state,omitempty"`
+
+	// object export. Required
+	// for live Durable Object entries (created and
+	// expecting-transfer). sqlite selects SQLite-backed storage;
+	// legacy-kv selects the legacy key-value storage.
+	// Available values: "sqlite", "legacy-kv".
+	// Storage backend for a `type: durable-object` export. Required
+	// for live Durable Object entries (`created` and
+	// `expecting-transfer`). `sqlite` selects SQLite-backed storage;
+	// `legacy-kv` selects the legacy key-value storage.
+	// Available values: "sqlite", "legacy-kv".
+	// +kubebuilder:validation:Optional
+	Storage *string `json:"storage,omitempty" tf:"storage,omitempty"`
+
+	// transfer entry. The
+	// namespace on this script is materialised from the source
+	// script's data via the pending-transfer flow. Present on reads
+	// for expecting-transfer entries.
+	// Source script for a `state: expecting-transfer` entry. The
+	// namespace on this script is materialised from the source
+	// script's data via the pending-transfer flow. Present on reads
+	// for `expecting-transfer` entries.
+	// +kubebuilder:validation:Optional
+	TransferFrom *string `json:"transferFrom,omitempty" tf:"transfer_from,omitempty"`
+
+	// dispatch-namespace
+	// transfers are rejected. Write-only: never present in GET
+	// responses.
+	// Destination script for a `state: transferred` tombstone. Must
+	// reference a script in the same account; cross-dispatch-namespace
+	// transfers are rejected. Write-only: never present in GET
+	// responses.
+	// +kubebuilder:validation:Optional
+	TransferredTo *string `json:"transferredTo,omitempty" tf:"transferred_to,omitempty"`
+
+	// (String) The kind of resource that the binding provides.
+	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// The kind of export.
+	// Available values: "worker", "durable-object".
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type LimitsInitParameters struct {
@@ -1495,6 +1728,10 @@ type VersionInitParameters struct {
 	// (Attributes Set) List of containers attached to a Worker. Containers can only be attached to Durable Object classes of this Worker script. (see below for nested schema)
 	Containers []ContainersInitParameters `json:"containers,omitempty" tf:"containers,omitempty"`
 
+	// transfer) are returned. exports and migrations
+	// are mutually exclusive on upload. (see below for nested schema)
+	Exports map[string]ExportsInitParameters `json:"exports,omitempty" tf:"exports,omitempty"`
+
 	// (Attributes) Resource limits enforced at runtime. (see below for nested schema)
 	Limits *LimitsInitParameters `json:"limits,omitempty" tf:"limits,omitempty"`
 
@@ -1562,6 +1799,10 @@ type VersionObservation struct {
 	// (String) When the version was created.
 	// When the version was created.
 	CreatedOn *string `json:"createdOn,omitempty" tf:"created_on,omitempty"`
+
+	// transfer) are returned. exports and migrations
+	// are mutually exclusive on upload. (see below for nested schema)
+	Exports map[string]ExportsObservation `json:"exports,omitempty" tf:"exports,omitempty"`
 
 	// (String) Version identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -1661,6 +1902,11 @@ type VersionParameters struct {
 	// (Attributes Set) List of containers attached to a Worker. Containers can only be attached to Durable Object classes of this Worker script. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Containers []ContainersParameters `json:"containers,omitempty" tf:"containers,omitempty"`
+
+	// transfer) are returned. exports and migrations
+	// are mutually exclusive on upload. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Exports map[string]ExportsParameters `json:"exports,omitempty" tf:"exports,omitempty"`
 
 	// (Attributes) Resource limits enforced at runtime. (see below for nested schema)
 	// +kubebuilder:validation:Optional

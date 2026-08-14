@@ -61,8 +61,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifier
-                      Identifier
+                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
                     type: string
                   accountIdRef:
                     description: Reference to a Account in account to populate accountId.
@@ -182,8 +182,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifier
-                      Identifier
+                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
                     type: string
                   accountIdRef:
                     description: Reference to a Account in account to populate accountId.
@@ -353,8 +353,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifier
-                      Identifier
+                      (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+                      The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
                     type: string
                   currency:
                     description: |-

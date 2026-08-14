@@ -160,6 +160,11 @@ func (in *WidgetObservation) DeepCopyInto(out *WidgetObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DeployedVia != nil {
+		in, out := &in.DeployedVia, &out.DeployedVia
+		*out = new(string)
+		**out = **in
+	}
 	if in.Domains != nil {
 		in, out := &in.Domains, &out.Domains
 		*out = make([]*string, len(*in))
@@ -178,6 +183,11 @@ func (in *WidgetObservation) DeepCopyInto(out *WidgetObservation) {
 	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.LastModifiedVia != nil {
+		in, out := &in.LastModifiedVia, &out.LastModifiedVia
 		*out = new(string)
 		**out = **in
 	}

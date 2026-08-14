@@ -14,6 +14,55 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type AuthConfigSummaryInitParameters struct {
+}
+
+type AuthConfigSummaryObservation struct {
+
+	// (String) Available values: "dcr", "manual".
+	// Available values: "dcr", "manual".
+	AuthMode *string `json:"authMode,omitempty" tf:"auth_mode,omitempty"`
+
+	// (Number)
+	ClientSecretVersion *float64 `json:"clientSecretVersion,omitempty" tf:"client_secret_version,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	Config *ConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
+
+	// (Boolean)
+	HasClientSecret *bool `json:"hasClientSecret,omitempty" tf:"has_client_secret,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	RegistrationInfo *RegistrationInfoObservation `json:"registrationInfo,omitempty" tf:"registration_info,omitempty"`
+}
+
+type AuthConfigSummaryParameters struct {
+}
+
+type ConfigInitParameters struct {
+}
+
+type ConfigObservation struct {
+
+	// (String)
+	AuthorizationEndpoint *string `json:"authorizationEndpoint,omitempty" tf:"authorization_endpoint,omitempty"`
+
+	// (String)
+	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
+
+	// (String)
+	Resource *string `json:"resource,omitempty" tf:"resource,omitempty"`
+
+	// (String)
+	RevocationEndpoint *string `json:"revocationEndpoint,omitempty" tf:"revocation_endpoint,omitempty"`
+
+	// (String)
+	TokenEndpoint *string `json:"tokenEndpoint,omitempty" tf:"token_endpoint,omitempty"`
+}
+
+type ConfigParameters struct {
+}
+
 type ErrorDetailsInitParameters struct {
 }
 
@@ -43,6 +92,27 @@ type ErrorDetailsObservation struct {
 type ErrorDetailsParameters struct {
 }
 
+type RegistrationInfoInitParameters struct {
+}
+
+type RegistrationInfoObservation struct {
+
+	// (String)
+	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
+
+	// (List of String)
+	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
+
+	// (String)
+	Scope *string `json:"scope,omitempty" tf:"scope,omitempty"`
+
+	// (String)
+	TokenEndpointAuthMethod *string `json:"tokenEndpointAuthMethod,omitempty" tf:"token_endpoint_auth_method,omitempty"`
+}
+
+type RegistrationInfoParameters struct {
+}
+
 type TrustAccessAIControlsMcpServerInitParameters struct {
 
 	// (String)
@@ -55,14 +125,18 @@ type TrustAccessAIControlsMcpServerInitParameters struct {
 	// Available values: "oauth", "bearer", "unauthenticated".
 	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
 
+	// registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
+	// Pre-registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
+	ClientSecretSecretRef *v1.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+
 	// (String)
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (String)
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
-	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
 	IsSharedOauthCallbackEnabled *bool `json:"isSharedOauthCallbackEnabled,omitempty" tf:"is_shared_oauth_callback_enabled,omitempty"`
 
 	// (String)
@@ -83,6 +157,9 @@ type TrustAccessAIControlsMcpServerObservation struct {
 
 	// (String)
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (Attributes) Safe subset of auth_credentials surfaced to the dashboard. Includes auth_mode (dcr|manual), has_client_secret, client_secret_version, and the OAuth endpoints + client_id for manual servers. Never includes the secret value. (see below for nested schema)
+	AuthConfigSummary *AuthConfigSummaryObservation `json:"authConfigSummary,omitempty" tf:"auth_config_summary,omitempty"`
 
 	// (String) Available values: "oauth", "bearer", "unauthenticated".
 	// Available values: "oauth", "bearer", "unauthenticated".
@@ -109,8 +186,8 @@ type TrustAccessAIControlsMcpServerObservation struct {
 	// (String) server id
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
-	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
 	IsSharedOauthCallbackEnabled *bool `json:"isSharedOauthCallbackEnabled,omitempty" tf:"is_shared_oauth_callback_enabled,omitempty"`
 
 	// (String)
@@ -163,6 +240,11 @@ type TrustAccessAIControlsMcpServerParameters struct {
 	// +kubebuilder:validation:Optional
 	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
 
+	// registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
+	// Pre-registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
+	// +kubebuilder:validation:Optional
+	ClientSecretSecretRef *v1.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+
 	// (String)
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -171,8 +253,8 @@ type TrustAccessAIControlsMcpServerParameters struct {
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
-	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
 	// +kubebuilder:validation:Optional
 	IsSharedOauthCallbackEnabled *bool `json:"isSharedOauthCallbackEnabled,omitempty" tf:"is_shared_oauth_callback_enabled,omitempty"`
 

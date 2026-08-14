@@ -70,6 +70,67 @@ type FallbackDomainsObservation struct {
 type FallbackDomainsParameters struct {
 }
 
+type GlobalAccelerationInitParameters struct {
+
+	// (List of String) IP:port entries for the API endpoints.
+	// IP:port entries for the API endpoints.
+	APIEndpoints []*string `json:"apiEndpoints,omitempty" tf:"api_endpoints,omitempty"`
+
+	// (Boolean) Whether the policy will be applied to matching devices.
+	// Global acceleration settings are used only when "enabled".
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (List of String) IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+	// IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+	MasqueEndpoints []*string `json:"masqueEndpoints,omitempty" tf:"masque_endpoints,omitempty"`
+
+	// (List of String) IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+	// IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+	WireguardEndpoints []*string `json:"wireguardEndpoints,omitempty" tf:"wireguard_endpoints,omitempty"`
+}
+
+type GlobalAccelerationObservation struct {
+
+	// (List of String) IP:port entries for the API endpoints.
+	// IP:port entries for the API endpoints.
+	APIEndpoints []*string `json:"apiEndpoints,omitempty" tf:"api_endpoints,omitempty"`
+
+	// (Boolean) Whether the policy will be applied to matching devices.
+	// Global acceleration settings are used only when "enabled".
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (List of String) IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+	// IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+	MasqueEndpoints []*string `json:"masqueEndpoints,omitempty" tf:"masque_endpoints,omitempty"`
+
+	// (List of String) IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+	// IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+	WireguardEndpoints []*string `json:"wireguardEndpoints,omitempty" tf:"wireguard_endpoints,omitempty"`
+}
+
+type GlobalAccelerationParameters struct {
+
+	// (List of String) IP:port entries for the API endpoints.
+	// IP:port entries for the API endpoints.
+	// +kubebuilder:validation:Optional
+	APIEndpoints []*string `json:"apiEndpoints" tf:"api_endpoints,omitempty"`
+
+	// (Boolean) Whether the policy will be applied to matching devices.
+	// Global acceleration settings are used only when "enabled".
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
+
+	// (List of String) IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+	// IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+	// +kubebuilder:validation:Optional
+	MasqueEndpoints []*string `json:"masqueEndpoints" tf:"masque_endpoints,omitempty"`
+
+	// (List of String) IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+	// IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+	// +kubebuilder:validation:Optional
+	WireguardEndpoints []*string `json:"wireguardEndpoints" tf:"wireguard_endpoints,omitempty"`
+}
+
 type ServiceModeV2InitParameters struct {
 
 	// (String) The mode to run the WARP client under.
@@ -265,6 +326,9 @@ type TrustDeviceCustomProfileInitParameters struct {
 	// Whether to add Microsoft IPs to Split Tunnel exclusions.
 	ExcludeOfficeIps *bool `json:"excludeOfficeIps,omitempty" tf:"exclude_office_ips,omitempty"`
 
+	// network/concepts/global-acceleration/. (see below for nested schema)
+	GlobalAcceleration *GlobalAccelerationInitParameters `json:"globalAcceleration,omitempty" tf:"global_acceleration,omitempty"`
+
 	// (Attributes List) List of routes included in the WARP client's tunnel. Both 'exclude' and 'include' cannot be set in the same request. (see below for nested schema)
 	Include []TrustDeviceCustomProfileIncludeInitParameters `json:"include,omitempty" tf:"include,omitempty"`
 
@@ -371,6 +435,9 @@ type TrustDeviceCustomProfileObservation struct {
 
 	// (String)
 	GatewayUniqueID *string `json:"gatewayUniqueId,omitempty" tf:"gateway_unique_id,omitempty"`
+
+	// network/concepts/global-acceleration/. (see below for nested schema)
+	GlobalAcceleration *GlobalAccelerationObservation `json:"globalAcceleration,omitempty" tf:"global_acceleration,omitempty"`
 
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -489,6 +556,10 @@ type TrustDeviceCustomProfileParameters struct {
 	// Whether to add Microsoft IPs to Split Tunnel exclusions.
 	// +kubebuilder:validation:Optional
 	ExcludeOfficeIps *bool `json:"excludeOfficeIps,omitempty" tf:"exclude_office_ips,omitempty"`
+
+	// network/concepts/global-acceleration/. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	GlobalAcceleration *GlobalAccelerationParameters `json:"globalAcceleration,omitempty" tf:"global_acceleration,omitempty"`
 
 	// (Attributes List) List of routes included in the WARP client's tunnel. Both 'exclude' and 'include' cannot be set in the same request. (see below for nested schema)
 	// +kubebuilder:validation:Optional

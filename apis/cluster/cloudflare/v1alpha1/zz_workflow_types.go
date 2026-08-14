@@ -10,8 +10,44 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v1common "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 )
+
+type DefaultRetentionInitParameters struct {
+
+	// (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
+	// Specifies the duration in milliseconds or as a string like '5 minutes'.
+	ErrorRetention *v1.JSON `json:"errorRetention,omitempty" tf:"error_retention,omitempty"`
+
+	// (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
+	// Specifies the duration in milliseconds or as a string like '5 minutes'.
+	SuccessRetention *v1.JSON `json:"successRetention,omitempty" tf:"success_retention,omitempty"`
+}
+
+type DefaultRetentionObservation struct {
+
+	// (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
+	// Specifies the duration in milliseconds or as a string like '5 minutes'.
+	ErrorRetention *v1.JSON `json:"errorRetention,omitempty" tf:"error_retention,omitempty"`
+
+	// (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
+	// Specifies the duration in milliseconds or as a string like '5 minutes'.
+	SuccessRetention *v1.JSON `json:"successRetention,omitempty" tf:"success_retention,omitempty"`
+}
+
+type DefaultRetentionParameters struct {
+
+	// (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
+	// Specifies the duration in milliseconds or as a string like '5 minutes'.
+	// +kubebuilder:validation:Optional
+	ErrorRetention *v1.JSON `json:"errorRetention,omitempty" tf:"error_retention,omitempty"`
+
+	// (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
+	// Specifies the duration in milliseconds or as a string like '5 minutes'.
+	// +kubebuilder:validation:Optional
+	SuccessRetention *v1.JSON `json:"successRetention,omitempty" tf:"success_retention,omitempty"`
+}
 
 type InstancesInitParameters struct {
 }
@@ -95,6 +131,9 @@ type WorkflowInitParameters struct {
 	// (String)
 	ClassName *string `json:"className,omitempty" tf:"class_name,omitempty"`
 
+	// (Attributes) Default retention applied to instances of this version when they do not set their own retention. (see below for nested schema)
+	DefaultRetention *DefaultRetentionInitParameters `json:"defaultRetention,omitempty" tf:"default_retention,omitempty"`
+
 	// (Attributes) (see below for nested schema)
 	Limits *LimitsInitParameters `json:"limits,omitempty" tf:"limits,omitempty"`
 
@@ -118,6 +157,9 @@ type WorkflowObservation struct {
 
 	// (String)
 	CreatedOn *string `json:"createdOn,omitempty" tf:"created_on,omitempty"`
+
+	// (Attributes) Default retention applied to instances of this version when they do not set their own retention. (see below for nested schema)
+	DefaultRetention *DefaultRetentionObservation `json:"defaultRetention,omitempty" tf:"default_retention,omitempty"`
 
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -166,6 +208,10 @@ type WorkflowParameters struct {
 	// +kubebuilder:validation:Optional
 	ClassName *string `json:"className,omitempty" tf:"class_name,omitempty"`
 
+	// (Attributes) Default retention applied to instances of this version when they do not set their own retention. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	DefaultRetention *DefaultRetentionParameters `json:"defaultRetention,omitempty" tf:"default_retention,omitempty"`
+
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Limits *LimitsParameters `json:"limits,omitempty" tf:"limits,omitempty"`
@@ -185,8 +231,8 @@ type WorkflowParameters struct {
 
 // WorkflowSpec defines the desired state of Workflow
 type WorkflowSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     WorkflowParameters `json:"forProvider"`
+	v1common.ResourceSpec `json:",inline"`
+	ForProvider           WorkflowParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -202,8 +248,8 @@ type WorkflowSpec struct {
 
 // WorkflowStatus defines the observed state of Workflow.
 type WorkflowStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        WorkflowObservation `json:"atProvider,omitempty"`
+	v1common.ResourceStatus `json:",inline"`
+	AtProvider              WorkflowObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

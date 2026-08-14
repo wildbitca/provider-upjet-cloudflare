@@ -2976,6 +2976,16 @@ func (in *SourceInitParameters) DeepCopyInto(out *SourceInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.AccountKeySecretRef != nil {
+		in, out := &in.AccountKeySecretRef, &out.AccountKeySecretRef
+		*out = new(v1.LocalSecretKeySelector)
+		**out = **in
+	}
+	if in.AccountName != nil {
+		in, out := &in.AccountName, &out.AccountName
+		*out = new(string)
+		**out = **in
+	}
 	if in.Bucket != nil {
 		in, out := &in.Bucket, &out.Bucket
 		*out = new(string)
@@ -2996,6 +3006,11 @@ func (in *SourceInitParameters) DeepCopyInto(out *SourceInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Container != nil {
+		in, out := &in.Container, &out.Container
+		*out = new(string)
+		**out = **in
+	}
 	if in.PrivateKeySecretRef != nil {
 		in, out := &in.PrivateKeySecretRef, &out.PrivateKeySecretRef
 		*out = new(v1.LocalSecretKeySelector)
@@ -3004,6 +3019,11 @@ func (in *SourceInitParameters) DeepCopyInto(out *SourceInitParameters) {
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
+		**out = **in
+	}
+	if in.SasTokenSecretRef != nil {
+		in, out := &in.SasTokenSecretRef, &out.SasTokenSecretRef
+		*out = new(v1.LocalSecretKeySelector)
 		**out = **in
 	}
 	if in.SecretAccessKeySecretRef != nil {
@@ -3031,6 +3051,11 @@ func (in *SourceObservation) DeepCopyInto(out *SourceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.AccountName != nil {
+		in, out := &in.AccountName, &out.AccountName
+		*out = new(string)
+		**out = **in
+	}
 	if in.Bucket != nil {
 		in, out := &in.Bucket, &out.Bucket
 		*out = new(string)
@@ -3048,6 +3073,11 @@ func (in *SourceObservation) DeepCopyInto(out *SourceObservation) {
 	}
 	if in.CloudProvider != nil {
 		in, out := &in.CloudProvider, &out.CloudProvider
+		*out = new(string)
+		**out = **in
+	}
+	if in.Container != nil {
+		in, out := &in.Container, &out.Container
 		*out = new(string)
 		**out = **in
 	}
@@ -3076,6 +3106,16 @@ func (in *SourceParameters) DeepCopyInto(out *SourceParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.AccountKeySecretRef != nil {
+		in, out := &in.AccountKeySecretRef, &out.AccountKeySecretRef
+		*out = new(v1.LocalSecretKeySelector)
+		**out = **in
+	}
+	if in.AccountName != nil {
+		in, out := &in.AccountName, &out.AccountName
+		*out = new(string)
+		**out = **in
+	}
 	if in.Bucket != nil {
 		in, out := &in.Bucket, &out.Bucket
 		*out = new(string)
@@ -3096,6 +3136,11 @@ func (in *SourceParameters) DeepCopyInto(out *SourceParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Container != nil {
+		in, out := &in.Container, &out.Container
+		*out = new(string)
+		**out = **in
+	}
 	if in.PrivateKeySecretRef != nil {
 		in, out := &in.PrivateKeySecretRef, &out.PrivateKeySecretRef
 		*out = new(v1.LocalSecretKeySelector)
@@ -3104,6 +3149,11 @@ func (in *SourceParameters) DeepCopyInto(out *SourceParameters) {
 	if in.Region != nil {
 		in, out := &in.Region, &out.Region
 		*out = new(string)
+		**out = **in
+	}
+	if in.SasTokenSecretRef != nil {
+		in, out := &in.SasTokenSecretRef, &out.SasTokenSecretRef
+		*out = new(v1.LocalSecretKeySelector)
 		**out = **in
 	}
 	if in.SecretAccessKeySecretRef != nil {

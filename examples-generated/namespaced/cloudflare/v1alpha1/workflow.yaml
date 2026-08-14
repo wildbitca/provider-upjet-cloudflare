@@ -11,6 +11,9 @@ spec:
   forProvider:
     accountId: account_id
     className: x
+    defaultRetention:
+      errorRetention: 5 minutes
+      successRetention: 5 minutes
     limits:
       steps: 1
     schedules:

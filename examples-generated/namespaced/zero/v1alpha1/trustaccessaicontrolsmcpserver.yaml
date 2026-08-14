@@ -14,6 +14,9 @@ spec:
       key: example-key
       name: example-secret
     authType: unauthenticated
+    clientSecretSecretRef:
+      key: example-key
+      name: example-secret
     description: This is one remote mcp server
     hostname: https://example.com/mcp
     isSharedOauthCallbackEnabled: true

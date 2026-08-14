@@ -139,6 +139,37 @@ spec:
                       (Boolean) Whether to add Microsoft IPs to Split Tunnel exclusions.
                       Whether to add Microsoft IPs to Split Tunnel exclusions.
                     type: boolean
+                  globalAcceleration:
+                    description: network/concepts/global-acceleration/. (see below
+                      for nested schema)
+                    properties:
+                      apiEndpoints:
+                        description: |-
+                          (List of String) IP:port entries for the API endpoints.
+                          IP:port entries for the API endpoints.
+                        items:
+                          type: string
+                        type: array
+                      enabled:
+                        description: |-
+                          (Boolean) Whether the policy will be applied to matching devices.
+                          Global acceleration settings are used only when "enabled".
+                        type: boolean
+                      masqueEndpoints:
+                        description: |-
+                          (List of String) IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+                          IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+                        items:
+                          type: string
+                        type: array
+                      wireguardEndpoints:
+                        description: |-
+                          (List of String) IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+                          IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+                        items:
+                          type: string
+                        type: array
+                    type: object
                   include:
                     description: (Attributes List) List of routes included in the
                       WARP client's tunnel. Both 'exclude' and 'include' cannot be
@@ -321,6 +352,37 @@ spec:
                       (Boolean) Whether to add Microsoft IPs to Split Tunnel exclusions.
                       Whether to add Microsoft IPs to Split Tunnel exclusions.
                     type: boolean
+                  globalAcceleration:
+                    description: network/concepts/global-acceleration/. (see below
+                      for nested schema)
+                    properties:
+                      apiEndpoints:
+                        description: |-
+                          (List of String) IP:port entries for the API endpoints.
+                          IP:port entries for the API endpoints.
+                        items:
+                          type: string
+                        type: array
+                      enabled:
+                        description: |-
+                          (Boolean) Whether the policy will be applied to matching devices.
+                          Global acceleration settings are used only when "enabled".
+                        type: boolean
+                      masqueEndpoints:
+                        description: |-
+                          (List of String) IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+                          IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+                        items:
+                          type: string
+                        type: array
+                      wireguardEndpoints:
+                        description: |-
+                          (List of String) IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+                          IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+                        items:
+                          type: string
+                        type: array
+                    type: object
                   include:
                     description: (Attributes List) List of routes included in the
                       WARP client's tunnel. Both 'exclude' and 'include' cannot be
@@ -595,6 +657,37 @@ spec:
                   gatewayUniqueId:
                     description: (String)
                     type: string
+                  globalAcceleration:
+                    description: network/concepts/global-acceleration/. (see below
+                      for nested schema)
+                    properties:
+                      apiEndpoints:
+                        description: |-
+                          (List of String) IP:port entries for the API endpoints.
+                          IP:port entries for the API endpoints.
+                        items:
+                          type: string
+                        type: array
+                      enabled:
+                        description: |-
+                          (Boolean) Whether the policy will be applied to matching devices.
+                          Global acceleration settings are used only when "enabled".
+                        type: boolean
+                      masqueEndpoints:
+                        description: |-
+                          (List of String) IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+                          IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+                        items:
+                          type: string
+                        type: array
+                      wireguardEndpoints:
+                        description: |-
+                          (List of String) IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+                          IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
+                        items:
+                          type: string
+                        type: array
+                    type: object
                   id:
                     description: (String) The ID of this resource.
                     type: string

@@ -61,7 +61,10 @@ spec:
               forProvider:
                 properties:
                   credentials:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) Request payload for create and PUT credentials
+                      operations. Provided keys define the complete stored key set.
+                      Key identities ({alg,kid}) must be unique. (see below for nested
+                      schema)
                     properties:
                       keys:
                         description: (Attributes List) (see below for nested schema)
@@ -70,9 +73,9 @@ spec:
                             alg:
                               description: |-
                                 (String) Algorithm
-                                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+                                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
                                 Algorithm
-                                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+                                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
                               type: string
                             crv:
                               description: |-
@@ -85,6 +88,11 @@ spec:
                                 (String) RSA exponent
                                 RSA exponent
                               type: string
+                            k:
+                              description: |-
+                                (String) Symmetric key material. Required for create and PUT update requests.
+                                Symmetric key material. Required for create and PUT update requests.
+                              type: string
                             kid:
                               description: |-
                                 (String) Key ID
@@ -93,9 +101,9 @@ spec:
                             kty:
                               description: |-
                                 (String) Key Type
-                                Available values: "RSA", "EC".
+                                Available values: "RSA", "EC", "oct".
                                 Key Type
-                                Available values: "RSA", "EC".
+                                Available values: "RSA", "EC", "oct".
                               type: string
                             "n":
                               description: |-
@@ -151,7 +159,10 @@ spec:
                   autoscaler.
                 properties:
                   credentials:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) Request payload for create and PUT credentials
+                      operations. Provided keys define the complete stored key set.
+                      Key identities ({alg,kid}) must be unique. (see below for nested
+                      schema)
                     properties:
                       keys:
                         description: (Attributes List) (see below for nested schema)
@@ -160,9 +171,9 @@ spec:
                             alg:
                               description: |-
                                 (String) Algorithm
-                                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+                                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
                                 Algorithm
-                                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+                                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
                               type: string
                             crv:
                               description: |-
@@ -175,6 +186,11 @@ spec:
                                 (String) RSA exponent
                                 RSA exponent
                               type: string
+                            k:
+                              description: |-
+                                (String) Symmetric key material. Required for create and PUT update requests.
+                                Symmetric key material. Required for create and PUT update requests.
+                              type: string
                             kid:
                               description: |-
                                 (String) Key ID
@@ -183,9 +199,9 @@ spec:
                             kty:
                               description: |-
                                 (String) Key Type
-                                Available values: "RSA", "EC".
+                                Available values: "RSA", "EC", "oct".
                                 Key Type
-                                Available values: "RSA", "EC".
+                                Available values: "RSA", "EC", "oct".
                               type: string
                             "n":
                               description: |-
@@ -319,7 +335,10 @@ spec:
                     description: (String)
                     type: string
                   credentials:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) Request payload for create and PUT credentials
+                      operations. Provided keys define the complete stored key set.
+                      Key identities ({alg,kid}) must be unique. (see below for nested
+                      schema)
                     properties:
                       keys:
                         description: (Attributes List) (see below for nested schema)
@@ -328,9 +347,9 @@ spec:
                             alg:
                               description: |-
                                 (String) Algorithm
-                                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+                                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
                                 Algorithm
-                                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+                                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
                               type: string
                             crv:
                               description: |-
@@ -343,6 +362,11 @@ spec:
                                 (String) RSA exponent
                                 RSA exponent
                               type: string
+                            k:
+                              description: |-
+                                (String) Symmetric key material. Required for create and PUT update requests.
+                                Symmetric key material. Required for create and PUT update requests.
+                              type: string
                             kid:
                               description: |-
                                 (String) Key ID
@@ -351,9 +375,9 @@ spec:
                             kty:
                               description: |-
                                 (String) Key Type
-                                Available values: "RSA", "EC".
+                                Available values: "RSA", "EC", "oct".
                                 Key Type
-                                Available values: "RSA", "EC".
+                                Available values: "RSA", "EC", "oct".
                               type: string
                             "n":
                               description: |-

@@ -10,6 +10,8 @@ spec:
   forProvider:
     customMetadata:
       foo: string
+    customOriginServer: origin2.example.com
+    customOriginSni: sni.example.com
     hostname: app.example.com
     ssl:
       bundleMethod: ubiquitous

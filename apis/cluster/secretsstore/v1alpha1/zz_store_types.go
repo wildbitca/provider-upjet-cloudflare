@@ -15,8 +15,7 @@ import (
 
 type StoreInitParameters struct {
 
-	// (String) Account Identifier
-	// Account Identifier
+	// (String)
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/account/v1alpha1.Account
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
@@ -28,37 +27,35 @@ type StoreInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
-	// (String) The name of the store
-	// The name of the store
+	// (String) The name of the store.
+	// The name of the store.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type StoreObservation struct {
 
-	// (String) Account Identifier
-	// Account Identifier
+	// (String)
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) Whenthe secret was created.
-	// Whenthe secret was created.
+	// (String) When the secret was created.
+	// When the secret was created.
 	Created *string `json:"created,omitempty" tf:"created,omitempty"`
 
-	// (String) Store Identifier
+	// (String) Store Identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String) When the secret was modified.
 	// When the secret was modified.
 	Modified *string `json:"modified,omitempty" tf:"modified,omitempty"`
 
-	// (String) The name of the store
-	// The name of the store
+	// (String) The name of the store.
+	// The name of the store.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type StoreParameters struct {
 
-	// (String) Account Identifier
-	// Account Identifier
+	// (String)
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/account/v1alpha1.Account
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
@@ -71,8 +68,8 @@ type StoreParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
-	// (String) The name of the store
-	// The name of the store
+	// (String) The name of the store.
+	// The name of the store.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }

@@ -161,6 +161,14 @@ type SourceInitParameters struct {
 	// Access Key ID of an IAM credential (ideally scoped to a single S3 bucket).
 	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
 
+	// (String, Sensitive) Access key for the Azure Storage account. Mutually exclusive with sas_token.
+	// Access key for the Azure Storage account. Mutually exclusive with sasToken.
+	AccountKeySecretRef *v1.SecretKeySelector `json:"accountKeySecretRef,omitempty" tf:"-"`
+
+	// (String) Name of the Azure Storage account.
+	// Name of the Azure Storage account.
+	AccountName *string `json:"accountName,omitempty" tf:"account_name,omitempty"`
+
 	// (String) Name of the AWS S3 bucket.
 	// Name of the AWS S3 bucket.
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
@@ -174,8 +182,12 @@ type SourceInitParameters struct {
 	ClientEmail *string `json:"clientEmail,omitempty" tf:"client_email,omitempty"`
 
 	// (String) Available values: "r2".
-	// Available values: "aws", "gcs", "s3".
+	// Available values: "aws", "gcs", "s3", "azure".
 	CloudProvider *string `json:"cloudProvider,omitempty" tf:"cloud_provider,omitempty"`
+
+	// (String) Name of the Azure Blob Storage container.
+	// Name of the Azure Blob Storage container.
+	Container *string `json:"container,omitempty" tf:"container,omitempty"`
 
 	// (String, Sensitive) Private Key of an IAM credential (ideally scoped to a single GCS bucket).
 	// Private Key of an IAM credential (ideally scoped to a single GCS bucket).
@@ -184,6 +196,10 @@ type SourceInitParameters struct {
 	// (String) Name of the AWS availability zone.
 	// Name of the AWS availability zone.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// (String, Sensitive) Shared Access Signature token for the Azure Storage account. Mutually exclusive with account_key.
+	// Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
+	SasTokenSecretRef *v1.SecretKeySelector `json:"sasTokenSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) Value of a Cloudflare API token.
 	// This is the value labelled "Secret Access Key" when creating an API.
@@ -200,6 +216,10 @@ type SourceObservation struct {
 	// Access Key ID of an IAM credential (ideally scoped to a single S3 bucket).
 	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
 
+	// (String) Name of the Azure Storage account.
+	// Name of the Azure Storage account.
+	AccountName *string `json:"accountName,omitempty" tf:"account_name,omitempty"`
+
 	// (String) Name of the AWS S3 bucket.
 	// Name of the AWS S3 bucket.
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
@@ -213,8 +233,12 @@ type SourceObservation struct {
 	ClientEmail *string `json:"clientEmail,omitempty" tf:"client_email,omitempty"`
 
 	// (String) Available values: "r2".
-	// Available values: "aws", "gcs", "s3".
+	// Available values: "aws", "gcs", "s3", "azure".
 	CloudProvider *string `json:"cloudProvider,omitempty" tf:"cloud_provider,omitempty"`
+
+	// (String) Name of the Azure Blob Storage container.
+	// Name of the Azure Blob Storage container.
+	Container *string `json:"container,omitempty" tf:"container,omitempty"`
 
 	// (String) Name of the AWS availability zone.
 	// Name of the AWS availability zone.
@@ -230,6 +254,16 @@ type SourceParameters struct {
 	// +kubebuilder:validation:Optional
 	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
 
+	// (String, Sensitive) Access key for the Azure Storage account. Mutually exclusive with sas_token.
+	// Access key for the Azure Storage account. Mutually exclusive with sasToken.
+	// +kubebuilder:validation:Optional
+	AccountKeySecretRef *v1.SecretKeySelector `json:"accountKeySecretRef,omitempty" tf:"-"`
+
+	// (String) Name of the Azure Storage account.
+	// Name of the Azure Storage account.
+	// +kubebuilder:validation:Optional
+	AccountName *string `json:"accountName,omitempty" tf:"account_name,omitempty"`
+
 	// (String) Name of the AWS S3 bucket.
 	// Name of the AWS S3 bucket.
 	// +kubebuilder:validation:Optional
@@ -246,9 +280,14 @@ type SourceParameters struct {
 	ClientEmail *string `json:"clientEmail,omitempty" tf:"client_email,omitempty"`
 
 	// (String) Available values: "r2".
-	// Available values: "aws", "gcs", "s3".
+	// Available values: "aws", "gcs", "s3", "azure".
 	// +kubebuilder:validation:Optional
 	CloudProvider *string `json:"cloudProvider,omitempty" tf:"cloud_provider,omitempty"`
+
+	// (String) Name of the Azure Blob Storage container.
+	// Name of the Azure Blob Storage container.
+	// +kubebuilder:validation:Optional
+	Container *string `json:"container,omitempty" tf:"container,omitempty"`
 
 	// (String, Sensitive) Private Key of an IAM credential (ideally scoped to a single GCS bucket).
 	// Private Key of an IAM credential (ideally scoped to a single GCS bucket).
@@ -259,6 +298,11 @@ type SourceParameters struct {
 	// Name of the AWS availability zone.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// (String, Sensitive) Shared Access Signature token for the Azure Storage account. Mutually exclusive with account_key.
+	// Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
+	// +kubebuilder:validation:Optional
+	SasTokenSecretRef *v1.SecretKeySelector `json:"sasTokenSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) Value of a Cloudflare API token.
 	// This is the value labelled "Secret Access Key" when creating an API.

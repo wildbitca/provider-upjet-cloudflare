@@ -202,8 +202,8 @@ type SchemaInfoObservation struct {
 	// (Attributes) Schema active on endpoint. (see below for nested schema)
 	ActiveSchema *ActiveSchemaObservation `json:"activeSchema,omitempty" tf:"active_schema,omitempty"`
 
-	// provided learned schema is available for this endpoint.
-	// True if a Cloudflare-provided learned schema is available for this endpoint.
+	// (Boolean) Deprecated. Always false.
+	// Deprecated. Always false.
 	LearnedAvailable *bool `json:"learnedAvailable,omitempty" tf:"learned_available,omitempty"`
 
 	// (String) Action taken on requests failing validation.

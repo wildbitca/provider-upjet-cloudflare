@@ -381,8 +381,8 @@ spec:
                             type: object
                           learnedAvailable:
                             description: |-
-                              provided learned schema is available for this endpoint.
-                              True if a Cloudflare-provided learned schema is available for this endpoint.
+                              (Boolean) Deprecated. Always false.
+                              Deprecated. Always false.
                             type: boolean
                           mitigationAction:
                             description: |-

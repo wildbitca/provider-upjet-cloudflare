@@ -26,14 +26,19 @@ type SecurityBlockSenderInitParameters struct {
 	// (Boolean)
 	IsRegex *bool `json:"isRegex,omitempty" tf:"is_regex,omitempty"`
 
-	// (String)
+	// (String) The pattern value to match against. Format depends on pattern_type:
+	// The pattern value to match against. Format depends on `pattern_type`:
+	// - EMAIL: a valid email address, e.g. `user@example.com`
+	// - DOMAIN: a valid domain name, e.g. `example.com`
+	// - IP: a plain IPv4 address (e.g. `1.2.3.4`) or an IPv4 CIDR block (e.g. `1.2.3.0/24`). Only globally reachable addresses are accepted; private, loopback, link-local, and unspecified addresses are rejected.
 	Pattern *string `json:"pattern,omitempty" tf:"pattern,omitempty"`
 
 	// (String) Type of pattern matching.
-	// Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
-	// Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
 	// Type of pattern matching.
-	// Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
+	// - EMAIL: matches a full email address (e.g. `user@example.com`)
+	// - DOMAIN: matches a domain name (e.g. `example.com`)
+	// - IP: matches a plain IPv4 address (e.g. `1.2.3.4`) or an IPv4 CIDR block (e.g. `1.2.3.0/24`). Only globally reachable addresses are accepted.
+	// - UNKNOWN: deprecated, cannot be used when creating or updating policies, but may be returned for existing entries.
 	// Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
 	PatternType *string `json:"patternType,omitempty" tf:"pattern_type,omitempty"`
 }
@@ -63,14 +68,19 @@ type SecurityBlockSenderObservation struct {
 	// (String)
 	ModifiedAt *string `json:"modifiedAt,omitempty" tf:"modified_at,omitempty"`
 
-	// (String)
+	// (String) The pattern value to match against. Format depends on pattern_type:
+	// The pattern value to match against. Format depends on `pattern_type`:
+	// - EMAIL: a valid email address, e.g. `user@example.com`
+	// - DOMAIN: a valid domain name, e.g. `example.com`
+	// - IP: a plain IPv4 address (e.g. `1.2.3.4`) or an IPv4 CIDR block (e.g. `1.2.3.0/24`). Only globally reachable addresses are accepted; private, loopback, link-local, and unspecified addresses are rejected.
 	Pattern *string `json:"pattern,omitempty" tf:"pattern,omitempty"`
 
 	// (String) Type of pattern matching.
-	// Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
-	// Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
 	// Type of pattern matching.
-	// Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
+	// - EMAIL: matches a full email address (e.g. `user@example.com`)
+	// - DOMAIN: matches a domain name (e.g. `example.com`)
+	// - IP: matches a plain IPv4 address (e.g. `1.2.3.4`) or an IPv4 CIDR block (e.g. `1.2.3.0/24`). Only globally reachable addresses are accepted.
+	// - UNKNOWN: deprecated, cannot be used when creating or updating policies, but may be returned for existing entries.
 	// Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
 	PatternType *string `json:"patternType,omitempty" tf:"pattern_type,omitempty"`
 }
@@ -90,15 +100,20 @@ type SecurityBlockSenderParameters struct {
 	// +kubebuilder:validation:Optional
 	IsRegex *bool `json:"isRegex,omitempty" tf:"is_regex,omitempty"`
 
-	// (String)
+	// (String) The pattern value to match against. Format depends on pattern_type:
+	// The pattern value to match against. Format depends on `pattern_type`:
+	// - EMAIL: a valid email address, e.g. `user@example.com`
+	// - DOMAIN: a valid domain name, e.g. `example.com`
+	// - IP: a plain IPv4 address (e.g. `1.2.3.4`) or an IPv4 CIDR block (e.g. `1.2.3.0/24`). Only globally reachable addresses are accepted; private, loopback, link-local, and unspecified addresses are rejected.
 	// +kubebuilder:validation:Optional
 	Pattern *string `json:"pattern,omitempty" tf:"pattern,omitempty"`
 
 	// (String) Type of pattern matching.
-	// Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
-	// Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
 	// Type of pattern matching.
-	// Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
+	// - EMAIL: matches a full email address (e.g. `user@example.com`)
+	// - DOMAIN: matches a domain name (e.g. `example.com`)
+	// - IP: matches a plain IPv4 address (e.g. `1.2.3.4`) or an IPv4 CIDR block (e.g. `1.2.3.0/24`). Only globally reachable addresses are accepted.
+	// - UNKNOWN: deprecated, cannot be used when creating or updating policies, but may be returned for existing entries.
 	// Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
 	// +kubebuilder:validation:Optional
 	PatternType *string `json:"patternType,omitempty" tf:"pattern_type,omitempty"`

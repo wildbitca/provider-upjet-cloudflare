@@ -110,7 +110,7 @@ type DataInitParameters struct {
 	Preference *float64 `json:"preference,omitempty" tf:"preference,omitempty"`
 
 	// (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
-	// Priority.
+	// Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
 	// (Number) Protocol.
@@ -145,8 +145,8 @@ type DataInitParameters struct {
 	// Name of the property controlled by this record (e.g.: issue, issuewild, iodef).
 	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
 
-	// (String) Target.
-	// Target.
+	// (String) A valid mail server hostname, or "." for a NULL MX record.
+	// A valid mail server hostname, or "." for a NULL MX record.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
 	// (String) Record type.
@@ -262,7 +262,7 @@ type DataObservation struct {
 	Preference *float64 `json:"preference,omitempty" tf:"preference,omitempty"`
 
 	// (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
-	// Priority.
+	// Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
 	// (Number) Protocol.
@@ -297,8 +297,8 @@ type DataObservation struct {
 	// Name of the property controlled by this record (e.g.: issue, issuewild, iodef).
 	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
 
-	// (String) Target.
-	// Target.
+	// (String) A valid mail server hostname, or "." for a NULL MX record.
+	// A valid mail server hostname, or "." for a NULL MX record.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
 	// (String) Record type.
@@ -436,7 +436,7 @@ type DataParameters struct {
 	Preference *float64 `json:"preference,omitempty" tf:"preference,omitempty"`
 
 	// (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
-	// Priority.
+	// Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
 	// +kubebuilder:validation:Optional
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
@@ -480,8 +480,8 @@ type DataParameters struct {
 	// +kubebuilder:validation:Optional
 	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
 
-	// (String) Target.
-	// Target.
+	// (String) A valid mail server hostname, or "." for a NULL MX record.
+	// A valid mail server hostname, or "." for a NULL MX record.
 	// +kubebuilder:validation:Optional
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
@@ -517,7 +517,7 @@ type RecordInitParameters struct {
 	// A valid IPv4 address.
 	Content *string `json:"content,omitempty" tf:"content,omitempty"`
 
-	// (Attributes) Components of a CAA record. (see below for nested schema)
+	// (Attributes) Components of a MX record. (see below for nested schema)
 	Data *DataInitParameters `json:"data,omitempty" tf:"data,omitempty"`
 
 	// (String) DNS record name (or @ for the zone apex) in Punycode.
@@ -586,7 +586,7 @@ type RecordObservation struct {
 	// When the record was created.
 	CreatedOn *string `json:"createdOn,omitempty" tf:"created_on,omitempty"`
 
-	// (Attributes) Components of a CAA record. (see below for nested schema)
+	// (Attributes) Components of a MX record. (see below for nested schema)
 	Data *DataObservation `json:"data,omitempty" tf:"data,omitempty"`
 
 	// (String) Identifier.
@@ -659,7 +659,7 @@ type RecordParameters struct {
 	// +kubebuilder:validation:Optional
 	Content *string `json:"content,omitempty" tf:"content,omitempty"`
 
-	// (Attributes) Components of a CAA record. (see below for nested schema)
+	// (Attributes) Components of a MX record. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Data *DataParameters `json:"data,omitempty" tf:"data,omitempty"`
 

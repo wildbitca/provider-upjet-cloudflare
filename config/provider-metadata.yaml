@@ -203,7 +203,7 @@ resources:
             - name: example_account_subscription
               manifest: |-
                 {
-                  "account_id": "023e105f4ecef8ad9ca31a8372d0c353",
+                  "account_id": "account_id",
                   "frequency": "monthly",
                   "rate_plan": {
                     "currency": "USD",
@@ -218,7 +218,7 @@ resources:
                   }
                 }
         argumentDocs:
-            account_id: (String) Identifier
+            account_id: (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
             currency: (String) The monetary unit in which pricing information is displayed.
             current_period_end: (String) The end of the current period and also when the next billing is due.
             current_period_start: (String) When the current billing period started. May match initial_period_start if this is the first period.
@@ -529,6 +529,7 @@ resources:
             custom_domains: (List of String) Custom domain hostnames that alias this public endpoint. GET and create responses return the current set; on update (PUT) this field is only echoed back when supplied in the request body, otherwise it is null (omit it to leave domains unchanged).
             custom_metadata: (Attributes List) (see below for nested schema)
             data_type: '(String) Available values: "text", "number", "boolean", "datetime".'
+            default_domain_enabled: (Boolean) When false, the instance is reachable only via a registered custom domain and the default <public_endpoint_id>.search.ai.cloudflare.com host returns 404. Requires at least one custom domain. Defaults to true. public_endpoint_params is replaced wholesale on update, so resend default_domain_enabled on every update to keep the default host off — omitting it resets to true.
             description: (String)
             direction: |-
                 (String) Boost direction. 'desc' = higher values rank higher (e.g. newer timestamps). 'asc' = lower values rank higher. 'exists' = boost chunks that have the field. 'not_exists' = boost chunks that lack the field. Optional — defaults to 'asc' for numeric/datetime fields, 'exists' for text/boolean fields.
@@ -551,7 +552,7 @@ resources:
             indexing_options: (Attributes) (see below for nested schema)
             keyword: (Boolean) Enable keyword (BM25) storage backend.
             keyword_match_mode: |-
-                (String) Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. Defaults to 'and'.
+                (String) Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. When omitted on an update, the existing stored value is preserved; when never set, search falls back to 'and'.
                 Available values: "and", "or".
             keyword_tokenizer: |-
                 (String) Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
@@ -717,7 +718,7 @@ resources:
             auth_id_characteristics: (Attributes List) (see below for nested schema)
             id: (String) Identifier.
             json_path: is a RFC 9535 JSONPath expression that returns a singleton value (interpreted as a string)
-            name: (String) The name of the characteristic field, i.e., the header or cookie name. When using type "jwt", this must be a claim location expressed as $(token_config_id):$(json_path), where token_config_id is the ID of the token configuration used in validating the JWT, and json_path is a RFC 9535 JSONPath expression.
+            name: (String) The name of the characteristic field, i.e., the header or cookie name.
             token_config_id: is the ID of the token configuration used in validating the JWT
             type: |-
                 (String) The type of characteristic.
@@ -776,7 +777,7 @@ resources:
             is_learned: (Boolean) True if schema is Cloudflare-provided.
             last_updated: (String)
             learned: (Attributes) An OpenAPI operation object fragment containing schema information for an operation. May include parameter definitions, request body specifications, and a component schema extension. (see below for nested schema)
-            learned_available: (Boolean) True if a Cloudflare-provided learned schema is available for this endpoint.
+            learned_available: (Boolean) Deprecated. Always false.
             lower: (Number) Lower bound for percentile estimate
             mean: (Number) Suggested threshold.
             method: |-
@@ -1691,6 +1692,8 @@ resources:
                   "custom_metadata": {
                     "foo": "string"
                   },
+                  "custom_origin_server": "origin2.example.com",
+                  "custom_origin_sni": "sni.example.com",
                   "hostname": "app.example.com",
                   "ssl": {
                     "bundle_method": "ubiquitous",
@@ -1986,6 +1989,7 @@ resources:
             - $ terraform import cloudflare_d1_database.example '<account_id>/<database_id>'
     cloudflare_dls_prefix_binding:
         subCategory: ""
+        description: 'Accepted Permissions DLS: Read DLS: Write IP Prefixes: Write'
         name: cloudflare_dls_prefix_binding
         title: cloudflare_dls_prefix_binding Resource - Cloudflare
         examples:
@@ -2097,7 +2101,7 @@ resources:
             comment_modified_on: (String) When the record comment was last modified. Omitted if there is no comment.
             content: (String) A valid IPv4 address.
             created_on: (String) When the record was created.
-            data: (Attributes) Components of a CAA record. (see below for nested schema)
+            data: (Attributes) Components of a MX record. (see below for nested schema)
             digest: (String) Digest.
             digest_type: (Number) Digest Type.
             fingerprint: (String) Fingerprint.
@@ -2143,7 +2147,7 @@ resources:
             tag: '(String) Name of the property controlled by this record (e.g.: issue, issuewild, iodef).'
             tags: (Set of String) Custom tags for the DNS record. This field has no effect on DNS responses.
             tags_modified_on: (String) When the record tags were last modified. Omitted if there are no tags.
-            target: (String) Target.
+            target: (String) A valid mail server hostname, or "." for a NULL MX record.
             ttl: (Number) Time To Live (TTL) of the DNS record in seconds. Setting to 1 means 'automatic'. Value must be between 60 and 86400, with the minimum reduced to 30 for Enterprise zones.
             type: |-
                 (String) Record type.
@@ -2498,18 +2502,18 @@ resources:
                   "pattern_type": "EMAIL"
                 }
         argumentDocs:
+            1.2.3.4: ) or an IPv4 CIDR block (e.g. 1.2.3.0/24). Only globally reachable addresses are accepted; private, loopback, link-local, and unspecified addresses are rejected.
             account_id: (String) Identifier.
             comments: (String)
             created_at: (String)
+            example.com: )
             id: (String) Blocked sender pattern identifier
             is_regex: (Boolean)
             last_modified: '(String, Deprecated) Deprecated, use modified_at instead. End of life: November 1, 2026.'
             modified_at: (String)
-            pattern: (String)
-            pattern_type: |-
-                (String) Type of pattern matching.
-                Note: UNKNOWN is deprecated and cannot be used when creating or updating policies, but may be returned for existing entries.
-                Available values: "EMAIL", "DOMAIN", "IP", "UNKNOWN".
+            pattern: '(String) The pattern value to match against. Format depends on pattern_type:'
+            pattern_type: (String) Type of pattern matching.
+            user@example.com: )
         importStatements:
             - $ terraform import cloudflare_email_security_block_sender.example '<account_id>/<pattern_id>'
     cloudflare_email_security_impersonation_registry:
@@ -2735,7 +2739,7 @@ resources:
         importStatements: []
     cloudflare_google_tag_gateway:
         subCategory: ""
-        description: Accepted Permissions Zone Settings ReadZone Settings Write
+        description: Accepted Permissions Zaraz AdminZaraz EditZaraz Read
         name: cloudflare_google_tag_gateway
         title: cloudflare_google_tag_gateway Resource - Cloudflare
         examples:
@@ -2930,6 +2934,7 @@ resources:
             origin_connection_limit: (Number) The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
             password: (String, Sensitive) Set the password needed to access your origin database. The API never returns this write-only value.
             port: (Number) Defines the port of your origin database. Defaults to 5432 for PostgreSQL or 3306 for MySQL if not specified.
+            restarted_on: (String) Defines the last time the Hyperdrive connection pool was explicitly restarted via the restart endpoint. Omitted if the pool has never been explicitly restarted.
             scheme: |-
                 (String) Specifies the URL scheme used to connect to your origin database.
                 Available values: "postgres", "postgresql", "mysql".
@@ -3200,6 +3205,7 @@ resources:
                     "00920f38ce07c2e2f4df50b1f61d4194"
                   ],
                   "description": "Load Balancer for www.example.com",
+                  "enabled": true,
                   "fallback_pool": "fallback_pool",
                   "location_strategy": {
                     "mode": "resolver_ip",
@@ -3273,6 +3279,14 @@ resources:
                           "mode": "resolver_ip",
                           "prefer_ecs": "always"
                         },
+                        "pool_default_weight": 0.2,
+                        "pool_weights": {
+                          "9290f38c5d07c2e2f4df57b1f61d4196": 0.5,
+                          "de90f38ced07c2e2f4df50b1f61d4194": 0.3
+                        },
+                        "pools": [
+                          "17b5962d775c646f3f9725cbc7a53df4"
+                        ],
                         "pop_pools": {
                           "LAX": [
                             "de90f38ced07c2e2f4df50b1f61d4194",
@@ -3335,7 +3349,7 @@ resources:
                   "session_affinity_ttl": 1800,
                   "steering_policy": "dynamic_latency",
                   "ttl": 30,
-                  "zone_id": "699d98642c564d2e855e9661899b7252"
+                  "zone_id": "zone_id"
                 }
         argumentDocs:
             '""': |-
@@ -3411,7 +3425,7 @@ resources:
             zone_id: (String)
             zone_name: (String)
         importStatements:
-            - $ terraform import cloudflare_load_balancer.example '<zone_id>/<load_balancer_id>'
+            - $ terraform import cloudflare_load_balancer.example '<{accounts|zones}/{account_id|zone_id}>/<load_balancer_id>'
     cloudflare_load_balancer_monitor:
         subCategory: ""
         description: 'Accepted Permissions Load Balancing: Monitors and Pools ReadLoad Balancing: Monitors and Pools Write'
@@ -5710,7 +5724,7 @@ resources:
             id: (String) Name of the bucket.
             jurisdiction: |-
                 (String) Jurisdiction where objects in this bucket are guaranteed to be stored.
-                Available values: "default", "eu", "fedramp".
+                Available values: "default", "eu", "fedramp", "us".
             location: |-
                 (String) Location of the bucket.
                 Available values: "apac", "eeur", "enam", "weur", "wnam", "oc".  Note: location is only honored the first time a bucket with a given name is created. If you delete and recreate a bucket with the same name, the original bucket location will be used. It is also a best-effort, not a guarantee, of bucket location.
@@ -5924,16 +5938,21 @@ resources:
                 This is the value labelled "Access Key ID" when creating an API.
                 token from the R2 dashboard.
             account_id: (String) Account ID.
+            account_key: (String, Sensitive) Access key for the Azure Storage account. Mutually exclusive with sas_token.
+            account_name: (String) Name of the Azure Storage account.
             bucket: (String) Name of the AWS S3 bucket.
             bucket_name: (String) Name of the bucket.
             bucket_url: (String) URL to the S3-compatible API of the bucket.
             client_email: (String) Client email of an IAM credential (ideally scoped to a single GCS bucket).
             cloud_provider: '(String) Available values: "r2".'
+            container: (String) Name of the Azure Blob Storage container.
             destination: (Attributes) R2 bucket to copy objects to. (see below for nested schema)
             enabled: (Boolean) State of Sippy for this bucket.
             jurisdiction: (String) Jurisdiction of the bucket
             private_key: (String, Sensitive) Private Key of an IAM credential (ideally scoped to a single GCS bucket).
+            r2_bucket_sippy_provider: '(String) Available values: "aws", "gcs", "s3", "azure".'
             region: (String) Name of the AWS availability zone.
+            sas_token: (String, Sensitive) Shared Access Signature token for the Azure Storage account. Mutually exclusive with account_key.
             secret_access_key: |-
                 (String, Sensitive) Value of a Cloudflare API token.
                 This is the value labelled "Secret Access Key" when creating an API.
@@ -6284,13 +6303,11 @@ resources:
                 (String) The kind of the ruleset.
                 Available values: "managed", "custom", "root", "zone".
             lang: (Boolean) Whether to use the user agent's language in the cache key.
-            languages: (List of String) The set of languages to normalize against. Only valid for the accept-language header.
             last_updated: (String) The timestamp of when the ruleset was last modified.
             list: (List of String) A list of query string parameters to exclude from the cache key.
             logging: (Attributes) An object configuring the rule's logging behavior. (see below for nested schema)
             matched_data: (Attributes) The configuration to use for matched data logging. (see below for nested schema)
             max_age: (Attributes) Set the max-age cache control directive. (see below for nested schema)
-            media_types: (List of String) The set of media types to normalize against. Only valid for the accept header.
             minimum_file_size: (Number) The minimum file size eligible for storage in Cache Reserve.
             mirage: (Boolean) Whether to enable Mirage.
             mitigation_timeout: (Number) Period of time in seconds after which the action will be disabled following its first execution.
@@ -6393,7 +6410,6 @@ resources:
             username_expression: (String) An expression that selects the user ID used in the credentials check.
             value: (Number) The time to cache the response for (in seconds). A value of 0 is equivalent to setting the cache control header with the value "no-cache". A value of -1 is equivalent to setting the cache control header with the value of "no-store".
             values: (List of String) The cache tag values for set_cache_tags action.
-            vary: (Attributes) Controls how cached responses vary based on request headers. default is required and applies to any Vary response header that does not have a per-header override. (see below for nested schema)
             version: (String) The version of the ruleset.
             zone_id: (String) The unique ID of the zone.
         importStatements:
@@ -6491,11 +6507,11 @@ resources:
                   "name": "service_x_keys"
                 }
         argumentDocs:
-            account_id: (String) Account Identifier
-            created: (String) Whenthe secret was created.
-            id: (String) Store Identifier
+            account_id: (String)
+            created: (String) When the secret was created.
+            id: (String) Store Identifier.
             modified: (String) When the secret was modified.
-            name: (String) The name of the store
+            name: (String) The name of the store.
         importStatements:
             - $ terraform import cloudflare_secrets_store.example '<account_id>/<store_id>'
     cloudflare_secrets_store_secret:
@@ -6511,15 +6527,15 @@ resources:
                   "store_id": "023e105f4ecef8ad9ca31a8372d0c353"
                 }
         argumentDocs:
-            account_id: (String) Account Identifier
-            comment: (String) Freeform text describing the secret
-            created: (String) Whenthe secret was created.
+            account_id: (String)
+            comment: (String) Freeform text describing the secret.
+            created: (String) When the secret was created.
             id: (String) Secret identifier tag.
             modified: (String) When the secret was modified.
             name: (String) The name of the secret
-            scopes: (List of String) The list of services that can use this secret. Valid values are workers, ai_gateway, dex, and access. Must be listed in alphabetical order.
+            scopes: (List of String) The list of services that can use this secret.
             status: '(String) Available values: "pending", "active", "deleted".'
-            store_id: (String) Store Identifier
+            store_id: (String)
             value: (String, Sensitive) The value of the secret. Maximum 64 KiB (65,536 bytes). Note that this is 'write only' - no API response will provide this value, it is only used to create/modify secrets.
         importStatements:
             - $ terraform import cloudflare_secrets_store_secret.example '<account_id>/<store_id>/<secret_id>'
@@ -7120,12 +7136,11 @@ resources:
                   "credentials": {
                     "keys": [
                       {
-                        "alg": "ES256",
-                        "crv": "P-256",
-                        "kid": "38013f13-c266-4eec-a72a-92ec92779f21",
-                        "kty": "EC",
-                        "x": "KN53JRwN3wCjm2o39bvZUX2VdrsHzS8pxOAGjm8m7EQ",
-                        "y": "lnkkzIxaveggz-HFhcMWW15nxvOj0Z_uQsXbpK0GFcY"
+                        "alg": "RS256",
+                        "e": "e",
+                        "kid": "kid",
+                        "kty": "RSA",
+                        "n": "n"
                       }
                     ]
                   },
@@ -7141,20 +7156,21 @@ resources:
         argumentDocs:
             alg: |-
                 (String) Algorithm
-                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384".
+                Available values: "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "HS256", "HS384", "HS512".
             created_at: (String)
-            credentials: (Attributes) (see below for nested schema)
+            credentials: (Attributes) Request payload for create and PUT credentials operations. Provided keys define the complete stored key set. Key identities ({alg,kid}) must be unique. (see below for nested schema)
             crv: |-
                 (String) Curve
                 Available values: "P-256", "P-384".
             description: (String)
             e: (String) RSA exponent
             id: (String) UUID.
+            k: (String) Symmetric key material. Required for create and PUT update requests.
             keys: (Attributes List) (see below for nested schema)
             kid: (String) Key ID
             kty: |-
                 (String) Key Type
-                Available values: "RSA", "EC".
+                Available values: "RSA", "EC", "oct".
             last_updated: (String)
             "n": (String) RSA modulus
             title: (String)
@@ -7280,9 +7296,20 @@ resources:
                 this setting can determine the clearance level to be set
                 Available values: "no_clearance", "jschallenge", "managed", "interactive".
             created_on: (String) When the widget was created.
+            deployed_via: |-
+                (String) Origin that created this widget, recorded at creation time and
+                immutable afterward. Server-derived from the create request; not
+                client-settable. Omitted from the response for widgets created
+                before this field existed.
+                Available values: "wrangler", "dashboard", "spin", "api", "unknown".
             domains: (List of String)
             ephemeral_id: (Boolean) Return the Ephemeral ID in /siteverify (ENT only).
             id: (String) Widget item identifier tag.
+            last_modified_via: |-
+                (String) Origin of the most recent mutation (create, update, delete, or
+                secret rotation). Server-derived; not client-settable. Omitted for
+                widgets last mutated before this field existed.
+                Available values: "wrangler", "dashboard", "spin", "api", "unknown".
             mode: |-
                 (String) Widget Mode
                 Available values: "non-interactive", "invisible", "managed".
@@ -8042,6 +8069,10 @@ resources:
             assets: (Attributes) Configuration for assets within a Worker.
             bindings: '(Attributes List) List of bindings attached to a Worker. You can find more about bindings on our docs: https://developers.cloudflare.com/workers/configuration/multipart-upload-metadata/#bindings. (see below for nested schema)'
             bucket_name: (String) R2 bucket to bind to.
+            cache: |-
+                (Attributes) Cache override for this entrypoint. It applies only to
+                type: worker entries and overrides the Worker's global
+                cache_options.enabled for that entrypoint. (see below for nested schema)
             cache_options: |-
                 (Attributes) Global CacheW configuration for the Worker. When caching is on,
                 the platform provisions a cloudflare.app zone for the Worker.
@@ -8073,6 +8104,13 @@ resources:
             enabled: (Boolean) Whether caching is enabled for this Worker.
             entrypoint: (String) Entrypoint to invoke on the target Worker.
             environment: (String) The environment of the script_name to bind to.
+            exports: |-
+                (Attributes Map) Declarative exports for the version, including Durable Object
+                classes (with their storage backend) and named Worker
+                entrypoints. On reads, tombstoned lifecycle entries are
+                omitted, so only live exports (created and
+                expecting-transfer) are returned. exports and migrations
+                are mutually exclusive on upload. (see below for nested schema)
             format: |-
                 (String) Data format of the key. Learn more.
                 Available values: "raw", "pkcs8", "spki", "jwk".
@@ -8131,6 +8169,10 @@ resources:
             queue_name: (String) Name of the Queue to bind to.
             region: (String) Cloud region for targeted placement in format 'provider:region'.
             renamed_classes: (Attributes List) A list of classes with Durable Object namespaces that were renamed. (see below for nested schema)
+            renamed_to: |-
+                (String) Destination class name for a state: renamed tombstone. The
+                target must appear as a live (created) entry in the same
+                exports map. Write-only: never present in GET responses.
             run_worker_first: (Dynamic) When a boolean true, requests will always invoke the Worker script. Otherwise, attempt to serve an asset matching the request, falling back to the Worker script. When a list of strings, contains path rules to control routing to either the Worker or assets. Glob (*) and negative (!) rules are supported. Rules must start with either '/' or '!/'. At least one non-negative rule must be provided, and negative rules have higher precedence than non-negative rules.
             script_name: (String) The script where the Durable Object is defined, if it is external to this Worker.
             secret_name: (String) Name of the secret in the store.
@@ -8139,13 +8181,32 @@ resources:
             simple: (Attributes) The rate limit configuration. (see below for nested schema)
             source: (String) The client used to create the version.
             startup_time_ms: (Number) Time in milliseconds spent on Worker startup.
+            state: |-
+                (String) Lifecycle state of the export entry. Defaults to created
+                (a normal, live export) when omitted.
             steps: (Attributes List) Migrations to apply in order. (see below for nested schema)
+            storage: |-
+                (String) Storage backend for a type: durable-object export. Required
+                for live Durable Object entries (created and
+                expecting-transfer). sqlite selects SQLite-backed storage;
+                legacy-kv selects the legacy key-value storage.
+                Available values: "sqlite", "legacy-kv".
             store_id: (String) ID of the store containing the secret.
             subrequests: (Number) Subrequest limit per request.
             target: (Attributes List) Array of placement targets (currently limited to single target). (see below for nested schema)
             text: (String, Sensitive) The text value to use.
             to: (String)
+            transfer_from: |-
+                (String) Source script for a state: expecting-transfer entry. The
+                namespace on this script is materialised from the source
+                script's data via the pending-transfer flow. Present on reads
+                for expecting-transfer entries.
             transferred_classes: (Attributes List) A list of transfers for Durable Object namespaces from a different Worker and class to a class defined in this Worker. (see below for nested schema)
+            transferred_to: |-
+                (String) Destination script for a state: transferred tombstone. Must
+                reference a script in the same account; cross-dispatch-namespace
+                transfers are rejected. Write-only: never present in GET
+                responses.
             tunnel_id: (String) UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
             type: |-
                 (String) The kind of resource that the binding provides.
@@ -8201,7 +8262,6 @@ resources:
               manifest: |-
                 {
                   "account_id": "023e105f4ecef8ad9ca31a8372d0c353",
-                  "environment": "production",
                   "hostname": "app.example.com",
                   "service": "my-worker",
                   "zone_id": "593c9c94de529bbbfaac7c53ced0447d",
@@ -8387,12 +8447,22 @@ resources:
                       "cache": {
                         "enabled": true
                       },
+                      "renamed_to": "renamed_to",
+                      "state": "created",
+                      "storage": "sqlite",
+                      "transfer_from": "transfer_from",
+                      "transferred_to": "transferred_to",
                       "type": "worker"
                     },
                     "default": {
                       "cache": {
                         "enabled": false
                       },
+                      "renamed_to": "renamed_to",
+                      "state": "created",
+                      "storage": "sqlite",
+                      "transfer_from": "transfer_from",
+                      "transferred_to": "transferred_to",
                       "type": "worker"
                     }
                   },
@@ -8663,6 +8733,10 @@ resources:
                 {
                   "account_id": "account_id",
                   "class_name": "x",
+                  "default_retention": {
+                    "error_retention": "5 minutes",
+                    "success_retention": "5 minutes"
+                  },
                   "limits": {
                     "steps": 1
                   },
@@ -8680,6 +8754,8 @@ resources:
             complete: (Number)
             created_on: (String)
             cron: (String)
+            default_retention: (Attributes) Default retention applied to instances of this version when they do not set their own retention. (see below for nested schema)
+            error_retention: (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
             errored: (Number)
             id: (String) The ID of this resource.
             instances: (Attributes) (see below for nested schema)
@@ -8694,6 +8770,7 @@ resources:
             schedules: (Attributes List) (see below for nested schema)
             script_name: (String)
             steps: (Number)
+            success_retention: (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
             terminated: (Number)
             terminator_running: (Number)
             triggered_on: (String)
@@ -8777,6 +8854,7 @@ resources:
                   "account_id": "a86a8f5c339544d7bdc89926de14fb8c",
                   "auth_credentials": "auth_credentials",
                   "auth_type": "unauthenticated",
+                  "client_secret": "client_secret",
                   "description": "This is one remote mcp server",
                   "hostname": "https://example.com/mcp",
                   "id": "my-mcp-server",
@@ -8803,19 +8881,28 @@ resources:
         argumentDocs:
             account_id: (String)
             alias: (String)
+            auth_config_summary: (Attributes) Safe subset of auth_credentials surfaced to the dashboard. Includes auth_mode (dcr|manual), has_client_secret, client_secret_version, and the OAuth endpoints + client_id for manual servers. Never includes the secret value. (see below for nested schema)
             auth_credentials: (String, Sensitive)
+            auth_mode: '(String) Available values: "dcr", "manual".'
             auth_type: '(String) Available values: "oauth", "bearer", "unauthenticated".'
+            authorization_endpoint: (String)
             cause: (String) Underlying error message
+            client_id: (String)
+            client_secret: (String, Sensitive) Pre-registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
+            client_secret_version: (Number)
+            config: (Attributes) (see below for nested schema)
             created_at: (String)
             created_by: (String)
             description: (String)
             enabled: (Boolean)
             error: (String)
             error_details: (Attributes) (see below for nested schema)
+            has_client_secret: (Boolean)
             hostname: (String)
             id: (String) server id
-            is_shared_oauth_callback_enabled: (Boolean) When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. New public server creates default to true; existing servers default to false from migration until explicitly updated. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+            is_shared_oauth_callback_enabled: (Boolean) When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
             is_upstream: (Boolean) True = MCP server returned an error. False = couldn't reach the server
+            issuer: (String)
             last_successful_sync: (String)
             last_synced: (String)
             mcp_code: (Number) MCP protocol error code
@@ -8823,10 +8910,17 @@ resources:
             modified_by: (String)
             name: (String)
             prompts: (List of Map of String)
+            redirect_uris: (List of String)
+            registration_info: (Attributes) (see below for nested schema)
+            resource: (String)
             retryable: (Boolean) Whether the error is transient and worth retrying
+            revocation_endpoint: (String)
+            scope: (String)
             secure_web_gateway: (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
             status: (String)
             status_code: (Number) HTTP status code from the server
+            token_endpoint: (String)
+            token_endpoint_auth_method: (String)
             tools: (List of Map of String)
             updated_prompts: (Attributes List) (see below for nested schema)
             updated_tools: (Attributes List) (see below for nested schema)
@@ -9518,10 +9612,12 @@ resources:
                   "connection_rules": {
                     "rdp": {
                       "allowed_clipboard_local_to_remote_formats": [
-                        "text"
+                        "text",
+                        "file"
                       ],
                       "allowed_clipboard_remote_to_local_formats": [
-                        "text"
+                        "text",
+                        "file"
                       ]
                     }
                   },
@@ -9563,6 +9659,7 @@ resources:
             allowed_clipboard_local_to_remote_formats: (List of String) Clipboard formats allowed when copying from local machine to remote RDP session.
             allowed_clipboard_remote_to_local_formats: (List of String) Clipboard formats allowed when copying from remote RDP session to local machine.
             any_valid_service_token: (Attributes) An empty object which matches on all service tokens. (see below for nested schema)
+            app_count: (Number) Number of access applications currently using this policy.
             app_uid: (String) The ID of an Access OIDC SaaS application
             approval_groups: (Attributes Set) Administrators who can approve a temporary authentication request. (see below for nested schema)
             approval_required: (Boolean) Requires the user to request access from an administrator at the start of each session.
@@ -9579,6 +9676,7 @@ resources:
             common_name: (Attributes) (see below for nested schema)
             connection_rules: (Attributes) The rules that define how users may connect to targets secured by your application. (see below for nested schema)
             country_code: (String) The country code that should be matched.
+            created_at: (String)
             decision: |-
                 (String) The action Access will take if a user matches this policy. Infrastructure application policies can only use the Allow action.
                 Available values: "allow", "deny", "non_identity", "bypass".
@@ -9616,11 +9714,13 @@ resources:
             purpose_justification_required: (Boolean) Require users to enter a justification when they log in to the application.
             rdp: (Attributes) The RDP-specific rules that define clipboard behavior for RDP connections. (see below for nested schema)
             require: (Attributes Set) Rules evaluated with an AND logical operator. To match the policy, a user must meet all of the Require rules. (see below for nested schema)
+            reusable: (Boolean)
             saml: (Attributes) (see below for nested schema)
             service_token: (Attributes) (see below for nested schema)
             session_duration: '(String) The amount of time that tokens issued for the application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.'
             team: (String) The name of the team
             token_id: (String) The ID of a Service Token.
+            updated_at: (String)
             user_risk_score: (Attributes) (see below for nested schema)
         importStatements:
             - $ terraform import cloudflare_zero_trust_access_policy.example '<account_id>/<policy_id>'
@@ -9644,7 +9744,7 @@ resources:
             client_id: (String) The Client ID for the service token. Access will check for this value in the CF-Access-Client-ID request header.
             client_secret: (String, Sensitive) The Client Secret for the service token. Access will check for this value in the CF-Access-Client-Secret request header.
             client_secret_version: (Number) A version number identifying the current client_secret associated with the service token. Incrementing it triggers a rotation; the previous secret will still be accepted until the time indicated by previous_client_secret_expires_at.
-            duration: '(String) The duration for how long the service token will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).'
+            duration: '(String) The duration for how long the service token will be valid. Must be in the format 300ms or 2h45m, or the special value forever for non-expiring tokens. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).'
             expires_at: (String)
             id: (String) The ID of the service token.
             name: (String) The name of the service token.
@@ -9743,6 +9843,7 @@ resources:
             allow_updates: (Boolean) Whether to receive update notifications when a new version of the client is available.
             allowed: (List of String) List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
             allowed_to_leave: (Boolean) Whether to allow devices to leave the organization.
+            api_endpoints: (List of String) IP:port entries for the API endpoints.
             auto_connect: (Number) The amount of time in seconds to reconnect after having been disabled.
             captive_portal: (Number) Turn on the captive portal after the specified amount of time.
             default: (Boolean) Whether the policy is the default policy for an account.
@@ -9755,11 +9856,13 @@ resources:
             exclude_office_ips: (Boolean) Whether to add Microsoft IPs to Split Tunnel exclusions.
             fallback_domains: (Attributes List) (see below for nested schema)
             gateway_unique_id: (String)
+            global_acceleration: (Attributes) Global Acceleration settings for China. When configured, WARP clients connect to the Global Accelerator addresses instead of the default ones. Please contact your account representative to enable this feature on your account. See https://developers.cloudflare.com/china-network/concepts/global-acceleration/. (see below for nested schema)
             host: (String) The domain name to exclude from the tunnel. If host is present, address must not be present.
             id: (String) The ID of this resource.
             include: (Attributes List) List of routes included in the WARP client's tunnel. Both 'exclude' and 'include' cannot be set in the same request. (see below for nested schema)
             lan_allow_minutes: (Number) The amount of time in minutes a user is allowed access to their LAN. A value of 0 will allow LAN access until the next WARP reconnection, such as a reboot or a laptop waking from sleep. Note that this field is omitted from the response if null or unset.
             lan_allow_subnet_size: (Number) The size of the subnet for the local access network. Note that this field is omitted from the response if null or unset.
+            masque_endpoints: (List of String) IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
             match: '(String) The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version".'
             mode: (String) The mode to run the WARP client under.
             name: (String) The name of the device settings profile.
@@ -9775,6 +9878,7 @@ resources:
             target_tests: (Attributes List) (see below for nested schema)
             tunnel_protocol: (String) Determines which tunnel protocol to use.
             virtual_networks: (Attributes) Virtual network access settings for the device. (see below for nested schema)
+            wireguard_endpoints: (List of String) IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
         importStatements:
             - $ terraform import cloudflare_zero_trust_device_custom_profile.example '<account_id>/<policy_id>'
     cloudflare_zero_trust_device_custom_profile_local_domain_fallback:
@@ -9856,6 +9960,7 @@ resources:
             allow_updates: (Boolean) Whether to receive update notifications when a new version of the client is available.
             allowed: (List of String) List of virtual network IDs the device is allowed to access. When virtual_networks is set, at least one entry is required.
             allowed_to_leave: (Boolean) Whether to allow devices to leave the organization.
+            api_endpoints: (List of String) IP:port entries for the API endpoints.
             auto_connect: (Number) The amount of time in seconds to reconnect after having been disabled.
             captive_portal: (Number) Turn on the captive portal after the specified amount of time.
             default: (Boolean) Whether the policy will be applied to matching devices.
@@ -9868,11 +9973,13 @@ resources:
             exclude_office_ips: (Boolean) Whether to add Microsoft IPs to Split Tunnel exclusions.
             fallback_domains: (Attributes List) (see below for nested schema)
             gateway_unique_id: (String)
+            global_acceleration: (Attributes) Global Acceleration settings for China. When configured, WARP clients connect to the Global Accelerator addresses instead of the default ones. Please contact your account representative to enable this feature on your account. See https://developers.cloudflare.com/china-network/concepts/global-acceleration/. (see below for nested schema)
             host: (String) The domain name to exclude from the tunnel. If host is present, address must not be present.
             id: (String) The ID of this resource.
             include: (Attributes List) List of routes included in the WARP client's tunnel. Both 'exclude' and 'include' cannot be set in the same request. (see below for nested schema)
             lan_allow_minutes: (Number) The amount of time in minutes a user is allowed access to their LAN. A value of 0 will allow LAN access until the next WARP reconnection, such as a reboot or a laptop waking from sleep. Note that this field is omitted from the response if null or unset.
             lan_allow_subnet_size: (Number) The size of the subnet for the local access network. Note that this field is omitted from the response if null or unset.
+            masque_endpoints: (List of String) IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
             mode: (String) The mode to run the WARP client under.
             policy_id: (String)
             port: (Number) The port number when used with proxy mode.
@@ -9884,6 +9991,7 @@ resources:
             switch_locked: (Boolean) Whether to allow the user to turn off the WARP switch and disconnect the client.
             tunnel_protocol: (String) Determines which tunnel protocol to use.
             virtual_networks: (Attributes) Virtual network access settings for the device. (see below for nested schema)
+            wireguard_endpoints: (List of String) IP:port entries for the WireGuard tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
         importStatements:
             - $ terraform import cloudflare_zero_trust_device_default_profile.example '<account_id>'
     cloudflare_zero_trust_device_default_profile_certificates:
@@ -10108,7 +10216,7 @@ resources:
             description: (String) The description of the device posture rule.
             domain: (String) Domain.
             eid_last_seen: (String) For more details on eid last seen, refer to the Tanium documentation.
-            enabled: (Boolean) Enabled.
+            enabled: (Boolean) Whether the rule is enabled. This is a computed, read-only value. It is false for deprecated Kolide posture rules that still use the issue_count input, and true otherwise.
             exists: (Boolean) Whether or not file exists.
             expiration: (String) Sets the expiration time for a posture check result. If empty, the result remains valid until it is overwritten by new data from the WARP client.
             extended_key_usage: (List of String) List of values indicating purposes for which the certificate public key can be used.
@@ -10218,6 +10326,7 @@ resources:
                 }
         argumentDocs:
             account_id: (String) Cloudflare account ID
+            capacity: (Attributes) IP capacity information for the subnet. (see below for nested schema)
             comment: (String) An optional description of the subnet.
             created_at: (String) Timestamp of when the resource was created.
             deleted_at: (String) Timestamp of when the resource was deleted. If null, the resource has not been deleted.
@@ -10227,7 +10336,9 @@ resources:
             network: (String) The private IPv4 or IPv6 range defining the subnet, in CIDR notation.
             subnet_type: |-
                 (String) The type of subnet.
-                Available values: "cloudflare_source", "warp".
+                Available values: "cloudflare_source", "initial_resolved_ip", "warp".
+            total: (Number) Total number of assignable IPs in the subnet.
+            used: (Number) Number of assigned IPs in the subnet.
         importStatements:
             - $ terraform import cloudflare_zero_trust_device_subnet.example '<account_id>/<subnet_id>'
     cloudflare_zero_trust_dex_rule:
@@ -11076,6 +11187,10 @@ resources:
                       "duration": "300s",
                       "enforce": true
                     },
+                    "delete_headers": [
+                      "X-Old-Header",
+                      "X-Remove-Me"
+                    ],
                     "dns_resolvers": {
                       "ipv4": [
                         {
@@ -11139,6 +11254,11 @@ resources:
                       "view_id": "view_id"
                     },
                     "resolve_dns_through_cloudflare": true,
+                    "set_headers": {
+                      "X-User-Identity": [
+                        "user=@{identity.name}"
+                      ]
+                    },
                     "untrusted_cert": {
                       "action": "error"
                     }
@@ -11176,6 +11296,7 @@ resources:
             created_at: (String)
             dcp: (Boolean) Set to false to enable copy-pasting. Only applies when version == "v1".
             dd: (Boolean) Set to false to enable downloading. Only applies when version == "v1".
+            delete_headers: (List of String) Remove headers from allowed requests by name. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes. Settable only for http rules with the action set to allow.
             deleted_at: (String) Indicate the date of deletion, if any.
             description: (String) Specify the rule description.
             device_posture: (String) Specify the wirefilter expression used for device posture check. The API automatically formats and sanitizes expressions before storing them. To prevent Terraform state drift, use the formatted expression returned in the API response.
@@ -11240,6 +11361,7 @@ resources:
             rule_settings: (Attributes) Defines settings for this rule. Settings apply only to specific rule types and must use compatible selectors. If Terraform detects drift, confirm the setting supports your rule type and check whether the API modifies the value. Use API-returned values in your configuration to prevent drift. (see below for nested schema)
             sat: (String) Specify the time intervals when the rule is active on Saturdays, in the increasing order from 00:00-24:00.  If this parameter omitted, the rule is deactivated on Saturdays. API returns a formatted version of this string, which may cause Terraform drift if a unformatted value is used.
             schedule: (Attributes) Defines the schedule for activating DNS policies. Settable only for dns and dns_resolver rules. (see below for nested schema)
+            set_headers: (Map of List of String) Replace existing headers on allowed requests with the specified key-value pairs. If a header does not exist, it is added. Header values may contain @{selector.name} variable references that are interpolated at the edge. Use @@{ to escape a literal @{. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes and each header value may not exceed 4 KB. Settable only for http rules with the action set to allow.
             sharable: (Boolean) Indicate that this rule is sharable via the Orgs API.
             source_account: (String) Provide the account tag of the account that created the rule.
             sun: (String) Specify the time intervals when the rule is active on Sundays, in the increasing order from 00:00-24:00. If this parameter omitted, the rule is deactivated on Sundays. API returns a formatted version of this string, which may cause Terraform drift if a unformatted value is used.

@@ -848,6 +848,10 @@ type RuleSettingsInitParameters struct {
 	// (Attributes) Configure custom resolvers to route queries that match the resolver policy. Unused with 'resolve_dns_through_cloudflare' or 'resolve_dns_internally' settings. DNS queries get routed to the address closest to their origin. Only valid when a rule's action set to 'resolve'. Settable only for dns_resolver rules. (see below for nested schema)
 	DNSResolvers *DNSResolversInitParameters `json:"dnsResolvers,omitempty" tf:"dns_resolvers,omitempty"`
 
+	// (List of String) Remove headers from allowed requests by name. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes. Settable only for http rules with the action set to allow.
+	// Remove headers from allowed requests by name. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes. Settable only for `http` rules with the action set to `allow`.
+	DeleteHeaders []*string `json:"deleteHeaders,omitempty" tf:"delete_headers,omitempty"`
+
 	// (Attributes) Configure how Gateway Proxy traffic egresses. You can enable this setting for rules with Egress actions and filters, or omit it to indicate local egress via WARP IPs. Settable only for egress rules. (see below for nested schema)
 	Egress *EgressInitParameters `json:"egress,omitempty" tf:"egress,omitempty"`
 
@@ -900,6 +904,10 @@ type RuleSettingsInitParameters struct {
 	// Enable to send queries that match the policy to Cloudflare's default 1.1.1.1 DNS resolver. Cannot set when 'dns_resolvers' specified or 'resolve_dns_internally' is set. Only valid when a rule's action set to 'resolve'. Settable only for `dns_resolver` rules.
 	ResolveDNSThroughCloudflare *bool `json:"resolveDnsThroughCloudflare,omitempty" tf:"resolve_dns_through_cloudflare,omitempty"`
 
+	// value pairs. If a header does not exist, it is added. Header values may contain @{selector.name} variable references that are interpolated at the edge. Use @@{ to escape a literal @{. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes and each header value may not exceed 4 KB. Settable only for http rules with the action set to allow.
+	// Replace existing headers on allowed requests with the specified key-value pairs. If a header does not exist, it is added. Header values may contain `@{selector.name}` variable references that are interpolated at the edge. Use `@@{` to escape a literal `@{`. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes and each header value may not exceed 4 KB. Settable only for `http` rules with the action set to `allow`.
+	SetHeaders map[string][]*string `json:"setHeaders,omitempty" tf:"set_headers,omitempty"`
+
 	// (Attributes) Configure behavior when an upstream certificate is invalid or an SSL error occurs. Settable only for http rules with the action set to allow. (see below for nested schema)
 	UntrustedCert *UntrustedCertInitParameters `json:"untrustedCert,omitempty" tf:"untrusted_cert,omitempty"`
 }
@@ -940,6 +948,10 @@ type RuleSettingsObservation struct {
 
 	// (Attributes) Configure custom resolvers to route queries that match the resolver policy. Unused with 'resolve_dns_through_cloudflare' or 'resolve_dns_internally' settings. DNS queries get routed to the address closest to their origin. Only valid when a rule's action set to 'resolve'. Settable only for dns_resolver rules. (see below for nested schema)
 	DNSResolvers *DNSResolversObservation `json:"dnsResolvers,omitempty" tf:"dns_resolvers,omitempty"`
+
+	// (List of String) Remove headers from allowed requests by name. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes. Settable only for http rules with the action set to allow.
+	// Remove headers from allowed requests by name. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes. Settable only for `http` rules with the action set to `allow`.
+	DeleteHeaders []*string `json:"deleteHeaders,omitempty" tf:"delete_headers,omitempty"`
 
 	// (Attributes) Configure how Gateway Proxy traffic egresses. You can enable this setting for rules with Egress actions and filters, or omit it to indicate local egress via WARP IPs. Settable only for egress rules. (see below for nested schema)
 	Egress *EgressObservation `json:"egress,omitempty" tf:"egress,omitempty"`
@@ -993,6 +1005,10 @@ type RuleSettingsObservation struct {
 	// Enable to send queries that match the policy to Cloudflare's default 1.1.1.1 DNS resolver. Cannot set when 'dns_resolvers' specified or 'resolve_dns_internally' is set. Only valid when a rule's action set to 'resolve'. Settable only for `dns_resolver` rules.
 	ResolveDNSThroughCloudflare *bool `json:"resolveDnsThroughCloudflare,omitempty" tf:"resolve_dns_through_cloudflare,omitempty"`
 
+	// value pairs. If a header does not exist, it is added. Header values may contain @{selector.name} variable references that are interpolated at the edge. Use @@{ to escape a literal @{. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes and each header value may not exceed 4 KB. Settable only for http rules with the action set to allow.
+	// Replace existing headers on allowed requests with the specified key-value pairs. If a header does not exist, it is added. Header values may contain `@{selector.name}` variable references that are interpolated at the edge. Use `@@{` to escape a literal `@{`. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes and each header value may not exceed 4 KB. Settable only for `http` rules with the action set to `allow`.
+	SetHeaders map[string][]*string `json:"setHeaders,omitempty" tf:"set_headers,omitempty"`
+
 	// (Attributes) Configure behavior when an upstream certificate is invalid or an SSL error occurs. Settable only for http rules with the action set to allow. (see below for nested schema)
 	UntrustedCert *UntrustedCertObservation `json:"untrustedCert,omitempty" tf:"untrusted_cert,omitempty"`
 }
@@ -1043,6 +1059,11 @@ type RuleSettingsParameters struct {
 	// (Attributes) Configure custom resolvers to route queries that match the resolver policy. Unused with 'resolve_dns_through_cloudflare' or 'resolve_dns_internally' settings. DNS queries get routed to the address closest to their origin. Only valid when a rule's action set to 'resolve'. Settable only for dns_resolver rules. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	DNSResolvers *DNSResolversParameters `json:"dnsResolvers,omitempty" tf:"dns_resolvers,omitempty"`
+
+	// (List of String) Remove headers from allowed requests by name. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes. Settable only for http rules with the action set to allow.
+	// Remove headers from allowed requests by name. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes. Settable only for `http` rules with the action set to `allow`.
+	// +kubebuilder:validation:Optional
+	DeleteHeaders []*string `json:"deleteHeaders,omitempty" tf:"delete_headers,omitempty"`
 
 	// (Attributes) Configure how Gateway Proxy traffic egresses. You can enable this setting for rules with Egress actions and filters, or omit it to indicate local egress via WARP IPs. Settable only for egress rules. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -1110,6 +1131,11 @@ type RuleSettingsParameters struct {
 	// Enable to send queries that match the policy to Cloudflare's default 1.1.1.1 DNS resolver. Cannot set when 'dns_resolvers' specified or 'resolve_dns_internally' is set. Only valid when a rule's action set to 'resolve'. Settable only for `dns_resolver` rules.
 	// +kubebuilder:validation:Optional
 	ResolveDNSThroughCloudflare *bool `json:"resolveDnsThroughCloudflare,omitempty" tf:"resolve_dns_through_cloudflare,omitempty"`
+
+	// value pairs. If a header does not exist, it is added. Header values may contain @{selector.name} variable references that are interpolated at the edge. Use @@{ to escape a literal @{. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes and each header value may not exceed 4 KB. Settable only for http rules with the action set to allow.
+	// Replace existing headers on allowed requests with the specified key-value pairs. If a header does not exist, it is added. Header values may contain `@{selector.name}` variable references that are interpolated at the edge. Use `@@{` to escape a literal `@{`. A maximum of 20 header operations (add + set + delete) is allowed per policy. Each header name may not exceed 256 bytes and each header value may not exceed 4 KB. Settable only for `http` rules with the action set to `allow`.
+	// +kubebuilder:validation:Optional
+	SetHeaders map[string][]*string `json:"setHeaders,omitempty" tf:"set_headers,omitempty"`
 
 	// (Attributes) Configure behavior when an upstream certificate is invalid or an SSL error occurs. Settable only for http rules with the action set to allow. (see below for nested schema)
 	// +kubebuilder:validation:Optional

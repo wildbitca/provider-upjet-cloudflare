@@ -314,7 +314,6 @@ type ActionParametersInitParameters struct {
 	// The cache tag values for set_cache_tags action.
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 
-	// header override. (see below for nested schema)
 	Vary *VaryInitParameters `json:"vary,omitempty" tf:"vary,omitempty"`
 }
 
@@ -618,7 +617,6 @@ type ActionParametersObservation struct {
 	// The cache tag values for set_cache_tags action.
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 
-	// header override. (see below for nested schema)
 	Vary *VaryObservation `json:"vary,omitempty" tf:"vary,omitempty"`
 }
 
@@ -1000,7 +998,6 @@ type ActionParametersParameters struct {
 	// +kubebuilder:validation:Optional
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 
-	// header override. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Vary *VaryParameters `json:"vary,omitempty" tf:"vary,omitempty"`
 }
@@ -3514,11 +3511,9 @@ type VaryHeadersInitParameters struct {
 	// Available values: "bypass", "passthrough", "normalize".
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// language header.
 	// The set of languages to normalize against. Only valid for the `accept-language` header.
 	Languages []*string `json:"languages,omitempty" tf:"languages,omitempty"`
 
-	// (List of String) The set of media types to normalize against. Only valid for the accept header.
 	// The set of media types to normalize against. Only valid for the `accept` header.
 	MediaTypes []*string `json:"mediaTypes,omitempty" tf:"media_types,omitempty"`
 }
@@ -3531,11 +3526,9 @@ type VaryHeadersObservation struct {
 	// Available values: "bypass", "passthrough", "normalize".
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// language header.
 	// The set of languages to normalize against. Only valid for the `accept-language` header.
 	Languages []*string `json:"languages,omitempty" tf:"languages,omitempty"`
 
-	// (List of String) The set of media types to normalize against. Only valid for the accept header.
 	// The set of media types to normalize against. Only valid for the `accept` header.
 	MediaTypes []*string `json:"mediaTypes,omitempty" tf:"media_types,omitempty"`
 }
@@ -3549,12 +3542,10 @@ type VaryHeadersParameters struct {
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action" tf:"action,omitempty"`
 
-	// language header.
 	// The set of languages to normalize against. Only valid for the `accept-language` header.
 	// +kubebuilder:validation:Optional
 	Languages []*string `json:"languages,omitempty" tf:"languages,omitempty"`
 
-	// (List of String) The set of media types to normalize against. Only valid for the accept header.
 	// The set of media types to normalize against. Only valid for the `accept` header.
 	// +kubebuilder:validation:Optional
 	MediaTypes []*string `json:"mediaTypes,omitempty" tf:"media_types,omitempty"`
