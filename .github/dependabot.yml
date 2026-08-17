@@ -1,0 +1,30 @@
+# Dependabot no estaba configurado: llegaban las actualizaciones de SEGURIDAD (son ajuste
+# de repo) pero no las de VERSION, asi que las dependencias envejecian calladas hasta que
+# alguna salia en un aviso.
+#
+# Un provider de Crossplane arrastra el SDK de upjet, crossplane-runtime y el provider de
+# Terraform que envuelve: quedarse atras aqui no es cosmetico, es divergir del ecosistema
+# que se supone que sigue.
+version: 2
+updates:
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels: [dependencies]
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 3
+    labels: [dependencies, ci]
+    groups:
+      actions:
+        update-types: [minor, patch]
