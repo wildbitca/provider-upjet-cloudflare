@@ -140,6 +140,9 @@ jobs:
     env:
       VERSION: ${{ needs.prepare.outputs.version }}
     steps:
+      - uses: docker/setup-qemu-action@v3
+        with: { platforms: 'arm64' }
+
       - uses: docker/setup-buildx-action@v4
         with: { version: '${{ env.DOCKER_BUILDX_VERSION }}' }
 
@@ -186,11 +189,13 @@ jobs:
 
       - name: Build binary
         run: |
-          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
-            -trimpath -installsuffix static \
-            -ldflags "-X github.com/wildbitca/provider-upjet-cloudflare/internal/version.Version=${VERSION} -s -w" \
-            -o _output/bin/linux_amd64/config \
-            ./cmd/provider/config/
+          for arch in amd64 arm64; do
+            CGO_ENABLED=0 GOOS=linux GOARCH=${arch} go build \
+              -trimpath -installsuffix static \
+              -ldflags "-X github.com/wildbitca/provider-upjet-cloudflare/internal/version.Version=${VERSION} -s -w" \
+              -o _output/bin/linux_${arch}/config \
+              ./cmd/provider/config/
+          done
 
       - name: Build image and xpkg
         run: |
@@ -200,19 +205,6 @@ jobs:
           cp cluster/images/provider-upjet-cloudflare/Dockerfile "${BUILD_CTX}/"
           cp cluster/images/provider-upjet-cloudflare/terraformrc.hcl "${BUILD_CTX}/"
           cp -r _output/bin/ "${BUILD_CTX}/bin"
-
-          docker buildx build \
-            --platform linux/amd64 \
-            --build-arg SUBPACKAGE=config \
-            --build-arg OPENTOFU_VERSION=${OPENTOFU_VERSION} \
-            --build-arg TERRAFORM_PROVIDER_SOURCE=${TERRAFORM_PROVIDER_SOURCE} \
-            --build-arg TERRAFORM_PROVIDER_VERSION=${TERRAFORM_PROVIDER_VERSION} \
-            --build-arg TERRAFORM_PROVIDER_DOWNLOAD_NAME=${TERRAFORM_PROVIDER_DOWNLOAD_NAME} \
-            --build-arg TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX=${TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX} \
-            --build-arg TERRAFORM_NATIVE_PROVIDER_BINARY=${TERRAFORM_NATIVE_PROVIDER_BINARY} \
-            --cache-from type=gha --cache-to type=gha,mode=max \
-            -t build-${REPO}:latest --load \
-            "${BUILD_CTX}"
 
           WORK_DIR=$(mktemp -d)
           mkdir -p "${WORK_DIR}/crds"
@@ -236,13 +228,31 @@ jobs:
           YAML
           sed -i 's/^          //' "${WORK_DIR}/crossplane.yaml"
 
-          crossplane xpkg build \
-            --embed-runtime-image="build-${REPO}:latest" \
-            --package-root="${WORK_DIR}" \
-            --package-file="${WORK_DIR}/${REPO}.xpkg"
+          PKG_FILES=()
+          for arch in amd64 arm64; do
+            docker buildx build \
+              --platform linux/${arch} \
+              --build-arg SUBPACKAGE=config \
+              --build-arg OPENTOFU_VERSION=${OPENTOFU_VERSION} \
+              --build-arg TERRAFORM_PROVIDER_SOURCE=${TERRAFORM_PROVIDER_SOURCE} \
+              --build-arg TERRAFORM_PROVIDER_VERSION=${TERRAFORM_PROVIDER_VERSION} \
+              --build-arg TERRAFORM_PROVIDER_DOWNLOAD_NAME=${TERRAFORM_PROVIDER_DOWNLOAD_NAME} \
+              --build-arg TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX=${TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX} \
+              --build-arg TERRAFORM_NATIVE_PROVIDER_BINARY=${TERRAFORM_NATIVE_PROVIDER_BINARY} \
+              --cache-from type=gha,scope=${REPO}-${arch} --cache-to type=gha,mode=max,scope=${REPO}-${arch} \
+              -t build-${REPO}:${arch} --load \
+              "${BUILD_CTX}"
+
+            crossplane xpkg build \
+              --embed-runtime-image="build-${REPO}:${arch}" \
+              --package-root="${WORK_DIR}" \
+              --package-file="${WORK_DIR}/${REPO}-${arch}.xpkg"
+
+            PKG_FILES+=(-f "${WORK_DIR}/${REPO}-${arch}.xpkg")
+          done
 
           up xpkg push "${UPBOUND_REGISTRY}/${REPO}:${VERSION}" \
-            -f "${WORK_DIR}/${REPO}.xpkg"
+            "${PKG_FILES[@]}"
 
           echo "Published: ${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
 
@@ -264,6 +274,9 @@ jobs:
       matrix:
         subpackage: ${{ fromJson(needs.prepare.outputs.subpackages) }}
     steps:
+      - uses: docker/setup-qemu-action@v3
+        with: { platforms: 'arm64' }
+
       - uses: docker/setup-buildx-action@v4
         with: { version: '${{ env.DOCKER_BUILDX_VERSION }}' }
 
@@ -311,11 +324,13 @@ jobs:
       - name: Build binary
         run: |
           SP="${{ matrix.subpackage }}"
-          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
-            -trimpath -installsuffix static \
-            -ldflags "-X github.com/wildbitca/provider-upjet-cloudflare/internal/version.Version=${VERSION} -s -w" \
-            -o _output/bin/linux_amd64/${SP} \
-            ./cmd/provider/${SP}/
+          for arch in amd64 arm64; do
+            CGO_ENABLED=0 GOOS=linux GOARCH=${arch} go build \
+              -trimpath -installsuffix static \
+              -ldflags "-X github.com/wildbitca/provider-upjet-cloudflare/internal/version.Version=${VERSION} -s -w" \
+              -o _output/bin/linux_${arch}/${SP} \
+              ./cmd/provider/${SP}/
+          done
 
       - name: Build image, xpkg and publish
         run: |
@@ -326,19 +341,6 @@ jobs:
           cp cluster/images/provider-upjet-cloudflare/Dockerfile "${BUILD_CTX}/"
           cp cluster/images/provider-upjet-cloudflare/terraformrc.hcl "${BUILD_CTX}/"
           cp -r _output/bin/ "${BUILD_CTX}/bin"
-
-          docker buildx build \
-            --platform linux/amd64 \
-            --build-arg SUBPACKAGE=${SP} \
-            --build-arg OPENTOFU_VERSION=${OPENTOFU_VERSION} \
-            --build-arg TERRAFORM_PROVIDER_SOURCE=${TERRAFORM_PROVIDER_SOURCE} \
-            --build-arg TERRAFORM_PROVIDER_VERSION=${TERRAFORM_PROVIDER_VERSION} \
-            --build-arg TERRAFORM_PROVIDER_DOWNLOAD_NAME=${TERRAFORM_PROVIDER_DOWNLOAD_NAME} \
-            --build-arg TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX=${TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX} \
-            --build-arg TERRAFORM_NATIVE_PROVIDER_BINARY=${TERRAFORM_NATIVE_PROVIDER_BINARY} \
-            --cache-from type=gha --cache-to type=gha,mode=max \
-            -t build-${REPO}:latest --load \
-            "${BUILD_CTX}"
 
           WORK_DIR=$(mktemp -d)
           mkdir -p "${WORK_DIR}/crds"
@@ -368,13 +370,31 @@ jobs:
           YAML
           sed -i 's/^          //' "${WORK_DIR}/crossplane.yaml"
 
-          crossplane xpkg build \
-            --embed-runtime-image="build-${REPO}:latest" \
-            --package-root="${WORK_DIR}" \
-            --package-file="${WORK_DIR}/${REPO}.xpkg"
+          PKG_FILES=()
+          for arch in amd64 arm64; do
+            docker buildx build \
+              --platform linux/${arch} \
+              --build-arg SUBPACKAGE=${SP} \
+              --build-arg OPENTOFU_VERSION=${OPENTOFU_VERSION} \
+              --build-arg TERRAFORM_PROVIDER_SOURCE=${TERRAFORM_PROVIDER_SOURCE} \
+              --build-arg TERRAFORM_PROVIDER_VERSION=${TERRAFORM_PROVIDER_VERSION} \
+              --build-arg TERRAFORM_PROVIDER_DOWNLOAD_NAME=${TERRAFORM_PROVIDER_DOWNLOAD_NAME} \
+              --build-arg TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX=${TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX} \
+              --build-arg TERRAFORM_NATIVE_PROVIDER_BINARY=${TERRAFORM_NATIVE_PROVIDER_BINARY} \
+              --cache-from type=gha,scope=${REPO}-${arch} --cache-to type=gha,mode=max,scope=${REPO}-${arch} \
+              -t build-${REPO}:${arch} --load \
+              "${BUILD_CTX}"
+
+            crossplane xpkg build \
+              --embed-runtime-image="build-${REPO}:${arch}" \
+              --package-root="${WORK_DIR}" \
+              --package-file="${WORK_DIR}/${REPO}-${arch}.xpkg"
+
+            PKG_FILES+=(-f "${WORK_DIR}/${REPO}-${arch}.xpkg")
+          done
 
           up xpkg push "${UPBOUND_REGISTRY}/${REPO}:${VERSION}" \
-            -f "${WORK_DIR}/${REPO}.xpkg"
+            "${PKG_FILES[@]}"
 
           echo "Published: ${UPBOUND_REGISTRY}/${REPO}:${VERSION}"
 
