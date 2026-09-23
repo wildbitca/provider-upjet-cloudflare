@@ -38,7 +38,7 @@ permissions:
 jobs:
   # ── Resolve version + package list ────────────────────────────────────
   prepare:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ fromJSON(vars.CI_RUNNER || '"ubuntu-24.04"') }}
     outputs:
       version: ${{ steps.version.outputs.version }}
       subpackages: ${{ steps.packages.outputs.subpackages }}
@@ -83,7 +83,7 @@ jobs:
 
   # ── Ensure Upbound repos exist (only for packages being published) ────
   ensure-repos:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ fromJSON(vars.CI_RUNNER || '"ubuntu-24.04"') }}
     needs: prepare
     steps:
       - name: Install up CLI
@@ -135,7 +135,7 @@ jobs:
 
   # ── Family config (ProviderConfig CRDs — published before sub-providers) ──
   family-config:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ fromJSON(vars.CI_RUNNER || '"ubuntu-24.04"') }}
     needs: [prepare, ensure-repos]
     env:
       VERSION: ${{ needs.prepare.outputs.version }}
@@ -254,7 +254,7 @@ jobs:
 
   # ── Family sub-providers (only selected packages, parallel after family-config) ──
   family-subproviders:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ fromJSON(vars.CI_RUNNER || '"ubuntu-24.04"') }}
     needs: [prepare, family-config]
     env:
       VERSION: ${{ needs.prepare.outputs.version }}
@@ -387,7 +387,7 @@ jobs:
 
   # ── GitHub Release ────────────────────────────────────────────────────
   release:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ fromJSON(vars.CI_RUNNER || '"ubuntu-24.04"') }}
     needs: [prepare, family-subproviders]
     if: always() && needs.family-subproviders.result == 'success'
     env:
