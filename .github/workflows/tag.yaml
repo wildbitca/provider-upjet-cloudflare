@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   tag:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ fromJSON(vars.CI_RUNNER || '"ubuntu-24.04"') }}
     steps:
       - name: Mint GitHub App token (wildbit-ci)
         id: app-token
