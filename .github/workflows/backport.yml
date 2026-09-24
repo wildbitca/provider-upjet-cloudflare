@@ -19,9 +19,9 @@ jobs:
     if: github.event.pull_request.merged
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
       - name: Open Backport PR
-        uses: korthout/backport-action@v4
+        uses: korthout/backport-action@6b65649031ac6d18ffdfd0c0820e9436f3fde22b # v4.6.1

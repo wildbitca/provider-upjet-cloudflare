@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Detect No-op Changes
         id: noop
-        uses: fkirc/skip-duplicate-actions@v5
+        uses: fkirc/skip-duplicate-actions@b974a9395958c231af965b70070979a577efa578 # v5.3.2
         env:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
         with:
@@ -41,13 +41,13 @@ jobs:
     if: needs.detect-noop.outputs.noop != 'true'
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
 
       - name: Get modified CRDs
         id: modified-crds
-        uses: tj-actions/changed-files@v47
+        uses: tj-actions/changed-files@24d32ffd492484c1d75e0c0b894501ddb9d30d62 # v47.0.0
         with:
           files: |
             package/crds/**
@@ -69,12 +69,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
 
       - name: Setup Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
         with:
           go-version: ${{ env.GO_VERSION }}
 
@@ -83,14 +83,14 @@ jobs:
         run: echo "cache=$(make go.cachedir)" >> $GITHUB_OUTPUT
 
       - name: Cache the Go Build Cache
-        uses: actions/cache@v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: ${{ steps.go.outputs.cache }}
           key: ${{ runner.os }}-provider-upjet-cloudflare-go-${{ hashFiles('**/go.sum') }}
           restore-keys: ${{ runner.os }}-provider-upjet-cloudflare-go-
 
       - name: Cache Go Dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: .work/pkg
           key: ${{ runner.os }}-provider-upjet-cloudflare-pkg-${{ hashFiles('**/go.sum') }}
@@ -102,7 +102,7 @@ jobs:
       # We could run 'make lint' but we prefer this action because it leaves
       # 'annotations' (i.e. it comments on PRs to point out linter violations).
       - name: Lint
-        uses: golangci/golangci-lint-action@v9
+        uses: golangci/golangci-lint-action@ba0d7d2ec06a0ea1cb5fa41b2e4a3ab91d21278a # v9.3.0
         with:
           version: ${{ env.GOLANGCI_VERSION }}
 
@@ -113,12 +113,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
 
       - name: Setup Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
         with:
           go-version: ${{ env.GO_VERSION }}
 
@@ -130,14 +130,14 @@ jobs:
         run: echo "cache=$(make go.cachedir)" >> $GITHUB_OUTPUT
 
       - name: Cache the Go Build Cache
-        uses: actions/cache@v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: ${{ steps.go.outputs.cache }}
           key: ${{ runner.os }}-provider-upjet-cloudflare-go-${{ hashFiles('**/go.sum') }}
           restore-keys: ${{ runner.os }}-provider-upjet-cloudflare-go-
 
       - name: Cache Go Dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: .work/pkg
           key: ${{ runner.os }}-provider-upjet-cloudflare-pkg-${{ hashFiles('**/go.sum') }}
@@ -156,7 +156,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
 
@@ -176,7 +176,7 @@ jobs:
           done
 
       - name: Setup Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
         with:
           go-version: ${{ env.GO_VERSION }}
 
@@ -185,14 +185,14 @@ jobs:
         run: echo "cache=$(make go.cachedir)" >> $GITHUB_OUTPUT
 
       - name: Cache the Go Build Cache
-        uses: actions/cache@v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: ${{ steps.go.outputs.cache }}
           key: ${{ runner.os }}-provider-upjet-cloudflare-go-${{ hashFiles('**/go.sum') }}
           restore-keys: ${{ runner.os }}-provider-upjet-cloudflare-go-
 
       - name: Cache Go Dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: .work/pkg
           key: ${{ runner.os }}-provider-upjet-cloudflare-pkg-${{ hashFiles('**/go.sum') }}
@@ -205,7 +205,7 @@ jobs:
         run: make -j2 test
 
       - name: Publish Unit Test Coverage
-        uses: codecov/codecov-action@v7
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
           flags: unittests
           files: _output/tests/linux_amd64/coverage.txt
@@ -217,7 +217,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
 
@@ -237,7 +237,7 @@ jobs:
           done
 
       - name: Setup Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
         with:
           go-version: ${{ env.GO_VERSION }}
 
@@ -246,14 +246,14 @@ jobs:
         run: echo "cache=$(make go.cachedir)" >> $GITHUB_OUTPUT
 
       - name: Cache the Go Build Cache
-        uses: actions/cache@v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: ${{ steps.go.outputs.cache }}
           key: ${{ runner.os }}-provider-upjet-cloudflare-go-${{ hashFiles('**/go.sum') }}
           restore-keys: ${{ runner.os }}-provider-upjet-cloudflare-go-
 
       - name: Cache Go Dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: .work/pkg
           key: ${{ runner.os }}-provider-upjet-cloudflare-pkg-${{ hashFiles('**/go.sum') }}
