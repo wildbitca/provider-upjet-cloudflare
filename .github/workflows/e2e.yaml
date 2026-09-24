@@ -24,15 +24,20 @@ jobs:
     steps:
       - name: Get Commenter Permissions
         id: check-permissions
+        env:
+          SECRET_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_EVENT_COMMENT_USER_LOGIN: ${{ github.event.comment.user.login }}
+          GH_REPOSITORY: ${{ github.repository }}
+          ENV_GO_VERSION: ${{ env.GO_VERSION }}
         run: |
           echo "Trigger keyword: '/test-examples'"
-          echo "Go version: ${{ env.GO_VERSION }}"
+          echo "Go version: ${ENV_GO_VERSION}"
 
-          REPO=${{ github.repository }}
-          COMMENTER=${{ github.event.comment.user.login }}
+          REPO="${GH_REPOSITORY}"
+          COMMENTER="${GH_EVENT_COMMENT_USER_LOGIN}"
 
           # Fetch the commenter's repo-level permission grant
-          GRANTED=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          GRANTED=$(curl -s -H "Authorization: Bearer ${SECRET_GITHUB_TOKEN}" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/$REPO/collaborators/$COMMENTER/permission" | jq -r .permission)
 
@@ -87,15 +92,19 @@ jobs:
       - name: Create Pending Status Check
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STEPS_GET_EXAMPLE_LIST_NAME_OUTPUTS_EXAMPLE_HASH: ${{ steps.get-example-list-name.outputs.example-hash }}
+          GH_RUN_ID: ${{ github.run_id }}
+          GH_REPOSITORY: ${{ github.repository }}
+          STEPS_CHECKOUT_PR_OUTPUTS_COMMIT_SHA: ${{ steps.checkout-pr.outputs.commit-sha }}
         run: |
           gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
-            /repos/${{ github.repository }}/statuses/${{ steps.checkout-pr.outputs.commit-sha }} \
+            /repos/"${GH_REPOSITORY}"/statuses/"${STEPS_CHECKOUT_PR_OUTPUTS_COMMIT_SHA}" \
             -f state='pending' \
-            -f target_url='https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}' \
+            -f target_url='https://github.com/'"${GH_REPOSITORY}"'/actions/runs/'"${GH_RUN_ID}"'' \
             -f description='Running...' \
-            -f context="Uptest-${{ steps.get-example-list-name.outputs.example-hash }}"
+            -f context="Uptest-${STEPS_GET_EXAMPLE_LIST_NAME_OUTPUTS_EXAMPLE_HASH}"
 
   uptest:
     needs:
@@ -155,13 +164,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EXAMPLE_HASH: ${{ needs.get-example-list.outputs.example_hash }}
+          GH_RUN_ID: ${{ github.run_id }}
+          GH_REPOSITORY: ${{ github.repository }}
+          STEPS_CHECKOUT_PR_OUTPUTS_COMMIT_SHA: ${{ steps.checkout-pr.outputs.commit-sha }}
         run: |
           gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
-            /repos/${{ github.repository }}/statuses/${{ steps.checkout-pr.outputs.commit-sha }} \
+            /repos/"${GH_REPOSITORY}"/statuses/"${STEPS_CHECKOUT_PR_OUTPUTS_COMMIT_SHA}" \
             -f state='success' \
-            -f target_url='https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}' \
+            -f target_url='https://github.com/'"${GH_REPOSITORY}"'/actions/runs/'"${GH_RUN_ID}"'' \
             -f description='Passed' \
             -f context="Uptest-${EXAMPLE_HASH}"
 
@@ -188,12 +200,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EXAMPLE_HASH: ${{ needs.get-example-list.outputs.example_hash }}
+          GH_RUN_ID: ${{ github.run_id }}
+          GH_REPOSITORY: ${{ github.repository }}
+          STEPS_CHECKOUT_PR_OUTPUTS_COMMIT_SHA: ${{ steps.checkout-pr.outputs.commit-sha }}
         run: |
           gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
-            /repos/${{ github.repository }}/statuses/${{ steps.checkout-pr.outputs.commit-sha }} \
+            /repos/"${GH_REPOSITORY}"/statuses/"${STEPS_CHECKOUT_PR_OUTPUTS_COMMIT_SHA}" \
             -f state='failure' \
-            -f target_url='https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}' \
+            -f target_url='https://github.com/'"${GH_REPOSITORY}"'/actions/runs/'"${GH_RUN_ID}"'' \
             -f description='Failed' \
             -f context="Uptest-${EXAMPLE_HASH}"

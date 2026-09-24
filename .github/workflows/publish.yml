@@ -45,12 +45,17 @@ jobs:
     steps:
       - name: Resolve version
         id: version
+        env:
+          GH_REF_NAME: ${{ github.ref_name }}
+          GH_EVENT_INPUTS_VERSION: ${{ github.event.inputs.version }}
         run: |
-          V="${{ github.event.inputs.version }}"
-          echo "version=${V:-${{ github.ref_name }}}" >> $GITHUB_OUTPUT
+          V="${GH_EVENT_INPUTS_VERSION}"
+          echo "version=${V:-${GH_REF_NAME}}" >> $GITHUB_OUTPUT
 
       - name: Resolve package list
         id: packages
+        env:
+          GH_EVENT_INPUTS_PACKAGES: ${{ github.event.inputs.packages }}
         run: |
           ALL='["access","account","address","ai","api","argo","authenticated",
                 "bot","byo","calls","certificate","cloud","cloudflare","cloudforce",
@@ -63,7 +68,7 @@ jobs:
                 "stream","tiered","token","total","turnstile","universal","url",
                 "user","waiting","web","web3","worker","workers","zero","zone"]'
 
-          INPUT="${{ github.event.inputs.packages }}"
+          INPUT="${GH_EVENT_INPUTS_PACKAGES}"
 
           if [ -z "$INPUT" ] || [ "$INPUT" = "all" ]; then
             SUBPACKAGES=$(echo "$ALL" | tr -d '\n' | jq -c .)
@@ -96,10 +101,12 @@ jobs:
         run: up login -t "${{ secrets.UPBOUND_TOKEN }}"
 
       - name: Ensure repos exist
+        env:
+          NEEDS_PREPARE_OUTPUTS_SUBPACKAGES: ${{ needs.prepare.outputs.subpackages }}
         run: |
           # Build the list of repos being published in this run.
           # family-cloudflare is always included.
-          SUBPACKAGES='${{ needs.prepare.outputs.subpackages }}'
+          SUBPACKAGES=''"${NEEDS_PREPARE_OUTPUTS_SUBPACKAGES}"''
           REPOS=("provider-family-cloudflare")
           while IFS= read -r pkg; do
             REPOS+=("provider-cloudflare-${pkg}")
@@ -309,8 +316,10 @@ jobs:
           fi
 
       - name: Build binary
+        env:
+          MATRIX_SUBPACKAGE: ${{ matrix.subpackage }}
         run: |
-          SP="${{ matrix.subpackage }}"
+          SP="${MATRIX_SUBPACKAGE}"
           CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
             -trimpath -installsuffix static \
             -ldflags "-X github.com/wildbitca/provider-upjet-cloudflare/internal/version.Version=${VERSION} -s -w" \
@@ -318,8 +327,10 @@ jobs:
             ./cmd/provider/${SP}/
 
       - name: Build image, xpkg and publish
+        env:
+          MATRIX_SUBPACKAGE: ${{ matrix.subpackage }}
         run: |
-          SP="${{ matrix.subpackage }}"
+          SP="${MATRIX_SUBPACKAGE}"
           REPO="provider-cloudflare-${SP}"
 
           BUILD_CTX=$(mktemp -d)
@@ -380,8 +391,10 @@ jobs:
 
       - name: Append extensions
         continue-on-error: true
+        env:
+          MATRIX_SUBPACKAGE: ${{ matrix.subpackage }}
         run: |
-          SP="${{ matrix.subpackage }}"
+          SP="${MATRIX_SUBPACKAGE}"
           up xpkg append --extensions-root=./extensions \
             "${UPBOUND_REGISTRY}/provider-cloudflare-${SP}:${VERSION}"
 
