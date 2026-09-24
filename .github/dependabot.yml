@@ -17,6 +17,8 @@ updates:
     groups:
       minor-and-patch:
         update-types: [minor, patch]
+    cooldown:
+      default-days: 7
 
   - package-ecosystem: github-actions
     directory: /
@@ -28,3 +30,5 @@ updates:
     groups:
       actions:
         update-types: [minor, patch]
+    cooldown:
+      default-days: 7
