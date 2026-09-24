@@ -93,7 +93,8 @@ jobs:
     steps:
       - name: Install up CLI
         run: |
-          curl -sLo up "https://cli.upbound.io/stable/current/bin/linux_amd64/up"
+          curl -fsSLo up "https://cli.upbound.io/stable/v0.54.0/bin/linux_amd64/up"
+          echo "99a666d01e92d7fb7f44bfc9baf436fc28247f6022faa11122b80f5b216bbf8f  up" | sha256sum -c -
           chmod +x up
           sudo mv up /usr/local/bin/up
 
@@ -171,10 +172,12 @@ jobs:
 
       - name: Install CLIs
         run: |
-          curl -sLo up "https://cli.upbound.io/stable/current/bin/linux_amd64/up"
+          curl -fsSLo up "https://cli.upbound.io/stable/v0.54.0/bin/linux_amd64/up"
+          echo "99a666d01e92d7fb7f44bfc9baf436fc28247f6022faa11122b80f5b216bbf8f  up" | sha256sum -c -
           chmod +x up
           sudo mv up /usr/local/bin/up
-          curl -sLo docker-credential-up "https://cli.upbound.io/stable/current/bin/linux_amd64/docker-credential-up"
+          curl -fsSLo docker-credential-up "https://cli.upbound.io/stable/v0.54.0/bin/linux_amd64/docker-credential-up"
+          echo "336e7f4883d8c0b873f709febfae3ae9b6f60288ffb79a12cc9f0659e12066c9  docker-credential-up" | sha256sum -c -
           chmod +x docker-credential-up
           sudo mv docker-credential-up /usr/local/bin/docker-credential-up
           curl -sL "https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh" | sh
@@ -295,10 +298,12 @@ jobs:
 
       - name: Install CLIs
         run: |
-          curl -sLo up "https://cli.upbound.io/stable/current/bin/linux_amd64/up"
+          curl -fsSLo up "https://cli.upbound.io/stable/v0.54.0/bin/linux_amd64/up"
+          echo "99a666d01e92d7fb7f44bfc9baf436fc28247f6022faa11122b80f5b216bbf8f  up" | sha256sum -c -
           chmod +x up
           sudo mv up /usr/local/bin/up
-          curl -sLo docker-credential-up "https://cli.upbound.io/stable/current/bin/linux_amd64/docker-credential-up"
+          curl -fsSLo docker-credential-up "https://cli.upbound.io/stable/v0.54.0/bin/linux_amd64/docker-credential-up"
+          echo "336e7f4883d8c0b873f709febfae3ae9b6f60288ffb79a12cc9f0659e12066c9  docker-credential-up" | sha256sum -c -
           chmod +x docker-credential-up
           sudo mv docker-credential-up /usr/local/bin/docker-credential-up
           curl -sL "https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh" | sh
