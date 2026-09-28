@@ -8,6 +8,13 @@ on:
   issue_comment:
     types: [ created ]
 
+concurrency:
+  # issue_comment events don't carry a meaningful github.ref (it resolves to
+  # the default branch), so group by the PR/issue number instead to avoid
+  # cancelling e2e runs from unrelated PRs.
+  group: ${{ github.workflow }}-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
 env:
   GO_VERSION: "1.25"
 
