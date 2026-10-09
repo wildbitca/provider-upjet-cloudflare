@@ -85,6 +85,17 @@ spec:
                           (Number) The maximum number of messages to include in a batch.
                           The maximum number of messages to include in a batch.
                         type: number
+                      email:
+                        description: (Attributes List) (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) The email address.
+                                The email address.
+                              type: string
+                          type: object
+                        type: array
                       maxConcurrency:
                         description: |-
                           (Number) Maximum number of concurrent consumers that may consume from this Queue. Set to null to automatically opt in to the platform's maximum (recommended).
@@ -100,6 +111,18 @@ spec:
                           (Number) The number of milliseconds to wait for a batch to fill up before attempting to deliver it
                           The number of milliseconds to wait for a batch to fill up before attempting to deliver it
                         type: number
+                      pagerduty:
+                        description: (Attributes List) PagerDuty notification destinations.
+                          (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) The email address.
+                                UUID.
+                              type: string
+                          type: object
+                        type: array
                       retryDelay:
                         description: |-
                           (Number) The number of seconds to delay before making the message available for another attempt.
@@ -110,11 +133,23 @@ spec:
                           (Number) The number of milliseconds that a message is exclusively leased. After the timeout, the message becomes available for another attempt.
                           The number of milliseconds that a message is exclusively leased. After the timeout, the message becomes available for another attempt.
                         type: number
+                      webhooks:
+                        description: (Attributes List) Webhook notification destinations.
+                          (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) The email address.
+                                UUID.
+                              type: string
+                          type: object
+                        type: array
                     type: object
                   type:
                     description: |-
-                      (String) Available values: "worker", "http_pull".
-                      Available values: "worker", "http_pull".
+                      (String) Available values: "worker", "http_pull", "notification".
+                      Available values: "worker", "http_pull", "notification".
                     type: string
                 type: object
               initProvider:
@@ -156,6 +191,17 @@ spec:
                           (Number) The maximum number of messages to include in a batch.
                           The maximum number of messages to include in a batch.
                         type: number
+                      email:
+                        description: (Attributes List) (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) The email address.
+                                The email address.
+                              type: string
+                          type: object
+                        type: array
                       maxConcurrency:
                         description: |-
                           (Number) Maximum number of concurrent consumers that may consume from this Queue. Set to null to automatically opt in to the platform's maximum (recommended).
@@ -171,6 +217,18 @@ spec:
                           (Number) The number of milliseconds to wait for a batch to fill up before attempting to deliver it
                           The number of milliseconds to wait for a batch to fill up before attempting to deliver it
                         type: number
+                      pagerduty:
+                        description: (Attributes List) PagerDuty notification destinations.
+                          (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) The email address.
+                                UUID.
+                              type: string
+                          type: object
+                        type: array
                       retryDelay:
                         description: |-
                           (Number) The number of seconds to delay before making the message available for another attempt.
@@ -181,11 +239,23 @@ spec:
                           (Number) The number of milliseconds that a message is exclusively leased. After the timeout, the message becomes available for another attempt.
                           The number of milliseconds that a message is exclusively leased. After the timeout, the message becomes available for another attempt.
                         type: number
+                      webhooks:
+                        description: (Attributes List) Webhook notification destinations.
+                          (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) The email address.
+                                UUID.
+                              type: string
+                          type: object
+                        type: array
                     type: object
                   type:
                     description: |-
-                      (String) Available values: "worker", "http_pull".
-                      Available values: "worker", "http_pull".
+                      (String) Available values: "worker", "http_pull", "notification".
+                      Available values: "worker", "http_pull", "notification".
                     type: string
                 type: object
               managementPolicies:
@@ -281,6 +351,7 @@ spec:
                     description: (String)
                     type: string
                   id:
+                    description: (String) The email address.
                     type: string
                   queueId:
                     description: |-
@@ -303,6 +374,17 @@ spec:
                           (Number) The maximum number of messages to include in a batch.
                           The maximum number of messages to include in a batch.
                         type: number
+                      email:
+                        description: (Attributes List) (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) The email address.
+                                The email address.
+                              type: string
+                          type: object
+                        type: array
                       maxConcurrency:
                         description: |-
                           (Number) Maximum number of concurrent consumers that may consume from this Queue. Set to null to automatically opt in to the platform's maximum (recommended).
@@ -318,6 +400,18 @@ spec:
                           (Number) The number of milliseconds to wait for a batch to fill up before attempting to deliver it
                           The number of milliseconds to wait for a batch to fill up before attempting to deliver it
                         type: number
+                      pagerduty:
+                        description: (Attributes List) PagerDuty notification destinations.
+                          (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) The email address.
+                                UUID.
+                              type: string
+                          type: object
+                        type: array
                       retryDelay:
                         description: |-
                           (Number) The number of seconds to delay before making the message available for another attempt.
@@ -328,11 +422,23 @@ spec:
                           (Number) The number of milliseconds that a message is exclusively leased. After the timeout, the message becomes available for another attempt.
                           The number of milliseconds that a message is exclusively leased. After the timeout, the message becomes available for another attempt.
                         type: number
+                      webhooks:
+                        description: (Attributes List) Webhook notification destinations.
+                          (see below for nested schema)
+                        items:
+                          properties:
+                            id:
+                              description: |-
+                                (String) The email address.
+                                UUID.
+                              type: string
+                          type: object
+                        type: array
                     type: object
                   type:
                     description: |-
-                      (String) Available values: "worker", "http_pull".
-                      Available values: "worker", "http_pull".
+                      (String) Available values: "worker", "http_pull", "notification".
+                      Available values: "worker", "http_pull", "notification".
                     type: string
                 type: object
               conditions:

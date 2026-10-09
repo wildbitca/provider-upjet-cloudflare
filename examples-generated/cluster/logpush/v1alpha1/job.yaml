@@ -8,13 +8,14 @@ metadata:
   name: example-logpush-job
 spec:
   forProvider:
-    dataset: gateway_dns
+    dataset: http_requests
     destinationConfSecretRef:
       key: example-key
       name: example-secret
       namespace: upbound-system
     enabled: false
     filter: '{"where":{"and":[{"key":"ClientRequestPath","operator":"contains","value":"/static"},{"key":"ClientRequestHost","operator":"eq","value":"example.com"}]}}'
+    filterAttackTraffic: true
     frequency: high
     kind: ""
     logpullOptions: fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339
@@ -23,21 +24,19 @@ spec:
     maxUploadRecords: 1000
     name: example.com
     outputOptions:
-      batchPrefix: ""
-      batchSuffix: ""
-      cve202144228: false
-      fieldDelimiter: ','
+      batchPrefix: batch_prefix
+      batchSuffix: batch_suffix
+      cve202144228: true
+      fieldDelimiter: field_delimiter
       fieldNames:
-      - Datetime
-      - DstIP
-      - SrcIP
+      - ClientIP
+      - EdgeStartTimestamp
+      - RayID
       mergeSubrequests: true
       outputType: ndjson
-      recordDelimiter: ""
-      recordPrefix: '{'
-      recordSuffix: |2+
-            }
-
+      recordDelimiter: record_delimiter
+      recordPrefix: record_prefix
+      recordSuffix: record_suffix
       recordTemplate: record_template
       sampleRate: 1
       timestampFormat: unixnano

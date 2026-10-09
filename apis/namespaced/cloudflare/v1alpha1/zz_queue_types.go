@@ -73,6 +73,10 @@ type QueueInitParameters struct {
 	// A Resource identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// (String) Available values: "eu", "us", "fedramp".
+	// Available values: "eu", "us", "fedramp".
+	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
+
 	// (String)
 	QueueName *string `json:"queueName,omitempty" tf:"queue_name,omitempty"`
 
@@ -97,6 +101,10 @@ type QueueObservation struct {
 
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (String) Available values: "eu", "us", "fedramp".
+	// Available values: "eu", "us", "fedramp".
+	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
 	// (String)
 	ModifiedOn *string `json:"modifiedOn,omitempty" tf:"modified_on,omitempty"`
@@ -123,6 +131,11 @@ type QueueParameters struct {
 	// A Resource identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (String) Available values: "eu", "us", "fedramp".
+	// Available values: "eu", "us", "fedramp".
+	// +kubebuilder:validation:Optional
+	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional

@@ -290,6 +290,11 @@ spec:
                         devicePosture:
                           description: (Attributes) (see below for nested schema)
                           properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                The ID of the account that owns the device posture integration.
+                              type: string
                             integrationUid:
                               description: |-
                                 (String) The ID of a device posture integration.
@@ -578,6 +583,11 @@ spec:
                         devicePosture:
                           description: (Attributes) (see below for nested schema)
                           properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                The ID of the account that owns the device posture integration.
+                              type: string
                             integrationUid:
                               description: |-
                                 (String) The ID of a device posture integration.
@@ -908,6 +918,11 @@ spec:
                         devicePosture:
                           description: (Attributes) (see below for nested schema)
                           properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                The ID of the account that owns the device posture integration.
+                              type: string
                             integrationUid:
                               description: |-
                                 (String) The ID of a device posture integration.
@@ -1355,6 +1370,11 @@ spec:
                         devicePosture:
                           description: (Attributes) (see below for nested schema)
                           properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                The ID of the account that owns the device posture integration.
+                              type: string
                             integrationUid:
                               description: |-
                                 (String) The ID of a device posture integration.
@@ -1643,6 +1663,11 @@ spec:
                         devicePosture:
                           description: (Attributes) (see below for nested schema)
                           properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                The ID of the account that owns the device posture integration.
+                              type: string
                             integrationUid:
                               description: |-
                                 (String) The ID of a device posture integration.
@@ -1973,6 +1998,11 @@ spec:
                         devicePosture:
                           description: (Attributes) (see below for nested schema)
                           properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                The ID of the account that owns the device posture integration.
+                              type: string
                             integrationUid:
                               description: |-
                                 (String) The ID of a device posture integration.
@@ -2441,6 +2471,11 @@ spec:
                         devicePosture:
                           description: (Attributes) (see below for nested schema)
                           properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                The ID of the account that owns the device posture integration.
+                              type: string
                             integrationUid:
                               description: |-
                                 (String) The ID of a device posture integration.
@@ -2732,6 +2767,11 @@ spec:
                         devicePosture:
                           description: (Attributes) (see below for nested schema)
                           properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                The ID of the account that owns the device posture integration.
+                              type: string
                             integrationUid:
                               description: |-
                                 (String) The ID of a device posture integration.
@@ -3062,6 +3102,11 @@ spec:
                         devicePosture:
                           description: (Attributes) (see below for nested schema)
                           properties:
+                            accountId:
+                              description: |-
+                                (String) Identifier.
+                                The ID of the account that owns the device posture integration.
+                              type: string
                             integrationUid:
                               description: |-
                                 (String) The ID of a device posture integration.

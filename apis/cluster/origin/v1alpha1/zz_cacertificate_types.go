@@ -56,7 +56,7 @@ type CACertificateObservation struct {
 	// Hostnames must be fully qualified domain names (FQDNs) belonging to zones on your account (e.g., `example.com` or `sub.example.com`). Wildcards are supported only as a `*.` prefix for a single level (e.g., `*.example.com`). Double wildcards (`*.*.example.com`) and interior wildcards (`foo.*.example.com`) are not allowed. The wildcard suffix must be a multi-label domain (`*.example.com` is valid, but `*.com` is not). Unicode/IDN hostnames are accepted and automatically converted to punycode.
 	Hostnames []*string `json:"hostnames,omitempty" tf:"hostnames,omitempty"`
 
-	// (String) Identifier.
+	// (String) The x509 serial number of the Origin CA certificate.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// rsa" (rsa), "origin-ecc" (ecdsa), or "keyless-certificate" (for Keyless SSL servers).

@@ -116,6 +116,12 @@ type TrustDlpCustomEntryObservation struct {
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// (Boolean) Whether this entry is deprecated for new use. This is computed from the static catalog and
+	// emitted only when true.
+	// Whether this entry is deprecated for new use. This is computed from the static catalog and
+	// emitted only when true.
+	Deprecated *bool `json:"deprecated,omitempty" tf:"deprecated,omitempty"`
+
 	// (String)
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 

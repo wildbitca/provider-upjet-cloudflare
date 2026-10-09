@@ -11,8 +11,9 @@ spec:
   forProvider:
     accountId: a86a8f5c339544d7bdc89926de14fb8c
     allowCodeMode: true
+    codeMode: opt_in
     description: This is my custom MCP Portal
-    hostname: exmaple.com
+    hostname: example.com
     name: My MCP Portal
     secureWebGateway: false
     servers:

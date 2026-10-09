@@ -182,6 +182,10 @@ type ExcludeCommonNameParameters struct {
 
 type ExcludeDevicePostureInitParameters struct {
 
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// The ID of the account that owns the device posture integration.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
 	IntegrationUID *string `json:"integrationUid,omitempty" tf:"integration_uid,omitempty"`
@@ -189,12 +193,21 @@ type ExcludeDevicePostureInitParameters struct {
 
 type ExcludeDevicePostureObservation struct {
 
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// The ID of the account that owns the device posture integration.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
 	IntegrationUID *string `json:"integrationUid,omitempty" tf:"integration_uid,omitempty"`
 }
 
 type ExcludeDevicePostureParameters struct {
+
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// The ID of the account that owns the device posture integration.
+	// +kubebuilder:validation:Optional
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
@@ -1184,6 +1197,10 @@ type TrustAccessGroupIncludeCommonNameParameters struct {
 
 type TrustAccessGroupIncludeDevicePostureInitParameters struct {
 
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// The ID of the account that owns the device posture integration.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
 	IntegrationUID *string `json:"integrationUid,omitempty" tf:"integration_uid,omitempty"`
@@ -1191,12 +1208,21 @@ type TrustAccessGroupIncludeDevicePostureInitParameters struct {
 
 type TrustAccessGroupIncludeDevicePostureObservation struct {
 
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// The ID of the account that owns the device posture integration.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
 	IntegrationUID *string `json:"integrationUid,omitempty" tf:"integration_uid,omitempty"`
 }
 
 type TrustAccessGroupIncludeDevicePostureParameters struct {
+
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// The ID of the account that owns the device posture integration.
+	// +kubebuilder:validation:Optional
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
@@ -2210,6 +2236,10 @@ type TrustAccessGroupRequireCommonNameParameters struct {
 
 type TrustAccessGroupRequireDevicePostureInitParameters struct {
 
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// The ID of the account that owns the device posture integration.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
 	IntegrationUID *string `json:"integrationUid,omitempty" tf:"integration_uid,omitempty"`
@@ -2217,12 +2247,21 @@ type TrustAccessGroupRequireDevicePostureInitParameters struct {
 
 type TrustAccessGroupRequireDevicePostureObservation struct {
 
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// The ID of the account that owns the device posture integration.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
 	IntegrationUID *string `json:"integrationUid,omitempty" tf:"integration_uid,omitempty"`
 }
 
 type TrustAccessGroupRequireDevicePostureParameters struct {
+
+	// (String) The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
+	// The ID of the account that owns the device posture integration.
+	// +kubebuilder:validation:Optional
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.

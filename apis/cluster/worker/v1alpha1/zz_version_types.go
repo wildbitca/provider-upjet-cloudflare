@@ -162,6 +162,11 @@ type BindingsInitParameters struct {
 	// Identifier of the D1 database to bind to.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// email-alpha".
+	// Enables Gateway identity for the binding. Requires network_id to be "cf1:network" and cannot be combined with tunnel_id.
+	// Available values: "runtime-email-alpha".
+	Identity *string `json:"identity,omitempty" tf:"identity,omitempty"`
+
 	// (String) Name of the Vectorize index to bind to.
 	// Name of the Vectorize index to bind to.
 	IndexName *string `json:"indexName,omitempty" tf:"index_name,omitempty"`
@@ -174,9 +179,9 @@ type BindingsInitParameters struct {
 	// JSON data to use.
 	JSON *string `json:"json,omitempty" tf:"json,omitempty"`
 
-	// high".
+	// high", "us".
 	// The [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) of the R2 bucket.
-	// Available values: "eu", "fedramp", "fedramp-high".
+	// Available values: "eu", "fedramp", "fedramp-high", "us".
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
 	// encoded key data. Required if format is "raw", "pkcs8", or "spki".
@@ -245,6 +250,10 @@ type BindingsInitParameters struct {
 	// ID of the store containing the secret.
 	StoreID *string `json:"storeId,omitempty" tf:"store_id,omitempty"`
 
+	// (String) ID of a K2 stream owned by the account deploying the Worker.
+	// ID of a K2 stream owned by the account deploying the Worker.
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
 	// (String, Sensitive) The text value to use.
 	// The text value to use.
 	TextSecretRef *v1.SecretKeySelector `json:"textSecretRef,omitempty" tf:"-"`
@@ -254,9 +263,9 @@ type BindingsInitParameters struct {
 	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
 
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (Set of String) Allowed operations with the key. Learn more.
@@ -337,6 +346,11 @@ type BindingsObservation struct {
 	// Identifier of the D1 database to bind to.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// email-alpha".
+	// Enables Gateway identity for the binding. Requires network_id to be "cf1:network" and cannot be combined with tunnel_id.
+	// Available values: "runtime-email-alpha".
+	Identity *string `json:"identity,omitempty" tf:"identity,omitempty"`
+
 	// (String) Name of the Vectorize index to bind to.
 	// Name of the Vectorize index to bind to.
 	IndexName *string `json:"indexName,omitempty" tf:"index_name,omitempty"`
@@ -349,9 +363,9 @@ type BindingsObservation struct {
 	// JSON data to use.
 	JSON *string `json:"json,omitempty" tf:"json,omitempty"`
 
-	// high".
+	// high", "us".
 	// The [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) of the R2 bucket.
-	// Available values: "eu", "fedramp", "fedramp-high".
+	// Available values: "eu", "fedramp", "fedramp-high", "us".
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
 	// (String) A JavaScript variable name for the binding.
@@ -412,14 +426,18 @@ type BindingsObservation struct {
 	// ID of the store containing the secret.
 	StoreID *string `json:"storeId,omitempty" tf:"store_id,omitempty"`
 
+	// (String) ID of a K2 stream owned by the account deploying the Worker.
+	// ID of a K2 stream owned by the account deploying the Worker.
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
 	// (String) UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
 	// UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
 	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
 
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (Set of String) Allowed operations with the key. Learn more.
@@ -515,6 +533,12 @@ type BindingsParameters struct {
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// email-alpha".
+	// Enables Gateway identity for the binding. Requires network_id to be "cf1:network" and cannot be combined with tunnel_id.
+	// Available values: "runtime-email-alpha".
+	// +kubebuilder:validation:Optional
+	Identity *string `json:"identity,omitempty" tf:"identity,omitempty"`
+
 	// (String) Name of the Vectorize index to bind to.
 	// Name of the Vectorize index to bind to.
 	// +kubebuilder:validation:Optional
@@ -530,9 +554,9 @@ type BindingsParameters struct {
 	// +kubebuilder:validation:Optional
 	JSON *string `json:"json,omitempty" tf:"json,omitempty"`
 
-	// high".
+	// high", "us".
 	// The [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) of the R2 bucket.
-	// Available values: "eu", "fedramp", "fedramp-high".
+	// Available values: "eu", "fedramp", "fedramp-high", "us".
 	// +kubebuilder:validation:Optional
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
@@ -619,6 +643,11 @@ type BindingsParameters struct {
 	// +kubebuilder:validation:Optional
 	StoreID *string `json:"storeId,omitempty" tf:"store_id,omitempty"`
 
+	// (String) ID of a K2 stream owned by the account deploying the Worker.
+	// ID of a K2 stream owned by the account deploying the Worker.
+	// +kubebuilder:validation:Optional
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
 	// (String, Sensitive) The text value to use.
 	// The text value to use.
 	// +kubebuilder:validation:Optional
@@ -630,9 +659,9 @@ type BindingsParameters struct {
 	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
 
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
@@ -730,6 +759,10 @@ type CacheParameters struct {
 
 type ConfigInitParameters struct {
 
+	// (String) The public URL path prefix under which assets are served. A null request value resets it to /; responses represent the root as /. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+	// The public URL path prefix under which assets are served. A null request value resets it to `/`; responses represent the root as `/`. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+	BasePath *string `json:"basePath,omitempty" tf:"base_path,omitempty"`
+
 	// trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
 	// Determines the redirects and rewrites of requests for HTML content.
 	// Available values: "auto-trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
@@ -747,6 +780,10 @@ type ConfigInitParameters struct {
 
 type ConfigObservation struct {
 
+	// (String) The public URL path prefix under which assets are served. A null request value resets it to /; responses represent the root as /. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+	// The public URL path prefix under which assets are served. A null request value resets it to `/`; responses represent the root as `/`. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+	BasePath *string `json:"basePath,omitempty" tf:"base_path,omitempty"`
+
 	// trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
 	// Determines the redirects and rewrites of requests for HTML content.
 	// Available values: "auto-trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
@@ -763,6 +800,11 @@ type ConfigObservation struct {
 }
 
 type ConfigParameters struct {
+
+	// (String) The public URL path prefix under which assets are served. A null request value resets it to /; responses represent the root as /. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+	// The public URL path prefix under which assets are served. A null request value resets it to `/`; responses represent the root as `/`. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+	// +kubebuilder:validation:Optional
+	BasePath *string `json:"basePath,omitempty" tf:"base_path,omitempty"`
 
 	// trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
 	// Determines the redirects and rewrites of requests for HTML content.
@@ -866,7 +908,7 @@ type ExportsInitParameters struct {
 	TransferredTo *string `json:"transferredTo,omitempty" tf:"transferred_to,omitempty"`
 
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of export.
 	// Available values: "worker", "durable-object".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -934,7 +976,7 @@ type ExportsObservation struct {
 	TransferredTo *string `json:"transferredTo,omitempty" tf:"transferred_to,omitempty"`
 
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of export.
 	// Available values: "worker", "durable-object".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -1008,11 +1050,80 @@ type ExportsParameters struct {
 	TransferredTo *string `json:"transferredTo,omitempty" tf:"transferred_to,omitempty"`
 
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of export.
 	// Available values: "worker", "durable-object".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type ExportsReconciliationInitParameters struct {
+}
+
+type ExportsReconciliationObservation struct {
+
+	// (List of String) Class names for which a new namespace was provisioned.
+	// Class names for which a new namespace was provisioned.
+	Created []*string `json:"created,omitempty" tf:"created,omitempty"`
+
+	// (List of String) Class names whose namespace was deleted by a deleted tombstone.
+	// Class names whose namespace was deleted by a `deleted` tombstone.
+	Deleted []*string `json:"deleted,omitempty" tf:"deleted,omitempty"`
+
+	// blocking info entries (stale tombstones, tombstone applied with class still in code). See exports_reconciliation_info. (see below for nested schema)
+	Info []InfoObservation `json:"info,omitempty" tf:"info,omitempty"`
+
+	// (List of String) Source class names whose tombstone entry is now stale and safe to delete from exports (no remaining referencing scripts).
+	// Source class names whose tombstone entry is now stale and safe to delete from `exports` (no remaining referencing scripts).
+	RemovableEntries []*string `json:"removableEntries,omitempty" tf:"removable_entries,omitempty"`
+
+	// (Attributes List) Applied renamed tombstones. (see below for nested schema)
+	Renamed []RenamedObservation `json:"renamed,omitempty" tf:"renamed,omitempty"`
+
+	// 1 transfer hints recorded on the target side. (see below for nested schema)
+	TransferPending []TransferPendingObservation `json:"transferPending,omitempty" tf:"transfer_pending,omitempty"`
+
+	// 2). (see below for nested schema)
+	Transferred []TransferredObservation `json:"transferred,omitempty" tf:"transferred,omitempty"`
+
+	// (List of String) Class names whose provisioned namespace was mutated in place.
+	// Class names whose provisioned namespace was mutated in place.
+	Updated []*string `json:"updated,omitempty" tf:"updated,omitempty"`
+
+	// blocking warnings. See exports_reconciliation_warning. (see below for nested schema)
+	Warnings []WarningsObservation `json:"warnings,omitempty" tf:"warnings,omitempty"`
+}
+
+type ExportsReconciliationParameters struct {
+}
+
+type InfoInitParameters struct {
+}
+
+type InfoObservation struct {
+
+	// (String) The class name the info entry is about.
+	// The class name the info entry is about.
+	Class *string `json:"class,omitempty" tf:"class,omitempty"`
+
+	// readable explanation.
+	// Human-readable explanation.
+	Message *string `json:"message,omitempty" tf:"message,omitempty"`
+
+	// (String) Namespace identifier tag.
+	// The provisioned namespace the entry relates to, when applicable.
+	NamespaceID *string `json:"namespaceId,omitempty" tf:"namespace_id,omitempty"`
+
+	// empty the tombstone is not yet safe to remove — redeploy these Workers with bindings re-pointed first.
+	// Other Workers in the account that still bind to the affected class. Advisory: while non-empty the tombstone is not yet safe to remove — redeploy these Workers with bindings re-pointed first.
+	ReferencingScripts []*string `json:"referencingScripts,omitempty" tf:"referencing_scripts,omitempty"`
+
+	// readable tag identifying which reconciliation scenario produced an error, warning, or info entry. Clients may branch on this value instead of parsing message.
+	// Stable, machine-readable tag identifying which reconciliation scenario produced an error, warning, or info entry. Clients may branch on this value instead of parsing `message`.
+	Scenario *string `json:"scenario,omitempty" tf:"scenario,omitempty"`
+}
+
+type InfoParameters struct {
 }
 
 type LimitsInitParameters struct {
@@ -1463,6 +1574,23 @@ type RenamedClassesParameters struct {
 	To *string `json:"to,omitempty" tf:"to,omitempty"`
 }
 
+type RenamedInitParameters struct {
+}
+
+type RenamedObservation struct {
+
+	// (String)
+	// The original (source) class name.
+	From *string `json:"from,omitempty" tf:"from,omitempty"`
+
+	// (String)
+	// The new class name (`renamed_to`).
+	To *string `json:"to,omitempty" tf:"to,omitempty"`
+}
+
+type RenamedParameters struct {
+}
+
 type SimpleInitParameters struct {
 
 	// (Number) The limit (requests per period).
@@ -1656,6 +1784,23 @@ type TargetParameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
+type TransferPendingInitParameters struct {
+}
+
+type TransferPendingObservation struct {
+
+	// (String) The class name the info entry is about.
+	// The target-side class name awaiting transfer.
+	Class *string `json:"class,omitempty" tf:"class,omitempty"`
+
+	// (String)
+	// The source script the namespace will be transferred from.
+	From *string `json:"from,omitempty" tf:"from,omitempty"`
+}
+
+type TransferPendingParameters struct {
+}
+
 type TransferredClassesInitParameters struct {
 
 	// (String)
@@ -1695,6 +1840,27 @@ type TransferredClassesParameters struct {
 	To *string `json:"to,omitempty" tf:"to,omitempty"`
 }
 
+type TransferredInitParameters struct {
+}
+
+type TransferredObservation struct {
+
+	// (String) The class name the info entry is about.
+	// The source class name that was transferred.
+	Class *string `json:"class,omitempty" tf:"class,omitempty"`
+
+	// (String) The transfer phase. Currently always committed.
+	// The transfer phase. Currently always `committed`.
+	Phase *string `json:"phase,omitempty" tf:"phase,omitempty"`
+
+	// (String)
+	// The destination script that now owns the namespace.
+	To *string `json:"to,omitempty" tf:"to,omitempty"`
+}
+
+type TransferredParameters struct {
+}
+
 type VersionInitParameters struct {
 
 	// (String) Identifier.
@@ -1728,9 +1894,19 @@ type VersionInitParameters struct {
 	// (Attributes Set) List of containers attached to a Worker. Containers can only be attached to Durable Object classes of this Worker script. (see below for nested schema)
 	Containers []ContainersInitParameters `json:"containers,omitempty" tf:"containers,omitempty"`
 
+	// (Boolean) If true, a deployment will be created that sends 100% of traffic to the new version.
+	// If true, a deployment will be created that sends 100% of traffic to the new version.
+	Deploy *bool `json:"deploy,omitempty" tf:"deploy,omitempty"`
+
 	// transfer) are returned. exports and migrations
 	// are mutually exclusive on upload. (see below for nested schema)
 	Exports map[string]ExportsInitParameters `json:"exports,omitempty" tf:"exports,omitempty"`
+
+	// (String) Whether to include the modules property of the version in the response, which contains code and sourcemap content and may add several megabytes to the response size.
+	// Available values: "modules".
+	// Whether to include the `modules` property of the version in the response, which contains code and sourcemap content and may add several megabytes to the response size.
+	// Available values: "modules".
+	Include *string `json:"include,omitempty" tf:"include,omitempty"`
 
 	// (Attributes) Resource limits enforced at runtime. (see below for nested schema)
 	Limits *LimitsInitParameters `json:"limits,omitempty" tf:"limits,omitempty"`
@@ -1775,6 +1951,14 @@ type VersionObservation struct {
 	// (Attributes) Configuration for assets within a Worker.
 	Assets *AssetsObservation `json:"assets,omitempty" tf:"assets,omitempty"`
 
+	// (String) Email of the user who created the version.
+	// Email of the user who created the version.
+	AuthorEmail *string `json:"authorEmail,omitempty" tf:"author_email,omitempty"`
+
+	// (String) Identifier of the user who created the version.
+	// Identifier of the user who created the version.
+	AuthorID *string `json:"authorId,omitempty" tf:"author_id,omitempty"`
+
 	// upload-metadata/#bindings. (see below for nested schema)
 	Bindings []BindingsObservation `json:"bindings,omitempty" tf:"bindings,omitempty"`
 
@@ -1800,12 +1984,25 @@ type VersionObservation struct {
 	// When the version was created.
 	CreatedOn *string `json:"createdOn,omitempty" tf:"created_on,omitempty"`
 
+	// (Boolean) If true, a deployment will be created that sends 100% of traffic to the new version.
+	// If true, a deployment will be created that sends 100% of traffic to the new version.
+	Deploy *bool `json:"deploy,omitempty" tf:"deploy,omitempty"`
+
 	// transfer) are returned. exports and migrations
 	// are mutually exclusive on upload. (see below for nested schema)
 	Exports map[string]ExportsObservation `json:"exports,omitempty" tf:"exports,omitempty"`
 
+	// (Attributes) Summary of the declarative exports reconciliation that ran on this upload. Populated only when the uploaded metadata included an exports block. Durable Object entries drive reconciliation; type: worker entries do not contribute to this summary. (see below for nested schema)
+	ExportsReconciliation *ExportsReconciliationObservation `json:"exportsReconciliation,omitempty" tf:"exports_reconciliation,omitempty"`
+
 	// (String) Version identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (String) Whether to include the modules property of the version in the response, which contains code and sourcemap content and may add several megabytes to the response size.
+	// Available values: "modules".
+	// Whether to include the `modules` property of the version in the response, which contains code and sourcemap content and may add several megabytes to the response size.
+	// Available values: "modules".
+	Include *string `json:"include,omitempty" tf:"include,omitempty"`
 
 	// (Attributes) Resource limits enforced at runtime. (see below for nested schema)
 	Limits *LimitsObservation `json:"limits,omitempty" tf:"limits,omitempty"`
@@ -1903,10 +2100,22 @@ type VersionParameters struct {
 	// +kubebuilder:validation:Optional
 	Containers []ContainersParameters `json:"containers,omitempty" tf:"containers,omitempty"`
 
+	// (Boolean) If true, a deployment will be created that sends 100% of traffic to the new version.
+	// If true, a deployment will be created that sends 100% of traffic to the new version.
+	// +kubebuilder:validation:Optional
+	Deploy *bool `json:"deploy,omitempty" tf:"deploy,omitempty"`
+
 	// transfer) are returned. exports and migrations
 	// are mutually exclusive on upload. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Exports map[string]ExportsParameters `json:"exports,omitempty" tf:"exports,omitempty"`
+
+	// (String) Whether to include the modules property of the version in the response, which contains code and sourcemap content and may add several megabytes to the response size.
+	// Available values: "modules".
+	// Whether to include the `modules` property of the version in the response, which contains code and sourcemap content and may add several megabytes to the response size.
+	// Available values: "modules".
+	// +kubebuilder:validation:Optional
+	Include *string `json:"include,omitempty" tf:"include,omitempty"`
 
 	// (Attributes) Resource limits enforced at runtime. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -1945,6 +2154,31 @@ type VersionParameters struct {
 	// Identifier for the Worker, which can be ID or name.
 	// +kubebuilder:validation:Optional
 	WorkerID *string `json:"workerId,omitempty" tf:"worker_id,omitempty"`
+}
+
+type WarningsInitParameters struct {
+}
+
+type WarningsObservation struct {
+
+	// (String) The class name the info entry is about.
+	// The class name the warning is about.
+	Class *string `json:"class,omitempty" tf:"class,omitempty"`
+
+	// readable explanation.
+	// Human-readable explanation of the warning.
+	Message *string `json:"message,omitempty" tf:"message,omitempty"`
+
+	// (String) Namespace identifier tag.
+	// The provisioned namespace the warning relates to, when applicable.
+	NamespaceID *string `json:"namespaceId,omitempty" tf:"namespace_id,omitempty"`
+
+	// readable tag identifying which reconciliation scenario produced an error, warning, or info entry. Clients may branch on this value instead of parsing message.
+	// Stable, machine-readable tag identifying which reconciliation scenario produced an error, warning, or info entry. Clients may branch on this value instead of parsing `message`.
+	Scenario *string `json:"scenario,omitempty" tf:"scenario,omitempty"`
+}
+
+type WarningsParameters struct {
 }
 
 type WorkerInitParameters struct {

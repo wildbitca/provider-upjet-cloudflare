@@ -15,11 +15,33 @@ import (
 
 type ManagementInitParameters struct {
 
+	// rule updates.
+	// Temporary migration flag tracking zones opted out of AI bots managed-rule updates.
+	AIBotsMigrationOptOut *bool `json:"aiBotsMigrationOptOut,omitempty" tf:"ai_bots_migration_opt_out,omitempty"`
+
 	// (String) Enable rule to block AI Scrapers and Crawlers.
 	// Available values: "block", "disabled", "only_on_ad_pages".
 	// Enable rule to block AI Scrapers and Crawlers.
 	// Available values: "block", "disabled", "only_on_ad_pages".
 	AIBotsProtection *string `json:"aiBotsProtection,omitempty" tf:"ai_bots_protection,omitempty"`
+
+	// (String) Configure robots.txt policy for AI model training bots.
+	// Available values: "disabled", "disallow", "block", "only_on_ad_pages".
+	// Configure robots.txt policy for AI model training bots.
+	// Available values: "disabled", "disallow", "block", "only_on_ad_pages".
+	AITraining *string `json:"aiTraining,omitempty" tf:"ai_training,omitempty"`
+
+	// (String) Configure robots.txt policy for AI assistant and agent bots.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Configure robots.txt policy for AI assistant and agent bots.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	AIUser *string `json:"aiUser,omitempty" tf:"ai_user,omitempty"`
+
+	// (String) Configure robots.txt policy for AI search bots.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Configure robots.txt policy for AI search bots.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	Aisearch *string `json:"aisearch,omitempty" tf:"aisearch,omitempty"`
 
 	// (Boolean) Automatically update to the newest bot detection models created by Cloudflare as they are released. Learn more.
 	// Automatically update to the newest bot detection models created by Cloudflare as they are released. [Learn more.](https://developers.cloudflare.com/bots/reference/machine-learning-models#model-versions-and-release-notes)
@@ -28,6 +50,10 @@ type ManagementInitParameters struct {
 	// (Boolean) Indicates that the bot management cookie can be placed on end user devices accessing the site. Defaults to true
 	// Indicates that the bot management cookie can be placed on end user devices accessing the site. Defaults to true
 	BmCookieEnabled *bool `json:"bmCookieEnabled,omitempty" tf:"bm_cookie_enabled,omitempty"`
+
+	// (Boolean) Enable Bot Preference Sync for this zone. When enabled, Cloudflare can serve robots.txt content derived from the zone's AI Search, AI User, and AI Training preferences.
+	// Enable Bot Preference Sync for this zone. When enabled, Cloudflare can serve robots.txt content derived from the zone's AI Search, AI User, and AI Training preferences.
+	BotPreferenceSyncEnabled *bool `json:"botPreferenceSyncEnabled,omitempty" tf:"bot_preference_sync_enabled,omitempty"`
 
 	// (String) Specifies the Robots Access Control License variant to use.
 	// Available values: "off", "policy_only".
@@ -58,6 +84,10 @@ type ManagementInitParameters struct {
 	// (Boolean) Enable cloudflare managed robots.txt. If an existing robots.txt is detected, then managed robots.txt will be prepended to the existing robots.txt.
 	// Enable cloudflare managed robots.txt. If an existing robots.txt is detected, then managed robots.txt will be prepended to the existing robots.txt.
 	IsRobotsTxtManaged *bool `json:"isRobotsTxtManaged,omitempty" tf:"is_robots_txt_managed,omitempty"`
+
+	// (Boolean) Whether to use JavaScript Detection results submitted through the API for this zone.
+	// Whether to use JavaScript Detection results submitted through the API for this zone.
+	JsdAPIResultsEnabled *bool `json:"jsdApiResultsEnabled,omitempty" tf:"jsd_api_results_enabled,omitempty"`
 
 	// (Boolean) Whether to optimize Super Bot Fight Mode protections for Wordpress.
 	// Whether to optimize Super Bot Fight Mode protections for Wordpress.
@@ -100,11 +130,33 @@ type ManagementInitParameters struct {
 
 type ManagementObservation struct {
 
+	// rule updates.
+	// Temporary migration flag tracking zones opted out of AI bots managed-rule updates.
+	AIBotsMigrationOptOut *bool `json:"aiBotsMigrationOptOut,omitempty" tf:"ai_bots_migration_opt_out,omitempty"`
+
 	// (String) Enable rule to block AI Scrapers and Crawlers.
 	// Available values: "block", "disabled", "only_on_ad_pages".
 	// Enable rule to block AI Scrapers and Crawlers.
 	// Available values: "block", "disabled", "only_on_ad_pages".
 	AIBotsProtection *string `json:"aiBotsProtection,omitempty" tf:"ai_bots_protection,omitempty"`
+
+	// (String) Configure robots.txt policy for AI model training bots.
+	// Available values: "disabled", "disallow", "block", "only_on_ad_pages".
+	// Configure robots.txt policy for AI model training bots.
+	// Available values: "disabled", "disallow", "block", "only_on_ad_pages".
+	AITraining *string `json:"aiTraining,omitempty" tf:"ai_training,omitempty"`
+
+	// (String) Configure robots.txt policy for AI assistant and agent bots.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Configure robots.txt policy for AI assistant and agent bots.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	AIUser *string `json:"aiUser,omitempty" tf:"ai_user,omitempty"`
+
+	// (String) Configure robots.txt policy for AI search bots.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Configure robots.txt policy for AI search bots.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	Aisearch *string `json:"aisearch,omitempty" tf:"aisearch,omitempty"`
 
 	// (Boolean) Automatically update to the newest bot detection models created by Cloudflare as they are released. Learn more.
 	// Automatically update to the newest bot detection models created by Cloudflare as they are released. [Learn more.](https://developers.cloudflare.com/bots/reference/machine-learning-models#model-versions-and-release-notes)
@@ -113,6 +165,10 @@ type ManagementObservation struct {
 	// (Boolean) Indicates that the bot management cookie can be placed on end user devices accessing the site. Defaults to true
 	// Indicates that the bot management cookie can be placed on end user devices accessing the site. Defaults to true
 	BmCookieEnabled *bool `json:"bmCookieEnabled,omitempty" tf:"bm_cookie_enabled,omitempty"`
+
+	// (Boolean) Enable Bot Preference Sync for this zone. When enabled, Cloudflare can serve robots.txt content derived from the zone's AI Search, AI User, and AI Training preferences.
+	// Enable Bot Preference Sync for this zone. When enabled, Cloudflare can serve robots.txt content derived from the zone's AI Search, AI User, and AI Training preferences.
+	BotPreferenceSyncEnabled *bool `json:"botPreferenceSyncEnabled,omitempty" tf:"bot_preference_sync_enabled,omitempty"`
 
 	// (String) Specifies the Robots Access Control License variant to use.
 	// Available values: "off", "policy_only".
@@ -146,6 +202,10 @@ type ManagementObservation struct {
 	// (Boolean) Enable cloudflare managed robots.txt. If an existing robots.txt is detected, then managed robots.txt will be prepended to the existing robots.txt.
 	// Enable cloudflare managed robots.txt. If an existing robots.txt is detected, then managed robots.txt will be prepended to the existing robots.txt.
 	IsRobotsTxtManaged *bool `json:"isRobotsTxtManaged,omitempty" tf:"is_robots_txt_managed,omitempty"`
+
+	// (Boolean) Whether to use JavaScript Detection results submitted through the API for this zone.
+	// Whether to use JavaScript Detection results submitted through the API for this zone.
+	JsdAPIResultsEnabled *bool `json:"jsdApiResultsEnabled,omitempty" tf:"jsd_api_results_enabled,omitempty"`
 
 	// (Boolean) Whether to optimize Super Bot Fight Mode protections for Wordpress.
 	// Whether to optimize Super Bot Fight Mode protections for Wordpress.
@@ -195,12 +255,38 @@ type ManagementObservation struct {
 
 type ManagementParameters struct {
 
+	// rule updates.
+	// Temporary migration flag tracking zones opted out of AI bots managed-rule updates.
+	// +kubebuilder:validation:Optional
+	AIBotsMigrationOptOut *bool `json:"aiBotsMigrationOptOut,omitempty" tf:"ai_bots_migration_opt_out,omitempty"`
+
 	// (String) Enable rule to block AI Scrapers and Crawlers.
 	// Available values: "block", "disabled", "only_on_ad_pages".
 	// Enable rule to block AI Scrapers and Crawlers.
 	// Available values: "block", "disabled", "only_on_ad_pages".
 	// +kubebuilder:validation:Optional
 	AIBotsProtection *string `json:"aiBotsProtection,omitempty" tf:"ai_bots_protection,omitempty"`
+
+	// (String) Configure robots.txt policy for AI model training bots.
+	// Available values: "disabled", "disallow", "block", "only_on_ad_pages".
+	// Configure robots.txt policy for AI model training bots.
+	// Available values: "disabled", "disallow", "block", "only_on_ad_pages".
+	// +kubebuilder:validation:Optional
+	AITraining *string `json:"aiTraining,omitempty" tf:"ai_training,omitempty"`
+
+	// (String) Configure robots.txt policy for AI assistant and agent bots.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Configure robots.txt policy for AI assistant and agent bots.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// +kubebuilder:validation:Optional
+	AIUser *string `json:"aiUser,omitempty" tf:"ai_user,omitempty"`
+
+	// (String) Configure robots.txt policy for AI search bots.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Configure robots.txt policy for AI search bots.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// +kubebuilder:validation:Optional
+	Aisearch *string `json:"aisearch,omitempty" tf:"aisearch,omitempty"`
 
 	// (Boolean) Automatically update to the newest bot detection models created by Cloudflare as they are released. Learn more.
 	// Automatically update to the newest bot detection models created by Cloudflare as they are released. [Learn more.](https://developers.cloudflare.com/bots/reference/machine-learning-models#model-versions-and-release-notes)
@@ -211,6 +297,11 @@ type ManagementParameters struct {
 	// Indicates that the bot management cookie can be placed on end user devices accessing the site. Defaults to true
 	// +kubebuilder:validation:Optional
 	BmCookieEnabled *bool `json:"bmCookieEnabled,omitempty" tf:"bm_cookie_enabled,omitempty"`
+
+	// (Boolean) Enable Bot Preference Sync for this zone. When enabled, Cloudflare can serve robots.txt content derived from the zone's AI Search, AI User, and AI Training preferences.
+	// Enable Bot Preference Sync for this zone. When enabled, Cloudflare can serve robots.txt content derived from the zone's AI Search, AI User, and AI Training preferences.
+	// +kubebuilder:validation:Optional
+	BotPreferenceSyncEnabled *bool `json:"botPreferenceSyncEnabled,omitempty" tf:"bot_preference_sync_enabled,omitempty"`
 
 	// (String) Specifies the Robots Access Control License variant to use.
 	// Available values: "off", "policy_only".
@@ -247,6 +338,11 @@ type ManagementParameters struct {
 	// Enable cloudflare managed robots.txt. If an existing robots.txt is detected, then managed robots.txt will be prepended to the existing robots.txt.
 	// +kubebuilder:validation:Optional
 	IsRobotsTxtManaged *bool `json:"isRobotsTxtManaged,omitempty" tf:"is_robots_txt_managed,omitempty"`
+
+	// (Boolean) Whether to use JavaScript Detection results submitted through the API for this zone.
+	// Whether to use JavaScript Detection results submitted through the API for this zone.
+	// +kubebuilder:validation:Optional
+	JsdAPIResultsEnabled *bool `json:"jsdApiResultsEnabled,omitempty" tf:"jsd_api_results_enabled,omitempty"`
 
 	// (Boolean) Whether to optimize Super Bot Fight Mode protections for Wordpress.
 	// Whether to optimize Super Bot Fight Mode protections for Wordpress.

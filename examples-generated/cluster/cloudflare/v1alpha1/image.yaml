@@ -9,8 +9,8 @@ metadata:
 spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
-    creator: creator
-    file: Example data
-    metadata: {}
-    requireSignedUrls: true
-    url: https://example.com/path/to/logo.png
+    file: ${filebase64("${path.module}/logo.png")}
+    metadata: |-
+      ${jsonencode({
+          source = "terraform"
+        })}

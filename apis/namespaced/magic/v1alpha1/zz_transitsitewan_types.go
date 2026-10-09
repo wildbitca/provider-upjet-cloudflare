@@ -20,6 +20,15 @@ type TransitSiteWanInitParameters struct {
 	// Identifier
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// (String) Magic WAN health check rate for tunnels created on this link. The default value is mid.
+	// Available values: "low", "mid", "high".
+	// Magic WAN health check rate for tunnels created on this link. The default value is `mid`.
+	// Available values: "low", "mid", "high".
+	HealthCheckRate *string `json:"healthCheckRate,omitempty" tf:"health_check_rate,omitempty"`
+
+	// (Boolean)
+	LoadBalanceInnerFlows *bool `json:"loadBalanceInnerFlows,omitempty" tf:"load_balance_inner_flows,omitempty"`
+
 	// (String)
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -56,6 +65,9 @@ type TransitSiteWanObservation struct {
 	// (String) Identifier
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Boolean)
+	LoadBalanceInnerFlows *bool `json:"loadBalanceInnerFlows,omitempty" tf:"load_balance_inner_flows,omitempty"`
+
 	// (String)
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -83,6 +95,17 @@ type TransitSiteWanParameters struct {
 	// Identifier
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (String) Magic WAN health check rate for tunnels created on this link. The default value is mid.
+	// Available values: "low", "mid", "high".
+	// Magic WAN health check rate for tunnels created on this link. The default value is `mid`.
+	// Available values: "low", "mid", "high".
+	// +kubebuilder:validation:Optional
+	HealthCheckRate *string `json:"healthCheckRate,omitempty" tf:"health_check_rate,omitempty"`
+
+	// (Boolean)
+	// +kubebuilder:validation:Optional
+	LoadBalanceInnerFlows *bool `json:"loadBalanceInnerFlows,omitempty" tf:"load_balance_inner_flows,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional

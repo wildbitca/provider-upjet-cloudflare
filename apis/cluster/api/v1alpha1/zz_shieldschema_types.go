@@ -64,6 +64,10 @@ type ShieldSchemaInitParameters struct {
 	// Name of the schema
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// files of schemas and only retrieve their meta-data.
+	// Omit the source-files of schemas and only retrieve their meta-data.
+	OmitSource *bool `json:"omitSource,omitempty" tf:"omit_source,omitempty"`
+
 	// (String)
 	SchemaID *string `json:"schemaId,omitempty" tf:"schema_id,omitempty"`
 
@@ -98,6 +102,10 @@ type ShieldSchemaObservation struct {
 	// (String) Name of the schema
 	// Name of the schema
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// files of schemas and only retrieve their meta-data.
+	// Omit the source-files of schemas and only retrieve their meta-data.
+	OmitSource *bool `json:"omitSource,omitempty" tf:"omit_source,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	Schema *SchemaObservation `json:"schema,omitempty" tf:"schema,omitempty"`
@@ -141,6 +149,11 @@ type ShieldSchemaParameters struct {
 	// Name of the schema
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// files of schemas and only retrieve their meta-data.
+	// Omit the source-files of schemas and only retrieve their meta-data.
+	// +kubebuilder:validation:Optional
+	OmitSource *bool `json:"omitSource,omitempty" tf:"omit_source,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional

@@ -1077,6 +1077,11 @@ func (in *RecordInitParameters) DeepCopyInto(out *RecordInitParameters) {
 		*out = new(DataInitParameters)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.IncludeShadowMetadata != nil {
+		in, out := &in.IncludeShadowMetadata, &out.IncludeShadowMetadata
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -1215,6 +1220,11 @@ func (in *RecordObservation) DeepCopyInto(out *RecordObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.IncludeShadowMetadata != nil {
+		in, out := &in.IncludeShadowMetadata, &out.IncludeShadowMetadata
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Meta != nil {
 		in, out := &in.Meta, &out.Meta
 		*out = new(string)
@@ -1315,6 +1325,11 @@ func (in *RecordParameters) DeepCopyInto(out *RecordParameters) {
 		in, out := &in.Data, &out.Data
 		*out = new(DataParameters)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.IncludeShadowMetadata != nil {
+		in, out := &in.IncludeShadowMetadata, &out.IncludeShadowMetadata
+		*out = new(bool)
+		**out = **in
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name

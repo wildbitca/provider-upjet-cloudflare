@@ -732,6 +732,17 @@ spec:
                                 (Boolean) Whether to generate Cloudflare error pages for issues from the origin server.
                                 Whether to generate Cloudflare error pages for issues from the origin server.
                               type: boolean
+                            originRangeRequests:
+                              description: body request. (see below for nested schema)
+                              properties:
+                                mode:
+                                  description: |-
+                                    (String) The browser TTL mode.
+                                    Available values: "respect_origin", "bypass_by_default", "override_origin", "bypass".
+                                    Whether to use range requests. `default` is the behaviour the zone gets without this rule.
+                                    Available values: "on", "off", "default".
+                                  type: string
+                              type: object
                             overrides:
                               description: (Attributes) A set of overrides to apply
                                 to the target ruleset. (see below for nested schema)
@@ -1213,6 +1224,8 @@ spec:
                                 type: string
                               type: array
                             vary:
+                              description: header override. (see below for nested
+                                schema)
                               properties:
                                 default:
                                   description: (Number) The browser TTL (in seconds)
@@ -1237,15 +1250,16 @@ spec:
                                           Available values: "bypass", "passthrough", "normalize".
                                         type: string
                                       languages:
-                                        description: The set of languages to normalize
-                                          against. Only valid for the `accept-language`
-                                          header.
+                                        description: |-
+                                          language header.
+                                          The set of languages to normalize against. Only valid for the `accept-language` header.
                                         items:
                                           type: string
                                         type: array
                                       mediaTypes:
-                                        description: The set of media types to normalize
-                                          against. Only valid for the `accept` header.
+                                        description: |-
+                                          (List of String) The set of media types to normalize against. Only valid for the accept header.
+                                          The set of media types to normalize against. Only valid for the `accept` header.
                                         items:
                                           type: string
                                         type: array
@@ -2042,6 +2056,17 @@ spec:
                                 (Boolean) Whether to generate Cloudflare error pages for issues from the origin server.
                                 Whether to generate Cloudflare error pages for issues from the origin server.
                               type: boolean
+                            originRangeRequests:
+                              description: body request. (see below for nested schema)
+                              properties:
+                                mode:
+                                  description: |-
+                                    (String) The browser TTL mode.
+                                    Available values: "respect_origin", "bypass_by_default", "override_origin", "bypass".
+                                    Whether to use range requests. `default` is the behaviour the zone gets without this rule.
+                                    Available values: "on", "off", "default".
+                                  type: string
+                              type: object
                             overrides:
                               description: (Attributes) A set of overrides to apply
                                 to the target ruleset. (see below for nested schema)
@@ -2523,6 +2548,8 @@ spec:
                                 type: string
                               type: array
                             vary:
+                              description: header override. (see below for nested
+                                schema)
                               properties:
                                 default:
                                   description: (Number) The browser TTL (in seconds)
@@ -2547,15 +2574,16 @@ spec:
                                           Available values: "bypass", "passthrough", "normalize".
                                         type: string
                                       languages:
-                                        description: The set of languages to normalize
-                                          against. Only valid for the `accept-language`
-                                          header.
+                                        description: |-
+                                          language header.
+                                          The set of languages to normalize against. Only valid for the `accept-language` header.
                                         items:
                                           type: string
                                         type: array
                                       mediaTypes:
-                                        description: The set of media types to normalize
-                                          against. Only valid for the `accept` header.
+                                        description: |-
+                                          (List of String) The set of media types to normalize against. Only valid for the accept header.
+                                          The set of media types to normalize against. Only valid for the `accept` header.
                                         items:
                                           type: string
                                         type: array
@@ -3423,6 +3451,17 @@ spec:
                                 (Boolean) Whether to generate Cloudflare error pages for issues from the origin server.
                                 Whether to generate Cloudflare error pages for issues from the origin server.
                               type: boolean
+                            originRangeRequests:
+                              description: body request. (see below for nested schema)
+                              properties:
+                                mode:
+                                  description: |-
+                                    (String) The browser TTL mode.
+                                    Available values: "respect_origin", "bypass_by_default", "override_origin", "bypass".
+                                    Whether to use range requests. `default` is the behaviour the zone gets without this rule.
+                                    Available values: "on", "off", "default".
+                                  type: string
+                              type: object
                             overrides:
                               description: (Attributes) A set of overrides to apply
                                 to the target ruleset. (see below for nested schema)
@@ -3904,6 +3943,8 @@ spec:
                                 type: string
                               type: array
                             vary:
+                              description: header override. (see below for nested
+                                schema)
                               properties:
                                 default:
                                   description: (Number) The browser TTL (in seconds)
@@ -3928,15 +3969,16 @@ spec:
                                           Available values: "bypass", "passthrough", "normalize".
                                         type: string
                                       languages:
-                                        description: The set of languages to normalize
-                                          against. Only valid for the `accept-language`
-                                          header.
+                                        description: |-
+                                          language header.
+                                          The set of languages to normalize against. Only valid for the `accept-language` header.
                                         items:
                                           type: string
                                         type: array
                                       mediaTypes:
-                                        description: The set of media types to normalize
-                                          against. Only valid for the `accept` header.
+                                        description: |-
+                                          (List of String) The set of media types to normalize against. Only valid for the accept header.
+                                          The set of media types to normalize against. Only valid for the `accept` header.
                                         items:
                                           type: string
                                         type: array

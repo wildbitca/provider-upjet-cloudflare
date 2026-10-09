@@ -86,7 +86,9 @@ spec:
                             Available values: "drop", "forward", "worker".
                           type: string
                         value:
-                          description: (List of String)
+                          description: |-
+                            (List of String) List of values for the action. Currently limited to a single value.
+                            List of values for the action. Currently limited to a single value.
                           items:
                             type: string
                           type: array
@@ -118,7 +120,7 @@ spec:
                           type: string
                         value:
                           description: |-
-                            (List of String)
+                            (List of String) List of values for the action. Currently limited to a single value.
                             Value for matcher.
                           type: string
                       type: object
@@ -181,7 +183,9 @@ spec:
                             Available values: "drop", "forward", "worker".
                           type: string
                         value:
-                          description: (List of String)
+                          description: |-
+                            (List of String) List of values for the action. Currently limited to a single value.
+                            List of values for the action. Currently limited to a single value.
                           items:
                             type: string
                           type: array
@@ -213,7 +217,7 @@ spec:
                           type: string
                         value:
                           description: |-
-                            (List of String)
+                            (List of String) List of values for the action. Currently limited to a single value.
                             Value for matcher.
                           type: string
                       type: object
@@ -367,7 +371,9 @@ spec:
                             Available values: "drop", "forward", "worker".
                           type: string
                         value:
-                          description: (List of String)
+                          description: |-
+                            (List of String) List of values for the action. Currently limited to a single value.
+                            List of values for the action. Currently limited to a single value.
                           items:
                             type: string
                           type: array
@@ -402,7 +408,7 @@ spec:
                           type: string
                         value:
                           description: |-
-                            (List of String)
+                            (List of String) List of values for the action. Currently limited to a single value.
                             Value for matcher.
                           type: string
                       type: object

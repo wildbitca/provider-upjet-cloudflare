@@ -82,21 +82,18 @@ spec:
                     description: (Attributes) (see below for nested schema)
                     properties:
                       disabled:
-                        description: |-
-                          (Boolean) Set to true to disable caching of SQL responses. Default is false.
-                          Set to true to disable caching of SQL responses. Default is false.
+                        description: (Boolean)
                         type: boolean
                       maxAge:
-                        description: |-
-                          (Number) Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
-                          Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
+                        description: (Number)
                         type: number
                       staleWhileRevalidate:
-                        description: |-
-                          (Number) Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
-                          Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
+                        description: (Number)
                         type: number
                     type: object
+                  integration:
+                    description: (String)
+                    type: string
                   mtls:
                     description: (Attributes) mTLS configuration for the origin connection.
                       Cannot be used with VPC Service origins; TLS must be managed
@@ -114,8 +111,8 @@ spec:
                         type: string
                       sslmode:
                         description: |-
-                          ca', or 'verify-full' to verify the CA.
-                          Set SSL mode to 'require', 'verify-ca', or 'verify-full' to verify the CA.
+                          ca, and verify-full. MySQL accepts REQUIRED, VERIFY_CA, and VERIFY_IDENTITY. The verify modes require a CA certificate; the require modes cannot be used with a CA certificate.
+                          PostgreSQL accepts `require`, `verify-ca`, and `verify-full`. MySQL accepts `REQUIRED`, `VERIFY_CA`, and `VERIFY_IDENTITY`. The verify modes require a CA certificate; the require modes cannot be used with a CA certificate.
                         type: string
                     type: object
                   name:
@@ -124,7 +121,9 @@ spec:
                       The name of the Hyperdrive configuration. Used to identify the configuration in the Cloudflare dashboard and API.
                     type: string
                   origin:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) Combines database connection fields
+                      with exactly one supported network location. (see below for
+                      nested schema)
                     properties:
                       accessClientId:
                         description: |-
@@ -157,8 +156,8 @@ spec:
                         type: string
                       host:
                         description: |-
-                          (String) Defines the host (hostname or IP) of your origin database.
-                          Defines the host (hostname or IP) of your origin database.
+                          local IP addresses are not allowed.
+                          Defines the publicly reachable hostname or IP of your origin database. Private, loopback, and link-local IP addresses are not allowed.
                         type: string
                       passwordSecretRef:
                         description: |-
@@ -209,6 +208,7 @@ spec:
 
                       Maximum allowed: 20 for free tier accounts, 100 for paid tier accounts.
                       If not specified, defaults to 20 for free tier and 60 for paid tier.
+                      Certain Cloudflare-managed origins may be permitted a higher limit.
                       Contact Cloudflare if you need a higher limit.
                     type: number
                 type: object
@@ -234,21 +234,18 @@ spec:
                     description: (Attributes) (see below for nested schema)
                     properties:
                       disabled:
-                        description: |-
-                          (Boolean) Set to true to disable caching of SQL responses. Default is false.
-                          Set to true to disable caching of SQL responses. Default is false.
+                        description: (Boolean)
                         type: boolean
                       maxAge:
-                        description: |-
-                          (Number) Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
-                          Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
+                        description: (Number)
                         type: number
                       staleWhileRevalidate:
-                        description: |-
-                          (Number) Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
-                          Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
+                        description: (Number)
                         type: number
                     type: object
+                  integration:
+                    description: (String)
+                    type: string
                   mtls:
                     description: (Attributes) mTLS configuration for the origin connection.
                       Cannot be used with VPC Service origins; TLS must be managed
@@ -266,8 +263,8 @@ spec:
                         type: string
                       sslmode:
                         description: |-
-                          ca', or 'verify-full' to verify the CA.
-                          Set SSL mode to 'require', 'verify-ca', or 'verify-full' to verify the CA.
+                          ca, and verify-full. MySQL accepts REQUIRED, VERIFY_CA, and VERIFY_IDENTITY. The verify modes require a CA certificate; the require modes cannot be used with a CA certificate.
+                          PostgreSQL accepts `require`, `verify-ca`, and `verify-full`. MySQL accepts `REQUIRED`, `VERIFY_CA`, and `VERIFY_IDENTITY`. The verify modes require a CA certificate; the require modes cannot be used with a CA certificate.
                         type: string
                     type: object
                   name:
@@ -276,7 +273,9 @@ spec:
                       The name of the Hyperdrive configuration. Used to identify the configuration in the Cloudflare dashboard and API.
                     type: string
                   origin:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) Combines database connection fields
+                      with exactly one supported network location. (see below for
+                      nested schema)
                     properties:
                       accessClientId:
                         description: |-
@@ -309,8 +308,8 @@ spec:
                         type: string
                       host:
                         description: |-
-                          (String) Defines the host (hostname or IP) of your origin database.
-                          Defines the host (hostname or IP) of your origin database.
+                          local IP addresses are not allowed.
+                          Defines the publicly reachable hostname or IP of your origin database. Private, loopback, and link-local IP addresses are not allowed.
                         type: string
                       passwordSecretRef:
                         description: |-
@@ -363,6 +362,7 @@ spec:
 
                       Maximum allowed: 20 for free tier accounts, 100 for paid tier accounts.
                       If not specified, defaults to 20 for free tier and 60 for paid tier.
+                      Certain Cloudflare-managed origins may be permitted a higher limit.
                       Contact Cloudflare if you need a higher limit.
                     type: number
                 type: object
@@ -461,10 +461,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
                 || (has(self.initProvider) && has(self.initProvider.name))'
-            - message: spec.forProvider.origin is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.origin)
-                || (has(self.initProvider) && has(self.initProvider.origin))'
           status:
             description: ConfigStatus defines the observed state of Config.
             properties:
@@ -479,19 +475,13 @@ spec:
                     description: (Attributes) (see below for nested schema)
                     properties:
                       disabled:
-                        description: |-
-                          (Boolean) Set to true to disable caching of SQL responses. Default is false.
-                          Set to true to disable caching of SQL responses. Default is false.
+                        description: (Boolean)
                         type: boolean
                       maxAge:
-                        description: |-
-                          (Number) Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
-                          Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
+                        description: (Number)
                         type: number
                       staleWhileRevalidate:
-                        description: |-
-                          (Number) Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
-                          Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
+                        description: (Number)
                         type: number
                     type: object
                   createdOn:
@@ -502,6 +492,9 @@ spec:
                   id:
                     description: (String) Define configurations using a unique string
                       identifier.
+                    type: string
+                  integration:
+                    description: (String)
                     type: string
                   modifiedOn:
                     description: |-
@@ -525,8 +518,8 @@ spec:
                         type: string
                       sslmode:
                         description: |-
-                          ca', or 'verify-full' to verify the CA.
-                          Set SSL mode to 'require', 'verify-ca', or 'verify-full' to verify the CA.
+                          ca, and verify-full. MySQL accepts REQUIRED, VERIFY_CA, and VERIFY_IDENTITY. The verify modes require a CA certificate; the require modes cannot be used with a CA certificate.
+                          PostgreSQL accepts `require`, `verify-ca`, and `verify-full`. MySQL accepts `REQUIRED`, `VERIFY_CA`, and `VERIFY_IDENTITY`. The verify modes require a CA certificate; the require modes cannot be used with a CA certificate.
                         type: string
                     type: object
                   name:
@@ -535,7 +528,9 @@ spec:
                       The name of the Hyperdrive configuration. Used to identify the configuration in the Cloudflare dashboard and API.
                     type: string
                   origin:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) Combines database connection fields
+                      with exactly one supported network location. (see below for
+                      nested schema)
                     properties:
                       accessClientId:
                         description: |-
@@ -549,8 +544,8 @@ spec:
                         type: string
                       host:
                         description: |-
-                          (String) Defines the host (hostname or IP) of your origin database.
-                          Defines the host (hostname or IP) of your origin database.
+                          local IP addresses are not allowed.
+                          Defines the publicly reachable hostname or IP of your origin database. Private, loopback, and link-local IP addresses are not allowed.
                         type: string
                       port:
                         description: |-
@@ -582,6 +577,7 @@ spec:
 
                       Maximum allowed: 20 for free tier accounts, 100 for paid tier accounts.
                       If not specified, defaults to 20 for free tier and 60 for paid tier.
+                      Certain Cloudflare-managed origins may be permitted a higher limit.
                       Contact Cloudflare if you need a higher limit.
                     type: number
                   restartedOn:

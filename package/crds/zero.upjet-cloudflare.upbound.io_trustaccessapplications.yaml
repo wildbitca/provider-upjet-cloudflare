@@ -304,7 +304,7 @@ spec:
                           description: |-
                             (String) The application type.
                             Available values: "self_hosted", "saas", "ssh", "vnc", "app_launcher", "warp", "biso", "bookmark", "dash_sso", "infrastructure", "rdp", "mcp", "mcp_portal", "proxy_endpoint".
-                            Available values: "public", "private".
+                            Available values: "public", "private", "via_mcp_server_portal", "worker", "preview_worker", "all_workers", "all_preview_workers".
                           type: string
                         uri:
                           description: |-
@@ -315,6 +315,11 @@ spec:
                           description: |-
                             (String) The VNET ID to match the destination. When omitted, all VNETs will match.
                             The VNET ID to match the destination. When omitted, all VNETs will match.
+                          type: string
+                        workerId:
+                          description: |-
+                            (String) The ID of the Cloudflare Worker to protect with Access. Required when type is worker or preview_worker.
+                            The ID of the Cloudflare Worker to protect with Access. Required when type is `worker` or `preview_worker`.
                           type: string
                       type: object
                     type: array
@@ -2119,7 +2124,7 @@ spec:
                           description: |-
                             (String) The application type.
                             Available values: "self_hosted", "saas", "ssh", "vnc", "app_launcher", "warp", "biso", "bookmark", "dash_sso", "infrastructure", "rdp", "mcp", "mcp_portal", "proxy_endpoint".
-                            Available values: "public", "private".
+                            Available values: "public", "private", "via_mcp_server_portal", "worker", "preview_worker", "all_workers", "all_preview_workers".
                           type: string
                         uri:
                           description: |-
@@ -2130,6 +2135,11 @@ spec:
                           description: |-
                             (String) The VNET ID to match the destination. When omitted, all VNETs will match.
                             The VNET ID to match the destination. When omitted, all VNETs will match.
+                          type: string
+                        workerId:
+                          description: |-
+                            (String) The ID of the Cloudflare Worker to protect with Access. Required when type is worker or preview_worker.
+                            The ID of the Cloudflare Worker to protect with Access. Required when type is `worker` or `preview_worker`.
                           type: string
                       type: object
                     type: array
@@ -3944,7 +3954,7 @@ spec:
                           description: |-
                             (String) The application type.
                             Available values: "self_hosted", "saas", "ssh", "vnc", "app_launcher", "warp", "biso", "bookmark", "dash_sso", "infrastructure", "rdp", "mcp", "mcp_portal", "proxy_endpoint".
-                            Available values: "public", "private".
+                            Available values: "public", "private", "via_mcp_server_portal", "worker", "preview_worker", "all_workers", "all_preview_workers".
                           type: string
                         uri:
                           description: |-
@@ -3955,6 +3965,11 @@ spec:
                           description: |-
                             (String) The VNET ID to match the destination. When omitted, all VNETs will match.
                             The VNET ID to match the destination. When omitted, all VNETs will match.
+                          type: string
+                        workerId:
+                          description: |-
+                            (String) The ID of the Cloudflare Worker to protect with Access. Required when type is worker or preview_worker.
+                            The ID of the Cloudflare Worker to protect with Access. Required when type is `worker` or `preview_worker`.
                           type: string
                       type: object
                     type: array

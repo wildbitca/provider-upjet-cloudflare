@@ -58,6 +58,11 @@ func (in *StoreInitParameters) DeepCopyInto(out *StoreInitParameters) {
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.Force != nil {
+		in, out := &in.Force, &out.Force
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -120,6 +125,11 @@ func (in *StoreObservation) DeepCopyInto(out *StoreObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Force != nil {
+		in, out := &in.Force, &out.Force
+		*out = new(bool)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -164,6 +174,11 @@ func (in *StoreParameters) DeepCopyInto(out *StoreParameters) {
 		in, out := &in.AccountIDSelector, &out.AccountIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.Force != nil {
+		in, out := &in.Force, &out.Force
+		*out = new(bool)
+		**out = **in
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name

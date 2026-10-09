@@ -146,6 +146,10 @@ type StreamInitParameters struct {
 	// A user-defined identifier for the media creator.
 	Creator *string `json:"creator,omitempty" tf:"creator,omitempty"`
 
+	// (Boolean) Provisions a URL to let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+	// Provisions a URL to let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+	DirectUser *bool `json:"directUser,omitempty" tf:"direct_user,omitempty"`
+
 	// generated unique identifier for a media item.
 	// A Cloudflare-generated unique identifier for a media item.
 	Identifier *string `json:"identifier,omitempty" tf:"identifier,omitempty"`
@@ -203,6 +207,10 @@ type StreamObservation struct {
 	// defined identifier for the media creator.
 	// A user-defined identifier for the media creator.
 	Creator *string `json:"creator,omitempty" tf:"creator,omitempty"`
+
+	// (Boolean) Provisions a URL to let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+	// Provisions a URL to let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+	DirectUser *bool `json:"directUser,omitempty" tf:"direct_user,omitempty"`
 
 	// 1 means the duration is unknown. The duration becomes available after the upload and before the video is ready.
 	// The duration of the video in seconds. A value of `-1` means the duration is unknown. The duration becomes available after the upload and before the video is ready.
@@ -319,6 +327,11 @@ type StreamParameters struct {
 	// A user-defined identifier for the media creator.
 	// +kubebuilder:validation:Optional
 	Creator *string `json:"creator,omitempty" tf:"creator,omitempty"`
+
+	// (Boolean) Provisions a URL to let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+	// Provisions a URL to let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+	// +kubebuilder:validation:Optional
+	DirectUser *bool `json:"directUser,omitempty" tf:"direct_user,omitempty"`
 
 	// generated unique identifier for a media item.
 	// A Cloudflare-generated unique identifier for a media item.

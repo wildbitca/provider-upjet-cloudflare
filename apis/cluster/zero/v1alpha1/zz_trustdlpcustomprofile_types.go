@@ -318,6 +318,9 @@ type TrustDlpCustomProfileObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String)
+	IntegrationID *string `json:"integrationId,omitempty" tf:"integration_id,omitempty"`
+
+	// (String)
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Boolean)

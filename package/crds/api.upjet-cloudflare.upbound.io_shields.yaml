@@ -92,6 +92,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  normalize:
+                    description: |-
+                      (Boolean) Ensures that the configuration is written or retrieved in normalized fashion
+                      Ensures that the configuration is written or retrieved in normalized fashion
+                    type: boolean
                   zoneId:
                     description: |-
                       (String) Identifier.
@@ -129,6 +134,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  normalize:
+                    description: |-
+                      (Boolean) Ensures that the configuration is written or retrieved in normalized fashion
+                      Ensures that the configuration is written or retrieved in normalized fashion
+                    type: boolean
                   zoneId:
                     description: |-
                       (String) Identifier.
@@ -256,6 +266,11 @@ spec:
                   id:
                     description: (String) Identifier.
                     type: string
+                  normalize:
+                    description: |-
+                      (Boolean) Ensures that the configuration is written or retrieved in normalized fashion
+                      Ensures that the configuration is written or retrieved in normalized fashion
+                    type: boolean
                   zoneId:
                     description: |-
                       (String) Identifier.

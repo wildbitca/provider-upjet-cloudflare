@@ -84,6 +84,11 @@ func (in *ApplicationInitParameters) DeepCopyInto(out *ApplicationInitParameters
 		*out = new(v1.JSON)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.OriginWorkerID != nil {
+		in, out := &in.OriginWorkerID, &out.OriginWorkerID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Protocol != nil {
 		in, out := &in.Protocol, &out.Protocol
 		*out = new(string)
@@ -217,6 +222,11 @@ func (in *ApplicationObservation) DeepCopyInto(out *ApplicationObservation) {
 		*out = new(v1.JSON)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.OriginWorkerID != nil {
+		in, out := &in.OriginWorkerID, &out.OriginWorkerID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Protocol != nil {
 		in, out := &in.Protocol, &out.Protocol
 		*out = new(string)
@@ -302,6 +312,11 @@ func (in *ApplicationParameters) DeepCopyInto(out *ApplicationParameters) {
 		in, out := &in.OriginPort, &out.OriginPort
 		*out = new(v1.JSON)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.OriginWorkerID != nil {
+		in, out := &in.OriginWorkerID, &out.OriginWorkerID
+		*out = new(string)
+		**out = **in
 	}
 	if in.Protocol != nil {
 		in, out := &in.Protocol, &out.Protocol

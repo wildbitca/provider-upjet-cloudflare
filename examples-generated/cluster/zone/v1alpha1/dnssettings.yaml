@@ -14,7 +14,6 @@ spec:
       referenceZoneId: reference_zone_id
     multiProvider: false
     nameservers:
-      nsSet: 1
       type: cloudflare.standard
     nsTtl: 86400
     secondaryOverrides: false

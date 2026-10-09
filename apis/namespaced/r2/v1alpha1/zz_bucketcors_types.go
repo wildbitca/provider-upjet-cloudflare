@@ -64,8 +64,8 @@ type AllowedParameters struct {
 
 type BucketCorsInitParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/account/v1alpha1.Account
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
@@ -87,8 +87,8 @@ type BucketCorsInitParameters struct {
 
 type BucketCorsObservation struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Identifier for this rule.
@@ -104,8 +104,8 @@ type BucketCorsObservation struct {
 
 type BucketCorsParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/account/v1alpha1.Account
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`

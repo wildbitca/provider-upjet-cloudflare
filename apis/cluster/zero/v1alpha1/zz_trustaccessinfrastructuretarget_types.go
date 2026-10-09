@@ -130,6 +130,12 @@ type TrustAccessInfrastructureTargetInitParameters struct {
 
 	// (Attributes) The IPv4/IPv6 address that identifies where to reach a target (see below for nested schema)
 	IP *TrustAccessInfrastructureTargetIPInitParameters `json:"ip,omitempty" tf:"ip,omitempty"`
+
+	// defined strings.
+	// Optional tags to associate with the target. Keys and values are
+	// user-defined strings.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 type TrustAccessInfrastructureTargetObservation struct {
@@ -161,6 +167,12 @@ type TrustAccessInfrastructureTargetObservation struct {
 	// (String) Date and time at which the target was modified
 	// Date and time at which the target was modified
 	ModifiedAt *string `json:"modifiedAt,omitempty" tf:"modified_at,omitempty"`
+
+	// defined strings.
+	// Optional tags to associate with the target. Keys and values are
+	// user-defined strings.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 type TrustAccessInfrastructureTargetParameters struct {
@@ -184,6 +196,13 @@ type TrustAccessInfrastructureTargetParameters struct {
 	// (Attributes) The IPv4/IPv6 address that identifies where to reach a target (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	IP *TrustAccessInfrastructureTargetIPParameters `json:"ip,omitempty" tf:"ip,omitempty"`
+
+	// defined strings.
+	// Optional tags to associate with the target. Keys and values are
+	// user-defined strings.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 // TrustAccessInfrastructureTargetSpec defines the desired state of TrustAccessInfrastructureTarget

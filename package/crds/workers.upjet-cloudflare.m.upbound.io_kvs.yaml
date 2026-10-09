@@ -61,9 +61,19 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifier.
-                      Identifier.
+                      (String) ID of the Cloudflare account that owns the Workers KV namespaces.
+                      ID of the Cloudflare account that owns the Workers KV namespaces.
                     type: string
+                  expiration:
+                    description: |-
+                      (Number) Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
+                      Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
+                    type: number
+                  expirationTtl:
+                    description: |-
+                      (Number) Expires the key after a number of seconds. Must be at least 60.
+                      Expires the key after a number of seconds. Must be at least 60.
+                    type: number
                   keyName:
                     description: |-
                       whitespace characters are valid. Use percent-encoding to define key names as part of a URL.
@@ -76,8 +86,8 @@ spec:
                     type: string
                   namespaceId:
                     description: |-
-                      (String) Namespace identifier tag.
-                      Namespace identifier tag.
+                      (String) ID of the Workers KV namespace.
+                      ID of the Workers KV namespace.
                     type: string
                   value:
                     description: |-
@@ -100,9 +110,19 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifier.
-                      Identifier.
+                      (String) ID of the Cloudflare account that owns the Workers KV namespaces.
+                      ID of the Cloudflare account that owns the Workers KV namespaces.
                     type: string
+                  expiration:
+                    description: |-
+                      (Number) Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
+                      Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
+                    type: number
+                  expirationTtl:
+                    description: |-
+                      (Number) Expires the key after a number of seconds. Must be at least 60.
+                      Expires the key after a number of seconds. Must be at least 60.
+                    type: number
                   keyName:
                     description: |-
                       whitespace characters are valid. Use percent-encoding to define key names as part of a URL.
@@ -115,8 +135,8 @@ spec:
                     type: string
                   namespaceId:
                     description: |-
-                      (String) Namespace identifier tag.
-                      Namespace identifier tag.
+                      (String) ID of the Workers KV namespace.
+                      ID of the Workers KV namespace.
                     type: string
                   value:
                     description: |-
@@ -206,9 +226,19 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifier.
-                      Identifier.
+                      (String) ID of the Cloudflare account that owns the Workers KV namespaces.
+                      ID of the Cloudflare account that owns the Workers KV namespaces.
                     type: string
+                  expiration:
+                    description: |-
+                      (Number) Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
+                      Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
+                    type: number
+                  expirationTtl:
+                    description: |-
+                      (Number) Expires the key after a number of seconds. Must be at least 60.
+                      Expires the key after a number of seconds. Must be at least 60.
+                    type: number
                   id:
                     description: whitespace characters are valid. Use percent-encoding
                       to define key names as part of a URL.
@@ -225,8 +255,8 @@ spec:
                     type: string
                   namespaceId:
                     description: |-
-                      (String) Namespace identifier tag.
-                      Namespace identifier tag.
+                      (String) ID of the Workers KV namespace.
+                      ID of the Workers KV namespace.
                     type: string
                   value:
                     description: |-

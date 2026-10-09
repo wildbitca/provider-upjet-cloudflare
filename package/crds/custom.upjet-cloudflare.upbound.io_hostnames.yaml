@@ -563,7 +563,7 @@ spec:
                       The custom hostname that will point to your hostname via CNAME.
                     type: string
                   id:
-                    description: (String) Identifier.
+                    description: (String) Custom hostname identifier tag.
                     type: string
                   ownershipVerification:
                     description: (Attributes) This is a record which can be placed

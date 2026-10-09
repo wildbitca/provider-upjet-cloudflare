@@ -292,7 +292,7 @@ spec:
                           type: array
                         id:
                           description: |-
-                            (String) Identifier.
+                            (String) The unique identifier for a certificate_pack.
                             Certificate identifier.
                           type: string
                         issuer:
@@ -397,7 +397,7 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   id:
-                    description: (String) Identifier.
+                    description: (String) The unique identifier for a certificate_pack.
                     type: string
                   primaryCertificate:
                     description: |-

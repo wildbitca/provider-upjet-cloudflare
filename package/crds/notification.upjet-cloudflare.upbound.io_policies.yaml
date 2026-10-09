@@ -367,6 +367,13 @@ spec:
                         items:
                           type: string
                         type: array
+                      tokenId:
+                        description: |-
+                          (List of String) Access service token IDs to include for expiring_service_token_alert. Omit this property to include all current and future service tokens.
+                          Access service token IDs to include for expiring_service_token_alert. Omit this property to include all current and future service tokens.
+                        items:
+                          type: string
+                        type: array
                       trafficExclusions:
                         description: |-
                           (List of String) Used for configuring traffic_anomalies_alert
@@ -758,6 +765,13 @@ spec:
                         description: |-
                           (List of String) Used for configuring advanced_ddos_attack_l7_alert
                           Used for configuring advanced_ddos_attack_l7_alert
+                        items:
+                          type: string
+                        type: array
+                      tokenId:
+                        description: |-
+                          (List of String) Access service token IDs to include for expiring_service_token_alert. Omit this property to include all current and future service tokens.
+                          Access service token IDs to include for expiring_service_token_alert. Omit this property to include all current and future service tokens.
                         items:
                           type: string
                         type: array
@@ -1250,6 +1264,13 @@ spec:
                         description: |-
                           (List of String) Used for configuring advanced_ddos_attack_l7_alert
                           Used for configuring advanced_ddos_attack_l7_alert
+                        items:
+                          type: string
+                        type: array
+                      tokenId:
+                        description: |-
+                          (List of String) Access service token IDs to include for expiring_service_token_alert. Omit this property to include all current and future service tokens.
+                          Access service token IDs to include for expiring_service_token_alert. Omit this property to include all current and future service tokens.
                         items:
                           type: string
                         type: array

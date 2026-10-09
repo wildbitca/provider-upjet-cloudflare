@@ -89,6 +89,8 @@ spec:
       - string
       targetZoneName:
       - string
+      tokenId:
+      - x
       trafficExclusions:
       - security_events
       tunnelId:

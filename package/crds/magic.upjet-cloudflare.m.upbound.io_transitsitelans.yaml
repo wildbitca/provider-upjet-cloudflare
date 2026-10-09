@@ -191,7 +191,7 @@ spec:
                             type: string
                           dnsServer:
                             description: |-
-                              (String) A valid IPv4 address.
+                              (String, Deprecated) A valid IPv4 address.
                               A valid IPv4 address.
                             type: string
                           dnsServers:
@@ -369,7 +369,7 @@ spec:
                             type: string
                           dnsServer:
                             description: |-
-                              (String) A valid IPv4 address.
+                              (String, Deprecated) A valid IPv4 address.
                               A valid IPv4 address.
                             type: string
                           dnsServers:
@@ -609,7 +609,7 @@ spec:
                             type: string
                           dnsServer:
                             description: |-
-                              (String) A valid IPv4 address.
+                              (String, Deprecated) A valid IPv4 address.
                               A valid IPv4 address.
                             type: string
                           dnsServers:

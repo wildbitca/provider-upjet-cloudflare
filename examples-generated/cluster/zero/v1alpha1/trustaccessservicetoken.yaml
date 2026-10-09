@@ -10,6 +10,7 @@ spec:
   forProvider:
     clientSecretVersion: 0
     duration: 60m
+    enabled: true
     name: CI/CD token
     previousClientSecretExpiresAt: "2014-01-01T05:20:00.12345Z"
     zoneId: zone_id

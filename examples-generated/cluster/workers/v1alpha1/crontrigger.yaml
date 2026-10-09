@@ -9,6 +9,6 @@ metadata:
 spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
-    body:
+    schedules:
     - cron: '*/30 * * * *'
     scriptName: this-is_my_script-01

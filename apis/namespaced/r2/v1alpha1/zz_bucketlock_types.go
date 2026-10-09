@@ -16,8 +16,8 @@ import (
 
 type BucketLockInitParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Jurisdiction of the bucket
@@ -30,8 +30,8 @@ type BucketLockInitParameters struct {
 
 type BucketLockObservation struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Unique identifier for this rule.
@@ -47,8 +47,8 @@ type BucketLockObservation struct {
 
 type BucketLockParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 

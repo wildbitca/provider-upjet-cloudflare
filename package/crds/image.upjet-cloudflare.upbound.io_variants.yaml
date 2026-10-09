@@ -305,46 +305,6 @@ spec:
                           Maximum width in image pixels.
                         type: number
                     type: object
-                  variant:
-                    description: (Attributes) (see below for nested schema)
-                    properties:
-                      id:
-                        description: (String) The ID of this resource.
-                        type: string
-                      neverRequireSignedUrls:
-                        description: |-
-                          (Boolean) Indicates whether the variant can access an image without a signature, regardless of image access control.
-                          Indicates whether the variant can access an image without a signature, regardless of image access control.
-                        type: boolean
-                      options:
-                        description: (Attributes) Allows you to define image resizing
-                          sizes for different use cases. (see below for nested schema)
-                        properties:
-                          fit:
-                            description: |-
-                              down", "contain", "cover", "crop", "pad".
-                              The fit property describes how the width and height dimensions should be interpreted.
-                              Available values: "scale-down", "contain", "cover", "crop", "pad".
-                            type: string
-                          height:
-                            description: |-
-                              (Number) Maximum height in image pixels.
-                              Maximum height in image pixels.
-                            type: number
-                          metadata:
-                            description: |-
-                              (String) What EXIF data should be preserved in the output image.
-                              Available values: "keep", "copyright", "none".
-                              What EXIF data should be preserved in the output image.
-                              Available values: "keep", "copyright", "none".
-                            type: string
-                          width:
-                            description: |-
-                              (Number) Maximum width in image pixels.
-                              Maximum width in image pixels.
-                            type: number
-                        type: object
-                    type: object
                 type: object
               conditions:
                 description: Conditions of the resource.

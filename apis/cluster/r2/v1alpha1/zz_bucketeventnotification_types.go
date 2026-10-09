@@ -15,16 +15,16 @@ import (
 
 type BucketEventNotificationInitParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Jurisdiction of the bucket
 	// Jurisdiction of the bucket
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
-	// (String) Queue ID.
-	// Queue ID.
+	// (String) ID of the Cloudflare Queue that receives notifications for matching R2 object events.
+	// ID of the Cloudflare Queue that receives notifications for matching R2 object events.
 	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
 
 	// (Attributes List) Array of rules to drive notifications. (see below for nested schema)
@@ -33,8 +33,8 @@ type BucketEventNotificationInitParameters struct {
 
 type BucketEventNotificationObservation struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -43,8 +43,8 @@ type BucketEventNotificationObservation struct {
 	// Jurisdiction of the bucket
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
-	// (String) Queue ID.
-	// Queue ID.
+	// (String) ID of the Cloudflare Queue that receives notifications for matching R2 object events.
+	// ID of the Cloudflare Queue that receives notifications for matching R2 object events.
 	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
 
 	// (String) Name of the queue.
@@ -57,8 +57,8 @@ type BucketEventNotificationObservation struct {
 
 type BucketEventNotificationParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
@@ -67,8 +67,8 @@ type BucketEventNotificationParameters struct {
 	// +kubebuilder:validation:Optional
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
-	// (String) Queue ID.
-	// Queue ID.
+	// (String) ID of the Cloudflare Queue that receives notifications for matching R2 object events.
+	// ID of the Cloudflare Queue that receives notifications for matching R2 object events.
 	// +kubebuilder:validation:Optional
 	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
 

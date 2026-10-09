@@ -19,6 +19,10 @@ type TrustAccessCustomPageInitParameters struct {
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// (Number) Contract version of the page's Liquid template. Present (>= 1) marks a sanitized template; absent or 0 marks a legacy page served verbatim.
+	// Contract version of the page's Liquid template. Present (>= 1) marks a sanitized template; absent or 0 marks a legacy page served verbatim.
+	ContractVersion *float64 `json:"contractVersion,omitempty" tf:"contract_version,omitempty"`
+
 	// (String) Custom page HTML.
 	// Custom page HTML.
 	CustomHTML *string `json:"customHtml,omitempty" tf:"custom_html,omitempty"`
@@ -28,9 +32,9 @@ type TrustAccessCustomPageInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Custom page type.
-	// Available values: "identity_denied", "forbidden".
+	// Available values: "identity_denied", "forbidden", "login", "interstitial".
 	// Custom page type.
-	// Available values: "identity_denied", "forbidden".
+	// Available values: "identity_denied", "forbidden", "login", "interstitial".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -39,6 +43,10 @@ type TrustAccessCustomPageObservation struct {
 	// (String) Identifier.
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (Number) Contract version of the page's Liquid template. Present (>= 1) marks a sanitized template; absent or 0 marks a legacy page served verbatim.
+	// Contract version of the page's Liquid template. Present (>= 1) marks a sanitized template; absent or 0 marks a legacy page served verbatim.
+	ContractVersion *float64 `json:"contractVersion,omitempty" tf:"contract_version,omitempty"`
 
 	// (String) Custom page HTML.
 	// Custom page HTML.
@@ -52,14 +60,17 @@ type TrustAccessCustomPageObservation struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Custom page type.
-	// Available values: "identity_denied", "forbidden".
+	// Available values: "identity_denied", "forbidden", "login", "interstitial".
 	// Custom page type.
-	// Available values: "identity_denied", "forbidden".
+	// Available values: "identity_denied", "forbidden", "login", "interstitial".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (String) UUID.
 	// UUID.
 	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
+
+	// (Attributes List) Advisory validation findings returned when creating or updating a template. Omitted when empty. (see below for nested schema)
+	Warnings []WarningsObservation `json:"warnings,omitempty" tf:"warnings,omitempty"`
 }
 
 type TrustAccessCustomPageParameters struct {
@@ -68,6 +79,11 @@ type TrustAccessCustomPageParameters struct {
 	// Identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (Number) Contract version of the page's Liquid template. Present (>= 1) marks a sanitized template; absent or 0 marks a legacy page served verbatim.
+	// Contract version of the page's Liquid template. Present (>= 1) marks a sanitized template; absent or 0 marks a legacy page served verbatim.
+	// +kubebuilder:validation:Optional
+	ContractVersion *float64 `json:"contractVersion,omitempty" tf:"contract_version,omitempty"`
 
 	// (String) Custom page HTML.
 	// Custom page HTML.
@@ -80,11 +96,32 @@ type TrustAccessCustomPageParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Custom page type.
-	// Available values: "identity_denied", "forbidden".
+	// Available values: "identity_denied", "forbidden", "login", "interstitial".
 	// Custom page type.
-	// Available values: "identity_denied", "forbidden".
+	// Available values: "identity_denied", "forbidden", "login", "interstitial".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type WarningsInitParameters struct {
+}
+
+type WarningsObservation struct {
+
+	// readable description of the finding.
+	// Human-readable description of the finding.
+	Message *string `json:"message,omitempty" tf:"message,omitempty"`
+
+	// (String) Optional pointer to the part of the template the finding refers to.
+	// Optional pointer to the part of the template the finding refers to.
+	Ref *string `json:"ref,omitempty" tf:"ref,omitempty"`
+
+	// (String) The validation tier that produced the finding (e.g. html, liquid).
+	// The validation tier that produced the finding (e.g. html, liquid).
+	Tier *string `json:"tier,omitempty" tf:"tier,omitempty"`
+}
+
+type WarningsParameters struct {
 }
 
 // TrustAccessCustomPageSpec defines the desired state of TrustAccessCustomPage

@@ -24,6 +24,7 @@ spec:
       prompt: login
       supportGroups: true
     name: Widget Corps IDP
+    samlCertificateSetId: c409ef44-e72c-41c8-8c0b-278c8a6f4fd8
     scimConfig:
       enabled: true
       identityUpdateBehavior: automatic

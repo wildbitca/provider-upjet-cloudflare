@@ -106,13 +106,18 @@ spec:
                           Two-Factor Authentication is enabled
                         type: boolean
                     type: object
+                  standalone:
+                    description: |-
+                      (Boolean) Set to true and omit unit to create a standalone Free Account. If provided, this field must be true.
+                      Set to `true` and omit `unit` to create a standalone Free Account. If provided, this field must be `true`.
+                    type: boolean
                   type:
                     description: |-
                       (String, Deprecated) Available values: "standard", "enterprise".
                       Available values: "standard", "enterprise".
                     type: string
                   unit:
-                    description: to/manage-accounts/ (see below for nested schema)
+                    description: to/manage-accounts/. (see below for nested schema)
                     properties:
                       id:
                         description: |-
@@ -159,13 +164,18 @@ spec:
                           Two-Factor Authentication is enabled
                         type: boolean
                     type: object
+                  standalone:
+                    description: |-
+                      (Boolean) Set to true and omit unit to create a standalone Free Account. If provided, this field must be true.
+                      Set to `true` and omit `unit` to create a standalone Free Account. If provided, this field must be `true`.
+                    type: boolean
                   type:
                     description: |-
                       (String, Deprecated) Available values: "standard", "enterprise".
                       Available values: "standard", "enterprise".
                     type: string
                   unit:
-                    description: to/manage-accounts/ (see below for nested schema)
+                    description: to/manage-accounts/. (see below for nested schema)
                     properties:
                       id:
                         description: |-
@@ -314,13 +324,18 @@ spec:
                           Two-Factor Authentication is enabled
                         type: boolean
                     type: object
+                  standalone:
+                    description: |-
+                      (Boolean) Set to true and omit unit to create a standalone Free Account. If provided, this field must be true.
+                      Set to `true` and omit `unit` to create a standalone Free Account. If provided, this field must be `true`.
+                    type: boolean
                   type:
                     description: |-
                       (String, Deprecated) Available values: "standard", "enterprise".
                       Available values: "standard", "enterprise".
                     type: string
                   unit:
-                    description: to/manage-accounts/ (see below for nested schema)
+                    description: to/manage-accounts/. (see below for nested schema)
                     properties:
                       id:
                         description: |-

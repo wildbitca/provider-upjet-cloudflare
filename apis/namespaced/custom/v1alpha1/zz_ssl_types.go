@@ -53,7 +53,7 @@ type KeylessServerObservation struct {
 	// The keyless SSL name.
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
-	// (String) Identifier.
+	// (String) Custom certificate identifier tag.
 	// Keyless certificate identifier tag.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -117,9 +117,9 @@ type SSLInitParameters_2 struct {
 	// Note: The API accepts this field as either "policy" or "policy_restrictions" in requests. Responses return this field as "policy_restrictions".
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
-	// (String, Sensitive) The zone's private key.
-	// The zone's private key.
-	PrivateKeySecretRef v1.LocalSecretKeySelector `json:"privateKeySecretRef" tf:"-"`
+	// (String, Sensitive) The zone's private key. Not required if custom_csr_id is provided, in which case the private key is retrieved from the CSR record held by Cloudflare.
+	// The zone's private key. Not required if custom_csr_id is provided, in which case the private key is retrieved from the CSR record held by Cloudflare.
+	PrivateKeySecretRef *v1.LocalSecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
 
 	// (String) The type 'legacy_custom' enables support for legacy clients which do not include SNI in the TLS handshake.
 	// Available values: "legacy_custom", "sni_custom".
@@ -173,7 +173,7 @@ type SSLObservation_2 struct {
 	// (List of String)
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
-	// (String) Identifier.
+	// (String) Custom certificate identifier tag.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String) The certificate authority that issued the certificate.
@@ -271,10 +271,10 @@ type SSLParameters_2 struct {
 	// +kubebuilder:validation:Optional
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
-	// (String, Sensitive) The zone's private key.
-	// The zone's private key.
+	// (String, Sensitive) The zone's private key. Not required if custom_csr_id is provided, in which case the private key is retrieved from the CSR record held by Cloudflare.
+	// The zone's private key. Not required if custom_csr_id is provided, in which case the private key is retrieved from the CSR record held by Cloudflare.
 	// +kubebuilder:validation:Optional
-	PrivateKeySecretRef v1.LocalSecretKeySelector `json:"privateKeySecretRef" tf:"-"`
+	PrivateKeySecretRef *v1.LocalSecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
 
 	// (String) The type 'legacy_custom' enables support for legacy clients which do not include SNI in the TLS handshake.
 	// Available values: "legacy_custom", "sni_custom".
@@ -352,7 +352,6 @@ type SSL struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.certificate) || (has(self.initProvider) && has(self.initProvider.certificate))",message="spec.forProvider.certificate is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.privateKeySecretRef)",message="spec.forProvider.privateKeySecretRef is a required parameter"
 	Spec   SSLSpec   `json:"spec"`
 	Status SSLStatus `json:"status,omitempty"`
 }

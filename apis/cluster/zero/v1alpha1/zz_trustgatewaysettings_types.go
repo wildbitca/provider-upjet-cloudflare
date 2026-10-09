@@ -227,7 +227,7 @@ type CustomCertificateInitParameters struct {
 	// Specify whether to enable a custom certificate authority for signing Gateway traffic.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String) Specify the Cloudflare account identifier.
 	// Specify the UUID of the certificate (ID from MTLS certificate store).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -245,7 +245,7 @@ type CustomCertificateObservation struct {
 	// Specify whether to enable a custom certificate authority for signing Gateway traffic.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String) Specify the Cloudflare account identifier.
 	// Specify the UUID of the certificate (ID from MTLS certificate store).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -265,7 +265,7 @@ type CustomCertificateParameters struct {
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String) Specify the Cloudflare account identifier.
 	// Specify the UUID of the certificate (ID from MTLS certificate store).
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -656,21 +656,21 @@ type SettingsBlockPageParameters struct {
 
 type SettingsCertificateInitParameters struct {
 
-	// (String) The ID of this resource.
+	// (String) Specify the Cloudflare account identifier.
 	// Specify the UUID of the certificate used for interception. Ensure the certificate is available at the edge(previously called 'active'). A nil UUID directs Cloudflare to use the Root CA.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type SettingsCertificateObservation struct {
 
-	// (String) The ID of this resource.
+	// (String) Specify the Cloudflare account identifier.
 	// Specify the UUID of the certificate used for interception. Ensure the certificate is available at the edge(previously called 'active'). A nil UUID directs Cloudflare to use the Root CA.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type SettingsCertificateParameters struct {
 
-	// (String) The ID of this resource.
+	// (String) Specify the Cloudflare account identifier.
 	// Specify the UUID of the certificate used for interception. Ensure the certificate is available at the edge(previously called 'active'). A nil UUID directs Cloudflare to use the Root CA.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id" tf:"id,omitempty"`
@@ -700,7 +700,8 @@ type TLSDecryptParameters struct {
 
 type TrustGatewaySettingsInitParameters struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (Attributes) Specify account settings. (see below for nested schema)
@@ -709,13 +710,14 @@ type TrustGatewaySettingsInitParameters struct {
 
 type TrustGatewaySettingsObservation struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String) Specify the Cloudflare account identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Attributes) Specify account settings. (see below for nested schema)
@@ -727,7 +729,8 @@ type TrustGatewaySettingsObservation struct {
 
 type TrustGatewaySettingsParameters struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 

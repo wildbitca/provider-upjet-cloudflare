@@ -63,6 +63,13 @@ spec:
                     description: (Attributes List) (see below for nested schema)
                     items:
                       properties:
+                        cloudConnectorRulesProvider:
+                          description: |-
+                            (String) Cloud Provider type
+                            Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage", "oci_storage".
+                            Cloud Provider type
+                            Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage", "oci_storage".
+                          type: string
                         description:
                           description: (String)
                           type: string
@@ -82,13 +89,6 @@ spec:
                                 Host to perform Cloud Connection to
                               type: string
                           type: object
-                        provider:
-                          description: |-
-                            (String) Cloud Provider type
-                            Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage".
-                            Cloud Provider type
-                            Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage".
-                          type: string
                       type: object
                     type: array
                   zoneId:
@@ -114,6 +114,13 @@ spec:
                     description: (Attributes List) (see below for nested schema)
                     items:
                       properties:
+                        cloudConnectorRulesProvider:
+                          description: |-
+                            (String) Cloud Provider type
+                            Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage", "oci_storage".
+                            Cloud Provider type
+                            Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage", "oci_storage".
+                          type: string
                         description:
                           description: (String)
                           type: string
@@ -133,13 +140,6 @@ spec:
                                 Host to perform Cloud Connection to
                               type: string
                           type: object
-                        provider:
-                          description: |-
-                            (String) Cloud Provider type
-                            Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage".
-                            Cloud Provider type
-                            Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage".
-                          type: string
                       type: object
                     type: array
                   zoneId:
@@ -207,6 +207,10 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
+            - message: spec.forProvider.rules is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.rules)
+                || (has(self.initProvider) && has(self.initProvider.rules))'
             - message: spec.forProvider.zoneId is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.zoneId)
@@ -223,6 +227,13 @@ spec:
                     description: (Attributes List) (see below for nested schema)
                     items:
                       properties:
+                        cloudConnectorRulesProvider:
+                          description: |-
+                            (String) Cloud Provider type
+                            Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage", "oci_storage".
+                            Cloud Provider type
+                            Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage", "oci_storage".
+                          type: string
                         description:
                           description: (String)
                           type: string
@@ -245,13 +256,6 @@ spec:
                                 Host to perform Cloud Connection to
                               type: string
                           type: object
-                        provider:
-                          description: |-
-                            (String) Cloud Provider type
-                            Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage".
-                            Cloud Provider type
-                            Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage".
-                          type: string
                       type: object
                     type: array
                   zoneId:

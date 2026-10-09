@@ -97,11 +97,12 @@ spec:
                     type: number
                   urls:
                     description: |-
-                      (List of String) The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
+                      (Set of String) The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
                       The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   zoneId:
                     description: |-
                       (String) Defines an identifier.
@@ -239,11 +240,12 @@ spec:
                     type: number
                   urls:
                     description: |-
-                      (List of String) The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
+                      (Set of String) The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
                       The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   zoneId:
                     description: |-
                       (String) Defines an identifier.
@@ -454,11 +456,12 @@ spec:
                     type: number
                   urls:
                     description: |-
-                      (List of String) The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
+                      (Set of String) The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
                       The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   zoneId:
                     description: |-
                       (String) Defines an identifier.

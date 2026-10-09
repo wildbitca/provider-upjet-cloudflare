@@ -64,12 +64,21 @@ spec:
                       (String) Account identifier tag.
                       Account identifier tag.
                     type: string
+                  fields:
+                    description: |-
+                      separated list of fields to include in the response. When omitted,
+                      all fields are returned.
+                      Comma-separated list of fields to include in the response. When omitted,
+                      all fields are returned.
+                    items:
+                      type: string
+                    type: array
                   jurisdiction:
                     description: |-
                       (String) Specify the location to restrict the D1 database to run and store data. If this option is present, the location hint is ignored.
-                      Available values: "eu", "fedramp".
+                      Available values: "eu", "fedramp", "us".
                       Specify the location to restrict the D1 database to run and store data. If this option is present, the location hint is ignored.
-                      Available values: "eu", "fedramp".
+                      Available values: "eu", "fedramp", "us".
                     type: string
                   name:
                     description: |-
@@ -114,12 +123,21 @@ spec:
                       (String) Account identifier tag.
                       Account identifier tag.
                     type: string
+                  fields:
+                    description: |-
+                      separated list of fields to include in the response. When omitted,
+                      all fields are returned.
+                      Comma-separated list of fields to include in the response. When omitted,
+                      all fields are returned.
+                    items:
+                      type: string
+                    type: array
                   jurisdiction:
                     description: |-
                       (String) Specify the location to restrict the D1 database to run and store data. If this option is present, the location hint is ignored.
-                      Available values: "eu", "fedramp".
+                      Available values: "eu", "fedramp", "us".
                       Specify the location to restrict the D1 database to run and store data. If this option is present, the location hint is ignored.
-                      Available values: "eu", "fedramp".
+                      Available values: "eu", "fedramp", "us".
                     type: string
                   name:
                     description: |-
@@ -228,6 +246,15 @@ spec:
                       (String) Specifies the timestamp the resource was created as an ISO8601 string.
                       Specifies the timestamp the resource was created as an ISO8601 string.
                     type: string
+                  fields:
+                    description: |-
+                      separated list of fields to include in the response. When omitted,
+                      all fields are returned.
+                      Comma-separated list of fields to include in the response. When omitted,
+                      all fields are returned.
+                    items:
+                      type: string
+                    type: array
                   fileSize:
                     description: |-
                       (Number) The D1 database's size, in bytes.
@@ -239,9 +266,9 @@ spec:
                   jurisdiction:
                     description: |-
                       (String) Specify the location to restrict the D1 database to run and store data. If this option is present, the location hint is ignored.
-                      Available values: "eu", "fedramp".
+                      Available values: "eu", "fedramp", "us".
                       Specify the location to restrict the D1 database to run and store data. If this option is present, the location hint is ignored.
-                      Available values: "eu", "fedramp".
+                      Available values: "eu", "fedramp", "us".
                     type: string
                   name:
                     description: |-
@@ -249,7 +276,9 @@ spec:
                       D1 database name.
                     type: string
                   numTables:
-                    description: (Number)
+                    description: |-
+                      (Number, Deprecated) The number of tables in the D1 database. This count is no longer accurate and should not be relied upon.
+                      The number of tables in the D1 database. This count is no longer accurate and should not be relied upon.
                     type: number
                   primaryLocationHint:
                     description: |-

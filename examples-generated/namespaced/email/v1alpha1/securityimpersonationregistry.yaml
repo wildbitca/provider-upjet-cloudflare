@@ -10,6 +10,11 @@ metadata:
 spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
-    email: email
-    isEmailRegex: true
-    name: name
+    comments: comments
+    directoryId: 0
+    directoryNodeId: 0
+    email: john.doe@example.com
+    externalDirectoryNodeId: external_directory_node_id
+    isEmailRegex: false
+    name: John Doe
+    provenance: A1S_INTERNAL

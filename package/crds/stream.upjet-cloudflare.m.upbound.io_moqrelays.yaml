@@ -34,7 +34,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: MOQRelay is the Schema for the MOQRelays API. <no value>
+        description: MOQRelay is the Schema for the MOQRelays API.
         properties:
           apiVersion:
             description: |-
@@ -59,7 +59,9 @@ spec:
               forProvider:
                 properties:
                   accountId:
-                    description: Cloudflare account identifier.
+                    description: |-
+                      (String) Cloudflare account identifier.
+                      Cloudflare account identifier.
                     type: string
                   accountIdRef:
                     description: Reference to a Account in account to populate accountId.
@@ -142,32 +144,52 @@ spec:
                         type: object
                     type: object
                   config:
+                    description: (Attributes) upstreams and lingering_subscribe are
+                      mutually exclusive. (see below for nested schema)
                     properties:
                       lingeringSubscribe:
+                        description: (Attributes) (see below for nested schema)
                         properties:
                           enabled:
+                            description: (Boolean)
                             type: boolean
                           maxTimeoutMs:
-                            description: Relay-level ceiling on lingering subscribe
-                              timeout (ms). Default 30000.
+                            description: |-
+                              level ceiling on lingering subscribe timeout (ms). Default 30000.
+                              Relay-level ceiling on lingering subscribe timeout (ms). Default 30000.
                             type: number
                         type: object
                       upstreams:
+                        description: |-
+                          (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+                          to when it has no local publisher for a requested namespace/track. (see below for nested schema)
                         properties:
                           enabled:
+                            description: (Boolean)
                             type: boolean
                           upstreams:
+                            description: |-
+                              (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+                              to when it has no local publisher for a requested namespace/track. (see below for nested schema)
                             items:
                               properties:
                                 url:
-                                  description: Upstream MOQT server publisher URL.
+                                  description: |-
+                                    (String) Upstream MOQT server publisher URL. Must be an absolute URL with a
+                                    host and a scheme the relay can dial: moqt:// (raw QUIC) or https://
+                                    (WebTransport). Validated on update (PUT); rejected with 21013.
+                                    Upstream MOQT server publisher URL. Must be an absolute URL with a
+                                    host and a scheme the relay can dial: moqt:// (raw QUIC) or https://
+                                    (WebTransport). Validated on update (PUT); rejected with 21013.
                                   type: string
                               type: object
                             type: array
                         type: object
                     type: object
                   name:
-                    description: Human-readable name for the relay.
+                    description: |-
+                      readable name for the relay.
+                      Human-readable name for the relay.
                     type: string
                 type: object
               initProvider:
@@ -184,7 +206,9 @@ spec:
                   autoscaler.
                 properties:
                   accountId:
-                    description: Cloudflare account identifier.
+                    description: |-
+                      (String) Cloudflare account identifier.
+                      Cloudflare account identifier.
                     type: string
                   accountIdRef:
                     description: Reference to a Account in account to populate accountId.
@@ -267,32 +291,52 @@ spec:
                         type: object
                     type: object
                   config:
+                    description: (Attributes) upstreams and lingering_subscribe are
+                      mutually exclusive. (see below for nested schema)
                     properties:
                       lingeringSubscribe:
+                        description: (Attributes) (see below for nested schema)
                         properties:
                           enabled:
+                            description: (Boolean)
                             type: boolean
                           maxTimeoutMs:
-                            description: Relay-level ceiling on lingering subscribe
-                              timeout (ms). Default 30000.
+                            description: |-
+                              level ceiling on lingering subscribe timeout (ms). Default 30000.
+                              Relay-level ceiling on lingering subscribe timeout (ms). Default 30000.
                             type: number
                         type: object
                       upstreams:
+                        description: |-
+                          (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+                          to when it has no local publisher for a requested namespace/track. (see below for nested schema)
                         properties:
                           enabled:
+                            description: (Boolean)
                             type: boolean
                           upstreams:
+                            description: |-
+                              (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+                              to when it has no local publisher for a requested namespace/track. (see below for nested schema)
                             items:
                               properties:
                                 url:
-                                  description: Upstream MOQT server publisher URL.
+                                  description: |-
+                                    (String) Upstream MOQT server publisher URL. Must be an absolute URL with a
+                                    host and a scheme the relay can dial: moqt:// (raw QUIC) or https://
+                                    (WebTransport). Validated on update (PUT); rejected with 21013.
+                                    Upstream MOQT server publisher URL. Must be an absolute URL with a
+                                    host and a scheme the relay can dial: moqt:// (raw QUIC) or https://
+                                    (WebTransport). Validated on update (PUT); rejected with 21013.
                                   type: string
                               type: object
                             type: array
                         type: object
                     type: object
                   name:
-                    description: Human-readable name for the relay.
+                    description: |-
+                      readable name for the relay.
+                      Human-readable name for the relay.
                     type: string
                 type: object
               managementPolicies:
@@ -364,49 +408,78 @@ spec:
               atProvider:
                 properties:
                   accountId:
-                    description: Cloudflare account identifier.
+                    description: |-
+                      (String) Cloudflare account identifier.
+                      Cloudflare account identifier.
                     type: string
                   config:
+                    description: (Attributes) upstreams and lingering_subscribe are
+                      mutually exclusive. (see below for nested schema)
                     properties:
                       lingeringSubscribe:
+                        description: (Attributes) (see below for nested schema)
                         properties:
                           enabled:
+                            description: (Boolean)
                             type: boolean
                           maxTimeoutMs:
-                            description: Relay-level ceiling on lingering subscribe
-                              timeout (ms). Default 30000.
+                            description: |-
+                              level ceiling on lingering subscribe timeout (ms). Default 30000.
+                              Relay-level ceiling on lingering subscribe timeout (ms). Default 30000.
                             type: number
                         type: object
                       upstreams:
+                        description: |-
+                          (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+                          to when it has no local publisher for a requested namespace/track. (see below for nested schema)
                         properties:
                           enabled:
+                            description: (Boolean)
                             type: boolean
                           upstreams:
+                            description: |-
+                              (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+                              to when it has no local publisher for a requested namespace/track. (see below for nested schema)
                             items:
                               properties:
                                 url:
-                                  description: Upstream MOQT server publisher URL.
+                                  description: |-
+                                    (String) Upstream MOQT server publisher URL. Must be an absolute URL with a
+                                    host and a scheme the relay can dial: moqt:// (raw QUIC) or https://
+                                    (WebTransport). Validated on update (PUT); rejected with 21013.
+                                    Upstream MOQT server publisher URL. Must be an absolute URL with a
+                                    host and a scheme the relay can dial: moqt:// (raw QUIC) or https://
+                                    (WebTransport). Validated on update (PUT); rejected with 21013.
                                   type: string
                               type: object
                             type: array
                         type: object
                     type: object
                   created:
+                    description: (String)
                     type: string
                   id:
+                    description: generated unique identifier (32 hex chars).
                     type: string
                   modified:
+                    description: (String)
                     type: string
                   name:
-                    description: Human-readable name for the relay.
+                    description: |-
+                      readable name for the relay.
+                      Human-readable name for the relay.
                     type: string
                   status:
                     description: |-
+                      (String) "connected" when active, omitted otherwise.
+                      Available values: "connected".
                       "connected" when active, omitted otherwise.
                       Available values: "connected".
                     type: string
                   uid:
-                    description: Server-generated unique identifier (32 hex chars).
+                    description: |-
+                      generated unique identifier (32 hex chars).
+                      Server-generated unique identifier (32 hex chars).
                     type: string
                 type: object
               conditions:

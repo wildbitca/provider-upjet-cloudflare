@@ -24,8 +24,8 @@ type SfuAppInitParameters struct {
 	// A Cloudflare-generated unique identifier for a item.
 	AppID *string `json:"appId,omitempty" tf:"app_id,omitempty"`
 
-	// (String) A short description of Calls app, not shown to end users.
-	// A short description of Calls app, not shown to end users.
+	// (String) A short description of a Realtime SFU app, not shown to end users.
+	// A short description of a Realtime SFU app, not shown to end users.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
@@ -49,8 +49,8 @@ type SfuAppObservation struct {
 	// The date and time the item was last modified.
 	Modified *string `json:"modified,omitempty" tf:"modified,omitempty"`
 
-	// (String) A short description of Calls app, not shown to end users.
-	// A short description of Calls app, not shown to end users.
+	// (String) A short description of a Realtime SFU app, not shown to end users.
+	// A short description of a Realtime SFU app, not shown to end users.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// generated unique identifier for a item.
@@ -70,8 +70,8 @@ type SfuAppParameters struct {
 	// +kubebuilder:validation:Optional
 	AppID *string `json:"appId,omitempty" tf:"app_id,omitempty"`
 
-	// (String) A short description of Calls app, not shown to end users.
-	// A short description of Calls app, not shown to end users.
+	// (String) A short description of a Realtime SFU app, not shown to end users.
+	// A short description of a Realtime SFU app, not shown to end users.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }

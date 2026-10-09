@@ -81,29 +81,44 @@ spec:
                       Identifier.
                     type: string
                   comments:
-                    description: (String)
+                    description: |-
+                      (String) Optional note describing the entry.
+                      Optional note describing the entry.
                     type: string
                   directoryId:
-                    description: (Number)
+                    description: |-
+                      synced.
+                      Identifier of the directory the entry was synced from, when directory-synced.
                     type: number
                   directoryNodeId:
-                    description: (Number)
+                    description: |-
+                      synced.
+                      Identifier of the directory node the entry was synced from, when directory-synced.
                     type: number
                   email:
-                    description: (String)
+                    description: |-
+                      (String) Email address (or pattern) of the protected identity.
+                      Email address (or pattern) of the protected identity.
                     type: string
                   externalDirectoryNodeId:
-                    description: (String, Deprecated)
+                    description: |-
+                      (String, Deprecated) Deprecated. External identifier of the directory node.
+                      Deprecated. External identifier of the directory node.
                     type: string
                   isEmailRegex:
-                    description: (Boolean)
+                    description: |-
+                      (Boolean) Whether email is a regular expression instead of a literal address.
+                      Whether `email` is a regular expression instead of a literal address.
                     type: boolean
                   name:
-                    description: (String)
+                    description: |-
+                      (String) Display name of the protected identity.
+                      Display name of the protected identity.
                     type: string
                   provenance:
                     description: |-
                       CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+                      Source the entry was created from.
                       Available values: "A1S_INTERNAL", "SNOOPY-CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
                     type: string
                 type: object
@@ -126,29 +141,44 @@ spec:
                       Identifier.
                     type: string
                   comments:
-                    description: (String)
+                    description: |-
+                      (String) Optional note describing the entry.
+                      Optional note describing the entry.
                     type: string
                   directoryId:
-                    description: (Number)
+                    description: |-
+                      synced.
+                      Identifier of the directory the entry was synced from, when directory-synced.
                     type: number
                   directoryNodeId:
-                    description: (Number)
+                    description: |-
+                      synced.
+                      Identifier of the directory node the entry was synced from, when directory-synced.
                     type: number
                   email:
-                    description: (String)
+                    description: |-
+                      (String) Email address (or pattern) of the protected identity.
+                      Email address (or pattern) of the protected identity.
                     type: string
                   externalDirectoryNodeId:
-                    description: (String, Deprecated)
+                    description: |-
+                      (String, Deprecated) Deprecated. External identifier of the directory node.
+                      Deprecated. External identifier of the directory node.
                     type: string
                   isEmailRegex:
-                    description: (Boolean)
+                    description: |-
+                      (Boolean) Whether email is a regular expression instead of a literal address.
+                      Whether `email` is a regular expression instead of a literal address.
                     type: boolean
                   name:
-                    description: (String)
+                    description: |-
+                      (String) Display name of the protected identity.
+                      Display name of the protected identity.
                     type: string
                   provenance:
                     description: |-
                       CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+                      Source the entry was created from.
                       Available values: "A1S_INTERNAL", "SNOOPY-CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
                     type: string
                 type: object
@@ -267,28 +297,40 @@ spec:
                       Identifier.
                     type: string
                   comments:
-                    description: (String)
+                    description: |-
+                      (String) Optional note describing the entry.
+                      Optional note describing the entry.
                     type: string
                   createdAt:
                     description: (String)
                     type: string
                   directoryId:
-                    description: (Number)
+                    description: |-
+                      synced.
+                      Identifier of the directory the entry was synced from, when directory-synced.
                     type: number
                   directoryNodeId:
-                    description: (Number)
+                    description: |-
+                      synced.
+                      Identifier of the directory node the entry was synced from, when directory-synced.
                     type: number
                   email:
-                    description: (String)
+                    description: |-
+                      (String) Email address (or pattern) of the protected identity.
+                      Email address (or pattern) of the protected identity.
                     type: string
                   externalDirectoryNodeId:
-                    description: (String, Deprecated)
+                    description: |-
+                      (String, Deprecated) Deprecated. External identifier of the directory node.
+                      Deprecated. External identifier of the directory node.
                     type: string
                   id:
                     description: (String) Impersonation registry entry identifier
                     type: string
                   isEmailRegex:
-                    description: (Boolean)
+                    description: |-
+                      (Boolean) Whether email is a regular expression instead of a literal address.
+                      Whether `email` is a regular expression instead of a literal address.
                     type: boolean
                   lastModified:
                     description: |-
@@ -299,11 +341,14 @@ spec:
                     description: (String)
                     type: string
                   name:
-                    description: (String)
+                    description: |-
+                      (String) Display name of the protected identity.
+                      Display name of the protected identity.
                     type: string
                   provenance:
                     description: |-
                       CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+                      Source the entry was created from.
                       Available values: "A1S_INTERNAL", "SNOOPY-CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
                     type: string
                 type: object

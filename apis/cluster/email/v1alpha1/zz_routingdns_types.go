@@ -13,208 +13,15 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
-type ErrorsInitParameters struct {
-}
-
-type ErrorsObservation struct {
-
-	// (Number)
-	Code *float64 `json:"code,omitempty" tf:"code,omitempty"`
-
-	// (String)
-	DocumentationURL *string `json:"documentationUrl,omitempty" tf:"documentation_url,omitempty"`
-
-	// (String)
-	Message *string `json:"message,omitempty" tf:"message,omitempty"`
-
-	// (Attributes) (see below for nested schema)
-	Source *SourceObservation `json:"source,omitempty" tf:"source,omitempty"`
-}
-
-type ErrorsParameters struct {
-}
-
-type MessagesInitParameters struct {
-}
-
-type MessagesObservation struct {
-
-	// (Number)
-	Code *float64 `json:"code,omitempty" tf:"code,omitempty"`
-
-	// (String)
-	DocumentationURL *string `json:"documentationUrl,omitempty" tf:"documentation_url,omitempty"`
-
-	// (String)
-	Message *string `json:"message,omitempty" tf:"message,omitempty"`
-
-	// (Attributes) (see below for nested schema)
-	Source *MessagesSourceObservation `json:"source,omitempty" tf:"source,omitempty"`
-}
-
-type MessagesParameters struct {
-}
-
-type MessagesSourceInitParameters struct {
-}
-
-type MessagesSourceObservation struct {
-
-	// (String)
-	Pointer *string `json:"pointer,omitempty" tf:"pointer,omitempty"`
-}
-
-type MessagesSourceParameters struct {
-}
-
-type MissingInitParameters struct {
-}
-
-type MissingObservation struct {
-
-	// (String) DNS record content.
-	// DNS record content.
-	Content *string `json:"content,omitempty" tf:"content,omitempty"`
-
-	// (String) Domain of your zone.
-	// DNS record name (or @ for the zone apex).
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// (Number) Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
-	// Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
-	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
-
-	// (Number) Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
-	// Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
-	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
-
-	// (String) DNS record type.
-	// Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
-	// DNS record type.
-	// Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
-}
-
-type MissingParameters struct {
-}
-
-type RecordInitParameters struct {
-}
-
-type RecordObservation struct {
-
-	// (String) DNS record content.
-	// DNS record content.
-	Content *string `json:"content,omitempty" tf:"content,omitempty"`
-
-	// (String) Domain of your zone.
-	// DNS record name (or @ for the zone apex).
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// (Number) Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
-	// Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
-	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
-
-	// (Number) Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
-	// Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
-	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
-
-	// (String) DNS record type.
-	// Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
-	// DNS record type.
-	// Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
-}
-
-type RecordParameters struct {
-}
-
-type ResultErrorsInitParameters struct {
-}
-
-type ResultErrorsObservation struct {
-
-	// (Number)
-	Code *string `json:"code,omitempty" tf:"code,omitempty"`
-
-	// (Attributes) List of records needed to enable an Email Routing zone. (see below for nested schema)
-	Missing *MissingObservation `json:"missing,omitempty" tf:"missing,omitempty"`
-}
-
-type ResultErrorsParameters struct {
-}
-
-type ResultInfoInitParameters struct {
-}
-
-type ResultInfoObservation struct {
-
-	// (Number) Total number of results for the requested service.
-	// Total number of results for the requested service.
-	EmailRoutingDNSCount *float64 `json:"emailRoutingDnsCount,omitempty" tf:"email_routing_dns_count,omitempty"`
-
-	// (Number) Current page within paginated list of results.
-	// Current page within paginated list of results.
-	Page *float64 `json:"page,omitempty" tf:"page,omitempty"`
-
-	// (Number) Number of results per page of results.
-	// Number of results per page of results.
-	PerPage *float64 `json:"perPage,omitempty" tf:"per_page,omitempty"`
-
-	// (Number) Total results available without any search parameters.
-	// Total results available without any search parameters.
-	TotalCount *float64 `json:"totalCount,omitempty" tf:"total_count,omitempty"`
-
-	// (Number) The number of total pages in the entire result set.
-	// The number of total pages in the entire result set.
-	TotalPages *float64 `json:"totalPages,omitempty" tf:"total_pages,omitempty"`
-}
-
-type ResultInfoParameters struct {
-}
-
-type ResultInitParameters struct {
-}
-
-type ResultObservation struct {
-
-	// (String) DNS record content.
-	// DNS record content.
-	Content *string `json:"content,omitempty" tf:"content,omitempty"`
-
-	// (Attributes List) (see below for nested schema)
-	Errors []ResultErrorsObservation `json:"errors,omitempty" tf:"errors,omitempty"`
-
-	// (String) Domain of your zone.
-	// DNS record name (or @ for the zone apex).
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// (Number) Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
-	// Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
-	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
-
-	// (Attributes List) (see below for nested schema)
-	Record []RecordObservation `json:"record,omitempty" tf:"record,omitempty"`
-
-	// (Number) Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
-	// Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
-	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
-
-	// (String) DNS record type.
-	// Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
-	// DNS record type.
-	// Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
-}
-
-type ResultParameters struct {
-}
-
 type RoutingDNSInitParameters struct {
 
 	// (String) Domain of your zone.
 	// Domain of your zone.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (String) Deprecated. When supplied, the response shape differs from the documented default and is not modeled in generated SDKs. Do not rely on this parameter.
+	// Deprecated. When supplied, the response shape differs from the documented default and is not modeled in generated SDKs. Do not rely on this parameter.
+	Subdomain *string `json:"subdomain,omitempty" tf:"subdomain,omitempty"`
 
 	// (String) Identifier.
 	// Identifier.
@@ -231,14 +38,8 @@ type RoutingDNSObservation struct {
 	// State of the zone settings for Email Routing.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
-	Errors []ErrorsObservation `json:"errors,omitempty" tf:"errors,omitempty"`
-
 	// (String) Identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// (Attributes List) (see below for nested schema)
-	Messages []MessagesObservation `json:"messages,omitempty" tf:"messages,omitempty"`
 
 	// (String) The date and time the settings have been modified.
 	// The date and time the settings have been modified.
@@ -247,12 +48,6 @@ type RoutingDNSObservation struct {
 	// (String) Domain of your zone.
 	// Domain of your zone.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// (Attributes) (see below for nested schema)
-	Result *ResultObservation `json:"result,omitempty" tf:"result,omitempty"`
-
-	// (Attributes) (see below for nested schema)
-	ResultInfo *ResultInfoObservation `json:"resultInfo,omitempty" tf:"result_info,omitempty"`
 
 	// (Boolean) Flag to check if the user skipped the configuration wizard.
 	// Flag to check if the user skipped the configuration wizard.
@@ -264,9 +59,13 @@ type RoutingDNSObservation struct {
 	// Available values: "ready", "unconfigured", "misconfigured", "misconfigured/locked", "unlocked".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// (Boolean) Whether the API call was successful.
-	// Whether the API call was successful.
-	Success *bool `json:"success,omitempty" tf:"success,omitempty"`
+	// (String) Deprecated. When supplied, the response shape differs from the documented default and is not modeled in generated SDKs. Do not rely on this parameter.
+	// Deprecated. When supplied, the response shape differs from the documented default and is not modeled in generated SDKs. Do not rely on this parameter.
+	Subdomain *string `json:"subdomain,omitempty" tf:"subdomain,omitempty"`
+
+	// addressing) is honored when matching incoming mail against routing rules.
+	// Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+	SupportSubaddress *bool `json:"supportSubaddress,omitempty" tf:"support_subaddress,omitempty"`
 
 	// (String, Deprecated) Email Routing settings tag. (Deprecated, replaced by Email Routing settings identifier)
 	// Email Routing settings tag. (Deprecated, replaced by Email Routing settings identifier)
@@ -284,22 +83,15 @@ type RoutingDNSParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) Deprecated. When supplied, the response shape differs from the documented default and is not modeled in generated SDKs. Do not rely on this parameter.
+	// Deprecated. When supplied, the response shape differs from the documented default and is not modeled in generated SDKs. Do not rely on this parameter.
+	// +kubebuilder:validation:Optional
+	Subdomain *string `json:"subdomain,omitempty" tf:"subdomain,omitempty"`
+
 	// (String) Identifier.
 	// Identifier.
 	// +kubebuilder:validation:Optional
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
-}
-
-type SourceInitParameters struct {
-}
-
-type SourceObservation struct {
-
-	// (String)
-	Pointer *string `json:"pointer,omitempty" tf:"pointer,omitempty"`
-}
-
-type SourceParameters struct {
 }
 
 // RoutingDNSSpec defines the desired state of RoutingDNS

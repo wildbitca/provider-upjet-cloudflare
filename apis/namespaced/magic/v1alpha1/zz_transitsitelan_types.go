@@ -103,7 +103,7 @@ type DHCPServerInitParameters struct {
 	// A valid IPv4 address.
 	DHCPPoolStart *string `json:"dhcpPoolStart,omitempty" tf:"dhcp_pool_start,omitempty"`
 
-	// (String) A valid IPv4 address.
+	// (String, Deprecated) A valid IPv4 address.
 	// A valid IPv4 address.
 	DNSServer *string `json:"dnsServer,omitempty" tf:"dns_server,omitempty"`
 
@@ -129,7 +129,7 @@ type DHCPServerObservation struct {
 	// A valid IPv4 address.
 	DHCPPoolStart *string `json:"dhcpPoolStart,omitempty" tf:"dhcp_pool_start,omitempty"`
 
-	// (String) A valid IPv4 address.
+	// (String, Deprecated) A valid IPv4 address.
 	// A valid IPv4 address.
 	DNSServer *string `json:"dnsServer,omitempty" tf:"dns_server,omitempty"`
 
@@ -158,7 +158,7 @@ type DHCPServerParameters struct {
 	// +kubebuilder:validation:Optional
 	DHCPPoolStart *string `json:"dhcpPoolStart,omitempty" tf:"dhcp_pool_start,omitempty"`
 
-	// (String) A valid IPv4 address.
+	// (String, Deprecated) A valid IPv4 address.
 	// A valid IPv4 address.
 	// +kubebuilder:validation:Optional
 	DNSServer *string `json:"dnsServer,omitempty" tf:"dns_server,omitempty"`

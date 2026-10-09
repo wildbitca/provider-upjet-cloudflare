@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: TLSSetting is the Schema for the TLSSettings API. Accepted Permissions
-          SSL and Certificates ReadSSL and Certificates Write
+          SSL and Certificates Write
         properties:
           apiVersion:
             description: |-

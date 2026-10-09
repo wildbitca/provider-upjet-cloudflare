@@ -22,7 +22,8 @@ type ActionsInitParameters struct {
 	// Available values: "drop", "forward", "worker".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (List of String)
+	// (List of String) List of values for the action. Currently limited to a single value.
+	// List of values for the action. Currently limited to a single value.
 	Value []*string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
@@ -34,7 +35,8 @@ type ActionsObservation struct {
 	// Available values: "drop", "forward", "worker".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (List of String)
+	// (List of String) List of values for the action. Currently limited to a single value.
+	// List of values for the action. Currently limited to a single value.
 	Value []*string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
@@ -47,7 +49,8 @@ type ActionsParameters struct {
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
-	// (List of String)
+	// (List of String) List of values for the action. Currently limited to a single value.
+	// List of values for the action. Currently limited to a single value.
 	// +kubebuilder:validation:Optional
 	Value []*string `json:"value,omitempty" tf:"value,omitempty"`
 }

@@ -249,6 +249,11 @@ spec:
 
                           Note: Requires `saml_certificate_set_id` to be set when `true`.
                         type: boolean
+                      forceAuthn:
+                        description: |-
+                          (Boolean) Asks the IdP to reauthenticate the user for each SAML authentication request.
+                          Asks the IdP to reauthenticate the user for each SAML authentication request.
+                        type: boolean
                       headerAttributes:
                         description: (Attributes List) Add a list of attribute names
                           that will be returned in the response header from the Access
@@ -279,6 +284,15 @@ spec:
                           (String) IdP Entity ID or Issuer URL
                           IdP Entity ID or Issuer URL
                         type: string
+                      maxSsoUrlLength:
+                        description: |-
+                          side and a short nonce is passed to the IdP instead.
+                          Set this if your IdP enforces a URL length limit.
+                          The maximum URL length the IdP accepts for the SSO redirect URL.
+                          When the constructed SSO URL would exceed this length, the RelayState
+                          is stored server-side and a short nonce is passed to the IdP instead.
+                          Set this if your IdP enforces a URL length limit.
+                        type: number
                       oktaAccount:
                         description: |-
                           (String) Your okta account url
@@ -302,9 +316,9 @@ spec:
                       prompt:
                         description: |-
                           sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-                          Available values: "login", "select_account", "none".
+                          Available values: "login", "select_account", "none", "consent".
                           Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-                          Available values: "login", "select_account", "none".
+                          Available values: "login", "select_account", "none", "consent".
                         type: string
                       restrictToAccountMembers:
                         description: |-
@@ -338,6 +352,11 @@ spec:
                           (String) The token_endpoint URL of your IdP
                           The token_endpoint URL of your IdP
                         type: string
+                      useLoginHint:
+                        description: |-
+                          (Boolean) Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
+                          Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
+                        type: boolean
                     type: object
                   name:
                     description: |-
@@ -598,6 +617,11 @@ spec:
 
                           Note: Requires `saml_certificate_set_id` to be set when `true`.
                         type: boolean
+                      forceAuthn:
+                        description: |-
+                          (Boolean) Asks the IdP to reauthenticate the user for each SAML authentication request.
+                          Asks the IdP to reauthenticate the user for each SAML authentication request.
+                        type: boolean
                       headerAttributes:
                         description: (Attributes List) Add a list of attribute names
                           that will be returned in the response header from the Access
@@ -628,6 +652,15 @@ spec:
                           (String) IdP Entity ID or Issuer URL
                           IdP Entity ID or Issuer URL
                         type: string
+                      maxSsoUrlLength:
+                        description: |-
+                          side and a short nonce is passed to the IdP instead.
+                          Set this if your IdP enforces a URL length limit.
+                          The maximum URL length the IdP accepts for the SSO redirect URL.
+                          When the constructed SSO URL would exceed this length, the RelayState
+                          is stored server-side and a short nonce is passed to the IdP instead.
+                          Set this if your IdP enforces a URL length limit.
+                        type: number
                       oktaAccount:
                         description: |-
                           (String) Your okta account url
@@ -651,9 +684,9 @@ spec:
                       prompt:
                         description: |-
                           sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-                          Available values: "login", "select_account", "none".
+                          Available values: "login", "select_account", "none", "consent".
                           Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-                          Available values: "login", "select_account", "none".
+                          Available values: "login", "select_account", "none", "consent".
                         type: string
                       restrictToAccountMembers:
                         description: |-
@@ -687,6 +720,11 @@ spec:
                           (String) The token_endpoint URL of your IdP
                           The token_endpoint URL of your IdP
                         type: string
+                      useLoginHint:
+                        description: |-
+                          (Boolean) Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
+                          Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
+                        type: boolean
                     type: object
                   name:
                     description: |-
@@ -917,6 +955,11 @@ spec:
 
                           Note: Requires `saml_certificate_set_id` to be set when `true`.
                         type: boolean
+                      forceAuthn:
+                        description: |-
+                          (Boolean) Asks the IdP to reauthenticate the user for each SAML authentication request.
+                          Asks the IdP to reauthenticate the user for each SAML authentication request.
+                        type: boolean
                       headerAttributes:
                         description: (Attributes List) Add a list of attribute names
                           that will be returned in the response header from the Access
@@ -947,6 +990,15 @@ spec:
                           (String) IdP Entity ID or Issuer URL
                           IdP Entity ID or Issuer URL
                         type: string
+                      maxSsoUrlLength:
+                        description: |-
+                          side and a short nonce is passed to the IdP instead.
+                          Set this if your IdP enforces a URL length limit.
+                          The maximum URL length the IdP accepts for the SSO redirect URL.
+                          When the constructed SSO URL would exceed this length, the RelayState
+                          is stored server-side and a short nonce is passed to the IdP instead.
+                          Set this if your IdP enforces a URL length limit.
+                        type: number
                       oktaAccount:
                         description: |-
                           (String) Your okta account url
@@ -970,9 +1022,9 @@ spec:
                       prompt:
                         description: |-
                           sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-                          Available values: "login", "select_account", "none".
+                          Available values: "login", "select_account", "none", "consent".
                           Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-                          Available values: "login", "select_account", "none".
+                          Available values: "login", "select_account", "none", "consent".
                         type: string
                       redirectUrl:
                         description: (String)
@@ -1009,6 +1061,11 @@ spec:
                           (String) The token_endpoint URL of your IdP
                           The token_endpoint URL of your IdP
                         type: string
+                      useLoginHint:
+                        description: |-
+                          (Boolean) Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
+                          Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
+                        type: boolean
                     type: object
                   id:
                     description: (String) UUID.

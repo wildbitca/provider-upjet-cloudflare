@@ -15,7 +15,8 @@ import (
 
 type TrustGatewayProxyEndpointInitParameters struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (List of String) Specify the list of CIDRs to restrict ingress connections.
@@ -35,7 +36,8 @@ type TrustGatewayProxyEndpointInitParameters struct {
 
 type TrustGatewayProxyEndpointObservation struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String)
@@ -68,7 +70,8 @@ type TrustGatewayProxyEndpointObservation struct {
 
 type TrustGatewayProxyEndpointParameters struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 

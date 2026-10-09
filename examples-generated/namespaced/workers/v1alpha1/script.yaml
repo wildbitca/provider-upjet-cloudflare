@@ -38,7 +38,7 @@ spec:
     cacheOptions:
       crossVersionCache: true
       enabled: true
-    compatibilityDate: "2021-01-01"
+    compatibilityDate: "2021-01-01T00:00:00Z"
     compatibilityFlags:
     - nodejs_compat
     exports:
@@ -60,6 +60,10 @@ spec:
         transfer_from: transfer_from
         transferred_to: transferred_to
         type: worker
+    files:
+      module.wasm:
+        content_base64: AGFzbQEAAAA=
+        content_type: application/wasm
     keepAssets: false
     keepBindings:
     - string
@@ -87,6 +91,8 @@ spec:
     observability:
       enabled: true
       headSamplingRate: 0.1
+      issues:
+        enabled: true
       logs:
         destinations:
         - cloudflare
@@ -94,6 +100,7 @@ spec:
         headSamplingRate: 0.1
         invocationLogs: true
         persist: true
+      redact_query_string: false
       traces:
         destinations:
         - cloudflare

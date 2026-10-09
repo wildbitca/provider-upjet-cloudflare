@@ -79,11 +79,16 @@ spec:
                       properties:
                         payload:
                           description: |-
-                            (String) Defines the ruleset expression to use in matching content objects.
-                            Defines the ruleset expression to use in matching content objects.
+                            (String) Defines the custom content extraction expression used to reach content objects in the request.
+                            Defines the custom content extraction expression used to reach content objects in the request.
                           type: string
                       type: object
                     type: array
+                  payload:
+                    description: |-
+                      (String) Defines the custom content extraction expression used to reach content objects in the request.
+                      Defines the custom content extraction expression used to reach content objects in the request.
+                    type: string
                   zoneId:
                     description: |-
                       (String) Defines an identifier.
@@ -109,11 +114,16 @@ spec:
                       properties:
                         payload:
                           description: |-
-                            (String) Defines the ruleset expression to use in matching content objects.
-                            Defines the ruleset expression to use in matching content objects.
+                            (String) Defines the custom content extraction expression used to reach content objects in the request.
+                            Defines the custom content extraction expression used to reach content objects in the request.
                           type: string
                       type: object
                     type: array
+                  payload:
+                    description: |-
+                      (String) Defines the custom content extraction expression used to reach content objects in the request.
+                      Defines the custom content extraction expression used to reach content objects in the request.
+                    type: string
                   zoneId:
                     description: |-
                       (String) Defines an identifier.
@@ -226,14 +236,19 @@ spec:
                       properties:
                         payload:
                           description: |-
-                            (String) Defines the ruleset expression to use in matching content objects.
-                            Defines the ruleset expression to use in matching content objects.
+                            (String) Defines the custom content extraction expression used to reach content objects in the request.
+                            Defines the custom content extraction expression used to reach content objects in the request.
                           type: string
                       type: object
                     type: array
                   id:
-                    description: (String) defines the unique ID for this custom scan
-                      expression.
+                    description: (String) Defines the unique ID for this Content Scanning
+                      custom expression.
+                    type: string
+                  payload:
+                    description: |-
+                      (String) Defines the custom content extraction expression used to reach content objects in the request.
+                      Defines the custom content extraction expression used to reach content objects in the request.
                     type: string
                   zoneId:
                     description: |-

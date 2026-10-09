@@ -26,6 +26,10 @@ type ValidationSchemasInitParameters struct {
 	// A human-readable name for the schema
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// files of schemas and only retrieve their meta-data.
+	// Omit the source-files of schemas and only retrieve their meta-data.
+	OmitSource *bool `json:"omitSource,omitempty" tf:"omit_source,omitempty"`
+
 	// (String) The raw schema, e.g., the OpenAPI schema, either as JSON or YAML
 	// The raw schema, e.g., the OpenAPI schema, either as JSON or YAML
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
@@ -57,6 +61,10 @@ type ValidationSchemasObservation struct {
 	// A human-readable name for the schema
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// files of schemas and only retrieve their meta-data.
+	// Omit the source-files of schemas and only retrieve their meta-data.
+	OmitSource *bool `json:"omitSource,omitempty" tf:"omit_source,omitempty"`
+
 	// (String) A unique identifier of this schema
 	// A unique identifier of this schema
 	SchemaID *string `json:"schemaId,omitempty" tf:"schema_id,omitempty"`
@@ -87,6 +95,11 @@ type ValidationSchemasParameters struct {
 	// A human-readable name for the schema
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// files of schemas and only retrieve their meta-data.
+	// Omit the source-files of schemas and only retrieve their meta-data.
+	// +kubebuilder:validation:Optional
+	OmitSource *bool `json:"omitSource,omitempty" tf:"omit_source,omitempty"`
 
 	// (String) The raw schema, e.g., the OpenAPI schema, either as JSON or YAML
 	// The raw schema, e.g., the OpenAPI schema, either as JSON or YAML

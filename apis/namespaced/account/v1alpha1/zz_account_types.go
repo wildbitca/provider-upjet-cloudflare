@@ -26,11 +26,15 @@ type AccountInitParameters struct {
 	// (Attributes) Account settings (see below for nested schema)
 	Settings *SettingsInitParameters `json:"settings,omitempty" tf:"settings,omitempty"`
 
+	// (Boolean) Set to true and omit unit to create a standalone Free Account. If provided, this field must be true.
+	// Set to `true` and omit `unit` to create a standalone Free Account. If provided, this field must be `true`.
+	Standalone *bool `json:"standalone,omitempty" tf:"standalone,omitempty"`
+
 	// (String, Deprecated) Available values: "standard", "enterprise".
 	// Available values: "standard", "enterprise".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// to/manage-accounts/ (see below for nested schema)
+	// to/manage-accounts/. (see below for nested schema)
 	Unit *UnitInitParameters `json:"unit,omitempty" tf:"unit,omitempty"`
 }
 
@@ -53,11 +57,15 @@ type AccountObservation struct {
 	// (Attributes) Account settings (see below for nested schema)
 	Settings *SettingsObservation `json:"settings,omitempty" tf:"settings,omitempty"`
 
+	// (Boolean) Set to true and omit unit to create a standalone Free Account. If provided, this field must be true.
+	// Set to `true` and omit `unit` to create a standalone Free Account. If provided, this field must be `true`.
+	Standalone *bool `json:"standalone,omitempty" tf:"standalone,omitempty"`
+
 	// (String, Deprecated) Available values: "standard", "enterprise".
 	// Available values: "standard", "enterprise".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// to/manage-accounts/ (see below for nested schema)
+	// to/manage-accounts/. (see below for nested schema)
 	Unit *UnitObservation `json:"unit,omitempty" tf:"unit,omitempty"`
 }
 
@@ -76,12 +84,17 @@ type AccountParameters struct {
 	// +kubebuilder:validation:Optional
 	Settings *SettingsParameters `json:"settings,omitempty" tf:"settings,omitempty"`
 
+	// (Boolean) Set to true and omit unit to create a standalone Free Account. If provided, this field must be true.
+	// Set to `true` and omit `unit` to create a standalone Free Account. If provided, this field must be `true`.
+	// +kubebuilder:validation:Optional
+	Standalone *bool `json:"standalone,omitempty" tf:"standalone,omitempty"`
+
 	// (String, Deprecated) Available values: "standard", "enterprise".
 	// Available values: "standard", "enterprise".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// to/manage-accounts/ (see below for nested schema)
+	// to/manage-accounts/. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Unit *UnitParameters `json:"unit,omitempty" tf:"unit,omitempty"`
 }

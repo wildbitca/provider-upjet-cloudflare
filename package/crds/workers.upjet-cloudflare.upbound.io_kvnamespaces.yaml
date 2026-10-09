@@ -75,8 +75,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifier.
-                      Identifier.
+                      (String) ID of the Cloudflare account that owns the Workers KV namespaces.
+                      ID of the Cloudflare account that owns the Workers KV namespaces.
                     type: string
                   accountIdRef:
                     description: Reference to a Account in account to populate accountId.
@@ -152,10 +152,17 @@ spec:
                             type: string
                         type: object
                     type: object
+                  jurisdiction:
+                    description: |-
+                      (String) Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
+                      Available values: "eu", "fedramp", "us".
+                      Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
+                      Available values: "eu", "fedramp", "us".
+                    type: string
                   title:
                     description: |-
-                      readable string name for a Namespace.
-                      A human-readable string name for a Namespace.
+                      readable string name for a Workers KV namespace.
+                      Human-readable string name for a Workers KV namespace.
                     type: string
                 type: object
               initProvider:
@@ -173,8 +180,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifier.
-                      Identifier.
+                      (String) ID of the Cloudflare account that owns the Workers KV namespaces.
+                      ID of the Cloudflare account that owns the Workers KV namespaces.
                     type: string
                   accountIdRef:
                     description: Reference to a Account in account to populate accountId.
@@ -250,10 +257,17 @@ spec:
                             type: string
                         type: object
                     type: object
+                  jurisdiction:
+                    description: |-
+                      (String) Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
+                      Available values: "eu", "fedramp", "us".
+                      Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
+                      Available values: "eu", "fedramp", "us".
+                    type: string
                   title:
                     description: |-
-                      readable string name for a Namespace.
-                      A human-readable string name for a Namespace.
+                      readable string name for a Workers KV namespace.
+                      Human-readable string name for a Workers KV namespace.
                     type: string
                 type: object
               managementPolicies:
@@ -354,11 +368,18 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifier.
-                      Identifier.
+                      (String) ID of the Cloudflare account that owns the Workers KV namespaces.
+                      ID of the Cloudflare account that owns the Workers KV namespaces.
                     type: string
                   id:
-                    description: (String) Namespace identifier tag.
+                    description: (String) ID of the Workers KV namespace.
+                    type: string
+                  jurisdiction:
+                    description: |-
+                      (String) Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
+                      Available values: "eu", "fedramp", "us".
+                      Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
+                      Available values: "eu", "fedramp", "us".
                     type: string
                   supportsUrlEncoding:
                     description: |-
@@ -367,8 +388,8 @@ spec:
                     type: boolean
                   title:
                     description: |-
-                      readable string name for a Namespace.
-                      A human-readable string name for a Namespace.
+                      readable string name for a Workers KV namespace.
+                      Human-readable string name for a Workers KV namespace.
                     type: string
                 type: object
               conditions:

@@ -8,28 +8,16 @@ metadata:
   name: example-zero-trust-access-ai-controls-mcp-server
 spec:
   forProvider:
-    accountId: a86a8f5c339544d7bdc89926de14fb8c
+    accountId: ${var.cloudflare_account_id}
     authCredentialsSecretRef:
       key: example-key
       name: example-secret
       namespace: upbound-system
-    authType: unauthenticated
+    authType: oauth
     clientSecretSecretRef:
       key: example-key
       name: example-secret
       namespace: upbound-system
-    description: This is one remote mcp server
-    hostname: https://example.com/mcp
+    hostname: https://github-mcp.example.com/mcp
     isSharedOauthCallbackEnabled: true
-    name: My MCP Server
-    secureWebGateway: false
-    updatedPrompts:
-    - alias: my-custom-alias
-      description: description
-      enabled: true
-      name: name
-    updatedTools:
-    - alias: my-custom-alias
-      description: description
-      enabled: true
-      name: name
+    name: GitHub MCP Server

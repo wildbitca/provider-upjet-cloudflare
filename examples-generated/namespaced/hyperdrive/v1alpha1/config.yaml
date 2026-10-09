@@ -12,6 +12,9 @@ spec:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
     caching:
       disabled: true
+      maxAge: 0
+      staleWhileRevalidate: 0
+    integration: ${jsonencode({})}
     mtls:
       caCertificateId: 00000000-0000-0000-0000-0000000000
       mtlsCertificateId: 00000000-0000-0000-0000-0000000000

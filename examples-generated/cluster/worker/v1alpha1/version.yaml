@@ -14,6 +14,7 @@ spec:
       workersTag: v1.0.1
     assets:
       config:
+        basePath: /docs/
         htmlHandling: auto-trailing-slash
         notFoundHandling: 404-page
         runWorkerFirst: []
@@ -31,11 +32,31 @@ spec:
     cacheOptions:
       crossVersionCache: true
       enabled: true
-    compatibilityDate: "2021-01-01"
+    compatibilityDate: "2021-01-01T00:00:00Z"
     compatibilityFlags:
     - nodejs_compat
     containers:
     - className: MyDurableObject
+    exports:
+      Admin:
+        cache:
+          enabled: true
+        state: created
+        type: worker
+      Counter:
+        container: my-container
+        state: created
+        storage: sqlite
+        type: durable-object
+      OldCounter:
+        renamed_to: Counter
+        state: renamed
+        type: durable-object
+      default:
+        cache:
+          enabled: false
+        state: created
+        type: worker
     limits:
       cpuMs: 50
       subrequests: 1000
@@ -57,7 +78,7 @@ spec:
         fromScript: from_script
         to: to
     modules:
-    - contentFile: dist/index.js
+    - contentBase64: ZXhwb3J0IGRlZmF1bHQgewogIGFzeW5jIGZldGNoKHJlcXVlc3QsIGVudiwgY3R4KSB7CiAgICByZXR1cm4gbmV3IFJlc3BvbnNlKCdIZWxsbyBXb3JsZCEnKQogIH0KfQ==
       contentType: application/javascript+module
       name: index.js
     packageDependencies:
@@ -66,4 +87,5 @@ spec:
       packageJsonVersion: ^4.17.21
     placement:
       mode: smart
+    usageModel: standard
     workerId: worker_id

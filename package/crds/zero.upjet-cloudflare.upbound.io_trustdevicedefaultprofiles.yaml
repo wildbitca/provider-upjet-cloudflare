@@ -256,6 +256,11 @@ spec:
                       (String) Determines which tunnel protocol to use.
                       Determines which tunnel protocol to use.
                     type: string
+                  uninstallProtection:
+                    description: |-
+                      (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
+                      Determines whether uninstalling the WARP client requires an override code. (Windows only).
+                    type: boolean
                   virtualNetworks:
                     description: (Attributes) Virtual network access settings for
                       the device. (see below for nested schema)
@@ -469,6 +474,11 @@ spec:
                       (String) Determines which tunnel protocol to use.
                       Determines which tunnel protocol to use.
                     type: string
+                  uninstallProtection:
+                    description: |-
+                      (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
+                      Determines whether uninstalling the WARP client requires an override code. (Windows only).
+                    type: boolean
                   virtualNetworks:
                     description: (Attributes) Virtual network access settings for
                       the device. (see below for nested schema)
@@ -769,6 +779,13 @@ spec:
                   policyId:
                     description: (String)
                     type: string
+                  profileType:
+                    description: |-
+                      (String) The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+                      Available values: "warp", "browser_extension".
+                      The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+                      Available values: "warp", "browser_extension".
+                    type: string
                   registerInterfaceIpWithDns:
                     description: |-
                       premises DNS server.
@@ -808,6 +825,11 @@ spec:
                       (String) Determines which tunnel protocol to use.
                       Determines which tunnel protocol to use.
                     type: string
+                  uninstallProtection:
+                    description: |-
+                      (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
+                      Determines whether uninstalling the WARP client requires an override code. (Windows only).
+                    type: boolean
                   virtualNetworks:
                     description: (Attributes) Virtual network access settings for
                       the device. (see below for nested schema)

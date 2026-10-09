@@ -492,6 +492,9 @@ spec:
                   id:
                     description: (String) The id of the profile (uuid).
                     type: string
+                  integrationId:
+                    description: (String)
+                    type: string
                   name:
                     description: (String)
                     type: string

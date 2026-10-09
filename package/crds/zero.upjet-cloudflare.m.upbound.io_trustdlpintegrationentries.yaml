@@ -212,6 +212,13 @@ spec:
                   createdAt:
                     description: (String)
                     type: string
+                  deprecated:
+                    description: |-
+                      (Boolean) Whether this entry is deprecated for new use. This is computed from the static catalog and
+                      emitted only when true.
+                      Whether this entry is deprecated for new use. This is computed from the static catalog and
+                      emitted only when true.
+                    type: boolean
                   description:
                     description: (String)
                     type: string

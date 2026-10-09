@@ -9,11 +9,17 @@ metadata:
   namespace: crossplane-system
 spec:
   forProvider:
+    aiBotsMigrationOptOut: false
     aiBotsProtection: block
+    aiTraining: disallow
+    aiUser: only_on_ad_pages
+    aisearch: block
+    botPreferenceSyncEnabled: true
     cfRobotsVariant: policy_only
     contentBotsProtection: disabled
     crawlerProtection: enabled
     enableJs: true
     fightMode: true
     isRobotsTxtManaged: false
+    jsdApiResultsEnabled: true
     zoneId: 023e105f4ecef8ad9ca31a8372d0c353

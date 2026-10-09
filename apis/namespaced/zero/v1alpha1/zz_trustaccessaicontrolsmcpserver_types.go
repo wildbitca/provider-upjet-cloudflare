@@ -118,10 +118,13 @@ type TrustAccessAIControlsMcpServerInitParameters struct {
 	// (String)
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String, Sensitive)
+	// abc123"), which is wrapped server-side as Authorization: Bearer <token>, or a JSON-encoded object of the form {"headers":{"Header-Name":"value",...}} for custom or multiple static headers (e.g. Cloudflare Access service tokens: {"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}).
+	// Static credential for the upstream MCP server. For auth_type "bearer", either a raw token string (e.g. "sk-abc123"), which is wrapped server-side as `Authorization: Bearer <token>`, or a JSON-encoded object of the form `{"headers":{"Header-Name":"value",...}}` for custom or multiple static headers (e.g. Cloudflare Access service tokens: `{"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}`).
 	AuthCredentialsSecretRef *v1.LocalSecretKeySelector `json:"authCredentialsSecretRef,omitempty" tf:"-"`
 
-	// (String) Available values: "oauth", "bearer", "unauthenticated".
+	// (String) Authentication method used to connect to the upstream MCP server.
+	// Available values: "oauth", "bearer", "unauthenticated".
+	// Authentication method used to connect to the upstream MCP server.
 	// Available values: "oauth", "bearer", "unauthenticated".
 	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
 
@@ -129,27 +132,30 @@ type TrustAccessAIControlsMcpServerInitParameters struct {
 	// Pre-registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
 	ClientSecretSecretRef *v1.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
-	// (String)
+	// (String) Optional description of the MCP server.
+	// Optional description of the MCP server.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String)
+	// (String) URL of the upstream MCP endpoint.
+	// URL of the upstream MCP endpoint.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
-	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
+	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
 	IsSharedOauthCallbackEnabled *bool `json:"isSharedOauthCallbackEnabled,omitempty" tf:"is_shared_oauth_callback_enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP server.
+	// Display name for the MCP server.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
-	// Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
+	// (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
+	// Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
 	SecureWebGateway *bool `json:"secureWebGateway,omitempty" tf:"secure_web_gateway,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// wide prompt capability overrides. (see below for nested schema)
 	UpdatedPrompts []TrustAccessAIControlsMcpServerUpdatedPromptsInitParameters `json:"updatedPrompts,omitempty" tf:"updated_prompts,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// wide tool capability overrides. (see below for nested schema)
 	UpdatedTools []TrustAccessAIControlsMcpServerUpdatedToolsInitParameters `json:"updatedTools,omitempty" tf:"updated_tools,omitempty"`
 }
 
@@ -161,9 +167,17 @@ type TrustAccessAIControlsMcpServerObservation struct {
 	// (Attributes) Safe subset of auth_credentials surfaced to the dashboard. Includes auth_mode (dcr|manual), has_client_secret, client_secret_version, and the OAuth endpoints + client_id for manual servers. Never includes the secret value. (see below for nested schema)
 	AuthConfigSummary *AuthConfigSummaryObservation `json:"authConfigSummary,omitempty" tf:"auth_config_summary,omitempty"`
 
-	// (String) Available values: "oauth", "bearer", "unauthenticated".
+	// (String) Authentication method used to connect to the upstream MCP server.
+	// Available values: "oauth", "bearer", "unauthenticated".
+	// Authentication method used to connect to the upstream MCP server.
 	// Available values: "oauth", "bearer", "unauthenticated".
 	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
+
+	// managed and has no administrative authentication flow.
+	// Available values: "not_required", "required", "connected", "stale", "manual".
+	// Whether administrative authentication is required before capabilities can be synced. Manual OAuth is user-managed and has no administrative authentication flow.
+	// Available values: "not_required", "required", "connected", "stale", "manual".
+	AuthenticationStatus *string `json:"authenticationStatus,omitempty" tf:"authentication_status,omitempty"`
 
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
@@ -171,7 +185,8 @@ type TrustAccessAIControlsMcpServerObservation struct {
 	// (String)
 	CreatedBy *string `json:"createdBy,omitempty" tf:"created_by,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP server.
+	// Optional description of the MCP server.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (String)
@@ -180,14 +195,15 @@ type TrustAccessAIControlsMcpServerObservation struct {
 	// (Attributes) (see below for nested schema)
 	ErrorDetails *ErrorDetailsObservation `json:"errorDetails,omitempty" tf:"error_details,omitempty"`
 
-	// (String)
+	// (String) URL of the upstream MCP endpoint.
+	// URL of the upstream MCP endpoint.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (String) server id
+	// (String) Unique identifier for the MCP server.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
-	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
+	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
 	IsSharedOauthCallbackEnabled *bool `json:"isSharedOauthCallbackEnabled,omitempty" tf:"is_shared_oauth_callback_enabled,omitempty"`
 
 	// (String)
@@ -202,14 +218,15 @@ type TrustAccessAIControlsMcpServerObservation struct {
 	// (String)
 	ModifiedBy *string `json:"modifiedBy,omitempty" tf:"modified_by,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP server.
+	// Display name for the MCP server.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (List of Map of String)
 	Prompts []map[string]*string `json:"prompts,omitempty" tf:"prompts,omitempty"`
 
-	// (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
-	// Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
+	// (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
+	// Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
 	SecureWebGateway *bool `json:"secureWebGateway,omitempty" tf:"secure_web_gateway,omitempty"`
 
 	// (String)
@@ -218,10 +235,10 @@ type TrustAccessAIControlsMcpServerObservation struct {
 	// (List of Map of String)
 	Tools []map[string]*string `json:"tools,omitempty" tf:"tools,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// wide prompt capability overrides. (see below for nested schema)
 	UpdatedPrompts []TrustAccessAIControlsMcpServerUpdatedPromptsObservation `json:"updatedPrompts,omitempty" tf:"updated_prompts,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// wide tool capability overrides. (see below for nested schema)
 	UpdatedTools []TrustAccessAIControlsMcpServerUpdatedToolsObservation `json:"updatedTools,omitempty" tf:"updated_tools,omitempty"`
 }
 
@@ -231,11 +248,14 @@ type TrustAccessAIControlsMcpServerParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String, Sensitive)
+	// abc123"), which is wrapped server-side as Authorization: Bearer <token>, or a JSON-encoded object of the form {"headers":{"Header-Name":"value",...}} for custom or multiple static headers (e.g. Cloudflare Access service tokens: {"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}).
+	// Static credential for the upstream MCP server. For auth_type "bearer", either a raw token string (e.g. "sk-abc123"), which is wrapped server-side as `Authorization: Bearer <token>`, or a JSON-encoded object of the form `{"headers":{"Header-Name":"value",...}}` for custom or multiple static headers (e.g. Cloudflare Access service tokens: `{"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}`).
 	// +kubebuilder:validation:Optional
 	AuthCredentialsSecretRef *v1.LocalSecretKeySelector `json:"authCredentialsSecretRef,omitempty" tf:"-"`
 
-	// (String) Available values: "oauth", "bearer", "unauthenticated".
+	// (String) Authentication method used to connect to the upstream MCP server.
+	// Available values: "oauth", "bearer", "unauthenticated".
+	// Authentication method used to connect to the upstream MCP server.
 	// Available values: "oauth", "bearer", "unauthenticated".
 	// +kubebuilder:validation:Optional
 	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
@@ -245,131 +265,158 @@ type TrustAccessAIControlsMcpServerParameters struct {
 	// +kubebuilder:validation:Optional
 	ClientSecretSecretRef *v1.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
-	// (String)
+	// (String) Optional description of the MCP server.
+	// Optional description of the MCP server.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String)
+	// (String) URL of the upstream MCP endpoint.
+	// URL of the upstream MCP endpoint.
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
-	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
+	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
 	// +kubebuilder:validation:Optional
 	IsSharedOauthCallbackEnabled *bool `json:"isSharedOauthCallbackEnabled,omitempty" tf:"is_shared_oauth_callback_enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP server.
+	// Display name for the MCP server.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
-	// Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
+	// (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
+	// Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
 	// +kubebuilder:validation:Optional
 	SecureWebGateway *bool `json:"secureWebGateway,omitempty" tf:"secure_web_gateway,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// wide prompt capability overrides. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	UpdatedPrompts []TrustAccessAIControlsMcpServerUpdatedPromptsParameters `json:"updatedPrompts,omitempty" tf:"updated_prompts,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// wide tool capability overrides. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	UpdatedTools []TrustAccessAIControlsMcpServerUpdatedToolsParameters `json:"updatedTools,omitempty" tf:"updated_tools,omitempty"`
 }
 
 type TrustAccessAIControlsMcpServerUpdatedPromptsInitParameters struct {
 
-	// (String)
+	// (String) Custom name exposed for the capability.
+	// Custom name exposed for the capability.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP server.
+	// Custom description exposed for the capability.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether the capability is available through the MCP server.
+	// Whether the capability is available through the MCP server.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP server.
+	// Name of the tool or prompt capability to override.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type TrustAccessAIControlsMcpServerUpdatedPromptsObservation struct {
 
-	// (String)
+	// (String) Custom name exposed for the capability.
+	// Custom name exposed for the capability.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP server.
+	// Custom description exposed for the capability.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether the capability is available through the MCP server.
+	// Whether the capability is available through the MCP server.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP server.
+	// Name of the tool or prompt capability to override.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type TrustAccessAIControlsMcpServerUpdatedPromptsParameters struct {
 
-	// (String)
+	// (String) Custom name exposed for the capability.
+	// Custom name exposed for the capability.
 	// +kubebuilder:validation:Optional
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP server.
+	// Custom description exposed for the capability.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether the capability is available through the MCP server.
+	// Whether the capability is available through the MCP server.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP server.
+	// Name of the tool or prompt capability to override.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 }
 
 type TrustAccessAIControlsMcpServerUpdatedToolsInitParameters struct {
 
-	// (String)
+	// (String) Custom name exposed for the capability.
+	// Custom name exposed for the capability.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP server.
+	// Custom description exposed for the capability.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether the capability is available through the MCP server.
+	// Whether the capability is available through the MCP server.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP server.
+	// Name of the tool or prompt capability to override.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type TrustAccessAIControlsMcpServerUpdatedToolsObservation struct {
 
-	// (String)
+	// (String) Custom name exposed for the capability.
+	// Custom name exposed for the capability.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP server.
+	// Custom description exposed for the capability.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether the capability is available through the MCP server.
+	// Whether the capability is available through the MCP server.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP server.
+	// Name of the tool or prompt capability to override.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type TrustAccessAIControlsMcpServerUpdatedToolsParameters struct {
 
-	// (String)
+	// (String) Custom name exposed for the capability.
+	// Custom name exposed for the capability.
 	// +kubebuilder:validation:Optional
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP server.
+	// Custom description exposed for the capability.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether the capability is available through the MCP server.
+	// Whether the capability is available through the MCP server.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP server.
+	// Name of the tool or prompt capability to override.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 }

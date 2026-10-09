@@ -28,6 +28,14 @@ type StoreInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
+	// deletes all secrets in the store before deleting the store itself.
+	// Required when deleting a non-empty store. Without this parameter, attempting to
+	// delete a non-empty store returns 409.
+	// When true, cascade-deletes all secrets in the store before deleting the store itself.
+	// Required when deleting a non-empty store. Without this parameter, attempting to
+	// delete a non-empty store returns 409.
+	Force *bool `json:"force,omitempty" tf:"force,omitempty"`
+
 	// (String) The name of the store.
 	// The name of the store.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -41,6 +49,14 @@ type StoreObservation struct {
 	// (String) When the secret was created.
 	// When the secret was created.
 	Created *string `json:"created,omitempty" tf:"created,omitempty"`
+
+	// deletes all secrets in the store before deleting the store itself.
+	// Required when deleting a non-empty store. Without this parameter, attempting to
+	// delete a non-empty store returns 409.
+	// When true, cascade-deletes all secrets in the store before deleting the store itself.
+	// Required when deleting a non-empty store. Without this parameter, attempting to
+	// delete a non-empty store returns 409.
+	Force *bool `json:"force,omitempty" tf:"force,omitempty"`
 
 	// (String) Store Identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -68,6 +84,15 @@ type StoreParameters struct {
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
 	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
+
+	// deletes all secrets in the store before deleting the store itself.
+	// Required when deleting a non-empty store. Without this parameter, attempting to
+	// delete a non-empty store returns 409.
+	// When true, cascade-deletes all secrets in the store before deleting the store itself.
+	// Required when deleting a non-empty store. Without this parameter, attempting to
+	// delete a non-empty store returns 409.
+	// +kubebuilder:validation:Optional
+	Force *bool `json:"force,omitempty" tf:"force,omitempty"`
 
 	// (String) The name of the store.
 	// The name of the store.

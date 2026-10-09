@@ -24,8 +24,10 @@ spec:
       ttl: 600
       type: ""
     originPort: 22
+    originWorkerId: 277b7815c871434b960b60729659000a
     protocol: tcp/22
     proxyProtocol: "off"
     tls: "off"
     trafficType: direct
+    virtualNetworkId: 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e
     zoneId: 023e105f4ecef8ad9ca31a8372d0c353

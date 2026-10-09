@@ -164,6 +164,11 @@ spec:
                       defined identifier for the media creator.
                       A user-defined identifier for the media creator.
                     type: string
+                  directUser:
+                    description: |-
+                      (Boolean) Provisions a URL to let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+                      Provisions a URL to let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+                    type: boolean
                   identifier:
                     description: |-
                       generated unique identifier for a media item.
@@ -327,6 +332,11 @@ spec:
                       defined identifier for the media creator.
                       A user-defined identifier for the media creator.
                     type: string
+                  directUser:
+                    description: |-
+                      (Boolean) Provisions a URL to let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+                      Provisions a URL to let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+                    type: boolean
                   identifier:
                     description: |-
                       generated unique identifier for a media item.
@@ -504,6 +514,11 @@ spec:
                       defined identifier for the media creator.
                       A user-defined identifier for the media creator.
                     type: string
+                  directUser:
+                    description: |-
+                      (Boolean) Provisions a URL to let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+                      Provisions a URL to let your end users upload videos directly to Cloudflare Stream without exposing your API token to clients.
+                    type: boolean
                   duration:
                     description: |-
                       1 means the duration is unknown. The duration becomes available after the upload and before the video is ready.

@@ -1258,7 +1258,8 @@ type ScheduleParameters struct {
 
 type TrustGatewayPolicyInitParameters struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
@@ -1311,7 +1312,8 @@ type TrustGatewayPolicyInitParameters struct {
 
 type TrustGatewayPolicyObservation struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
@@ -1397,7 +1399,8 @@ type TrustGatewayPolicyObservation struct {
 
 type TrustGatewayPolicyParameters struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 

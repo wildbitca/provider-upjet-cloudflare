@@ -34,7 +34,7 @@ type CertificatesObservation struct {
 	// Hostnames covered by this certificate.
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
-	// (String) Identifier.
+	// (String) The unique identifier for a certificate_pack.
 	// Certificate identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -189,7 +189,7 @@ type PackObservation struct {
 	// +listType=set
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
-	// (String) Identifier.
+	// (String) The unique identifier for a certificate_pack.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String) Identifier of the primary certificate in a pack.

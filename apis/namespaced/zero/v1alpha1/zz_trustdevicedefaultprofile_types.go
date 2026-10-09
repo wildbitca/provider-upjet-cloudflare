@@ -303,6 +303,10 @@ type TrustDeviceDefaultProfileInitParameters struct {
 	// Determines which tunnel protocol to use.
 	TunnelProtocol *string `json:"tunnelProtocol,omitempty" tf:"tunnel_protocol,omitempty"`
 
+	// (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
+	// Determines whether uninstalling the WARP client requires an override code. (Windows only).
+	UninstallProtection *bool `json:"uninstallProtection,omitempty" tf:"uninstall_protection,omitempty"`
+
 	// (Attributes) Virtual network access settings for the device. (see below for nested schema)
 	VirtualNetworks *TrustDeviceDefaultProfileVirtualNetworksInitParameters `json:"virtualNetworks,omitempty" tf:"virtual_networks,omitempty"`
 }
@@ -380,6 +384,12 @@ type TrustDeviceDefaultProfileObservation struct {
 	// (String)
 	PolicyID *string `json:"policyId,omitempty" tf:"policy_id,omitempty"`
 
+	// (String) The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+	// Available values: "warp", "browser_extension".
+	// The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+	// Available values: "warp", "browser_extension".
+	ProfileType *string `json:"profileType,omitempty" tf:"profile_type,omitempty"`
+
 	// premises DNS server.
 	// Determines if the operating system will register WARP's local interface IP with your on-premises DNS server.
 	RegisterInterfaceIPWithDNS *bool `json:"registerInterfaceIpWithDns,omitempty" tf:"register_interface_ip_with_dns,omitempty"`
@@ -402,6 +412,10 @@ type TrustDeviceDefaultProfileObservation struct {
 	// (String) Determines which tunnel protocol to use.
 	// Determines which tunnel protocol to use.
 	TunnelProtocol *string `json:"tunnelProtocol,omitempty" tf:"tunnel_protocol,omitempty"`
+
+	// (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
+	// Determines whether uninstalling the WARP client requires an override code. (Windows only).
+	UninstallProtection *bool `json:"uninstallProtection,omitempty" tf:"uninstall_protection,omitempty"`
 
 	// (Attributes) Virtual network access settings for the device. (see below for nested schema)
 	VirtualNetworks *TrustDeviceDefaultProfileVirtualNetworksObservation `json:"virtualNetworks,omitempty" tf:"virtual_networks,omitempty"`
@@ -502,6 +516,11 @@ type TrustDeviceDefaultProfileParameters struct {
 	// Determines which tunnel protocol to use.
 	// +kubebuilder:validation:Optional
 	TunnelProtocol *string `json:"tunnelProtocol,omitempty" tf:"tunnel_protocol,omitempty"`
+
+	// (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
+	// Determines whether uninstalling the WARP client requires an override code. (Windows only).
+	// +kubebuilder:validation:Optional
+	UninstallProtection *bool `json:"uninstallProtection,omitempty" tf:"uninstall_protection,omitempty"`
 
 	// (Attributes) Virtual network access settings for the device. (see below for nested schema)
 	// +kubebuilder:validation:Optional

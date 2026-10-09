@@ -12,8 +12,10 @@ spec:
     defaultCreator: defaultCreator
     deleteRecordingAfterDays: 45
     enabled: true
-    meta:
-      name: test stream 1
+    meta: |-
+      ${jsonencode({
+          name = "test stream 1"
+        })}
     preferLowLatency: true
     recording:
       allowedOrigins:

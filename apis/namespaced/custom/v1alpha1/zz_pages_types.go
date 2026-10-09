@@ -20,9 +20,9 @@ type PagesInitParameters struct {
 	// The Account ID to use for this endpoint. Mutually exclusive with the Zone ID.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) Error Page Types
+	// (String) Custom page type.
 	// Available values: "1000_errors", "500_errors", "basic_challenge", "country_challenge", "ip_block", "managed_challenge", "ratelimit_block", "under_attack", "waf_block", "waf_challenge".
-	// Error Page Types
+	// Custom page type.
 	// Available values: "1000_errors", "500_errors", "basic_challenge", "country_challenge", "ip_block", "managed_challenge", "ratelimit_block", "under_attack", "waf_block", "waf_challenge".
 	Identifier *string `json:"identifier,omitempty" tf:"identifier,omitempty"`
 
@@ -62,13 +62,13 @@ type PagesObservation struct {
 	// (String)
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) Error Page Types
+	// (String) Custom page type.
 	// Available values: "1000_errors", "500_errors", "basic_challenge", "country_challenge", "ip_block", "managed_challenge", "ratelimit_block", "under_attack", "waf_block", "waf_challenge".
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) Error Page Types
+	// (String) Custom page type.
 	// Available values: "1000_errors", "500_errors", "basic_challenge", "country_challenge", "ip_block", "managed_challenge", "ratelimit_block", "under_attack", "waf_block", "waf_challenge".
-	// Error Page Types
+	// Custom page type.
 	// Available values: "1000_errors", "500_errors", "basic_challenge", "country_challenge", "ip_block", "managed_challenge", "ratelimit_block", "under_attack", "waf_block", "waf_challenge".
 	Identifier *string `json:"identifier,omitempty" tf:"identifier,omitempty"`
 
@@ -103,9 +103,9 @@ type PagesParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) Error Page Types
+	// (String) Custom page type.
 	// Available values: "1000_errors", "500_errors", "basic_challenge", "country_challenge", "ip_block", "managed_challenge", "ratelimit_block", "under_attack", "waf_block", "waf_challenge".
-	// Error Page Types
+	// Custom page type.
 	// Available values: "1000_errors", "500_errors", "basic_challenge", "country_challenge", "ip_block", "managed_challenge", "ratelimit_block", "under_attack", "waf_block", "waf_challenge".
 	// +kubebuilder:validation:Optional
 	Identifier *string `json:"identifier,omitempty" tf:"identifier,omitempty"`

@@ -17,3 +17,5 @@ spec:
       ipv6:
         ipAddr: 64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0
         virtualNetworkId: c77b744e-acc8-428f-9257-6878c046ed55
+    tags:
+      foo: string

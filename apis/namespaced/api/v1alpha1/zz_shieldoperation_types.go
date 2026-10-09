@@ -42,10 +42,6 @@ type ActiveSchemaObservation struct {
 	// UUID.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// provided.
-	// True if schema is Cloudflare-provided.
-	IsLearned *bool `json:"isLearned,omitempty" tf:"is_learned,omitempty"`
-
 	// (String) Schema file name.
 	// Schema file name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -201,10 +197,6 @@ type SchemaInfoObservation struct {
 
 	// (Attributes) Schema active on endpoint. (see below for nested schema)
 	ActiveSchema *ActiveSchemaObservation `json:"activeSchema,omitempty" tf:"active_schema,omitempty"`
-
-	// (Boolean) Deprecated. Always false.
-	// Deprecated. Always false.
-	LearnedAvailable *bool `json:"learnedAvailable,omitempty" tf:"learned_available,omitempty"`
 
 	// (String) Action taken on requests failing validation.
 	// Available values: "none", "log", "block".

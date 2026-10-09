@@ -251,7 +251,7 @@ spec:
                               properties:
                                 id:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     UUID of the D1 database.
                                   type: string
                               type: object
@@ -306,7 +306,9 @@ spec:
                             additionalProperties:
                               properties:
                                 id:
-                                  description: (String) Name of the project.
+                                  description: (String) Name for the Pages project.
+                                    Must begin with a lowercase letter or digit and
+                                    contain only lowercase letters, digits, and hyphens.
                                   type: string
                               type: object
                             description: (Attributes Map) Hyperdrive bindings used
@@ -359,7 +361,7 @@ spec:
                               properties:
                                 name:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     Name of the Queue.
                                   type: string
                               type: object
@@ -376,7 +378,7 @@ spec:
                                   type: string
                                 name:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     Name of the R2 bucket.
                                   type: string
                               type: object
@@ -487,7 +489,7 @@ spec:
                               properties:
                                 id:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     UUID of the D1 database.
                                   type: string
                               type: object
@@ -542,7 +544,9 @@ spec:
                             additionalProperties:
                               properties:
                                 id:
-                                  description: (String) Name of the project.
+                                  description: (String) Name for the Pages project.
+                                    Must begin with a lowercase letter or digit and
+                                    contain only lowercase letters, digits, and hyphens.
                                   type: string
                               type: object
                             description: (Attributes Map) Hyperdrive bindings used
@@ -595,7 +599,7 @@ spec:
                               properties:
                                 name:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     Name of the Queue.
                                   type: string
                               type: object
@@ -612,7 +616,7 @@ spec:
                                   type: string
                                 name:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     Name of the R2 bucket.
                                   type: string
                               type: object
@@ -667,8 +671,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Name of the project.
-                      Name of the project.
+                      (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+                      Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                     type: string
                   productionBranch:
                     description: |-
@@ -973,7 +977,7 @@ spec:
                               properties:
                                 id:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     UUID of the D1 database.
                                   type: string
                               type: object
@@ -1030,7 +1034,9 @@ spec:
                             additionalProperties:
                               properties:
                                 id:
-                                  description: (String) Name of the project.
+                                  description: (String) Name for the Pages project.
+                                    Must begin with a lowercase letter or digit and
+                                    contain only lowercase letters, digits, and hyphens.
                                   type: string
                               type: object
                             description: (Attributes Map) Hyperdrive bindings used
@@ -1083,7 +1089,7 @@ spec:
                               properties:
                                 name:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     Name of the Queue.
                                   type: string
                               type: object
@@ -1100,7 +1106,7 @@ spec:
                                   type: string
                                 name:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     Name of the R2 bucket.
                                   type: string
                               type: object
@@ -1211,7 +1217,7 @@ spec:
                               properties:
                                 id:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     UUID of the D1 database.
                                   type: string
                               type: object
@@ -1268,7 +1274,9 @@ spec:
                             additionalProperties:
                               properties:
                                 id:
-                                  description: (String) Name of the project.
+                                  description: (String) Name for the Pages project.
+                                    Must begin with a lowercase letter or digit and
+                                    contain only lowercase letters, digits, and hyphens.
                                   type: string
                               type: object
                             description: (Attributes Map) Hyperdrive bindings used
@@ -1321,7 +1329,7 @@ spec:
                               properties:
                                 name:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     Name of the Queue.
                                   type: string
                               type: object
@@ -1338,7 +1346,7 @@ spec:
                                   type: string
                                 name:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     Name of the R2 bucket.
                                   type: string
                               type: object
@@ -1393,8 +1401,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Name of the project.
-                      Name of the project.
+                      (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+                      Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                     type: string
                   productionBranch:
                     description: |-
@@ -1703,13 +1711,13 @@ spec:
                         type: string
                       id:
                         description: |-
-                          (String) Name of the project.
+                          (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                           Id of the deployment.
                         type: string
                       isSkipped:
                         description: |-
-                          (Boolean) If the deployment has been skipped.
-                          If the deployment has been skipped.
+                          (Boolean) Whether the deployment was skipped.
+                          Whether the deployment was skipped.
                         type: boolean
                       latestStage:
                         description: (Attributes) The status of the deployment. (see
@@ -1722,7 +1730,7 @@ spec:
                             type: string
                           name:
                             description: |-
-                              (String) Name of the project.
+                              (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                               The current build stage.
                               Available values: "queued", "initialize", "clone_repo", "build", "deploy".
                             type: string
@@ -1734,9 +1742,9 @@ spec:
                           status:
                             description: |-
                               (String) State of the current stage.
-                              Available values: "success", "idle", "active", "failure", "canceled".
+                              Available values: "success", "idle", "active", "failure", "canceled", "skipped".
                               State of the current stage.
-                              Available values: "success", "idle", "active", "failure", "canceled".
+                              Available values: "success", "idle", "active", "failure", "canceled", "skipped".
                             type: string
                         type: object
                       modifiedOn:
@@ -1751,8 +1759,8 @@ spec:
                         type: string
                       projectName:
                         description: |-
-                          (String) Name of the project.
-                          Name of the project.
+                          (String) Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+                          Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                         type: string
                       shortId:
                         description: |-
@@ -1863,7 +1871,7 @@ spec:
                               type: string
                             name:
                               description: |-
-                                (String) Name of the project.
+                                (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                 The current build stage.
                                 Available values: "queued", "initialize", "clone_repo", "build", "deploy".
                               type: string
@@ -1875,9 +1883,9 @@ spec:
                             status:
                               description: |-
                                 (String) State of the current stage.
-                                Available values: "success", "idle", "active", "failure", "canceled".
+                                Available values: "success", "idle", "active", "failure", "canceled", "skipped".
                                 State of the current stage.
-                                Available values: "success", "idle", "active", "failure", "canceled".
+                                Available values: "success", "idle", "active", "failure", "canceled", "skipped".
                               type: string
                           type: object
                         type: array
@@ -1960,7 +1968,7 @@ spec:
                               properties:
                                 id:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     UUID of the D1 database.
                                   type: string
                               type: object
@@ -2001,7 +2009,9 @@ spec:
                             additionalProperties:
                               properties:
                                 id:
-                                  description: (String) Name of the project.
+                                  description: (String) Name for the Pages project.
+                                    Must begin with a lowercase letter or digit and
+                                    contain only lowercase letters, digits, and hyphens.
                                   type: string
                               type: object
                             description: (Attributes Map) Hyperdrive bindings used
@@ -2054,7 +2064,7 @@ spec:
                               properties:
                                 name:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     Name of the Queue.
                                   type: string
                               type: object
@@ -2071,7 +2081,7 @@ spec:
                                   type: string
                                 name:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     Name of the R2 bucket.
                                   type: string
                               type: object
@@ -2182,7 +2192,7 @@ spec:
                               properties:
                                 id:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     UUID of the D1 database.
                                   type: string
                               type: object
@@ -2223,7 +2233,9 @@ spec:
                             additionalProperties:
                               properties:
                                 id:
-                                  description: (String) Name of the project.
+                                  description: (String) Name for the Pages project.
+                                    Must begin with a lowercase letter or digit and
+                                    contain only lowercase letters, digits, and hyphens.
                                   type: string
                               type: object
                             description: (Attributes Map) Hyperdrive bindings used
@@ -2276,7 +2288,7 @@ spec:
                               properties:
                                 name:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     Name of the Queue.
                                   type: string
                               type: object
@@ -2293,7 +2305,7 @@ spec:
                                   type: string
                                 name:
                                   description: |-
-                                    (String) Name of the project.
+                                    (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                     Name of the R2 bucket.
                                   type: string
                               type: object
@@ -2364,7 +2376,9 @@ spec:
                       Version of the framework the project is using.
                     type: string
                   id:
-                    description: (String) Name of the project.
+                    description: (String) Name for the Pages project. Must begin with
+                      a lowercase letter or digit and contain only lowercase letters,
+                      digits, and hyphens.
                     type: string
                   latestDeployment:
                     description: (Attributes) Most recent deployment of the project.
@@ -2468,13 +2482,13 @@ spec:
                         type: string
                       id:
                         description: |-
-                          (String) Name of the project.
+                          (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                           Id of the deployment.
                         type: string
                       isSkipped:
                         description: |-
-                          (Boolean) If the deployment has been skipped.
-                          If the deployment has been skipped.
+                          (Boolean) Whether the deployment was skipped.
+                          Whether the deployment was skipped.
                         type: boolean
                       latestStage:
                         description: (Attributes) The status of the deployment. (see
@@ -2487,7 +2501,7 @@ spec:
                             type: string
                           name:
                             description: |-
-                              (String) Name of the project.
+                              (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                               The current build stage.
                               Available values: "queued", "initialize", "clone_repo", "build", "deploy".
                             type: string
@@ -2499,9 +2513,9 @@ spec:
                           status:
                             description: |-
                               (String) State of the current stage.
-                              Available values: "success", "idle", "active", "failure", "canceled".
+                              Available values: "success", "idle", "active", "failure", "canceled", "skipped".
                               State of the current stage.
-                              Available values: "success", "idle", "active", "failure", "canceled".
+                              Available values: "success", "idle", "active", "failure", "canceled", "skipped".
                             type: string
                         type: object
                       modifiedOn:
@@ -2516,8 +2530,8 @@ spec:
                         type: string
                       projectName:
                         description: |-
-                          (String) Name of the project.
-                          Name of the project.
+                          (String) Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+                          Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                         type: string
                       shortId:
                         description: |-
@@ -2628,7 +2642,7 @@ spec:
                               type: string
                             name:
                               description: |-
-                                (String) Name of the project.
+                                (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                                 The current build stage.
                                 Available values: "queued", "initialize", "clone_repo", "build", "deploy".
                               type: string
@@ -2640,9 +2654,9 @@ spec:
                             status:
                               description: |-
                                 (String) State of the current stage.
-                                Available values: "success", "idle", "active", "failure", "canceled".
+                                Available values: "success", "idle", "active", "failure", "canceled", "skipped".
                                 State of the current stage.
-                                Available values: "success", "idle", "active", "failure", "canceled".
+                                Available values: "success", "idle", "active", "failure", "canceled", "skipped".
                               type: string
                           type: object
                         type: array
@@ -2659,8 +2673,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Name of the project.
-                      Name of the project.
+                      (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+                      Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                     type: string
                   previewScriptName:
                     description: |-

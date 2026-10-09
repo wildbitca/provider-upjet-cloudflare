@@ -21,6 +21,11 @@ func (in *BGPInitParameters) DeepCopyInto(out *BGPInitParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ExportFilterID != nil {
+		in, out := &in.ExportFilterID, &out.ExportFilterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExtraPrefixes != nil {
 		in, out := &in.ExtraPrefixes, &out.ExtraPrefixes
 		*out = make([]*string, len(*in))
@@ -31,6 +36,11 @@ func (in *BGPInitParameters) DeepCopyInto(out *BGPInitParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.ImportFilterID != nil {
+		in, out := &in.ImportFilterID, &out.ImportFilterID
+		*out = new(string)
+		**out = **in
 	}
 	if in.Md5Key != nil {
 		in, out := &in.Md5Key, &out.Md5Key
@@ -57,6 +67,11 @@ func (in *BGPObservation) DeepCopyInto(out *BGPObservation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ExportFilterID != nil {
+		in, out := &in.ExportFilterID, &out.ExportFilterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExtraPrefixes != nil {
 		in, out := &in.ExtraPrefixes, &out.ExtraPrefixes
 		*out = make([]*string, len(*in))
@@ -67,6 +82,11 @@ func (in *BGPObservation) DeepCopyInto(out *BGPObservation) {
 				**out = **in
 			}
 		}
+	}
+	if in.ImportFilterID != nil {
+		in, out := &in.ImportFilterID, &out.ImportFilterID
+		*out = new(string)
+		**out = **in
 	}
 	if in.Md5Key != nil {
 		in, out := &in.Md5Key, &out.Md5Key
@@ -93,6 +113,11 @@ func (in *BGPParameters) DeepCopyInto(out *BGPParameters) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ExportFilterID != nil {
+		in, out := &in.ExportFilterID, &out.ExportFilterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExtraPrefixes != nil {
 		in, out := &in.ExtraPrefixes, &out.ExtraPrefixes
 		*out = make([]*string, len(*in))
@@ -103,6 +128,11 @@ func (in *BGPParameters) DeepCopyInto(out *BGPParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.ImportFilterID != nil {
+		in, out := &in.ImportFilterID, &out.ImportFilterID
+		*out = new(string)
+		**out = **in
 	}
 	if in.Md5Key != nil {
 		in, out := &in.Md5Key, &out.Md5Key
@@ -3610,6 +3640,16 @@ func (in *TransitSiteWanInitParameters) DeepCopyInto(out *TransitSiteWanInitPara
 		*out = new(string)
 		**out = **in
 	}
+	if in.HealthCheckRate != nil {
+		in, out := &in.HealthCheckRate, &out.HealthCheckRate
+		*out = new(string)
+		**out = **in
+	}
+	if in.LoadBalanceInnerFlows != nil {
+		in, out := &in.LoadBalanceInnerFlows, &out.LoadBalanceInnerFlows
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -3702,6 +3742,11 @@ func (in *TransitSiteWanObservation) DeepCopyInto(out *TransitSiteWanObservation
 		*out = new(string)
 		**out = **in
 	}
+	if in.LoadBalanceInnerFlows != nil {
+		in, out := &in.LoadBalanceInnerFlows, &out.LoadBalanceInnerFlows
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -3750,6 +3795,16 @@ func (in *TransitSiteWanParameters) DeepCopyInto(out *TransitSiteWanParameters) 
 	if in.AccountID != nil {
 		in, out := &in.AccountID, &out.AccountID
 		*out = new(string)
+		**out = **in
+	}
+	if in.HealthCheckRate != nil {
+		in, out := &in.HealthCheckRate, &out.HealthCheckRate
+		*out = new(string)
+		**out = **in
+	}
+	if in.LoadBalanceInnerFlows != nil {
+		in, out := &in.LoadBalanceInnerFlows, &out.LoadBalanceInnerFlows
+		*out = new(bool)
 		**out = **in
 	}
 	if in.Name != nil {
@@ -4293,6 +4348,11 @@ func (in *WanIpsecTunnelBGPInitParameters) DeepCopyInto(out *WanIpsecTunnelBGPIn
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ExportFilterID != nil {
+		in, out := &in.ExportFilterID, &out.ExportFilterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExtraPrefixes != nil {
 		in, out := &in.ExtraPrefixes, &out.ExtraPrefixes
 		*out = make([]*string, len(*in))
@@ -4303,6 +4363,11 @@ func (in *WanIpsecTunnelBGPInitParameters) DeepCopyInto(out *WanIpsecTunnelBGPIn
 				**out = **in
 			}
 		}
+	}
+	if in.ImportFilterID != nil {
+		in, out := &in.ImportFilterID, &out.ImportFilterID
+		*out = new(string)
+		**out = **in
 	}
 	if in.Md5Key != nil {
 		in, out := &in.Md5Key, &out.Md5Key
@@ -4329,6 +4394,11 @@ func (in *WanIpsecTunnelBGPObservation) DeepCopyInto(out *WanIpsecTunnelBGPObser
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ExportFilterID != nil {
+		in, out := &in.ExportFilterID, &out.ExportFilterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExtraPrefixes != nil {
 		in, out := &in.ExtraPrefixes, &out.ExtraPrefixes
 		*out = make([]*string, len(*in))
@@ -4339,6 +4409,11 @@ func (in *WanIpsecTunnelBGPObservation) DeepCopyInto(out *WanIpsecTunnelBGPObser
 				**out = **in
 			}
 		}
+	}
+	if in.ImportFilterID != nil {
+		in, out := &in.ImportFilterID, &out.ImportFilterID
+		*out = new(string)
+		**out = **in
 	}
 	if in.Md5Key != nil {
 		in, out := &in.Md5Key, &out.Md5Key
@@ -4365,6 +4440,11 @@ func (in *WanIpsecTunnelBGPParameters) DeepCopyInto(out *WanIpsecTunnelBGPParame
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ExportFilterID != nil {
+		in, out := &in.ExportFilterID, &out.ExportFilterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExtraPrefixes != nil {
 		in, out := &in.ExtraPrefixes, &out.ExtraPrefixes
 		*out = make([]*string, len(*in))
@@ -4375,6 +4455,11 @@ func (in *WanIpsecTunnelBGPParameters) DeepCopyInto(out *WanIpsecTunnelBGPParame
 				**out = **in
 			}
 		}
+	}
+	if in.ImportFilterID != nil {
+		in, out := &in.ImportFilterID, &out.ImportFilterID
+		*out = new(string)
+		**out = **in
 	}
 	if in.Md5Key != nil {
 		in, out := &in.Md5Key, &out.Md5Key

@@ -20,9 +20,9 @@ type JobInitParameters struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
-	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+	// Available values: "access_requests", "account_abuse_protection_events", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_bgp_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
 	// Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
-	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+	// Available values: "access_requests", "account_abuse_protection_events", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_bgp_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
 	Dataset *string `json:"dataset,omitempty" tf:"dataset,omitempty"`
 
 	// (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
@@ -36,6 +36,10 @@ type JobInitParameters struct {
 	// (String) The filters to select the events to include and/or remove from your logs. For more information, refer to Filters.
 	// The filters to select the events to include and/or remove from your logs. For more information, refer to [Filters](https://developers.cloudflare.com/logs/reference/filters/).
 	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
+
+	// (Boolean) When true, excludes DDoS attack traffic from logs. This option is supported for the http_requests, firewall_events, and network_analytics_logs datasets.
+	// When true, excludes DDoS attack traffic from logs. This option is supported for the `http_requests`, `firewall_events`, and `network_analytics_logs` datasets.
+	FilterAttackTraffic *bool `json:"filterAttackTraffic,omitempty" tf:"filter_attack_traffic,omitempty"`
 
 	// (String, Deprecated) This field is deprecated. Please use max_upload_* parameters instead. . The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to high sends your logs in larger quantities of smaller files. Setting frequency to low sends logs in smaller quantities of larger files.
 	// Available values: "high", "low".
@@ -88,9 +92,9 @@ type JobObservation struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
-	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+	// Available values: "access_requests", "account_abuse_protection_events", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_bgp_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
 	// Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
-	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+	// Available values: "access_requests", "account_abuse_protection_events", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_bgp_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
 	Dataset *string `json:"dataset,omitempty" tf:"dataset,omitempty"`
 
 	// (Boolean) Flag that indicates if the job is enabled.
@@ -104,6 +108,10 @@ type JobObservation struct {
 	// (String) The filters to select the events to include and/or remove from your logs. For more information, refer to Filters.
 	// The filters to select the events to include and/or remove from your logs. For more information, refer to [Filters](https://developers.cloudflare.com/logs/reference/filters/).
 	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
+
+	// (Boolean) When true, excludes DDoS attack traffic from logs. This option is supported for the http_requests, firewall_events, and network_analytics_logs datasets.
+	// When true, excludes DDoS attack traffic from logs. This option is supported for the `http_requests`, `firewall_events`, and `network_analytics_logs` datasets.
+	FilterAttackTraffic *bool `json:"filterAttackTraffic,omitempty" tf:"filter_attack_traffic,omitempty"`
 
 	// (String, Deprecated) This field is deprecated. Please use max_upload_* parameters instead. . The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to high sends your logs in larger quantities of smaller files. Setting frequency to low sends logs in smaller quantities of larger files.
 	// Available values: "high", "low".
@@ -164,9 +172,9 @@ type JobParameters struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
-	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+	// Available values: "access_requests", "account_abuse_protection_events", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_bgp_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
 	// Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
-	// Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+	// Available values: "access_requests", "account_abuse_protection_events", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_bgp_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
 	// +kubebuilder:validation:Optional
 	Dataset *string `json:"dataset,omitempty" tf:"dataset,omitempty"`
 
@@ -184,6 +192,11 @@ type JobParameters struct {
 	// The filters to select the events to include and/or remove from your logs. For more information, refer to [Filters](https://developers.cloudflare.com/logs/reference/filters/).
 	// +kubebuilder:validation:Optional
 	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
+
+	// (Boolean) When true, excludes DDoS attack traffic from logs. This option is supported for the http_requests, firewall_events, and network_analytics_logs datasets.
+	// When true, excludes DDoS attack traffic from logs. This option is supported for the `http_requests`, `firewall_events`, and `network_analytics_logs` datasets.
+	// +kubebuilder:validation:Optional
+	FilterAttackTraffic *bool `json:"filterAttackTraffic,omitempty" tf:"filter_attack_traffic,omitempty"`
 
 	// (String, Deprecated) This field is deprecated. Please use max_upload_* parameters instead. . The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to high sends your logs in larger quantities of smaller files. Setting frequency to low sends logs in smaller quantities of larger files.
 	// Available values: "high", "low".
@@ -261,8 +274,8 @@ type OutputOptionsInitParameters struct {
 	// List of field names to be included in the Logpush output. For the moment, there is no option to add all fields at once, so you must specify all the fields names you are interested in.
 	FieldNames []*string `json:"fieldNames,omitempty" tf:"field_names,omitempty"`
 
-	// (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
-	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
+	// scoped jobs.
+	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset. Not supported for account-scoped jobs.
 	MergeSubrequests *bool `json:"mergeSubrequests,omitempty" tf:"merge_subrequests,omitempty"`
 
 	// (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
@@ -287,8 +300,8 @@ type OutputOptionsInitParameters struct {
 	// String to use as template for each record instead of the default json key value mapping. All fields used in the template must be present in `field_names` as well, otherwise they will end up as null. Format as a Go `text/template` without any standard functions, like conditionals, loops, sub-templates, etc.
 	RecordTemplate *string `json:"recordTemplate,omitempty" tf:"record_template,omitempty"`
 
-	// (Number) Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
-	// Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
+	// (Number) Specifies the sampling rate as a floating number greater than 0 and at most 1. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
+	// Specifies the sampling rate as a floating number greater than 0 and at most 1. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
 	SampleRate *float64 `json:"sampleRate,omitempty" tf:"sample_rate,omitempty"`
 
 	// (String) String to specify the format for timestamps, such as unixnano, unix, rfc3339, rfc3339ms or rfc3339ns.
@@ -320,8 +333,8 @@ type OutputOptionsObservation struct {
 	// List of field names to be included in the Logpush output. For the moment, there is no option to add all fields at once, so you must specify all the fields names you are interested in.
 	FieldNames []*string `json:"fieldNames,omitempty" tf:"field_names,omitempty"`
 
-	// (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
-	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
+	// scoped jobs.
+	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset. Not supported for account-scoped jobs.
 	MergeSubrequests *bool `json:"mergeSubrequests,omitempty" tf:"merge_subrequests,omitempty"`
 
 	// (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
@@ -346,8 +359,8 @@ type OutputOptionsObservation struct {
 	// String to use as template for each record instead of the default json key value mapping. All fields used in the template must be present in `field_names` as well, otherwise they will end up as null. Format as a Go `text/template` without any standard functions, like conditionals, loops, sub-templates, etc.
 	RecordTemplate *string `json:"recordTemplate,omitempty" tf:"record_template,omitempty"`
 
-	// (Number) Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
-	// Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
+	// (Number) Specifies the sampling rate as a floating number greater than 0 and at most 1. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
+	// Specifies the sampling rate as a floating number greater than 0 and at most 1. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
 	SampleRate *float64 `json:"sampleRate,omitempty" tf:"sample_rate,omitempty"`
 
 	// (String) String to specify the format for timestamps, such as unixnano, unix, rfc3339, rfc3339ms or rfc3339ns.
@@ -384,8 +397,8 @@ type OutputOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	FieldNames []*string `json:"fieldNames,omitempty" tf:"field_names,omitempty"`
 
-	// (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
-	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
+	// scoped jobs.
+	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset. Not supported for account-scoped jobs.
 	// +kubebuilder:validation:Optional
 	MergeSubrequests *bool `json:"mergeSubrequests,omitempty" tf:"merge_subrequests,omitempty"`
 
@@ -416,8 +429,8 @@ type OutputOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	RecordTemplate *string `json:"recordTemplate,omitempty" tf:"record_template,omitempty"`
 
-	// (Number) Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
-	// Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
+	// (Number) Specifies the sampling rate as a floating number greater than 0 and at most 1. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
+	// Specifies the sampling rate as a floating number greater than 0 and at most 1. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
 	// +kubebuilder:validation:Optional
 	SampleRate *float64 `json:"sampleRate,omitempty" tf:"sample_rate,omitempty"`
 

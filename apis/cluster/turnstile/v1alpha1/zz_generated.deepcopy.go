@@ -57,6 +57,11 @@ func (in *WidgetInitParameters) DeepCopyInto(out *WidgetInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Direction != nil {
+		in, out := &in.Direction, &out.Direction
+		*out = new(string)
+		**out = **in
+	}
 	if in.Domains != nil {
 		in, out := &in.Domains, &out.Domains
 		*out = make([]*string, len(*in))
@@ -73,6 +78,11 @@ func (in *WidgetInitParameters) DeepCopyInto(out *WidgetInitParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.Filter != nil {
+		in, out := &in.Filter, &out.Filter
+		*out = new(string)
+		**out = **in
+	}
 	if in.Mode != nil {
 		in, out := &in.Mode, &out.Mode
 		*out = new(string)
@@ -86,6 +96,21 @@ func (in *WidgetInitParameters) DeepCopyInto(out *WidgetInitParameters) {
 	if in.Offlabel != nil {
 		in, out := &in.Offlabel, &out.Offlabel
 		*out = new(bool)
+		**out = **in
+	}
+	if in.Order != nil {
+		in, out := &in.Order, &out.Order
+		*out = new(string)
+		**out = **in
+	}
+	if in.Page != nil {
+		in, out := &in.Page, &out.Page
+		*out = new(float64)
+		**out = **in
+	}
+	if in.PerPage != nil {
+		in, out := &in.PerPage, &out.PerPage
+		*out = new(float64)
 		**out = **in
 	}
 	if in.Region != nil {
@@ -165,6 +190,11 @@ func (in *WidgetObservation) DeepCopyInto(out *WidgetObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Direction != nil {
+		in, out := &in.Direction, &out.Direction
+		*out = new(string)
+		**out = **in
+	}
 	if in.Domains != nil {
 		in, out := &in.Domains, &out.Domains
 		*out = make([]*string, len(*in))
@@ -179,6 +209,11 @@ func (in *WidgetObservation) DeepCopyInto(out *WidgetObservation) {
 	if in.EphemeralID != nil {
 		in, out := &in.EphemeralID, &out.EphemeralID
 		*out = new(bool)
+		**out = **in
+	}
+	if in.Filter != nil {
+		in, out := &in.Filter, &out.Filter
+		*out = new(string)
 		**out = **in
 	}
 	if in.ID != nil {
@@ -209,6 +244,21 @@ func (in *WidgetObservation) DeepCopyInto(out *WidgetObservation) {
 	if in.Offlabel != nil {
 		in, out := &in.Offlabel, &out.Offlabel
 		*out = new(bool)
+		**out = **in
+	}
+	if in.Order != nil {
+		in, out := &in.Order, &out.Order
+		*out = new(string)
+		**out = **in
+	}
+	if in.Page != nil {
+		in, out := &in.Page, &out.Page
+		*out = new(float64)
+		**out = **in
+	}
+	if in.PerPage != nil {
+		in, out := &in.PerPage, &out.PerPage
+		*out = new(float64)
 		**out = **in
 	}
 	if in.Region != nil {
@@ -251,6 +301,11 @@ func (in *WidgetParameters) DeepCopyInto(out *WidgetParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Direction != nil {
+		in, out := &in.Direction, &out.Direction
+		*out = new(string)
+		**out = **in
+	}
 	if in.Domains != nil {
 		in, out := &in.Domains, &out.Domains
 		*out = make([]*string, len(*in))
@@ -267,6 +322,11 @@ func (in *WidgetParameters) DeepCopyInto(out *WidgetParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.Filter != nil {
+		in, out := &in.Filter, &out.Filter
+		*out = new(string)
+		**out = **in
+	}
 	if in.Mode != nil {
 		in, out := &in.Mode, &out.Mode
 		*out = new(string)
@@ -280,6 +340,21 @@ func (in *WidgetParameters) DeepCopyInto(out *WidgetParameters) {
 	if in.Offlabel != nil {
 		in, out := &in.Offlabel, &out.Offlabel
 		*out = new(bool)
+		**out = **in
+	}
+	if in.Order != nil {
+		in, out := &in.Order, &out.Order
+		*out = new(string)
+		**out = **in
+	}
+	if in.Page != nil {
+		in, out := &in.Page, &out.Page
+		*out = new(float64)
+		**out = **in
+	}
+	if in.PerPage != nil {
+		in, out := &in.PerPage, &out.PerPage
+		*out = new(float64)
 		**out = **in
 	}
 	if in.Region != nil {

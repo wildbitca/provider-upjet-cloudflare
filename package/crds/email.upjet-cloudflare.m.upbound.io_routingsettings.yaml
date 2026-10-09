@@ -59,6 +59,11 @@ spec:
             properties:
               forProvider:
                 properties:
+                  supportSubaddress:
+                    description: |-
+                      addressing) is honored when matching incoming mail against routing rules.
+                      Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+                    type: boolean
                   zoneId:
                     description: |-
                       (String) Identifier.
@@ -78,6 +83,11 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  supportSubaddress:
+                    description: |-
+                      addressing) is honored when matching incoming mail against routing rules.
+                      Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+                    type: boolean
                   zoneId:
                     description: |-
                       (String) Identifier.
@@ -187,6 +197,11 @@ spec:
                       Show the state of your account, and the type or configuration error.
                       Available values: "ready", "unconfigured", "misconfigured", "misconfigured/locked", "unlocked".
                     type: string
+                  supportSubaddress:
+                    description: |-
+                      addressing) is honored when matching incoming mail against routing rules.
+                      Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+                    type: boolean
                   tag:
                     description: |-
                       (String, Deprecated) Email Routing settings tag. (Deprecated, replaced by Email Routing settings identifier)

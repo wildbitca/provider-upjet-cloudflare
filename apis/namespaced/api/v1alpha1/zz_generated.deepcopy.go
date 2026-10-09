@@ -95,11 +95,6 @@ func (in *ActiveSchemaObservation) DeepCopyInto(out *ActiveSchemaObservation) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.IsLearned != nil {
-		in, out := &in.IsLearned, &out.IsLearned
-		*out = new(bool)
-		**out = **in
-	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -1046,11 +1041,6 @@ func (in *SchemaInfoObservation) DeepCopyInto(out *SchemaInfoObservation) {
 		*out = new(ActiveSchemaObservation)
 		(*in).DeepCopyInto(*out)
 	}
-	if in.LearnedAvailable != nil {
-		in, out := &in.LearnedAvailable, &out.LearnedAvailable
-		*out = new(bool)
-		**out = **in
-	}
 	if in.MitigationAction != nil {
 		in, out := &in.MitigationAction, &out.MitigationAction
 		*out = new(string)
@@ -1439,6 +1429,11 @@ func (in *ShieldInitParameters) DeepCopyInto(out *ShieldInitParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Normalize != nil {
+		in, out := &in.Normalize, &out.Normalize
+		*out = new(bool)
+		**out = **in
+	}
 	if in.ZoneID != nil {
 		in, out := &in.ZoneID, &out.ZoneID
 		*out = new(string)
@@ -1501,6 +1496,11 @@ func (in *ShieldObservation) DeepCopyInto(out *ShieldObservation) {
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
+		**out = **in
+	}
+	if in.Normalize != nil {
+		in, out := &in.Normalize, &out.Normalize
+		*out = new(bool)
 		**out = **in
 	}
 	if in.ZoneID != nil {
@@ -1943,6 +1943,11 @@ func (in *ShieldParameters) DeepCopyInto(out *ShieldParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Normalize != nil {
+		in, out := &in.Normalize, &out.Normalize
+		*out = new(bool)
+		**out = **in
+	}
 	if in.ZoneID != nil {
 		in, out := &in.ZoneID, &out.ZoneID
 		*out = new(string)
@@ -2003,6 +2008,11 @@ func (in *ShieldSchemaInitParameters) DeepCopyInto(out *ShieldSchemaInitParamete
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
+		**out = **in
+	}
+	if in.OmitSource != nil {
+		in, out := &in.OmitSource, &out.OmitSource
+		*out = new(bool)
 		**out = **in
 	}
 	if in.SchemaID != nil {
@@ -2092,6 +2102,11 @@ func (in *ShieldSchemaObservation) DeepCopyInto(out *ShieldSchemaObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.OmitSource != nil {
+		in, out := &in.OmitSource, &out.OmitSource
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Schema != nil {
 		in, out := &in.Schema, &out.Schema
 		*out = new(SchemaObservation)
@@ -2150,6 +2165,11 @@ func (in *ShieldSchemaParameters) DeepCopyInto(out *ShieldSchemaParameters) {
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
+		**out = **in
+	}
+	if in.OmitSource != nil {
+		in, out := &in.OmitSource, &out.OmitSource
+		*out = new(bool)
 		**out = **in
 	}
 	if in.SchemaID != nil {
@@ -2757,6 +2777,11 @@ func (in *TokenObservation) DeepCopyInto(out *TokenObservation) {
 		*out = new(ConditionObservation)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.CreatorEmailAtCreation != nil {
+		in, out := &in.CreatorEmailAtCreation, &out.CreatorEmailAtCreation
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExpiresOn != nil {
 		in, out := &in.ExpiresOn, &out.ExpiresOn
 		*out = new(string)
@@ -2798,6 +2823,16 @@ func (in *TokenObservation) DeepCopyInto(out *TokenObservation) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.ProvisionerID != nil {
+		in, out := &in.ProvisionerID, &out.ProvisionerID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ProvisionerType != nil {
+		in, out := &in.ProvisionerType, &out.ProvisionerType
+		*out = new(string)
+		**out = **in
 	}
 	if in.Status != nil {
 		in, out := &in.Status, &out.Status

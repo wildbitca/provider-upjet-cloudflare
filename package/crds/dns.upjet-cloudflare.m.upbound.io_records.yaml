@@ -190,7 +190,7 @@ spec:
                       priority:
                         description: |-
                           (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
-                          Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
+                          Priority.
                         type: number
                       protocol:
                         description: |-
@@ -234,8 +234,8 @@ spec:
                         type: string
                       target:
                         description: |-
-                          (String) A valid mail server hostname, or "." for a NULL MX record.
-                          A valid mail server hostname, or "." for a NULL MX record.
+                          (String) Target.
+                          Target.
                         type: string
                       type:
                         description: |-
@@ -259,6 +259,11 @@ spec:
                           The record weight.
                         type: number
                     type: object
+                  includeShadowMetadata:
+                    description: |-
+                      (Boolean) Whether to include shadow metadata in the meta field of each record in the response. See Shadowed records.
+                      Whether to include shadow metadata in the `meta` field of each record in the response. See [Shadowed records](https://developers.cloudflare.com/dns/manage-dns-records/reference/shadowed-records).
+                    type: boolean
                   name:
                     description: |-
                       (String) DNS record name (or @ for the zone apex) in Punycode.
@@ -549,7 +554,7 @@ spec:
                       priority:
                         description: |-
                           (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
-                          Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
+                          Priority.
                         type: number
                       protocol:
                         description: |-
@@ -593,8 +598,8 @@ spec:
                         type: string
                       target:
                         description: |-
-                          (String) A valid mail server hostname, or "." for a NULL MX record.
-                          A valid mail server hostname, or "." for a NULL MX record.
+                          (String) Target.
+                          Target.
                         type: string
                       type:
                         description: |-
@@ -618,6 +623,11 @@ spec:
                           The record weight.
                         type: number
                     type: object
+                  includeShadowMetadata:
+                    description: |-
+                      (Boolean) Whether to include shadow metadata in the meta field of each record in the response. See Shadowed records.
+                      Whether to include shadow metadata in the `meta` field of each record in the response. See [Shadowed records](https://developers.cloudflare.com/dns/manage-dns-records/reference/shadowed-records).
+                    type: boolean
                   name:
                     description: |-
                       (String) DNS record name (or @ for the zone apex) in Punycode.
@@ -981,7 +991,7 @@ spec:
                       priority:
                         description: |-
                           (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
-                          Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
+                          Priority.
                         type: number
                       protocol:
                         description: |-
@@ -1025,8 +1035,8 @@ spec:
                         type: string
                       target:
                         description: |-
-                          (String) A valid mail server hostname, or "." for a NULL MX record.
-                          A valid mail server hostname, or "." for a NULL MX record.
+                          (String) Target.
+                          Target.
                         type: string
                       type:
                         description: |-
@@ -1053,6 +1063,11 @@ spec:
                   id:
                     description: (String) Identifier.
                     type: string
+                  includeShadowMetadata:
+                    description: |-
+                      (Boolean) Whether to include shadow metadata in the meta field of each record in the response. See Shadowed records.
+                      Whether to include shadow metadata in the `meta` field of each record in the response. See [Shadowed records](https://developers.cloudflare.com/dns/manage-dns-records/reference/shadowed-records).
+                    type: boolean
                   meta:
                     description: |-
                       specific information about the record.

@@ -64,6 +64,11 @@ spec:
                       (String) A Resource identifier.
                       A Resource identifier.
                     type: string
+                  jurisdiction:
+                    description: |-
+                      (String) Available values: "eu", "us", "fedramp".
+                      Available values: "eu", "us", "fedramp".
+                    type: string
                   queueName:
                     description: (String)
                     type: string
@@ -104,6 +109,11 @@ spec:
                     description: |-
                       (String) A Resource identifier.
                       A Resource identifier.
+                    type: string
+                  jurisdiction:
+                    description: |-
+                      (String) Available values: "eu", "us", "fedramp".
+                      Available values: "eu", "us", "fedramp".
                     type: string
                   queueName:
                     description: (String)
@@ -279,6 +289,11 @@ spec:
                     type: string
                   id:
                     description: (String) The ID of this resource.
+                    type: string
+                  jurisdiction:
+                    description: |-
+                      (String) Available values: "eu", "us", "fedramp".
+                      Available values: "eu", "us", "fedramp".
                     type: string
                   modifiedOn:
                     description: (String)

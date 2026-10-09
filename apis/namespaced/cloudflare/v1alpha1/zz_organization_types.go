@@ -14,37 +14,10 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
-type FlagsInitParameters struct {
-}
-
-type FlagsObservation struct {
-
-	// (String)
-	AccountCreation *string `json:"accountCreation,omitempty" tf:"account_creation,omitempty"`
-
-	// (String)
-	AccountDeletion *string `json:"accountDeletion,omitempty" tf:"account_deletion,omitempty"`
-
-	// (String)
-	AccountMigration *string `json:"accountMigration,omitempty" tf:"account_migration,omitempty"`
-
-	// (String)
-	AccountMobility *string `json:"accountMobility,omitempty" tf:"account_mobility,omitempty"`
-
-	// (String)
-	SubOrgCreation *string `json:"subOrgCreation,omitempty" tf:"sub_org_creation,omitempty"`
-}
-
-type FlagsParameters struct {
-}
-
 type MetaInitParameters struct {
 }
 
 type MetaObservation struct {
-
-	// (Attributes) Enable features for Organizations. (see below for nested schema)
-	Flags *FlagsObservation `json:"flags,omitempty" tf:"flags,omitempty"`
 
 	// element array containing their own tag; sub-organizations return
 	// [rootTag, ...intermediateTags, parentTag, selfTag]. Useful for
@@ -60,6 +33,9 @@ type MetaObservation struct {
 
 	// (String)
 	ManagedBy *string `json:"managedBy,omitempty" tf:"managed_by,omitempty"`
+
+	// (Attributes) Enable features for Organizations. (see below for nested schema)
+	TenantFlags *TenantFlagsObservation `json:"tenantFlags,omitempty" tf:"tenant_flags,omitempty"`
 }
 
 type MetaParameters struct {
@@ -192,6 +168,39 @@ type ProfileParameters struct {
 	// (String)
 	// +kubebuilder:validation:Optional
 	ExternalMetadata *string `json:"externalMetadata" tf:"external_metadata,omitempty"`
+}
+
+type TenantFlagsInitParameters struct {
+}
+
+type TenantFlagsObservation struct {
+
+	// (String)
+	AccountCreation *string `json:"accountCreation,omitempty" tf:"account_creation,omitempty"`
+
+	// (String)
+	AccountCreationAppliesTenantDefaults *string `json:"accountCreationAppliesTenantDefaults,omitempty" tf:"account_creation_applies_tenant_defaults,omitempty"`
+
+	// (String)
+	AccountDeletion *string `json:"accountDeletion,omitempty" tf:"account_deletion,omitempty"`
+
+	// (String)
+	AccountMigration *string `json:"accountMigration,omitempty" tf:"account_migration,omitempty"`
+
+	// (String)
+	AccountMobility *string `json:"accountMobility,omitempty" tf:"account_mobility,omitempty"`
+
+	// (String)
+	EnterpriseCapability *string `json:"enterpriseCapability,omitempty" tf:"enterprise_capability,omitempty"`
+
+	// (String)
+	MemberManagement *string `json:"memberManagement,omitempty" tf:"member_management,omitempty"`
+
+	// (String)
+	SubOrgCreation *string `json:"subOrgCreation,omitempty" tf:"sub_org_creation,omitempty"`
+}
+
+type TenantFlagsParameters struct {
 }
 
 // OrganizationSpec defines the desired state of Organization

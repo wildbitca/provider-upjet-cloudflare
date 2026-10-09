@@ -175,6 +175,10 @@ type TrustAccessIdentityProviderConfigInitParameters struct {
 	// Note: Requires `saml_certificate_set_id` to be set when `true`.
 	EnableEncryption *bool `json:"enableEncryption,omitempty" tf:"enable_encryption,omitempty"`
 
+	// (Boolean) Asks the IdP to reauthenticate the user for each SAML authentication request.
+	// Asks the IdP to reauthenticate the user for each SAML authentication request.
+	ForceAuthn *bool `json:"forceAuthn,omitempty" tf:"force_authn,omitempty"`
+
 	// (Attributes List) Add a list of attribute names that will be returned in the response header from the Access callback. (see below for nested schema)
 	HeaderAttributes []HeaderAttributesInitParameters `json:"headerAttributes,omitempty" tf:"header_attributes,omitempty"`
 
@@ -185,6 +189,14 @@ type TrustAccessIdentityProviderConfigInitParameters struct {
 	// (String) IdP Entity ID or Issuer URL
 	// IdP Entity ID or Issuer URL
 	IssuerURL *string `json:"issuerUrl,omitempty" tf:"issuer_url,omitempty"`
+
+	// side and a short nonce is passed to the IdP instead.
+	// Set this if your IdP enforces a URL length limit.
+	// The maximum URL length the IdP accepts for the SSO redirect URL.
+	// When the constructed SSO URL would exceed this length, the RelayState
+	// is stored server-side and a short nonce is passed to the IdP instead.
+	// Set this if your IdP enforces a URL length limit.
+	MaxSsoURLLength *float64 `json:"maxSsoUrlLength,omitempty" tf:"max_sso_url_length,omitempty"`
 
 	// (String) Your okta account url
 	// Your okta account url
@@ -203,9 +215,9 @@ type TrustAccessIdentityProviderConfigInitParameters struct {
 	PkceEnabled *bool `json:"pkceEnabled,omitempty" tf:"pkce_enabled,omitempty"`
 
 	// sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-	// Available values: "login", "select_account", "none".
+	// Available values: "login", "select_account", "none", "consent".
 	// Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-	// Available values: "login", "select_account", "none".
+	// Available values: "login", "select_account", "none", "consent".
 	Prompt *string `json:"prompt,omitempty" tf:"prompt,omitempty"`
 
 	// (Boolean) When enabled, only users who are members of your Cloudflare account can authenticate through this identity provider. When disabled, any user with a Cloudflare account can authenticate, subject to your Access policies.
@@ -231,6 +243,10 @@ type TrustAccessIdentityProviderConfigInitParameters struct {
 	// (String) The token_endpoint URL of your IdP
 	// The token_endpoint URL of your IdP
 	TokenURL *string `json:"tokenUrl,omitempty" tf:"token_url,omitempty"`
+
+	// (Boolean) Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
+	// Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
+	UseLoginHint *bool `json:"useLoginHint,omitempty" tf:"use_login_hint,omitempty"`
 }
 
 type TrustAccessIdentityProviderConfigObservation struct {
@@ -300,6 +316,10 @@ type TrustAccessIdentityProviderConfigObservation struct {
 	// Note: Requires `saml_certificate_set_id` to be set when `true`.
 	EnableEncryption *bool `json:"enableEncryption,omitempty" tf:"enable_encryption,omitempty"`
 
+	// (Boolean) Asks the IdP to reauthenticate the user for each SAML authentication request.
+	// Asks the IdP to reauthenticate the user for each SAML authentication request.
+	ForceAuthn *bool `json:"forceAuthn,omitempty" tf:"force_authn,omitempty"`
+
 	// (Attributes List) Add a list of attribute names that will be returned in the response header from the Access callback. (see below for nested schema)
 	HeaderAttributes []HeaderAttributesObservation `json:"headerAttributes,omitempty" tf:"header_attributes,omitempty"`
 
@@ -310,6 +330,14 @@ type TrustAccessIdentityProviderConfigObservation struct {
 	// (String) IdP Entity ID or Issuer URL
 	// IdP Entity ID or Issuer URL
 	IssuerURL *string `json:"issuerUrl,omitempty" tf:"issuer_url,omitempty"`
+
+	// side and a short nonce is passed to the IdP instead.
+	// Set this if your IdP enforces a URL length limit.
+	// The maximum URL length the IdP accepts for the SSO redirect URL.
+	// When the constructed SSO URL would exceed this length, the RelayState
+	// is stored server-side and a short nonce is passed to the IdP instead.
+	// Set this if your IdP enforces a URL length limit.
+	MaxSsoURLLength *float64 `json:"maxSsoUrlLength,omitempty" tf:"max_sso_url_length,omitempty"`
 
 	// (String) Your okta account url
 	// Your okta account url
@@ -328,9 +356,9 @@ type TrustAccessIdentityProviderConfigObservation struct {
 	PkceEnabled *bool `json:"pkceEnabled,omitempty" tf:"pkce_enabled,omitempty"`
 
 	// sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-	// Available values: "login", "select_account", "none".
+	// Available values: "login", "select_account", "none", "consent".
 	// Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-	// Available values: "login", "select_account", "none".
+	// Available values: "login", "select_account", "none", "consent".
 	Prompt *string `json:"prompt,omitempty" tf:"prompt,omitempty"`
 
 	// (String)
@@ -359,6 +387,10 @@ type TrustAccessIdentityProviderConfigObservation struct {
 	// (String) The token_endpoint URL of your IdP
 	// The token_endpoint URL of your IdP
 	TokenURL *string `json:"tokenUrl,omitempty" tf:"token_url,omitempty"`
+
+	// (Boolean) Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
+	// Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
+	UseLoginHint *bool `json:"useLoginHint,omitempty" tf:"use_login_hint,omitempty"`
 }
 
 type TrustAccessIdentityProviderConfigParameters struct {
@@ -447,6 +479,11 @@ type TrustAccessIdentityProviderConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	EnableEncryption *bool `json:"enableEncryption,omitempty" tf:"enable_encryption,omitempty"`
 
+	// (Boolean) Asks the IdP to reauthenticate the user for each SAML authentication request.
+	// Asks the IdP to reauthenticate the user for each SAML authentication request.
+	// +kubebuilder:validation:Optional
+	ForceAuthn *bool `json:"forceAuthn,omitempty" tf:"force_authn,omitempty"`
+
 	// (Attributes List) Add a list of attribute names that will be returned in the response header from the Access callback. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	HeaderAttributes []HeaderAttributesParameters `json:"headerAttributes,omitempty" tf:"header_attributes,omitempty"`
@@ -460,6 +497,15 @@ type TrustAccessIdentityProviderConfigParameters struct {
 	// IdP Entity ID or Issuer URL
 	// +kubebuilder:validation:Optional
 	IssuerURL *string `json:"issuerUrl,omitempty" tf:"issuer_url,omitempty"`
+
+	// side and a short nonce is passed to the IdP instead.
+	// Set this if your IdP enforces a URL length limit.
+	// The maximum URL length the IdP accepts for the SSO redirect URL.
+	// When the constructed SSO URL would exceed this length, the RelayState
+	// is stored server-side and a short nonce is passed to the IdP instead.
+	// Set this if your IdP enforces a URL length limit.
+	// +kubebuilder:validation:Optional
+	MaxSsoURLLength *float64 `json:"maxSsoUrlLength,omitempty" tf:"max_sso_url_length,omitempty"`
 
 	// (String) Your okta account url
 	// Your okta account url
@@ -482,9 +528,9 @@ type TrustAccessIdentityProviderConfigParameters struct {
 	PkceEnabled *bool `json:"pkceEnabled,omitempty" tf:"pkce_enabled,omitempty"`
 
 	// sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-	// Available values: "login", "select_account", "none".
+	// Available values: "login", "select_account", "none", "consent".
 	// Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-	// Available values: "login", "select_account", "none".
+	// Available values: "login", "select_account", "none", "consent".
 	// +kubebuilder:validation:Optional
 	Prompt *string `json:"prompt,omitempty" tf:"prompt,omitempty"`
 
@@ -517,6 +563,11 @@ type TrustAccessIdentityProviderConfigParameters struct {
 	// The token_endpoint URL of your IdP
 	// +kubebuilder:validation:Optional
 	TokenURL *string `json:"tokenUrl,omitempty" tf:"token_url,omitempty"`
+
+	// (Boolean) Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
+	// Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
+	// +kubebuilder:validation:Optional
+	UseLoginHint *bool `json:"useLoginHint,omitempty" tf:"use_login_hint,omitempty"`
 }
 
 type TrustAccessIdentityProviderInitParameters struct {

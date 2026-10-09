@@ -152,6 +152,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  force:
+                    description: |-
+                      (Boolean) If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+                      If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+                    type: boolean
                   logpush:
                     description: |-
                       (Boolean) Whether logpush is enabled for the Worker.
@@ -176,6 +181,16 @@ spec:
                           (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
                           The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
                         type: number
+                      issues:
+                        description: time Issues settings for the Worker. (see below
+                          for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether real-time Issues are enabled for the Worker.
+                            type: boolean
+                        type: object
                       logs:
                         description: (Attributes) Log settings for the Worker. (see
                           below for nested schema)
@@ -242,6 +257,223 @@ spec:
                               Available values: "authenticated", "accept".
                             type: string
                         type: object
+                    type: object
+                  previewsBaseConfig:
+                    description: (Attributes) Template configuration used when creating
+                      new Previews for this Worker. (see below for nested schema)
+                    properties:
+                      cacheOptions:
+                        description: (Attributes) Cache options used when creating
+                          new Previews. (see below for nested schema)
+                        properties:
+                          crossVersionCache:
+                            description: |-
+                              (Boolean) Whether cached responses are shared across Worker version
+                              uploads. This is independent of enabled. It can stay true
+                              while caching is off, so the preference survives turning
+                              caching off and back on.
+                              Whether cached responses are shared across Worker version
+                              uploads. This is independent of `enabled`. It can stay true
+                              while caching is off, so the preference survives turning
+                              caching off and back on.
+                            type: boolean
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether caching is enabled for this Worker.
+                            type: boolean
+                        type: object
+                      env:
+                        additionalProperties:
+                          properties:
+                            type:
+                              description: |-
+                                (String) The kind of resource that the binding provides.
+                                The kind of resource that the binding provides.
+                              type: string
+                          type: object
+                        description: (Attributes Map) Bindings used when creating
+                          new Previews, keyed by binding name. (see below for nested
+                          schema)
+                        type: object
+                      limits:
+                        description: (Attributes) Resource limits enforced at runtime
+                          for newly created Previews. (see below for nested schema)
+                        properties:
+                          cpuMs:
+                            description: |-
+                              (Number) The amount of CPU time this Worker can use in milliseconds.
+                              The amount of CPU time this Worker can use in milliseconds.
+                            type: number
+                          subrequests:
+                            description: |-
+                              (Number) The number of subrequests this Worker can make per request.
+                              The number of subrequests this Worker can make per request.
+                            type: number
+                        type: object
+                      logpush:
+                        description: |-
+                          (Boolean) Whether logpush is enabled for the Worker.
+                          Whether logpush is enabled when creating new Previews.
+                        type: boolean
+                      observability:
+                        description: (Attributes) Observability settings for the Worker.
+                          (see below for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether observability is enabled for the Worker.
+                            type: boolean
+                          headSamplingRate:
+                            description: |-
+                              (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                              The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                            type: number
+                          issues:
+                            description: time Issues settings for the Worker. (see
+                              below for nested schema)
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean) Whether observability is enabled for the Worker.
+                                  Whether real-time Issues are enabled for the Worker.
+                                type: boolean
+                            type: object
+                          logs:
+                            description: (Attributes) Log settings for the Worker.
+                              (see below for nested schema)
+                            properties:
+                              destinations:
+                                description: |-
+                                  (List of String) A list of destinations where logs will be exported to.
+                                  A list of destinations where logs will be exported to.
+                                items:
+                                  type: string
+                                type: array
+                              enabled:
+                                description: |-
+                                  (Boolean) Whether observability is enabled for the Worker.
+                                  Whether logs are enabled for the Worker.
+                                type: boolean
+                              headSamplingRate:
+                                description: |-
+                                  (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                                  The sampling rate for logs. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                                type: number
+                              invocationLogs:
+                                description: |-
+                                  (Boolean) Whether invocation logs are enabled for the Worker.
+                                  Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
+                                type: boolean
+                              persist:
+                                description: |-
+                                  (Boolean) Whether log persistence is enabled for the Worker.
+                                  Whether log persistence is enabled for the Worker.
+                                type: boolean
+                            type: object
+                          redactQueryString:
+                            description: |-
+                              (Boolean) Whether query strings are removed from request URLs in logs and traces.
+                              Whether query strings are removed from request URLs in logs and traces.
+                            type: boolean
+                          traces:
+                            description: (Attributes) Trace settings for the Worker.
+                              (see below for nested schema)
+                            properties:
+                              destinations:
+                                description: |-
+                                  (List of String) A list of destinations where logs will be exported to.
+                                  A list of destinations where traces will be exported to.
+                                items:
+                                  type: string
+                                type: array
+                              enabled:
+                                description: |-
+                                  (Boolean) Whether observability is enabled for the Worker.
+                                  Whether traces are enabled for the Worker.
+                                type: boolean
+                              headSamplingRate:
+                                description: |-
+                                  (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                                  The sampling rate for traces. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                                type: number
+                              persist:
+                                description: |-
+                                  (Boolean) Whether log persistence is enabled for the Worker.
+                                  Whether trace persistence is enabled for the Worker.
+                                type: boolean
+                              propagationPolicy:
+                                description: |-
+                                  (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+                                  Available values: "authenticated", "accept".
+                                  Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled. Returns null when the trace propagation feature is not enabled for the account.
+                                  Available values: "authenticated", "accept".
+                                type: string
+                            type: object
+                        type: object
+                      placement:
+                        description: (Attributes) Placement configuration used when
+                          creating new Previews. (see below for nested schema)
+                        properties:
+                          host:
+                            description: |-
+                              (String) TCP host and port for targeted placement.
+                              TCP host and port for targeted placement.
+                            type: string
+                          hostname:
+                            description: |-
+                              (String) HTTP hostname for targeted placement.
+                              HTTP hostname for targeted placement.
+                            type: string
+                          mode:
+                            description: |-
+                              (String) Enables Smart Placement.
+                              Available values: "smart", "targeted".
+                              Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+                              Available values: "smart", "targeted".
+                            type: string
+                          region:
+                            description: |-
+                              (String) Cloud region for targeted placement in format 'provider:region'.
+                              Cloud region for targeted placement in format 'provider:region'.
+                            type: string
+                          target:
+                            description: (Attributes List) Array of placement targets
+                              (currently limited to single target). (see below for
+                              nested schema)
+                            items:
+                              properties:
+                                host:
+                                  description: |-
+                                    (String) TCP host and port for targeted placement.
+                                    TCP host:port for targeted placement.
+                                  type: string
+                                hostname:
+                                  description: |-
+                                    (String) HTTP hostname for targeted placement.
+                                    HTTP hostname for targeted placement.
+                                  type: string
+                                region:
+                                  description: |-
+                                    (String) Cloud region for targeted placement in format 'provider:region'.
+                                    Cloud region in format 'provider:region'.
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      tailConsumers:
+                        description: (Attributes Set) Other Workers that should consume
+                          logs from the Worker. (see below for nested schema)
+                        items:
+                          properties:
+                            name:
+                              description: |-
+                                (String) Name of the Worker.
+                                Name of the consumer Worker.
+                              type: string
+                          type: object
+                        type: array
                     type: object
                   subdomain:
                     description: (Attributes) Subdomain settings for the Worker. (see
@@ -371,6 +603,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  force:
+                    description: |-
+                      (Boolean) If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+                      If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+                    type: boolean
                   logpush:
                     description: |-
                       (Boolean) Whether logpush is enabled for the Worker.
@@ -395,6 +632,16 @@ spec:
                           (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
                           The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
                         type: number
+                      issues:
+                        description: time Issues settings for the Worker. (see below
+                          for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether real-time Issues are enabled for the Worker.
+                            type: boolean
+                        type: object
                       logs:
                         description: (Attributes) Log settings for the Worker. (see
                           below for nested schema)
@@ -461,6 +708,223 @@ spec:
                               Available values: "authenticated", "accept".
                             type: string
                         type: object
+                    type: object
+                  previewsBaseConfig:
+                    description: (Attributes) Template configuration used when creating
+                      new Previews for this Worker. (see below for nested schema)
+                    properties:
+                      cacheOptions:
+                        description: (Attributes) Cache options used when creating
+                          new Previews. (see below for nested schema)
+                        properties:
+                          crossVersionCache:
+                            description: |-
+                              (Boolean) Whether cached responses are shared across Worker version
+                              uploads. This is independent of enabled. It can stay true
+                              while caching is off, so the preference survives turning
+                              caching off and back on.
+                              Whether cached responses are shared across Worker version
+                              uploads. This is independent of `enabled`. It can stay true
+                              while caching is off, so the preference survives turning
+                              caching off and back on.
+                            type: boolean
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether caching is enabled for this Worker.
+                            type: boolean
+                        type: object
+                      env:
+                        additionalProperties:
+                          properties:
+                            type:
+                              description: |-
+                                (String) The kind of resource that the binding provides.
+                                The kind of resource that the binding provides.
+                              type: string
+                          type: object
+                        description: (Attributes Map) Bindings used when creating
+                          new Previews, keyed by binding name. (see below for nested
+                          schema)
+                        type: object
+                      limits:
+                        description: (Attributes) Resource limits enforced at runtime
+                          for newly created Previews. (see below for nested schema)
+                        properties:
+                          cpuMs:
+                            description: |-
+                              (Number) The amount of CPU time this Worker can use in milliseconds.
+                              The amount of CPU time this Worker can use in milliseconds.
+                            type: number
+                          subrequests:
+                            description: |-
+                              (Number) The number of subrequests this Worker can make per request.
+                              The number of subrequests this Worker can make per request.
+                            type: number
+                        type: object
+                      logpush:
+                        description: |-
+                          (Boolean) Whether logpush is enabled for the Worker.
+                          Whether logpush is enabled when creating new Previews.
+                        type: boolean
+                      observability:
+                        description: (Attributes) Observability settings for the Worker.
+                          (see below for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether observability is enabled for the Worker.
+                            type: boolean
+                          headSamplingRate:
+                            description: |-
+                              (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                              The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                            type: number
+                          issues:
+                            description: time Issues settings for the Worker. (see
+                              below for nested schema)
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean) Whether observability is enabled for the Worker.
+                                  Whether real-time Issues are enabled for the Worker.
+                                type: boolean
+                            type: object
+                          logs:
+                            description: (Attributes) Log settings for the Worker.
+                              (see below for nested schema)
+                            properties:
+                              destinations:
+                                description: |-
+                                  (List of String) A list of destinations where logs will be exported to.
+                                  A list of destinations where logs will be exported to.
+                                items:
+                                  type: string
+                                type: array
+                              enabled:
+                                description: |-
+                                  (Boolean) Whether observability is enabled for the Worker.
+                                  Whether logs are enabled for the Worker.
+                                type: boolean
+                              headSamplingRate:
+                                description: |-
+                                  (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                                  The sampling rate for logs. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                                type: number
+                              invocationLogs:
+                                description: |-
+                                  (Boolean) Whether invocation logs are enabled for the Worker.
+                                  Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
+                                type: boolean
+                              persist:
+                                description: |-
+                                  (Boolean) Whether log persistence is enabled for the Worker.
+                                  Whether log persistence is enabled for the Worker.
+                                type: boolean
+                            type: object
+                          redactQueryString:
+                            description: |-
+                              (Boolean) Whether query strings are removed from request URLs in logs and traces.
+                              Whether query strings are removed from request URLs in logs and traces.
+                            type: boolean
+                          traces:
+                            description: (Attributes) Trace settings for the Worker.
+                              (see below for nested schema)
+                            properties:
+                              destinations:
+                                description: |-
+                                  (List of String) A list of destinations where logs will be exported to.
+                                  A list of destinations where traces will be exported to.
+                                items:
+                                  type: string
+                                type: array
+                              enabled:
+                                description: |-
+                                  (Boolean) Whether observability is enabled for the Worker.
+                                  Whether traces are enabled for the Worker.
+                                type: boolean
+                              headSamplingRate:
+                                description: |-
+                                  (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                                  The sampling rate for traces. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                                type: number
+                              persist:
+                                description: |-
+                                  (Boolean) Whether log persistence is enabled for the Worker.
+                                  Whether trace persistence is enabled for the Worker.
+                                type: boolean
+                              propagationPolicy:
+                                description: |-
+                                  (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+                                  Available values: "authenticated", "accept".
+                                  Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled. Returns null when the trace propagation feature is not enabled for the account.
+                                  Available values: "authenticated", "accept".
+                                type: string
+                            type: object
+                        type: object
+                      placement:
+                        description: (Attributes) Placement configuration used when
+                          creating new Previews. (see below for nested schema)
+                        properties:
+                          host:
+                            description: |-
+                              (String) TCP host and port for targeted placement.
+                              TCP host and port for targeted placement.
+                            type: string
+                          hostname:
+                            description: |-
+                              (String) HTTP hostname for targeted placement.
+                              HTTP hostname for targeted placement.
+                            type: string
+                          mode:
+                            description: |-
+                              (String) Enables Smart Placement.
+                              Available values: "smart", "targeted".
+                              Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+                              Available values: "smart", "targeted".
+                            type: string
+                          region:
+                            description: |-
+                              (String) Cloud region for targeted placement in format 'provider:region'.
+                              Cloud region for targeted placement in format 'provider:region'.
+                            type: string
+                          target:
+                            description: (Attributes List) Array of placement targets
+                              (currently limited to single target). (see below for
+                              nested schema)
+                            items:
+                              properties:
+                                host:
+                                  description: |-
+                                    (String) TCP host and port for targeted placement.
+                                    TCP host:port for targeted placement.
+                                  type: string
+                                hostname:
+                                  description: |-
+                                    (String) HTTP hostname for targeted placement.
+                                    HTTP hostname for targeted placement.
+                                  type: string
+                                region:
+                                  description: |-
+                                    (String) Cloud region for targeted placement in format 'provider:region'.
+                                    Cloud region in format 'provider:region'.
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      tailConsumers:
+                        description: (Attributes Set) Other Workers that should consume
+                          logs from the Worker. (see below for nested schema)
+                        items:
+                          properties:
+                            name:
+                              description: |-
+                                (String) Name of the Worker.
+                                Name of the consumer Worker.
+                              type: string
+                          type: object
+                        type: array
                     type: object
                   subdomain:
                     description: (Attributes) Subdomain settings for the Worker. (see
@@ -609,6 +1073,11 @@ spec:
                       (String) When the Worker's most recent deployment was created. null if the Worker has never been deployed.
                       When the Worker's most recent deployment was created. `null` if the Worker has never been deployed.
                     type: string
+                  force:
+                    description: |-
+                      (Boolean) If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+                      If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+                    type: boolean
                   id:
                     description: (String) Immutable ID of the Worker.
                     type: string
@@ -636,6 +1105,16 @@ spec:
                           (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
                           The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
                         type: number
+                      issues:
+                        description: time Issues settings for the Worker. (see below
+                          for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether real-time Issues are enabled for the Worker.
+                            type: boolean
+                        type: object
                       logs:
                         description: (Attributes) Log settings for the Worker. (see
                           below for nested schema)
@@ -703,6 +1182,223 @@ spec:
                             type: string
                         type: object
                     type: object
+                  previewsBaseConfig:
+                    description: (Attributes) Template configuration used when creating
+                      new Previews for this Worker. (see below for nested schema)
+                    properties:
+                      cacheOptions:
+                        description: (Attributes) Cache options used when creating
+                          new Previews. (see below for nested schema)
+                        properties:
+                          crossVersionCache:
+                            description: |-
+                              (Boolean) Whether cached responses are shared across Worker version
+                              uploads. This is independent of enabled. It can stay true
+                              while caching is off, so the preference survives turning
+                              caching off and back on.
+                              Whether cached responses are shared across Worker version
+                              uploads. This is independent of `enabled`. It can stay true
+                              while caching is off, so the preference survives turning
+                              caching off and back on.
+                            type: boolean
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether caching is enabled for this Worker.
+                            type: boolean
+                        type: object
+                      env:
+                        additionalProperties:
+                          properties:
+                            type:
+                              description: |-
+                                (String) The kind of resource that the binding provides.
+                                The kind of resource that the binding provides.
+                              type: string
+                          type: object
+                        description: (Attributes Map) Bindings used when creating
+                          new Previews, keyed by binding name. (see below for nested
+                          schema)
+                        type: object
+                      limits:
+                        description: (Attributes) Resource limits enforced at runtime
+                          for newly created Previews. (see below for nested schema)
+                        properties:
+                          cpuMs:
+                            description: |-
+                              (Number) The amount of CPU time this Worker can use in milliseconds.
+                              The amount of CPU time this Worker can use in milliseconds.
+                            type: number
+                          subrequests:
+                            description: |-
+                              (Number) The number of subrequests this Worker can make per request.
+                              The number of subrequests this Worker can make per request.
+                            type: number
+                        type: object
+                      logpush:
+                        description: |-
+                          (Boolean) Whether logpush is enabled for the Worker.
+                          Whether logpush is enabled when creating new Previews.
+                        type: boolean
+                      observability:
+                        description: (Attributes) Observability settings for the Worker.
+                          (see below for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Whether observability is enabled for the Worker.
+                              Whether observability is enabled for the Worker.
+                            type: boolean
+                          headSamplingRate:
+                            description: |-
+                              (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                              The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                            type: number
+                          issues:
+                            description: time Issues settings for the Worker. (see
+                              below for nested schema)
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean) Whether observability is enabled for the Worker.
+                                  Whether real-time Issues are enabled for the Worker.
+                                type: boolean
+                            type: object
+                          logs:
+                            description: (Attributes) Log settings for the Worker.
+                              (see below for nested schema)
+                            properties:
+                              destinations:
+                                description: |-
+                                  (List of String) A list of destinations where logs will be exported to.
+                                  A list of destinations where logs will be exported to.
+                                items:
+                                  type: string
+                                type: array
+                              enabled:
+                                description: |-
+                                  (Boolean) Whether observability is enabled for the Worker.
+                                  Whether logs are enabled for the Worker.
+                                type: boolean
+                              headSamplingRate:
+                                description: |-
+                                  (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                                  The sampling rate for logs. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                                type: number
+                              invocationLogs:
+                                description: |-
+                                  (Boolean) Whether invocation logs are enabled for the Worker.
+                                  Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
+                                type: boolean
+                              persist:
+                                description: |-
+                                  (Boolean) Whether log persistence is enabled for the Worker.
+                                  Whether log persistence is enabled for the Worker.
+                                type: boolean
+                            type: object
+                          redactQueryString:
+                            description: |-
+                              (Boolean) Whether query strings are removed from request URLs in logs and traces.
+                              Whether query strings are removed from request URLs in logs and traces.
+                            type: boolean
+                          traces:
+                            description: (Attributes) Trace settings for the Worker.
+                              (see below for nested schema)
+                            properties:
+                              destinations:
+                                description: |-
+                                  (List of String) A list of destinations where logs will be exported to.
+                                  A list of destinations where traces will be exported to.
+                                items:
+                                  type: string
+                                type: array
+                              enabled:
+                                description: |-
+                                  (Boolean) Whether observability is enabled for the Worker.
+                                  Whether traces are enabled for the Worker.
+                                type: boolean
+                              headSamplingRate:
+                                description: |-
+                                  (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                                  The sampling rate for traces. From 0 to 1 (1 = 100%, 0.1 = 10%).
+                                type: number
+                              persist:
+                                description: |-
+                                  (Boolean) Whether log persistence is enabled for the Worker.
+                                  Whether trace persistence is enabled for the Worker.
+                                type: boolean
+                              propagationPolicy:
+                                description: |-
+                                  (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+                                  Available values: "authenticated", "accept".
+                                  Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled. Returns null when the trace propagation feature is not enabled for the account.
+                                  Available values: "authenticated", "accept".
+                                type: string
+                            type: object
+                        type: object
+                      placement:
+                        description: (Attributes) Placement configuration used when
+                          creating new Previews. (see below for nested schema)
+                        properties:
+                          host:
+                            description: |-
+                              (String) TCP host and port for targeted placement.
+                              TCP host and port for targeted placement.
+                            type: string
+                          hostname:
+                            description: |-
+                              (String) HTTP hostname for targeted placement.
+                              HTTP hostname for targeted placement.
+                            type: string
+                          mode:
+                            description: |-
+                              (String) Enables Smart Placement.
+                              Available values: "smart", "targeted".
+                              Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+                              Available values: "smart", "targeted".
+                            type: string
+                          region:
+                            description: |-
+                              (String) Cloud region for targeted placement in format 'provider:region'.
+                              Cloud region for targeted placement in format 'provider:region'.
+                            type: string
+                          target:
+                            description: (Attributes List) Array of placement targets
+                              (currently limited to single target). (see below for
+                              nested schema)
+                            items:
+                              properties:
+                                host:
+                                  description: |-
+                                    (String) TCP host and port for targeted placement.
+                                    TCP host:port for targeted placement.
+                                  type: string
+                                hostname:
+                                  description: |-
+                                    (String) HTTP hostname for targeted placement.
+                                    HTTP hostname for targeted placement.
+                                  type: string
+                                region:
+                                  description: |-
+                                    (String) Cloud region for targeted placement in format 'provider:region'.
+                                    Cloud region in format 'provider:region'.
+                                  type: string
+                              type: object
+                            type: array
+                        type: object
+                      tailConsumers:
+                        description: (Attributes Set) Other Workers that should consume
+                          logs from the Worker. (see below for nested schema)
+                        items:
+                          properties:
+                            name:
+                              description: |-
+                                (String) Name of the Worker.
+                                Name of the consumer Worker.
+                              type: string
+                          type: object
+                        type: array
+                    type: object
                   references:
                     description: (Attributes) Other resources that reference the Worker
                       and depend on it existing. (see below for nested schema)
@@ -747,7 +1443,7 @@ spec:
                               type: string
                             hostname:
                               description: |-
-                                (String) Full hostname of the custom domain, including the zone name.
+                                (String) HTTP hostname for targeted placement.
                                 Full hostname of the custom domain, including the zone name.
                               type: string
                             id:
@@ -845,11 +1541,21 @@ spec:
                           (Boolean) Whether observability is enabled for the Worker.
                           Whether the *.workers.dev subdomain is enabled for the Worker.
                         type: boolean
+                      previewUrlSuffix:
+                        description: |-
+                          my-worker.my-subdomain.workers.dev. Present whenever the account owns a workers.dev subdomain, regardless of whether previews_enabled is true, so presence does not imply preview URLs are currently live. Absent only when the account owns no workers.dev subdomain.
+                          Prepend a version or preview prefix to this host suffix to form the *.workers.dev [preview URL](https://developers.cloudflare.com/workers/configuration/previews/) the Worker would serve on once previews are enabled, e.g. `https://<prefix>-my-worker.my-subdomain.workers.dev`. Present whenever the account owns a workers.dev subdomain, regardless of whether `previews_enabled` is true, so presence does not imply preview URLs are currently live. Absent only when the account owns no workers.dev subdomain.
+                        type: string
                       previewsEnabled:
                         description: |-
                           (Boolean) Whether preview URLs are enabled for the Worker.
                           Whether [preview URLs](https://developers.cloudflare.com/workers/configuration/previews/) are enabled for the Worker.
                         type: boolean
+                      url:
+                        description: |-
+                          (String) The address the Worker would serve on once its *.workers.dev subdomain is enabled. Present whenever the account owns a workers.dev subdomain, regardless of whether enabled is true, so presence does not imply the Worker is currently live at this URL. Absent only when the account owns no workers.dev subdomain.
+                          The address the Worker would serve on once its *.workers.dev subdomain is enabled. Present whenever the account owns a workers.dev subdomain, regardless of whether `enabled` is true, so presence does not imply the Worker is currently live at this URL. Absent only when the account owns no workers.dev subdomain.
+                        type: string
                     type: object
                   tags:
                     description: |-

@@ -16,9 +16,17 @@ import (
 
 type KvInitParameters struct {
 
-	// (String) Identifier.
-	// Identifier.
+	// (String) ID of the Cloudflare account that owns the Workers KV namespaces.
+	// ID of the Cloudflare account that owns the Workers KV namespaces.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (Number) Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
+	// Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
+	Expiration *float64 `json:"expiration,omitempty" tf:"expiration,omitempty"`
+
+	// (Number) Expires the key after a number of seconds. Must be at least 60.
+	// Expires the key after a number of seconds. Must be at least 60.
+	ExpirationTTL *float64 `json:"expirationTtl,omitempty" tf:"expiration_ttl,omitempty"`
 
 	// whitespace characters are valid. Use percent-encoding to define key names as part of a URL.
 	// A key's name. The name may be at most 512 bytes. All printable, non-whitespace characters are valid. Use percent-encoding to define key names as part of a URL.
@@ -28,8 +36,8 @@ type KvInitParameters struct {
 	// Associates arbitrary JSON data with a key/value pair.
 	Metadata *string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Namespace identifier tag.
-	// Namespace identifier tag.
+	// (String) ID of the Workers KV namespace.
+	// ID of the Workers KV namespace.
 	NamespaceID *string `json:"namespaceId,omitempty" tf:"namespace_id,omitempty"`
 
 	// (String) A byte sequence to be stored, up to 25 MiB in length.
@@ -39,9 +47,17 @@ type KvInitParameters struct {
 
 type KvObservation struct {
 
-	// (String) Identifier.
-	// Identifier.
+	// (String) ID of the Cloudflare account that owns the Workers KV namespaces.
+	// ID of the Cloudflare account that owns the Workers KV namespaces.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (Number) Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
+	// Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
+	Expiration *float64 `json:"expiration,omitempty" tf:"expiration,omitempty"`
+
+	// (Number) Expires the key after a number of seconds. Must be at least 60.
+	// Expires the key after a number of seconds. Must be at least 60.
+	ExpirationTTL *float64 `json:"expirationTtl,omitempty" tf:"expiration_ttl,omitempty"`
 
 	// whitespace characters are valid. Use percent-encoding to define key names as part of a URL.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -54,8 +70,8 @@ type KvObservation struct {
 	// Associates arbitrary JSON data with a key/value pair.
 	Metadata *string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Namespace identifier tag.
-	// Namespace identifier tag.
+	// (String) ID of the Workers KV namespace.
+	// ID of the Workers KV namespace.
 	NamespaceID *string `json:"namespaceId,omitempty" tf:"namespace_id,omitempty"`
 
 	// (String) A byte sequence to be stored, up to 25 MiB in length.
@@ -65,10 +81,20 @@ type KvObservation struct {
 
 type KvParameters struct {
 
-	// (String) Identifier.
-	// Identifier.
+	// (String) ID of the Cloudflare account that owns the Workers KV namespaces.
+	// ID of the Cloudflare account that owns the Workers KV namespaces.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
+	// (Number) Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
+	// Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
+	// +kubebuilder:validation:Optional
+	Expiration *float64 `json:"expiration,omitempty" tf:"expiration,omitempty"`
+
+	// (Number) Expires the key after a number of seconds. Must be at least 60.
+	// Expires the key after a number of seconds. Must be at least 60.
+	// +kubebuilder:validation:Optional
+	ExpirationTTL *float64 `json:"expirationTtl,omitempty" tf:"expiration_ttl,omitempty"`
 
 	// whitespace characters are valid. Use percent-encoding to define key names as part of a URL.
 	// A key's name. The name may be at most 512 bytes. All printable, non-whitespace characters are valid. Use percent-encoding to define key names as part of a URL.
@@ -80,8 +106,8 @@ type KvParameters struct {
 	// +kubebuilder:validation:Optional
 	Metadata *string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// (String) Namespace identifier tag.
-	// Namespace identifier tag.
+	// (String) ID of the Workers KV namespace.
+	// ID of the Workers KV namespace.
 	// +kubebuilder:validation:Optional
 	NamespaceID *string `json:"namespaceId,omitempty" tf:"namespace_id,omitempty"`
 

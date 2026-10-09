@@ -23,8 +23,8 @@ type CronTriggerInitParameters struct {
 	// (Attributes List) (see below for nested schema)
 	Schedules []SchedulesInitParameters `json:"schedules,omitempty" tf:"schedules,omitempty"`
 
-	// (String) Name of the script, used in URLs and route configuration.
-	// Name of the script, used in URLs and route configuration.
+	// (String) Name of the script.
+	// Name of the script.
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 }
 
@@ -34,14 +34,14 @@ type CronTriggerObservation struct {
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) Name of the script, used in URLs and route configuration.
+	// (String) Name of the script.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Attributes List) (see below for nested schema)
 	Schedules []SchedulesObservation `json:"schedules,omitempty" tf:"schedules,omitempty"`
 
-	// (String) Name of the script, used in URLs and route configuration.
-	// Name of the script, used in URLs and route configuration.
+	// (String) Name of the script.
+	// Name of the script.
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 }
 
@@ -56,8 +56,8 @@ type CronTriggerParameters struct {
 	// +kubebuilder:validation:Optional
 	Schedules []SchedulesParameters `json:"schedules,omitempty" tf:"schedules,omitempty"`
 
-	// (String) Name of the script, used in URLs and route configuration.
-	// Name of the script, used in URLs and route configuration.
+	// (String) Name of the script.
+	// Name of the script.
 	// +kubebuilder:validation:Optional
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 }

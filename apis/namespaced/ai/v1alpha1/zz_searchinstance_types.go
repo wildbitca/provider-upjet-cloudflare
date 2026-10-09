@@ -120,6 +120,78 @@ type CustomMetadataParameters struct {
 	FieldName *string `json:"fieldName" tf:"field_name,omitempty"`
 }
 
+type DiscoverOptionsInitParameters struct {
+
+	// Maximum link-follow depth from the seed URL.
+	Depth *float64 `json:"depth,omitempty" tf:"depth,omitempty"`
+
+	// Follow links that point outside the source domain. Must stay `false` — discover crawls are restricted to the zone you own.
+	IncludeExternalLinks *bool `json:"includeExternalLinks,omitempty" tf:"include_external_links,omitempty"`
+
+	// Follow links to subdomains of the source host.
+	IncludeSubdomains *bool `json:"includeSubdomains,omitempty" tf:"include_subdomains,omitempty"`
+
+	// Maximum number of pages to crawl (1-100000).
+	Limit *float64 `json:"limit,omitempty" tf:"limit,omitempty"`
+
+	// Maximum content age in seconds to accept (0–604800).
+	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
+
+	// Where the crawler looks for URLs: 'sitemaps' reads sitemap XML only, 'links' follows page links only, 'all' does both.
+	// Available values: "all", "sitemaps", "links".
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+}
+
+type DiscoverOptionsObservation struct {
+
+	// Maximum link-follow depth from the seed URL.
+	Depth *float64 `json:"depth,omitempty" tf:"depth,omitempty"`
+
+	// Follow links that point outside the source domain. Must stay `false` — discover crawls are restricted to the zone you own.
+	IncludeExternalLinks *bool `json:"includeExternalLinks,omitempty" tf:"include_external_links,omitempty"`
+
+	// Follow links to subdomains of the source host.
+	IncludeSubdomains *bool `json:"includeSubdomains,omitempty" tf:"include_subdomains,omitempty"`
+
+	// Maximum number of pages to crawl (1-100000).
+	Limit *float64 `json:"limit,omitempty" tf:"limit,omitempty"`
+
+	// Maximum content age in seconds to accept (0–604800).
+	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
+
+	// Where the crawler looks for URLs: 'sitemaps' reads sitemap XML only, 'links' follows page links only, 'all' does both.
+	// Available values: "all", "sitemaps", "links".
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+}
+
+type DiscoverOptionsParameters struct {
+
+	// Maximum link-follow depth from the seed URL.
+	// +kubebuilder:validation:Optional
+	Depth *float64 `json:"depth,omitempty" tf:"depth,omitempty"`
+
+	// Follow links that point outside the source domain. Must stay `false` — discover crawls are restricted to the zone you own.
+	// +kubebuilder:validation:Optional
+	IncludeExternalLinks *bool `json:"includeExternalLinks,omitempty" tf:"include_external_links,omitempty"`
+
+	// Follow links to subdomains of the source host.
+	// +kubebuilder:validation:Optional
+	IncludeSubdomains *bool `json:"includeSubdomains,omitempty" tf:"include_subdomains,omitempty"`
+
+	// Maximum number of pages to crawl (1-100000).
+	// +kubebuilder:validation:Optional
+	Limit *float64 `json:"limit,omitempty" tf:"limit,omitempty"`
+
+	// Maximum content age in seconds to accept (0–604800).
+	// +kubebuilder:validation:Optional
+	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
+
+	// Where the crawler looks for URLs: 'sitemaps' reads sitemap XML only, 'links' follows page links only, 'all' does both.
+	// Available values: "all", "sitemaps", "links".
+	// +kubebuilder:validation:Optional
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+}
+
 type IndexMethodInitParameters struct {
 
 	// Enable keyword (BM25) storage backend.
@@ -154,6 +226,9 @@ type IndexingOptionsInitParameters struct {
 	// Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
 	// Available values: "porter", "trigram".
 	KeywordTokenizer *string `json:"keywordTokenizer,omitempty" tf:"keyword_tokenizer,omitempty"`
+
+	// Enables OCR ingestion for PDFs and images. Changing this triggers a full re-index. Defaults to false.
+	UseOcr *bool `json:"useOcr,omitempty" tf:"use_ocr,omitempty"`
 }
 
 type IndexingOptionsObservation struct {
@@ -161,6 +236,9 @@ type IndexingOptionsObservation struct {
 	// Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
 	// Available values: "porter", "trigram".
 	KeywordTokenizer *string `json:"keywordTokenizer,omitempty" tf:"keyword_tokenizer,omitempty"`
+
+	// Enables OCR ingestion for PDFs and images. Changing this triggers a full re-index. Defaults to false.
+	UseOcr *bool `json:"useOcr,omitempty" tf:"use_ocr,omitempty"`
 }
 
 type IndexingOptionsParameters struct {
@@ -169,6 +247,10 @@ type IndexingOptionsParameters struct {
 	// Available values: "porter", "trigram".
 	// +kubebuilder:validation:Optional
 	KeywordTokenizer *string `json:"keywordTokenizer,omitempty" tf:"keyword_tokenizer,omitempty"`
+
+	// Enables OCR ingestion for PDFs and images. Changing this triggers a full re-index. Defaults to false.
+	// +kubebuilder:validation:Optional
+	UseOcr *bool `json:"useOcr,omitempty" tf:"use_ocr,omitempty"`
 }
 
 type McpInitParameters struct {
@@ -418,7 +500,7 @@ type SearchInstanceInitParameters struct {
 
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// A Workers AI model ID or an AI Gateway model ID compatible with the OpenAI Chat Completions API. An empty string uses the configured or default model.
 	AisearchModel *string `json:"aisearchModel,omitempty" tf:"aisearch_model,omitempty"`
 
 	Cache *bool `json:"cache,omitempty" tf:"cache,omitempty"`
@@ -438,13 +520,12 @@ type SearchInstanceInitParameters struct {
 
 	CustomMetadata []CustomMetadataInitParameters `json:"customMetadata,omitempty" tf:"custom_metadata,omitempty"`
 
-	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "google-ai-studio/gemini-embedding-2", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
 	EmbeddingModel *string `json:"embeddingModel,omitempty" tf:"embedding_model,omitempty"`
 
 	// Available values: "max", "rrf".
 	FusionMethod *string `json:"fusionMethod,omitempty" tf:"fusion_method,omitempty"`
 
-	// Deprecated — use index_method instead.
+	// Deprecated — use index_method instead. Defaults to true for new instances; set false to create a vector-only instance.
 	HybridSearchEnabled *bool `json:"hybridSearchEnabled,omitempty" tf:"hybrid_search_enabled,omitempty"`
 
 	IndexMethod *IndexMethodInitParameters `json:"indexMethod,omitempty" tf:"index_method,omitempty"`
@@ -461,12 +542,11 @@ type SearchInstanceInitParameters struct {
 
 	Reranking *bool `json:"reranking,omitempty" tf:"reranking,omitempty"`
 
-	// Available values: "@cf/baai/bge-reranker-base", "".
 	RerankingModel *string `json:"rerankingModel,omitempty" tf:"reranking_model,omitempty"`
 
 	RetrievalOptions *RetrievalOptionsInitParameters `json:"retrievalOptions,omitempty" tf:"retrieval_options,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// A Workers AI model ID or an AI Gateway model ID compatible with the OpenAI Chat Completions API. An empty string uses the configured or default model.
 	RewriteModel *string `json:"rewriteModel,omitempty" tf:"rewrite_model,omitempty"`
 
 	RewriteQuery *bool `json:"rewriteQuery,omitempty" tf:"rewrite_query,omitempty"`
@@ -479,7 +559,6 @@ type SearchInstanceInitParameters struct {
 
 	Summarization *bool `json:"summarization,omitempty" tf:"summarization,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
 	SummarizationModel *string `json:"summarizationModel,omitempty" tf:"summarization_model,omitempty"`
 
 	// Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
@@ -494,6 +573,7 @@ type SearchInstanceInitParameters struct {
 
 	TokenID *string `json:"tokenId,omitempty" tf:"token_id,omitempty"`
 
+	// Source type. When omitted or null with a non-blank source, HTTP(S) URLs infer web-crawler and existing R2 bucket names infer r2. A missing or blank source without a type uses managed upload-only storage.
 	// Available values: "r2", "web-crawler".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
@@ -503,7 +583,7 @@ type SearchInstanceObservation struct {
 
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// A Workers AI model ID or an AI Gateway model ID compatible with the OpenAI Chat Completions API. An empty string uses the configured or default model.
 	AisearchModel *string `json:"aisearchModel,omitempty" tf:"aisearch_model,omitempty"`
 
 	Cache *bool `json:"cache,omitempty" tf:"cache,omitempty"`
@@ -527,7 +607,6 @@ type SearchInstanceObservation struct {
 
 	CustomMetadata []CustomMetadataObservation `json:"customMetadata,omitempty" tf:"custom_metadata,omitempty"`
 
-	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "google-ai-studio/gemini-embedding-2", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
 	EmbeddingModel *string `json:"embeddingModel,omitempty" tf:"embedding_model,omitempty"`
 
 	Enable *bool `json:"enable,omitempty" tf:"enable,omitempty"`
@@ -537,7 +616,7 @@ type SearchInstanceObservation struct {
 	// Available values: "max", "rrf".
 	FusionMethod *string `json:"fusionMethod,omitempty" tf:"fusion_method,omitempty"`
 
-	// Deprecated — use index_method instead.
+	// Deprecated — use index_method instead. Defaults to true for new instances; set false to create a vector-only instance.
 	HybridSearchEnabled *bool `json:"hybridSearchEnabled,omitempty" tf:"hybrid_search_enabled,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -566,12 +645,11 @@ type SearchInstanceObservation struct {
 
 	Reranking *bool `json:"reranking,omitempty" tf:"reranking,omitempty"`
 
-	// Available values: "@cf/baai/bge-reranker-base", "".
 	RerankingModel *string `json:"rerankingModel,omitempty" tf:"reranking_model,omitempty"`
 
 	RetrievalOptions *RetrievalOptionsObservation `json:"retrievalOptions,omitempty" tf:"retrieval_options,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// A Workers AI model ID or an AI Gateway model ID compatible with the OpenAI Chat Completions API. An empty string uses the configured or default model.
 	RewriteModel *string `json:"rewriteModel,omitempty" tf:"rewrite_model,omitempty"`
 
 	RewriteQuery *bool `json:"rewriteQuery,omitempty" tf:"rewrite_query,omitempty"`
@@ -586,7 +664,6 @@ type SearchInstanceObservation struct {
 
 	Summarization *bool `json:"summarization,omitempty" tf:"summarization,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
 	SummarizationModel *string `json:"summarizationModel,omitempty" tf:"summarization_model,omitempty"`
 
 	// Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
@@ -601,10 +678,9 @@ type SearchInstanceObservation struct {
 
 	TokenID *string `json:"tokenId,omitempty" tf:"token_id,omitempty"`
 
+	// Source type. When omitted or null with a non-blank source, HTTP(S) URLs infer web-crawler and existing R2 bucket names infer r2. A missing or blank source without a type uses managed upload-only storage.
 	// Available values: "r2", "web-crawler".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
-
-	VectorizeName *string `json:"vectorizeName,omitempty" tf:"vectorize_name,omitempty"`
 }
 
 type SearchInstanceParameters struct {
@@ -615,7 +691,7 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// A Workers AI model ID or an AI Gateway model ID compatible with the OpenAI Chat Completions API. An empty string uses the configured or default model.
 	// +kubebuilder:validation:Optional
 	AisearchModel *string `json:"aisearchModel,omitempty" tf:"aisearch_model,omitempty"`
 
@@ -643,7 +719,6 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	CustomMetadata []CustomMetadataParameters `json:"customMetadata,omitempty" tf:"custom_metadata,omitempty"`
 
-	// Available values: "@cf/qwen/qwen3-embedding-0.6b", "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m", "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview", "google-ai-studio/gemini-embedding-2", "openai/text-embedding-3-small", "openai/text-embedding-3-large", "".
 	// +kubebuilder:validation:Optional
 	EmbeddingModel *string `json:"embeddingModel,omitempty" tf:"embedding_model,omitempty"`
 
@@ -651,7 +726,7 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	FusionMethod *string `json:"fusionMethod,omitempty" tf:"fusion_method,omitempty"`
 
-	// Deprecated — use index_method instead.
+	// Deprecated — use index_method instead. Defaults to true for new instances; set false to create a vector-only instance.
 	// +kubebuilder:validation:Optional
 	HybridSearchEnabled *bool `json:"hybridSearchEnabled,omitempty" tf:"hybrid_search_enabled,omitempty"`
 
@@ -676,14 +751,13 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Reranking *bool `json:"reranking,omitempty" tf:"reranking,omitempty"`
 
-	// Available values: "@cf/baai/bge-reranker-base", "".
 	// +kubebuilder:validation:Optional
 	RerankingModel *string `json:"rerankingModel,omitempty" tf:"reranking_model,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	RetrievalOptions *RetrievalOptionsParameters `json:"retrievalOptions,omitempty" tf:"retrieval_options,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
+	// A Workers AI model ID or an AI Gateway model ID compatible with the OpenAI Chat Completions API. An empty string uses the configured or default model.
 	// +kubebuilder:validation:Optional
 	RewriteModel *string `json:"rewriteModel,omitempty" tf:"rewrite_model,omitempty"`
 
@@ -702,7 +776,6 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Summarization *bool `json:"summarization,omitempty" tf:"summarization,omitempty"`
 
-	// Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast", "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b", "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it", "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5", "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4", "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct", "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b", "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct", "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash", "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile", "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini", "openai/gpt-5-nano", "".
 	// +kubebuilder:validation:Optional
 	SummarizationModel *string `json:"summarizationModel,omitempty" tf:"summarization_model,omitempty"`
 
@@ -723,6 +796,7 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	TokenID *string `json:"tokenId,omitempty" tf:"token_id,omitempty"`
 
+	// Source type. When omitted or null with a non-blank source, HTTP(S) URLs infer web-crawler and existing R2 bucket names infer r2. A missing or blank source without a type uses managed upload-only storage.
 	// Available values: "r2", "web-crawler".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -730,10 +804,10 @@ type SearchInstanceParameters struct {
 
 type SourceParamsInitParameters struct {
 
-	// List of path patterns to exclude. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /admin/** matches /admin/users and /admin/settings/advanced)
+	// List of path patterns to exclude. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /admin/** matches /admin/users and /admin/settings/advanced). Most accounts are limited to 10 rules; contact support to raise it.
 	ExcludeItems []*string `json:"excludeItems,omitempty" tf:"exclude_items,omitempty"`
 
-	// List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post)
+	// List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post). Most accounts are limited to 10 rules; contact support to raise it.
 	IncludeItems []*string `json:"includeItems,omitempty" tf:"include_items,omitempty"`
 
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
@@ -745,10 +819,10 @@ type SourceParamsInitParameters struct {
 
 type SourceParamsObservation struct {
 
-	// List of path patterns to exclude. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /admin/** matches /admin/users and /admin/settings/advanced)
+	// List of path patterns to exclude. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /admin/** matches /admin/users and /admin/settings/advanced). Most accounts are limited to 10 rules; contact support to raise it.
 	ExcludeItems []*string `json:"excludeItems,omitempty" tf:"exclude_items,omitempty"`
 
-	// List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post)
+	// List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post). Most accounts are limited to 10 rules; contact support to raise it.
 	IncludeItems []*string `json:"includeItems,omitempty" tf:"include_items,omitempty"`
 
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
@@ -760,11 +834,11 @@ type SourceParamsObservation struct {
 
 type SourceParamsParameters struct {
 
-	// List of path patterns to exclude. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /admin/** matches /admin/users and /admin/settings/advanced)
+	// List of path patterns to exclude. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /admin/** matches /admin/users and /admin/settings/advanced). Most accounts are limited to 10 rules; contact support to raise it.
 	// +kubebuilder:validation:Optional
 	ExcludeItems []*string `json:"excludeItems,omitempty" tf:"exclude_items,omitempty"`
 
-	// List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post)
+	// List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post). Most accounts are limited to 10 rules; contact support to raise it.
 	// +kubebuilder:validation:Optional
 	IncludeItems []*string `json:"includeItems,omitempty" tf:"include_items,omitempty"`
 
@@ -778,66 +852,38 @@ type SourceParamsParameters struct {
 	WebCrawler *WebCrawlerParameters `json:"webCrawler,omitempty" tf:"web_crawler,omitempty"`
 }
 
-type StoreOptionsInitParameters struct {
-	R2Jurisdiction *string `json:"r2Jurisdiction,omitempty" tf:"r2_jurisdiction,omitempty"`
-
-	StorageID *string `json:"storageId,omitempty" tf:"storage_id,omitempty"`
-
-	// Available values: "r2".
-	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
-}
-
-type StoreOptionsObservation struct {
-	R2Jurisdiction *string `json:"r2Jurisdiction,omitempty" tf:"r2_jurisdiction,omitempty"`
-
-	StorageID *string `json:"storageId,omitempty" tf:"storage_id,omitempty"`
-
-	// Available values: "r2".
-	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
-}
-
-type StoreOptionsParameters struct {
-
-	// +kubebuilder:validation:Optional
-	R2Jurisdiction *string `json:"r2Jurisdiction,omitempty" tf:"r2_jurisdiction,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	StorageID *string `json:"storageId" tf:"storage_id,omitempty"`
-
-	// Available values: "r2".
-	// +kubebuilder:validation:Optional
-	StorageType *string `json:"storageType,omitempty" tf:"storage_type,omitempty"`
-}
-
 type WebCrawlerInitParameters struct {
+	DiscoverOptions *DiscoverOptionsInitParameters `json:"discoverOptions,omitempty" tf:"discover_options,omitempty"`
+
 	ParseOptions *ParseOptionsInitParameters `json:"parseOptions,omitempty" tf:"parse_options,omitempty"`
 
-	// Available values: "sitemap", "feed-rss", "crawl".
+	// How URLs are discovered. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to be a Verified zone on this account.
+	// Available values: "sitemap", "discover".
 	ParseType *string `json:"parseType,omitempty" tf:"parse_type,omitempty"`
-
-	StoreOptions *StoreOptionsInitParameters `json:"storeOptions,omitempty" tf:"store_options,omitempty"`
 }
 
 type WebCrawlerObservation struct {
+	DiscoverOptions *DiscoverOptionsObservation `json:"discoverOptions,omitempty" tf:"discover_options,omitempty"`
+
 	ParseOptions *ParseOptionsObservation `json:"parseOptions,omitempty" tf:"parse_options,omitempty"`
 
-	// Available values: "sitemap", "feed-rss", "crawl".
+	// How URLs are discovered. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to be a Verified zone on this account.
+	// Available values: "sitemap", "discover".
 	ParseType *string `json:"parseType,omitempty" tf:"parse_type,omitempty"`
-
-	StoreOptions *StoreOptionsObservation `json:"storeOptions,omitempty" tf:"store_options,omitempty"`
 }
 
 type WebCrawlerParameters struct {
 
 	// +kubebuilder:validation:Optional
+	DiscoverOptions *DiscoverOptionsParameters `json:"discoverOptions,omitempty" tf:"discover_options,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	ParseOptions *ParseOptionsParameters `json:"parseOptions,omitempty" tf:"parse_options,omitempty"`
 
-	// Available values: "sitemap", "feed-rss", "crawl".
+	// How URLs are discovered. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to be a Verified zone on this account.
+	// Available values: "sitemap", "discover".
 	// +kubebuilder:validation:Optional
 	ParseType *string `json:"parseType,omitempty" tf:"parse_type,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	StoreOptions *StoreOptionsParameters `json:"storeOptions,omitempty" tf:"store_options,omitempty"`
 }
 
 // SearchInstanceSpec defines the desired state of SearchInstance

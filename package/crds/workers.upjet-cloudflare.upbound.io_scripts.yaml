@@ -101,6 +101,11 @@ spec:
                         description: (Attributes) Configuration for assets within
                           a Worker. (see below for nested schema)
                         properties:
+                          basePath:
+                            description: |-
+                              (String) The public URL path prefix under which assets are served. A null request value resets it to /; responses represent the root as /. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+                              The public URL path prefix under which assets are served. A null request value resets it to `/`; responses represent the root as `/`. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+                            type: string
                           headers:
                             description: |-
                               (String) The contents of a _headers file (used to attach custom headers on asset responses).
@@ -416,6 +421,11 @@ spec:
                             (String) ID of the store containing the secret.
                             ID of the store containing the secret.
                           type: string
+                        stream:
+                          description: |-
+                            (String) ID of a K2 stream owned by the account deploying the Worker.
+                            ID of a K2 stream owned by the account deploying the Worker.
+                          type: string
                         textSecretRef:
                           description: |-
                             (String, Sensitive) The text value to use.
@@ -443,9 +453,9 @@ spec:
                         type:
                           description: |-
                             (String) The kind of resource that the binding provides.
-                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                             The kind of resource that the binding provides.
-                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                           type: string
                         usages:
                           description: |-
@@ -546,7 +556,7 @@ spec:
                         type:
                           description: |-
                             (String) The kind of resource that the binding provides.
-                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                             The kind of entrypoint. A `type: worker` entry overrides the top-level `cache_options` for this specific entrypoint.
                           type: string
                       type: object
@@ -554,6 +564,35 @@ spec:
                       names; values describe the entrypoint's kind and per-entrypoint
                       cache behavior. (see below for nested schema)
                     type: object
+                  files:
+                    additionalProperties:
+                      properties:
+                        contentBase64:
+                          description: |-
+                            encoded file content.
+                            Base64-encoded file content.
+                          type: string
+                        contentFile:
+                          description: |-
+                            (String) Path to a file containing the Module or Service Worker contents of the Worker. Conflicts with content. Must be paired with content_sha256.
+                            Path to the file content.
+                          type: string
+                        contentType:
+                          description: |-
+                            Type of the Worker. Required if uploading a non-JavaScript Worker (e.g. "text/x-python").
+                            Content type of the file, such as `application/wasm`, `text/plain`, or `application/octet-stream`.
+                          type: string
+                      type: object
+                    description: (Attributes Map) Additional modules and data files
+                      to include in the multipart Worker upload. Map keys are multipart
+                      part names referenced by binding part values and module imports.
+                      (see below for nested schema)
+                    type: object
+                  force:
+                    description: |-
+                      (Boolean) If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+                      If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+                    type: boolean
                   keepAssets:
                     description: |-
                       (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit assets upload takes precedence over keep_assets.
@@ -733,6 +772,16 @@ spec:
                           (Number) The sampling rate for incoming requests. From 0 to 1 (1 = 100%, 0.1 = 10%). Default is 1.
                           The sampling rate for incoming requests. From 0 to 1 (1 = 100%, 0.1 = 10%). Default is 1.
                         type: number
+                      issues:
+                        description: time Issues settings for the Worker. (see below
+                          for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Whether caching is enabled for this Worker.
+                              Whether real-time Issues are enabled for the Worker.
+                            type: boolean
+                        type: object
                       logs:
                         description: (Attributes) Log settings for the Worker. (see
                           below for nested schema)
@@ -793,6 +842,8 @@ spec:
                             type: boolean
                           propagationPolicy:
                             description: |-
+                              (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+                              Available values: "authenticated", "accept".
                               Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
                               Available values: "authenticated", "accept".
                             type: string
@@ -910,6 +961,11 @@ spec:
                         description: (Attributes) Configuration for assets within
                           a Worker. (see below for nested schema)
                         properties:
+                          basePath:
+                            description: |-
+                              (String) The public URL path prefix under which assets are served. A null request value resets it to /; responses represent the root as /. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+                              The public URL path prefix under which assets are served. A null request value resets it to `/`; responses represent the root as `/`. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+                            type: string
                           headers:
                             description: |-
                               (String) The contents of a _headers file (used to attach custom headers on asset responses).
@@ -1225,6 +1281,11 @@ spec:
                             (String) ID of the store containing the secret.
                             ID of the store containing the secret.
                           type: string
+                        stream:
+                          description: |-
+                            (String) ID of a K2 stream owned by the account deploying the Worker.
+                            ID of a K2 stream owned by the account deploying the Worker.
+                          type: string
                         textSecretRef:
                           description: |-
                             (String, Sensitive) The text value to use.
@@ -1252,9 +1313,9 @@ spec:
                         type:
                           description: |-
                             (String) The kind of resource that the binding provides.
-                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                             The kind of resource that the binding provides.
-                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                           type: string
                         usages:
                           description: |-
@@ -1355,7 +1416,7 @@ spec:
                         type:
                           description: |-
                             (String) The kind of resource that the binding provides.
-                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                             The kind of entrypoint. A `type: worker` entry overrides the top-level `cache_options` for this specific entrypoint.
                           type: string
                       type: object
@@ -1363,6 +1424,35 @@ spec:
                       names; values describe the entrypoint's kind and per-entrypoint
                       cache behavior. (see below for nested schema)
                     type: object
+                  files:
+                    additionalProperties:
+                      properties:
+                        contentBase64:
+                          description: |-
+                            encoded file content.
+                            Base64-encoded file content.
+                          type: string
+                        contentFile:
+                          description: |-
+                            (String) Path to a file containing the Module or Service Worker contents of the Worker. Conflicts with content. Must be paired with content_sha256.
+                            Path to the file content.
+                          type: string
+                        contentType:
+                          description: |-
+                            Type of the Worker. Required if uploading a non-JavaScript Worker (e.g. "text/x-python").
+                            Content type of the file, such as `application/wasm`, `text/plain`, or `application/octet-stream`.
+                          type: string
+                      type: object
+                    description: (Attributes Map) Additional modules and data files
+                      to include in the multipart Worker upload. Map keys are multipart
+                      part names referenced by binding part values and module imports.
+                      (see below for nested schema)
+                    type: object
+                  force:
+                    description: |-
+                      (Boolean) If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+                      If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+                    type: boolean
                   keepAssets:
                     description: |-
                       (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit assets upload takes precedence over keep_assets.
@@ -1542,6 +1632,16 @@ spec:
                           (Number) The sampling rate for incoming requests. From 0 to 1 (1 = 100%, 0.1 = 10%). Default is 1.
                           The sampling rate for incoming requests. From 0 to 1 (1 = 100%, 0.1 = 10%). Default is 1.
                         type: number
+                      issues:
+                        description: time Issues settings for the Worker. (see below
+                          for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Whether caching is enabled for this Worker.
+                              Whether real-time Issues are enabled for the Worker.
+                            type: boolean
+                        type: object
                       logs:
                         description: (Attributes) Log settings for the Worker. (see
                           below for nested schema)
@@ -1602,6 +1702,8 @@ spec:
                             type: boolean
                           propagationPolicy:
                             description: |-
+                              (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+                              Available values: "authenticated", "accept".
                               Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
                               Available values: "authenticated", "accept".
                             type: string
@@ -1816,6 +1918,11 @@ spec:
                         description: (Attributes) Configuration for assets within
                           a Worker. (see below for nested schema)
                         properties:
+                          basePath:
+                            description: |-
+                              (String) The public URL path prefix under which assets are served. A null request value resets it to /; responses represent the root as /. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+                              The public URL path prefix under which assets are served. A null request value resets it to `/`; responses represent the root as `/`. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+                            type: string
                           headers:
                             description: |-
                               (String) The contents of a _headers file (used to attach custom headers on asset responses).
@@ -2074,6 +2181,11 @@ spec:
                             (String) ID of the store containing the secret.
                             ID of the store containing the secret.
                           type: string
+                        stream:
+                          description: |-
+                            (String) ID of a K2 stream owned by the account deploying the Worker.
+                            ID of a K2 stream owned by the account deploying the Worker.
+                          type: string
                         tunnelId:
                           description: |-
                             (String) UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
@@ -2082,9 +2194,9 @@ spec:
                         type:
                           description: |-
                             (String) The kind of resource that the binding provides.
-                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                             The kind of resource that the binding provides.
-                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                           type: string
                         usages:
                           description: |-
@@ -2195,7 +2307,7 @@ spec:
                         type:
                           description: |-
                             (String) The kind of resource that the binding provides.
-                            Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+                            Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
                             The kind of entrypoint. A `type: worker` entry overrides the top-level `cache_options` for this specific entrypoint.
                           type: string
                       type: object
@@ -2203,6 +2315,40 @@ spec:
                       names; values describe the entrypoint's kind and per-entrypoint
                       cache behavior. (see below for nested schema)
                     type: object
+                  files:
+                    additionalProperties:
+                      properties:
+                        contentBase64:
+                          description: |-
+                            encoded file content.
+                            Base64-encoded file content.
+                          type: string
+                        contentFile:
+                          description: |-
+                            (String) Path to a file containing the Module or Service Worker contents of the Worker. Conflicts with content. Must be paired with content_sha256.
+                            Path to the file content.
+                          type: string
+                        contentSha256:
+                          description: |-
+                            256 hash of the Worker contents. Used to trigger updates when source code changes. Must be provided when content_file is specified.
+                            SHA-256 hash of the file content, used to detect changes and remote drift.
+                          type: string
+                        contentType:
+                          description: |-
+                            Type of the Worker. Required if uploading a non-JavaScript Worker (e.g. "text/x-python").
+                            Content type of the file, such as `application/wasm`, `text/plain`, or `application/octet-stream`.
+                          type: string
+                      type: object
+                    description: (Attributes Map) Additional modules and data files
+                      to include in the multipart Worker upload. Map keys are multipart
+                      part names referenced by binding part values and module imports.
+                      (see below for nested schema)
+                    type: object
+                  force:
+                    description: |-
+                      (Boolean) If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+                      If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+                    type: boolean
                   handlers:
                     description: |-
                       (List of String) The names of handlers exported as part of the default export.
@@ -2438,6 +2584,16 @@ spec:
                           (Number) The sampling rate for incoming requests. From 0 to 1 (1 = 100%, 0.1 = 10%). Default is 1.
                           The sampling rate for incoming requests. From 0 to 1 (1 = 100%, 0.1 = 10%). Default is 1.
                         type: number
+                      issues:
+                        description: time Issues settings for the Worker. (see below
+                          for nested schema)
+                        properties:
+                          enabled:
+                            description: |-
+                              (Boolean) Whether caching is enabled for this Worker.
+                              Whether real-time Issues are enabled for the Worker.
+                            type: boolean
+                        type: object
                       logs:
                         description: (Attributes) Log settings for the Worker. (see
                           below for nested schema)
@@ -2498,6 +2654,8 @@ spec:
                             type: boolean
                           propagationPolicy:
                             description: |-
+                              (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+                              Available values: "authenticated", "accept".
                               Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
                               Available values: "authenticated", "accept".
                             type: string

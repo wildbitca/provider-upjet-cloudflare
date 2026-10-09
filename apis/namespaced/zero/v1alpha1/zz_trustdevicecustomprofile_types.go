@@ -14,6 +14,47 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type BrowserExtensionConfigInitParameters struct {
+
+	// (String) Whether the user may disable the browser extension proxy.
+	// Available values: "unlocked", "locked".
+	// Whether the user may disable the browser extension proxy.
+	// Available values: "unlocked", "locked".
+	ProxyControl *string `json:"proxyControl,omitempty" tf:"proxy_control,omitempty"`
+
+	// (Boolean) Whether the browser extension proxy is active.
+	// Whether the browser extension proxy is active.
+	ProxyEnabled *bool `json:"proxyEnabled,omitempty" tf:"proxy_enabled,omitempty"`
+}
+
+type BrowserExtensionConfigObservation struct {
+
+	// (String) Whether the user may disable the browser extension proxy.
+	// Available values: "unlocked", "locked".
+	// Whether the user may disable the browser extension proxy.
+	// Available values: "unlocked", "locked".
+	ProxyControl *string `json:"proxyControl,omitempty" tf:"proxy_control,omitempty"`
+
+	// (Boolean) Whether the browser extension proxy is active.
+	// Whether the browser extension proxy is active.
+	ProxyEnabled *bool `json:"proxyEnabled,omitempty" tf:"proxy_enabled,omitempty"`
+}
+
+type BrowserExtensionConfigParameters struct {
+
+	// (String) Whether the user may disable the browser extension proxy.
+	// Available values: "unlocked", "locked".
+	// Whether the user may disable the browser extension proxy.
+	// Available values: "unlocked", "locked".
+	// +kubebuilder:validation:Optional
+	ProxyControl *string `json:"proxyControl" tf:"proxy_control,omitempty"`
+
+	// (Boolean) Whether the browser extension proxy is active.
+	// Whether the browser extension proxy is active.
+	// +kubebuilder:validation:Optional
+	ProxyEnabled *bool `json:"proxyEnabled" tf:"proxy_enabled,omitempty"`
+}
+
 type DNSSearchSuffixesInitParameters struct {
 
 	// (String) A description of the policy.
@@ -300,6 +341,9 @@ type TrustDeviceCustomProfileInitParameters struct {
 	// The amount of time in seconds to reconnect after having been disabled.
 	AutoConnect *float64 `json:"autoConnect,omitempty" tf:"auto_connect,omitempty"`
 
+	// (Attributes) Browser extension proxy settings. Required when profile_type is browser_extension and invalid for WARP profiles. (see below for nested schema)
+	BrowserExtensionConfig *BrowserExtensionConfigInitParameters `json:"browserExtensionConfig,omitempty" tf:"browser_extension_config,omitempty"`
+
 	// (Number) Turn on the captive portal after the specified amount of time.
 	// Turn on the captive portal after the specified amount of time.
 	CaptivePortal *float64 `json:"captivePortal,omitempty" tf:"captive_portal,omitempty"`
@@ -352,6 +396,12 @@ type TrustDeviceCustomProfileInitParameters struct {
 	// The precedence of the policy. Lower values indicate higher precedence. Policies will be evaluated in ascending order of this field.
 	Precedence *float64 `json:"precedence,omitempty" tf:"precedence,omitempty"`
 
+	// (String) The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+	// Available values: "warp", "browser_extension".
+	// The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+	// Available values: "warp", "browser_extension".
+	ProfileType *string `json:"profileType,omitempty" tf:"profile_type,omitempty"`
+
 	// premises DNS server.
 	// Determines if the operating system will register WARP's local interface IP with your on-premises DNS server.
 	RegisterInterfaceIPWithDNS *bool `json:"registerInterfaceIpWithDns,omitempty" tf:"register_interface_ip_with_dns,omitempty"`
@@ -374,6 +424,10 @@ type TrustDeviceCustomProfileInitParameters struct {
 	// (String) Determines which tunnel protocol to use.
 	// Determines which tunnel protocol to use.
 	TunnelProtocol *string `json:"tunnelProtocol,omitempty" tf:"tunnel_protocol,omitempty"`
+
+	// (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
+	// Determines whether uninstalling the WARP client requires an override code. (Windows only).
+	UninstallProtection *bool `json:"uninstallProtection,omitempty" tf:"uninstall_protection,omitempty"`
 
 	// (Attributes) Virtual network access settings for the device. (see below for nested schema)
 	VirtualNetworks *VirtualNetworksInitParameters `json:"virtualNetworks,omitempty" tf:"virtual_networks,omitempty"`
@@ -399,6 +453,9 @@ type TrustDeviceCustomProfileObservation struct {
 	// (Number) The amount of time in seconds to reconnect after having been disabled.
 	// The amount of time in seconds to reconnect after having been disabled.
 	AutoConnect *float64 `json:"autoConnect,omitempty" tf:"auto_connect,omitempty"`
+
+	// (Attributes) Browser extension proxy settings. Required when profile_type is browser_extension and invalid for WARP profiles. (see below for nested schema)
+	BrowserExtensionConfig *BrowserExtensionConfigObservation `json:"browserExtensionConfig,omitempty" tf:"browser_extension_config,omitempty"`
 
 	// (Number) Turn on the captive portal after the specified amount of time.
 	// Turn on the captive portal after the specified amount of time.
@@ -468,6 +525,12 @@ type TrustDeviceCustomProfileObservation struct {
 	// The precedence of the policy. Lower values indicate higher precedence. Policies will be evaluated in ascending order of this field.
 	Precedence *float64 `json:"precedence,omitempty" tf:"precedence,omitempty"`
 
+	// (String) The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+	// Available values: "warp", "browser_extension".
+	// The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+	// Available values: "warp", "browser_extension".
+	ProfileType *string `json:"profileType,omitempty" tf:"profile_type,omitempty"`
+
 	// premises DNS server.
 	// Determines if the operating system will register WARP's local interface IP with your on-premises DNS server.
 	RegisterInterfaceIPWithDNS *bool `json:"registerInterfaceIpWithDns,omitempty" tf:"register_interface_ip_with_dns,omitempty"`
@@ -493,6 +556,10 @@ type TrustDeviceCustomProfileObservation struct {
 	// (String) Determines which tunnel protocol to use.
 	// Determines which tunnel protocol to use.
 	TunnelProtocol *string `json:"tunnelProtocol,omitempty" tf:"tunnel_protocol,omitempty"`
+
+	// (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
+	// Determines whether uninstalling the WARP client requires an override code. (Windows only).
+	UninstallProtection *bool `json:"uninstallProtection,omitempty" tf:"uninstall_protection,omitempty"`
 
 	// (Attributes) Virtual network access settings for the device. (see below for nested schema)
 	VirtualNetworks *VirtualNetworksObservation `json:"virtualNetworks,omitempty" tf:"virtual_networks,omitempty"`
@@ -523,6 +590,10 @@ type TrustDeviceCustomProfileParameters struct {
 	// The amount of time in seconds to reconnect after having been disabled.
 	// +kubebuilder:validation:Optional
 	AutoConnect *float64 `json:"autoConnect,omitempty" tf:"auto_connect,omitempty"`
+
+	// (Attributes) Browser extension proxy settings. Required when profile_type is browser_extension and invalid for WARP profiles. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	BrowserExtensionConfig *BrowserExtensionConfigParameters `json:"browserExtensionConfig,omitempty" tf:"browser_extension_config,omitempty"`
 
 	// (Number) Turn on the captive portal after the specified amount of time.
 	// Turn on the captive portal after the specified amount of time.
@@ -590,6 +661,13 @@ type TrustDeviceCustomProfileParameters struct {
 	// +kubebuilder:validation:Optional
 	Precedence *float64 `json:"precedence,omitempty" tf:"precedence,omitempty"`
 
+	// (String) The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+	// Available values: "warp", "browser_extension".
+	// The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+	// Available values: "warp", "browser_extension".
+	// +kubebuilder:validation:Optional
+	ProfileType *string `json:"profileType,omitempty" tf:"profile_type,omitempty"`
+
 	// premises DNS server.
 	// Determines if the operating system will register WARP's local interface IP with your on-premises DNS server.
 	// +kubebuilder:validation:Optional
@@ -618,6 +696,11 @@ type TrustDeviceCustomProfileParameters struct {
 	// Determines which tunnel protocol to use.
 	// +kubebuilder:validation:Optional
 	TunnelProtocol *string `json:"tunnelProtocol,omitempty" tf:"tunnel_protocol,omitempty"`
+
+	// (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
+	// Determines whether uninstalling the WARP client requires an override code. (Windows only).
+	// +kubebuilder:validation:Optional
+	UninstallProtection *bool `json:"uninstallProtection,omitempty" tf:"uninstall_protection,omitempty"`
 
 	// (Attributes) Virtual network access settings for the device. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -696,7 +779,6 @@ type TrustDeviceCustomProfile struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountId) || (has(self.initProvider) && has(self.initProvider.accountId))",message="spec.forProvider.accountId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.match) || (has(self.initProvider) && has(self.initProvider.match))",message="spec.forProvider.match is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	Spec   TrustDeviceCustomProfileSpec   `json:"spec"`
 	Status TrustDeviceCustomProfileStatus `json:"status,omitempty"`

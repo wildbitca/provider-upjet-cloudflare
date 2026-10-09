@@ -16,7 +16,8 @@ import (
 
 type TrustGatewayCertificateInitParameters struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// only field and does not appear in the API response. Monitor binding_status for the activation status. Once a certificate is activated, you may use the certificate to intercept traffic
@@ -30,7 +31,8 @@ type TrustGatewayCertificateInitParameters struct {
 
 type TrustGatewayCertificateObservation struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// only field and does not appear in the API response. Monitor binding_status for the activation status. Once a certificate is activated, you may use the certificate to intercept traffic
@@ -91,7 +93,8 @@ type TrustGatewayCertificateObservation struct {
 
 type TrustGatewayCertificateParameters struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 

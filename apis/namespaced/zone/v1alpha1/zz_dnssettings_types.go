@@ -20,8 +20,8 @@ type DNSSettingsInitParameters struct {
 	// Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
 	FlattenAllCnames *bool `json:"flattenAllCnames,omitempty" tf:"flatten_all_cnames,omitempty"`
 
-	// (Boolean) Whether to enable Foundation DNS Advanced Nameservers on the zone.
-	// Whether to enable Foundation DNS Advanced Nameservers on the zone.
+	// (Boolean, Deprecated) Deprecated. Use nameservers.type to configure Advanced Nameservers.
+	// Deprecated. Use nameservers.type to configure Advanced Nameservers.
 	FoundationDNS *bool `json:"foundationDns,omitempty" tf:"foundation_dns,omitempty"`
 
 	// (Attributes) Settings for this internal zone. (see below for nested schema)
@@ -31,7 +31,7 @@ type DNSSettingsInitParameters struct {
 	// Whether to enable multi-provider DNS, which causes Cloudflare to activate the zone even when non-Cloudflare NS records exist, and to respect NS records at the zone apex during outbound zone transfers.
 	MultiProvider *bool `json:"multiProvider,omitempty" tf:"multi_provider,omitempty"`
 
-	// (Attributes) Settings determining the nameservers through which the zone should be available. (see below for nested schema)
+	// (Attributes) Controls the nameservers through which the zone is available. (see below for nested schema)
 	Nameservers *NameserversInitParameters `json:"nameservers,omitempty" tf:"nameservers,omitempty"`
 
 	// (Number) The time to live (TTL) of the zone's nameserver (NS) records.
@@ -71,8 +71,8 @@ type DNSSettingsObservation struct {
 	// Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
 	FlattenAllCnames *bool `json:"flattenAllCnames,omitempty" tf:"flatten_all_cnames,omitempty"`
 
-	// (Boolean) Whether to enable Foundation DNS Advanced Nameservers on the zone.
-	// Whether to enable Foundation DNS Advanced Nameservers on the zone.
+	// (Boolean, Deprecated) Deprecated. Use nameservers.type to configure Advanced Nameservers.
+	// Deprecated. Use nameservers.type to configure Advanced Nameservers.
 	FoundationDNS *bool `json:"foundationDns,omitempty" tf:"foundation_dns,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -84,7 +84,7 @@ type DNSSettingsObservation struct {
 	// Whether to enable multi-provider DNS, which causes Cloudflare to activate the zone even when non-Cloudflare NS records exist, and to respect NS records at the zone apex during outbound zone transfers.
 	MultiProvider *bool `json:"multiProvider,omitempty" tf:"multi_provider,omitempty"`
 
-	// (Attributes) Settings determining the nameservers through which the zone should be available. (see below for nested schema)
+	// (Attributes) Controls the nameservers through which the zone is available. (see below for nested schema)
 	Nameservers *NameserversObservation `json:"nameservers,omitempty" tf:"nameservers,omitempty"`
 
 	// (Number) The time to live (TTL) of the zone's nameserver (NS) records.
@@ -116,8 +116,8 @@ type DNSSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	FlattenAllCnames *bool `json:"flattenAllCnames,omitempty" tf:"flatten_all_cnames,omitempty"`
 
-	// (Boolean) Whether to enable Foundation DNS Advanced Nameservers on the zone.
-	// Whether to enable Foundation DNS Advanced Nameservers on the zone.
+	// (Boolean, Deprecated) Deprecated. Use nameservers.type to configure Advanced Nameservers.
+	// Deprecated. Use nameservers.type to configure Advanced Nameservers.
 	// +kubebuilder:validation:Optional
 	FoundationDNS *bool `json:"foundationDns,omitempty" tf:"foundation_dns,omitempty"`
 
@@ -130,7 +130,7 @@ type DNSSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	MultiProvider *bool `json:"multiProvider,omitempty" tf:"multi_provider,omitempty"`
 
-	// (Attributes) Settings determining the nameservers through which the zone should be available. (see below for nested schema)
+	// (Attributes) Controls the nameservers through which the zone is available. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Nameservers *NameserversParameters `json:"nameservers,omitempty" tf:"nameservers,omitempty"`
 
@@ -194,43 +194,56 @@ type InternalDNSParameters struct {
 
 type NameserversInitParameters struct {
 
-	// (Number) Configured nameserver set to be used for this zone
-	// Configured nameserver set to be used for this zone
+	// owned Custom Nameserver Set to use for this zone.
+	// Identifier of the account-owned Custom Nameserver Set to use for this zone.
+	NameserverSetID *string `json:"nameserverSetId,omitempty" tf:"nameserver_set_id,omitempty"`
+
+	// (Number) Configured nameserver set number to use for this zone.
+	// Configured nameserver set number to use for this zone.
 	NsSet *float64 `json:"nsSet,omitempty" tf:"ns_set,omitempty"`
 
-	// (String) Nameserver type
-	// Available values: "cloudflare.standard", "custom.account", "custom.tenant", "custom.zone".
-	// Nameserver type
-	// Available values: "cloudflare.standard", "custom.account", "custom.tenant", "custom.zone".
+	// (String) Nameserver type.
+	// Available values: "cloudflare.standard", "cloudflare.advanced", "custom.account", "custom.tenant", "custom.zone", "custom".
+	// Nameserver type.
+	// Available values: "cloudflare.standard", "cloudflare.advanced", "custom.account", "custom.tenant", "custom.zone", "custom".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type NameserversObservation struct {
 
-	// (Number) Configured nameserver set to be used for this zone
-	// Configured nameserver set to be used for this zone
+	// owned Custom Nameserver Set to use for this zone.
+	// Identifier of the account-owned Custom Nameserver Set to use for this zone.
+	NameserverSetID *string `json:"nameserverSetId,omitempty" tf:"nameserver_set_id,omitempty"`
+
+	// (Number) Configured nameserver set number to use for this zone.
+	// Configured nameserver set number to use for this zone.
 	NsSet *float64 `json:"nsSet,omitempty" tf:"ns_set,omitempty"`
 
-	// (String) Nameserver type
-	// Available values: "cloudflare.standard", "custom.account", "custom.tenant", "custom.zone".
-	// Nameserver type
-	// Available values: "cloudflare.standard", "custom.account", "custom.tenant", "custom.zone".
+	// (String) Nameserver type.
+	// Available values: "cloudflare.standard", "cloudflare.advanced", "custom.account", "custom.tenant", "custom.zone", "custom".
+	// Nameserver type.
+	// Available values: "cloudflare.standard", "cloudflare.advanced", "custom.account", "custom.tenant", "custom.zone", "custom".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type NameserversParameters struct {
 
-	// (Number) Configured nameserver set to be used for this zone
-	// Configured nameserver set to be used for this zone
+	// owned Custom Nameserver Set to use for this zone.
+	// Identifier of the account-owned Custom Nameserver Set to use for this zone.
+	// +kubebuilder:validation:Optional
+	NameserverSetID *string `json:"nameserverSetId,omitempty" tf:"nameserver_set_id,omitempty"`
+
+	// (Number) Configured nameserver set number to use for this zone.
+	// Configured nameserver set number to use for this zone.
 	// +kubebuilder:validation:Optional
 	NsSet *float64 `json:"nsSet,omitempty" tf:"ns_set,omitempty"`
 
-	// (String) Nameserver type
-	// Available values: "cloudflare.standard", "custom.account", "custom.tenant", "custom.zone".
-	// Nameserver type
-	// Available values: "cloudflare.standard", "custom.account", "custom.tenant", "custom.zone".
+	// (String) Nameserver type.
+	// Available values: "cloudflare.standard", "cloudflare.advanced", "custom.account", "custom.tenant", "custom.zone", "custom".
+	// Nameserver type.
+	// Available values: "cloudflare.standard", "cloudflare.advanced", "custom.account", "custom.tenant", "custom.zone", "custom".
 	// +kubebuilder:validation:Optional
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type SoaInitParameters struct {

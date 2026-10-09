@@ -178,6 +178,13 @@ spec:
                       (String) The unique identifier for an OAuth client.
                       The unique identifier for an OAuth client.
                     type: string
+                  optionalScopes:
+                    description: |-
+                      (List of String) Scopes that the authorizing user may decline during consent. Each value must also appear in scopes. The scopes openid, offline, and offline_access cannot be optional.
+                      Scopes that the authorizing user may decline during consent. Each value must also appear in `scopes`. The scopes `openid`, `offline`, and `offline_access` cannot be optional.
+                    items:
+                      type: string
+                    type: array
                   policyUri:
                     description: |-
                       (String) URL that points to a privacy policy document.
@@ -363,6 +370,13 @@ spec:
                       (String) The unique identifier for an OAuth client.
                       The unique identifier for an OAuth client.
                     type: string
+                  optionalScopes:
+                    description: |-
+                      (List of String) Scopes that the authorizing user may decline during consent. Each value must also appear in scopes. The scopes openid, offline, and offline_access cannot be optional.
+                      Scopes that the authorizing user may decline during consent. Each value must also appear in `scopes`. The scopes `openid`, `offline`, and `offline_access` cannot be optional.
+                    items:
+                      type: string
+                    type: array
                   policyUri:
                     description: |-
                       (String) URL that points to a privacy policy document.
@@ -577,6 +591,13 @@ spec:
                       (String) The unique identifier for an OAuth client.
                       The unique identifier for an OAuth client.
                     type: string
+                  optionalScopes:
+                    description: |-
+                      (List of String) Scopes that the authorizing user may decline during consent. Each value must also appear in scopes. The scopes openid, offline, and offline_access cannot be optional.
+                      Scopes that the authorizing user may decline during consent. Each value must also appear in `scopes`. The scopes `openid`, `offline`, and `offline_access` cannot be optional.
+                    items:
+                      type: string
+                    type: array
                   policyUri:
                     description: |-
                       (String) URL that points to a privacy policy document.

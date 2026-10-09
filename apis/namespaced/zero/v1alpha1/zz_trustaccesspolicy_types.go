@@ -307,6 +307,10 @@ type TrustAccessPolicyExcludeCommonNameParameters struct {
 
 type TrustAccessPolicyExcludeDevicePostureInitParameters struct {
 
+	// (String) Identifier.
+	// The ID of the account that owns the device posture integration.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
 	IntegrationUID *string `json:"integrationUid,omitempty" tf:"integration_uid,omitempty"`
@@ -314,12 +318,21 @@ type TrustAccessPolicyExcludeDevicePostureInitParameters struct {
 
 type TrustAccessPolicyExcludeDevicePostureObservation struct {
 
+	// (String) Identifier.
+	// The ID of the account that owns the device posture integration.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
 	IntegrationUID *string `json:"integrationUid,omitempty" tf:"integration_uid,omitempty"`
 }
 
 type TrustAccessPolicyExcludeDevicePostureParameters struct {
+
+	// (String) Identifier.
+	// The ID of the account that owns the device posture integration.
+	// +kubebuilder:validation:Optional
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
@@ -1243,6 +1256,10 @@ type TrustAccessPolicyIncludeCommonNameParameters struct {
 
 type TrustAccessPolicyIncludeDevicePostureInitParameters struct {
 
+	// (String) Identifier.
+	// The ID of the account that owns the device posture integration.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
 	IntegrationUID *string `json:"integrationUid,omitempty" tf:"integration_uid,omitempty"`
@@ -1250,12 +1267,21 @@ type TrustAccessPolicyIncludeDevicePostureInitParameters struct {
 
 type TrustAccessPolicyIncludeDevicePostureObservation struct {
 
+	// (String) Identifier.
+	// The ID of the account that owns the device posture integration.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
 	IntegrationUID *string `json:"integrationUid,omitempty" tf:"integration_uid,omitempty"`
 }
 
 type TrustAccessPolicyIncludeDevicePostureParameters struct {
+
+	// (String) Identifier.
+	// The ID of the account that owns the device posture integration.
+	// +kubebuilder:validation:Optional
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
@@ -2462,6 +2488,10 @@ type TrustAccessPolicyRequireCommonNameParameters struct {
 
 type TrustAccessPolicyRequireDevicePostureInitParameters struct {
 
+	// (String) Identifier.
+	// The ID of the account that owns the device posture integration.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
 	IntegrationUID *string `json:"integrationUid,omitempty" tf:"integration_uid,omitempty"`
@@ -2469,12 +2499,21 @@ type TrustAccessPolicyRequireDevicePostureInitParameters struct {
 
 type TrustAccessPolicyRequireDevicePostureObservation struct {
 
+	// (String) Identifier.
+	// The ID of the account that owns the device posture integration.
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
+
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.
 	IntegrationUID *string `json:"integrationUid,omitempty" tf:"integration_uid,omitempty"`
 }
 
 type TrustAccessPolicyRequireDevicePostureParameters struct {
+
+	// (String) Identifier.
+	// The ID of the account that owns the device posture integration.
+	// +kubebuilder:validation:Optional
+	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) The ID of a device posture integration.
 	// The ID of a device posture integration.

@@ -9,5 +9,5 @@ metadata:
 spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
-    name: this-is-my-domain-01.com
+    name: example.com
     projectName: this-is-my-project-01

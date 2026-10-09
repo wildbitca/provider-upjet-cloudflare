@@ -88,6 +88,9 @@ type LiveInputObservation struct {
 	// The date and time the live input was last modified.
 	Modified *string `json:"modified,omitempty" tf:"modified,omitempty"`
 
+	// (Attributes) Details for playing a live input's broadcast using the HLS or DASH manifests. URLs reference the live input ID. (see below for nested schema)
+	Playback *PlaybackObservation `json:"playback,omitempty" tf:"playback,omitempty"`
+
 	// Latency HLS (LL-HLS), reducing glass-to-glass latency for viewers at the cost of reduced player compatibility.
 	// When enabled, the live stream is delivered using Low-Latency HLS (LL-HLS), reducing glass-to-glass latency for viewers at the cost of reduced player compatibility.
 	PreferLowLatency *bool `json:"preferLowLatency,omitempty" tf:"prefer_low_latency,omitempty"`
@@ -164,6 +167,23 @@ type LiveInputParameters struct {
 	// demand after a condition is satisfied. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Recording *RecordingParameters `json:"recording,omitempty" tf:"recording,omitempty"`
+}
+
+type PlaybackInitParameters struct {
+}
+
+type PlaybackObservation struct {
+
+	// (String) The DASH manifest URL used to play live video, referencing the live input ID.
+	// The DASH manifest URL used to play live video, referencing the live input ID.
+	Dash *string `json:"dash,omitempty" tf:"dash,omitempty"`
+
+	// (String) The HLS manifest URL used to play live video, referencing the live input ID.
+	// The HLS manifest URL used to play live video, referencing the live input ID.
+	Hls *string `json:"hls,omitempty" tf:"hls,omitempty"`
+}
+
+type PlaybackParameters struct {
 }
 
 type RecordingInitParameters struct {

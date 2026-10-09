@@ -64,7 +64,9 @@ spec:
                     description: (String)
                     type: string
                   authCredentialsSecretRef:
-                    description: (String, Sensitive)
+                    description: |-
+                      abc123"), which is wrapped server-side as Authorization: Bearer <token>, or a JSON-encoded object of the form {"headers":{"Header-Name":"value",...}} for custom or multiple static headers (e.g. Cloudflare Access service tokens: {"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}).
+                      Static credential for the upstream MCP server. For auth_type "bearer", either a raw token string (e.g. "sk-abc123"), which is wrapped server-side as `Authorization: Bearer <token>`, or a JSON-encoded object of the form `{"headers":{"Header-Name":"value",...}}` for custom or multiple static headers (e.g. Cloudflare Access service tokens: `{"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}`).
                     properties:
                       key:
                         type: string
@@ -77,7 +79,9 @@ spec:
                     type: object
                   authType:
                     description: |-
-                      (String) Available values: "oauth", "bearer", "unauthenticated".
+                      (String) Authentication method used to connect to the upstream MCP server.
+                      Available values: "oauth", "bearer", "unauthenticated".
+                      Authentication method used to connect to the upstream MCP server.
                       Available values: "oauth", "bearer", "unauthenticated".
                     type: string
                   clientSecretSecretRef:
@@ -95,57 +99,81 @@ spec:
                     - name
                     type: object
                   description:
-                    description: (String)
+                    description: |-
+                      (String) Optional description of the MCP server.
+                      Optional description of the MCP server.
                     type: string
                   hostname:
-                    description: (String)
+                    description: |-
+                      (String) URL of the upstream MCP endpoint.
+                      URL of the upstream MCP endpoint.
                     type: string
                   isSharedOauthCallbackEnabled:
                     description: |-
-                      owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
-                      When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+                      owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
+                      When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
                     type: boolean
                   name:
-                    description: (String)
+                    description: |-
+                      (String) Display name for the MCP server.
+                      Display name for the MCP server.
                     type: string
                   secureWebGateway:
                     description: |-
-                      (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
-                      Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
+                      (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
+                      Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
                     type: boolean
                   updatedPrompts:
-                    description: (Attributes List) (see below for nested schema)
+                    description: wide prompt capability overrides. (see below for
+                      nested schema)
                     items:
                       properties:
                         alias:
-                          description: (String)
+                          description: |-
+                            (String) Custom name exposed for the capability.
+                            Custom name exposed for the capability.
                           type: string
                         description:
-                          description: (String)
+                          description: |-
+                            (String) Optional description of the MCP server.
+                            Custom description exposed for the capability.
                           type: string
                         enabled:
-                          description: (Boolean)
+                          description: |-
+                            (Boolean) Whether the capability is available through the MCP server.
+                            Whether the capability is available through the MCP server.
                           type: boolean
                         name:
-                          description: (String)
+                          description: |-
+                            (String) Display name for the MCP server.
+                            Name of the tool or prompt capability to override.
                           type: string
                       type: object
                     type: array
                   updatedTools:
-                    description: (Attributes List) (see below for nested schema)
+                    description: wide tool capability overrides. (see below for nested
+                      schema)
                     items:
                       properties:
                         alias:
-                          description: (String)
+                          description: |-
+                            (String) Custom name exposed for the capability.
+                            Custom name exposed for the capability.
                           type: string
                         description:
-                          description: (String)
+                          description: |-
+                            (String) Optional description of the MCP server.
+                            Custom description exposed for the capability.
                           type: string
                         enabled:
-                          description: (Boolean)
+                          description: |-
+                            (Boolean) Whether the capability is available through the MCP server.
+                            Whether the capability is available through the MCP server.
                           type: boolean
                         name:
-                          description: (String)
+                          description: |-
+                            (String) Display name for the MCP server.
+                            Name of the tool or prompt capability to override.
                           type: string
                       type: object
                     type: array
@@ -167,7 +195,9 @@ spec:
                     description: (String)
                     type: string
                   authCredentialsSecretRef:
-                    description: (String, Sensitive)
+                    description: |-
+                      abc123"), which is wrapped server-side as Authorization: Bearer <token>, or a JSON-encoded object of the form {"headers":{"Header-Name":"value",...}} for custom or multiple static headers (e.g. Cloudflare Access service tokens: {"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}).
+                      Static credential for the upstream MCP server. For auth_type "bearer", either a raw token string (e.g. "sk-abc123"), which is wrapped server-side as `Authorization: Bearer <token>`, or a JSON-encoded object of the form `{"headers":{"Header-Name":"value",...}}` for custom or multiple static headers (e.g. Cloudflare Access service tokens: `{"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}`).
                     properties:
                       key:
                         type: string
@@ -180,7 +210,9 @@ spec:
                     type: object
                   authType:
                     description: |-
-                      (String) Available values: "oauth", "bearer", "unauthenticated".
+                      (String) Authentication method used to connect to the upstream MCP server.
+                      Available values: "oauth", "bearer", "unauthenticated".
+                      Authentication method used to connect to the upstream MCP server.
                       Available values: "oauth", "bearer", "unauthenticated".
                     type: string
                   clientSecretSecretRef:
@@ -198,57 +230,81 @@ spec:
                     - name
                     type: object
                   description:
-                    description: (String)
+                    description: |-
+                      (String) Optional description of the MCP server.
+                      Optional description of the MCP server.
                     type: string
                   hostname:
-                    description: (String)
+                    description: |-
+                      (String) URL of the upstream MCP endpoint.
+                      URL of the upstream MCP endpoint.
                     type: string
                   isSharedOauthCallbackEnabled:
                     description: |-
-                      owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
-                      When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+                      owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
+                      When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
                     type: boolean
                   name:
-                    description: (String)
+                    description: |-
+                      (String) Display name for the MCP server.
+                      Display name for the MCP server.
                     type: string
                   secureWebGateway:
                     description: |-
-                      (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
-                      Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
+                      (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
+                      Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
                     type: boolean
                   updatedPrompts:
-                    description: (Attributes List) (see below for nested schema)
+                    description: wide prompt capability overrides. (see below for
+                      nested schema)
                     items:
                       properties:
                         alias:
-                          description: (String)
+                          description: |-
+                            (String) Custom name exposed for the capability.
+                            Custom name exposed for the capability.
                           type: string
                         description:
-                          description: (String)
+                          description: |-
+                            (String) Optional description of the MCP server.
+                            Custom description exposed for the capability.
                           type: string
                         enabled:
-                          description: (Boolean)
+                          description: |-
+                            (Boolean) Whether the capability is available through the MCP server.
+                            Whether the capability is available through the MCP server.
                           type: boolean
                         name:
-                          description: (String)
+                          description: |-
+                            (String) Display name for the MCP server.
+                            Name of the tool or prompt capability to override.
                           type: string
                       type: object
                     type: array
                   updatedTools:
-                    description: (Attributes List) (see below for nested schema)
+                    description: wide tool capability overrides. (see below for nested
+                      schema)
                     items:
                       properties:
                         alias:
-                          description: (String)
+                          description: |-
+                            (String) Custom name exposed for the capability.
+                            Custom name exposed for the capability.
                           type: string
                         description:
-                          description: (String)
+                          description: |-
+                            (String) Optional description of the MCP server.
+                            Custom description exposed for the capability.
                           type: string
                         enabled:
-                          description: (Boolean)
+                          description: |-
+                            (Boolean) Whether the capability is available through the MCP server.
+                            Whether the capability is available through the MCP server.
                           type: boolean
                         name:
-                          description: (String)
+                          description: |-
+                            (String) Display name for the MCP server.
+                            Name of the tool or prompt capability to override.
                           type: string
                       type: object
                     type: array
@@ -395,8 +451,17 @@ spec:
                     type: object
                   authType:
                     description: |-
-                      (String) Available values: "oauth", "bearer", "unauthenticated".
+                      (String) Authentication method used to connect to the upstream MCP server.
                       Available values: "oauth", "bearer", "unauthenticated".
+                      Authentication method used to connect to the upstream MCP server.
+                      Available values: "oauth", "bearer", "unauthenticated".
+                    type: string
+                  authenticationStatus:
+                    description: |-
+                      managed and has no administrative authentication flow.
+                      Available values: "not_required", "required", "connected", "stale", "manual".
+                      Whether administrative authentication is required before capabilities can be synced. Manual OAuth is user-managed and has no administrative authentication flow.
+                      Available values: "not_required", "required", "connected", "stale", "manual".
                     type: string
                   createdAt:
                     description: (String)
@@ -405,7 +470,9 @@ spec:
                     description: (String)
                     type: string
                   description:
-                    description: (String)
+                    description: |-
+                      (String) Optional description of the MCP server.
+                      Optional description of the MCP server.
                     type: string
                   error:
                     description: (String)
@@ -440,15 +507,17 @@ spec:
                         type: number
                     type: object
                   hostname:
-                    description: (String)
+                    description: |-
+                      (String) URL of the upstream MCP endpoint.
+                      URL of the upstream MCP endpoint.
                     type: string
                   id:
-                    description: (String) server id
+                    description: (String) Unique identifier for the MCP server.
                     type: string
                   isSharedOauthCallbackEnabled:
                     description: |-
-                      owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
-                      When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true. Effective behavior is gated by the gateway worker's per-env rollout mode KV key.
+                      owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
+                      When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
                     type: boolean
                   lastSuccessfulSync:
                     description: (String)
@@ -463,7 +532,9 @@ spec:
                     description: (String)
                     type: string
                   name:
-                    description: (String)
+                    description: |-
+                      (String) Display name for the MCP server.
+                      Display name for the MCP server.
                     type: string
                   prompts:
                     description: (List of Map of String)
@@ -474,8 +545,8 @@ spec:
                     type: array
                   secureWebGateway:
                     description: |-
-                      (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
-                      Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway
+                      (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
+                      Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
                     type: boolean
                   status:
                     description: (String)
@@ -488,38 +559,56 @@ spec:
                       type: object
                     type: array
                   updatedPrompts:
-                    description: (Attributes List) (see below for nested schema)
+                    description: wide prompt capability overrides. (see below for
+                      nested schema)
                     items:
                       properties:
                         alias:
-                          description: (String)
+                          description: |-
+                            (String) Custom name exposed for the capability.
+                            Custom name exposed for the capability.
                           type: string
                         description:
-                          description: (String)
+                          description: |-
+                            (String) Optional description of the MCP server.
+                            Custom description exposed for the capability.
                           type: string
                         enabled:
-                          description: (Boolean)
+                          description: |-
+                            (Boolean) Whether the capability is available through the MCP server.
+                            Whether the capability is available through the MCP server.
                           type: boolean
                         name:
-                          description: (String)
+                          description: |-
+                            (String) Display name for the MCP server.
+                            Name of the tool or prompt capability to override.
                           type: string
                       type: object
                     type: array
                   updatedTools:
-                    description: (Attributes List) (see below for nested schema)
+                    description: wide tool capability overrides. (see below for nested
+                      schema)
                     items:
                       properties:
                         alias:
-                          description: (String)
+                          description: |-
+                            (String) Custom name exposed for the capability.
+                            Custom name exposed for the capability.
                           type: string
                         description:
-                          description: (String)
+                          description: |-
+                            (String) Optional description of the MCP server.
+                            Custom description exposed for the capability.
                           type: string
                         enabled:
-                          description: (Boolean)
+                          description: |-
+                            (Boolean) Whether the capability is available through the MCP server.
+                            Whether the capability is available through the MCP server.
                           type: boolean
                         name:
-                          description: (String)
+                          description: |-
+                            (String) Display name for the MCP server.
+                            Name of the tool or prompt capability to override.
                           type: string
                       type: object
                     type: array

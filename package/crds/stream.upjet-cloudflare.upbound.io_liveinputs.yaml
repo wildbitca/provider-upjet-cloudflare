@@ -369,6 +369,22 @@ spec:
                       (String) The date and time the live input was last modified.
                       The date and time the live input was last modified.
                     type: string
+                  playback:
+                    description: (Attributes) Details for playing a live input's broadcast
+                      using the HLS or DASH manifests. URLs reference the live input
+                      ID. (see below for nested schema)
+                    properties:
+                      dash:
+                        description: |-
+                          (String) The DASH manifest URL used to play live video, referencing the live input ID.
+                          The DASH manifest URL used to play live video, referencing the live input ID.
+                        type: string
+                      hls:
+                        description: |-
+                          (String) The HLS manifest URL used to play live video, referencing the live input ID.
+                          The HLS manifest URL used to play live video, referencing the live input ID.
+                        type: string
+                    type: object
                   preferLowLatency:
                     description: |-
                       Latency HLS (LL-HLS), reducing glass-to-glass latency for viewers at the cost of reduced player compatibility.

@@ -35,10 +35,6 @@ type ConnectionsObservation struct {
 	// UUID of the Cloudflare Tunnel connection.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Boolean) Cloudflare continues to track connections for several minutes after they disconnect. This is an optimization to improve latency and reliability of reconnecting.  If true, the connection has disconnected but is still being tracked. If false, the connection is actively serving traffic.
-	// Cloudflare continues to track connections for several minutes after they disconnect. This is an optimization to improve latency and reliability of reconnecting.  If `true`, the connection has disconnected but is still being tracked. If `false`, the connection is actively serving traffic.
-	IsPendingReconnect *bool `json:"isPendingReconnect,omitempty" tf:"is_pending_reconnect,omitempty"`
-
 	// (String) Timestamp of when the connection was established.
 	// Timestamp of when the connection was established.
 	OpenedAt *string `json:"openedAt,omitempty" tf:"opened_at,omitempty"`

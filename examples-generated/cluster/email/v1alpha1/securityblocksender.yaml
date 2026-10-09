@@ -9,7 +9,7 @@ metadata:
 spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
-    comments: block sender with email test@example.com
+    comments: Block sender with email test@example.com
     isRegex: false
     pattern: test@example.com
     patternType: EMAIL

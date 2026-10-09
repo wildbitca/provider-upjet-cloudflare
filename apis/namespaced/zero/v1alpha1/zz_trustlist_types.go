@@ -51,7 +51,8 @@ type ItemsParameters struct {
 
 type TrustListInitParameters struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Provide the list description.
@@ -74,7 +75,8 @@ type TrustListInitParameters struct {
 
 type TrustListObservation struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String)
@@ -110,7 +112,8 @@ type TrustListObservation struct {
 
 type TrustListParameters struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 

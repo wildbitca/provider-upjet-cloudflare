@@ -15,62 +15,68 @@ import (
 
 type ServersInitParameters struct {
 
-	// (Boolean)
+	// (Boolean) Disable this server by default for clients connecting through the portal.
+	// Disable this server by default for clients connecting through the portal.
 	DefaultDisabled *bool `json:"defaultDisabled,omitempty" tf:"default_disabled,omitempty"`
 
-	// (Boolean)
+	// user OAuth credentials when connecting this server to the portal.
+	// Use end-user OAuth credentials when connecting this server to the portal.
 	OnBehalf *bool `json:"onBehalf,omitempty" tf:"on_behalf,omitempty"`
 
-	// (String) server id
-	// server id
+	// (String) Unique identifier for the MCP server.
+	// Unique identifier for the MCP server.
 	ServerID *string `json:"serverId,omitempty" tf:"server_id,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// specific prompt overrides. (see below for nested schema)
 	UpdatedPrompts []UpdatedPromptsInitParameters `json:"updatedPrompts,omitempty" tf:"updated_prompts,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// specific tool overrides. (see below for nested schema)
 	UpdatedTools []UpdatedToolsInitParameters `json:"updatedTools,omitempty" tf:"updated_tools,omitempty"`
 }
 
 type ServersObservation struct {
 
-	// (Boolean)
+	// (Boolean) Disable this server by default for clients connecting through the portal.
+	// Disable this server by default for clients connecting through the portal.
 	DefaultDisabled *bool `json:"defaultDisabled,omitempty" tf:"default_disabled,omitempty"`
 
-	// (Boolean)
+	// user OAuth credentials when connecting this server to the portal.
+	// Use end-user OAuth credentials when connecting this server to the portal.
 	OnBehalf *bool `json:"onBehalf,omitempty" tf:"on_behalf,omitempty"`
 
-	// (String) server id
-	// server id
+	// (String) Unique identifier for the MCP server.
+	// Unique identifier for the MCP server.
 	ServerID *string `json:"serverId,omitempty" tf:"server_id,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// specific prompt overrides. (see below for nested schema)
 	UpdatedPrompts []UpdatedPromptsObservation `json:"updatedPrompts,omitempty" tf:"updated_prompts,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// specific tool overrides. (see below for nested schema)
 	UpdatedTools []UpdatedToolsObservation `json:"updatedTools,omitempty" tf:"updated_tools,omitempty"`
 }
 
 type ServersParameters struct {
 
-	// (Boolean)
+	// (Boolean) Disable this server by default for clients connecting through the portal.
+	// Disable this server by default for clients connecting through the portal.
 	// +kubebuilder:validation:Optional
 	DefaultDisabled *bool `json:"defaultDisabled,omitempty" tf:"default_disabled,omitempty"`
 
-	// (Boolean)
+	// user OAuth credentials when connecting this server to the portal.
+	// Use end-user OAuth credentials when connecting this server to the portal.
 	// +kubebuilder:validation:Optional
 	OnBehalf *bool `json:"onBehalf,omitempty" tf:"on_behalf,omitempty"`
 
-	// (String) server id
-	// server id
+	// (String) Unique identifier for the MCP server.
+	// Unique identifier for the MCP server.
 	// +kubebuilder:validation:Optional
 	ServerID *string `json:"serverId" tf:"server_id,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// specific prompt overrides. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	UpdatedPrompts []UpdatedPromptsParameters `json:"updatedPrompts,omitempty" tf:"updated_prompts,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// specific tool overrides. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	UpdatedTools []UpdatedToolsParameters `json:"updatedTools,omitempty" tf:"updated_tools,omitempty"`
 }
@@ -80,24 +86,33 @@ type TrustAccessAIControlsMcpPortalInitParameters struct {
 	// (String)
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (Boolean) Allow remote code execution in Dynamic Workers (beta)
-	// Allow remote code execution in Dynamic Workers (beta)
+	// off Code Mode policy; false maps to code_mode: off. If both fields are sent, they must be consistent or the request returns a 400.
+	// Deprecated: use `code_mode` for new integrations. `true` maps to any non-off Code Mode policy; `false` maps to `code_mode: off`. If both fields are sent, they must be consistent or the request returns a 400.
 	AllowCodeMode *bool `json:"allowCodeMode,omitempty" tf:"allow_code_mode,omitempty"`
 
-	// (String)
+	// (String) Code Mode policy for this portal. off: Code Mode is unavailable; query parameters are ignored. opt_in: Code Mode is off by default; clients turn it on with ?codemode=search_and_execute. default_on: Code Mode is on by default; clients can opt out with ?codemode=off. enforced: Code Mode is always on; query parameters are ignored. Defaults to opt_in when omitted on create. If both code_mode and allow_code_mode are sent, they must be consistent or the request returns a 400.
+	// Available values: "off", "opt_in", "default_on", "enforced".
+	// Code Mode policy for this portal. `off`: Code Mode is unavailable; query parameters are ignored. `opt_in`: Code Mode is off by default; clients turn it on with `?codemode=search_and_execute`. `default_on`: Code Mode is on by default; clients can opt out with `?codemode=off`. `enforced`: Code Mode is always on; query parameters are ignored. Defaults to `opt_in` when omitted on create. If both `code_mode` and `allow_code_mode` are sent, they must be consistent or the request returns a 400.
+	// Available values: "off", "opt_in", "default_on", "enforced".
+	CodeMode *string `json:"codeMode,omitempty" tf:"code_mode,omitempty"`
+
+	// (String) Optional description of the MCP portal.
+	// Optional description of the MCP portal.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String)
+	// (String) Hostname where the MCP portal is available.
+	// Hostname where the MCP portal is available.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP portal.
+	// Display name for the MCP portal.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway
-	// Route outbound MCP traffic through Zero Trust Secure Web Gateway
+	// (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway.
+	// Route outbound MCP traffic through Zero Trust Secure Web Gateway.
 	SecureWebGateway *bool `json:"secureWebGateway,omitempty" tf:"secure_web_gateway,omitempty"`
 
-	// (Attributes Set) (see below for nested schema)
+	// specific settings. (see below for nested schema)
 	Servers []ServersInitParameters `json:"servers,omitempty" tf:"servers,omitempty"`
 }
 
@@ -106,9 +121,15 @@ type TrustAccessAIControlsMcpPortalObservation struct {
 	// (String)
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (Boolean) Allow remote code execution in Dynamic Workers (beta)
-	// Allow remote code execution in Dynamic Workers (beta)
+	// off Code Mode policy; false maps to code_mode: off. If both fields are sent, they must be consistent or the request returns a 400.
+	// Deprecated: use `code_mode` for new integrations. `true` maps to any non-off Code Mode policy; `false` maps to `code_mode: off`. If both fields are sent, they must be consistent or the request returns a 400.
 	AllowCodeMode *bool `json:"allowCodeMode,omitempty" tf:"allow_code_mode,omitempty"`
+
+	// (String) Code Mode policy for this portal. off: Code Mode is unavailable; query parameters are ignored. opt_in: Code Mode is off by default; clients turn it on with ?codemode=search_and_execute. default_on: Code Mode is on by default; clients can opt out with ?codemode=off. enforced: Code Mode is always on; query parameters are ignored. Defaults to opt_in when omitted on create. If both code_mode and allow_code_mode are sent, they must be consistent or the request returns a 400.
+	// Available values: "off", "opt_in", "default_on", "enforced".
+	// Code Mode policy for this portal. `off`: Code Mode is unavailable; query parameters are ignored. `opt_in`: Code Mode is off by default; clients turn it on with `?codemode=search_and_execute`. `default_on`: Code Mode is on by default; clients can opt out with `?codemode=off`. `enforced`: Code Mode is always on; query parameters are ignored. Defaults to `opt_in` when omitted on create. If both `code_mode` and `allow_code_mode` are sent, they must be consistent or the request returns a 400.
+	// Available values: "off", "opt_in", "default_on", "enforced".
+	CodeMode *string `json:"codeMode,omitempty" tf:"code_mode,omitempty"`
 
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
@@ -116,13 +137,15 @@ type TrustAccessAIControlsMcpPortalObservation struct {
 	// (String)
 	CreatedBy *string `json:"createdBy,omitempty" tf:"created_by,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP portal.
+	// Optional description of the MCP portal.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String)
+	// (String) Hostname where the MCP portal is available.
+	// Hostname where the MCP portal is available.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (String) portal id
+	// (String) Unique identifier for the MCP portal.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String)
@@ -131,14 +154,15 @@ type TrustAccessAIControlsMcpPortalObservation struct {
 	// (String)
 	ModifiedBy *string `json:"modifiedBy,omitempty" tf:"modified_by,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP portal.
+	// Display name for the MCP portal.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway
-	// Route outbound MCP traffic through Zero Trust Secure Web Gateway
+	// (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway.
+	// Route outbound MCP traffic through Zero Trust Secure Web Gateway.
 	SecureWebGateway *bool `json:"secureWebGateway,omitempty" tf:"secure_web_gateway,omitempty"`
 
-	// (Attributes Set) (see below for nested schema)
+	// specific settings. (see below for nested schema)
 	Servers []ServersObservation `json:"servers,omitempty" tf:"servers,omitempty"`
 }
 
@@ -148,127 +172,161 @@ type TrustAccessAIControlsMcpPortalParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (Boolean) Allow remote code execution in Dynamic Workers (beta)
-	// Allow remote code execution in Dynamic Workers (beta)
+	// off Code Mode policy; false maps to code_mode: off. If both fields are sent, they must be consistent or the request returns a 400.
+	// Deprecated: use `code_mode` for new integrations. `true` maps to any non-off Code Mode policy; `false` maps to `code_mode: off`. If both fields are sent, they must be consistent or the request returns a 400.
 	// +kubebuilder:validation:Optional
 	AllowCodeMode *bool `json:"allowCodeMode,omitempty" tf:"allow_code_mode,omitempty"`
 
-	// (String)
+	// (String) Code Mode policy for this portal. off: Code Mode is unavailable; query parameters are ignored. opt_in: Code Mode is off by default; clients turn it on with ?codemode=search_and_execute. default_on: Code Mode is on by default; clients can opt out with ?codemode=off. enforced: Code Mode is always on; query parameters are ignored. Defaults to opt_in when omitted on create. If both code_mode and allow_code_mode are sent, they must be consistent or the request returns a 400.
+	// Available values: "off", "opt_in", "default_on", "enforced".
+	// Code Mode policy for this portal. `off`: Code Mode is unavailable; query parameters are ignored. `opt_in`: Code Mode is off by default; clients turn it on with `?codemode=search_and_execute`. `default_on`: Code Mode is on by default; clients can opt out with `?codemode=off`. `enforced`: Code Mode is always on; query parameters are ignored. Defaults to `opt_in` when omitted on create. If both `code_mode` and `allow_code_mode` are sent, they must be consistent or the request returns a 400.
+	// Available values: "off", "opt_in", "default_on", "enforced".
+	// +kubebuilder:validation:Optional
+	CodeMode *string `json:"codeMode,omitempty" tf:"code_mode,omitempty"`
+
+	// (String) Optional description of the MCP portal.
+	// Optional description of the MCP portal.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String)
+	// (String) Hostname where the MCP portal is available.
+	// Hostname where the MCP portal is available.
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP portal.
+	// Display name for the MCP portal.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway
-	// Route outbound MCP traffic through Zero Trust Secure Web Gateway
+	// (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway.
+	// Route outbound MCP traffic through Zero Trust Secure Web Gateway.
 	// +kubebuilder:validation:Optional
 	SecureWebGateway *bool `json:"secureWebGateway,omitempty" tf:"secure_web_gateway,omitempty"`
 
-	// (Attributes Set) (see below for nested schema)
+	// specific settings. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Servers []ServersParameters `json:"servers,omitempty" tf:"servers,omitempty"`
 }
 
 type UpdatedPromptsInitParameters struct {
 
-	// (String)
+	// (String) Custom name exposed for the capability.
+	// Custom name exposed for the capability.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP portal.
+	// Custom description exposed for the capability.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether the capability is available through the MCP server.
+	// Whether the capability is available through the MCP server.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP portal.
+	// Name of the tool or prompt capability to override.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type UpdatedPromptsObservation struct {
 
-	// (String)
+	// (String) Custom name exposed for the capability.
+	// Custom name exposed for the capability.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP portal.
+	// Custom description exposed for the capability.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether the capability is available through the MCP server.
+	// Whether the capability is available through the MCP server.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP portal.
+	// Name of the tool or prompt capability to override.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type UpdatedPromptsParameters struct {
 
-	// (String)
+	// (String) Custom name exposed for the capability.
+	// Custom name exposed for the capability.
 	// +kubebuilder:validation:Optional
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP portal.
+	// Custom description exposed for the capability.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether the capability is available through the MCP server.
+	// Whether the capability is available through the MCP server.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP portal.
+	// Name of the tool or prompt capability to override.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 }
 
 type UpdatedToolsInitParameters struct {
 
-	// (String)
+	// (String) Custom name exposed for the capability.
+	// Custom name exposed for the capability.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP portal.
+	// Custom description exposed for the capability.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether the capability is available through the MCP server.
+	// Whether the capability is available through the MCP server.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP portal.
+	// Name of the tool or prompt capability to override.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type UpdatedToolsObservation struct {
 
-	// (String)
+	// (String) Custom name exposed for the capability.
+	// Custom name exposed for the capability.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP portal.
+	// Custom description exposed for the capability.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether the capability is available through the MCP server.
+	// Whether the capability is available through the MCP server.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP portal.
+	// Name of the tool or prompt capability to override.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type UpdatedToolsParameters struct {
 
-	// (String)
+	// (String) Custom name exposed for the capability.
+	// Custom name exposed for the capability.
 	// +kubebuilder:validation:Optional
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (String)
+	// (String) Optional description of the MCP portal.
+	// Custom description exposed for the capability.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether the capability is available through the MCP server.
+	// Whether the capability is available through the MCP server.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String)
+	// (String) Display name for the MCP portal.
+	// Name of the tool or prompt capability to override.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 }

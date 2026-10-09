@@ -9,7 +9,7 @@ metadata:
 spec:
   forProvider:
     rules:
-    - cloud_connector_rules_provider: aws_s3
+    - cloudConnectorRulesProvider: aws_s3
       description: Rule description
       enabled: true
       expression: http.cookie eq "a=b"

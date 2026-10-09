@@ -208,6 +208,60 @@ type MfaSSHPivKeyRequirementsParameters struct {
 	TouchPolicy *string `json:"touchPolicy,omitempty" tf:"touch_policy,omitempty"`
 }
 
+type ServiceTokenInactivityInitParameters struct {
+
+	// (String) The action applied to an inactive service token.
+	// Available values: "disable", "delete".
+	// The action applied to an inactive service token.
+	// Available values: "disable", "delete".
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	// (Boolean) Whether automatic enforcement for inactive service tokens is enabled.
+	// Whether automatic enforcement for inactive service tokens is enabled.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The number of days a service token must be inactive before the configured action is applied.
+	// The number of days a service token must be inactive before the configured action is applied.
+	InactivityThresholdDays *float64 `json:"inactivityThresholdDays,omitempty" tf:"inactivity_threshold_days,omitempty"`
+}
+
+type ServiceTokenInactivityObservation struct {
+
+	// (String) The action applied to an inactive service token.
+	// Available values: "disable", "delete".
+	// The action applied to an inactive service token.
+	// Available values: "disable", "delete".
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	// (Boolean) Whether automatic enforcement for inactive service tokens is enabled.
+	// Whether automatic enforcement for inactive service tokens is enabled.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The number of days a service token must be inactive before the configured action is applied.
+	// The number of days a service token must be inactive before the configured action is applied.
+	InactivityThresholdDays *float64 `json:"inactivityThresholdDays,omitempty" tf:"inactivity_threshold_days,omitempty"`
+}
+
+type ServiceTokenInactivityParameters struct {
+
+	// (String) The action applied to an inactive service token.
+	// Available values: "disable", "delete".
+	// The action applied to an inactive service token.
+	// Available values: "disable", "delete".
+	// +kubebuilder:validation:Optional
+	Action *string `json:"action" tf:"action,omitempty"`
+
+	// (Boolean) Whether automatic enforcement for inactive service tokens is enabled.
+	// Whether automatic enforcement for inactive service tokens is enabled.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
+
+	// (Number) The number of days a service token must be inactive before the configured action is applied.
+	// The number of days a service token must be inactive before the configured action is applied.
+	// +kubebuilder:validation:Optional
+	InactivityThresholdDays *float64 `json:"inactivityThresholdDays" tf:"inactivity_threshold_days,omitempty"`
+}
+
 type TrustOrganizationInitParameters struct {
 
 	// (Boolean) When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
@@ -247,8 +301,8 @@ type TrustOrganizationInitParameters struct {
 	// Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
 	MfaConfigurationAllowed *bool `json:"mfaConfigurationAllowed,omitempty" tf:"mfa_configuration_allowed,omitempty"`
 
-	// infrastructure applications because PIV keys are only compatible with infrastructure apps.
-	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot only contain 'ssh_piv_key' if the organization has any non-infrastructure applications because PIV keys are only compatible with infrastructure apps.
+	// infrastructure applications.
+	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot contain only the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the organization has any non-infrastructure applications.
 	MfaRequiredForAllApps *bool `json:"mfaRequiredForAllApps,omitempty" tf:"mfa_required_for_all_apps,omitempty"`
 
 	// (Attributes) Configures SSH PIV key requirements for MFA using hardware security keys. (see below for nested schema)
@@ -258,9 +312,16 @@ type TrustOrganizationInitParameters struct {
 	// The name of your Zero Trust organization.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Attributes) Configures automatic enforcement for inactive service tokens. A service token is inactive if no policy references it, and it has not successfully authenticated with an Access application during the selected inactivity period. This setting applies to every service token in your Zero Trust account. (see below for nested schema)
+	ServiceTokenInactivity *ServiceTokenInactivityInitParameters `json:"serviceTokenInactivity,omitempty" tf:"service_token_inactivity,omitempty"`
+
 	// (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
 	// The amount of time that tokens issued for applications will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h.
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+
+	// (Boolean) Enables new behaviors for requests made with Access service tokens. Unauthorized requests emit audit logs, and return a 401 or 403 status code in the response instead of redirecting to the login page. Successful requests no longer receive a CF_Authorization cookie in the response. Zero Trust organizations created on or after October 5, 2026 will have this setting enabled by default, and cannot disable it.
+	// Enables new behaviors for requests made with Access service tokens. Unauthorized requests emit audit logs, and return a 401 or 403 status code in the response instead of redirecting to the login page. Successful requests no longer receive a CF_Authorization cookie in the response. Zero Trust organizations created on or after October 5, 2026 will have this setting enabled by default, and cannot disable it.
+	StrictServiceTokenAuth *bool `json:"strictServiceTokenAuth,omitempty" tf:"strict_service_token_auth,omitempty"`
 
 	// (String) A description of the reason why the UI read only field is being toggled.
 	// A description of the reason why the UI read only field is being toggled.
@@ -269,6 +330,10 @@ type TrustOrganizationInitParameters struct {
 	// (String) The amount of time a user seat is inactive before it expires. When the user seat exceeds the set time of inactivity, the user is removed as an active seat and no longer counts against your Teams seat count.  Minimum value for this setting is 1 month (730h). Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
 	// The amount of time a user seat is inactive before it expires. When the user seat exceeds the set time of inactivity, the user is removed as an active seat and no longer counts against your Teams seat count.  Minimum value for this setting is 1 month (730h). Must be in the format `300ms` or `2h45m`. Valid time units are: `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`.
 	UserSeatExpirationInactiveTime *string `json:"userSeatExpirationInactiveTime,omitempty" tf:"user_seat_expiration_inactive_time,omitempty"`
+
+	// HTML Accept header return a 401 response instead of redirecting to the login page.
+	// When enabled, unsuccessful WARP authentication requests with a non-HTML Accept header return a 401 response instead of redirecting to the login page.
+	WarpAuthNonBrowser401 *bool `json:"warpAuthNonBrowser401,omitempty" tf:"warp_auth_non_browser_401,omitempty"`
 
 	// (String) The amount of time that tokens issued for applications will be valid. Must be in the format 30m or 2h45m. Valid time units are: m, h.
 	// The amount of time that tokens issued for applications will be valid. Must be in the format `30m` or `2h45m`. Valid time units are: m, h.
@@ -281,8 +346,8 @@ type TrustOrganizationInitParameters struct {
 
 type TrustOrganizationMfaConfigInitParameters struct {
 
-	// (List of String) Lists the MFA methods that users can authenticate with. ssh_piv_key is only relevant for infrastructure applications.
-	// Lists the MFA methods that users can authenticate with. `ssh_piv_key` is only relevant for infrastructure applications.
+	// (List of String) Lists the MFA methods that users can authenticate with. The piv_key and ssh_fido2_key values are supported only for infrastructure applications.
+	// Lists the MFA methods that users can authenticate with. The `piv_key` and `ssh_fido2_key` values are supported only for infrastructure applications.
 	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
 
 	// (String) Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
@@ -300,8 +365,8 @@ type TrustOrganizationMfaConfigInitParameters struct {
 
 type TrustOrganizationMfaConfigObservation struct {
 
-	// (List of String) Lists the MFA methods that users can authenticate with. ssh_piv_key is only relevant for infrastructure applications.
-	// Lists the MFA methods that users can authenticate with. `ssh_piv_key` is only relevant for infrastructure applications.
+	// (List of String) Lists the MFA methods that users can authenticate with. The piv_key and ssh_fido2_key values are supported only for infrastructure applications.
+	// Lists the MFA methods that users can authenticate with. The `piv_key` and `ssh_fido2_key` values are supported only for infrastructure applications.
 	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
 
 	// (String) Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).
@@ -319,8 +384,8 @@ type TrustOrganizationMfaConfigObservation struct {
 
 type TrustOrganizationMfaConfigParameters struct {
 
-	// (List of String) Lists the MFA methods that users can authenticate with. ssh_piv_key is only relevant for infrastructure applications.
-	// Lists the MFA methods that users can authenticate with. `ssh_piv_key` is only relevant for infrastructure applications.
+	// (List of String) Lists the MFA methods that users can authenticate with. The piv_key and ssh_fido2_key values are supported only for infrastructure applications.
+	// Lists the MFA methods that users can authenticate with. The `piv_key` and `ssh_fido2_key` values are supported only for infrastructure applications.
 	// +kubebuilder:validation:Optional
 	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
 
@@ -381,8 +446,8 @@ type TrustOrganizationObservation struct {
 	// Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
 	MfaConfigurationAllowed *bool `json:"mfaConfigurationAllowed,omitempty" tf:"mfa_configuration_allowed,omitempty"`
 
-	// infrastructure applications because PIV keys are only compatible with infrastructure apps.
-	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot only contain 'ssh_piv_key' if the organization has any non-infrastructure applications because PIV keys are only compatible with infrastructure apps.
+	// infrastructure applications.
+	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot contain only the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the organization has any non-infrastructure applications.
 	MfaRequiredForAllApps *bool `json:"mfaRequiredForAllApps,omitempty" tf:"mfa_required_for_all_apps,omitempty"`
 
 	// (Attributes) Configures SSH PIV key requirements for MFA using hardware security keys. (see below for nested schema)
@@ -392,9 +457,20 @@ type TrustOrganizationObservation struct {
 	// The name of your Zero Trust organization.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Attributes) Configures automatic enforcement for inactive service tokens. A service token is inactive if no policy references it, and it has not successfully authenticated with an Access application during the selected inactivity period. This setting applies to every service token in your Zero Trust account. (see below for nested schema)
+	ServiceTokenInactivity *ServiceTokenInactivityObservation `json:"serviceTokenInactivity,omitempty" tf:"service_token_inactivity,omitempty"`
+
 	// (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
 	// The amount of time that tokens issued for applications will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h.
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+
+	// (Boolean) Enables new behaviors for requests made with Access service tokens. Unauthorized requests emit audit logs, and return a 401 or 403 status code in the response instead of redirecting to the login page. Successful requests no longer receive a CF_Authorization cookie in the response. Zero Trust organizations created on or after October 5, 2026 will have this setting enabled by default, and cannot disable it.
+	// Enables new behaviors for requests made with Access service tokens. Unauthorized requests emit audit logs, and return a 401 or 403 status code in the response instead of redirecting to the login page. Successful requests no longer receive a CF_Authorization cookie in the response. Zero Trust organizations created on or after October 5, 2026 will have this setting enabled by default, and cannot disable it.
+	StrictServiceTokenAuth *bool `json:"strictServiceTokenAuth,omitempty" tf:"strict_service_token_auth,omitempty"`
+
+	// (List of String) The account tags of organizations trusted by this organization for policy and device posture sharing.
+	// The account tags of organizations trusted by this organization for policy and device posture sharing.
+	TrustedAccounts []*string `json:"trustedAccounts,omitempty" tf:"trusted_accounts,omitempty"`
 
 	// (String) A description of the reason why the UI read only field is being toggled.
 	// A description of the reason why the UI read only field is being toggled.
@@ -403,6 +479,10 @@ type TrustOrganizationObservation struct {
 	// (String) The amount of time a user seat is inactive before it expires. When the user seat exceeds the set time of inactivity, the user is removed as an active seat and no longer counts against your Teams seat count.  Minimum value for this setting is 1 month (730h). Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
 	// The amount of time a user seat is inactive before it expires. When the user seat exceeds the set time of inactivity, the user is removed as an active seat and no longer counts against your Teams seat count.  Minimum value for this setting is 1 month (730h). Must be in the format `300ms` or `2h45m`. Valid time units are: `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`.
 	UserSeatExpirationInactiveTime *string `json:"userSeatExpirationInactiveTime,omitempty" tf:"user_seat_expiration_inactive_time,omitempty"`
+
+	// HTML Accept header return a 401 response instead of redirecting to the login page.
+	// When enabled, unsuccessful WARP authentication requests with a non-HTML Accept header return a 401 response instead of redirecting to the login page.
+	WarpAuthNonBrowser401 *bool `json:"warpAuthNonBrowser401,omitempty" tf:"warp_auth_non_browser_401,omitempty"`
 
 	// (String) The amount of time that tokens issued for applications will be valid. Must be in the format 30m or 2h45m. Valid time units are: m, h.
 	// The amount of time that tokens issued for applications will be valid. Must be in the format `30m` or `2h45m`. Valid time units are: m, h.
@@ -462,8 +542,8 @@ type TrustOrganizationParameters struct {
 	// +kubebuilder:validation:Optional
 	MfaConfigurationAllowed *bool `json:"mfaConfigurationAllowed,omitempty" tf:"mfa_configuration_allowed,omitempty"`
 
-	// infrastructure applications because PIV keys are only compatible with infrastructure apps.
-	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot only contain 'ssh_piv_key' if the organization has any non-infrastructure applications because PIV keys are only compatible with infrastructure apps.
+	// infrastructure applications.
+	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot contain only the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the organization has any non-infrastructure applications.
 	// +kubebuilder:validation:Optional
 	MfaRequiredForAllApps *bool `json:"mfaRequiredForAllApps,omitempty" tf:"mfa_required_for_all_apps,omitempty"`
 
@@ -476,10 +556,19 @@ type TrustOrganizationParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Attributes) Configures automatic enforcement for inactive service tokens. A service token is inactive if no policy references it, and it has not successfully authenticated with an Access application during the selected inactivity period. This setting applies to every service token in your Zero Trust account. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	ServiceTokenInactivity *ServiceTokenInactivityParameters `json:"serviceTokenInactivity,omitempty" tf:"service_token_inactivity,omitempty"`
+
 	// (String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.
 	// The amount of time that tokens issued for applications will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h.
 	// +kubebuilder:validation:Optional
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
+
+	// (Boolean) Enables new behaviors for requests made with Access service tokens. Unauthorized requests emit audit logs, and return a 401 or 403 status code in the response instead of redirecting to the login page. Successful requests no longer receive a CF_Authorization cookie in the response. Zero Trust organizations created on or after October 5, 2026 will have this setting enabled by default, and cannot disable it.
+	// Enables new behaviors for requests made with Access service tokens. Unauthorized requests emit audit logs, and return a 401 or 403 status code in the response instead of redirecting to the login page. Successful requests no longer receive a CF_Authorization cookie in the response. Zero Trust organizations created on or after October 5, 2026 will have this setting enabled by default, and cannot disable it.
+	// +kubebuilder:validation:Optional
+	StrictServiceTokenAuth *bool `json:"strictServiceTokenAuth,omitempty" tf:"strict_service_token_auth,omitempty"`
 
 	// (String) A description of the reason why the UI read only field is being toggled.
 	// A description of the reason why the UI read only field is being toggled.
@@ -490,6 +579,11 @@ type TrustOrganizationParameters struct {
 	// The amount of time a user seat is inactive before it expires. When the user seat exceeds the set time of inactivity, the user is removed as an active seat and no longer counts against your Teams seat count.  Minimum value for this setting is 1 month (730h). Must be in the format `300ms` or `2h45m`. Valid time units are: `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`.
 	// +kubebuilder:validation:Optional
 	UserSeatExpirationInactiveTime *string `json:"userSeatExpirationInactiveTime,omitempty" tf:"user_seat_expiration_inactive_time,omitempty"`
+
+	// HTML Accept header return a 401 response instead of redirecting to the login page.
+	// When enabled, unsuccessful WARP authentication requests with a non-HTML Accept header return a 401 response instead of redirecting to the login page.
+	// +kubebuilder:validation:Optional
+	WarpAuthNonBrowser401 *bool `json:"warpAuthNonBrowser401,omitempty" tf:"warp_auth_non_browser_401,omitempty"`
 
 	// (String) The amount of time that tokens issued for applications will be valid. Must be in the format 30m or 2h45m. Valid time units are: m, h.
 	// The amount of time that tokens issued for applications will be valid. Must be in the format `30m` or `2h45m`. Valid time units are: m, h.

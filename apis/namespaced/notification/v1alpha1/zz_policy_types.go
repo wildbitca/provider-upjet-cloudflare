@@ -186,6 +186,10 @@ type FiltersInitParameters struct {
 	// Used for configuring advanced_ddos_attack_l7_alert
 	TargetZoneName []*string `json:"targetZoneName,omitempty" tf:"target_zone_name,omitempty"`
 
+	// (List of String) Access service token IDs to include for expiring_service_token_alert. Omit this property to include all current and future service tokens.
+	// Access service token IDs to include for expiring_service_token_alert. Omit this property to include all current and future service tokens.
+	TokenID []*string `json:"tokenId,omitempty" tf:"token_id,omitempty"`
+
 	// (List of String) Used for configuring traffic_anomalies_alert
 	// Used for configuring traffic_anomalies_alert
 	TrafficExclusions []*string `json:"trafficExclusions,omitempty" tf:"traffic_exclusions,omitempty"`
@@ -360,6 +364,10 @@ type FiltersObservation struct {
 	// (List of String) Used for configuring advanced_ddos_attack_l7_alert
 	// Used for configuring advanced_ddos_attack_l7_alert
 	TargetZoneName []*string `json:"targetZoneName,omitempty" tf:"target_zone_name,omitempty"`
+
+	// (List of String) Access service token IDs to include for expiring_service_token_alert. Omit this property to include all current and future service tokens.
+	// Access service token IDs to include for expiring_service_token_alert. Omit this property to include all current and future service tokens.
+	TokenID []*string `json:"tokenId,omitempty" tf:"token_id,omitempty"`
 
 	// (List of String) Used for configuring traffic_anomalies_alert
 	// Used for configuring traffic_anomalies_alert
@@ -572,6 +580,11 @@ type FiltersParameters struct {
 	// Used for configuring advanced_ddos_attack_l7_alert
 	// +kubebuilder:validation:Optional
 	TargetZoneName []*string `json:"targetZoneName,omitempty" tf:"target_zone_name,omitempty"`
+
+	// (List of String) Access service token IDs to include for expiring_service_token_alert. Omit this property to include all current and future service tokens.
+	// Access service token IDs to include for expiring_service_token_alert. Omit this property to include all current and future service tokens.
+	// +kubebuilder:validation:Optional
+	TokenID []*string `json:"tokenId,omitempty" tf:"token_id,omitempty"`
 
 	// (List of String) Used for configuring traffic_anomalies_alert
 	// Used for configuring traffic_anomalies_alert

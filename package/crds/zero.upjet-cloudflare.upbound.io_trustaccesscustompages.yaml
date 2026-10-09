@@ -79,6 +79,11 @@ spec:
                       (String) Identifier.
                       Identifier.
                     type: string
+                  contractVersion:
+                    description: |-
+                      (Number) Contract version of the page's Liquid template. Present (>= 1) marks a sanitized template; absent or 0 marks a legacy page served verbatim.
+                      Contract version of the page's Liquid template. Present (>= 1) marks a sanitized template; absent or 0 marks a legacy page served verbatim.
+                    type: number
                   customHtml:
                     description: |-
                       (String) Custom page HTML.
@@ -92,9 +97,9 @@ spec:
                   type:
                     description: |-
                       (String) Custom page type.
-                      Available values: "identity_denied", "forbidden".
+                      Available values: "identity_denied", "forbidden", "login", "interstitial".
                       Custom page type.
-                      Available values: "identity_denied", "forbidden".
+                      Available values: "identity_denied", "forbidden", "login", "interstitial".
                     type: string
                 type: object
               initProvider:
@@ -115,6 +120,11 @@ spec:
                       (String) Identifier.
                       Identifier.
                     type: string
+                  contractVersion:
+                    description: |-
+                      (Number) Contract version of the page's Liquid template. Present (>= 1) marks a sanitized template; absent or 0 marks a legacy page served verbatim.
+                      Contract version of the page's Liquid template. Present (>= 1) marks a sanitized template; absent or 0 marks a legacy page served verbatim.
+                    type: number
                   customHtml:
                     description: |-
                       (String) Custom page HTML.
@@ -128,9 +138,9 @@ spec:
                   type:
                     description: |-
                       (String) Custom page type.
-                      Available values: "identity_denied", "forbidden".
+                      Available values: "identity_denied", "forbidden", "login", "interstitial".
                       Custom page type.
-                      Available values: "identity_denied", "forbidden".
+                      Available values: "identity_denied", "forbidden", "login", "interstitial".
                     type: string
                 type: object
               managementPolicies:
@@ -247,6 +257,11 @@ spec:
                       (String) Identifier.
                       Identifier.
                     type: string
+                  contractVersion:
+                    description: |-
+                      (Number) Contract version of the page's Liquid template. Present (>= 1) marks a sanitized template; absent or 0 marks a legacy page served verbatim.
+                      Contract version of the page's Liquid template. Present (>= 1) marks a sanitized template; absent or 0 marks a legacy page served verbatim.
+                    type: number
                   customHtml:
                     description: |-
                       (String) Custom page HTML.
@@ -263,15 +278,38 @@ spec:
                   type:
                     description: |-
                       (String) Custom page type.
-                      Available values: "identity_denied", "forbidden".
+                      Available values: "identity_denied", "forbidden", "login", "interstitial".
                       Custom page type.
-                      Available values: "identity_denied", "forbidden".
+                      Available values: "identity_denied", "forbidden", "login", "interstitial".
                     type: string
                   uid:
                     description: |-
                       (String) UUID.
                       UUID.
                     type: string
+                  warnings:
+                    description: (Attributes List) Advisory validation findings returned
+                      when creating or updating a template. Omitted when empty. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        message:
+                          description: |-
+                            readable description of the finding.
+                            Human-readable description of the finding.
+                          type: string
+                        ref:
+                          description: |-
+                            (String) Optional pointer to the part of the template the finding refers to.
+                            Optional pointer to the part of the template the finding refers to.
+                          type: string
+                        tier:
+                          description: |-
+                            (String) The validation tier that produced the finding (e.g. html, liquid).
+                            The validation tier that produced the finding (e.g. html, liquid).
+                          type: string
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.

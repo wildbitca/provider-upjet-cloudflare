@@ -202,12 +202,12 @@ type CanonicalDeploymentObservation struct {
 	// Available values: "preview", "production".
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Id of the deployment.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Boolean) If the deployment has been skipped.
-	// If the deployment has been skipped.
+	// (Boolean) Whether the deployment was skipped.
+	// Whether the deployment was skipped.
 	IsSkipped *bool `json:"isSkipped,omitempty" tf:"is_skipped,omitempty"`
 
 	// (Attributes) The status of the deployment. (see below for nested schema)
@@ -221,8 +221,8 @@ type CanonicalDeploymentObservation struct {
 	// Id of the project.
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// (String) Name of the project.
-	// Name of the project.
+	// (String) Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+	// Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	ProjectName *string `json:"projectName,omitempty" tf:"project_name,omitempty"`
 
 	// (String) Short Id (8 character) of the deployment.
@@ -314,21 +314,21 @@ type ConfigParameters struct {
 
 type D1DatabasesInitParameters struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// UUID of the D1 database.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type D1DatabasesObservation struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// UUID of the D1 database.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type D1DatabasesParameters struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// UUID of the D1 database.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id" tf:"id,omitempty"`
@@ -442,19 +442,19 @@ type EnvVarsParameters struct {
 
 type HyperdriveBindingsInitParameters struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type HyperdriveBindingsObservation struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type HyperdriveBindingsParameters struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id" tf:"id,omitempty"`
 }
@@ -552,7 +552,7 @@ type LatestDeploymentLatestStageObservation struct {
 	// When the stage ended.
 	EndedOn *string `json:"endedOn,omitempty" tf:"ended_on,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// The current build stage.
 	// Available values: "queued", "initialize", "clone_repo", "build", "deploy".
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -562,9 +562,9 @@ type LatestDeploymentLatestStageObservation struct {
 	StartedOn *string `json:"startedOn,omitempty" tf:"started_on,omitempty"`
 
 	// (String) State of the current stage.
-	// Available values: "success", "idle", "active", "failure", "canceled".
+	// Available values: "success", "idle", "active", "failure", "canceled", "skipped".
 	// State of the current stage.
-	// Available values: "success", "idle", "active", "failure", "canceled".
+	// Available values: "success", "idle", "active", "failure", "canceled", "skipped".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
@@ -595,12 +595,12 @@ type LatestDeploymentObservation struct {
 	// Available values: "preview", "production".
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Id of the deployment.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Boolean) If the deployment has been skipped.
-	// If the deployment has been skipped.
+	// (Boolean) Whether the deployment was skipped.
+	// Whether the deployment was skipped.
 	IsSkipped *bool `json:"isSkipped,omitempty" tf:"is_skipped,omitempty"`
 
 	// (Attributes) The status of the deployment. (see below for nested schema)
@@ -614,8 +614,8 @@ type LatestDeploymentObservation struct {
 	// Id of the project.
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
 
-	// (String) Name of the project.
-	// Name of the project.
+	// (String) Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+	// Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	ProjectName *string `json:"projectName,omitempty" tf:"project_name,omitempty"`
 
 	// (String) Short Id (8 character) of the deployment.
@@ -666,7 +666,7 @@ type LatestDeploymentStagesObservation struct {
 	// When the stage ended.
 	EndedOn *string `json:"endedOn,omitempty" tf:"ended_on,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// The current build stage.
 	// Available values: "queued", "initialize", "clone_repo", "build", "deploy".
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -676,9 +676,9 @@ type LatestDeploymentStagesObservation struct {
 	StartedOn *string `json:"startedOn,omitempty" tf:"started_on,omitempty"`
 
 	// (String) State of the current stage.
-	// Available values: "success", "idle", "active", "failure", "canceled".
+	// Available values: "success", "idle", "active", "failure", "canceled", "skipped".
 	// State of the current stage.
-	// Available values: "success", "idle", "active", "failure", "canceled".
+	// Available values: "success", "idle", "active", "failure", "canceled", "skipped".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
@@ -694,7 +694,7 @@ type LatestStageObservation struct {
 	// When the stage ended.
 	EndedOn *string `json:"endedOn,omitempty" tf:"ended_on,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// The current build stage.
 	// Available values: "queued", "initialize", "clone_repo", "build", "deploy".
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -704,9 +704,9 @@ type LatestStageObservation struct {
 	StartedOn *string `json:"startedOn,omitempty" tf:"started_on,omitempty"`
 
 	// (String) State of the current stage.
-	// Available values: "success", "idle", "active", "failure", "canceled".
+	// Available values: "success", "idle", "active", "failure", "canceled", "skipped".
 	// State of the current stage.
-	// Available values: "success", "idle", "active", "failure", "canceled".
+	// Available values: "success", "idle", "active", "failure", "canceled", "skipped".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
@@ -1140,21 +1140,21 @@ type ProductionBrowsersParameters struct {
 
 type ProductionD1DatabasesInitParameters struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// UUID of the D1 database.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type ProductionD1DatabasesObservation struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// UUID of the D1 database.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type ProductionD1DatabasesParameters struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// UUID of the D1 database.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id" tf:"id,omitempty"`
@@ -1215,19 +1215,19 @@ type ProductionEnvVarsParameters struct {
 
 type ProductionHyperdriveBindingsInitParameters struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type ProductionHyperdriveBindingsObservation struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type ProductionHyperdriveBindingsParameters struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id" tf:"id,omitempty"`
 }
@@ -1575,21 +1575,21 @@ type ProductionPlacementParameters struct {
 
 type ProductionQueueProducersInitParameters struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Name of the Queue.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type ProductionQueueProducersObservation struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Name of the Queue.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type ProductionQueueProducersParameters struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Name of the Queue.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
@@ -1601,7 +1601,7 @@ type ProductionR2BucketsInitParameters struct {
 	// Jurisdiction of the R2 bucket.
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Name of the R2 bucket.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
@@ -1612,7 +1612,7 @@ type ProductionR2BucketsObservation struct {
 	// Jurisdiction of the R2 bucket.
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Name of the R2 bucket.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
@@ -1624,7 +1624,7 @@ type ProductionR2BucketsParameters struct {
 	// +kubebuilder:validation:Optional
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Name of the R2 bucket.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
@@ -1718,8 +1718,8 @@ type ProjectInitParameters struct {
 	// (Attributes) Configs for deployments in a project. (see below for nested schema)
 	DeploymentConfigs *DeploymentConfigsInitParameters `json:"deploymentConfigs,omitempty" tf:"deployment_configs,omitempty"`
 
-	// (String) Name of the project.
-	// Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+	// Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Production branch of the project. Used to identify production deployments.
@@ -1761,14 +1761,14 @@ type ProjectObservation struct {
 	// Version of the framework the project is using.
 	FrameworkVersion *string `json:"frameworkVersion,omitempty" tf:"framework_version,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Attributes) Most recent deployment of the project. (see below for nested schema)
 	LatestDeployment *LatestDeploymentObservation `json:"latestDeployment,omitempty" tf:"latest_deployment,omitempty"`
 
-	// (String) Name of the project.
-	// Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+	// Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) Name of the preview script.
@@ -1819,8 +1819,8 @@ type ProjectParameters struct {
 	// +kubebuilder:validation:Optional
 	DeploymentConfigs *DeploymentConfigsParameters `json:"deploymentConfigs,omitempty" tf:"deployment_configs,omitempty"`
 
-	// (String) Name of the project.
-	// Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+	// Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -2061,21 +2061,21 @@ type ProjectSourceParameters struct {
 
 type QueueProducersInitParameters struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Name of the Queue.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type QueueProducersObservation struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Name of the Queue.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type QueueProducersParameters struct {
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Name of the Queue.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
@@ -2087,7 +2087,7 @@ type R2BucketsInitParameters struct {
 	// Jurisdiction of the R2 bucket.
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Name of the R2 bucket.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
@@ -2098,7 +2098,7 @@ type R2BucketsObservation struct {
 	// Jurisdiction of the R2 bucket.
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Name of the R2 bucket.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
@@ -2110,7 +2110,7 @@ type R2BucketsParameters struct {
 	// +kubebuilder:validation:Optional
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// Name of the R2 bucket.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
@@ -2255,7 +2255,7 @@ type StagesObservation struct {
 	// When the stage ended.
 	EndedOn *string `json:"endedOn,omitempty" tf:"ended_on,omitempty"`
 
-	// (String) Name of the project.
+	// (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// The current build stage.
 	// Available values: "queued", "initialize", "clone_repo", "build", "deploy".
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -2265,9 +2265,9 @@ type StagesObservation struct {
 	StartedOn *string `json:"startedOn,omitempty" tf:"started_on,omitempty"`
 
 	// (String) State of the current stage.
-	// Available values: "success", "idle", "active", "failure", "canceled".
+	// Available values: "success", "idle", "active", "failure", "canceled", "skipped".
 	// State of the current stage.
-	// Available values: "success", "idle", "active", "failure", "canceled".
+	// Available values: "success", "idle", "active", "failure", "canceled", "skipped".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 

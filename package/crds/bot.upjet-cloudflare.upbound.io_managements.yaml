@@ -73,12 +73,38 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  aiBotsMigrationOptOut:
+                    description: |-
+                      rule updates.
+                      Temporary migration flag tracking zones opted out of AI bots managed-rule updates.
+                    type: boolean
                   aiBotsProtection:
                     description: |-
                       (String) Enable rule to block AI Scrapers and Crawlers.
                       Available values: "block", "disabled", "only_on_ad_pages".
                       Enable rule to block AI Scrapers and Crawlers.
                       Available values: "block", "disabled", "only_on_ad_pages".
+                    type: string
+                  aiTraining:
+                    description: |-
+                      (String) Configure robots.txt policy for AI model training bots.
+                      Available values: "disabled", "disallow", "block", "only_on_ad_pages".
+                      Configure robots.txt policy for AI model training bots.
+                      Available values: "disabled", "disallow", "block", "only_on_ad_pages".
+                    type: string
+                  aiUser:
+                    description: |-
+                      (String) Configure robots.txt policy for AI assistant and agent bots.
+                      Available values: "disabled", "block", "only_on_ad_pages".
+                      Configure robots.txt policy for AI assistant and agent bots.
+                      Available values: "disabled", "block", "only_on_ad_pages".
+                    type: string
+                  aisearch:
+                    description: |-
+                      (String) Configure robots.txt policy for AI search bots.
+                      Available values: "disabled", "block", "only_on_ad_pages".
+                      Configure robots.txt policy for AI search bots.
+                      Available values: "disabled", "block", "only_on_ad_pages".
                     type: string
                   autoUpdateModel:
                     description: |-
@@ -89,6 +115,11 @@ spec:
                     description: |-
                       (Boolean) Indicates that the bot management cookie can be placed on end user devices accessing the site. Defaults to true
                       Indicates that the bot management cookie can be placed on end user devices accessing the site. Defaults to true
+                    type: boolean
+                  botPreferenceSyncEnabled:
+                    description: |-
+                      (Boolean) Enable Bot Preference Sync for this zone. When enabled, Cloudflare can serve robots.txt content derived from the zone's AI Search, AI User, and AI Training preferences.
+                      Enable Bot Preference Sync for this zone. When enabled, Cloudflare can serve robots.txt content derived from the zone's AI Search, AI User, and AI Training preferences.
                     type: boolean
                   cfRobotsVariant:
                     description: |-
@@ -125,6 +156,11 @@ spec:
                     description: |-
                       (Boolean) Enable cloudflare managed robots.txt. If an existing robots.txt is detected, then managed robots.txt will be prepended to the existing robots.txt.
                       Enable cloudflare managed robots.txt. If an existing robots.txt is detected, then managed robots.txt will be prepended to the existing robots.txt.
+                    type: boolean
+                  jsdApiResultsEnabled:
+                    description: |-
+                      (Boolean) Whether to use JavaScript Detection results submitted through the API for this zone.
+                      Whether to use JavaScript Detection results submitted through the API for this zone.
                     type: boolean
                   optimizeWordpress:
                     description: |-
@@ -185,12 +221,38 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  aiBotsMigrationOptOut:
+                    description: |-
+                      rule updates.
+                      Temporary migration flag tracking zones opted out of AI bots managed-rule updates.
+                    type: boolean
                   aiBotsProtection:
                     description: |-
                       (String) Enable rule to block AI Scrapers and Crawlers.
                       Available values: "block", "disabled", "only_on_ad_pages".
                       Enable rule to block AI Scrapers and Crawlers.
                       Available values: "block", "disabled", "only_on_ad_pages".
+                    type: string
+                  aiTraining:
+                    description: |-
+                      (String) Configure robots.txt policy for AI model training bots.
+                      Available values: "disabled", "disallow", "block", "only_on_ad_pages".
+                      Configure robots.txt policy for AI model training bots.
+                      Available values: "disabled", "disallow", "block", "only_on_ad_pages".
+                    type: string
+                  aiUser:
+                    description: |-
+                      (String) Configure robots.txt policy for AI assistant and agent bots.
+                      Available values: "disabled", "block", "only_on_ad_pages".
+                      Configure robots.txt policy for AI assistant and agent bots.
+                      Available values: "disabled", "block", "only_on_ad_pages".
+                    type: string
+                  aisearch:
+                    description: |-
+                      (String) Configure robots.txt policy for AI search bots.
+                      Available values: "disabled", "block", "only_on_ad_pages".
+                      Configure robots.txt policy for AI search bots.
+                      Available values: "disabled", "block", "only_on_ad_pages".
                     type: string
                   autoUpdateModel:
                     description: |-
@@ -201,6 +263,11 @@ spec:
                     description: |-
                       (Boolean) Indicates that the bot management cookie can be placed on end user devices accessing the site. Defaults to true
                       Indicates that the bot management cookie can be placed on end user devices accessing the site. Defaults to true
+                    type: boolean
+                  botPreferenceSyncEnabled:
+                    description: |-
+                      (Boolean) Enable Bot Preference Sync for this zone. When enabled, Cloudflare can serve robots.txt content derived from the zone's AI Search, AI User, and AI Training preferences.
+                      Enable Bot Preference Sync for this zone. When enabled, Cloudflare can serve robots.txt content derived from the zone's AI Search, AI User, and AI Training preferences.
                     type: boolean
                   cfRobotsVariant:
                     description: |-
@@ -237,6 +304,11 @@ spec:
                     description: |-
                       (Boolean) Enable cloudflare managed robots.txt. If an existing robots.txt is detected, then managed robots.txt will be prepended to the existing robots.txt.
                       Enable cloudflare managed robots.txt. If an existing robots.txt is detected, then managed robots.txt will be prepended to the existing robots.txt.
+                    type: boolean
+                  jsdApiResultsEnabled:
+                    description: |-
+                      (Boolean) Whether to use JavaScript Detection results submitted through the API for this zone.
+                      Whether to use JavaScript Detection results submitted through the API for this zone.
                     type: boolean
                   optimizeWordpress:
                     description: |-
@@ -380,12 +452,38 @@ spec:
             properties:
               atProvider:
                 properties:
+                  aiBotsMigrationOptOut:
+                    description: |-
+                      rule updates.
+                      Temporary migration flag tracking zones opted out of AI bots managed-rule updates.
+                    type: boolean
                   aiBotsProtection:
                     description: |-
                       (String) Enable rule to block AI Scrapers and Crawlers.
                       Available values: "block", "disabled", "only_on_ad_pages".
                       Enable rule to block AI Scrapers and Crawlers.
                       Available values: "block", "disabled", "only_on_ad_pages".
+                    type: string
+                  aiTraining:
+                    description: |-
+                      (String) Configure robots.txt policy for AI model training bots.
+                      Available values: "disabled", "disallow", "block", "only_on_ad_pages".
+                      Configure robots.txt policy for AI model training bots.
+                      Available values: "disabled", "disallow", "block", "only_on_ad_pages".
+                    type: string
+                  aiUser:
+                    description: |-
+                      (String) Configure robots.txt policy for AI assistant and agent bots.
+                      Available values: "disabled", "block", "only_on_ad_pages".
+                      Configure robots.txt policy for AI assistant and agent bots.
+                      Available values: "disabled", "block", "only_on_ad_pages".
+                    type: string
+                  aisearch:
+                    description: |-
+                      (String) Configure robots.txt policy for AI search bots.
+                      Available values: "disabled", "block", "only_on_ad_pages".
+                      Configure robots.txt policy for AI search bots.
+                      Available values: "disabled", "block", "only_on_ad_pages".
                     type: string
                   autoUpdateModel:
                     description: |-
@@ -396,6 +494,11 @@ spec:
                     description: |-
                       (Boolean) Indicates that the bot management cookie can be placed on end user devices accessing the site. Defaults to true
                       Indicates that the bot management cookie can be placed on end user devices accessing the site. Defaults to true
+                    type: boolean
+                  botPreferenceSyncEnabled:
+                    description: |-
+                      (Boolean) Enable Bot Preference Sync for this zone. When enabled, Cloudflare can serve robots.txt content derived from the zone's AI Search, AI User, and AI Training preferences.
+                      Enable Bot Preference Sync for this zone. When enabled, Cloudflare can serve robots.txt content derived from the zone's AI Search, AI User, and AI Training preferences.
                     type: boolean
                   cfRobotsVariant:
                     description: |-
@@ -435,6 +538,11 @@ spec:
                     description: |-
                       (Boolean) Enable cloudflare managed robots.txt. If an existing robots.txt is detected, then managed robots.txt will be prepended to the existing robots.txt.
                       Enable cloudflare managed robots.txt. If an existing robots.txt is detected, then managed robots.txt will be prepended to the existing robots.txt.
+                    type: boolean
+                  jsdApiResultsEnabled:
+                    description: |-
+                      (Boolean) Whether to use JavaScript Detection results submitted through the API for this zone.
+                      Whether to use JavaScript Detection results submitted through the API for this zone.
                     type: boolean
                   optimizeWordpress:
                     description: |-

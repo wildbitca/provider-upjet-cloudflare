@@ -15,8 +15,8 @@ import (
 
 type ManagedDomainInitParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Name of the bucket.
@@ -34,8 +34,8 @@ type ManagedDomainInitParameters struct {
 
 type ManagedDomainObservation struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Bucket ID.
@@ -63,8 +63,8 @@ type ManagedDomainObservation struct {
 
 type ManagedDomainParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 

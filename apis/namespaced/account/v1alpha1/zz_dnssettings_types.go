@@ -24,7 +24,7 @@ type DNSSettingsInitParameters struct {
 	// When enabled, forces all proxied DNS records in the account to behave as DNS-only at the edge, regardless of each record's individual proxy setting. Note that this account-level override does not modify the records themselves; it only affects how they are served at the edge. See more on [Enforce DNS-only](https://developers.cloudflare.com/dns/proxy-status/enforce-dns-only).
 	EnforceDNSOnly *bool `json:"enforceDnsOnly,omitempty" tf:"enforce_dns_only,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) Default settings for new zones created in this account. (see below for nested schema)
 	ZoneDefaults *ZoneDefaultsInitParameters `json:"zoneDefaults,omitempty" tf:"zone_defaults,omitempty"`
 }
 
@@ -40,7 +40,7 @@ type DNSSettingsObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) Default settings for new zones created in this account. (see below for nested schema)
 	ZoneDefaults *ZoneDefaultsObservation `json:"zoneDefaults,omitempty" tf:"zone_defaults,omitempty"`
 }
 
@@ -56,7 +56,7 @@ type DNSSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	EnforceDNSOnly *bool `json:"enforceDnsOnly,omitempty" tf:"enforce_dns_only,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) Default settings for new zones created in this account. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ZoneDefaults *ZoneDefaultsParameters `json:"zoneDefaults,omitempty" tf:"zone_defaults,omitempty"`
 }

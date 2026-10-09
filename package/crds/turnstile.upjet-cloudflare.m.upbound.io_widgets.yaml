@@ -81,6 +81,13 @@ spec:
                       this setting can determine the clearance level to be set
                       Available values: "no_clearance", "jschallenge", "managed", "interactive".
                     type: string
+                  direction:
+                    description: |-
+                      (String) Direction to order widgets.
+                      Available values: "asc", "desc".
+                      Direction to order widgets.
+                      Available values: "asc", "desc".
+                    type: string
                   domains:
                     description: (List of String)
                     items:
@@ -91,6 +98,20 @@ spec:
                       (Boolean) Return the Ephemeral ID in /siteverify (ENT only).
                       Return the Ephemeral ID in /siteverify (ENT only).
                     type: boolean
+                  filter:
+                    description: |-
+                      insensitive substring matching.
+                      Format: field:value
+                      Filter widgets by field using case-insensitive substring matching.
+                      Format: `field:value`
+
+                      Supported fields:
+                      - `name` - Filter by widget name (e.g., `filter=name:login-form`)
+                      - `sitekey` - Filter by sitekey (e.g., `filter=sitekey:0x4AAA`)
+
+                      Returns 400 Bad Request if the field is unsupported or format is invalid.
+                      An empty filter value returns all results.
+                    type: string
                   mode:
                     description: |-
                       interactive", "invisible", "managed".
@@ -111,6 +132,23 @@ spec:
                       (Boolean) Do not show any Cloudflare branding on the widget (ENT only).
                       Do not show any Cloudflare branding on the widget (ENT only).
                     type: boolean
+                  order:
+                    description: |-
+                      (String) Field to order widgets by.
+                      Available values: "id", "sitekey", "name", "created_on", "modified_on".
+                      Field to order widgets by.
+                      Available values: "id", "sitekey", "name", "created_on", "modified_on".
+                    type: string
+                  page:
+                    description: |-
+                      (Number) Page number of paginated results.
+                      Page number of paginated results.
+                    type: number
+                  perPage:
+                    description: |-
+                      (Number) Number of items per page.
+                      Number of items per page.
+                    type: number
                   region:
                     description: |-
                       (String) Region where this widget can be used. This cannot be changed after creation.
@@ -153,6 +191,13 @@ spec:
                       this setting can determine the clearance level to be set
                       Available values: "no_clearance", "jschallenge", "managed", "interactive".
                     type: string
+                  direction:
+                    description: |-
+                      (String) Direction to order widgets.
+                      Available values: "asc", "desc".
+                      Direction to order widgets.
+                      Available values: "asc", "desc".
+                    type: string
                   domains:
                     description: (List of String)
                     items:
@@ -163,6 +208,20 @@ spec:
                       (Boolean) Return the Ephemeral ID in /siteverify (ENT only).
                       Return the Ephemeral ID in /siteverify (ENT only).
                     type: boolean
+                  filter:
+                    description: |-
+                      insensitive substring matching.
+                      Format: field:value
+                      Filter widgets by field using case-insensitive substring matching.
+                      Format: `field:value`
+
+                      Supported fields:
+                      - `name` - Filter by widget name (e.g., `filter=name:login-form`)
+                      - `sitekey` - Filter by sitekey (e.g., `filter=sitekey:0x4AAA`)
+
+                      Returns 400 Bad Request if the field is unsupported or format is invalid.
+                      An empty filter value returns all results.
+                    type: string
                   mode:
                     description: |-
                       interactive", "invisible", "managed".
@@ -183,6 +242,23 @@ spec:
                       (Boolean) Do not show any Cloudflare branding on the widget (ENT only).
                       Do not show any Cloudflare branding on the widget (ENT only).
                     type: boolean
+                  order:
+                    description: |-
+                      (String) Field to order widgets by.
+                      Available values: "id", "sitekey", "name", "created_on", "modified_on".
+                      Field to order widgets by.
+                      Available values: "id", "sitekey", "name", "created_on", "modified_on".
+                    type: string
+                  page:
+                    description: |-
+                      (Number) Page number of paginated results.
+                      Page number of paginated results.
+                    type: number
+                  perPage:
+                    description: |-
+                      (Number) Number of items per page.
+                      Number of items per page.
+                    type: number
                   region:
                     description: |-
                       (String) Region where this widget can be used. This cannot be changed after creation.
@@ -309,6 +385,13 @@ spec:
                       before this field existed.
                       Available values: "wrangler", "dashboard", "spin", "api", "unknown".
                     type: string
+                  direction:
+                    description: |-
+                      (String) Direction to order widgets.
+                      Available values: "asc", "desc".
+                      Direction to order widgets.
+                      Available values: "asc", "desc".
+                    type: string
                   domains:
                     description: (List of String)
                     items:
@@ -319,6 +402,20 @@ spec:
                       (Boolean) Return the Ephemeral ID in /siteverify (ENT only).
                       Return the Ephemeral ID in /siteverify (ENT only).
                     type: boolean
+                  filter:
+                    description: |-
+                      insensitive substring matching.
+                      Format: field:value
+                      Filter widgets by field using case-insensitive substring matching.
+                      Format: `field:value`
+
+                      Supported fields:
+                      - `name` - Filter by widget name (e.g., `filter=name:login-form`)
+                      - `sitekey` - Filter by sitekey (e.g., `filter=sitekey:0x4AAA`)
+
+                      Returns 400 Bad Request if the field is unsupported or format is invalid.
+                      An empty filter value returns all results.
+                    type: string
                   id:
                     description: (String) Widget item identifier tag.
                     type: string
@@ -357,6 +454,23 @@ spec:
                       (Boolean) Do not show any Cloudflare branding on the widget (ENT only).
                       Do not show any Cloudflare branding on the widget (ENT only).
                     type: boolean
+                  order:
+                    description: |-
+                      (String) Field to order widgets by.
+                      Available values: "id", "sitekey", "name", "created_on", "modified_on".
+                      Field to order widgets by.
+                      Available values: "id", "sitekey", "name", "created_on", "modified_on".
+                    type: string
+                  page:
+                    description: |-
+                      (Number) Page number of paginated results.
+                      Page number of paginated results.
+                    type: number
+                  perPage:
+                    description: |-
+                      (Number) Number of items per page.
+                      Number of items per page.
+                    type: number
                   region:
                     description: |-
                       (String) Region where this widget can be used. This cannot be changed after creation.
@@ -366,7 +480,7 @@ spec:
                     type: string
                   sitekey:
                     description: |-
-                      (String) Widget item identifier tag.
+                      Filter by sitekey (e.g., filter=sitekey:0x4AAA)
                       Widget item identifier tag.
                     type: string
                 type: object

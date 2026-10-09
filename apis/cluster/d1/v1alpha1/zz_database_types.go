@@ -19,10 +19,16 @@ type DatabaseInitParameters struct {
 	// Account identifier tag.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// separated list of fields to include in the response. When omitted,
+	// all fields are returned.
+	// Comma-separated list of fields to include in the response. When omitted,
+	// all fields are returned.
+	Fields []*string `json:"fields,omitempty" tf:"fields,omitempty"`
+
 	// (String) Specify the location to restrict the D1 database to run and store data. If this option is present, the location hint is ignored.
-	// Available values: "eu", "fedramp".
+	// Available values: "eu", "fedramp", "us".
 	// Specify the location to restrict the D1 database to run and store data. If this option is present, the location hint is ignored.
-	// Available values: "eu", "fedramp".
+	// Available values: "eu", "fedramp", "us".
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
 	// (String) D1 database name.
@@ -49,6 +55,12 @@ type DatabaseObservation struct {
 	// Specifies the timestamp the resource was created as an ISO8601 string.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// separated list of fields to include in the response. When omitted,
+	// all fields are returned.
+	// Comma-separated list of fields to include in the response. When omitted,
+	// all fields are returned.
+	Fields []*string `json:"fields,omitempty" tf:"fields,omitempty"`
+
 	// (Number) The D1 database's size, in bytes.
 	// The D1 database's size, in bytes.
 	FileSize *float64 `json:"fileSize,omitempty" tf:"file_size,omitempty"`
@@ -57,16 +69,17 @@ type DatabaseObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String) Specify the location to restrict the D1 database to run and store data. If this option is present, the location hint is ignored.
-	// Available values: "eu", "fedramp".
+	// Available values: "eu", "fedramp", "us".
 	// Specify the location to restrict the D1 database to run and store data. If this option is present, the location hint is ignored.
-	// Available values: "eu", "fedramp".
+	// Available values: "eu", "fedramp", "us".
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
 	// (String) D1 database name.
 	// D1 database name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Number)
+	// (Number, Deprecated) The number of tables in the D1 database. This count is no longer accurate and should not be relied upon.
+	// The number of tables in the D1 database. This count is no longer accurate and should not be relied upon.
 	NumTables *float64 `json:"numTables,omitempty" tf:"num_tables,omitempty"`
 
 	// (String) Specify the region to create the D1 primary, if available. If this option is omitted, the D1 will be created as close as possible to the current user.
@@ -93,10 +106,17 @@ type DatabaseParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// separated list of fields to include in the response. When omitted,
+	// all fields are returned.
+	// Comma-separated list of fields to include in the response. When omitted,
+	// all fields are returned.
+	// +kubebuilder:validation:Optional
+	Fields []*string `json:"fields,omitempty" tf:"fields,omitempty"`
+
 	// (String) Specify the location to restrict the D1 database to run and store data. If this option is present, the location hint is ignored.
-	// Available values: "eu", "fedramp".
+	// Available values: "eu", "fedramp", "us".
 	// Specify the location to restrict the D1 database to run and store data. If this option is present, the location hint is ignored.
-	// Available values: "eu", "fedramp".
+	// Available values: "eu", "fedramp", "us".
 	// +kubebuilder:validation:Optional
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 

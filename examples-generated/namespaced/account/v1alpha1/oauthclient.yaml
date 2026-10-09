@@ -20,6 +20,8 @@ spec:
     - authorization_code
     - refresh_token
     logoUri: https://example.com/logo.png
+    optionalScopes:
+    - account.write
     policyUri: https://example.com/privacy
     postLogoutRedirectUris:
     - https://example.com/logout

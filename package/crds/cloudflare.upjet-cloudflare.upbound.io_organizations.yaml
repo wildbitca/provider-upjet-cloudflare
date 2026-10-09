@@ -251,26 +251,6 @@ spec:
                   meta:
                     description: (Attributes) (see below for nested schema)
                     properties:
-                      flags:
-                        description: (Attributes) Enable features for Organizations.
-                          (see below for nested schema)
-                        properties:
-                          accountCreation:
-                            description: (String)
-                            type: string
-                          accountDeletion:
-                            description: (String)
-                            type: string
-                          accountMigration:
-                            description: (String)
-                            type: string
-                          accountMobility:
-                            description: (String)
-                            type: string
-                          subOrgCreation:
-                            description: (String)
-                            type: string
-                        type: object
                       hierarchyTags:
                         description: |-
                           element array containing their own tag; sub-organizations return
@@ -289,6 +269,35 @@ spec:
                       managedBy:
                         description: (String)
                         type: string
+                      tenantFlags:
+                        description: (Attributes) Enable features for Organizations.
+                          (see below for nested schema)
+                        properties:
+                          accountCreation:
+                            description: (String)
+                            type: string
+                          accountCreationAppliesTenantDefaults:
+                            description: (String)
+                            type: string
+                          accountDeletion:
+                            description: (String)
+                            type: string
+                          accountMigration:
+                            description: (String)
+                            type: string
+                          accountMobility:
+                            description: (String)
+                            type: string
+                          enterpriseCapability:
+                            description: (String)
+                            type: string
+                          memberManagement:
+                            description: (String)
+                            type: string
+                          subOrgCreation:
+                            description: (String)
+                            type: string
+                        type: object
                     type: object
                   name:
                     description: (String)

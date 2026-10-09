@@ -79,71 +79,106 @@ spec:
                     type: string
                   allowCodeMode:
                     description: |-
-                      (Boolean) Allow remote code execution in Dynamic Workers (beta)
-                      Allow remote code execution in Dynamic Workers (beta)
+                      off Code Mode policy; false maps to code_mode: off. If both fields are sent, they must be consistent or the request returns a 400.
+                      Deprecated: use `code_mode` for new integrations. `true` maps to any non-off Code Mode policy; `false` maps to `code_mode: off`. If both fields are sent, they must be consistent or the request returns a 400.
                     type: boolean
+                  codeMode:
+                    description: |-
+                      (String) Code Mode policy for this portal. off: Code Mode is unavailable; query parameters are ignored. opt_in: Code Mode is off by default; clients turn it on with ?codemode=search_and_execute. default_on: Code Mode is on by default; clients can opt out with ?codemode=off. enforced: Code Mode is always on; query parameters are ignored. Defaults to opt_in when omitted on create. If both code_mode and allow_code_mode are sent, they must be consistent or the request returns a 400.
+                      Available values: "off", "opt_in", "default_on", "enforced".
+                      Code Mode policy for this portal. `off`: Code Mode is unavailable; query parameters are ignored. `opt_in`: Code Mode is off by default; clients turn it on with `?codemode=search_and_execute`. `default_on`: Code Mode is on by default; clients can opt out with `?codemode=off`. `enforced`: Code Mode is always on; query parameters are ignored. Defaults to `opt_in` when omitted on create. If both `code_mode` and `allow_code_mode` are sent, they must be consistent or the request returns a 400.
+                      Available values: "off", "opt_in", "default_on", "enforced".
+                    type: string
                   description:
-                    description: (String)
+                    description: |-
+                      (String) Optional description of the MCP portal.
+                      Optional description of the MCP portal.
                     type: string
                   hostname:
-                    description: (String)
+                    description: |-
+                      (String) Hostname where the MCP portal is available.
+                      Hostname where the MCP portal is available.
                     type: string
                   name:
-                    description: (String)
+                    description: |-
+                      (String) Display name for the MCP portal.
+                      Display name for the MCP portal.
                     type: string
                   secureWebGateway:
                     description: |-
-                      (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway
-                      Route outbound MCP traffic through Zero Trust Secure Web Gateway
+                      (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway.
+                      Route outbound MCP traffic through Zero Trust Secure Web Gateway.
                     type: boolean
                   servers:
-                    description: (Attributes Set) (see below for nested schema)
+                    description: specific settings. (see below for nested schema)
                     items:
                       properties:
                         defaultDisabled:
-                          description: (Boolean)
+                          description: |-
+                            (Boolean) Disable this server by default for clients connecting through the portal.
+                            Disable this server by default for clients connecting through the portal.
                           type: boolean
                         onBehalf:
-                          description: (Boolean)
+                          description: |-
+                            user OAuth credentials when connecting this server to the portal.
+                            Use end-user OAuth credentials when connecting this server to the portal.
                           type: boolean
                         serverId:
                           description: |-
-                            (String) server id
-                            server id
+                            (String) Unique identifier for the MCP server.
+                            Unique identifier for the MCP server.
                           type: string
                         updatedPrompts:
-                          description: (Attributes List) (see below for nested schema)
+                          description: specific prompt overrides. (see below for nested
+                            schema)
                           items:
                             properties:
                               alias:
-                                description: (String)
+                                description: |-
+                                  (String) Custom name exposed for the capability.
+                                  Custom name exposed for the capability.
                                 type: string
                               description:
-                                description: (String)
+                                description: |-
+                                  (String) Optional description of the MCP portal.
+                                  Custom description exposed for the capability.
                                 type: string
                               enabled:
-                                description: (Boolean)
+                                description: |-
+                                  (Boolean) Whether the capability is available through the MCP server.
+                                  Whether the capability is available through the MCP server.
                                 type: boolean
                               name:
-                                description: (String)
+                                description: |-
+                                  (String) Display name for the MCP portal.
+                                  Name of the tool or prompt capability to override.
                                 type: string
                             type: object
                           type: array
                         updatedTools:
-                          description: (Attributes List) (see below for nested schema)
+                          description: specific tool overrides. (see below for nested
+                            schema)
                           items:
                             properties:
                               alias:
-                                description: (String)
+                                description: |-
+                                  (String) Custom name exposed for the capability.
+                                  Custom name exposed for the capability.
                                 type: string
                               description:
-                                description: (String)
+                                description: |-
+                                  (String) Optional description of the MCP portal.
+                                  Custom description exposed for the capability.
                                 type: string
                               enabled:
-                                description: (Boolean)
+                                description: |-
+                                  (Boolean) Whether the capability is available through the MCP server.
+                                  Whether the capability is available through the MCP server.
                                 type: boolean
                               name:
-                                description: (String)
+                                description: |-
+                                  (String) Display name for the MCP portal.
+                                  Name of the tool or prompt capability to override.
                                 type: string
                             type: object
                           type: array
@@ -168,71 +203,106 @@ spec:
                     type: string
                   allowCodeMode:
                     description: |-
-                      (Boolean) Allow remote code execution in Dynamic Workers (beta)
-                      Allow remote code execution in Dynamic Workers (beta)
+                      off Code Mode policy; false maps to code_mode: off. If both fields are sent, they must be consistent or the request returns a 400.
+                      Deprecated: use `code_mode` for new integrations. `true` maps to any non-off Code Mode policy; `false` maps to `code_mode: off`. If both fields are sent, they must be consistent or the request returns a 400.
                     type: boolean
+                  codeMode:
+                    description: |-
+                      (String) Code Mode policy for this portal. off: Code Mode is unavailable; query parameters are ignored. opt_in: Code Mode is off by default; clients turn it on with ?codemode=search_and_execute. default_on: Code Mode is on by default; clients can opt out with ?codemode=off. enforced: Code Mode is always on; query parameters are ignored. Defaults to opt_in when omitted on create. If both code_mode and allow_code_mode are sent, they must be consistent or the request returns a 400.
+                      Available values: "off", "opt_in", "default_on", "enforced".
+                      Code Mode policy for this portal. `off`: Code Mode is unavailable; query parameters are ignored. `opt_in`: Code Mode is off by default; clients turn it on with `?codemode=search_and_execute`. `default_on`: Code Mode is on by default; clients can opt out with `?codemode=off`. `enforced`: Code Mode is always on; query parameters are ignored. Defaults to `opt_in` when omitted on create. If both `code_mode` and `allow_code_mode` are sent, they must be consistent or the request returns a 400.
+                      Available values: "off", "opt_in", "default_on", "enforced".
+                    type: string
                   description:
-                    description: (String)
+                    description: |-
+                      (String) Optional description of the MCP portal.
+                      Optional description of the MCP portal.
                     type: string
                   hostname:
-                    description: (String)
+                    description: |-
+                      (String) Hostname where the MCP portal is available.
+                      Hostname where the MCP portal is available.
                     type: string
                   name:
-                    description: (String)
+                    description: |-
+                      (String) Display name for the MCP portal.
+                      Display name for the MCP portal.
                     type: string
                   secureWebGateway:
                     description: |-
-                      (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway
-                      Route outbound MCP traffic through Zero Trust Secure Web Gateway
+                      (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway.
+                      Route outbound MCP traffic through Zero Trust Secure Web Gateway.
                     type: boolean
                   servers:
-                    description: (Attributes Set) (see below for nested schema)
+                    description: specific settings. (see below for nested schema)
                     items:
                       properties:
                         defaultDisabled:
-                          description: (Boolean)
+                          description: |-
+                            (Boolean) Disable this server by default for clients connecting through the portal.
+                            Disable this server by default for clients connecting through the portal.
                           type: boolean
                         onBehalf:
-                          description: (Boolean)
+                          description: |-
+                            user OAuth credentials when connecting this server to the portal.
+                            Use end-user OAuth credentials when connecting this server to the portal.
                           type: boolean
                         serverId:
                           description: |-
-                            (String) server id
-                            server id
+                            (String) Unique identifier for the MCP server.
+                            Unique identifier for the MCP server.
                           type: string
                         updatedPrompts:
-                          description: (Attributes List) (see below for nested schema)
+                          description: specific prompt overrides. (see below for nested
+                            schema)
                           items:
                             properties:
                               alias:
-                                description: (String)
+                                description: |-
+                                  (String) Custom name exposed for the capability.
+                                  Custom name exposed for the capability.
                                 type: string
                               description:
-                                description: (String)
+                                description: |-
+                                  (String) Optional description of the MCP portal.
+                                  Custom description exposed for the capability.
                                 type: string
                               enabled:
-                                description: (Boolean)
+                                description: |-
+                                  (Boolean) Whether the capability is available through the MCP server.
+                                  Whether the capability is available through the MCP server.
                                 type: boolean
                               name:
-                                description: (String)
+                                description: |-
+                                  (String) Display name for the MCP portal.
+                                  Name of the tool or prompt capability to override.
                                 type: string
                             type: object
                           type: array
                         updatedTools:
-                          description: (Attributes List) (see below for nested schema)
+                          description: specific tool overrides. (see below for nested
+                            schema)
                           items:
                             properties:
                               alias:
-                                description: (String)
+                                description: |-
+                                  (String) Custom name exposed for the capability.
+                                  Custom name exposed for the capability.
                                 type: string
                               description:
-                                description: (String)
+                                description: |-
+                                  (String) Optional description of the MCP portal.
+                                  Custom description exposed for the capability.
                                 type: string
                               enabled:
-                                description: (Boolean)
+                                description: |-
+                                  (Boolean) Whether the capability is available through the MCP server.
+                                  Whether the capability is available through the MCP server.
                                 type: boolean
                               name:
-                                description: (String)
+                                description: |-
+                                  (String) Display name for the MCP portal.
+                                  Name of the tool or prompt capability to override.
                                 type: string
                             type: object
                           type: array
@@ -349,9 +419,16 @@ spec:
                     type: string
                   allowCodeMode:
                     description: |-
-                      (Boolean) Allow remote code execution in Dynamic Workers (beta)
-                      Allow remote code execution in Dynamic Workers (beta)
+                      off Code Mode policy; false maps to code_mode: off. If both fields are sent, they must be consistent or the request returns a 400.
+                      Deprecated: use `code_mode` for new integrations. `true` maps to any non-off Code Mode policy; `false` maps to `code_mode: off`. If both fields are sent, they must be consistent or the request returns a 400.
                     type: boolean
+                  codeMode:
+                    description: |-
+                      (String) Code Mode policy for this portal. off: Code Mode is unavailable; query parameters are ignored. opt_in: Code Mode is off by default; clients turn it on with ?codemode=search_and_execute. default_on: Code Mode is on by default; clients can opt out with ?codemode=off. enforced: Code Mode is always on; query parameters are ignored. Defaults to opt_in when omitted on create. If both code_mode and allow_code_mode are sent, they must be consistent or the request returns a 400.
+                      Available values: "off", "opt_in", "default_on", "enforced".
+                      Code Mode policy for this portal. `off`: Code Mode is unavailable; query parameters are ignored. `opt_in`: Code Mode is off by default; clients turn it on with `?codemode=search_and_execute`. `default_on`: Code Mode is on by default; clients can opt out with `?codemode=off`. `enforced`: Code Mode is always on; query parameters are ignored. Defaults to `opt_in` when omitted on create. If both `code_mode` and `allow_code_mode` are sent, they must be consistent or the request returns a 400.
+                      Available values: "off", "opt_in", "default_on", "enforced".
+                    type: string
                   createdAt:
                     description: (String)
                     type: string
@@ -359,13 +436,17 @@ spec:
                     description: (String)
                     type: string
                   description:
-                    description: (String)
+                    description: |-
+                      (String) Optional description of the MCP portal.
+                      Optional description of the MCP portal.
                     type: string
                   hostname:
-                    description: (String)
+                    description: |-
+                      (String) Hostname where the MCP portal is available.
+                      Hostname where the MCP portal is available.
                     type: string
                   id:
-                    description: (String) portal id
+                    description: (String) Unique identifier for the MCP portal.
                     type: string
                   modifiedAt:
                     description: (String)
@@ -374,61 +455,85 @@ spec:
                     description: (String)
                     type: string
                   name:
-                    description: (String)
+                    description: |-
+                      (String) Display name for the MCP portal.
+                      Display name for the MCP portal.
                     type: string
                   secureWebGateway:
                     description: |-
-                      (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway
-                      Route outbound MCP traffic through Zero Trust Secure Web Gateway
+                      (Boolean) Route outbound MCP traffic through Zero Trust Secure Web Gateway.
+                      Route outbound MCP traffic through Zero Trust Secure Web Gateway.
                     type: boolean
                   servers:
-                    description: (Attributes Set) (see below for nested schema)
+                    description: specific settings. (see below for nested schema)
                     items:
                       properties:
                         defaultDisabled:
-                          description: (Boolean)
+                          description: |-
+                            (Boolean) Disable this server by default for clients connecting through the portal.
+                            Disable this server by default for clients connecting through the portal.
                           type: boolean
                         onBehalf:
-                          description: (Boolean)
+                          description: |-
+                            user OAuth credentials when connecting this server to the portal.
+                            Use end-user OAuth credentials when connecting this server to the portal.
                           type: boolean
                         serverId:
                           description: |-
-                            (String) server id
-                            server id
+                            (String) Unique identifier for the MCP server.
+                            Unique identifier for the MCP server.
                           type: string
                         updatedPrompts:
-                          description: (Attributes List) (see below for nested schema)
+                          description: specific prompt overrides. (see below for nested
+                            schema)
                           items:
                             properties:
                               alias:
-                                description: (String)
+                                description: |-
+                                  (String) Custom name exposed for the capability.
+                                  Custom name exposed for the capability.
                                 type: string
                               description:
-                                description: (String)
+                                description: |-
+                                  (String) Optional description of the MCP portal.
+                                  Custom description exposed for the capability.
                                 type: string
                               enabled:
-                                description: (Boolean)
+                                description: |-
+                                  (Boolean) Whether the capability is available through the MCP server.
+                                  Whether the capability is available through the MCP server.
                                 type: boolean
                               name:
-                                description: (String)
+                                description: |-
+                                  (String) Display name for the MCP portal.
+                                  Name of the tool or prompt capability to override.
                                 type: string
                             type: object
                           type: array
                         updatedTools:
-                          description: (Attributes List) (see below for nested schema)
+                          description: specific tool overrides. (see below for nested
+                            schema)
                           items:
                             properties:
                               alias:
-                                description: (String)
+                                description: |-
+                                  (String) Custom name exposed for the capability.
+                                  Custom name exposed for the capability.
                                 type: string
                               description:
-                                description: (String)
+                                description: |-
+                                  (String) Optional description of the MCP portal.
+                                  Custom description exposed for the capability.
                                 type: string
                               enabled:
-                                description: (Boolean)
+                                description: |-
+                                  (Boolean) Whether the capability is available through the MCP server.
+                                  Whether the capability is available through the MCP server.
                                 type: boolean
                               name:
-                                description: (String)
+                                description: |-
+                                  (String) Display name for the MCP portal.
+                                  Name of the tool or prompt capability to override.
                                 type: string
                             type: object
                           type: array

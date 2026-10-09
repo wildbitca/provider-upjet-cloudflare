@@ -169,6 +169,9 @@ type ActionParametersInitParameters struct {
 	// Whether to generate Cloudflare error pages for issues from the origin server.
 	OriginErrorPagePassthru *bool `json:"originErrorPagePassthru,omitempty" tf:"origin_error_page_passthru,omitempty"`
 
+	// body request. (see below for nested schema)
+	OriginRangeRequests *OriginRangeRequestsInitParameters `json:"originRangeRequests,omitempty" tf:"origin_range_requests,omitempty"`
+
 	// (Attributes) A set of overrides to apply to the target ruleset. (see below for nested schema)
 	Overrides *OverridesInitParameters `json:"overrides,omitempty" tf:"overrides,omitempty"`
 
@@ -314,6 +317,7 @@ type ActionParametersInitParameters struct {
 	// The cache tag values for set_cache_tags action.
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 
+	// header override. (see below for nested schema)
 	Vary *VaryInitParameters `json:"vary,omitempty" tf:"vary,omitempty"`
 }
 
@@ -472,6 +476,9 @@ type ActionParametersObservation struct {
 	// Whether to generate Cloudflare error pages for issues from the origin server.
 	OriginErrorPagePassthru *bool `json:"originErrorPagePassthru,omitempty" tf:"origin_error_page_passthru,omitempty"`
 
+	// body request. (see below for nested schema)
+	OriginRangeRequests *OriginRangeRequestsObservation `json:"originRangeRequests,omitempty" tf:"origin_range_requests,omitempty"`
+
 	// (Attributes) A set of overrides to apply to the target ruleset. (see below for nested schema)
 	Overrides *OverridesObservation `json:"overrides,omitempty" tf:"overrides,omitempty"`
 
@@ -617,6 +624,7 @@ type ActionParametersObservation struct {
 	// The cache tag values for set_cache_tags action.
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 
+	// header override. (see below for nested schema)
 	Vary *VaryObservation `json:"vary,omitempty" tf:"vary,omitempty"`
 }
 
@@ -817,6 +825,10 @@ type ActionParametersParameters struct {
 	// +kubebuilder:validation:Optional
 	OriginErrorPagePassthru *bool `json:"originErrorPagePassthru,omitempty" tf:"origin_error_page_passthru,omitempty"`
 
+	// body request. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	OriginRangeRequests *OriginRangeRequestsParameters `json:"originRangeRequests,omitempty" tf:"origin_range_requests,omitempty"`
+
 	// (Attributes) A set of overrides to apply to the target ruleset. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Overrides *OverridesParameters `json:"overrides,omitempty" tf:"overrides,omitempty"`
@@ -998,6 +1010,7 @@ type ActionParametersParameters struct {
 	// +kubebuilder:validation:Optional
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 
+	// header override. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Vary *VaryParameters `json:"vary,omitempty" tf:"vary,omitempty"`
 }
@@ -2186,6 +2199,34 @@ type OriginParameters struct {
 	// A destination port to route to.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+}
+
+type OriginRangeRequestsInitParameters struct {
+
+	// (String) The browser TTL mode.
+	// Available values: "respect_origin", "bypass_by_default", "override_origin", "bypass".
+	// Whether to use range requests. `default` is the behaviour the zone gets without this rule.
+	// Available values: "on", "off", "default".
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+}
+
+type OriginRangeRequestsObservation struct {
+
+	// (String) The browser TTL mode.
+	// Available values: "respect_origin", "bypass_by_default", "override_origin", "bypass".
+	// Whether to use range requests. `default` is the behaviour the zone gets without this rule.
+	// Available values: "on", "off", "default".
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+}
+
+type OriginRangeRequestsParameters struct {
+
+	// (String) The browser TTL mode.
+	// Available values: "respect_origin", "bypass_by_default", "override_origin", "bypass".
+	// Whether to use range requests. `default` is the behaviour the zone gets without this rule.
+	// Available values: "on", "off", "default".
+	// +kubebuilder:validation:Optional
+	Mode *string `json:"mode" tf:"mode,omitempty"`
 }
 
 type OverridesInitParameters struct {
@@ -3511,9 +3552,11 @@ type VaryHeadersInitParameters struct {
 	// Available values: "bypass", "passthrough", "normalize".
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
+	// language header.
 	// The set of languages to normalize against. Only valid for the `accept-language` header.
 	Languages []*string `json:"languages,omitempty" tf:"languages,omitempty"`
 
+	// (List of String) The set of media types to normalize against. Only valid for the accept header.
 	// The set of media types to normalize against. Only valid for the `accept` header.
 	MediaTypes []*string `json:"mediaTypes,omitempty" tf:"media_types,omitempty"`
 }
@@ -3526,9 +3569,11 @@ type VaryHeadersObservation struct {
 	// Available values: "bypass", "passthrough", "normalize".
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
+	// language header.
 	// The set of languages to normalize against. Only valid for the `accept-language` header.
 	Languages []*string `json:"languages,omitempty" tf:"languages,omitempty"`
 
+	// (List of String) The set of media types to normalize against. Only valid for the accept header.
 	// The set of media types to normalize against. Only valid for the `accept` header.
 	MediaTypes []*string `json:"mediaTypes,omitempty" tf:"media_types,omitempty"`
 }
@@ -3542,10 +3587,12 @@ type VaryHeadersParameters struct {
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action" tf:"action,omitempty"`
 
+	// language header.
 	// The set of languages to normalize against. Only valid for the `accept-language` header.
 	// +kubebuilder:validation:Optional
 	Languages []*string `json:"languages,omitempty" tf:"languages,omitempty"`
 
+	// (List of String) The set of media types to normalize against. Only valid for the accept header.
 	// The set of media types to normalize against. Only valid for the `accept` header.
 	// +kubebuilder:validation:Optional
 	MediaTypes []*string `json:"mediaTypes,omitempty" tf:"media_types,omitempty"`

@@ -1251,7 +1251,11 @@ func (in *SSLInitParameters_2) DeepCopyInto(out *SSLInitParameters_2) {
 		*out = new(string)
 		**out = **in
 	}
-	in.PrivateKeySecretRef.DeepCopyInto(&out.PrivateKeySecretRef)
+	if in.PrivateKeySecretRef != nil {
+		in, out := &in.PrivateKeySecretRef, &out.PrivateKeySecretRef
+		*out = new(v1.LocalSecretKeySelector)
+		**out = **in
+	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type
 		*out = new(string)
@@ -1604,7 +1608,11 @@ func (in *SSLParameters_2) DeepCopyInto(out *SSLParameters_2) {
 		*out = new(string)
 		**out = **in
 	}
-	in.PrivateKeySecretRef.DeepCopyInto(&out.PrivateKeySecretRef)
+	if in.PrivateKeySecretRef != nil {
+		in, out := &in.PrivateKeySecretRef, &out.PrivateKeySecretRef
+		*out = new(v1.LocalSecretKeySelector)
+		**out = **in
+	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type
 		*out = new(string)

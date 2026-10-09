@@ -64,6 +64,11 @@ func (in *JobInitParameters) DeepCopyInto(out *JobInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.FilterAttackTraffic != nil {
+		in, out := &in.FilterAttackTraffic, &out.FilterAttackTraffic
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Frequency != nil {
 		in, out := &in.Frequency, &out.Frequency
 		*out = new(string)
@@ -186,6 +191,11 @@ func (in *JobObservation) DeepCopyInto(out *JobObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.FilterAttackTraffic != nil {
+		in, out := &in.FilterAttackTraffic, &out.FilterAttackTraffic
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Frequency != nil {
 		in, out := &in.Frequency, &out.Frequency
 		*out = new(string)
@@ -280,6 +290,11 @@ func (in *JobParameters) DeepCopyInto(out *JobParameters) {
 	if in.Filter != nil {
 		in, out := &in.Filter, &out.Filter
 		*out = new(string)
+		**out = **in
+	}
+	if in.FilterAttackTraffic != nil {
+		in, out := &in.FilterAttackTraffic, &out.FilterAttackTraffic
+		*out = new(bool)
 		**out = **in
 	}
 	if in.Frequency != nil {

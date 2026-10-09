@@ -14,6 +14,59 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type CacheOptionsInitParameters struct {
+
+	// (Boolean) Whether cached responses are shared across Worker version
+	// uploads. This is independent of enabled. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	// Whether cached responses are shared across Worker version
+	// uploads. This is independent of `enabled`. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	CrossVersionCache *bool `json:"crossVersionCache,omitempty" tf:"cross_version_cache,omitempty"`
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether caching is enabled for this Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CacheOptionsObservation struct {
+
+	// (Boolean) Whether cached responses are shared across Worker version
+	// uploads. This is independent of enabled. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	// Whether cached responses are shared across Worker version
+	// uploads. This is independent of `enabled`. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	CrossVersionCache *bool `json:"crossVersionCache,omitempty" tf:"cross_version_cache,omitempty"`
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether caching is enabled for this Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CacheOptionsParameters struct {
+
+	// (Boolean) Whether cached responses are shared across Worker version
+	// uploads. This is independent of enabled. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	// Whether cached responses are shared across Worker version
+	// uploads. This is independent of `enabled`. It can stay true
+	// while caching is off, so the preference survives turning
+	// caching off and back on.
+	// +kubebuilder:validation:Optional
+	CrossVersionCache *bool `json:"crossVersionCache,omitempty" tf:"cross_version_cache,omitempty"`
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether caching is enabled for this Worker.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type DispatchNamespaceOutboundsInitParameters struct {
 }
 
@@ -48,7 +101,7 @@ type DomainsObservation struct {
 	// ID of the TLS certificate issued for the custom domain.
 	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
 
-	// (String) Full hostname of the custom domain, including the zone name.
+	// (String) HTTP hostname for targeted placement.
 	// Full hostname of the custom domain, including the zone name.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
@@ -91,6 +144,85 @@ type DurableObjectsObservation struct {
 }
 
 type DurableObjectsParameters struct {
+}
+
+type EnvInitParameters struct {
+
+	// (String) The kind of resource that the binding provides.
+	// The kind of resource that the binding provides.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type EnvObservation struct {
+
+	// (String) The kind of resource that the binding provides.
+	// The kind of resource that the binding provides.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type EnvParameters struct {
+
+	// (String) The kind of resource that the binding provides.
+	// The kind of resource that the binding provides.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type IssuesInitParameters struct {
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether real-time Issues are enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type IssuesObservation struct {
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether real-time Issues are enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type IssuesParameters struct {
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether real-time Issues are enabled for the Worker.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type LimitsInitParameters struct {
+
+	// (Number) The amount of CPU time this Worker can use in milliseconds.
+	// The amount of CPU time this Worker can use in milliseconds.
+	CPUMs *float64 `json:"cpuMs,omitempty" tf:"cpu_ms,omitempty"`
+
+	// (Number) The number of subrequests this Worker can make per request.
+	// The number of subrequests this Worker can make per request.
+	Subrequests *float64 `json:"subrequests,omitempty" tf:"subrequests,omitempty"`
+}
+
+type LimitsObservation struct {
+
+	// (Number) The amount of CPU time this Worker can use in milliseconds.
+	// The amount of CPU time this Worker can use in milliseconds.
+	CPUMs *float64 `json:"cpuMs,omitempty" tf:"cpu_ms,omitempty"`
+
+	// (Number) The number of subrequests this Worker can make per request.
+	// The number of subrequests this Worker can make per request.
+	Subrequests *float64 `json:"subrequests,omitempty" tf:"subrequests,omitempty"`
+}
+
+type LimitsParameters struct {
+
+	// (Number) The amount of CPU time this Worker can use in milliseconds.
+	// The amount of CPU time this Worker can use in milliseconds.
+	// +kubebuilder:validation:Optional
+	CPUMs *float64 `json:"cpuMs,omitempty" tf:"cpu_ms,omitempty"`
+
+	// (Number) The number of subrequests this Worker can make per request.
+	// The number of subrequests this Worker can make per request.
+	// +kubebuilder:validation:Optional
+	Subrequests *float64 `json:"subrequests,omitempty" tf:"subrequests,omitempty"`
 }
 
 type LogsInitParameters struct {
@@ -177,11 +309,110 @@ type ObservabilityInitParameters struct {
 	// The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
 	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
 
+	// time Issues settings for the Worker. (see below for nested schema)
+	Issues *IssuesInitParameters `json:"issues,omitempty" tf:"issues,omitempty"`
+
 	// (Attributes) Log settings for the Worker. (see below for nested schema)
 	Logs *LogsInitParameters `json:"logs,omitempty" tf:"logs,omitempty"`
 
 	// (Attributes) Trace settings for the Worker. (see below for nested schema)
 	Traces *TracesInitParameters `json:"traces,omitempty" tf:"traces,omitempty"`
+}
+
+type ObservabilityIssuesInitParameters struct {
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether real-time Issues are enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type ObservabilityIssuesObservation struct {
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether real-time Issues are enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type ObservabilityIssuesParameters struct {
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether real-time Issues are enabled for the Worker.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type ObservabilityLogsInitParameters struct {
+
+	// (List of String) A list of destinations where logs will be exported to.
+	// A list of destinations where logs will be exported to.
+	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether logs are enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// The sampling rate for logs. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// (Boolean) Whether invocation logs are enabled for the Worker.
+	// Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
+	InvocationLogs *bool `json:"invocationLogs,omitempty" tf:"invocation_logs,omitempty"`
+
+	// (Boolean) Whether log persistence is enabled for the Worker.
+	// Whether log persistence is enabled for the Worker.
+	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
+}
+
+type ObservabilityLogsObservation struct {
+
+	// (List of String) A list of destinations where logs will be exported to.
+	// A list of destinations where logs will be exported to.
+	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether logs are enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// The sampling rate for logs. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// (Boolean) Whether invocation logs are enabled for the Worker.
+	// Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
+	InvocationLogs *bool `json:"invocationLogs,omitempty" tf:"invocation_logs,omitempty"`
+
+	// (Boolean) Whether log persistence is enabled for the Worker.
+	// Whether log persistence is enabled for the Worker.
+	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
+}
+
+type ObservabilityLogsParameters struct {
+
+	// (List of String) A list of destinations where logs will be exported to.
+	// A list of destinations where logs will be exported to.
+	// +kubebuilder:validation:Optional
+	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether logs are enabled for the Worker.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// The sampling rate for logs. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// +kubebuilder:validation:Optional
+	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// (Boolean) Whether invocation logs are enabled for the Worker.
+	// Whether [invocation logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/#invocation-logs) are enabled for the Worker.
+	// +kubebuilder:validation:Optional
+	InvocationLogs *bool `json:"invocationLogs,omitempty" tf:"invocation_logs,omitempty"`
+
+	// (Boolean) Whether log persistence is enabled for the Worker.
+	// Whether log persistence is enabled for the Worker.
+	// +kubebuilder:validation:Optional
+	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
 }
 
 type ObservabilityObservation struct {
@@ -193,6 +424,9 @@ type ObservabilityObservation struct {
 	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
 	// The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
 	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// time Issues settings for the Worker. (see below for nested schema)
+	Issues *IssuesObservation `json:"issues,omitempty" tf:"issues,omitempty"`
 
 	// (Attributes) Log settings for the Worker. (see below for nested schema)
 	Logs *LogsObservation `json:"logs,omitempty" tf:"logs,omitempty"`
@@ -213,6 +447,10 @@ type ObservabilityParameters struct {
 	// +kubebuilder:validation:Optional
 	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
 
+	// time Issues settings for the Worker. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Issues *IssuesParameters `json:"issues,omitempty" tf:"issues,omitempty"`
+
 	// (Attributes) Log settings for the Worker. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Logs *LogsParameters `json:"logs,omitempty" tf:"logs,omitempty"`
@@ -220,6 +458,323 @@ type ObservabilityParameters struct {
 	// (Attributes) Trace settings for the Worker. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Traces *TracesParameters `json:"traces,omitempty" tf:"traces,omitempty"`
+}
+
+type ObservabilityTracesInitParameters struct {
+
+	// (List of String) A list of destinations where logs will be exported to.
+	// A list of destinations where traces will be exported to.
+	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether traces are enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// The sampling rate for traces. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// (Boolean) Whether log persistence is enabled for the Worker.
+	// Whether trace persistence is enabled for the Worker.
+	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
+
+	// (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+	// Available values: "authenticated", "accept".
+	// Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled. Returns null when the trace propagation feature is not enabled for the account.
+	// Available values: "authenticated", "accept".
+	PropagationPolicy *string `json:"propagationPolicy,omitempty" tf:"propagation_policy,omitempty"`
+}
+
+type ObservabilityTracesObservation struct {
+
+	// (List of String) A list of destinations where logs will be exported to.
+	// A list of destinations where traces will be exported to.
+	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether traces are enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// The sampling rate for traces. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// (Boolean) Whether log persistence is enabled for the Worker.
+	// Whether trace persistence is enabled for the Worker.
+	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
+
+	// (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+	// Available values: "authenticated", "accept".
+	// Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled. Returns null when the trace propagation feature is not enabled for the account.
+	// Available values: "authenticated", "accept".
+	PropagationPolicy *string `json:"propagationPolicy,omitempty" tf:"propagation_policy,omitempty"`
+}
+
+type ObservabilityTracesParameters struct {
+
+	// (List of String) A list of destinations where logs will be exported to.
+	// A list of destinations where traces will be exported to.
+	// +kubebuilder:validation:Optional
+	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether traces are enabled for the Worker.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// The sampling rate for traces. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// +kubebuilder:validation:Optional
+	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// (Boolean) Whether log persistence is enabled for the Worker.
+	// Whether trace persistence is enabled for the Worker.
+	// +kubebuilder:validation:Optional
+	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
+
+	// (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+	// Available values: "authenticated", "accept".
+	// Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled. Returns null when the trace propagation feature is not enabled for the account.
+	// Available values: "authenticated", "accept".
+	// +kubebuilder:validation:Optional
+	PropagationPolicy *string `json:"propagationPolicy,omitempty" tf:"propagation_policy,omitempty"`
+}
+
+type PlacementInitParameters struct {
+
+	// (String) TCP host and port for targeted placement.
+	// TCP host and port for targeted placement.
+	Host *string `json:"host,omitempty" tf:"host,omitempty"`
+
+	// (String) HTTP hostname for targeted placement.
+	// HTTP hostname for targeted placement.
+	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// (String) Enables Smart Placement.
+	// Available values: "smart", "targeted".
+	// Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+	// Available values: "smart", "targeted".
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// (String) Cloud region for targeted placement in format 'provider:region'.
+	// Cloud region for targeted placement in format 'provider:region'.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// (Attributes List) Array of placement targets (currently limited to single target). (see below for nested schema)
+	Target []TargetInitParameters `json:"target,omitempty" tf:"target,omitempty"`
+}
+
+type PlacementObservation struct {
+
+	// (String) TCP host and port for targeted placement.
+	// TCP host and port for targeted placement.
+	Host *string `json:"host,omitempty" tf:"host,omitempty"`
+
+	// (String) HTTP hostname for targeted placement.
+	// HTTP hostname for targeted placement.
+	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// (String) Enables Smart Placement.
+	// Available values: "smart", "targeted".
+	// Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+	// Available values: "smart", "targeted".
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// (String) Cloud region for targeted placement in format 'provider:region'.
+	// Cloud region for targeted placement in format 'provider:region'.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// (Attributes List) Array of placement targets (currently limited to single target). (see below for nested schema)
+	Target []TargetObservation `json:"target,omitempty" tf:"target,omitempty"`
+}
+
+type PlacementParameters struct {
+
+	// (String) TCP host and port for targeted placement.
+	// TCP host and port for targeted placement.
+	// +kubebuilder:validation:Optional
+	Host *string `json:"host,omitempty" tf:"host,omitempty"`
+
+	// (String) HTTP hostname for targeted placement.
+	// HTTP hostname for targeted placement.
+	// +kubebuilder:validation:Optional
+	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// (String) Enables Smart Placement.
+	// Available values: "smart", "targeted".
+	// Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+	// Available values: "smart", "targeted".
+	// +kubebuilder:validation:Optional
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// (String) Cloud region for targeted placement in format 'provider:region'.
+	// Cloud region for targeted placement in format 'provider:region'.
+	// +kubebuilder:validation:Optional
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// (Attributes List) Array of placement targets (currently limited to single target). (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Target []TargetParameters `json:"target,omitempty" tf:"target,omitempty"`
+}
+
+type PreviewsBaseConfigInitParameters struct {
+
+	// (Attributes) Cache options used when creating new Previews. (see below for nested schema)
+	CacheOptions *CacheOptionsInitParameters `json:"cacheOptions,omitempty" tf:"cache_options,omitempty"`
+
+	// (Attributes Map) Bindings used when creating new Previews, keyed by binding name. (see below for nested schema)
+	Env map[string]EnvInitParameters `json:"env,omitempty" tf:"env,omitempty"`
+
+	// (Attributes) Resource limits enforced at runtime for newly created Previews. (see below for nested schema)
+	Limits *LimitsInitParameters `json:"limits,omitempty" tf:"limits,omitempty"`
+
+	// (Boolean) Whether logpush is enabled for the Worker.
+	// Whether logpush is enabled when creating new Previews.
+	Logpush *bool `json:"logpush,omitempty" tf:"logpush,omitempty"`
+
+	// (Attributes) Observability settings for the Worker. (see below for nested schema)
+	Observability *PreviewsBaseConfigObservabilityInitParameters `json:"observability,omitempty" tf:"observability,omitempty"`
+
+	// (Attributes) Placement configuration used when creating new Previews. (see below for nested schema)
+	Placement *PlacementInitParameters `json:"placement,omitempty" tf:"placement,omitempty"`
+
+	// (Attributes Set) Other Workers that should consume logs from the Worker. (see below for nested schema)
+	TailConsumers []TailConsumersInitParameters `json:"tailConsumers,omitempty" tf:"tail_consumers,omitempty"`
+}
+
+type PreviewsBaseConfigObservabilityInitParameters struct {
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether observability is enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// time Issues settings for the Worker. (see below for nested schema)
+	Issues *ObservabilityIssuesInitParameters `json:"issues,omitempty" tf:"issues,omitempty"`
+
+	// (Attributes) Log settings for the Worker. (see below for nested schema)
+	Logs *ObservabilityLogsInitParameters `json:"logs,omitempty" tf:"logs,omitempty"`
+
+	// (Boolean) Whether query strings are removed from request URLs in logs and traces.
+	// Whether query strings are removed from request URLs in logs and traces.
+	RedactQueryString *bool `json:"redactQueryString,omitempty" tf:"redact_query_string,omitempty"`
+
+	// (Attributes) Trace settings for the Worker. (see below for nested schema)
+	Traces *ObservabilityTracesInitParameters `json:"traces,omitempty" tf:"traces,omitempty"`
+}
+
+type PreviewsBaseConfigObservabilityObservation struct {
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether observability is enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// time Issues settings for the Worker. (see below for nested schema)
+	Issues *ObservabilityIssuesObservation `json:"issues,omitempty" tf:"issues,omitempty"`
+
+	// (Attributes) Log settings for the Worker. (see below for nested schema)
+	Logs *ObservabilityLogsObservation `json:"logs,omitempty" tf:"logs,omitempty"`
+
+	// (Boolean) Whether query strings are removed from request URLs in logs and traces.
+	// Whether query strings are removed from request URLs in logs and traces.
+	RedactQueryString *bool `json:"redactQueryString,omitempty" tf:"redact_query_string,omitempty"`
+
+	// (Attributes) Trace settings for the Worker. (see below for nested schema)
+	Traces *ObservabilityTracesObservation `json:"traces,omitempty" tf:"traces,omitempty"`
+}
+
+type PreviewsBaseConfigObservabilityParameters struct {
+
+	// (Boolean) Whether observability is enabled for the Worker.
+	// Whether observability is enabled for the Worker.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// (Number) The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// The sampling rate for observability. From 0 to 1 (1 = 100%, 0.1 = 10%).
+	// +kubebuilder:validation:Optional
+	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// time Issues settings for the Worker. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Issues *ObservabilityIssuesParameters `json:"issues,omitempty" tf:"issues,omitempty"`
+
+	// (Attributes) Log settings for the Worker. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Logs *ObservabilityLogsParameters `json:"logs,omitempty" tf:"logs,omitempty"`
+
+	// (Boolean) Whether query strings are removed from request URLs in logs and traces.
+	// Whether query strings are removed from request URLs in logs and traces.
+	// +kubebuilder:validation:Optional
+	RedactQueryString *bool `json:"redactQueryString,omitempty" tf:"redact_query_string,omitempty"`
+
+	// (Attributes) Trace settings for the Worker. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Traces *ObservabilityTracesParameters `json:"traces,omitempty" tf:"traces,omitempty"`
+}
+
+type PreviewsBaseConfigObservation struct {
+
+	// (Attributes) Cache options used when creating new Previews. (see below for nested schema)
+	CacheOptions *CacheOptionsObservation `json:"cacheOptions,omitempty" tf:"cache_options,omitempty"`
+
+	// (Attributes Map) Bindings used when creating new Previews, keyed by binding name. (see below for nested schema)
+	Env map[string]EnvObservation `json:"env,omitempty" tf:"env,omitempty"`
+
+	// (Attributes) Resource limits enforced at runtime for newly created Previews. (see below for nested schema)
+	Limits *LimitsObservation `json:"limits,omitempty" tf:"limits,omitempty"`
+
+	// (Boolean) Whether logpush is enabled for the Worker.
+	// Whether logpush is enabled when creating new Previews.
+	Logpush *bool `json:"logpush,omitempty" tf:"logpush,omitempty"`
+
+	// (Attributes) Observability settings for the Worker. (see below for nested schema)
+	Observability *PreviewsBaseConfigObservabilityObservation `json:"observability,omitempty" tf:"observability,omitempty"`
+
+	// (Attributes) Placement configuration used when creating new Previews. (see below for nested schema)
+	Placement *PlacementObservation `json:"placement,omitempty" tf:"placement,omitempty"`
+
+	// (Attributes Set) Other Workers that should consume logs from the Worker. (see below for nested schema)
+	TailConsumers []TailConsumersObservation `json:"tailConsumers,omitempty" tf:"tail_consumers,omitempty"`
+}
+
+type PreviewsBaseConfigParameters struct {
+
+	// (Attributes) Cache options used when creating new Previews. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	CacheOptions *CacheOptionsParameters `json:"cacheOptions,omitempty" tf:"cache_options,omitempty"`
+
+	// (Attributes Map) Bindings used when creating new Previews, keyed by binding name. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Env map[string]EnvParameters `json:"env,omitempty" tf:"env,omitempty"`
+
+	// (Attributes) Resource limits enforced at runtime for newly created Previews. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Limits *LimitsParameters `json:"limits,omitempty" tf:"limits,omitempty"`
+
+	// (Boolean) Whether logpush is enabled for the Worker.
+	// Whether logpush is enabled when creating new Previews.
+	// +kubebuilder:validation:Optional
+	Logpush *bool `json:"logpush,omitempty" tf:"logpush,omitempty"`
+
+	// (Attributes) Observability settings for the Worker. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Observability *PreviewsBaseConfigObservabilityParameters `json:"observability,omitempty" tf:"observability,omitempty"`
+
+	// (Attributes) Placement configuration used when creating new Previews. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Placement *PlacementParameters `json:"placement,omitempty" tf:"placement,omitempty"`
+
+	// (Attributes Set) Other Workers that should consume logs from the Worker. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	TailConsumers []TailConsumersParameters `json:"tailConsumers,omitempty" tf:"tail_consumers,omitempty"`
 }
 
 type QueuesInitParameters struct {
@@ -284,9 +839,17 @@ type SubdomainObservation struct {
 	// Whether the *.workers.dev subdomain is enabled for the Worker.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// my-worker.my-subdomain.workers.dev. Present whenever the account owns a workers.dev subdomain, regardless of whether previews_enabled is true, so presence does not imply preview URLs are currently live. Absent only when the account owns no workers.dev subdomain.
+	// Prepend a version or preview prefix to this host suffix to form the *.workers.dev [preview URL](https://developers.cloudflare.com/workers/configuration/previews/) the Worker would serve on once previews are enabled, e.g. `https://<prefix>-my-worker.my-subdomain.workers.dev`. Present whenever the account owns a workers.dev subdomain, regardless of whether `previews_enabled` is true, so presence does not imply preview URLs are currently live. Absent only when the account owns no workers.dev subdomain.
+	PreviewURLSuffix *string `json:"previewUrlSuffix,omitempty" tf:"preview_url_suffix,omitempty"`
+
 	// (Boolean) Whether preview URLs are enabled for the Worker.
 	// Whether [preview URLs](https://developers.cloudflare.com/workers/configuration/previews/) are enabled for the Worker.
 	PreviewsEnabled *bool `json:"previewsEnabled,omitempty" tf:"previews_enabled,omitempty"`
+
+	// (String) The address the Worker would serve on once its *.workers.dev subdomain is enabled. Present whenever the account owns a workers.dev subdomain, regardless of whether enabled is true, so presence does not imply the Worker is currently live at this URL. Absent only when the account owns no workers.dev subdomain.
+	// The address the Worker would serve on once its *.workers.dev subdomain is enabled. Present whenever the account owns a workers.dev subdomain, regardless of whether `enabled` is true, so presence does not imply the Worker is currently live at this URL. Absent only when the account owns no workers.dev subdomain.
+	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
 
 type SubdomainParameters struct {
@@ -322,6 +885,54 @@ type TailConsumersParameters struct {
 	// Name of the consumer Worker.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
+}
+
+type TargetInitParameters struct {
+
+	// (String) TCP host and port for targeted placement.
+	// TCP host:port for targeted placement.
+	Host *string `json:"host,omitempty" tf:"host,omitempty"`
+
+	// (String) HTTP hostname for targeted placement.
+	// HTTP hostname for targeted placement.
+	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// (String) Cloud region for targeted placement in format 'provider:region'.
+	// Cloud region in format 'provider:region'.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+}
+
+type TargetObservation struct {
+
+	// (String) TCP host and port for targeted placement.
+	// TCP host:port for targeted placement.
+	Host *string `json:"host,omitempty" tf:"host,omitempty"`
+
+	// (String) HTTP hostname for targeted placement.
+	// HTTP hostname for targeted placement.
+	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// (String) Cloud region for targeted placement in format 'provider:region'.
+	// Cloud region in format 'provider:region'.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+}
+
+type TargetParameters struct {
+
+	// (String) TCP host and port for targeted placement.
+	// TCP host:port for targeted placement.
+	// +kubebuilder:validation:Optional
+	Host *string `json:"host,omitempty" tf:"host,omitempty"`
+
+	// (String) HTTP hostname for targeted placement.
+	// HTTP hostname for targeted placement.
+	// +kubebuilder:validation:Optional
+	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// (String) Cloud region for targeted placement in format 'provider:region'.
+	// Cloud region in format 'provider:region'.
+	// +kubebuilder:validation:Optional
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
 type TracesInitParameters struct {
@@ -419,6 +1030,10 @@ type WorkerInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
+	// (Boolean) If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+	// If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+	Force *bool `json:"force,omitempty" tf:"force,omitempty"`
+
 	// (Boolean) Whether logpush is enabled for the Worker.
 	// Whether logpush is enabled for the Worker.
 	Logpush *bool `json:"logpush,omitempty" tf:"logpush,omitempty"`
@@ -430,6 +1045,9 @@ type WorkerInitParameters struct {
 	// (Attributes) Observability settings for the Worker. (see below for nested schema)
 	Observability *ObservabilityInitParameters `json:"observability,omitempty" tf:"observability,omitempty"`
 
+	// (Attributes) Template configuration used when creating new Previews for this Worker. (see below for nested schema)
+	PreviewsBaseConfig *PreviewsBaseConfigInitParameters `json:"previewsBaseConfig,omitempty" tf:"previews_base_config,omitempty"`
+
 	// (Attributes) Subdomain settings for the Worker. (see below for nested schema)
 	Subdomain *SubdomainInitParameters `json:"subdomain,omitempty" tf:"subdomain,omitempty"`
 
@@ -439,7 +1057,7 @@ type WorkerInitParameters struct {
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// (Attributes Set) Other Workers that should consume logs from the Worker. (see below for nested schema)
-	TailConsumers []TailConsumersInitParameters `json:"tailConsumers,omitempty" tf:"tail_consumers,omitempty"`
+	TailConsumers []WorkerTailConsumersInitParameters `json:"tailConsumers,omitempty" tf:"tail_consumers,omitempty"`
 }
 
 type WorkerObservation struct {
@@ -456,6 +1074,10 @@ type WorkerObservation struct {
 	// When the Worker's most recent deployment was created. `null` if the Worker has never been deployed.
 	DeployedOn *string `json:"deployedOn,omitempty" tf:"deployed_on,omitempty"`
 
+	// (Boolean) If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+	// If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+	Force *bool `json:"force,omitempty" tf:"force,omitempty"`
+
 	// (String) Immutable ID of the Worker.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -470,6 +1092,9 @@ type WorkerObservation struct {
 	// (Attributes) Observability settings for the Worker. (see below for nested schema)
 	Observability *ObservabilityObservation `json:"observability,omitempty" tf:"observability,omitempty"`
 
+	// (Attributes) Template configuration used when creating new Previews for this Worker. (see below for nested schema)
+	PreviewsBaseConfig *PreviewsBaseConfigObservation `json:"previewsBaseConfig,omitempty" tf:"previews_base_config,omitempty"`
+
 	// (Attributes) Other resources that reference the Worker and depend on it existing. (see below for nested schema)
 	References *ReferencesObservation `json:"references,omitempty" tf:"references,omitempty"`
 
@@ -482,7 +1107,7 @@ type WorkerObservation struct {
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// (Attributes Set) Other Workers that should consume logs from the Worker. (see below for nested schema)
-	TailConsumers []TailConsumersObservation `json:"tailConsumers,omitempty" tf:"tail_consumers,omitempty"`
+	TailConsumers []WorkerTailConsumersObservation `json:"tailConsumers,omitempty" tf:"tail_consumers,omitempty"`
 
 	// (String) When the Worker was most recently updated.
 	// When the Worker was most recently updated.
@@ -505,6 +1130,11 @@ type WorkerParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
+	// (Boolean) If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+	// If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+	// +kubebuilder:validation:Optional
+	Force *bool `json:"force,omitempty" tf:"force,omitempty"`
+
 	// (Boolean) Whether logpush is enabled for the Worker.
 	// Whether logpush is enabled for the Worker.
 	// +kubebuilder:validation:Optional
@@ -519,6 +1149,10 @@ type WorkerParameters struct {
 	// +kubebuilder:validation:Optional
 	Observability *ObservabilityParameters `json:"observability,omitempty" tf:"observability,omitempty"`
 
+	// (Attributes) Template configuration used when creating new Previews for this Worker. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	PreviewsBaseConfig *PreviewsBaseConfigParameters `json:"previewsBaseConfig,omitempty" tf:"previews_base_config,omitempty"`
+
 	// (Attributes) Subdomain settings for the Worker. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Subdomain *SubdomainParameters `json:"subdomain,omitempty" tf:"subdomain,omitempty"`
@@ -531,7 +1165,29 @@ type WorkerParameters struct {
 
 	// (Attributes Set) Other Workers that should consume logs from the Worker. (see below for nested schema)
 	// +kubebuilder:validation:Optional
-	TailConsumers []TailConsumersParameters `json:"tailConsumers,omitempty" tf:"tail_consumers,omitempty"`
+	TailConsumers []WorkerTailConsumersParameters `json:"tailConsumers,omitempty" tf:"tail_consumers,omitempty"`
+}
+
+type WorkerTailConsumersInitParameters struct {
+
+	// (String) Name of the Worker.
+	// Name of the consumer Worker.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
+type WorkerTailConsumersObservation struct {
+
+	// (String) Name of the Worker.
+	// Name of the consumer Worker.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
+type WorkerTailConsumersParameters struct {
+
+	// (String) Name of the Worker.
+	// Name of the consumer Worker.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name" tf:"name,omitempty"`
 }
 
 type WorkersInitParameters struct {

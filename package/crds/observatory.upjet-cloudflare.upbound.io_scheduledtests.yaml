@@ -76,7 +76,9 @@ spec:
                   frequency:
                     description: |-
                       (String) The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
+                      Available values: "DAILY", "WEEKLY".
                       The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
+                      Available values: "DAILY", "WEEKLY".
                     type: string
                   region:
                     description: |-
@@ -111,7 +113,9 @@ spec:
                   frequency:
                     description: |-
                       (String) The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
+                      Available values: "DAILY", "WEEKLY".
                       The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
+                      Available values: "DAILY", "WEEKLY".
                     type: string
                   region:
                     description: |-
@@ -233,7 +237,9 @@ spec:
                   frequency:
                     description: |-
                       (String) The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
+                      Available values: "DAILY", "WEEKLY".
                       The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
+                      Available values: "DAILY", "WEEKLY".
                     type: string
                   id:
                     description: (String) A URL.
@@ -251,6 +257,7 @@ spec:
                       frequency:
                         description: |-
                           (String) The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
+                          Available values: "DAILY", "WEEKLY".
                           The frequency of the test.
                           Available values: "DAILY", "WEEKLY".
                         type: string

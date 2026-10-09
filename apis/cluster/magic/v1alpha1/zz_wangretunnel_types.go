@@ -19,9 +19,17 @@ type BGPInitParameters struct {
 	// ASN used on the customer end of the BGP session
 	CustomerAsn *float64 `json:"customerAsn,omitempty" tf:"customer_asn,omitempty"`
 
+	// (String) UUID of the BGP filter profile to apply to routes advertised by Cloudflare.
+	// UUID of the BGP filter profile to apply to routes advertised by Cloudflare.
+	ExportFilterID *string `json:"exportFilterId,omitempty" tf:"export_filter_id,omitempty"`
+
 	// (List of String) Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
 	// Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
 	ExtraPrefixes []*string `json:"extraPrefixes,omitempty" tf:"extra_prefixes,omitempty"`
+
+	// (String) UUID of the BGP filter profile to apply to routes advertised to Cloudflare.
+	// UUID of the BGP filter profile to apply to routes advertised to Cloudflare.
+	ImportFilterID *string `json:"importFilterId,omitempty" tf:"import_filter_id,omitempty"`
 
 	// (String) MD5 key to use for session authentication.
 	// MD5 key to use for session authentication.
@@ -49,9 +57,17 @@ type BGPObservation struct {
 	// ASN used on the customer end of the BGP session
 	CustomerAsn *float64 `json:"customerAsn,omitempty" tf:"customer_asn,omitempty"`
 
+	// (String) UUID of the BGP filter profile to apply to routes advertised by Cloudflare.
+	// UUID of the BGP filter profile to apply to routes advertised by Cloudflare.
+	ExportFilterID *string `json:"exportFilterId,omitempty" tf:"export_filter_id,omitempty"`
+
 	// (List of String) Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
 	// Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
 	ExtraPrefixes []*string `json:"extraPrefixes,omitempty" tf:"extra_prefixes,omitempty"`
+
+	// (String) UUID of the BGP filter profile to apply to routes advertised to Cloudflare.
+	// UUID of the BGP filter profile to apply to routes advertised to Cloudflare.
+	ImportFilterID *string `json:"importFilterId,omitempty" tf:"import_filter_id,omitempty"`
 
 	// (String) MD5 key to use for session authentication.
 	// MD5 key to use for session authentication.
@@ -80,10 +96,20 @@ type BGPParameters struct {
 	// +kubebuilder:validation:Optional
 	CustomerAsn *float64 `json:"customerAsn" tf:"customer_asn,omitempty"`
 
+	// (String) UUID of the BGP filter profile to apply to routes advertised by Cloudflare.
+	// UUID of the BGP filter profile to apply to routes advertised by Cloudflare.
+	// +kubebuilder:validation:Optional
+	ExportFilterID *string `json:"exportFilterId,omitempty" tf:"export_filter_id,omitempty"`
+
 	// (List of String) Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
 	// Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
 	// +kubebuilder:validation:Optional
 	ExtraPrefixes []*string `json:"extraPrefixes,omitempty" tf:"extra_prefixes,omitempty"`
+
+	// (String) UUID of the BGP filter profile to apply to routes advertised to Cloudflare.
+	// UUID of the BGP filter profile to apply to routes advertised to Cloudflare.
+	// +kubebuilder:validation:Optional
+	ImportFilterID *string `json:"importFilterId,omitempty" tf:"import_filter_id,omitempty"`
 
 	// (String) MD5 key to use for session authentication.
 	// MD5 key to use for session authentication.

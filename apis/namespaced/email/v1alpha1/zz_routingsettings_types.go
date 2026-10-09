@@ -16,6 +16,10 @@ import (
 
 type RoutingSettingsInitParameters struct {
 
+	// addressing) is honored when matching incoming mail against routing rules.
+	// Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+	SupportSubaddress *bool `json:"supportSubaddress,omitempty" tf:"support_subaddress,omitempty"`
+
 	// (String) Identifier.
 	// Identifier.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
@@ -52,6 +56,10 @@ type RoutingSettingsObservation struct {
 	// Available values: "ready", "unconfigured", "misconfigured", "misconfigured/locked", "unlocked".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
+	// addressing) is honored when matching incoming mail against routing rules.
+	// Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+	SupportSubaddress *bool `json:"supportSubaddress,omitempty" tf:"support_subaddress,omitempty"`
+
 	// (String, Deprecated) Email Routing settings tag. (Deprecated, replaced by Email Routing settings identifier)
 	// Email Routing settings tag. (Deprecated, replaced by Email Routing settings identifier)
 	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
@@ -62,6 +70,11 @@ type RoutingSettingsObservation struct {
 }
 
 type RoutingSettingsParameters struct {
+
+	// addressing) is honored when matching incoming mail against routing rules.
+	// Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+	// +kubebuilder:validation:Optional
+	SupportSubaddress *bool `json:"supportSubaddress,omitempty" tf:"support_subaddress,omitempty"`
 
 	// (String) Identifier.
 	// Identifier.

@@ -71,8 +71,9 @@ type LockdownInitParameters struct {
 	// The priority of the rule to control the processing order. A lower number indicates higher priority. If not provided, any rules with a configured priority will be processed before rules without a priority.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
-	// (List of String) The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
+	// (Set of String) The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
 	// The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
+	// +listType=set
 	Urls []*string `json:"urls,omitempty" tf:"urls,omitempty"`
 
 	// (String) Defines an identifier.
@@ -117,8 +118,9 @@ type LockdownObservation struct {
 	// The priority of the rule to control the processing order. A lower number indicates higher priority. If not provided, any rules with a configured priority will be processed before rules without a priority.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
-	// (List of String) The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
+	// (Set of String) The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
 	// The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
+	// +listType=set
 	Urls []*string `json:"urls,omitempty" tf:"urls,omitempty"`
 
 	// (String) Defines an identifier.
@@ -147,9 +149,10 @@ type LockdownParameters struct {
 	// +kubebuilder:validation:Optional
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
-	// (List of String) The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
+	// (Set of String) The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
 	// The URLs to include in the current WAF override. You can use wildcards. Each entered URL will be escaped before use, which means you can only use simple wildcard patterns.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Urls []*string `json:"urls,omitempty" tf:"urls,omitempty"`
 
 	// (String) Defines an identifier.

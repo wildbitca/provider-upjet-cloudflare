@@ -27,14 +27,16 @@ type SecurityTrustedDomainsInitParameters struct {
 	// Select to prevent recently registered domains from triggering a Suspicious or Malicious disposition.
 	IsRecent *bool `json:"isRecent,omitempty" tf:"is_recent,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether pattern is a regular expression instead of a literal domain.
+	// Whether `pattern` is a regular expression instead of a literal domain.
 	IsRegex *bool `json:"isRegex,omitempty" tf:"is_regex,omitempty"`
 
 	// (Boolean) Select for partner or other approved domains that have similar spelling to your connected domains. Prevents listed domains from triggering a Spoof disposition.
 	// Select for partner or other approved domains that have similar spelling to your connected domains. Prevents listed domains from triggering a Spoof disposition.
 	IsSimilarity *bool `json:"isSimilarity,omitempty" tf:"is_similarity,omitempty"`
 
-	// (String)
+	// (String) The domain pattern to trust, e.g. example.com.
+	// The domain pattern to trust, e.g. `example.com`.
 	Pattern *string `json:"pattern,omitempty" tf:"pattern,omitempty"`
 }
 
@@ -50,14 +52,15 @@ type SecurityTrustedDomainsObservation struct {
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) Trusted domain identifier
+	// (String) Trusted domain identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Boolean) Select to prevent recently registered domains from triggering a Suspicious or Malicious disposition.
 	// Select to prevent recently registered domains from triggering a Suspicious or Malicious disposition.
 	IsRecent *bool `json:"isRecent,omitempty" tf:"is_recent,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether pattern is a regular expression instead of a literal domain.
+	// Whether `pattern` is a regular expression instead of a literal domain.
 	IsRegex *bool `json:"isRegex,omitempty" tf:"is_regex,omitempty"`
 
 	// (Boolean) Select for partner or other approved domains that have similar spelling to your connected domains. Prevents listed domains from triggering a Spoof disposition.
@@ -71,7 +74,8 @@ type SecurityTrustedDomainsObservation struct {
 	// (String)
 	ModifiedAt *string `json:"modifiedAt,omitempty" tf:"modified_at,omitempty"`
 
-	// (String)
+	// (String) The domain pattern to trust, e.g. example.com.
+	// The domain pattern to trust, e.g. `example.com`.
 	Pattern *string `json:"pattern,omitempty" tf:"pattern,omitempty"`
 }
 
@@ -91,7 +95,8 @@ type SecurityTrustedDomainsParameters struct {
 	// +kubebuilder:validation:Optional
 	IsRecent *bool `json:"isRecent,omitempty" tf:"is_recent,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether pattern is a regular expression instead of a literal domain.
+	// Whether `pattern` is a regular expression instead of a literal domain.
 	// +kubebuilder:validation:Optional
 	IsRegex *bool `json:"isRegex,omitempty" tf:"is_regex,omitempty"`
 
@@ -100,7 +105,8 @@ type SecurityTrustedDomainsParameters struct {
 	// +kubebuilder:validation:Optional
 	IsSimilarity *bool `json:"isSimilarity,omitempty" tf:"is_similarity,omitempty"`
 
-	// (String)
+	// (String) The domain pattern to trust, e.g. example.com.
+	// The domain pattern to trust, e.g. `example.com`.
 	// +kubebuilder:validation:Optional
 	Pattern *string `json:"pattern,omitempty" tf:"pattern,omitempty"`
 }

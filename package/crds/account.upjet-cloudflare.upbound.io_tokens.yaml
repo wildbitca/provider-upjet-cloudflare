@@ -117,7 +117,7 @@ spec:
                       The time before which the token MUST NOT be accepted for processing.
                     type: string
                   policies:
-                    description: (Attributes List) Set of access policies assigned
+                    description: (Attributes List) List of access policies assigned
                       to the token. (see below for nested schema)
                     items:
                       properties:
@@ -213,7 +213,7 @@ spec:
                       The time before which the token MUST NOT be accepted for processing.
                     type: string
                   policies:
-                    description: (Attributes List) Set of access policies assigned
+                    description: (Attributes List) List of access policies assigned
                       to the token. (see below for nested schema)
                     items:
                       properties:
@@ -384,6 +384,15 @@ spec:
                             type: array
                         type: object
                     type: object
+                  creatorEmailAtCreation:
+                    description: |-
+                      (String) The email address of the user who created the token at the time of
+                      creation. Only present for Account Owned API Tokens when a creator email
+                      was available.
+                      The email address of the user who created the token at the time of
+                      creation. Only present for Account Owned API Tokens when a creator email
+                      was available.
+                    type: string
                   expiresOn:
                     description: |-
                       (String) The expiration time on or after which the JWT MUST NOT be accepted for processing.
@@ -418,7 +427,7 @@ spec:
                       The time before which the token MUST NOT be accepted for processing.
                     type: string
                   policies:
-                    description: (Attributes List) Set of access policies assigned
+                    description: (Attributes List) List of access policies assigned
                       to the token. (see below for nested schema)
                     items:
                       properties:
@@ -449,6 +458,23 @@ spec:
                           type: string
                       type: object
                     type: array
+                  provisionerId:
+                    description: |-
+                      provisioned token, this is the OAuth client identifier. Present
+                      when provisioner_type is present and null when the identifier is
+                      unavailable.
+                      The identifier of the service that provisioned the token. For an
+                      OAuth-provisioned token, this is the OAuth client identifier. Present
+                      when `provisioner_type` is present and null when the identifier is
+                      unavailable.
+                    type: string
+                  provisionerType:
+                    description: |-
+                      (String) The type of service that provisioned the token. Only present for
+                      provisioned Account Owned API Tokens.
+                      The type of service that provisioned the token. Only present for
+                      provisioned Account Owned API Tokens.
+                    type: string
                   status:
                     description: |-
                       (String) Status of the token.

@@ -74,7 +74,9 @@ spec:
                       Select to prevent recently registered domains from triggering a Suspicious or Malicious disposition.
                     type: boolean
                   isRegex:
-                    description: (Boolean)
+                    description: |-
+                      (Boolean) Whether pattern is a regular expression instead of a literal domain.
+                      Whether `pattern` is a regular expression instead of a literal domain.
                     type: boolean
                   isSimilarity:
                     description: |-
@@ -82,7 +84,9 @@ spec:
                       Select for partner or other approved domains that have similar spelling to your connected domains. Prevents listed domains from triggering a Spoof disposition.
                     type: boolean
                   pattern:
-                    description: (String)
+                    description: |-
+                      (String) The domain pattern to trust, e.g. example.com.
+                      The domain pattern to trust, e.g. `example.com`.
                     type: string
                 type: object
               initProvider:
@@ -112,7 +116,9 @@ spec:
                       Select to prevent recently registered domains from triggering a Suspicious or Malicious disposition.
                     type: boolean
                   isRegex:
-                    description: (Boolean)
+                    description: |-
+                      (Boolean) Whether pattern is a regular expression instead of a literal domain.
+                      Whether `pattern` is a regular expression instead of a literal domain.
                     type: boolean
                   isSimilarity:
                     description: |-
@@ -120,7 +126,9 @@ spec:
                       Select for partner or other approved domains that have similar spelling to your connected domains. Prevents listed domains from triggering a Spoof disposition.
                     type: boolean
                   pattern:
-                    description: (String)
+                    description: |-
+                      (String) The domain pattern to trust, e.g. example.com.
+                      The domain pattern to trust, e.g. `example.com`.
                     type: string
                 type: object
               managementPolicies:
@@ -208,7 +216,7 @@ spec:
                     description: (String)
                     type: string
                   id:
-                    description: (String) Trusted domain identifier
+                    description: (String) Trusted domain identifier.
                     type: string
                   isRecent:
                     description: |-
@@ -216,7 +224,9 @@ spec:
                       Select to prevent recently registered domains from triggering a Suspicious or Malicious disposition.
                     type: boolean
                   isRegex:
-                    description: (Boolean)
+                    description: |-
+                      (Boolean) Whether pattern is a regular expression instead of a literal domain.
+                      Whether `pattern` is a regular expression instead of a literal domain.
                     type: boolean
                   isSimilarity:
                     description: |-
@@ -232,7 +242,9 @@ spec:
                     description: (String)
                     type: string
                   pattern:
-                    description: (String)
+                    description: |-
+                      (String) The domain pattern to trust, e.g. example.com.
+                      The domain pattern to trust, e.g. `example.com`.
                     type: string
                 type: object
               conditions:

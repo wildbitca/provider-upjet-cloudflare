@@ -97,6 +97,24 @@ spec:
                       (Number) The amount of time in seconds to reconnect after having been disabled.
                       The amount of time in seconds to reconnect after having been disabled.
                     type: number
+                  browserExtensionConfig:
+                    description: (Attributes) Browser extension proxy settings. Required
+                      when profile_type is browser_extension and invalid for WARP
+                      profiles. (see below for nested schema)
+                    properties:
+                      proxyControl:
+                        description: |-
+                          (String) Whether the user may disable the browser extension proxy.
+                          Available values: "unlocked", "locked".
+                          Whether the user may disable the browser extension proxy.
+                          Available values: "unlocked", "locked".
+                        type: string
+                      proxyEnabled:
+                        description: |-
+                          (Boolean) Whether the browser extension proxy is active.
+                          Whether the browser extension proxy is active.
+                        type: boolean
+                    type: object
                   captivePortal:
                     description: |-
                       (Number) Turn on the captive portal after the specified amount of time.
@@ -242,6 +260,13 @@ spec:
                       (Number) The precedence of the policy. Lower values indicate higher precedence. Policies will be evaluated in ascending order of this field.
                       The precedence of the policy. Lower values indicate higher precedence. Policies will be evaluated in ascending order of this field.
                     type: number
+                  profileType:
+                    description: |-
+                      (String) The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+                      Available values: "warp", "browser_extension".
+                      The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+                      Available values: "warp", "browser_extension".
+                    type: string
                   registerInterfaceIpWithDns:
                     description: |-
                       premises DNS server.
@@ -281,6 +306,11 @@ spec:
                       (String) Determines which tunnel protocol to use.
                       Determines which tunnel protocol to use.
                     type: string
+                  uninstallProtection:
+                    description: |-
+                      (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
+                      Determines whether uninstalling the WARP client requires an override code. (Windows only).
+                    type: boolean
                   virtualNetworks:
                     description: (Attributes) Virtual network access settings for
                       the device. (see below for nested schema)
@@ -335,6 +365,24 @@ spec:
                       (Number) The amount of time in seconds to reconnect after having been disabled.
                       The amount of time in seconds to reconnect after having been disabled.
                     type: number
+                  browserExtensionConfig:
+                    description: (Attributes) Browser extension proxy settings. Required
+                      when profile_type is browser_extension and invalid for WARP
+                      profiles. (see below for nested schema)
+                    properties:
+                      proxyControl:
+                        description: |-
+                          (String) Whether the user may disable the browser extension proxy.
+                          Available values: "unlocked", "locked".
+                          Whether the user may disable the browser extension proxy.
+                          Available values: "unlocked", "locked".
+                        type: string
+                      proxyEnabled:
+                        description: |-
+                          (Boolean) Whether the browser extension proxy is active.
+                          Whether the browser extension proxy is active.
+                        type: boolean
+                    type: object
                   captivePortal:
                     description: |-
                       (Number) Turn on the captive portal after the specified amount of time.
@@ -480,6 +528,13 @@ spec:
                       (Number) The precedence of the policy. Lower values indicate higher precedence. Policies will be evaluated in ascending order of this field.
                       The precedence of the policy. Lower values indicate higher precedence. Policies will be evaluated in ascending order of this field.
                     type: number
+                  profileType:
+                    description: |-
+                      (String) The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+                      Available values: "warp", "browser_extension".
+                      The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+                      Available values: "warp", "browser_extension".
+                    type: string
                   registerInterfaceIpWithDns:
                     description: |-
                       premises DNS server.
@@ -519,6 +574,11 @@ spec:
                       (String) Determines which tunnel protocol to use.
                       Determines which tunnel protocol to use.
                     type: string
+                  uninstallProtection:
+                    description: |-
+                      (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
+                      Determines whether uninstalling the WARP client requires an override code. (Windows only).
+                    type: boolean
                   virtualNetworks:
                     description: (Attributes) Virtual network access settings for
                       the device. (see below for nested schema)
@@ -628,10 +688,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
                 || (has(self.initProvider) && has(self.initProvider.accountId))'
-            - message: spec.forProvider.match is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.match)
-                || (has(self.initProvider) && has(self.initProvider.match))'
             - message: spec.forProvider.name is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
@@ -665,6 +721,24 @@ spec:
                       (Number) The amount of time in seconds to reconnect after having been disabled.
                       The amount of time in seconds to reconnect after having been disabled.
                     type: number
+                  browserExtensionConfig:
+                    description: (Attributes) Browser extension proxy settings. Required
+                      when profile_type is browser_extension and invalid for WARP
+                      profiles. (see below for nested schema)
+                    properties:
+                      proxyControl:
+                        description: |-
+                          (String) Whether the user may disable the browser extension proxy.
+                          Available values: "unlocked", "locked".
+                          Whether the user may disable the browser extension proxy.
+                          Available values: "unlocked", "locked".
+                        type: string
+                      proxyEnabled:
+                        description: |-
+                          (Boolean) Whether the browser extension proxy is active.
+                          Whether the browser extension proxy is active.
+                        type: boolean
+                    type: object
                   captivePortal:
                     description: |-
                       (Number) Turn on the captive portal after the specified amount of time.
@@ -847,6 +921,13 @@ spec:
                       (Number) The precedence of the policy. Lower values indicate higher precedence. Policies will be evaluated in ascending order of this field.
                       The precedence of the policy. Lower values indicate higher precedence. Policies will be evaluated in ascending order of this field.
                     type: number
+                  profileType:
+                    description: |-
+                      (String) The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+                      Available values: "warp", "browser_extension".
+                      The client type to which the device settings profile applies. This field is set when the profile is created and cannot be changed.
+                      Available values: "warp", "browser_extension".
+                    type: string
                   registerInterfaceIpWithDns:
                     description: |-
                       premises DNS server.
@@ -902,6 +983,11 @@ spec:
                       (String) Determines which tunnel protocol to use.
                       Determines which tunnel protocol to use.
                     type: string
+                  uninstallProtection:
+                    description: |-
+                      (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
+                      Determines whether uninstalling the WARP client requires an override code. (Windows only).
+                    type: boolean
                   virtualNetworks:
                     description: (Attributes) Virtual network access settings for
                       the device. (see below for nested schema)

@@ -16,10 +16,21 @@ spec:
     autoConnect: 0
     captivePortal: 180
     disableAutoFallback: true
+    dnsSearchSuffixes:
+    - description: Example internal domains
+      suffix: internal.corp
     exclude:
     - address: 192.0.2.0/24
       description: Exclude testing domains from the tunnel
     excludeOfficeIps: true
+    globalAcceleration:
+      apiEndpoints:
+      - 198.51.100.1:443
+      enabled: true
+      masqueEndpoints:
+      - 198.51.100.1:443
+      wireguardEndpoints:
+      - 198.51.100.1:2408
     include:
     - address: 192.0.2.0/24
       description: Include testing domains in the tunnel
@@ -33,3 +44,8 @@ spec:
     supportUrl: https://1.1.1.1/help
     switchLocked: true
     tunnelProtocol: wireguard
+    uninstallProtection: false
+    virtualNetworks:
+      allowed:
+      - f174e90a-fafe-4643-bbbc-4a0ed4fc8415
+      default: f174e90a-fafe-4643-bbbc-4a0ed4fc8415

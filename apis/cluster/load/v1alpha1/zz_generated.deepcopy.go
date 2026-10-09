@@ -1228,6 +1228,17 @@ func (in *BalancerPoolInitParameters) DeepCopyInto(out *BalancerPoolInitParamete
 		*out = new(bool)
 		**out = **in
 	}
+	if in.HealthSources != nil {
+		in, out := &in.HealthSources, &out.HealthSources
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.Latitude != nil {
 		in, out := &in.Latitude, &out.Latitude
 		*out = new(float64)
@@ -1368,6 +1379,17 @@ func (in *BalancerPoolObservation) DeepCopyInto(out *BalancerPoolObservation) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.HealthSources != nil {
+		in, out := &in.HealthSources, &out.HealthSources
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -1486,6 +1508,17 @@ func (in *BalancerPoolParameters) DeepCopyInto(out *BalancerPoolParameters) {
 		in, out := &in.Enabled, &out.Enabled
 		*out = new(bool)
 		**out = **in
+	}
+	if in.HealthSources != nil {
+		in, out := &in.HealthSources, &out.HealthSources
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.Latitude != nil {
 		in, out := &in.Latitude, &out.Latitude

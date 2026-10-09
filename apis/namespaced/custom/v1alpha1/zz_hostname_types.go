@@ -95,7 +95,7 @@ type HostnameObservation struct {
 	// The custom hostname that will point to your hostname via CNAME.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// (String) Identifier.
+	// (String) Custom hostname identifier tag.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Attributes) This is a record which can be placed to activate a hostname. (see below for nested schema)

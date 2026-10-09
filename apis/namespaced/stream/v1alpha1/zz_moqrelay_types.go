@@ -15,45 +15,64 @@ import (
 )
 
 type ConfigInitParameters struct {
+
+	// (Attributes) (see below for nested schema)
 	LingeringSubscribe *LingeringSubscribeInitParameters `json:"lingeringSubscribe,omitempty" tf:"lingering_subscribe,omitempty"`
 
+	// (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+	// to when it has no local publisher for a requested namespace/track. (see below for nested schema)
 	Upstreams *UpstreamsInitParameters `json:"upstreams,omitempty" tf:"upstreams,omitempty"`
 }
 
 type ConfigObservation struct {
+
+	// (Attributes) (see below for nested schema)
 	LingeringSubscribe *LingeringSubscribeObservation `json:"lingeringSubscribe,omitempty" tf:"lingering_subscribe,omitempty"`
 
+	// (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+	// to when it has no local publisher for a requested namespace/track. (see below for nested schema)
 	Upstreams *UpstreamsObservation `json:"upstreams,omitempty" tf:"upstreams,omitempty"`
 }
 
 type ConfigParameters struct {
 
+	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	LingeringSubscribe *LingeringSubscribeParameters `json:"lingeringSubscribe,omitempty" tf:"lingering_subscribe,omitempty"`
 
+	// (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+	// to when it has no local publisher for a requested namespace/track. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Upstreams *UpstreamsParameters `json:"upstreams,omitempty" tf:"upstreams,omitempty"`
 }
 
 type LingeringSubscribeInitParameters struct {
+
+	// (Boolean)
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// level ceiling on lingering subscribe timeout (ms). Default 30000.
 	// Relay-level ceiling on lingering subscribe timeout (ms). Default 30000.
 	MaxTimeoutMs *float64 `json:"maxTimeoutMs,omitempty" tf:"max_timeout_ms,omitempty"`
 }
 
 type LingeringSubscribeObservation struct {
+
+	// (Boolean)
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// level ceiling on lingering subscribe timeout (ms). Default 30000.
 	// Relay-level ceiling on lingering subscribe timeout (ms). Default 30000.
 	MaxTimeoutMs *float64 `json:"maxTimeoutMs,omitempty" tf:"max_timeout_ms,omitempty"`
 }
 
 type LingeringSubscribeParameters struct {
 
+	// (Boolean)
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// level ceiling on lingering subscribe timeout (ms). Default 30000.
 	// Relay-level ceiling on lingering subscribe timeout (ms). Default 30000.
 	// +kubebuilder:validation:Optional
 	MaxTimeoutMs *float64 `json:"maxTimeoutMs,omitempty" tf:"max_timeout_ms,omitempty"`
@@ -61,6 +80,7 @@ type LingeringSubscribeParameters struct {
 
 type MOQRelayInitParameters struct {
 
+	// (String) Cloudflare account identifier.
 	// Cloudflare account identifier.
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/account/v1alpha1.Account
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
@@ -73,38 +93,50 @@ type MOQRelayInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
+	// (Attributes) upstreams and lingering_subscribe are mutually exclusive. (see below for nested schema)
 	Config *ConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
 
+	// readable name for the relay.
 	// Human-readable name for the relay.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type MOQRelayObservation struct {
 
+	// (String) Cloudflare account identifier.
 	// Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// (Attributes) upstreams and lingering_subscribe are mutually exclusive. (see below for nested schema)
 	Config *ConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
 
+	// (String)
 	Created *string `json:"created,omitempty" tf:"created,omitempty"`
 
+	// generated unique identifier (32 hex chars).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (String)
 	Modified *string `json:"modified,omitempty" tf:"modified,omitempty"`
 
+	// readable name for the relay.
 	// Human-readable name for the relay.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) "connected" when active, omitted otherwise.
+	// Available values: "connected".
 	// "connected" when active, omitted otherwise.
 	// Available values: "connected".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
+	// generated unique identifier (32 hex chars).
 	// Server-generated unique identifier (32 hex chars).
 	UID *string `json:"uid,omitempty" tf:"uid,omitempty"`
 }
 
 type MOQRelayParameters struct {
 
+	// (String) Cloudflare account identifier.
 	// Cloudflare account identifier.
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/account/v1alpha1.Account
 	// +kubebuilder:validation:Optional
@@ -118,50 +150,78 @@ type MOQRelayParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
+	// (Attributes) upstreams and lingering_subscribe are mutually exclusive. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Config *ConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
 
+	// readable name for the relay.
 	// Human-readable name for the relay.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type UpstreamsInitParameters struct {
+
+	// (Boolean)
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+	// to when it has no local publisher for a requested namespace/track. (see below for nested schema)
 	Upstreams []UpstreamsUpstreamsInitParameters `json:"upstreams,omitempty" tf:"upstreams,omitempty"`
 }
 
 type UpstreamsObservation struct {
+
+	// (Boolean)
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+	// to when it has no local publisher for a requested namespace/track. (see below for nested schema)
 	Upstreams []UpstreamsUpstreamsObservation `json:"upstreams,omitempty" tf:"upstreams,omitempty"`
 }
 
 type UpstreamsParameters struct {
 
+	// (Boolean)
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// (Attributes) Upstreams are external MOQT server publishers that a relay falls back
+	// to when it has no local publisher for a requested namespace/track. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Upstreams []UpstreamsUpstreamsParameters `json:"upstreams,omitempty" tf:"upstreams,omitempty"`
 }
 
 type UpstreamsUpstreamsInitParameters struct {
 
-	// Upstream MOQT server publisher URL.
+	// (String) Upstream MOQT server publisher URL. Must be an absolute URL with a
+	// host and a scheme the relay can dial: moqt:// (raw QUIC) or https://
+	// (WebTransport). Validated on update (PUT); rejected with 21013.
+	// Upstream MOQT server publisher URL. Must be an absolute URL with a
+	// host and a scheme the relay can dial: moqt:// (raw QUIC) or https://
+	// (WebTransport). Validated on update (PUT); rejected with 21013.
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
 
 type UpstreamsUpstreamsObservation struct {
 
-	// Upstream MOQT server publisher URL.
+	// (String) Upstream MOQT server publisher URL. Must be an absolute URL with a
+	// host and a scheme the relay can dial: moqt:// (raw QUIC) or https://
+	// (WebTransport). Validated on update (PUT); rejected with 21013.
+	// Upstream MOQT server publisher URL. Must be an absolute URL with a
+	// host and a scheme the relay can dial: moqt:// (raw QUIC) or https://
+	// (WebTransport). Validated on update (PUT); rejected with 21013.
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
 
 type UpstreamsUpstreamsParameters struct {
 
-	// Upstream MOQT server publisher URL.
+	// (String) Upstream MOQT server publisher URL. Must be an absolute URL with a
+	// host and a scheme the relay can dial: moqt:// (raw QUIC) or https://
+	// (WebTransport). Validated on update (PUT); rejected with 21013.
+	// Upstream MOQT server publisher URL. Must be an absolute URL with a
+	// host and a scheme the relay can dial: moqt:// (raw QUIC) or https://
+	// (WebTransport). Validated on update (PUT); rejected with 21013.
 	// +kubebuilder:validation:Optional
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
@@ -193,7 +253,7 @@ type MOQRelayStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// MOQRelay is the Schema for the MOQRelays API. <no value>
+// MOQRelay is the Schema for the MOQRelays API.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -65,6 +65,15 @@ spec:
                   className:
                     description: (String)
                     type: string
+                  concurrency:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      limit:
+                        description: |-
+                          (Number) Maximum number of instances of this workflow that can run concurrently. Additional instances are queued and started as running instances complete. Must not exceed the account concurrency limit.
+                          Maximum number of instances of this workflow that can run concurrently. Additional instances are queued and started as running instances complete. Must not exceed the account concurrency limit.
+                        type: number
+                    type: object
                   defaultRetention:
                     description: (Attributes) Default retention applied to instances
                       of this version when they do not set their own retention. (see
@@ -123,6 +132,15 @@ spec:
                   className:
                     description: (String)
                     type: string
+                  concurrency:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      limit:
+                        description: |-
+                          (Number) Maximum number of instances of this workflow that can run concurrently. Additional instances are queued and started as running instances complete. Must not exceed the account concurrency limit.
+                          Maximum number of instances of this workflow that can run concurrently. Additional instances are queued and started as running instances complete. Must not exceed the account concurrency limit.
+                        type: number
+                    type: object
                   defaultRetention:
                     description: (Attributes) Default retention applied to instances
                       of this version when they do not set their own retention. (see
@@ -248,6 +266,15 @@ spec:
                   className:
                     description: (String)
                     type: string
+                  concurrency:
+                    description: (Attributes) (see below for nested schema)
+                    properties:
+                      limit:
+                        description: |-
+                          (Number) Maximum number of instances of this workflow that can run concurrently. Additional instances are queued and started as running instances complete. Must not exceed the account concurrency limit.
+                          Maximum number of instances of this workflow that can run concurrently. Additional instances are queued and started as running instances complete. Must not exceed the account concurrency limit.
+                        type: number
+                    type: object
                   createdOn:
                     description: (String)
                     type: string
@@ -271,36 +298,11 @@ spec:
                     description: (String) The ID of this resource.
                     type: string
                   instances:
-                    description: (Attributes) (see below for nested schema)
-                    properties:
-                      complete:
-                        description: (Number)
-                        type: number
-                      errored:
-                        description: (Number)
-                        type: number
-                      paused:
-                        description: (Number)
-                        type: number
-                      queued:
-                        description: (Number)
-                        type: number
-                      rollingBack:
-                        description: (Number)
-                        type: number
-                      running:
-                        description: (Number)
-                        type: number
-                      terminated:
-                        description: (Number)
-                        type: number
-                      waiting:
-                        description: (Number)
-                        type: number
-                      waitingForPause:
-                        description: (Number)
-                        type: number
+                    additionalProperties:
+                      type: number
+                    description: (Map of Number)
                     type: object
+                    x-kubernetes-map-type: granular
                   isDeleted:
                     description: (Number)
                     type: number
@@ -326,6 +328,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  scriptDeleted:
+                    description: |-
+                      (Boolean) Whether the bound Worker was deleted, leaving this Workflow inactive.
+                      Whether the bound Worker was deleted, leaving this Workflow inactive.
+                    type: boolean
                   scriptName:
                     description: (String)
                     type: string

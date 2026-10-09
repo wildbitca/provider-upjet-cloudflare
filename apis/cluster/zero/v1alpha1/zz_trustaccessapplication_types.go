@@ -631,7 +631,7 @@ type DestinationsInitParameters struct {
 
 	// (String) The application type.
 	// Available values: "self_hosted", "saas", "ssh", "vnc", "app_launcher", "warp", "biso", "bookmark", "dash_sso", "infrastructure", "rdp", "mcp", "mcp_portal", "proxy_endpoint".
-	// Available values: "public", "private".
+	// Available values: "public", "private", "via_mcp_server_portal", "worker", "preview_worker", "all_workers", "all_preview_workers".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (String) The URI of the destination. Public destinations' URIs can include a domain and path with wildcards.
@@ -641,6 +641,10 @@ type DestinationsInitParameters struct {
 	// (String) The VNET ID to match the destination. When omitted, all VNETs will match.
 	// The VNET ID to match the destination. When omitted, all VNETs will match.
 	VnetID *string `json:"vnetId,omitempty" tf:"vnet_id,omitempty"`
+
+	// (String) The ID of the Cloudflare Worker to protect with Access. Required when type is worker or preview_worker.
+	// The ID of the Cloudflare Worker to protect with Access. Required when type is `worker` or `preview_worker`.
+	WorkerID *string `json:"workerId,omitempty" tf:"worker_id,omitempty"`
 }
 
 type DestinationsObservation struct {
@@ -669,7 +673,7 @@ type DestinationsObservation struct {
 
 	// (String) The application type.
 	// Available values: "self_hosted", "saas", "ssh", "vnc", "app_launcher", "warp", "biso", "bookmark", "dash_sso", "infrastructure", "rdp", "mcp", "mcp_portal", "proxy_endpoint".
-	// Available values: "public", "private".
+	// Available values: "public", "private", "via_mcp_server_portal", "worker", "preview_worker", "all_workers", "all_preview_workers".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (String) The URI of the destination. Public destinations' URIs can include a domain and path with wildcards.
@@ -679,6 +683,10 @@ type DestinationsObservation struct {
 	// (String) The VNET ID to match the destination. When omitted, all VNETs will match.
 	// The VNET ID to match the destination. When omitted, all VNETs will match.
 	VnetID *string `json:"vnetId,omitempty" tf:"vnet_id,omitempty"`
+
+	// (String) The ID of the Cloudflare Worker to protect with Access. Required when type is worker or preview_worker.
+	// The ID of the Cloudflare Worker to protect with Access. Required when type is `worker` or `preview_worker`.
+	WorkerID *string `json:"workerId,omitempty" tf:"worker_id,omitempty"`
 }
 
 type DestinationsParameters struct {
@@ -712,7 +720,7 @@ type DestinationsParameters struct {
 
 	// (String) The application type.
 	// Available values: "self_hosted", "saas", "ssh", "vnc", "app_launcher", "warp", "biso", "bookmark", "dash_sso", "infrastructure", "rdp", "mcp", "mcp_portal", "proxy_endpoint".
-	// Available values: "public", "private".
+	// Available values: "public", "private", "via_mcp_server_portal", "worker", "preview_worker", "all_workers", "all_preview_workers".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
@@ -725,6 +733,11 @@ type DestinationsParameters struct {
 	// The VNET ID to match the destination. When omitted, all VNETs will match.
 	// +kubebuilder:validation:Optional
 	VnetID *string `json:"vnetId,omitempty" tf:"vnet_id,omitempty"`
+
+	// (String) The ID of the Cloudflare Worker to protect with Access. Required when type is worker or preview_worker.
+	// The ID of the Cloudflare Worker to protect with Access. Required when type is `worker` or `preview_worker`.
+	// +kubebuilder:validation:Optional
+	WorkerID *string `json:"workerId,omitempty" tf:"worker_id,omitempty"`
 }
 
 type DevicePostureInitParameters struct {

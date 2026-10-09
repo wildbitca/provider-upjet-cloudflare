@@ -78,6 +78,11 @@ spec:
                       (String) Domain of your zone.
                       Domain of your zone.
                     type: string
+                  subdomain:
+                    description: |-
+                      (String) Deprecated. When supplied, the response shape differs from the documented default and is not modeled in generated SDKs. Do not rely on this parameter.
+                      Deprecated. When supplied, the response shape differs from the documented default and is not modeled in generated SDKs. Do not rely on this parameter.
+                    type: string
                   zoneId:
                     description: |-
                       (String) Identifier.
@@ -101,6 +106,11 @@ spec:
                     description: |-
                       (String) Domain of your zone.
                       Domain of your zone.
+                    type: string
+                  subdomain:
+                    description: |-
+                      (String) Deprecated. When supplied, the response shape differs from the documented default and is not modeled in generated SDKs. Do not rely on this parameter.
+                      Deprecated. When supplied, the response shape differs from the documented default and is not modeled in generated SDKs. Do not rely on this parameter.
                     type: string
                   zoneId:
                     description: |-
@@ -214,53 +224,9 @@ spec:
                       (Boolean) State of the zone settings for Email Routing.
                       State of the zone settings for Email Routing.
                     type: boolean
-                  errors:
-                    description: (Attributes List) (see below for nested schema)
-                    items:
-                      properties:
-                        code:
-                          description: (Number)
-                          type: number
-                        documentationUrl:
-                          description: (String)
-                          type: string
-                        message:
-                          description: (String)
-                          type: string
-                        source:
-                          description: (Attributes) (see below for nested schema)
-                          properties:
-                            pointer:
-                              description: (String)
-                              type: string
-                          type: object
-                      type: object
-                    type: array
                   id:
                     description: (String) Identifier.
                     type: string
-                  messages:
-                    description: (Attributes List) (see below for nested schema)
-                    items:
-                      properties:
-                        code:
-                          description: (Number)
-                          type: number
-                        documentationUrl:
-                          description: (String)
-                          type: string
-                        message:
-                          description: (String)
-                          type: string
-                        source:
-                          description: (Attributes) (see below for nested schema)
-                          properties:
-                            pointer:
-                              description: (String)
-                              type: string
-                          type: object
-                      type: object
-                    type: array
                   modified:
                     description: |-
                       (String) The date and time the settings have been modified.
@@ -271,141 +237,6 @@ spec:
                       (String) Domain of your zone.
                       Domain of your zone.
                     type: string
-                  result:
-                    description: (Attributes) (see below for nested schema)
-                    properties:
-                      content:
-                        description: |-
-                          (String) DNS record content.
-                          DNS record content.
-                        type: string
-                      errors:
-                        description: (Attributes List) (see below for nested schema)
-                        items:
-                          properties:
-                            code:
-                              description: (Number)
-                              type: string
-                            missing:
-                              description: (Attributes) List of records needed to
-                                enable an Email Routing zone. (see below for nested
-                                schema)
-                              properties:
-                                content:
-                                  description: |-
-                                    (String) DNS record content.
-                                    DNS record content.
-                                  type: string
-                                name:
-                                  description: |-
-                                    (String) Domain of your zone.
-                                    DNS record name (or @ for the zone apex).
-                                  type: string
-                                priority:
-                                  description: |-
-                                    (Number) Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
-                                    Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
-                                  type: number
-                                ttl:
-                                  description: |-
-                                    (Number) Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
-                                    Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
-                                  type: number
-                                type:
-                                  description: |-
-                                    (String) DNS record type.
-                                    Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
-                                    DNS record type.
-                                    Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
-                                  type: string
-                              type: object
-                          type: object
-                        type: array
-                      name:
-                        description: |-
-                          (String) Domain of your zone.
-                          DNS record name (or @ for the zone apex).
-                        type: string
-                      priority:
-                        description: |-
-                          (Number) Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
-                          Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
-                        type: number
-                      record:
-                        description: (Attributes List) (see below for nested schema)
-                        items:
-                          properties:
-                            content:
-                              description: |-
-                                (String) DNS record content.
-                                DNS record content.
-                              type: string
-                            name:
-                              description: |-
-                                (String) Domain of your zone.
-                                DNS record name (or @ for the zone apex).
-                              type: string
-                            priority:
-                              description: |-
-                                (Number) Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
-                                Required for MX, SRV and URI records. Unused by other record types. Records with lower priorities are preferred.
-                              type: number
-                            ttl:
-                              description: |-
-                                (Number) Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
-                                Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
-                              type: number
-                            type:
-                              description: |-
-                                (String) DNS record type.
-                                Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
-                                DNS record type.
-                                Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
-                              type: string
-                          type: object
-                        type: array
-                      ttl:
-                        description: |-
-                          (Number) Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
-                          Time to live, in seconds, of the DNS record. Must be between 60 and 86400, or 1 for 'automatic'.
-                        type: number
-                      type:
-                        description: |-
-                          (String) DNS record type.
-                          Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
-                          DNS record type.
-                          Available values: "A", "AAAA", "CNAME", "HTTPS", "TXT", "SRV", "LOC", "MX", "NS", "CERT", "DNSKEY", "DS", "NAPTR", "SMIMEA", "SSHFP", "SVCB", "TLSA", "URI".
-                        type: string
-                    type: object
-                  resultInfo:
-                    description: (Attributes) (see below for nested schema)
-                    properties:
-                      emailRoutingDnsCount:
-                        description: |-
-                          (Number) Total number of results for the requested service.
-                          Total number of results for the requested service.
-                        type: number
-                      page:
-                        description: |-
-                          (Number) Current page within paginated list of results.
-                          Current page within paginated list of results.
-                        type: number
-                      perPage:
-                        description: |-
-                          (Number) Number of results per page of results.
-                          Number of results per page of results.
-                        type: number
-                      totalCount:
-                        description: |-
-                          (Number) Total results available without any search parameters.
-                          Total results available without any search parameters.
-                        type: number
-                      totalPages:
-                        description: |-
-                          (Number) The number of total pages in the entire result set.
-                          The number of total pages in the entire result set.
-                        type: number
-                    type: object
                   skipWizard:
                     description: |-
                       (Boolean) Flag to check if the user skipped the configuration wizard.
@@ -418,10 +249,15 @@ spec:
                       Show the state of your account, and the type or configuration error.
                       Available values: "ready", "unconfigured", "misconfigured", "misconfigured/locked", "unlocked".
                     type: string
-                  success:
+                  subdomain:
                     description: |-
-                      (Boolean) Whether the API call was successful.
-                      Whether the API call was successful.
+                      (String) Deprecated. When supplied, the response shape differs from the documented default and is not modeled in generated SDKs. Do not rely on this parameter.
+                      Deprecated. When supplied, the response shape differs from the documented default and is not modeled in generated SDKs. Do not rely on this parameter.
+                    type: string
+                  supportSubaddress:
+                    description: |-
+                      addressing) is honored when matching incoming mail against routing rules.
+                      Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
                     type: boolean
                   tag:
                     description: |-

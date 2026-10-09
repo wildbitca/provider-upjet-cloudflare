@@ -136,6 +136,11 @@ func (in *ScanningExpressionInitParameters) DeepCopyInto(out *ScanningExpression
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Payload != nil {
+		in, out := &in.Payload, &out.Payload
+		*out = new(string)
+		**out = **in
+	}
 	if in.ZoneID != nil {
 		in, out := &in.ZoneID, &out.ZoneID
 		*out = new(string)
@@ -200,6 +205,11 @@ func (in *ScanningExpressionObservation) DeepCopyInto(out *ScanningExpressionObs
 		*out = new(string)
 		**out = **in
 	}
+	if in.Payload != nil {
+		in, out := &in.Payload, &out.Payload
+		*out = new(string)
+		**out = **in
+	}
 	if in.ZoneID != nil {
 		in, out := &in.ZoneID, &out.ZoneID
 		*out = new(string)
@@ -226,6 +236,11 @@ func (in *ScanningExpressionParameters) DeepCopyInto(out *ScanningExpressionPara
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.Payload != nil {
+		in, out := &in.Payload, &out.Payload
+		*out = new(string)
+		**out = **in
 	}
 	if in.ZoneID != nil {
 		in, out := &in.ZoneID, &out.ZoneID

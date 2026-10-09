@@ -85,8 +85,8 @@ spec:
                     type: string
                   name:
                     description: |-
-                      (String) A short description of Calls app, not shown to end users.
-                      A short description of Calls app, not shown to end users.
+                      (String) A short description of a Realtime SFU app, not shown to end users.
+                      A short description of a Realtime SFU app, not shown to end users.
                     type: string
                 type: object
               initProvider:
@@ -114,8 +114,8 @@ spec:
                     type: string
                   name:
                     description: |-
-                      (String) A short description of Calls app, not shown to end users.
-                      A short description of Calls app, not shown to end users.
+                      (String) A short description of a Realtime SFU app, not shown to end users.
+                      A short description of a Realtime SFU app, not shown to end users.
                     type: string
                 type: object
               managementPolicies:
@@ -238,8 +238,8 @@ spec:
                     type: string
                   name:
                     description: |-
-                      (String) A short description of Calls app, not shown to end users.
-                      A short description of Calls app, not shown to end users.
+                      (String) A short description of a Realtime SFU app, not shown to end users.
+                      A short description of a Realtime SFU app, not shown to end users.
                     type: string
                   uid:
                     description: |-

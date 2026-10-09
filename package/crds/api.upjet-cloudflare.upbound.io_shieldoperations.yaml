@@ -368,22 +368,12 @@ spec:
                                   (String) UUID.
                                   UUID.
                                 type: string
-                              isLearned:
-                                description: |-
-                                  provided.
-                                  True if schema is Cloudflare-provided.
-                                type: boolean
                               name:
                                 description: |-
                                   (String) Schema file name.
                                   Schema file name.
                                 type: string
                             type: object
-                          learnedAvailable:
-                            description: |-
-                              (Boolean) Deprecated. Always false.
-                              Deprecated. Always false.
-                            type: boolean
                           mitigationAction:
                             description: |-
                               (String) Action taken on requests failing validation.

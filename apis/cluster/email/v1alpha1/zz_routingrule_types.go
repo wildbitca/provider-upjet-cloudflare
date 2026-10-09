@@ -21,7 +21,8 @@ type RoutingRuleActionsInitParameters struct {
 	// Available values: "drop", "forward", "worker".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (List of String)
+	// (List of String) List of values for the action. Currently limited to a single value.
+	// List of values for the action. Currently limited to a single value.
 	Value []*string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
@@ -33,7 +34,8 @@ type RoutingRuleActionsObservation struct {
 	// Available values: "drop", "forward", "worker".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (List of String)
+	// (List of String) List of values for the action. Currently limited to a single value.
+	// List of values for the action. Currently limited to a single value.
 	Value []*string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
@@ -46,7 +48,8 @@ type RoutingRuleActionsParameters struct {
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
-	// (List of String)
+	// (List of String) List of values for the action. Currently limited to a single value.
+	// List of values for the action. Currently limited to a single value.
 	// +kubebuilder:validation:Optional
 	Value []*string `json:"value,omitempty" tf:"value,omitempty"`
 }
@@ -104,7 +107,7 @@ type RoutingRuleMatchersInitParameters struct {
 	// Available values: "all", "literal".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (List of String)
+	// (List of String) List of values for the action. Currently limited to a single value.
 	// Value for matcher.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
@@ -123,7 +126,7 @@ type RoutingRuleMatchersObservation struct {
 	// Available values: "all", "literal".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (List of String)
+	// (List of String) List of values for the action. Currently limited to a single value.
 	// Value for matcher.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
@@ -144,7 +147,7 @@ type RoutingRuleMatchersParameters struct {
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
-	// (List of String)
+	// (List of String) List of values for the action. Currently limited to a single value.
 	// Value for matcher.
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`

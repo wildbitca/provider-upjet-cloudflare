@@ -86,6 +86,11 @@ spec:
                       readable name for the schema
                       A human-readable name for the schema
                     type: string
+                  omitSource:
+                    description: |-
+                      files of schemas and only retrieve their meta-data.
+                      Omit the source-files of schemas and only retrieve their meta-data.
+                    type: boolean
                   source:
                     description: |-
                       (String) The raw schema, e.g., the OpenAPI schema, either as JSON or YAML
@@ -127,6 +132,11 @@ spec:
                       readable name for the schema
                       A human-readable name for the schema
                     type: string
+                  omitSource:
+                    description: |-
+                      files of schemas and only retrieve their meta-data.
+                      Omit the source-files of schemas and only retrieve their meta-data.
+                    type: boolean
                   source:
                     description: |-
                       (String) The raw schema, e.g., the OpenAPI schema, either as JSON or YAML
@@ -273,6 +283,11 @@ spec:
                       readable name for the schema
                       A human-readable name for the schema
                     type: string
+                  omitSource:
+                    description: |-
+                      files of schemas and only retrieve their meta-data.
+                      Omit the source-files of schemas and only retrieve their meta-data.
+                    type: boolean
                   schemaId:
                     description: |-
                       (String) A unique identifier of this schema

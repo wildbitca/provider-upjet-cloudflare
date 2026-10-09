@@ -73,23 +73,6 @@ type ActionParameters struct {
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 }
 
-type BypassInitParameters struct {
-}
-
-type BypassObservation struct {
-
-	// (String) The name of the response header to match.
-	// Available values: "url".
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// (String) The value of the response header, which must match exactly.
-	// The URL to bypass.
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
-}
-
-type BypassParameters struct {
-}
-
 type HeadersInitParameters struct {
 
 	// (String) The name of the response header to match.
@@ -156,6 +139,10 @@ type LimitInitParameters struct {
 	// The time in seconds (an integer value) to count matching traffic. If the count exceeds the configured threshold within this period, Cloudflare will perform the configured action.
 	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
 
+	// (String) Defines the unique identifier of the rate limit.
+	// Defines the unique identifier of the rate limit.
+	RateLimitID *string `json:"rateLimitId,omitempty" tf:"rate_limit_id,omitempty"`
+
 	// (Number) The threshold that will trigger the configured mitigation action. Configure this value along with the period property to establish a threshold per period.
 	// The threshold that will trigger the configured mitigation action. Configure this value along with the `period` property to establish a threshold per period.
 	Threshold *float64 `json:"threshold,omitempty" tf:"threshold,omitempty"`
@@ -179,18 +166,6 @@ type LimitObservation struct {
 	// (Attributes) The action to perform when the threshold of matched traffic within the configured period is exceeded. (see below for nested schema)
 	Action *ActionObservation `json:"action,omitempty" tf:"action,omitempty"`
 
-	// (Attributes List) Criteria specifying when the current rate limit should be bypassed. You can specify that the rate limit should not apply to one or more URLs. (see below for nested schema)
-	Bypass []BypassObservation `json:"bypass,omitempty" tf:"bypass,omitempty"`
-
-	// (String) An informative summary of the rule. This value is sanitized and any tags will be removed.
-	// An informative summary of the rule. This value is sanitized and any tags will be removed.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (Boolean) When true, indicates that the rate limit is currently disabled.
-	// When true, indicates that the rate limit is currently disabled.
-	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
-
-	// (String) The unique identifier of the rate limit.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Attributes) Determines which traffic the rate limit counts towards the threshold. (see below for nested schema)
@@ -199,6 +174,10 @@ type LimitObservation struct {
 	// (Number) The time in seconds (an integer value) to count matching traffic. If the count exceeds the configured threshold within this period, Cloudflare will perform the configured action.
 	// The time in seconds (an integer value) to count matching traffic. If the count exceeds the configured threshold within this period, Cloudflare will perform the configured action.
 	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
+
+	// (String) Defines the unique identifier of the rate limit.
+	// Defines the unique identifier of the rate limit.
+	RateLimitID *string `json:"rateLimitId,omitempty" tf:"rate_limit_id,omitempty"`
 
 	// (Number) The threshold that will trigger the configured mitigation action. Configure this value along with the period property to establish a threshold per period.
 	// The threshold that will trigger the configured mitigation action. Configure this value along with the `period` property to establish a threshold per period.
@@ -223,6 +202,11 @@ type LimitParameters struct {
 	// The time in seconds (an integer value) to count matching traffic. If the count exceeds the configured threshold within this period, Cloudflare will perform the configured action.
 	// +kubebuilder:validation:Optional
 	Period *float64 `json:"period,omitempty" tf:"period,omitempty"`
+
+	// (String) Defines the unique identifier of the rate limit.
+	// Defines the unique identifier of the rate limit.
+	// +kubebuilder:validation:Optional
+	RateLimitID *string `json:"rateLimitId,omitempty" tf:"rate_limit_id,omitempty"`
 
 	// (Number) The threshold that will trigger the configured mitigation action. Configure this value along with the period property to establish a threshold per period.
 	// The threshold that will trigger the configured mitigation action. Configure this value along with the `period` property to establish a threshold per period.

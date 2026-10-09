@@ -75,8 +75,8 @@ spec:
                     type: array
                   scriptName:
                     description: |-
-                      (String) Name of the script, used in URLs and route configuration.
-                      Name of the script, used in URLs and route configuration.
+                      (String) Name of the script.
+                      Name of the script.
                     type: string
                 type: object
               initProvider:
@@ -108,8 +108,8 @@ spec:
                     type: array
                   scriptName:
                     description: |-
-                      (String) Name of the script, used in URLs and route configuration.
-                      Name of the script, used in URLs and route configuration.
+                      (String) Name of the script.
+                      Name of the script.
                     type: string
                 type: object
               managementPolicies:
@@ -194,8 +194,7 @@ spec:
                       Identifier.
                     type: string
                   id:
-                    description: (String) Name of the script, used in URLs and route
-                      configuration.
+                    description: (String) Name of the script.
                     type: string
                   schedules:
                     description: (Attributes List) (see below for nested schema)
@@ -214,8 +213,8 @@ spec:
                     type: array
                   scriptName:
                     description: |-
-                      (String) Name of the script, used in URLs and route configuration.
-                      Name of the script, used in URLs and route configuration.
+                      (String) Name of the script.
+                      Name of the script.
                     type: string
                 type: object
               conditions:

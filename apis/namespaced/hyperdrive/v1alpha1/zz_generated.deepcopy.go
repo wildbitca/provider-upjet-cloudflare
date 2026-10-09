@@ -143,6 +143,11 @@ func (in *ConfigInitParameters) DeepCopyInto(out *ConfigInitParameters) {
 		*out = new(CachingInitParameters)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.Integration != nil {
+		in, out := &in.Integration, &out.Integration
+		*out = new(string)
+		**out = **in
+	}
 	if in.Mtls != nil {
 		in, out := &in.Mtls, &out.Mtls
 		*out = new(MtlsInitParameters)
@@ -230,6 +235,11 @@ func (in *ConfigObservation) DeepCopyInto(out *ConfigObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Integration != nil {
+		in, out := &in.Integration, &out.Integration
+		*out = new(string)
+		**out = **in
+	}
 	if in.ModifiedOn != nil {
 		in, out := &in.ModifiedOn, &out.ModifiedOn
 		*out = new(string)
@@ -284,6 +294,11 @@ func (in *ConfigParameters) DeepCopyInto(out *ConfigParameters) {
 		in, out := &in.Caching, &out.Caching
 		*out = new(CachingParameters)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.Integration != nil {
+		in, out := &in.Integration, &out.Integration
+		*out = new(string)
+		**out = **in
 	}
 	if in.Mtls != nil {
 		in, out := &in.Mtls, &out.Mtls

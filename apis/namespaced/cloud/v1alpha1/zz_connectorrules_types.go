@@ -73,6 +73,12 @@ type ParametersParameters struct {
 
 type RulesInitParameters struct {
 
+	// (String) Cloud Provider type
+	// Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage", "oci_storage".
+	// Cloud Provider type
+	// Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage", "oci_storage".
+	CloudConnectorRulesProvider *string `json:"cloudConnectorRulesProvider,omitempty" tf:"cloud_connector_rules_provider,omitempty"`
+
 	// (String)
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -84,15 +90,15 @@ type RulesInitParameters struct {
 
 	// (Attributes) Parameters of Cloud Connector Rule (see below for nested schema)
 	Parameters *ParametersInitParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
-
-	// (String) Cloud Provider type
-	// Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage".
-	// Cloud Provider type
-	// Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage".
-	Provider *string `json:"provider,omitempty" tf:"provider,omitempty"`
 }
 
 type RulesObservation struct {
+
+	// (String) Cloud Provider type
+	// Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage", "oci_storage".
+	// Cloud Provider type
+	// Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage", "oci_storage".
+	CloudConnectorRulesProvider *string `json:"cloudConnectorRulesProvider,omitempty" tf:"cloud_connector_rules_provider,omitempty"`
 
 	// (String)
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -108,15 +114,16 @@ type RulesObservation struct {
 
 	// (Attributes) Parameters of Cloud Connector Rule (see below for nested schema)
 	Parameters *ParametersObservation `json:"parameters,omitempty" tf:"parameters,omitempty"`
-
-	// (String) Cloud Provider type
-	// Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage".
-	// Cloud Provider type
-	// Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage".
-	Provider *string `json:"provider,omitempty" tf:"provider,omitempty"`
 }
 
 type RulesParameters struct {
+
+	// (String) Cloud Provider type
+	// Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage", "oci_storage".
+	// Cloud Provider type
+	// Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage", "oci_storage".
+	// +kubebuilder:validation:Optional
+	CloudConnectorRulesProvider *string `json:"cloudConnectorRulesProvider,omitempty" tf:"cloud_connector_rules_provider,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional
@@ -133,13 +140,6 @@ type RulesParameters struct {
 	// (Attributes) Parameters of Cloud Connector Rule (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Parameters *ParametersParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
-
-	// (String) Cloud Provider type
-	// Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage".
-	// Cloud Provider type
-	// Available values: "aws_s3", "cloudflare_r2", "gcp_storage", "azure_storage".
-	// +kubebuilder:validation:Optional
-	Provider *string `json:"provider,omitempty" tf:"provider,omitempty"`
 }
 
 // ConnectorRulesSpec defines the desired state of ConnectorRules
@@ -178,6 +178,7 @@ type ConnectorRulesStatus struct {
 type ConnectorRules struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.rules) || (has(self.initProvider) && has(self.initProvider.rules))",message="spec.forProvider.rules is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.zoneId) || (has(self.initProvider) && has(self.initProvider.zoneId))",message="spec.forProvider.zoneId is a required parameter"
 	Spec   ConnectorRulesSpec   `json:"spec"`
 	Status ConnectorRulesStatus `json:"status,omitempty"`

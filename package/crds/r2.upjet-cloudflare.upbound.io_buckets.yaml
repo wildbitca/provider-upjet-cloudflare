@@ -75,8 +75,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Account ID.
-                      Account ID.
+                      (String) Cloudflare account ID that owns the R2 resource.
+                      Cloudflare account ID that owns the R2 resource.
                     type: string
                   accountIdRef:
                     description: Reference to a Account in account to populate accountId.
@@ -193,8 +193,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Account ID.
-                      Account ID.
+                      (String) Cloudflare account ID that owns the R2 resource.
+                      Cloudflare account ID that owns the R2 resource.
                     type: string
                   accountIdRef:
                     description: Reference to a Account in account to populate accountId.
@@ -394,8 +394,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Account ID.
-                      Account ID.
+                      (String) Cloudflare account ID that owns the R2 resource.
+                      Cloudflare account ID that owns the R2 resource.
                     type: string
                   creationDate:
                     description: |-

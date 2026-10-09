@@ -16,6 +16,8 @@ spec:
     observability:
       enabled: true
       headSamplingRate: 1
+      issues:
+        enabled: true
       logs:
         destinations:
         - string
@@ -23,12 +25,49 @@ spec:
         headSamplingRate: 1
         invocationLogs: true
         persist: true
+      redact_query_string: true
       traces:
         destinations:
         - string
         enabled: true
         headSamplingRate: 1
         persist: true
+        propagationPolicy: authenticated
+    previewsBaseConfig:
+      cacheOptions:
+        crossVersionCache: true
+        enabled: true
+      env:
+        MY_ENV_VAR:
+          type: plain_text
+      limits:
+        cpuMs: 50
+        subrequests: 1000
+      logpush: true
+      observability:
+        enabled: true
+        headSamplingRate: 1
+        issues:
+          enabled: true
+        logs:
+          destinations:
+          - string
+          enabled: true
+          headSamplingRate: 1
+          invocationLogs: true
+          persist: true
+        redactQueryString: true
+        traces:
+          destinations:
+          - string
+          enabled: true
+          headSamplingRate: 1
+          persist: true
+          propagationPolicy: authenticated
+      placement:
+        mode: smart
+      tailConsumers:
+      - name: my-tail-consumer
     subdomain:
       enabled: true
       previewsEnabled: true

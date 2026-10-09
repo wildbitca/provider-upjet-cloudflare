@@ -109,7 +109,7 @@ type DataInitParameters struct {
 	Preference *float64 `json:"preference,omitempty" tf:"preference,omitempty"`
 
 	// (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
-	// Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
+	// Priority.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
 	// (Number) Protocol.
@@ -144,8 +144,8 @@ type DataInitParameters struct {
 	// Name of the property controlled by this record (e.g.: issue, issuewild, iodef).
 	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
 
-	// (String) A valid mail server hostname, or "." for a NULL MX record.
-	// A valid mail server hostname, or "." for a NULL MX record.
+	// (String) Target.
+	// Target.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
 	// (String) Record type.
@@ -261,7 +261,7 @@ type DataObservation struct {
 	Preference *float64 `json:"preference,omitempty" tf:"preference,omitempty"`
 
 	// (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
-	// Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
+	// Priority.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
 	// (Number) Protocol.
@@ -296,8 +296,8 @@ type DataObservation struct {
 	// Name of the property controlled by this record (e.g.: issue, issuewild, iodef).
 	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
 
-	// (String) A valid mail server hostname, or "." for a NULL MX record.
-	// A valid mail server hostname, or "." for a NULL MX record.
+	// (String) Target.
+	// Target.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
 	// (String) Record type.
@@ -435,7 +435,7 @@ type DataParameters struct {
 	Preference *float64 `json:"preference,omitempty" tf:"preference,omitempty"`
 
 	// (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
-	// Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
+	// Priority.
 	// +kubebuilder:validation:Optional
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
@@ -479,8 +479,8 @@ type DataParameters struct {
 	// +kubebuilder:validation:Optional
 	Tag *string `json:"tag,omitempty" tf:"tag,omitempty"`
 
-	// (String) A valid mail server hostname, or "." for a NULL MX record.
-	// A valid mail server hostname, or "." for a NULL MX record.
+	// (String) Target.
+	// Target.
 	// +kubebuilder:validation:Optional
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
@@ -518,6 +518,10 @@ type RecordInitParameters struct {
 
 	// (Attributes) Components of a MX record. (see below for nested schema)
 	Data *DataInitParameters `json:"data,omitempty" tf:"data,omitempty"`
+
+	// (Boolean) Whether to include shadow metadata in the meta field of each record in the response. See Shadowed records.
+	// Whether to include shadow metadata in the `meta` field of each record in the response. See [Shadowed records](https://developers.cloudflare.com/dns/manage-dns-records/reference/shadowed-records).
+	IncludeShadowMetadata *bool `json:"includeShadowMetadata,omitempty" tf:"include_shadow_metadata,omitempty"`
 
 	// (String) DNS record name (or @ for the zone apex) in Punycode.
 	// DNS record name (or @ for the zone apex) in Punycode.
@@ -591,6 +595,10 @@ type RecordObservation struct {
 	// (String) Identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Boolean) Whether to include shadow metadata in the meta field of each record in the response. See Shadowed records.
+	// Whether to include shadow metadata in the `meta` field of each record in the response. See [Shadowed records](https://developers.cloudflare.com/dns/manage-dns-records/reference/shadowed-records).
+	IncludeShadowMetadata *bool `json:"includeShadowMetadata,omitempty" tf:"include_shadow_metadata,omitempty"`
+
 	// specific information about the record.
 	// Extra Cloudflare-specific information about the record.
 	Meta *string `json:"meta,omitempty" tf:"meta,omitempty"`
@@ -661,6 +669,11 @@ type RecordParameters struct {
 	// (Attributes) Components of a MX record. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Data *DataParameters `json:"data,omitempty" tf:"data,omitempty"`
+
+	// (Boolean) Whether to include shadow metadata in the meta field of each record in the response. See Shadowed records.
+	// Whether to include shadow metadata in the `meta` field of each record in the response. See [Shadowed records](https://developers.cloudflare.com/dns/manage-dns-records/reference/shadowed-records).
+	// +kubebuilder:validation:Optional
+	IncludeShadowMetadata *bool `json:"includeShadowMetadata,omitempty" tf:"include_shadow_metadata,omitempty"`
 
 	// (String) DNS record name (or @ for the zone apex) in Punycode.
 	// DNS record name (or @ for the zone apex) in Punycode.

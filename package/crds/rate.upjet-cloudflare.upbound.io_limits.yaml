@@ -178,6 +178,11 @@ spec:
                       (Number) The time in seconds (an integer value) to count matching traffic. If the count exceeds the configured threshold within this period, Cloudflare will perform the configured action.
                       The time in seconds (an integer value) to count matching traffic. If the count exceeds the configured threshold within this period, Cloudflare will perform the configured action.
                     type: number
+                  rateLimitId:
+                    description: |-
+                      (String) Defines the unique identifier of the rate limit.
+                      Defines the unique identifier of the rate limit.
+                    type: string
                   threshold:
                     description: |-
                       (Number) The threshold that will trigger the configured mitigation action. Configure this value along with the period property to establish a threshold per period.
@@ -381,6 +386,11 @@ spec:
                       (Number) The time in seconds (an integer value) to count matching traffic. If the count exceeds the configured threshold within this period, Cloudflare will perform the configured action.
                       The time in seconds (an integer value) to count matching traffic. If the count exceeds the configured threshold within this period, Cloudflare will perform the configured action.
                     type: number
+                  rateLimitId:
+                    description: |-
+                      (String) Defines the unique identifier of the rate limit.
+                      Defines the unique identifier of the rate limit.
+                    type: string
                   threshold:
                     description: |-
                       (Number) The threshold that will trigger the configured mitigation action. Configure this value along with the period property to establish a threshold per period.
@@ -610,37 +620,7 @@ spec:
                           Notes: If "mode" is "challenge", "managed_challenge", or "js_challenge", Cloudflare will use the zone's Challenge Passage time and you should not provide this value.
                         type: number
                     type: object
-                  bypass:
-                    description: (Attributes List) Criteria specifying when the current
-                      rate limit should be bypassed. You can specify that the rate
-                      limit should not apply to one or more URLs. (see below for nested
-                      schema)
-                    items:
-                      properties:
-                        name:
-                          description: |-
-                            (String) The name of the response header to match.
-                            Available values: "url".
-                          type: string
-                        value:
-                          description: |-
-                            (String) The value of the response header, which must match exactly.
-                            The URL to bypass.
-                          type: string
-                      type: object
-                    type: array
-                  description:
-                    description: |-
-                      (String) An informative summary of the rule. This value is sanitized and any tags will be removed.
-                      An informative summary of the rule. This value is sanitized and any tags will be removed.
-                    type: string
-                  disabled:
-                    description: |-
-                      (Boolean) When true, indicates that the rate limit is currently disabled.
-                      When true, indicates that the rate limit is currently disabled.
-                    type: boolean
                   id:
-                    description: (String) The unique identifier of the rate limit.
                     type: string
                   match:
                     description: (Attributes) Determines which traffic the rate limit
@@ -711,6 +691,11 @@ spec:
                       (Number) The time in seconds (an integer value) to count matching traffic. If the count exceeds the configured threshold within this period, Cloudflare will perform the configured action.
                       The time in seconds (an integer value) to count matching traffic. If the count exceeds the configured threshold within this period, Cloudflare will perform the configured action.
                     type: number
+                  rateLimitId:
+                    description: |-
+                      (String) Defines the unique identifier of the rate limit.
+                      Defines the unique identifier of the rate limit.
+                    type: string
                   threshold:
                     description: |-
                       (Number) The threshold that will trigger the configured mitigation action. Configure this value along with the period property to establish a threshold per period.

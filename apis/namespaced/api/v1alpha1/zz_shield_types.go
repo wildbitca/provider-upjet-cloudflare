@@ -60,6 +60,10 @@ type ShieldInitParameters struct {
 	// (Attributes List) (see below for nested schema)
 	AuthIDCharacteristics []AuthIDCharacteristicsInitParameters `json:"authIdCharacteristics,omitempty" tf:"auth_id_characteristics,omitempty"`
 
+	// (Boolean) Ensures that the configuration is written or retrieved in normalized fashion
+	// Ensures that the configuration is written or retrieved in normalized fashion
+	Normalize *bool `json:"normalize,omitempty" tf:"normalize,omitempty"`
+
 	// (String) Identifier.
 	// Identifier.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
@@ -73,6 +77,10 @@ type ShieldObservation struct {
 	// (String) Identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Boolean) Ensures that the configuration is written or retrieved in normalized fashion
+	// Ensures that the configuration is written or retrieved in normalized fashion
+	Normalize *bool `json:"normalize,omitempty" tf:"normalize,omitempty"`
+
 	// (String) Identifier.
 	// Identifier.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
@@ -83,6 +91,11 @@ type ShieldParameters struct {
 	// (Attributes List) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	AuthIDCharacteristics []AuthIDCharacteristicsParameters `json:"authIdCharacteristics,omitempty" tf:"auth_id_characteristics,omitempty"`
+
+	// (Boolean) Ensures that the configuration is written or retrieved in normalized fashion
+	// Ensures that the configuration is written or retrieved in normalized fashion
+	// +kubebuilder:validation:Optional
+	Normalize *bool `json:"normalize,omitempty" tf:"normalize,omitempty"`
 
 	// (String) Identifier.
 	// Identifier.

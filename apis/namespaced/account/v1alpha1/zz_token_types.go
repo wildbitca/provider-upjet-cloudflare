@@ -111,7 +111,7 @@ type TokenInitParameters struct {
 	// The time before which the token MUST NOT be accepted for processing.
 	NotBefore *string `json:"notBefore,omitempty" tf:"not_before,omitempty"`
 
-	// (Attributes List) Set of access policies assigned to the token. (see below for nested schema)
+	// (Attributes List) List of access policies assigned to the token. (see below for nested schema)
 	Policies []TokenPoliciesInitParameters `json:"policies,omitempty" tf:"policies,omitempty"`
 
 	// (String) Status of the token.
@@ -129,6 +129,14 @@ type TokenObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	Condition *ConditionObservation `json:"condition,omitempty" tf:"condition,omitempty"`
+
+	// (String) The email address of the user who created the token at the time of
+	// creation. Only present for Account Owned API Tokens when a creator email
+	// was available.
+	// The email address of the user who created the token at the time of
+	// creation. Only present for Account Owned API Tokens when a creator email
+	// was available.
+	CreatorEmailAtCreation *string `json:"creatorEmailAtCreation,omitempty" tf:"creator_email_at_creation,omitempty"`
 
 	// (String) The expiration time on or after which the JWT MUST NOT be accepted for processing.
 	// The expiration time on or after which the JWT MUST NOT be accepted for processing.
@@ -157,8 +165,23 @@ type TokenObservation struct {
 	// The time before which the token MUST NOT be accepted for processing.
 	NotBefore *string `json:"notBefore,omitempty" tf:"not_before,omitempty"`
 
-	// (Attributes List) Set of access policies assigned to the token. (see below for nested schema)
+	// (Attributes List) List of access policies assigned to the token. (see below for nested schema)
 	Policies []TokenPoliciesObservation `json:"policies,omitempty" tf:"policies,omitempty"`
+
+	// provisioned token, this is the OAuth client identifier. Present
+	// when provisioner_type is present and null when the identifier is
+	// unavailable.
+	// The identifier of the service that provisioned the token. For an
+	// OAuth-provisioned token, this is the OAuth client identifier. Present
+	// when `provisioner_type` is present and null when the identifier is
+	// unavailable.
+	ProvisionerID *string `json:"provisionerId,omitempty" tf:"provisioner_id,omitempty"`
+
+	// (String) The type of service that provisioned the token. Only present for
+	// provisioned Account Owned API Tokens.
+	// The type of service that provisioned the token. Only present for
+	// provisioned Account Owned API Tokens.
+	ProvisionerType *string `json:"provisionerType,omitempty" tf:"provisioner_type,omitempty"`
 
 	// (String) Status of the token.
 	// Available values: "active", "disabled", "expired".
@@ -193,7 +216,7 @@ type TokenParameters struct {
 	// +kubebuilder:validation:Optional
 	NotBefore *string `json:"notBefore,omitempty" tf:"not_before,omitempty"`
 
-	// (Attributes List) Set of access policies assigned to the token. (see below for nested schema)
+	// (Attributes List) List of access policies assigned to the token. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Policies []TokenPoliciesParameters `json:"policies,omitempty" tf:"policies,omitempty"`
 

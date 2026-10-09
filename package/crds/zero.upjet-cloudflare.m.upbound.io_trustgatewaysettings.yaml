@@ -60,7 +60,9 @@ spec:
               forProvider:
                 properties:
                   accountId:
-                    description: (String)
+                    description: |-
+                      (String) Specify the Cloudflare account identifier.
+                      Specify the Cloudflare account identifier.
                     type: string
                   settings:
                     description: (Attributes) Specify account settings. (see below
@@ -237,7 +239,7 @@ spec:
                         properties:
                           id:
                             description: |-
-                              (String) The ID of this resource.
+                              (String) Specify the Cloudflare account identifier.
                               Specify the UUID of the certificate used for interception. Ensure the certificate is available at the edge(previously called 'active'). A nil UUID directs Cloudflare to use the Root CA.
                             type: string
                         type: object
@@ -257,7 +259,7 @@ spec:
                             type: boolean
                           id:
                             description: |-
-                              (String) The ID of this resource.
+                              (String) Specify the Cloudflare account identifier.
                               Specify the UUID of the certificate (ID from MTLS certificate store).
                             type: string
                           updatedAt:
@@ -370,7 +372,9 @@ spec:
                   autoscaler.
                 properties:
                   accountId:
-                    description: (String)
+                    description: |-
+                      (String) Specify the Cloudflare account identifier.
+                      Specify the Cloudflare account identifier.
                     type: string
                   settings:
                     description: (Attributes) Specify account settings. (see below
@@ -547,7 +551,7 @@ spec:
                         properties:
                           id:
                             description: |-
-                              (String) The ID of this resource.
+                              (String) Specify the Cloudflare account identifier.
                               Specify the UUID of the certificate used for interception. Ensure the certificate is available at the edge(previously called 'active'). A nil UUID directs Cloudflare to use the Root CA.
                             type: string
                         type: object
@@ -567,7 +571,7 @@ spec:
                             type: boolean
                           id:
                             description: |-
-                              (String) The ID of this resource.
+                              (String) Specify the Cloudflare account identifier.
                               Specify the UUID of the certificate (ID from MTLS certificate store).
                             type: string
                           updatedAt:
@@ -736,13 +740,15 @@ spec:
               atProvider:
                 properties:
                   accountId:
-                    description: (String)
+                    description: |-
+                      (String) Specify the Cloudflare account identifier.
+                      Specify the Cloudflare account identifier.
                     type: string
                   createdAt:
                     description: (String)
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String) Specify the Cloudflare account identifier.
                     type: string
                   settings:
                     description: (Attributes) Specify account settings. (see below
@@ -919,7 +925,7 @@ spec:
                         properties:
                           id:
                             description: |-
-                              (String) The ID of this resource.
+                              (String) Specify the Cloudflare account identifier.
                               Specify the UUID of the certificate used for interception. Ensure the certificate is available at the edge(previously called 'active'). A nil UUID directs Cloudflare to use the Root CA.
                             type: string
                         type: object
@@ -939,7 +945,7 @@ spec:
                             type: boolean
                           id:
                             description: |-
-                              (String) The ID of this resource.
+                              (String) Specify the Cloudflare account identifier.
                               Specify the UUID of the certificate (ID from MTLS certificate store).
                             type: string
                           updatedAt:

@@ -241,6 +241,11 @@ func (in *ValidationSchemasInitParameters) DeepCopyInto(out *ValidationSchemasIn
 		*out = new(string)
 		**out = **in
 	}
+	if in.OmitSource != nil {
+		in, out := &in.OmitSource, &out.OmitSource
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Source != nil {
 		in, out := &in.Source, &out.Source
 		*out = new(string)
@@ -323,6 +328,11 @@ func (in *ValidationSchemasObservation) DeepCopyInto(out *ValidationSchemasObser
 		*out = new(string)
 		**out = **in
 	}
+	if in.OmitSource != nil {
+		in, out := &in.OmitSource, &out.OmitSource
+		*out = new(bool)
+		**out = **in
+	}
 	if in.SchemaID != nil {
 		in, out := &in.SchemaID, &out.SchemaID
 		*out = new(string)
@@ -366,6 +376,11 @@ func (in *ValidationSchemasParameters) DeepCopyInto(out *ValidationSchemasParame
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
+		**out = **in
+	}
+	if in.OmitSource != nil {
+		in, out := &in.OmitSource, &out.OmitSource
+		*out = new(bool)
 		**out = **in
 	}
 	if in.Source != nil {

@@ -81,9 +81,9 @@ spec:
                   dataset:
                     description: |-
                       (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
-                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Available values: "access_requests", "account_abuse_protection_events", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_bgp_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
                       Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
-                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Available values: "access_requests", "account_abuse_protection_events", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_bgp_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
                     type: string
                   destinationConfSecretRef:
                     description: |-
@@ -114,6 +114,11 @@ spec:
                       (String) The filters to select the events to include and/or remove from your logs. For more information, refer to Filters.
                       The filters to select the events to include and/or remove from your logs. For more information, refer to [Filters](https://developers.cloudflare.com/logs/reference/filters/).
                     type: string
+                  filterAttackTraffic:
+                    description: |-
+                      (Boolean) When true, excludes DDoS attack traffic from logs. This option is supported for the http_requests, firewall_events, and network_analytics_logs datasets.
+                      When true, excludes DDoS attack traffic from logs. This option is supported for the `http_requests`, `firewall_events`, and `network_analytics_logs` datasets.
+                    type: boolean
                   frequency:
                     description: |-
                       (String, Deprecated) This field is deprecated. Please use max_upload_* parameters instead. . The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to high sends your logs in larger quantities of smaller files. Setting frequency to low sends logs in smaller quantities of larger files.
@@ -187,8 +192,8 @@ spec:
                         type: array
                       mergeSubrequests:
                         description: |-
-                          (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
-                          If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
+                          scoped jobs.
+                          If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset. Not supported for account-scoped jobs.
                         type: boolean
                       outputType:
                         description: |-
@@ -219,8 +224,8 @@ spec:
                         type: string
                       sampleRate:
                         description: |-
-                          (Number) Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
-                          Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
+                          (Number) Specifies the sampling rate as a floating number greater than 0 and at most 1. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
+                          Specifies the sampling rate as a floating number greater than 0 and at most 1. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
                         type: number
                       timestampFormat:
                         description: |-
@@ -276,9 +281,9 @@ spec:
                   dataset:
                     description: |-
                       (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
-                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Available values: "access_requests", "account_abuse_protection_events", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_bgp_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
                       Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
-                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Available values: "access_requests", "account_abuse_protection_events", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_bgp_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
                     type: string
                   destinationConfSecretRef:
                     description: |-
@@ -309,6 +314,11 @@ spec:
                       (String) The filters to select the events to include and/or remove from your logs. For more information, refer to Filters.
                       The filters to select the events to include and/or remove from your logs. For more information, refer to [Filters](https://developers.cloudflare.com/logs/reference/filters/).
                     type: string
+                  filterAttackTraffic:
+                    description: |-
+                      (Boolean) When true, excludes DDoS attack traffic from logs. This option is supported for the http_requests, firewall_events, and network_analytics_logs datasets.
+                      When true, excludes DDoS attack traffic from logs. This option is supported for the `http_requests`, `firewall_events`, and `network_analytics_logs` datasets.
+                    type: boolean
                   frequency:
                     description: |-
                       (String, Deprecated) This field is deprecated. Please use max_upload_* parameters instead. . The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to high sends your logs in larger quantities of smaller files. Setting frequency to low sends logs in smaller quantities of larger files.
@@ -382,8 +392,8 @@ spec:
                         type: array
                       mergeSubrequests:
                         description: |-
-                          (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
-                          If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
+                          scoped jobs.
+                          If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset. Not supported for account-scoped jobs.
                         type: boolean
                       outputType:
                         description: |-
@@ -414,8 +424,8 @@ spec:
                         type: string
                       sampleRate:
                         description: |-
-                          (Number) Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
-                          Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
+                          (Number) Specifies the sampling rate as a floating number greater than 0 and at most 1. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
+                          Specifies the sampling rate as a floating number greater than 0 and at most 1. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
                         type: number
                       timestampFormat:
                         description: |-
@@ -555,9 +565,9 @@ spec:
                   dataset:
                     description: |-
                       (String) Name of the dataset. A list of supported datasets can be found on the Developer Docs.
-                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Available values: "access_requests", "account_abuse_protection_events", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_bgp_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
                       Name of the dataset. A list of supported datasets can be found on the [Developer Docs](https://developers.cloudflare.com/logs/reference/log-fields/).
-                      Available values: "access_requests", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
+                      Available values: "access_requests", "account_abuse_protection_events", "audit_logs", "audit_logs_v2", "biso_user_actions", "casb_findings", "device_posture_results", "dex_application_tests", "dex_device_state_events", "dlp_forensic_copies", "dns_firewall_logs", "dns_logs", "email_security_alerts", "email_security_post_delivery_events", "firewall_events", "gateway_dns", "gateway_http", "gateway_network", "http_requests", "ipsec_logs", "magic_bgp_logs", "magic_ids_detections", "mcp_portal_logs", "mnm_flow_logs", "nel_reports", "network_analytics_logs", "page_shield_events", "sinkhole_http_logs", "spectrum_events", "ssh_logs", "turnstile_events", "warp_config_changes", "warp_toggle_changes", "websocket_analytics", "workers_trace_events", "zaraz_events", "zero_trust_network_sessions".
                     type: string
                   enabled:
                     description: |-
@@ -574,6 +584,11 @@ spec:
                       (String) The filters to select the events to include and/or remove from your logs. For more information, refer to Filters.
                       The filters to select the events to include and/or remove from your logs. For more information, refer to [Filters](https://developers.cloudflare.com/logs/reference/filters/).
                     type: string
+                  filterAttackTraffic:
+                    description: |-
+                      (Boolean) When true, excludes DDoS attack traffic from logs. This option is supported for the http_requests, firewall_events, and network_analytics_logs datasets.
+                      When true, excludes DDoS attack traffic from logs. This option is supported for the `http_requests`, `firewall_events`, and `network_analytics_logs` datasets.
+                    type: boolean
                   frequency:
                     description: |-
                       (String, Deprecated) This field is deprecated. Please use max_upload_* parameters instead. . The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to high sends your logs in larger quantities of smaller files. Setting frequency to low sends logs in smaller quantities of larger files.
@@ -660,8 +675,8 @@ spec:
                         type: array
                       mergeSubrequests:
                         description: |-
-                          (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
-                          If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
+                          scoped jobs.
+                          If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset. Not supported for account-scoped jobs.
                         type: boolean
                       outputType:
                         description: |-
@@ -692,8 +707,8 @@ spec:
                         type: string
                       sampleRate:
                         description: |-
-                          (Number) Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
-                          Floating number to specify sampling rate. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
+                          (Number) Specifies the sampling rate as a floating number greater than 0 and at most 1. Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
+                          Specifies the sampling rate as a floating number greater than 0 and at most 1. Sampling is applied on top of filtering, and regardless of the current `sample_interval` of the data.
                         type: number
                       timestampFormat:
                         description: |-

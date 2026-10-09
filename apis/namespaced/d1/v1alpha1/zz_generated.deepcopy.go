@@ -47,6 +47,17 @@ func (in *DatabaseInitParameters) DeepCopyInto(out *DatabaseInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Fields != nil {
+		in, out := &in.Fields, &out.Fields
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.Jurisdiction != nil {
 		in, out := &in.Jurisdiction, &out.Jurisdiction
 		*out = new(string)
@@ -124,6 +135,17 @@ func (in *DatabaseObservation) DeepCopyInto(out *DatabaseObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Fields != nil {
+		in, out := &in.Fields, &out.Fields
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.FileSize != nil {
 		in, out := &in.FileSize, &out.FileSize
 		*out = new(float64)
@@ -188,6 +210,17 @@ func (in *DatabaseParameters) DeepCopyInto(out *DatabaseParameters) {
 		in, out := &in.AccountID, &out.AccountID
 		*out = new(string)
 		**out = **in
+	}
+	if in.Fields != nil {
+		in, out := &in.Fields, &out.Fields
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.Jurisdiction != nil {
 		in, out := &in.Jurisdiction, &out.Jurisdiction

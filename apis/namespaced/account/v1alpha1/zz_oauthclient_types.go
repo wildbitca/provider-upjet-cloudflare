@@ -72,6 +72,10 @@ type OAuthClientInitParameters struct {
 	// The unique identifier for an OAuth client.
 	OauthClientID *string `json:"oauthClientId,omitempty" tf:"oauth_client_id,omitempty"`
 
+	// (List of String) Scopes that the authorizing user may decline during consent. Each value must also appear in scopes. The scopes openid, offline, and offline_access cannot be optional.
+	// Scopes that the authorizing user may decline during consent. Each value must also appear in `scopes`. The scopes `openid`, `offline`, and `offline_access` cannot be optional.
+	OptionalScopes []*string `json:"optionalScopes,omitempty" tf:"optional_scopes,omitempty"`
+
 	// (String) URL that points to a privacy policy document.
 	// URL that points to a privacy policy document.
 	PolicyURI *string `json:"policyUri,omitempty" tf:"policy_uri,omitempty"`
@@ -155,6 +159,10 @@ type OAuthClientObservation struct {
 	// (String) The unique identifier for an OAuth client.
 	// The unique identifier for an OAuth client.
 	OauthClientID *string `json:"oauthClientId,omitempty" tf:"oauth_client_id,omitempty"`
+
+	// (List of String) Scopes that the authorizing user may decline during consent. Each value must also appear in scopes. The scopes openid, offline, and offline_access cannot be optional.
+	// Scopes that the authorizing user may decline during consent. Each value must also appear in `scopes`. The scopes `openid`, `offline`, and `offline_access` cannot be optional.
+	OptionalScopes []*string `json:"optionalScopes,omitempty" tf:"optional_scopes,omitempty"`
 
 	// (String) URL that points to a privacy policy document.
 	// URL that points to a privacy policy document.
@@ -246,6 +254,11 @@ type OAuthClientParameters struct {
 	// The unique identifier for an OAuth client.
 	// +kubebuilder:validation:Optional
 	OauthClientID *string `json:"oauthClientId,omitempty" tf:"oauth_client_id,omitempty"`
+
+	// (List of String) Scopes that the authorizing user may decline during consent. Each value must also appear in scopes. The scopes openid, offline, and offline_access cannot be optional.
+	// Scopes that the authorizing user may decline during consent. Each value must also appear in `scopes`. The scopes `openid`, `offline`, and `offline_access` cannot be optional.
+	// +kubebuilder:validation:Optional
+	OptionalScopes []*string `json:"optionalScopes,omitempty" tf:"optional_scopes,omitempty"`
 
 	// (String) URL that points to a privacy policy document.
 	// URL that points to a privacy policy document.

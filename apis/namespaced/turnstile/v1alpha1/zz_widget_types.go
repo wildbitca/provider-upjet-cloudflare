@@ -34,12 +34,31 @@ type WidgetInitParameters struct {
 	// Available values: "no_clearance", "jschallenge", "managed", "interactive".
 	ClearanceLevel *string `json:"clearanceLevel,omitempty" tf:"clearance_level,omitempty"`
 
+	// (String) Direction to order widgets.
+	// Available values: "asc", "desc".
+	// Direction to order widgets.
+	// Available values: "asc", "desc".
+	Direction *string `json:"direction,omitempty" tf:"direction,omitempty"`
+
 	// (List of String)
 	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
 
 	// (Boolean) Return the Ephemeral ID in /siteverify (ENT only).
 	// Return the Ephemeral ID in /siteverify (ENT only).
 	EphemeralID *bool `json:"ephemeralId,omitempty" tf:"ephemeral_id,omitempty"`
+
+	// insensitive substring matching.
+	// Format: field:value
+	// Filter widgets by field using case-insensitive substring matching.
+	// Format: `field:value`
+	//
+	// Supported fields:
+	// - `name` - Filter by widget name (e.g., `filter=name:login-form`)
+	// - `sitekey` - Filter by sitekey (e.g., `filter=sitekey:0x4AAA`)
+	//
+	// Returns 400 Bad Request if the field is unsupported or format is invalid.
+	// An empty filter value returns all results.
+	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// interactive", "invisible", "managed".
 	// Widget Mode
@@ -57,6 +76,20 @@ type WidgetInitParameters struct {
 	// (Boolean) Do not show any Cloudflare branding on the widget (ENT only).
 	// Do not show any Cloudflare branding on the widget (ENT only).
 	Offlabel *bool `json:"offlabel,omitempty" tf:"offlabel,omitempty"`
+
+	// (String) Field to order widgets by.
+	// Available values: "id", "sitekey", "name", "created_on", "modified_on".
+	// Field to order widgets by.
+	// Available values: "id", "sitekey", "name", "created_on", "modified_on".
+	Order *string `json:"order,omitempty" tf:"order,omitempty"`
+
+	// (Number) Page number of paginated results.
+	// Page number of paginated results.
+	Page *float64 `json:"page,omitempty" tf:"page,omitempty"`
+
+	// (Number) Number of items per page.
+	// Number of items per page.
+	PerPage *float64 `json:"perPage,omitempty" tf:"per_page,omitempty"`
 
 	// (String) Region where this widget can be used. This cannot be changed after creation.
 	// Available values: "world", "china".
@@ -100,12 +133,31 @@ type WidgetObservation struct {
 	// Available values: "wrangler", "dashboard", "spin", "api", "unknown".
 	DeployedVia *string `json:"deployedVia,omitempty" tf:"deployed_via,omitempty"`
 
+	// (String) Direction to order widgets.
+	// Available values: "asc", "desc".
+	// Direction to order widgets.
+	// Available values: "asc", "desc".
+	Direction *string `json:"direction,omitempty" tf:"direction,omitempty"`
+
 	// (List of String)
 	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
 
 	// (Boolean) Return the Ephemeral ID in /siteverify (ENT only).
 	// Return the Ephemeral ID in /siteverify (ENT only).
 	EphemeralID *bool `json:"ephemeralId,omitempty" tf:"ephemeral_id,omitempty"`
+
+	// insensitive substring matching.
+	// Format: field:value
+	// Filter widgets by field using case-insensitive substring matching.
+	// Format: `field:value`
+	//
+	// Supported fields:
+	// - `name` - Filter by widget name (e.g., `filter=name:login-form`)
+	// - `sitekey` - Filter by sitekey (e.g., `filter=sitekey:0x4AAA`)
+	//
+	// Returns 400 Bad Request if the field is unsupported or format is invalid.
+	// An empty filter value returns all results.
+	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// (String) Widget item identifier tag.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -140,13 +192,27 @@ type WidgetObservation struct {
 	// Do not show any Cloudflare branding on the widget (ENT only).
 	Offlabel *bool `json:"offlabel,omitempty" tf:"offlabel,omitempty"`
 
+	// (String) Field to order widgets by.
+	// Available values: "id", "sitekey", "name", "created_on", "modified_on".
+	// Field to order widgets by.
+	// Available values: "id", "sitekey", "name", "created_on", "modified_on".
+	Order *string `json:"order,omitempty" tf:"order,omitempty"`
+
+	// (Number) Page number of paginated results.
+	// Page number of paginated results.
+	Page *float64 `json:"page,omitempty" tf:"page,omitempty"`
+
+	// (Number) Number of items per page.
+	// Number of items per page.
+	PerPage *float64 `json:"perPage,omitempty" tf:"per_page,omitempty"`
+
 	// (String) Region where this widget can be used. This cannot be changed after creation.
 	// Available values: "world", "china".
 	// Region where this widget can be used. This cannot be changed after creation.
 	// Available values: "world", "china".
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// (String) Widget item identifier tag.
+	// Filter by sitekey (e.g., filter=sitekey:0x4AAA)
 	// Widget item identifier tag.
 	Sitekey *string `json:"sitekey,omitempty" tf:"sitekey,omitempty"`
 }
@@ -174,6 +240,13 @@ type WidgetParameters struct {
 	// +kubebuilder:validation:Optional
 	ClearanceLevel *string `json:"clearanceLevel,omitempty" tf:"clearance_level,omitempty"`
 
+	// (String) Direction to order widgets.
+	// Available values: "asc", "desc".
+	// Direction to order widgets.
+	// Available values: "asc", "desc".
+	// +kubebuilder:validation:Optional
+	Direction *string `json:"direction,omitempty" tf:"direction,omitempty"`
+
 	// (List of String)
 	// +kubebuilder:validation:Optional
 	Domains []*string `json:"domains,omitempty" tf:"domains,omitempty"`
@@ -182,6 +255,20 @@ type WidgetParameters struct {
 	// Return the Ephemeral ID in /siteverify (ENT only).
 	// +kubebuilder:validation:Optional
 	EphemeralID *bool `json:"ephemeralId,omitempty" tf:"ephemeral_id,omitempty"`
+
+	// insensitive substring matching.
+	// Format: field:value
+	// Filter widgets by field using case-insensitive substring matching.
+	// Format: `field:value`
+	//
+	// Supported fields:
+	// - `name` - Filter by widget name (e.g., `filter=name:login-form`)
+	// - `sitekey` - Filter by sitekey (e.g., `filter=sitekey:0x4AAA`)
+	//
+	// Returns 400 Bad Request if the field is unsupported or format is invalid.
+	// An empty filter value returns all results.
+	// +kubebuilder:validation:Optional
+	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// interactive", "invisible", "managed".
 	// Widget Mode
@@ -202,6 +289,23 @@ type WidgetParameters struct {
 	// Do not show any Cloudflare branding on the widget (ENT only).
 	// +kubebuilder:validation:Optional
 	Offlabel *bool `json:"offlabel,omitempty" tf:"offlabel,omitempty"`
+
+	// (String) Field to order widgets by.
+	// Available values: "id", "sitekey", "name", "created_on", "modified_on".
+	// Field to order widgets by.
+	// Available values: "id", "sitekey", "name", "created_on", "modified_on".
+	// +kubebuilder:validation:Optional
+	Order *string `json:"order,omitempty" tf:"order,omitempty"`
+
+	// (Number) Page number of paginated results.
+	// Page number of paginated results.
+	// +kubebuilder:validation:Optional
+	Page *float64 `json:"page,omitempty" tf:"page,omitempty"`
+
+	// (Number) Number of items per page.
+	// Number of items per page.
+	// +kubebuilder:validation:Optional
+	PerPage *float64 `json:"perPage,omitempty" tf:"per_page,omitempty"`
 
 	// (String) Region where this widget can be used. This cannot be changed after creation.
 	// Available values: "world", "china".

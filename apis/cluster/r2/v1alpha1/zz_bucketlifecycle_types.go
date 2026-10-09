@@ -34,8 +34,8 @@ type AbortMultipartUploadsTransitionParameters struct {
 
 type BucketLifecycleInitParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/account/v1alpha1.Account
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
@@ -57,8 +57,8 @@ type BucketLifecycleInitParameters struct {
 
 type BucketLifecycleObservation struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Unique identifier for this rule.
@@ -74,8 +74,8 @@ type BucketLifecycleObservation struct {
 
 type BucketLifecycleParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/account/v1alpha1.Account
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`

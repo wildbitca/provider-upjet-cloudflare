@@ -19,28 +19,36 @@ type SecurityImpersonationRegistryInitParameters struct {
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String)
+	// (String) Optional note describing the entry.
+	// Optional note describing the entry.
 	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
 
-	// (Number)
+	// synced.
+	// Identifier of the directory the entry was synced from, when directory-synced.
 	DirectoryID *float64 `json:"directoryId,omitempty" tf:"directory_id,omitempty"`
 
-	// (Number)
+	// synced.
+	// Identifier of the directory node the entry was synced from, when directory-synced.
 	DirectoryNodeID *float64 `json:"directoryNodeId,omitempty" tf:"directory_node_id,omitempty"`
 
-	// (String)
+	// (String) Email address (or pattern) of the protected identity.
+	// Email address (or pattern) of the protected identity.
 	Email *string `json:"email,omitempty" tf:"email,omitempty"`
 
-	// (String, Deprecated)
+	// (String, Deprecated) Deprecated. External identifier of the directory node.
+	// Deprecated. External identifier of the directory node.
 	ExternalDirectoryNodeID *string `json:"externalDirectoryNodeId,omitempty" tf:"external_directory_node_id,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether email is a regular expression instead of a literal address.
+	// Whether `email` is a regular expression instead of a literal address.
 	IsEmailRegex *bool `json:"isEmailRegex,omitempty" tf:"is_email_regex,omitempty"`
 
-	// (String)
+	// (String) Display name of the protected identity.
+	// Display name of the protected identity.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+	// Source the entry was created from.
 	// Available values: "A1S_INTERNAL", "SNOOPY-CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
 	Provenance *string `json:"provenance,omitempty" tf:"provenance,omitempty"`
 }
@@ -51,28 +59,34 @@ type SecurityImpersonationRegistryObservation struct {
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String)
+	// (String) Optional note describing the entry.
+	// Optional note describing the entry.
 	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
 
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Number)
+	// synced.
+	// Identifier of the directory the entry was synced from, when directory-synced.
 	DirectoryID *float64 `json:"directoryId,omitempty" tf:"directory_id,omitempty"`
 
-	// (Number)
+	// synced.
+	// Identifier of the directory node the entry was synced from, when directory-synced.
 	DirectoryNodeID *float64 `json:"directoryNodeId,omitempty" tf:"directory_node_id,omitempty"`
 
-	// (String)
+	// (String) Email address (or pattern) of the protected identity.
+	// Email address (or pattern) of the protected identity.
 	Email *string `json:"email,omitempty" tf:"email,omitempty"`
 
-	// (String, Deprecated)
+	// (String, Deprecated) Deprecated. External identifier of the directory node.
+	// Deprecated. External identifier of the directory node.
 	ExternalDirectoryNodeID *string `json:"externalDirectoryNodeId,omitempty" tf:"external_directory_node_id,omitempty"`
 
 	// (String) Impersonation registry entry identifier
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether email is a regular expression instead of a literal address.
+	// Whether `email` is a regular expression instead of a literal address.
 	IsEmailRegex *bool `json:"isEmailRegex,omitempty" tf:"is_email_regex,omitempty"`
 
 	// (String, Deprecated) Deprecated, use modified_at instead. End of life: November 1, 2026.
@@ -82,10 +96,12 @@ type SecurityImpersonationRegistryObservation struct {
 	// (String)
 	ModifiedAt *string `json:"modifiedAt,omitempty" tf:"modified_at,omitempty"`
 
-	// (String)
+	// (String) Display name of the protected identity.
+	// Display name of the protected identity.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+	// Source the entry was created from.
 	// Available values: "A1S_INTERNAL", "SNOOPY-CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
 	Provenance *string `json:"provenance,omitempty" tf:"provenance,omitempty"`
 }
@@ -97,35 +113,43 @@ type SecurityImpersonationRegistryParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String)
+	// (String) Optional note describing the entry.
+	// Optional note describing the entry.
 	// +kubebuilder:validation:Optional
 	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
 
-	// (Number)
+	// synced.
+	// Identifier of the directory the entry was synced from, when directory-synced.
 	// +kubebuilder:validation:Optional
 	DirectoryID *float64 `json:"directoryId,omitempty" tf:"directory_id,omitempty"`
 
-	// (Number)
+	// synced.
+	// Identifier of the directory node the entry was synced from, when directory-synced.
 	// +kubebuilder:validation:Optional
 	DirectoryNodeID *float64 `json:"directoryNodeId,omitempty" tf:"directory_node_id,omitempty"`
 
-	// (String)
+	// (String) Email address (or pattern) of the protected identity.
+	// Email address (or pattern) of the protected identity.
 	// +kubebuilder:validation:Optional
 	Email *string `json:"email,omitempty" tf:"email,omitempty"`
 
-	// (String, Deprecated)
+	// (String, Deprecated) Deprecated. External identifier of the directory node.
+	// Deprecated. External identifier of the directory node.
 	// +kubebuilder:validation:Optional
 	ExternalDirectoryNodeID *string `json:"externalDirectoryNodeId,omitempty" tf:"external_directory_node_id,omitempty"`
 
-	// (Boolean)
+	// (Boolean) Whether email is a regular expression instead of a literal address.
+	// Whether `email` is a regular expression instead of a literal address.
 	// +kubebuilder:validation:Optional
 	IsEmailRegex *bool `json:"isEmailRegex,omitempty" tf:"is_email_regex,omitempty"`
 
-	// (String)
+	// (String) Display name of the protected identity.
+	// Display name of the protected identity.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
+	// Source the entry was created from.
 	// Available values: "A1S_INTERNAL", "SNOOPY-CASB_OFFICE_365", "SNOOPY-OFFICE_365", "SNOOPY-GOOGLE_DIRECTORY".
 	// +kubebuilder:validation:Optional
 	Provenance *string `json:"provenance,omitempty" tf:"provenance,omitempty"`

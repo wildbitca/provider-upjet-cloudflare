@@ -15,48 +15,39 @@ import (
 
 type CachingInitParameters struct {
 
-	// (Boolean) Set to true to disable caching of SQL responses. Default is false.
-	// Set to true to disable caching of SQL responses. Default is false.
+	// (Boolean)
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// (Number) Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
-	// Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
+	// (Number)
 	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
 
-	// (Number) Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
-	// Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
+	// (Number)
 	StaleWhileRevalidate *float64 `json:"staleWhileRevalidate,omitempty" tf:"stale_while_revalidate,omitempty"`
 }
 
 type CachingObservation struct {
 
-	// (Boolean) Set to true to disable caching of SQL responses. Default is false.
-	// Set to true to disable caching of SQL responses. Default is false.
+	// (Boolean)
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// (Number) Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
-	// Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
+	// (Number)
 	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
 
-	// (Number) Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
-	// Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
+	// (Number)
 	StaleWhileRevalidate *float64 `json:"staleWhileRevalidate,omitempty" tf:"stale_while_revalidate,omitempty"`
 }
 
 type CachingParameters struct {
 
-	// (Boolean) Set to true to disable caching of SQL responses. Default is false.
-	// Set to true to disable caching of SQL responses. Default is false.
+	// (Boolean)
 	// +kubebuilder:validation:Optional
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// (Number) Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
-	// Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
+	// (Number)
 	// +kubebuilder:validation:Optional
 	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
 
-	// (Number) Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
-	// Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
+	// (Number)
 	// +kubebuilder:validation:Optional
 	StaleWhileRevalidate *float64 `json:"staleWhileRevalidate,omitempty" tf:"stale_while_revalidate,omitempty"`
 }
@@ -70,6 +61,9 @@ type ConfigInitParameters struct {
 	// (Attributes) (see below for nested schema)
 	Caching *CachingInitParameters `json:"caching,omitempty" tf:"caching,omitempty"`
 
+	// (String)
+	Integration *string `json:"integration,omitempty" tf:"integration,omitempty"`
+
 	// (Attributes) mTLS configuration for the origin connection. Cannot be used with VPC Service origins; TLS must be managed on the VPC Service. (see below for nested schema)
 	Mtls *MtlsInitParameters `json:"mtls,omitempty" tf:"mtls,omitempty"`
 
@@ -77,7 +71,7 @@ type ConfigInitParameters struct {
 	// The name of the Hyperdrive configuration. Used to identify the configuration in the Cloudflare dashboard and API.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) Combines database connection fields with exactly one supported network location. (see below for nested schema)
 	Origin *OriginInitParameters `json:"origin,omitempty" tf:"origin,omitempty"`
 
 	// (Number) The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
@@ -85,6 +79,7 @@ type ConfigInitParameters struct {
 	//
 	// Maximum allowed: 20 for free tier accounts, 100 for paid tier accounts.
 	// If not specified, defaults to 20 for free tier and 60 for paid tier.
+	// Certain Cloudflare-managed origins may be permitted a higher limit.
 	// Contact Cloudflare if you need a higher limit.
 	OriginConnectionLimit *float64 `json:"originConnectionLimit,omitempty" tf:"origin_connection_limit,omitempty"`
 }
@@ -105,6 +100,9 @@ type ConfigObservation struct {
 	// (String) Define configurations using a unique string identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (String)
+	Integration *string `json:"integration,omitempty" tf:"integration,omitempty"`
+
 	// (String) Defines the last modified time of the Hyperdrive configuration.
 	// Defines the last modified time of the Hyperdrive configuration.
 	ModifiedOn *string `json:"modifiedOn,omitempty" tf:"modified_on,omitempty"`
@@ -116,7 +114,7 @@ type ConfigObservation struct {
 	// The name of the Hyperdrive configuration. Used to identify the configuration in the Cloudflare dashboard and API.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) Combines database connection fields with exactly one supported network location. (see below for nested schema)
 	Origin *OriginObservation `json:"origin,omitempty" tf:"origin,omitempty"`
 
 	// (Number) The (soft) maximum number of connections the Hyperdrive is allowed to make to the origin database.
@@ -124,6 +122,7 @@ type ConfigObservation struct {
 	//
 	// Maximum allowed: 20 for free tier accounts, 100 for paid tier accounts.
 	// If not specified, defaults to 20 for free tier and 60 for paid tier.
+	// Certain Cloudflare-managed origins may be permitted a higher limit.
 	// Contact Cloudflare if you need a higher limit.
 	OriginConnectionLimit *float64 `json:"originConnectionLimit,omitempty" tf:"origin_connection_limit,omitempty"`
 
@@ -143,6 +142,10 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Caching *CachingParameters `json:"caching,omitempty" tf:"caching,omitempty"`
 
+	// (String)
+	// +kubebuilder:validation:Optional
+	Integration *string `json:"integration,omitempty" tf:"integration,omitempty"`
+
 	// (Attributes) mTLS configuration for the origin connection. Cannot be used with VPC Service origins; TLS must be managed on the VPC Service. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Mtls *MtlsParameters `json:"mtls,omitempty" tf:"mtls,omitempty"`
@@ -152,7 +155,7 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) Combines database connection fields with exactly one supported network location. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Origin *OriginParameters `json:"origin,omitempty" tf:"origin,omitempty"`
 
@@ -161,6 +164,7 @@ type ConfigParameters struct {
 	//
 	// Maximum allowed: 20 for free tier accounts, 100 for paid tier accounts.
 	// If not specified, defaults to 20 for free tier and 60 for paid tier.
+	// Certain Cloudflare-managed origins may be permitted a higher limit.
 	// Contact Cloudflare if you need a higher limit.
 	// +kubebuilder:validation:Optional
 	OriginConnectionLimit *float64 `json:"originConnectionLimit,omitempty" tf:"origin_connection_limit,omitempty"`
@@ -176,8 +180,8 @@ type MtlsInitParameters struct {
 	// Define mTLS certificate ID obtained after uploading client cert.
 	MtlsCertificateID *string `json:"mtlsCertificateId,omitempty" tf:"mtls_certificate_id,omitempty"`
 
-	// ca', or 'verify-full' to verify the CA.
-	// Set SSL mode to 'require', 'verify-ca', or 'verify-full' to verify the CA.
+	// ca, and verify-full. MySQL accepts REQUIRED, VERIFY_CA, and VERIFY_IDENTITY. The verify modes require a CA certificate; the require modes cannot be used with a CA certificate.
+	// PostgreSQL accepts `require`, `verify-ca`, and `verify-full`. MySQL accepts `REQUIRED`, `VERIFY_CA`, and `VERIFY_IDENTITY`. The verify modes require a CA certificate; the require modes cannot be used with a CA certificate.
 	Sslmode *string `json:"sslmode,omitempty" tf:"sslmode,omitempty"`
 }
 
@@ -191,8 +195,8 @@ type MtlsObservation struct {
 	// Define mTLS certificate ID obtained after uploading client cert.
 	MtlsCertificateID *string `json:"mtlsCertificateId,omitempty" tf:"mtls_certificate_id,omitempty"`
 
-	// ca', or 'verify-full' to verify the CA.
-	// Set SSL mode to 'require', 'verify-ca', or 'verify-full' to verify the CA.
+	// ca, and verify-full. MySQL accepts REQUIRED, VERIFY_CA, and VERIFY_IDENTITY. The verify modes require a CA certificate; the require modes cannot be used with a CA certificate.
+	// PostgreSQL accepts `require`, `verify-ca`, and `verify-full`. MySQL accepts `REQUIRED`, `VERIFY_CA`, and `VERIFY_IDENTITY`. The verify modes require a CA certificate; the require modes cannot be used with a CA certificate.
 	Sslmode *string `json:"sslmode,omitempty" tf:"sslmode,omitempty"`
 }
 
@@ -208,8 +212,8 @@ type MtlsParameters struct {
 	// +kubebuilder:validation:Optional
 	MtlsCertificateID *string `json:"mtlsCertificateId,omitempty" tf:"mtls_certificate_id,omitempty"`
 
-	// ca', or 'verify-full' to verify the CA.
-	// Set SSL mode to 'require', 'verify-ca', or 'verify-full' to verify the CA.
+	// ca, and verify-full. MySQL accepts REQUIRED, VERIFY_CA, and VERIFY_IDENTITY. The verify modes require a CA certificate; the require modes cannot be used with a CA certificate.
+	// PostgreSQL accepts `require`, `verify-ca`, and `verify-full`. MySQL accepts `REQUIRED`, `VERIFY_CA`, and `VERIFY_IDENTITY`. The verify modes require a CA certificate; the require modes cannot be used with a CA certificate.
 	// +kubebuilder:validation:Optional
 	Sslmode *string `json:"sslmode,omitempty" tf:"sslmode,omitempty"`
 }
@@ -228,8 +232,8 @@ type OriginInitParameters struct {
 	// Set the name of your origin database.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
-	// (String) Defines the host (hostname or IP) of your origin database.
-	// Defines the host (hostname or IP) of your origin database.
+	// local IP addresses are not allowed.
+	// Defines the publicly reachable hostname or IP of your origin database. Private, loopback, and link-local IP addresses are not allowed.
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
 	// only value.
@@ -265,8 +269,8 @@ type OriginObservation struct {
 	// Set the name of your origin database.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
-	// (String) Defines the host (hostname or IP) of your origin database.
-	// Defines the host (hostname or IP) of your origin database.
+	// local IP addresses are not allowed.
+	// Defines the publicly reachable hostname or IP of your origin database. Private, loopback, and link-local IP addresses are not allowed.
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
 	// (Number) Defines the port of your origin database. Defaults to 5432 for PostgreSQL or 3306 for MySQL if not specified.
@@ -305,8 +309,8 @@ type OriginParameters struct {
 	// +kubebuilder:validation:Optional
 	Database *string `json:"database" tf:"database,omitempty"`
 
-	// (String) Defines the host (hostname or IP) of your origin database.
-	// Defines the host (hostname or IP) of your origin database.
+	// local IP addresses are not allowed.
+	// Defines the publicly reachable hostname or IP of your origin database. Private, loopback, and link-local IP addresses are not allowed.
 	// +kubebuilder:validation:Optional
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
@@ -376,7 +380,6 @@ type Config struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountId) || (has(self.initProvider) && has(self.initProvider.accountId))",message="spec.forProvider.accountId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.origin) || (has(self.initProvider) && has(self.initProvider.origin))",message="spec.forProvider.origin is a required parameter"
 	Spec   ConfigSpec   `json:"spec"`
 	Status ConfigStatus `json:"status,omitempty"`
 }

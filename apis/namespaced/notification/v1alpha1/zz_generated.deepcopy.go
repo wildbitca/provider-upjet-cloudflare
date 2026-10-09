@@ -483,6 +483,17 @@ func (in *FiltersInitParameters) DeepCopyInto(out *FiltersInitParameters) {
 			}
 		}
 	}
+	if in.TokenID != nil {
+		in, out := &in.TokenID, &out.TokenID
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.TrafficExclusions != nil {
 		in, out := &in.TrafficExclusions, &out.TrafficExclusions
 		*out = make([]*string, len(*in))
@@ -971,6 +982,17 @@ func (in *FiltersObservation) DeepCopyInto(out *FiltersObservation) {
 			}
 		}
 	}
+	if in.TokenID != nil {
+		in, out := &in.TokenID, &out.TokenID
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.TrafficExclusions != nil {
 		in, out := &in.TrafficExclusions, &out.TrafficExclusions
 		*out = make([]*string, len(*in))
@@ -1450,6 +1472,17 @@ func (in *FiltersParameters) DeepCopyInto(out *FiltersParameters) {
 	}
 	if in.TargetZoneName != nil {
 		in, out := &in.TargetZoneName, &out.TargetZoneName
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.TokenID != nil {
+		in, out := &in.TokenID, &out.TokenID
 		*out = make([]*string, len(*in))
 		for i := range *in {
 			if (*in)[i] != nil {

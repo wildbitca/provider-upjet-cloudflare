@@ -15,8 +15,8 @@ import (
 
 type HostnameInitParameters struct {
 
-	// (Boolean) Only applies to wildcard hostnames (e.g., *.example.com). When true (default), only subdomains are blocked. When false, both the root domain and subdomains are blocked.
-	// Only applies to wildcard hostnames (e.g., *.example.com). When true (default), only subdomains are blocked. When false, both the root domain and subdomains are blocked.
+	// (Boolean) Only applies to wildcard hostnames (e.g., *.example.com). When true (default), the rule blocks only subdomains. When false, the rule blocks both the root domain and subdomains.
+	// Only applies to wildcard hostnames (e.g., *.example.com). When true (default), the rule blocks only subdomains. When false, the rule blocks both the root domain and subdomains.
 	ExcludeExactHostname *bool `json:"excludeExactHostname,omitempty" tf:"exclude_exact_hostname,omitempty"`
 
 	// (String)
@@ -25,8 +25,8 @@ type HostnameInitParameters struct {
 
 type HostnameObservation struct {
 
-	// (Boolean) Only applies to wildcard hostnames (e.g., *.example.com). When true (default), only subdomains are blocked. When false, both the root domain and subdomains are blocked.
-	// Only applies to wildcard hostnames (e.g., *.example.com). When true (default), only subdomains are blocked. When false, both the root domain and subdomains are blocked.
+	// (Boolean) Only applies to wildcard hostnames (e.g., *.example.com). When true (default), the rule blocks only subdomains. When false, the rule blocks both the root domain and subdomains.
+	// Only applies to wildcard hostnames (e.g., *.example.com). When true (default), the rule blocks only subdomains. When false, the rule blocks both the root domain and subdomains.
 	ExcludeExactHostname *bool `json:"excludeExactHostname,omitempty" tf:"exclude_exact_hostname,omitempty"`
 
 	// (String)
@@ -35,8 +35,8 @@ type HostnameObservation struct {
 
 type HostnameParameters struct {
 
-	// (Boolean) Only applies to wildcard hostnames (e.g., *.example.com). When true (default), only subdomains are blocked. When false, both the root domain and subdomains are blocked.
-	// Only applies to wildcard hostnames (e.g., *.example.com). When true (default), only subdomains are blocked. When false, both the root domain and subdomains are blocked.
+	// (Boolean) Only applies to wildcard hostnames (e.g., *.example.com). When true (default), the rule blocks only subdomains. When false, the rule blocks both the root domain and subdomains.
+	// Only applies to wildcard hostnames (e.g., *.example.com). When true (default), the rule blocks only subdomains. When false, the rule blocks both the root domain and subdomains.
 	// +kubebuilder:validation:Optional
 	ExcludeExactHostname *bool `json:"excludeExactHostname,omitempty" tf:"exclude_exact_hostname,omitempty"`
 

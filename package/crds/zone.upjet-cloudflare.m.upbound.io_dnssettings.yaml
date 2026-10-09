@@ -66,8 +66,8 @@ spec:
                     type: boolean
                   foundationDns:
                     description: |-
-                      (Boolean) Whether to enable Foundation DNS Advanced Nameservers on the zone.
-                      Whether to enable Foundation DNS Advanced Nameservers on the zone.
+                      (Boolean, Deprecated) Deprecated. Use nameservers.type to configure Advanced Nameservers.
+                      Deprecated. Use nameservers.type to configure Advanced Nameservers.
                     type: boolean
                   internalDns:
                     description: (Attributes) Settings for this internal zone. (see
@@ -85,21 +85,25 @@ spec:
                       Whether to enable multi-provider DNS, which causes Cloudflare to activate the zone even when non-Cloudflare NS records exist, and to respect NS records at the zone apex during outbound zone transfers.
                     type: boolean
                   nameservers:
-                    description: (Attributes) Settings determining the nameservers
-                      through which the zone should be available. (see below for nested
-                      schema)
+                    description: (Attributes) Controls the nameservers through which
+                      the zone is available. (see below for nested schema)
                     properties:
+                      nameserverSetId:
+                        description: |-
+                          owned Custom Nameserver Set to use for this zone.
+                          Identifier of the account-owned Custom Nameserver Set to use for this zone.
+                        type: string
                       nsSet:
                         description: |-
-                          (Number) Configured nameserver set to be used for this zone
-                          Configured nameserver set to be used for this zone
+                          (Number) Configured nameserver set number to use for this zone.
+                          Configured nameserver set number to use for this zone.
                         type: number
                       type:
                         description: |-
-                          (String) Nameserver type
-                          Available values: "cloudflare.standard", "custom.account", "custom.tenant", "custom.zone".
-                          Nameserver type
-                          Available values: "cloudflare.standard", "custom.account", "custom.tenant", "custom.zone".
+                          (String) Nameserver type.
+                          Available values: "cloudflare.standard", "cloudflare.advanced", "custom.account", "custom.tenant", "custom.zone", "custom".
+                          Nameserver type.
+                          Available values: "cloudflare.standard", "cloudflare.advanced", "custom.account", "custom.tenant", "custom.zone", "custom".
                         type: string
                     type: object
                   nsTtl:
@@ -265,8 +269,8 @@ spec:
                     type: boolean
                   foundationDns:
                     description: |-
-                      (Boolean) Whether to enable Foundation DNS Advanced Nameservers on the zone.
-                      Whether to enable Foundation DNS Advanced Nameservers on the zone.
+                      (Boolean, Deprecated) Deprecated. Use nameservers.type to configure Advanced Nameservers.
+                      Deprecated. Use nameservers.type to configure Advanced Nameservers.
                     type: boolean
                   internalDns:
                     description: (Attributes) Settings for this internal zone. (see
@@ -284,21 +288,25 @@ spec:
                       Whether to enable multi-provider DNS, which causes Cloudflare to activate the zone even when non-Cloudflare NS records exist, and to respect NS records at the zone apex during outbound zone transfers.
                     type: boolean
                   nameservers:
-                    description: (Attributes) Settings determining the nameservers
-                      through which the zone should be available. (see below for nested
-                      schema)
+                    description: (Attributes) Controls the nameservers through which
+                      the zone is available. (see below for nested schema)
                     properties:
+                      nameserverSetId:
+                        description: |-
+                          owned Custom Nameserver Set to use for this zone.
+                          Identifier of the account-owned Custom Nameserver Set to use for this zone.
+                        type: string
                       nsSet:
                         description: |-
-                          (Number) Configured nameserver set to be used for this zone
-                          Configured nameserver set to be used for this zone
+                          (Number) Configured nameserver set number to use for this zone.
+                          Configured nameserver set number to use for this zone.
                         type: number
                       type:
                         description: |-
-                          (String) Nameserver type
-                          Available values: "cloudflare.standard", "custom.account", "custom.tenant", "custom.zone".
-                          Nameserver type
-                          Available values: "cloudflare.standard", "custom.account", "custom.tenant", "custom.zone".
+                          (String) Nameserver type.
+                          Available values: "cloudflare.standard", "cloudflare.advanced", "custom.account", "custom.tenant", "custom.zone", "custom".
+                          Nameserver type.
+                          Available values: "cloudflare.standard", "cloudflare.advanced", "custom.account", "custom.tenant", "custom.zone", "custom".
                         type: string
                     type: object
                   nsTtl:
@@ -514,8 +522,8 @@ spec:
                     type: boolean
                   foundationDns:
                     description: |-
-                      (Boolean) Whether to enable Foundation DNS Advanced Nameservers on the zone.
-                      Whether to enable Foundation DNS Advanced Nameservers on the zone.
+                      (Boolean, Deprecated) Deprecated. Use nameservers.type to configure Advanced Nameservers.
+                      Deprecated. Use nameservers.type to configure Advanced Nameservers.
                     type: boolean
                   id:
                     type: string
@@ -535,21 +543,25 @@ spec:
                       Whether to enable multi-provider DNS, which causes Cloudflare to activate the zone even when non-Cloudflare NS records exist, and to respect NS records at the zone apex during outbound zone transfers.
                     type: boolean
                   nameservers:
-                    description: (Attributes) Settings determining the nameservers
-                      through which the zone should be available. (see below for nested
-                      schema)
+                    description: (Attributes) Controls the nameservers through which
+                      the zone is available. (see below for nested schema)
                     properties:
+                      nameserverSetId:
+                        description: |-
+                          owned Custom Nameserver Set to use for this zone.
+                          Identifier of the account-owned Custom Nameserver Set to use for this zone.
+                        type: string
                       nsSet:
                         description: |-
-                          (Number) Configured nameserver set to be used for this zone
-                          Configured nameserver set to be used for this zone
+                          (Number) Configured nameserver set number to use for this zone.
+                          Configured nameserver set number to use for this zone.
                         type: number
                       type:
                         description: |-
-                          (String) Nameserver type
-                          Available values: "cloudflare.standard", "custom.account", "custom.tenant", "custom.zone".
-                          Nameserver type
-                          Available values: "cloudflare.standard", "custom.account", "custom.tenant", "custom.zone".
+                          (String) Nameserver type.
+                          Available values: "cloudflare.standard", "cloudflare.advanced", "custom.account", "custom.tenant", "custom.zone", "custom".
+                          Nameserver type.
+                          Available values: "cloudflare.standard", "cloudflare.advanced", "custom.account", "custom.tenant", "custom.zone", "custom".
                         type: string
                     type: object
                   nsTtl:

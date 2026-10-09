@@ -15,6 +15,28 @@ import (
 	v1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 )
 
+type ConcurrencyInitParameters struct {
+
+	// (Number) Maximum number of instances of this workflow that can run concurrently. Additional instances are queued and started as running instances complete. Must not exceed the account concurrency limit.
+	// Maximum number of instances of this workflow that can run concurrently. Additional instances are queued and started as running instances complete. Must not exceed the account concurrency limit.
+	Limit *float64 `json:"limit,omitempty" tf:"limit,omitempty"`
+}
+
+type ConcurrencyObservation struct {
+
+	// (Number) Maximum number of instances of this workflow that can run concurrently. Additional instances are queued and started as running instances complete. Must not exceed the account concurrency limit.
+	// Maximum number of instances of this workflow that can run concurrently. Additional instances are queued and started as running instances complete. Must not exceed the account concurrency limit.
+	Limit *float64 `json:"limit,omitempty" tf:"limit,omitempty"`
+}
+
+type ConcurrencyParameters struct {
+
+	// (Number) Maximum number of instances of this workflow that can run concurrently. Additional instances are queued and started as running instances complete. Must not exceed the account concurrency limit.
+	// Maximum number of instances of this workflow that can run concurrently. Additional instances are queued and started as running instances complete. Must not exceed the account concurrency limit.
+	// +kubebuilder:validation:Optional
+	Limit *float64 `json:"limit,omitempty" tf:"limit,omitempty"`
+}
+
 type DefaultRetentionInitParameters struct {
 
 	// (Dynamic) Specifies the duration in milliseconds or as a string like '5 minutes'.
@@ -50,61 +72,6 @@ type DefaultRetentionParameters struct {
 	SuccessRetention *v1.JSON `json:"successRetention,omitempty" tf:"success_retention,omitempty"`
 }
 
-type InstancesInitParameters struct {
-}
-
-type InstancesObservation struct {
-
-	// (Number)
-	Complete *float64 `json:"complete,omitempty" tf:"complete,omitempty"`
-
-	// (Number)
-	Errored *float64 `json:"errored,omitempty" tf:"errored,omitempty"`
-
-	// (Number)
-	Paused *float64 `json:"paused,omitempty" tf:"paused,omitempty"`
-
-	// (Number)
-	Queued *float64 `json:"queued,omitempty" tf:"queued,omitempty"`
-
-	// (Number)
-	RollingBack *float64 `json:"rollingBack,omitempty" tf:"rolling_back,omitempty"`
-
-	// (Number)
-	Running *float64 `json:"running,omitempty" tf:"running,omitempty"`
-
-	// (Number)
-	Terminated *float64 `json:"terminated,omitempty" tf:"terminated,omitempty"`
-
-	// (Number)
-	Waiting *float64 `json:"waiting,omitempty" tf:"waiting,omitempty"`
-
-	// (Number)
-	WaitingForPause *float64 `json:"waitingForPause,omitempty" tf:"waiting_for_pause,omitempty"`
-}
-
-type InstancesParameters struct {
-}
-
-type LimitsInitParameters struct {
-
-	// (Number)
-	Steps *float64 `json:"steps,omitempty" tf:"steps,omitempty"`
-}
-
-type LimitsObservation struct {
-
-	// (Number)
-	Steps *float64 `json:"steps,omitempty" tf:"steps,omitempty"`
-}
-
-type LimitsParameters struct {
-
-	// (Number)
-	// +kubebuilder:validation:Optional
-	Steps *float64 `json:"steps,omitempty" tf:"steps,omitempty"`
-}
-
 type SchedulesInitParameters struct {
 
 	// (String)
@@ -132,11 +99,14 @@ type WorkflowInitParameters struct {
 	// (String)
 	ClassName *string `json:"className,omitempty" tf:"class_name,omitempty"`
 
+	// (Attributes) (see below for nested schema)
+	Concurrency *ConcurrencyInitParameters `json:"concurrency,omitempty" tf:"concurrency,omitempty"`
+
 	// (Attributes) Default retention applied to instances of this version when they do not set their own retention. (see below for nested schema)
 	DefaultRetention *DefaultRetentionInitParameters `json:"defaultRetention,omitempty" tf:"default_retention,omitempty"`
 
 	// (Attributes) (see below for nested schema)
-	Limits *LimitsInitParameters `json:"limits,omitempty" tf:"limits,omitempty"`
+	Limits *WorkflowLimitsInitParameters `json:"limits,omitempty" tf:"limits,omitempty"`
 
 	// (Attributes List) (see below for nested schema)
 	Schedules []SchedulesInitParameters `json:"schedules,omitempty" tf:"schedules,omitempty"`
@@ -148,6 +118,25 @@ type WorkflowInitParameters struct {
 	WorkflowName *string `json:"workflowName,omitempty" tf:"workflow_name,omitempty"`
 }
 
+type WorkflowLimitsInitParameters struct {
+
+	// (Number)
+	Steps *float64 `json:"steps,omitempty" tf:"steps,omitempty"`
+}
+
+type WorkflowLimitsObservation struct {
+
+	// (Number)
+	Steps *float64 `json:"steps,omitempty" tf:"steps,omitempty"`
+}
+
+type WorkflowLimitsParameters struct {
+
+	// (Number)
+	// +kubebuilder:validation:Optional
+	Steps *float64 `json:"steps,omitempty" tf:"steps,omitempty"`
+}
+
 type WorkflowObservation struct {
 
 	// (String)
@@ -155,6 +144,9 @@ type WorkflowObservation struct {
 
 	// (String)
 	ClassName *string `json:"className,omitempty" tf:"class_name,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	Concurrency *ConcurrencyObservation `json:"concurrency,omitempty" tf:"concurrency,omitempty"`
 
 	// (String)
 	CreatedOn *string `json:"createdOn,omitempty" tf:"created_on,omitempty"`
@@ -165,14 +157,15 @@ type WorkflowObservation struct {
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Attributes) (see below for nested schema)
-	Instances *InstancesObservation `json:"instances,omitempty" tf:"instances,omitempty"`
+	// (Map of Number)
+	// +mapType=granular
+	Instances map[string]*float64 `json:"instances,omitempty" tf:"instances,omitempty"`
 
 	// (Number)
 	IsDeleted *float64 `json:"isDeleted,omitempty" tf:"is_deleted,omitempty"`
 
 	// (Attributes) (see below for nested schema)
-	Limits *LimitsObservation `json:"limits,omitempty" tf:"limits,omitempty"`
+	Limits *WorkflowLimitsObservation `json:"limits,omitempty" tf:"limits,omitempty"`
 
 	// (String)
 	ModifiedOn *string `json:"modifiedOn,omitempty" tf:"modified_on,omitempty"`
@@ -182,6 +175,10 @@ type WorkflowObservation struct {
 
 	// (Attributes List) (see below for nested schema)
 	Schedules []SchedulesObservation `json:"schedules,omitempty" tf:"schedules,omitempty"`
+
+	// (Boolean) Whether the bound Worker was deleted, leaving this Workflow inactive.
+	// Whether the bound Worker was deleted, leaving this Workflow inactive.
+	ScriptDeleted *bool `json:"scriptDeleted,omitempty" tf:"script_deleted,omitempty"`
 
 	// (String)
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
@@ -209,13 +206,17 @@ type WorkflowParameters struct {
 	// +kubebuilder:validation:Optional
 	ClassName *string `json:"className,omitempty" tf:"class_name,omitempty"`
 
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Concurrency *ConcurrencyParameters `json:"concurrency,omitempty" tf:"concurrency,omitempty"`
+
 	// (Attributes) Default retention applied to instances of this version when they do not set their own retention. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	DefaultRetention *DefaultRetentionParameters `json:"defaultRetention,omitempty" tf:"default_retention,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
-	Limits *LimitsParameters `json:"limits,omitempty" tf:"limits,omitempty"`
+	Limits *WorkflowLimitsParameters `json:"limits,omitempty" tf:"limits,omitempty"`
 
 	// (Attributes List) (see below for nested schema)
 	// +kubebuilder:validation:Optional

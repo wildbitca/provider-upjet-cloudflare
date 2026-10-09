@@ -60,8 +60,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Account ID.
-                      Account ID.
+                      (String) Cloudflare account ID that owns the R2 resource.
+                      Cloudflare account ID that owns the R2 resource.
                     type: string
                   jurisdiction:
                     description: |-
@@ -122,8 +122,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Account ID.
-                      Account ID.
+                      (String) Cloudflare account ID that owns the R2 resource.
+                      Cloudflare account ID that owns the R2 resource.
                     type: string
                   jurisdiction:
                     description: |-
@@ -239,8 +239,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Account ID.
-                      Account ID.
+                      (String) Cloudflare account ID that owns the R2 resource.
+                      Cloudflare account ID that owns the R2 resource.
                     type: string
                   id:
                     description: (String) Unique identifier for this rule.

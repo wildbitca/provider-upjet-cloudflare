@@ -66,13 +66,13 @@ spec:
                     type: string
                   name:
                     description: |-
-                      (String) The domain name.
-                      The domain name.
+                      (String) Fully qualified domain name for the Pages project, such as example.com.
+                      Fully qualified domain name for the Pages project, such as `example.com`.
                     type: string
                   projectName:
                     description: |-
-                      (String) Name of the project.
-                      Name of the project.
+                      (String) Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+                      Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                     type: string
                 type: object
               initProvider:
@@ -95,13 +95,13 @@ spec:
                     type: string
                   name:
                     description: |-
-                      (String) The domain name.
-                      The domain name.
+                      (String) Fully qualified domain name for the Pages project, such as example.com.
+                      Fully qualified domain name for the Pages project, such as `example.com`.
                     type: string
                   projectName:
                     description: |-
-                      (String) Name of the project.
-                      Name of the project.
+                      (String) Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+                      Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                     type: string
                 type: object
               managementPolicies:
@@ -197,17 +197,18 @@ spec:
                     description: (String)
                     type: string
                   id:
-                    description: (String) The domain name.
+                    description: (String) Fully qualified domain name for the Pages
+                      project, such as example.com.
                     type: string
                   name:
                     description: |-
-                      (String) The domain name.
-                      The domain name.
+                      (String) Fully qualified domain name for the Pages project, such as example.com.
+                      Fully qualified domain name for the Pages project, such as `example.com`.
                     type: string
                   projectName:
                     description: |-
-                      (String) Name of the project.
-                      Name of the project.
+                      (String) Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+                      Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
                     type: string
                   status:
                     description: |-

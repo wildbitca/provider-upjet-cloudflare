@@ -206,6 +206,10 @@ type BindingsInitParameters struct {
 	// ID of the store containing the secret.
 	StoreID *string `json:"storeId,omitempty" tf:"store_id,omitempty"`
 
+	// (String) ID of a K2 stream owned by the account deploying the Worker.
+	// ID of a K2 stream owned by the account deploying the Worker.
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
 	// (String, Sensitive) The text value to use.
 	// The text value to use.
 	TextSecretRef *v1.SecretKeySelector `json:"textSecretRef,omitempty" tf:"-"`
@@ -215,9 +219,9 @@ type BindingsInitParameters struct {
 	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
 
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (Set of String) Allowed operations with the key. Learn more.
@@ -373,14 +377,18 @@ type BindingsObservation struct {
 	// ID of the store containing the secret.
 	StoreID *string `json:"storeId,omitempty" tf:"store_id,omitempty"`
 
+	// (String) ID of a K2 stream owned by the account deploying the Worker.
+	// ID of a K2 stream owned by the account deploying the Worker.
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
 	// (String) UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
 	// UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
 	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
 
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (Set of String) Allowed operations with the key. Learn more.
@@ -580,6 +588,11 @@ type BindingsParameters struct {
 	// +kubebuilder:validation:Optional
 	StoreID *string `json:"storeId,omitempty" tf:"store_id,omitempty"`
 
+	// (String) ID of a K2 stream owned by the account deploying the Worker.
+	// ID of a K2 stream owned by the account deploying the Worker.
+	// +kubebuilder:validation:Optional
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
 	// (String, Sensitive) The text value to use.
 	// The text value to use.
 	// +kubebuilder:validation:Optional
@@ -591,9 +604,9 @@ type BindingsParameters struct {
 	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
 
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
@@ -691,6 +704,10 @@ type CacheParameters struct {
 
 type ConfigInitParameters struct {
 
+	// (String) The public URL path prefix under which assets are served. A null request value resets it to /; responses represent the root as /. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+	// The public URL path prefix under which assets are served. A null request value resets it to `/`; responses represent the root as `/`. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+	BasePath *string `json:"basePath,omitempty" tf:"base_path,omitempty"`
+
 	// trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
 	// Determines the redirects and rewrites of requests for HTML content.
 	// Available values: "auto-trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
@@ -720,6 +737,10 @@ type ConfigInitParameters struct {
 
 type ConfigObservation struct {
 
+	// (String) The public URL path prefix under which assets are served. A null request value resets it to /; responses represent the root as /. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+	// The public URL path prefix under which assets are served. A null request value resets it to `/`; responses represent the root as `/`. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+	BasePath *string `json:"basePath,omitempty" tf:"base_path,omitempty"`
+
 	// trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
 	// Determines the redirects and rewrites of requests for HTML content.
 	// Available values: "auto-trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
@@ -748,6 +769,11 @@ type ConfigObservation struct {
 }
 
 type ConfigParameters struct {
+
+	// (String) The public URL path prefix under which assets are served. A null request value resets it to /; responses represent the root as /. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+	// The public URL path prefix under which assets are served. A null request value resets it to `/`; responses represent the root as `/`. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
+	// +kubebuilder:validation:Optional
+	BasePath *string `json:"basePath,omitempty" tf:"base_path,omitempty"`
 
 	// trailing-slash", "force-trailing-slash", "drop-trailing-slash", "none".
 	// Determines the redirects and rewrites of requests for HTML content.
@@ -788,7 +814,7 @@ type ExportsInitParameters struct {
 	Cache *CacheInitParameters `json:"cache,omitempty" tf:"cache,omitempty"`
 
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of entrypoint. A `type: worker` entry overrides the top-level `cache_options` for this specific entrypoint.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
@@ -799,7 +825,7 @@ type ExportsObservation struct {
 	Cache *CacheObservation `json:"cache,omitempty" tf:"cache,omitempty"`
 
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of entrypoint. A `type: worker` entry overrides the top-level `cache_options` for this specific entrypoint.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
@@ -811,10 +837,84 @@ type ExportsParameters struct {
 	Cache *CacheParameters `json:"cache,omitempty" tf:"cache,omitempty"`
 
 	// (String) The kind of resource that the binding provides.
-	// Available values: "ai", "ai_search", "ai_search_namespace", "analytics_engine", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
+	// Available values: "ai", "ai_search", "ai_search_namespace", "messaging", "analytics_engine", "artifacts", "assets", "browser", "d1", "data_blob", "dispatch_namespace", "durable_object_namespace", "hyperdrive", "inherit", "images", "json", "kv_namespace", "media", "mtls_certificate", "plain_text", "pipelines", "k2", "queue", "ratelimit", "r2_bucket", "secret_text", "send_email", "service", "text_blob", "vectorize", "version_metadata", "secrets_store_secret", "flagship", "secret_key", "workflow", "wasm_module", "vpc_service", "vpc_network".
 	// The kind of entrypoint. A `type: worker` entry overrides the top-level `cache_options` for this specific entrypoint.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type FilesInitParameters struct {
+
+	// encoded file content.
+	// Base64-encoded file content.
+	ContentBase64 *string `json:"contentBase64,omitempty" tf:"content_base64,omitempty"`
+
+	// (String) Path to a file containing the Module or Service Worker contents of the Worker. Conflicts with content. Must be paired with content_sha256.
+	// Path to the file content.
+	ContentFile *string `json:"contentFile,omitempty" tf:"content_file,omitempty"`
+
+	// Type of the Worker. Required if uploading a non-JavaScript Worker (e.g. "text/x-python").
+	// Content type of the file, such as `application/wasm`, `text/plain`, or `application/octet-stream`.
+	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
+}
+
+type FilesObservation struct {
+
+	// encoded file content.
+	// Base64-encoded file content.
+	ContentBase64 *string `json:"contentBase64,omitempty" tf:"content_base64,omitempty"`
+
+	// (String) Path to a file containing the Module or Service Worker contents of the Worker. Conflicts with content. Must be paired with content_sha256.
+	// Path to the file content.
+	ContentFile *string `json:"contentFile,omitempty" tf:"content_file,omitempty"`
+
+	// 256 hash of the Worker contents. Used to trigger updates when source code changes. Must be provided when content_file is specified.
+	// SHA-256 hash of the file content, used to detect changes and remote drift.
+	ContentSha256 *string `json:"contentSha256,omitempty" tf:"content_sha256,omitempty"`
+
+	// Type of the Worker. Required if uploading a non-JavaScript Worker (e.g. "text/x-python").
+	// Content type of the file, such as `application/wasm`, `text/plain`, or `application/octet-stream`.
+	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
+}
+
+type FilesParameters struct {
+
+	// encoded file content.
+	// Base64-encoded file content.
+	// +kubebuilder:validation:Optional
+	ContentBase64 *string `json:"contentBase64,omitempty" tf:"content_base64,omitempty"`
+
+	// (String) Path to a file containing the Module or Service Worker contents of the Worker. Conflicts with content. Must be paired with content_sha256.
+	// Path to the file content.
+	// +kubebuilder:validation:Optional
+	ContentFile *string `json:"contentFile,omitempty" tf:"content_file,omitempty"`
+
+	// Type of the Worker. Required if uploading a non-JavaScript Worker (e.g. "text/x-python").
+	// Content type of the file, such as `application/wasm`, `text/plain`, or `application/octet-stream`.
+	// +kubebuilder:validation:Optional
+	ContentType *string `json:"contentType" tf:"content_type,omitempty"`
+}
+
+type IssuesInitParameters struct {
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether real-time Issues are enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type IssuesObservation struct {
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether real-time Issues are enabled for the Worker.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type IssuesParameters struct {
+
+	// (Boolean) Whether caching is enabled for this Worker.
+	// Whether real-time Issues are enabled for the Worker.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type LimitsInitParameters struct {
@@ -1096,6 +1196,9 @@ type ObservabilityInitParameters struct {
 	// The sampling rate for incoming requests. From 0 to 1 (1 = 100%, 0.1 = 10%). Default is 1.
 	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
 
+	// time Issues settings for the Worker. (see below for nested schema)
+	Issues *IssuesInitParameters `json:"issues,omitempty" tf:"issues,omitempty"`
+
 	// (Attributes) Log settings for the Worker. (see below for nested schema)
 	Logs *LogsInitParameters `json:"logs,omitempty" tf:"logs,omitempty"`
 
@@ -1112,6 +1215,9 @@ type ObservabilityObservation struct {
 	// (Number) The sampling rate for incoming requests. From 0 to 1 (1 = 100%, 0.1 = 10%). Default is 1.
 	// The sampling rate for incoming requests. From 0 to 1 (1 = 100%, 0.1 = 10%). Default is 1.
 	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// time Issues settings for the Worker. (see below for nested schema)
+	Issues *IssuesObservation `json:"issues,omitempty" tf:"issues,omitempty"`
 
 	// (Attributes) Log settings for the Worker. (see below for nested schema)
 	Logs *LogsObservation `json:"logs,omitempty" tf:"logs,omitempty"`
@@ -1131,6 +1237,10 @@ type ObservabilityParameters struct {
 	// The sampling rate for incoming requests. From 0 to 1 (1 = 100%, 0.1 = 10%). Default is 1.
 	// +kubebuilder:validation:Optional
 	HeadSamplingRate *float64 `json:"headSamplingRate,omitempty" tf:"head_sampling_rate,omitempty"`
+
+	// time Issues settings for the Worker. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Issues *IssuesParameters `json:"issues,omitempty" tf:"issues,omitempty"`
 
 	// (Attributes) Log settings for the Worker. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -1395,6 +1505,13 @@ type ScriptInitParameters struct {
 	// entrypoint export configuration. Keys are the export names; values describe the entrypoint's kind and per-entrypoint cache behavior. (see below for nested schema)
 	Exports map[string]ExportsInitParameters `json:"exports,omitempty" tf:"exports,omitempty"`
 
+	// (Attributes Map) Additional modules and data files to include in the multipart Worker upload. Map keys are multipart part names referenced by binding part values and module imports. (see below for nested schema)
+	Files map[string]FilesInitParameters `json:"files,omitempty" tf:"files,omitempty"`
+
+	// (Boolean) If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+	// If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+	Force *bool `json:"force,omitempty" tf:"force,omitempty"`
+
 	// (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit assets upload takes precedence over keep_assets.
 	// Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit `assets` upload takes precedence over `keep_assets`.
 	KeepAssets *bool `json:"keepAssets,omitempty" tf:"keep_assets,omitempty"`
@@ -1501,6 +1618,13 @@ type ScriptObservation struct {
 
 	// entrypoint export configuration. Keys are the export names; values describe the entrypoint's kind and per-entrypoint cache behavior. (see below for nested schema)
 	Exports map[string]ExportsObservation `json:"exports,omitempty" tf:"exports,omitempty"`
+
+	// (Attributes Map) Additional modules and data files to include in the multipart Worker upload. Map keys are multipart part names referenced by binding part values and module imports. (see below for nested schema)
+	Files map[string]FilesObservation `json:"files,omitempty" tf:"files,omitempty"`
+
+	// (Boolean) If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+	// If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+	Force *bool `json:"force,omitempty" tf:"force,omitempty"`
 
 	// (List of String) The names of handlers exported as part of the default export.
 	// The names of handlers exported as part of the default export.
@@ -1654,6 +1778,15 @@ type ScriptParameters struct {
 	// entrypoint export configuration. Keys are the export names; values describe the entrypoint's kind and per-entrypoint cache behavior. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Exports map[string]ExportsParameters `json:"exports,omitempty" tf:"exports,omitempty"`
+
+	// (Attributes Map) Additional modules and data files to include in the multipart Worker upload. Map keys are multipart part names referenced by binding part values and module imports. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Files map[string]FilesParameters `json:"files,omitempty" tf:"files,omitempty"`
+
+	// (Boolean) If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+	// If true, delete the Worker even when other Workers still reference it. Service bindings in those Workers may be left broken. Durable Object namespaces implemented by the deleted Worker are deleted even if other Workers reference them.
+	// +kubebuilder:validation:Optional
+	Force *bool `json:"force,omitempty" tf:"force,omitempty"`
 
 	// (Boolean) Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit assets upload takes precedence over keep_assets.
 	// Retain assets which exist for a previously uploaded Worker version; used in lieu of providing a completion token. An explicit `assets` upload takes precedence over `keep_assets`.
@@ -1945,6 +2078,8 @@ type TracesInitParameters struct {
 	// Whether trace persistence is enabled for the Worker.
 	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
 
+	// (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+	// Available values: "authenticated", "accept".
 	// Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
 	// Available values: "authenticated", "accept".
 	PropagationPolicy *string `json:"propagationPolicy,omitempty" tf:"propagation_policy,omitempty"`
@@ -1968,6 +2103,8 @@ type TracesObservation struct {
 	// Whether trace persistence is enabled for the Worker.
 	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
 
+	// (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+	// Available values: "authenticated", "accept".
 	// Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
 	// Available values: "authenticated", "accept".
 	PropagationPolicy *string `json:"propagationPolicy,omitempty" tf:"propagation_policy,omitempty"`
@@ -1995,6 +2132,8 @@ type TracesParameters struct {
 	// +kubebuilder:validation:Optional
 	Persist *bool `json:"persist,omitempty" tf:"persist,omitempty"`
 
+	// (String) Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
+	// Available values: "authenticated", "accept".
 	// Controls how inbound trace context (traceparent/tracestate) headers on incoming requests are handled. "authenticated" (default) honors inbound trace context only when accompanied by a valid trace auth token. "accept" unconditionally accepts inbound trace context. Requires the trace propagation feature to be enabled.
 	// Available values: "authenticated", "accept".
 	// +kubebuilder:validation:Optional

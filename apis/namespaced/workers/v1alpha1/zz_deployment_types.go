@@ -49,15 +49,19 @@ type DeploymentInitParameters struct {
 	// (Attributes) (see below for nested schema)
 	Annotations *AnnotationsInitParameters `json:"annotations,omitempty" tf:"annotations,omitempty"`
 
-	// (String) Name of the script, used in URLs and route configuration.
-	// Name of the script, used in URLs and route configuration.
+	// (Boolean) If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
+	// If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
+	Force *bool `json:"force,omitempty" tf:"force,omitempty"`
+
+	// (String) Name of the script.
+	// Name of the script.
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 
 	// (String) Available values: "percentage".
 	// Available values: "percentage".
 	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// -versions, either inline, for example --versions '[{"version_id":"023e105f-2a42-4f8b-a1c1-73f6a2a30c0f","percentage":100}]', or from a JSON file with --versions @versions.json. (see below for nested schema)
 	Versions []VersionsInitParameters `json:"versions,omitempty" tf:"versions,omitempty"`
 }
 
@@ -76,11 +80,15 @@ type DeploymentObservation struct {
 	// (String)
 	CreatedOn *string `json:"createdOn,omitempty" tf:"created_on,omitempty"`
 
+	// (Boolean) If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
+	// If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
+	Force *bool `json:"force,omitempty" tf:"force,omitempty"`
+
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) Name of the script, used in URLs and route configuration.
-	// Name of the script, used in URLs and route configuration.
+	// (String) Name of the script.
+	// Name of the script.
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 
 	// (String)
@@ -90,7 +98,7 @@ type DeploymentObservation struct {
 	// Available values: "percentage".
 	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// -versions, either inline, for example --versions '[{"version_id":"023e105f-2a42-4f8b-a1c1-73f6a2a30c0f","percentage":100}]', or from a JSON file with --versions @versions.json. (see below for nested schema)
 	Versions []VersionsObservation `json:"versions,omitempty" tf:"versions,omitempty"`
 }
 
@@ -105,8 +113,13 @@ type DeploymentParameters struct {
 	// +kubebuilder:validation:Optional
 	Annotations *AnnotationsParameters `json:"annotations,omitempty" tf:"annotations,omitempty"`
 
-	// (String) Name of the script, used in URLs and route configuration.
-	// Name of the script, used in URLs and route configuration.
+	// (Boolean) If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
+	// If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
+	// +kubebuilder:validation:Optional
+	Force *bool `json:"force,omitempty" tf:"force,omitempty"`
+
+	// (String) Name of the script.
+	// Name of the script.
 	// +kubebuilder:validation:Optional
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 
@@ -115,36 +128,42 @@ type DeploymentParameters struct {
 	// +kubebuilder:validation:Optional
 	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// -versions, either inline, for example --versions '[{"version_id":"023e105f-2a42-4f8b-a1c1-73f6a2a30c0f","percentage":100}]', or from a JSON file with --versions @versions.json. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Versions []VersionsParameters `json:"versions,omitempty" tf:"versions,omitempty"`
 }
 
 type VersionsInitParameters struct {
 
-	// (Number)
+	// (Number) Percentage of traffic served by this version.
+	// Percentage of traffic served by this version.
 	Percentage *float64 `json:"percentage,omitempty" tf:"percentage,omitempty"`
 
-	// (String)
+	// (String) Identifier of the Worker Version.
+	// Identifier of the Worker Version.
 	VersionID *string `json:"versionId,omitempty" tf:"version_id,omitempty"`
 }
 
 type VersionsObservation struct {
 
-	// (Number)
+	// (Number) Percentage of traffic served by this version.
+	// Percentage of traffic served by this version.
 	Percentage *float64 `json:"percentage,omitempty" tf:"percentage,omitempty"`
 
-	// (String)
+	// (String) Identifier of the Worker Version.
+	// Identifier of the Worker Version.
 	VersionID *string `json:"versionId,omitempty" tf:"version_id,omitempty"`
 }
 
 type VersionsParameters struct {
 
-	// (Number)
+	// (Number) Percentage of traffic served by this version.
+	// Percentage of traffic served by this version.
 	// +kubebuilder:validation:Optional
 	Percentage *float64 `json:"percentage" tf:"percentage,omitempty"`
 
-	// (String)
+	// (String) Identifier of the Worker Version.
+	// Identifier of the Worker Version.
 	// +kubebuilder:validation:Optional
 	VersionID *string `json:"versionId" tf:"version_id,omitempty"`
 }

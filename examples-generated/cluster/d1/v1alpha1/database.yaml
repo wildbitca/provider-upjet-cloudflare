@@ -12,3 +12,5 @@ spec:
     jurisdiction: eu
     name: my-database
     primaryLocationHint: wnam
+    readReplication:
+      mode: auto

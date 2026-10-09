@@ -15,8 +15,8 @@ import (
 
 type KvNamespaceInitParameters struct {
 
-	// (String) Identifier.
-	// Identifier.
+	// (String) ID of the Cloudflare account that owns the Workers KV namespaces.
+	// ID of the Cloudflare account that owns the Workers KV namespaces.
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/account/v1alpha1.Account
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
@@ -28,33 +28,45 @@ type KvNamespaceInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
-	// readable string name for a Namespace.
-	// A human-readable string name for a Namespace.
+	// (String) Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
+	// Available values: "eu", "fedramp", "us".
+	// Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
+	// Available values: "eu", "fedramp", "us".
+	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
+
+	// readable string name for a Workers KV namespace.
+	// Human-readable string name for a Workers KV namespace.
 	Title *string `json:"title,omitempty" tf:"title,omitempty"`
 }
 
 type KvNamespaceObservation struct {
 
-	// (String) Identifier.
-	// Identifier.
+	// (String) ID of the Cloudflare account that owns the Workers KV namespaces.
+	// ID of the Cloudflare account that owns the Workers KV namespaces.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) Namespace identifier tag.
+	// (String) ID of the Workers KV namespace.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (String) Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
+	// Available values: "eu", "fedramp", "us".
+	// Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
+	// Available values: "eu", "fedramp", "us".
+	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
 	// decoded before storing. For example, if set to "true", a key written on the URL as "%3F" will be stored as "?".
 	// True if keys written on the URL will be URL-decoded before storing. For example, if set to "true", a key written on the URL as "%3F" will be stored as "?".
 	SupportsURLEncoding *bool `json:"supportsUrlEncoding,omitempty" tf:"supports_url_encoding,omitempty"`
 
-	// readable string name for a Namespace.
-	// A human-readable string name for a Namespace.
+	// readable string name for a Workers KV namespace.
+	// Human-readable string name for a Workers KV namespace.
 	Title *string `json:"title,omitempty" tf:"title,omitempty"`
 }
 
 type KvNamespaceParameters struct {
 
-	// (String) Identifier.
-	// Identifier.
+	// (String) ID of the Cloudflare account that owns the Workers KV namespaces.
+	// ID of the Cloudflare account that owns the Workers KV namespaces.
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/account/v1alpha1.Account
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
@@ -67,8 +79,15 @@ type KvNamespaceParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
-	// readable string name for a Namespace.
-	// A human-readable string name for a Namespace.
+	// (String) Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
+	// Available values: "eu", "fedramp", "us".
+	// Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
+	// Available values: "eu", "fedramp", "us".
+	// +kubebuilder:validation:Optional
+	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
+
+	// readable string name for a Workers KV namespace.
+	// Human-readable string name for a Workers KV namespace.
 	// +kubebuilder:validation:Optional
 	Title *string `json:"title,omitempty" tf:"title,omitempty"`
 }

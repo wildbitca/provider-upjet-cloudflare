@@ -11,6 +11,8 @@ spec:
   forProvider:
     accountId: account_id
     className: x
+    concurrency:
+      limit: 1
     defaultRetention:
       errorRetention: 5 minutes
       successRetention: 5 minutes

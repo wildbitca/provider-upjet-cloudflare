@@ -91,6 +91,11 @@ spec:
                       (String) Name of the schema
                       Name of the schema
                     type: string
+                  omitSource:
+                    description: |-
+                      files of schemas and only retrieve their meta-data.
+                      Omit the source-files of schemas and only retrieve their meta-data.
+                    type: boolean
                   schemaId:
                     description: (String)
                     type: string
@@ -137,6 +142,11 @@ spec:
                       (String) Name of the schema
                       Name of the schema
                     type: string
+                  omitSource:
+                    description: |-
+                      files of schemas and only retrieve their meta-data.
+                      Omit the source-files of schemas and only retrieve their meta-data.
+                    type: boolean
                   schemaId:
                     description: (String)
                     type: string
@@ -279,6 +289,11 @@ spec:
                       (String) Name of the schema
                       Name of the schema
                     type: string
+                  omitSource:
+                    description: |-
+                      files of schemas and only retrieve their meta-data.
+                      Omit the source-files of schemas and only retrieve their meta-data.
+                    type: boolean
                   schema:
                     description: (Attributes) (see below for nested schema)
                     properties:

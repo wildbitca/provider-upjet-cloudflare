@@ -302,7 +302,8 @@ type NetworksParameters struct {
 
 type TrustDNSLocationInitParameters struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (Boolean) Indicate whether this location is the default location.
@@ -355,7 +356,8 @@ type TrustDNSLocationNetworksParameters struct {
 
 type TrustDNSLocationObservation struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (Boolean) Indicate whether this location is the default location.
@@ -415,7 +417,8 @@ type TrustDNSLocationObservation struct {
 
 type TrustDNSLocationParameters struct {
 
-	// (String)
+	// (String) Specify the Cloudflare account identifier.
+	// Specify the Cloudflare account identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 

@@ -11,4 +11,5 @@ spec:
     accountIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
+    jurisdiction: eu
     title: My Own Namespace

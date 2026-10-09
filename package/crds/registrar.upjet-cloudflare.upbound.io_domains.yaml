@@ -74,8 +74,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifier
-                      Identifier
+                      (String) Identifier.
+                      Identifier.
                     type: string
                   autoRenew:
                     description: |-
@@ -84,14 +84,14 @@ spec:
                     type: boolean
                   domainName:
                     description: |-
-                      (String) Fully qualified domain name (FQDN) including the extension
-                      (e.g., example.com, mybrand.app). The domain name uniquely
-                      identifies a registration — the same domain cannot be registered
-                      twice, making it a natural idempotency key for registration requests.
-                      Fully qualified domain name (FQDN) including the extension
-                      (e.g., `example.com`, `mybrand.app`). The domain name uniquely
-                      identifies a registration — the same domain cannot be registered
-                      twice, making it a natural idempotency key for registration requests.
+                      (String) Provides a fully qualified domain name (FQDN), including the extension
+                      (e.g., example.com, mybrand.app). The domain name uniquely identifies
+                      a registration. Cloudflare permits only one registration per domain, making
+                      the domain name a natural idempotency key for registration requests.
+                      Provides a fully qualified domain name (FQDN), including the extension
+                      (e.g., `example.com`, `mybrand.app`). The domain name uniquely identifies
+                      a registration. Cloudflare permits only one registration per domain, making
+                      the domain name a natural idempotency key for registration requests.
                     type: string
                   locked:
                     description: |-
@@ -119,8 +119,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifier
-                      Identifier
+                      (String) Identifier.
+                      Identifier.
                     type: string
                   autoRenew:
                     description: |-
@@ -129,14 +129,14 @@ spec:
                     type: boolean
                   domainName:
                     description: |-
-                      (String) Fully qualified domain name (FQDN) including the extension
-                      (e.g., example.com, mybrand.app). The domain name uniquely
-                      identifies a registration — the same domain cannot be registered
-                      twice, making it a natural idempotency key for registration requests.
-                      Fully qualified domain name (FQDN) including the extension
-                      (e.g., `example.com`, `mybrand.app`). The domain name uniquely
-                      identifies a registration — the same domain cannot be registered
-                      twice, making it a natural idempotency key for registration requests.
+                      (String) Provides a fully qualified domain name (FQDN), including the extension
+                      (e.g., example.com, mybrand.app). The domain name uniquely identifies
+                      a registration. Cloudflare permits only one registration per domain, making
+                      the domain name a natural idempotency key for registration requests.
+                      Provides a fully qualified domain name (FQDN), including the extension
+                      (e.g., `example.com`, `mybrand.app`). The domain name uniquely identifies
+                      a registration. Cloudflare permits only one registration per domain, making
+                      the domain name a natural idempotency key for registration requests.
                     type: string
                   locked:
                     description: |-
@@ -251,8 +251,8 @@ spec:
                 properties:
                   accountId:
                     description: |-
-                      (String) Identifier
-                      Identifier
+                      (String) Identifier.
+                      Identifier.
                     type: string
                   autoRenew:
                     description: |-
@@ -261,14 +261,14 @@ spec:
                     type: boolean
                   domainName:
                     description: |-
-                      (String) Fully qualified domain name (FQDN) including the extension
-                      (e.g., example.com, mybrand.app). The domain name uniquely
-                      identifies a registration — the same domain cannot be registered
-                      twice, making it a natural idempotency key for registration requests.
-                      Fully qualified domain name (FQDN) including the extension
-                      (e.g., `example.com`, `mybrand.app`). The domain name uniquely
-                      identifies a registration — the same domain cannot be registered
-                      twice, making it a natural idempotency key for registration requests.
+                      (String) Provides a fully qualified domain name (FQDN), including the extension
+                      (e.g., example.com, mybrand.app). The domain name uniquely identifies
+                      a registration. Cloudflare permits only one registration per domain, making
+                      the domain name a natural idempotency key for registration requests.
+                      Provides a fully qualified domain name (FQDN), including the extension
+                      (e.g., `example.com`, `mybrand.app`). The domain name uniquely identifies
+                      a registration. Cloudflare permits only one registration per domain, making
+                      the domain name a natural idempotency key for registration requests.
                     type: string
                   id:
                     type: string

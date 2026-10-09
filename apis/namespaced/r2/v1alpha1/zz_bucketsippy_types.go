@@ -16,8 +16,8 @@ import (
 
 type BucketSippyInitParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (Attributes) R2 bucket to copy objects to. (see below for nested schema)
@@ -33,8 +33,8 @@ type BucketSippyInitParameters struct {
 
 type BucketSippyObservation struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (Attributes) R2 bucket to copy objects to. (see below for nested schema)
@@ -56,8 +56,8 @@ type BucketSippyObservation struct {
 
 type BucketSippyParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
@@ -162,7 +162,7 @@ type SourceInitParameters struct {
 	// Access Key ID of an IAM credential (ideally scoped to a single S3 bucket).
 	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
 
-	// (String, Sensitive) Access key for the Azure Storage account. Mutually exclusive with sas_token.
+	// (String, Sensitive) Access key for the Azure Storage account. Mutually exclusive with sasToken.
 	// Access key for the Azure Storage account. Mutually exclusive with sasToken.
 	AccountKeySecretRef *v1.LocalSecretKeySelector `json:"accountKeySecretRef,omitempty" tf:"-"`
 
@@ -194,11 +194,11 @@ type SourceInitParameters struct {
 	// Private Key of an IAM credential (ideally scoped to a single GCS bucket).
 	PrivateKeySecretRef *v1.LocalSecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
 
-	// (String) Name of the AWS availability zone.
-	// Name of the AWS availability zone.
+	// (String) AWS region containing the source S3 bucket.
+	// AWS region containing the source S3 bucket.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// (String, Sensitive) Shared Access Signature token for the Azure Storage account. Mutually exclusive with account_key.
+	// (String, Sensitive) Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
 	// Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
 	SasTokenSecretRef *v1.LocalSecretKeySelector `json:"sasTokenSecretRef,omitempty" tf:"-"`
 
@@ -241,8 +241,8 @@ type SourceObservation struct {
 	// Name of the Azure Blob Storage container.
 	Container *string `json:"container,omitempty" tf:"container,omitempty"`
 
-	// (String) Name of the AWS availability zone.
-	// Name of the AWS availability zone.
+	// (String) AWS region containing the source S3 bucket.
+	// AWS region containing the source S3 bucket.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
@@ -255,7 +255,7 @@ type SourceParameters struct {
 	// +kubebuilder:validation:Optional
 	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
 
-	// (String, Sensitive) Access key for the Azure Storage account. Mutually exclusive with sas_token.
+	// (String, Sensitive) Access key for the Azure Storage account. Mutually exclusive with sasToken.
 	// Access key for the Azure Storage account. Mutually exclusive with sasToken.
 	// +kubebuilder:validation:Optional
 	AccountKeySecretRef *v1.LocalSecretKeySelector `json:"accountKeySecretRef,omitempty" tf:"-"`
@@ -295,12 +295,12 @@ type SourceParameters struct {
 	// +kubebuilder:validation:Optional
 	PrivateKeySecretRef *v1.LocalSecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
 
-	// (String) Name of the AWS availability zone.
-	// Name of the AWS availability zone.
+	// (String) AWS region containing the source S3 bucket.
+	// AWS region containing the source S3 bucket.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// (String, Sensitive) Shared Access Signature token for the Azure Storage account. Mutually exclusive with account_key.
+	// (String, Sensitive) Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
 	// Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
 	// +kubebuilder:validation:Optional
 	SasTokenSecretRef *v1.LocalSecretKeySelector `json:"sasTokenSecretRef,omitempty" tf:"-"`

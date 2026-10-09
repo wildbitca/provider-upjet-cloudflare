@@ -76,6 +76,11 @@ spec:
                           (Number) ASN used on the customer end of the BGP session
                           ASN used on the customer end of the BGP session
                         type: number
+                      exportFilterId:
+                        description: |-
+                          (String) UUID of the BGP filter profile to apply to routes advertised by Cloudflare.
+                          UUID of the BGP filter profile to apply to routes advertised by Cloudflare.
+                        type: string
                       extraPrefixes:
                         description: |-
                           (List of String) Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
@@ -83,6 +88,11 @@ spec:
                         items:
                           type: string
                         type: array
+                      importFilterId:
+                        description: |-
+                          (String) UUID of the BGP filter profile to apply to routes advertised to Cloudflare.
+                          UUID of the BGP filter profile to apply to routes advertised to Cloudflare.
+                        type: string
                       md5Key:
                         description: |-
                           (String) MD5 key to use for session authentication.
@@ -243,6 +253,11 @@ spec:
                           (Number) ASN used on the customer end of the BGP session
                           ASN used on the customer end of the BGP session
                         type: number
+                      exportFilterId:
+                        description: |-
+                          (String) UUID of the BGP filter profile to apply to routes advertised by Cloudflare.
+                          UUID of the BGP filter profile to apply to routes advertised by Cloudflare.
+                        type: string
                       extraPrefixes:
                         description: |-
                           (List of String) Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
@@ -250,6 +265,11 @@ spec:
                         items:
                           type: string
                         type: array
+                      importFilterId:
+                        description: |-
+                          (String) UUID of the BGP filter profile to apply to routes advertised to Cloudflare.
+                          UUID of the BGP filter profile to apply to routes advertised to Cloudflare.
+                        type: string
                       md5Key:
                         description: |-
                           (String) MD5 key to use for session authentication.
@@ -482,6 +502,11 @@ spec:
                           (Number) ASN used on the customer end of the BGP session
                           ASN used on the customer end of the BGP session
                         type: number
+                      exportFilterId:
+                        description: |-
+                          (String) UUID of the BGP filter profile to apply to routes advertised by Cloudflare.
+                          UUID of the BGP filter profile to apply to routes advertised by Cloudflare.
+                        type: string
                       extraPrefixes:
                         description: |-
                           (List of String) Prefixes in this list will be advertised to the customer device, in addition to the routes in the Magic routing table.
@@ -489,6 +514,11 @@ spec:
                         items:
                           type: string
                         type: array
+                      importFilterId:
+                        description: |-
+                          (String) UUID of the BGP filter profile to apply to routes advertised to Cloudflare.
+                          UUID of the BGP filter profile to apply to routes advertised to Cloudflare.
+                        type: string
                       md5Key:
                         description: |-
                           (String) MD5 key to use for session authentication.

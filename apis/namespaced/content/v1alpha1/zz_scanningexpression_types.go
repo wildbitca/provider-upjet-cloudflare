@@ -16,22 +16,22 @@ import (
 
 type BodyInitParameters struct {
 
-	// (String) Defines the ruleset expression to use in matching content objects.
-	// Defines the ruleset expression to use in matching content objects.
+	// (String) Defines the custom content extraction expression used to reach content objects in the request.
+	// Defines the custom content extraction expression used to reach content objects in the request.
 	Payload *string `json:"payload,omitempty" tf:"payload,omitempty"`
 }
 
 type BodyObservation struct {
 
-	// (String) Defines the ruleset expression to use in matching content objects.
-	// Defines the ruleset expression to use in matching content objects.
+	// (String) Defines the custom content extraction expression used to reach content objects in the request.
+	// Defines the custom content extraction expression used to reach content objects in the request.
 	Payload *string `json:"payload,omitempty" tf:"payload,omitempty"`
 }
 
 type BodyParameters struct {
 
-	// (String) Defines the ruleset expression to use in matching content objects.
-	// Defines the ruleset expression to use in matching content objects.
+	// (String) Defines the custom content extraction expression used to reach content objects in the request.
+	// Defines the custom content extraction expression used to reach content objects in the request.
 	// +kubebuilder:validation:Optional
 	Payload *string `json:"payload" tf:"payload,omitempty"`
 }
@@ -40,6 +40,10 @@ type ScanningExpressionInitParameters struct {
 
 	// (Attributes List) (see below for nested schema)
 	Body []BodyInitParameters `json:"body,omitempty" tf:"body,omitempty"`
+
+	// (String) Defines the custom content extraction expression used to reach content objects in the request.
+	// Defines the custom content extraction expression used to reach content objects in the request.
+	Payload *string `json:"payload,omitempty" tf:"payload,omitempty"`
 
 	// (String) Defines an identifier.
 	// Defines an identifier.
@@ -51,8 +55,12 @@ type ScanningExpressionObservation struct {
 	// (Attributes List) (see below for nested schema)
 	Body []BodyObservation `json:"body,omitempty" tf:"body,omitempty"`
 
-	// (String) defines the unique ID for this custom scan expression.
+	// (String) Defines the unique ID for this Content Scanning custom expression.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (String) Defines the custom content extraction expression used to reach content objects in the request.
+	// Defines the custom content extraction expression used to reach content objects in the request.
+	Payload *string `json:"payload,omitempty" tf:"payload,omitempty"`
 
 	// (String) Defines an identifier.
 	// Defines an identifier.
@@ -64,6 +72,11 @@ type ScanningExpressionParameters struct {
 	// (Attributes List) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Body []BodyParameters `json:"body,omitempty" tf:"body,omitempty"`
+
+	// (String) Defines the custom content extraction expression used to reach content objects in the request.
+	// Defines the custom content extraction expression used to reach content objects in the request.
+	// +kubebuilder:validation:Optional
+	Payload *string `json:"payload,omitempty" tf:"payload,omitempty"`
 
 	// (String) Defines an identifier.
 	// Defines an identifier.

@@ -16,22 +16,22 @@ import (
 
 type DomainInitParameters struct {
 
-	// (String) Identifier
-	// Identifier
+	// (String) Identifier.
+	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// renew controls whether subscription is automatically renewed upon domain expiration.
 	// Auto-renew controls whether subscription is automatically renewed upon domain expiration.
 	AutoRenew *bool `json:"autoRenew,omitempty" tf:"auto_renew,omitempty"`
 
-	// (String) Fully qualified domain name (FQDN) including the extension
-	// (e.g., example.com, mybrand.app). The domain name uniquely
-	// identifies a registration — the same domain cannot be registered
-	// twice, making it a natural idempotency key for registration requests.
-	// Fully qualified domain name (FQDN) including the extension
-	// (e.g., `example.com`, `mybrand.app`). The domain name uniquely
-	// identifies a registration — the same domain cannot be registered
-	// twice, making it a natural idempotency key for registration requests.
+	// (String) Provides a fully qualified domain name (FQDN), including the extension
+	// (e.g., example.com, mybrand.app). The domain name uniquely identifies
+	// a registration. Cloudflare permits only one registration per domain, making
+	// the domain name a natural idempotency key for registration requests.
+	// Provides a fully qualified domain name (FQDN), including the extension
+	// (e.g., `example.com`, `mybrand.app`). The domain name uniquely identifies
+	// a registration. Cloudflare permits only one registration per domain, making
+	// the domain name a natural idempotency key for registration requests.
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
 
 	// (Boolean) Shows whether a registrar lock is in place for a domain.
@@ -45,22 +45,22 @@ type DomainInitParameters struct {
 
 type DomainObservation struct {
 
-	// (String) Identifier
-	// Identifier
+	// (String) Identifier.
+	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// renew controls whether subscription is automatically renewed upon domain expiration.
 	// Auto-renew controls whether subscription is automatically renewed upon domain expiration.
 	AutoRenew *bool `json:"autoRenew,omitempty" tf:"auto_renew,omitempty"`
 
-	// (String) Fully qualified domain name (FQDN) including the extension
-	// (e.g., example.com, mybrand.app). The domain name uniquely
-	// identifies a registration — the same domain cannot be registered
-	// twice, making it a natural idempotency key for registration requests.
-	// Fully qualified domain name (FQDN) including the extension
-	// (e.g., `example.com`, `mybrand.app`). The domain name uniquely
-	// identifies a registration — the same domain cannot be registered
-	// twice, making it a natural idempotency key for registration requests.
+	// (String) Provides a fully qualified domain name (FQDN), including the extension
+	// (e.g., example.com, mybrand.app). The domain name uniquely identifies
+	// a registration. Cloudflare permits only one registration per domain, making
+	// the domain name a natural idempotency key for registration requests.
+	// Provides a fully qualified domain name (FQDN), including the extension
+	// (e.g., `example.com`, `mybrand.app`). The domain name uniquely identifies
+	// a registration. Cloudflare permits only one registration per domain, making
+	// the domain name a natural idempotency key for registration requests.
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -76,8 +76,8 @@ type DomainObservation struct {
 
 type DomainParameters struct {
 
-	// (String) Identifier
-	// Identifier
+	// (String) Identifier.
+	// Identifier.
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
@@ -86,14 +86,14 @@ type DomainParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoRenew *bool `json:"autoRenew,omitempty" tf:"auto_renew,omitempty"`
 
-	// (String) Fully qualified domain name (FQDN) including the extension
-	// (e.g., example.com, mybrand.app). The domain name uniquely
-	// identifies a registration — the same domain cannot be registered
-	// twice, making it a natural idempotency key for registration requests.
-	// Fully qualified domain name (FQDN) including the extension
-	// (e.g., `example.com`, `mybrand.app`). The domain name uniquely
-	// identifies a registration — the same domain cannot be registered
-	// twice, making it a natural idempotency key for registration requests.
+	// (String) Provides a fully qualified domain name (FQDN), including the extension
+	// (e.g., example.com, mybrand.app). The domain name uniquely identifies
+	// a registration. Cloudflare permits only one registration per domain, making
+	// the domain name a natural idempotency key for registration requests.
+	// Provides a fully qualified domain name (FQDN), including the extension
+	// (e.g., `example.com`, `mybrand.app`). The domain name uniquely identifies
+	// a registration. Cloudflare permits only one registration per domain, making
+	// the domain name a natural idempotency key for registration requests.
 	// +kubebuilder:validation:Optional
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
 

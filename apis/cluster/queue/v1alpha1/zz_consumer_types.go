@@ -33,8 +33,8 @@ type ConsumerInitParameters struct {
 	// (Attributes) (see below for nested schema)
 	Settings *SettingsInitParameters `json:"settings,omitempty" tf:"settings,omitempty"`
 
-	// (String) Available values: "worker", "http_pull".
-	// Available values: "worker", "http_pull".
+	// (String) Available values: "worker", "http_pull", "notification".
+	// Available values: "worker", "http_pull", "notification".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -54,6 +54,7 @@ type ConsumerObservation struct {
 	// (String)
 	DeadLetterQueue *string `json:"deadLetterQueue,omitempty" tf:"dead_letter_queue,omitempty"`
 
+	// (String) The email address.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String) A Resource identifier.
@@ -70,8 +71,8 @@ type ConsumerObservation struct {
 	// (Attributes) (see below for nested schema)
 	Settings *SettingsObservation `json:"settings,omitempty" tf:"settings,omitempty"`
 
-	// (String) Available values: "worker", "http_pull".
-	// Available values: "worker", "http_pull".
+	// (String) Available values: "worker", "http_pull", "notification".
+	// Available values: "worker", "http_pull", "notification".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -100,10 +101,54 @@ type ConsumerParameters struct {
 	// +kubebuilder:validation:Optional
 	Settings *SettingsParameters `json:"settings,omitempty" tf:"settings,omitempty"`
 
-	// (String) Available values: "worker", "http_pull".
-	// Available values: "worker", "http_pull".
+	// (String) Available values: "worker", "http_pull", "notification".
+	// Available values: "worker", "http_pull", "notification".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type EmailInitParameters struct {
+
+	// (String) The email address.
+	// The email address.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type EmailObservation struct {
+
+	// (String) The email address.
+	// The email address.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type EmailParameters struct {
+
+	// (String) The email address.
+	// The email address.
+	// +kubebuilder:validation:Optional
+	ID *string `json:"id" tf:"id,omitempty"`
+}
+
+type PagerdutyInitParameters struct {
+
+	// (String) The email address.
+	// UUID.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type PagerdutyObservation struct {
+
+	// (String) The email address.
+	// UUID.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type PagerdutyParameters struct {
+
+	// (String) The email address.
+	// UUID.
+	// +kubebuilder:validation:Optional
+	ID *string `json:"id" tf:"id,omitempty"`
 }
 
 type SettingsInitParameters struct {
@@ -112,6 +157,9 @@ type SettingsInitParameters struct {
 	// The maximum number of messages to include in a batch.
 	BatchSize *float64 `json:"batchSize,omitempty" tf:"batch_size,omitempty"`
 
+	// (Attributes List) (see below for nested schema)
+	Email []EmailInitParameters `json:"email,omitempty" tf:"email,omitempty"`
+
 	// (Number) Maximum number of concurrent consumers that may consume from this Queue. Set to null to automatically opt in to the platform's maximum (recommended).
 	// Maximum number of concurrent consumers that may consume from this Queue. Set to `null` to automatically opt in to the platform's maximum (recommended).
 	MaxConcurrency *float64 `json:"maxConcurrency,omitempty" tf:"max_concurrency,omitempty"`
@@ -124,6 +172,9 @@ type SettingsInitParameters struct {
 	// The number of milliseconds to wait for a batch to fill up before attempting to deliver it
 	MaxWaitTimeMs *float64 `json:"maxWaitTimeMs,omitempty" tf:"max_wait_time_ms,omitempty"`
 
+	// (Attributes List) PagerDuty notification destinations. (see below for nested schema)
+	Pagerduty []PagerdutyInitParameters `json:"pagerduty,omitempty" tf:"pagerduty,omitempty"`
+
 	// (Number) The number of seconds to delay before making the message available for another attempt.
 	// The number of seconds to delay before making the message available for another attempt.
 	RetryDelay *float64 `json:"retryDelay,omitempty" tf:"retry_delay,omitempty"`
@@ -131,6 +182,9 @@ type SettingsInitParameters struct {
 	// (Number) The number of milliseconds that a message is exclusively leased. After the timeout, the message becomes available for another attempt.
 	// The number of milliseconds that a message is exclusively leased. After the timeout, the message becomes available for another attempt.
 	VisibilityTimeoutMs *float64 `json:"visibilityTimeoutMs,omitempty" tf:"visibility_timeout_ms,omitempty"`
+
+	// (Attributes List) Webhook notification destinations. (see below for nested schema)
+	Webhooks []WebhooksInitParameters `json:"webhooks,omitempty" tf:"webhooks,omitempty"`
 }
 
 type SettingsObservation struct {
@@ -139,6 +193,9 @@ type SettingsObservation struct {
 	// The maximum number of messages to include in a batch.
 	BatchSize *float64 `json:"batchSize,omitempty" tf:"batch_size,omitempty"`
 
+	// (Attributes List) (see below for nested schema)
+	Email []EmailObservation `json:"email,omitempty" tf:"email,omitempty"`
+
 	// (Number) Maximum number of concurrent consumers that may consume from this Queue. Set to null to automatically opt in to the platform's maximum (recommended).
 	// Maximum number of concurrent consumers that may consume from this Queue. Set to `null` to automatically opt in to the platform's maximum (recommended).
 	MaxConcurrency *float64 `json:"maxConcurrency,omitempty" tf:"max_concurrency,omitempty"`
@@ -151,6 +208,9 @@ type SettingsObservation struct {
 	// The number of milliseconds to wait for a batch to fill up before attempting to deliver it
 	MaxWaitTimeMs *float64 `json:"maxWaitTimeMs,omitempty" tf:"max_wait_time_ms,omitempty"`
 
+	// (Attributes List) PagerDuty notification destinations. (see below for nested schema)
+	Pagerduty []PagerdutyObservation `json:"pagerduty,omitempty" tf:"pagerduty,omitempty"`
+
 	// (Number) The number of seconds to delay before making the message available for another attempt.
 	// The number of seconds to delay before making the message available for another attempt.
 	RetryDelay *float64 `json:"retryDelay,omitempty" tf:"retry_delay,omitempty"`
@@ -158,6 +218,9 @@ type SettingsObservation struct {
 	// (Number) The number of milliseconds that a message is exclusively leased. After the timeout, the message becomes available for another attempt.
 	// The number of milliseconds that a message is exclusively leased. After the timeout, the message becomes available for another attempt.
 	VisibilityTimeoutMs *float64 `json:"visibilityTimeoutMs,omitempty" tf:"visibility_timeout_ms,omitempty"`
+
+	// (Attributes List) Webhook notification destinations. (see below for nested schema)
+	Webhooks []WebhooksObservation `json:"webhooks,omitempty" tf:"webhooks,omitempty"`
 }
 
 type SettingsParameters struct {
@@ -167,6 +230,10 @@ type SettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	BatchSize *float64 `json:"batchSize,omitempty" tf:"batch_size,omitempty"`
 
+	// (Attributes List) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Email []EmailParameters `json:"email,omitempty" tf:"email,omitempty"`
+
 	// (Number) Maximum number of concurrent consumers that may consume from this Queue. Set to null to automatically opt in to the platform's maximum (recommended).
 	// Maximum number of concurrent consumers that may consume from this Queue. Set to `null` to automatically opt in to the platform's maximum (recommended).
 	// +kubebuilder:validation:Optional
@@ -182,6 +249,10 @@ type SettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	MaxWaitTimeMs *float64 `json:"maxWaitTimeMs,omitempty" tf:"max_wait_time_ms,omitempty"`
 
+	// (Attributes List) PagerDuty notification destinations. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Pagerduty []PagerdutyParameters `json:"pagerduty,omitempty" tf:"pagerduty,omitempty"`
+
 	// (Number) The number of seconds to delay before making the message available for another attempt.
 	// The number of seconds to delay before making the message available for another attempt.
 	// +kubebuilder:validation:Optional
@@ -191,6 +262,32 @@ type SettingsParameters struct {
 	// The number of milliseconds that a message is exclusively leased. After the timeout, the message becomes available for another attempt.
 	// +kubebuilder:validation:Optional
 	VisibilityTimeoutMs *float64 `json:"visibilityTimeoutMs,omitempty" tf:"visibility_timeout_ms,omitempty"`
+
+	// (Attributes List) Webhook notification destinations. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Webhooks []WebhooksParameters `json:"webhooks,omitempty" tf:"webhooks,omitempty"`
+}
+
+type WebhooksInitParameters struct {
+
+	// (String) The email address.
+	// UUID.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type WebhooksObservation struct {
+
+	// (String) The email address.
+	// UUID.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type WebhooksParameters struct {
+
+	// (String) The email address.
+	// UUID.
+	// +kubebuilder:validation:Optional
+	ID *string `json:"id" tf:"id,omitempty"`
 }
 
 // ConsumerSpec defines the desired state of Consumer

@@ -87,10 +87,15 @@ spec:
                           Human-readable message about the deployment. Truncated to 1000 bytes if longer.
                         type: string
                     type: object
+                  force:
+                    description: |-
+                      (Boolean) If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
+                      If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
+                    type: boolean
                   scriptName:
                     description: |-
-                      (String) Name of the script, used in URLs and route configuration.
-                      Name of the script, used in URLs and route configuration.
+                      (String) Name of the script.
+                      Name of the script.
                     type: string
                   strategy:
                     description: |-
@@ -98,14 +103,21 @@ spec:
                       Available values: "percentage".
                     type: string
                   versions:
-                    description: (Attributes List) (see below for nested schema)
+                    description: -versions, either inline, for example --versions
+                      '[{"version_id":"023e105f-2a42-4f8b-a1c1-73f6a2a30c0f","percentage":100}]',
+                      or from a JSON file with --versions @versions.json. (see below
+                      for nested schema)
                     items:
                       properties:
                         percentage:
-                          description: (Number)
+                          description: |-
+                            (Number) Percentage of traffic served by this version.
+                            Percentage of traffic served by this version.
                           type: number
                         versionId:
-                          description: (String)
+                          description: |-
+                            (String) Identifier of the Worker Version.
+                            Identifier of the Worker Version.
                           type: string
                       type: object
                     type: array
@@ -137,10 +149,15 @@ spec:
                           Human-readable message about the deployment. Truncated to 1000 bytes if longer.
                         type: string
                     type: object
+                  force:
+                    description: |-
+                      (Boolean) If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
+                      If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
+                    type: boolean
                   scriptName:
                     description: |-
-                      (String) Name of the script, used in URLs and route configuration.
-                      Name of the script, used in URLs and route configuration.
+                      (String) Name of the script.
+                      Name of the script.
                     type: string
                   strategy:
                     description: |-
@@ -148,14 +165,21 @@ spec:
                       Available values: "percentage".
                     type: string
                   versions:
-                    description: (Attributes List) (see below for nested schema)
+                    description: -versions, either inline, for example --versions
+                      '[{"version_id":"023e105f-2a42-4f8b-a1c1-73f6a2a30c0f","percentage":100}]',
+                      or from a JSON file with --versions @versions.json. (see below
+                      for nested schema)
                     items:
                       properties:
                         percentage:
-                          description: (Number)
+                          description: |-
+                            (Number) Percentage of traffic served by this version.
+                            Percentage of traffic served by this version.
                           type: number
                         versionId:
-                          description: (String)
+                          description: |-
+                            (String) Identifier of the Worker Version.
+                            Identifier of the Worker Version.
                           type: string
                       type: object
                     type: array
@@ -293,13 +317,18 @@ spec:
                   createdOn:
                     description: (String)
                     type: string
+                  force:
+                    description: |-
+                      (Boolean) If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
+                      If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
+                    type: boolean
                   id:
                     description: (String) The ID of this resource.
                     type: string
                   scriptName:
                     description: |-
-                      (String) Name of the script, used in URLs and route configuration.
-                      Name of the script, used in URLs and route configuration.
+                      (String) Name of the script.
+                      Name of the script.
                     type: string
                   source:
                     description: (String)
@@ -310,14 +339,21 @@ spec:
                       Available values: "percentage".
                     type: string
                   versions:
-                    description: (Attributes List) (see below for nested schema)
+                    description: -versions, either inline, for example --versions
+                      '[{"version_id":"023e105f-2a42-4f8b-a1c1-73f6a2a30c0f","percentage":100}]',
+                      or from a JSON file with --versions @versions.json. (see below
+                      for nested schema)
                     items:
                       properties:
                         percentage:
-                          description: (Number)
+                          description: |-
+                            (Number) Percentage of traffic served by this version.
+                            Percentage of traffic served by this version.
                           type: number
                         versionId:
-                          description: (String)
+                          description: |-
+                            (String) Identifier of the Worker Version.
+                            Identifier of the Worker Version.
                           type: string
                       type: object
                     type: array

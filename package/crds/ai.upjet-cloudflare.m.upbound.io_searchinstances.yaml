@@ -64,20 +64,9 @@ spec:
                   aiGatewayId:
                     type: string
                   aisearchModel:
-                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
-                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
-                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
-                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
-                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
-                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
-                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
-                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
-                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
-                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
-                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
-                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
-                      "openai/gpt-5-nano", "".'
+                    description: A Workers AI model ID or an AI Gateway model ID compatible
+                      with the OpenAI Chat Completions API. An empty string uses the
+                      configured or default model.
                     type: string
                   cache:
                     type: boolean
@@ -108,17 +97,13 @@ spec:
                       type: object
                     type: array
                   embeddingModel:
-                    description: 'Available values: "@cf/qwen/qwen3-embedding-0.6b",
-                      "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m",
-                      "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview",
-                      "google-ai-studio/gemini-embedding-2", "openai/text-embedding-3-small",
-                      "openai/text-embedding-3-large", "".'
                     type: string
                   fusionMethod:
                     description: 'Available values: "max", "rrf".'
                     type: string
                   hybridSearchEnabled:
-                    description: Deprecated — use index_method instead.
+                    description: Deprecated — use index_method instead. Defaults to
+                      true for new instances; set false to create a vector-only instance.
                     type: boolean
                   indexMethod:
                     properties:
@@ -136,6 +121,10 @@ spec:
                           Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
                           Available values: "porter", "trigram".
                         type: string
+                      useOcr:
+                        description: Enables OCR ingestion for PDFs and images. Changing
+                          this triggers a full re-index. Defaults to false.
+                        type: boolean
                     type: object
                   maxNumResults:
                     type: number
@@ -208,8 +197,6 @@ spec:
                   reranking:
                     type: boolean
                   rerankingModel:
-                    description: 'Available values: "@cf/baai/bge-reranker-base",
-                      "".'
                     type: string
                   retrievalOptions:
                     properties:
@@ -237,20 +224,9 @@ spec:
                         type: string
                     type: object
                   rewriteModel:
-                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
-                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
-                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
-                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
-                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
-                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
-                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
-                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
-                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
-                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
-                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
-                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
-                      "openai/gpt-5-nano", "".'
+                    description: A Workers AI model ID or an AI Gateway model ID compatible
+                      with the OpenAI Chat Completions API. An empty string uses the
+                      configured or default model.
                     type: string
                   rewriteQuery:
                     type: boolean
@@ -264,7 +240,8 @@ spec:
                         description: 'List of path patterns to exclude. Uses micromatch
                           glob syntax: * matches within a path segment, ** matches
                           across path segments (e.g., /admin/** matches /admin/users
-                          and /admin/settings/advanced)'
+                          and /admin/settings/advanced). Most accounts are limited
+                          to 10 rules; contact support to raise it.'
                         items:
                           type: string
                         type: array
@@ -272,7 +249,8 @@ spec:
                         description: 'List of path patterns to include. Uses micromatch
                           glob syntax: * matches within a path segment, ** matches
                           across path segments (e.g., /blog/** matches /blog/post
-                          and /blog/2024/post)'
+                          and /blog/2024/post). Most accounts are limited to 10 rules;
+                          contact support to raise it.'
                         items:
                           type: string
                         type: array
@@ -282,6 +260,34 @@ spec:
                         type: string
                       webCrawler:
                         properties:
+                          discoverOptions:
+                            properties:
+                              depth:
+                                description: Maximum link-follow depth from the seed
+                                  URL.
+                                type: number
+                              includeExternalLinks:
+                                description: Follow links that point outside the source
+                                  domain. Must stay `false` — discover crawls are
+                                  restricted to the zone you own.
+                                type: boolean
+                              includeSubdomains:
+                                description: Follow links to subdomains of the source
+                                  host.
+                                type: boolean
+                              limit:
+                                description: Maximum number of pages to crawl (1-100000).
+                                type: number
+                              maxAge:
+                                description: Maximum content age in seconds to accept
+                                  (0–604800).
+                                type: number
+                              source:
+                                description: |-
+                                  Where the crawler looks for URLs: 'sitemaps' reads sitemap XML only, 'links' follows page links only, 'all' does both.
+                                  Available values: "all", "sitemaps", "links".
+                                type: string
+                            type: object
                           parseOptions:
                             properties:
                               contentSelector:
@@ -323,38 +329,15 @@ spec:
                                 type: boolean
                             type: object
                           parseType:
-                            description: 'Available values: "sitemap", "feed-rss",
-                              "crawl".'
+                            description: |-
+                              How URLs are discovered. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to be a Verified zone on this account.
+                              Available values: "sitemap", "discover".
                             type: string
-                          storeOptions:
-                            properties:
-                              r2Jurisdiction:
-                                type: string
-                              storageId:
-                                type: string
-                              storageType:
-                                description: 'Available values: "r2".'
-                                type: string
-                            type: object
                         type: object
                     type: object
                   summarization:
                     type: boolean
                   summarizationModel:
-                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
-                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
-                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
-                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
-                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
-                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
-                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
-                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
-                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
-                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
-                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
-                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
-                      "openai/gpt-5-nano", "".'
                     type: string
                   syncInterval:
                     description: |-
@@ -370,7 +353,9 @@ spec:
                   tokenId:
                     type: string
                   type:
-                    description: 'Available values: "r2", "web-crawler".'
+                    description: |-
+                      Source type. When omitted or null with a non-blank source, HTTP(S) URLs infer web-crawler and existing R2 bucket names infer r2. A missing or blank source without a type uses managed upload-only storage.
+                      Available values: "r2", "web-crawler".
                     type: string
                 type: object
               initProvider:
@@ -391,20 +376,9 @@ spec:
                   aiGatewayId:
                     type: string
                   aisearchModel:
-                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
-                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
-                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
-                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
-                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
-                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
-                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
-                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
-                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
-                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
-                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
-                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
-                      "openai/gpt-5-nano", "".'
+                    description: A Workers AI model ID or an AI Gateway model ID compatible
+                      with the OpenAI Chat Completions API. An empty string uses the
+                      configured or default model.
                     type: string
                   cache:
                     type: boolean
@@ -435,17 +409,13 @@ spec:
                       type: object
                     type: array
                   embeddingModel:
-                    description: 'Available values: "@cf/qwen/qwen3-embedding-0.6b",
-                      "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m",
-                      "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview",
-                      "google-ai-studio/gemini-embedding-2", "openai/text-embedding-3-small",
-                      "openai/text-embedding-3-large", "".'
                     type: string
                   fusionMethod:
                     description: 'Available values: "max", "rrf".'
                     type: string
                   hybridSearchEnabled:
-                    description: Deprecated — use index_method instead.
+                    description: Deprecated — use index_method instead. Defaults to
+                      true for new instances; set false to create a vector-only instance.
                     type: boolean
                   indexMethod:
                     properties:
@@ -463,6 +433,10 @@ spec:
                           Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
                           Available values: "porter", "trigram".
                         type: string
+                      useOcr:
+                        description: Enables OCR ingestion for PDFs and images. Changing
+                          this triggers a full re-index. Defaults to false.
+                        type: boolean
                     type: object
                   maxNumResults:
                     type: number
@@ -535,8 +509,6 @@ spec:
                   reranking:
                     type: boolean
                   rerankingModel:
-                    description: 'Available values: "@cf/baai/bge-reranker-base",
-                      "".'
                     type: string
                   retrievalOptions:
                     properties:
@@ -564,20 +536,9 @@ spec:
                         type: string
                     type: object
                   rewriteModel:
-                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
-                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
-                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
-                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
-                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
-                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
-                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
-                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
-                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
-                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
-                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
-                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
-                      "openai/gpt-5-nano", "".'
+                    description: A Workers AI model ID or an AI Gateway model ID compatible
+                      with the OpenAI Chat Completions API. An empty string uses the
+                      configured or default model.
                     type: string
                   rewriteQuery:
                     type: boolean
@@ -591,7 +552,8 @@ spec:
                         description: 'List of path patterns to exclude. Uses micromatch
                           glob syntax: * matches within a path segment, ** matches
                           across path segments (e.g., /admin/** matches /admin/users
-                          and /admin/settings/advanced)'
+                          and /admin/settings/advanced). Most accounts are limited
+                          to 10 rules; contact support to raise it.'
                         items:
                           type: string
                         type: array
@@ -599,7 +561,8 @@ spec:
                         description: 'List of path patterns to include. Uses micromatch
                           glob syntax: * matches within a path segment, ** matches
                           across path segments (e.g., /blog/** matches /blog/post
-                          and /blog/2024/post)'
+                          and /blog/2024/post). Most accounts are limited to 10 rules;
+                          contact support to raise it.'
                         items:
                           type: string
                         type: array
@@ -609,6 +572,34 @@ spec:
                         type: string
                       webCrawler:
                         properties:
+                          discoverOptions:
+                            properties:
+                              depth:
+                                description: Maximum link-follow depth from the seed
+                                  URL.
+                                type: number
+                              includeExternalLinks:
+                                description: Follow links that point outside the source
+                                  domain. Must stay `false` — discover crawls are
+                                  restricted to the zone you own.
+                                type: boolean
+                              includeSubdomains:
+                                description: Follow links to subdomains of the source
+                                  host.
+                                type: boolean
+                              limit:
+                                description: Maximum number of pages to crawl (1-100000).
+                                type: number
+                              maxAge:
+                                description: Maximum content age in seconds to accept
+                                  (0–604800).
+                                type: number
+                              source:
+                                description: |-
+                                  Where the crawler looks for URLs: 'sitemaps' reads sitemap XML only, 'links' follows page links only, 'all' does both.
+                                  Available values: "all", "sitemaps", "links".
+                                type: string
+                            type: object
                           parseOptions:
                             properties:
                               contentSelector:
@@ -650,38 +641,15 @@ spec:
                                 type: boolean
                             type: object
                           parseType:
-                            description: 'Available values: "sitemap", "feed-rss",
-                              "crawl".'
+                            description: |-
+                              How URLs are discovered. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to be a Verified zone on this account.
+                              Available values: "sitemap", "discover".
                             type: string
-                          storeOptions:
-                            properties:
-                              r2Jurisdiction:
-                                type: string
-                              storageId:
-                                type: string
-                              storageType:
-                                description: 'Available values: "r2".'
-                                type: string
-                            type: object
                         type: object
                     type: object
                   summarization:
                     type: boolean
                   summarizationModel:
-                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
-                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
-                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
-                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
-                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
-                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
-                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
-                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
-                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
-                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
-                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
-                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
-                      "openai/gpt-5-nano", "".'
                     type: string
                   syncInterval:
                     description: |-
@@ -697,7 +665,9 @@ spec:
                   tokenId:
                     type: string
                   type:
-                    description: 'Available values: "r2", "web-crawler".'
+                    description: |-
+                      Source type. When omitted or null with a non-blank source, HTTP(S) URLs infer web-crawler and existing R2 bucket names infer r2. A missing or blank source without a type uses managed upload-only storage.
+                      Available values: "r2", "web-crawler".
                     type: string
                 type: object
               managementPolicies:
@@ -773,20 +743,9 @@ spec:
                   aiGatewayId:
                     type: string
                   aisearchModel:
-                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
-                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
-                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
-                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
-                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
-                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
-                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
-                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
-                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
-                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
-                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
-                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
-                      "openai/gpt-5-nano", "".'
+                    description: A Workers AI model ID or an AI Gateway model ID compatible
+                      with the OpenAI Chat Completions API. An empty string uses the
+                      configured or default model.
                     type: string
                   cache:
                     type: boolean
@@ -821,11 +780,6 @@ spec:
                       type: object
                     type: array
                   embeddingModel:
-                    description: 'Available values: "@cf/qwen/qwen3-embedding-0.6b",
-                      "@cf/baai/bge-m3", "@cf/baai/bge-large-en-v1.5", "@cf/google/embeddinggemma-300m",
-                      "google-ai-studio/gemini-embedding-001", "google-ai-studio/gemini-embedding-2-preview",
-                      "google-ai-studio/gemini-embedding-2", "openai/text-embedding-3-small",
-                      "openai/text-embedding-3-large", "".'
                     type: string
                   enable:
                     type: boolean
@@ -835,7 +789,8 @@ spec:
                     description: 'Available values: "max", "rrf".'
                     type: string
                   hybridSearchEnabled:
-                    description: Deprecated — use index_method instead.
+                    description: Deprecated — use index_method instead. Defaults to
+                      true for new instances; set false to create a vector-only instance.
                     type: boolean
                   id:
                     type: string
@@ -855,6 +810,10 @@ spec:
                           Tokenizer used for keyword search indexing. porter provides word-level tokenization with Porter stemming (good for natural language queries). trigram enables character-level substring matching (good for partial matches, code, identifiers). Changing this triggers a full re-index. Defaults to porter.
                           Available values: "porter", "trigram".
                         type: string
+                      useOcr:
+                        description: Enables OCR ingestion for PDFs and images. Changing
+                          this triggers a full re-index. Defaults to false.
+                        type: boolean
                     type: object
                   lastActivity:
                     type: string
@@ -937,8 +896,6 @@ spec:
                   reranking:
                     type: boolean
                   rerankingModel:
-                    description: 'Available values: "@cf/baai/bge-reranker-base",
-                      "".'
                     type: string
                   retrievalOptions:
                     properties:
@@ -966,20 +923,9 @@ spec:
                         type: string
                     type: object
                   rewriteModel:
-                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
-                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
-                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
-                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
-                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
-                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
-                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
-                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
-                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
-                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
-                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
-                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
-                      "openai/gpt-5-nano", "".'
+                    description: A Workers AI model ID or an AI Gateway model ID compatible
+                      with the OpenAI Chat Completions API. An empty string uses the
+                      configured or default model.
                     type: string
                   rewriteQuery:
                     type: boolean
@@ -993,7 +939,8 @@ spec:
                         description: 'List of path patterns to exclude. Uses micromatch
                           glob syntax: * matches within a path segment, ** matches
                           across path segments (e.g., /admin/** matches /admin/users
-                          and /admin/settings/advanced)'
+                          and /admin/settings/advanced). Most accounts are limited
+                          to 10 rules; contact support to raise it.'
                         items:
                           type: string
                         type: array
@@ -1001,7 +948,8 @@ spec:
                         description: 'List of path patterns to include. Uses micromatch
                           glob syntax: * matches within a path segment, ** matches
                           across path segments (e.g., /blog/** matches /blog/post
-                          and /blog/2024/post)'
+                          and /blog/2024/post). Most accounts are limited to 10 rules;
+                          contact support to raise it.'
                         items:
                           type: string
                         type: array
@@ -1011,6 +959,34 @@ spec:
                         type: string
                       webCrawler:
                         properties:
+                          discoverOptions:
+                            properties:
+                              depth:
+                                description: Maximum link-follow depth from the seed
+                                  URL.
+                                type: number
+                              includeExternalLinks:
+                                description: Follow links that point outside the source
+                                  domain. Must stay `false` — discover crawls are
+                                  restricted to the zone you own.
+                                type: boolean
+                              includeSubdomains:
+                                description: Follow links to subdomains of the source
+                                  host.
+                                type: boolean
+                              limit:
+                                description: Maximum number of pages to crawl (1-100000).
+                                type: number
+                              maxAge:
+                                description: Maximum content age in seconds to accept
+                                  (0–604800).
+                                type: number
+                              source:
+                                description: |-
+                                  Where the crawler looks for URLs: 'sitemaps' reads sitemap XML only, 'links' follows page links only, 'all' does both.
+                                  Available values: "all", "sitemaps", "links".
+                                type: string
+                            type: object
                           parseOptions:
                             properties:
                               contentSelector:
@@ -1052,19 +1028,10 @@ spec:
                                 type: boolean
                             type: object
                           parseType:
-                            description: 'Available values: "sitemap", "feed-rss",
-                              "crawl".'
+                            description: |-
+                              How URLs are discovered. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to be a Verified zone on this account.
+                              Available values: "sitemap", "discover".
                             type: string
-                          storeOptions:
-                            properties:
-                              r2Jurisdiction:
-                                type: string
-                              storageId:
-                                type: string
-                              storageType:
-                                description: 'Available values: "r2".'
-                                type: string
-                            type: object
                         type: object
                     type: object
                   status:
@@ -1072,20 +1039,6 @@ spec:
                   summarization:
                     type: boolean
                   summarizationModel:
-                    description: 'Available values: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-                      "@cf/zai-org/glm-4.7-flash", "@cf/meta/llama-3.1-8b-instruct-fast",
-                      "@cf/meta/llama-3.1-8b-instruct-fp8", "@cf/meta/llama-4-scout-17b-16e-instruct",
-                      "@cf/qwen/qwen3-30b-a3b-fp8", "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
-                      "@cf/moonshotai/kimi-k2-instruct", "@cf/google/gemma-3-12b-it",
-                      "@cf/google/gemma-4-26b-a4b-it", "@cf/moonshotai/kimi-k2.5",
-                      "anthropic/claude-3-7-sonnet", "anthropic/claude-sonnet-4",
-                      "anthropic/claude-opus-4", "anthropic/claude-3-5-haiku", "cerebras/qwen-3-235b-a22b-instruct",
-                      "cerebras/qwen-3-235b-a22b-thinking", "cerebras/llama-3.3-70b",
-                      "cerebras/llama-4-maverick-17b-128e-instruct", "cerebras/llama-4-scout-17b-16e-instruct",
-                      "cerebras/gpt-oss-120b", "google-ai-studio/gemini-2.5-flash",
-                      "google-ai-studio/gemini-2.5-pro", "grok/grok-4", "groq/llama-3.3-70b-versatile",
-                      "groq/llama-3.1-8b-instant", "openai/gpt-5", "openai/gpt-5-mini",
-                      "openai/gpt-5-nano", "".'
                     type: string
                   syncInterval:
                     description: |-
@@ -1101,9 +1054,9 @@ spec:
                   tokenId:
                     type: string
                   type:
-                    description: 'Available values: "r2", "web-crawler".'
-                    type: string
-                  vectorizeName:
+                    description: |-
+                      Source type. When omitted or null with a non-blank source, HTTP(S) URLs infer web-crawler and existing R2 bucket names infer r2. A missing or blank source without a type uses managed upload-only storage.
+                      Available values: "r2", "web-crawler".
                     type: string
                 type: object
               conditions:

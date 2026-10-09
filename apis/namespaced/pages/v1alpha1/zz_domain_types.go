@@ -20,12 +20,12 @@ type DomainInitParameters struct {
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) The domain name.
-	// The domain name.
+	// (String) Fully qualified domain name for the Pages project, such as example.com.
+	// Fully qualified domain name for the Pages project, such as `example.com`.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Name of the project.
-	// Name of the project.
+	// (String) Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+	// Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	ProjectName *string `json:"projectName,omitempty" tf:"project_name,omitempty"`
 }
 
@@ -45,15 +45,15 @@ type DomainObservation struct {
 	// (String)
 	DomainID *string `json:"domainId,omitempty" tf:"domain_id,omitempty"`
 
-	// (String) The domain name.
+	// (String) Fully qualified domain name for the Pages project, such as example.com.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) The domain name.
-	// The domain name.
+	// (String) Fully qualified domain name for the Pages project, such as example.com.
+	// Fully qualified domain name for the Pages project, such as `example.com`.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Name of the project.
-	// Name of the project.
+	// (String) Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+	// Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	ProjectName *string `json:"projectName,omitempty" tf:"project_name,omitempty"`
 
 	// (String) Available values: "initializing", "pending", "active", "deactivated", "blocked", "error".
@@ -77,13 +77,13 @@ type DomainParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (String) The domain name.
-	// The domain name.
+	// (String) Fully qualified domain name for the Pages project, such as example.com.
+	// Fully qualified domain name for the Pages project, such as `example.com`.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Name of the project.
-	// Name of the project.
+	// (String) Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
+	// Name of the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
 	// +kubebuilder:validation:Optional
 	ProjectName *string `json:"projectName,omitempty" tf:"project_name,omitempty"`
 }

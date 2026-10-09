@@ -113,37 +113,6 @@ type VariantObservation struct {
 
 	// (Attributes) Allows you to define image resizing sizes for different use cases. (see below for nested schema)
 	Options *OptionsObservation `json:"options,omitempty" tf:"options,omitempty"`
-
-	// (Attributes) (see below for nested schema)
-	Variant *VariantVariantObservation `json:"variant,omitempty" tf:"variant,omitempty"`
-}
-
-type VariantOptionsInitParameters struct {
-}
-
-type VariantOptionsObservation struct {
-
-	// down", "contain", "cover", "crop", "pad".
-	// The fit property describes how the width and height dimensions should be interpreted.
-	// Available values: "scale-down", "contain", "cover", "crop", "pad".
-	Fit *string `json:"fit,omitempty" tf:"fit,omitempty"`
-
-	// (Number) Maximum height in image pixels.
-	// Maximum height in image pixels.
-	Height *float64 `json:"height,omitempty" tf:"height,omitempty"`
-
-	// (String) What EXIF data should be preserved in the output image.
-	// Available values: "keep", "copyright", "none".
-	// What EXIF data should be preserved in the output image.
-	// Available values: "keep", "copyright", "none".
-	Metadata *string `json:"metadata,omitempty" tf:"metadata,omitempty"`
-
-	// (Number) Maximum width in image pixels.
-	// Maximum width in image pixels.
-	Width *float64 `json:"width,omitempty" tf:"width,omitempty"`
-}
-
-type VariantOptionsParameters struct {
 }
 
 type VariantParameters struct {
@@ -161,25 +130,6 @@ type VariantParameters struct {
 	// (Attributes) Allows you to define image resizing sizes for different use cases. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Options *OptionsParameters `json:"options,omitempty" tf:"options,omitempty"`
-}
-
-type VariantVariantInitParameters struct {
-}
-
-type VariantVariantObservation struct {
-
-	// (String) The ID of this resource.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// (Boolean) Indicates whether the variant can access an image without a signature, regardless of image access control.
-	// Indicates whether the variant can access an image without a signature, regardless of image access control.
-	NeverRequireSignedUrls *bool `json:"neverRequireSignedUrls,omitempty" tf:"never_require_signed_urls,omitempty"`
-
-	// (Attributes) Allows you to define image resizing sizes for different use cases. (see below for nested schema)
-	Options *VariantOptionsObservation `json:"options,omitempty" tf:"options,omitempty"`
-}
-
-type VariantVariantParameters struct {
 }
 
 // VariantSpec defines the desired state of Variant

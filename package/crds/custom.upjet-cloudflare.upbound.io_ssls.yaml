@@ -124,8 +124,8 @@ spec:
                     type: string
                   privateKeySecretRef:
                     description: |-
-                      (String, Sensitive) The zone's private key.
-                      The zone's private key.
+                      (String, Sensitive) The zone's private key. Not required if custom_csr_id is provided, in which case the private key is retrieved from the CSR record held by Cloudflare.
+                      The zone's private key. Not required if custom_csr_id is provided, in which case the private key is retrieved from the CSR record held by Cloudflare.
                     properties:
                       key:
                         description: The key to select.
@@ -291,8 +291,8 @@ spec:
                     type: string
                   privateKeySecretRef:
                     description: |-
-                      (String, Sensitive) The zone's private key.
-                      The zone's private key.
+                      (String, Sensitive) The zone's private key. Not required if custom_csr_id is provided, in which case the private key is retrieved from the CSR record held by Cloudflare.
+                      The zone's private key. Not required if custom_csr_id is provided, in which case the private key is retrieved from the CSR record held by Cloudflare.
                     properties:
                       key:
                         description: The key to select.
@@ -394,8 +394,6 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - privateKeySecretRef
                 type: object
               managementPolicies:
                 default:
@@ -488,9 +486,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.certificate)
                 || (has(self.initProvider) && has(self.initProvider.certificate))'
-            - message: spec.forProvider.privateKeySecretRef is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.privateKeySecretRef)'
           status:
             description: SSLStatus defines the observed state of SSL.
             properties:
@@ -548,7 +543,7 @@ spec:
                       type: string
                     type: array
                   id:
-                    description: (String) Identifier.
+                    description: (String) Custom certificate identifier tag.
                     type: string
                   issuer:
                     description: |-
@@ -575,7 +570,7 @@ spec:
                         type: string
                       id:
                         description: |-
-                          (String) Identifier.
+                          (String) Custom certificate identifier tag.
                           Keyless certificate identifier tag.
                         type: string
                       modifiedOn:

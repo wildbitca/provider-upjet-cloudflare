@@ -58,6 +58,11 @@ func (in *AccountInitParameters) DeepCopyInto(out *AccountInitParameters) {
 		*out = new(SettingsInitParameters)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.Standalone != nil {
+		in, out := &in.Standalone, &out.Standalone
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type
 		*out = new(string)
@@ -140,6 +145,11 @@ func (in *AccountObservation) DeepCopyInto(out *AccountObservation) {
 		*out = new(SettingsObservation)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.Standalone != nil {
+		in, out := &in.Standalone, &out.Standalone
+		*out = new(bool)
+		**out = **in
+	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type
 		*out = new(string)
@@ -179,6 +189,11 @@ func (in *AccountParameters) DeepCopyInto(out *AccountParameters) {
 		in, out := &in.Settings, &out.Settings
 		*out = new(SettingsParameters)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.Standalone != nil {
+		in, out := &in.Standalone, &out.Standalone
+		*out = new(bool)
+		**out = **in
 	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type
@@ -1288,6 +1303,17 @@ func (in *OAuthClientInitParameters) DeepCopyInto(out *OAuthClientInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.OptionalScopes != nil {
+		in, out := &in.OptionalScopes, &out.OptionalScopes
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.PolicyURI != nil {
 		in, out := &in.PolicyURI, &out.PolicyURI
 		*out = new(string)
@@ -1471,6 +1497,17 @@ func (in *OAuthClientObservation) DeepCopyInto(out *OAuthClientObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.OptionalScopes != nil {
+		in, out := &in.OptionalScopes, &out.OptionalScopes
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.PolicyURI != nil {
 		in, out := &in.PolicyURI, &out.PolicyURI
 		*out = new(string)
@@ -1616,6 +1653,17 @@ func (in *OAuthClientParameters) DeepCopyInto(out *OAuthClientParameters) {
 		in, out := &in.OauthClientID, &out.OauthClientID
 		*out = new(string)
 		**out = **in
+	}
+	if in.OptionalScopes != nil {
+		in, out := &in.OptionalScopes, &out.OptionalScopes
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.PolicyURI != nil {
 		in, out := &in.PolicyURI, &out.PolicyURI
@@ -2810,6 +2858,11 @@ func (in *TokenObservation) DeepCopyInto(out *TokenObservation) {
 		*out = new(ConditionObservation)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.CreatorEmailAtCreation != nil {
+		in, out := &in.CreatorEmailAtCreation, &out.CreatorEmailAtCreation
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExpiresOn != nil {
 		in, out := &in.ExpiresOn, &out.ExpiresOn
 		*out = new(string)
@@ -2851,6 +2904,16 @@ func (in *TokenObservation) DeepCopyInto(out *TokenObservation) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.ProvisionerID != nil {
+		in, out := &in.ProvisionerID, &out.ProvisionerID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ProvisionerType != nil {
+		in, out := &in.ProvisionerType, &out.ProvisionerType
+		*out = new(string)
+		**out = **in
 	}
 	if in.Status != nil {
 		in, out := &in.Status, &out.Status

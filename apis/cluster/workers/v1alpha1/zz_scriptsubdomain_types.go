@@ -27,8 +27,8 @@ type ScriptSubdomainInitParameters struct {
 	// Whether the Worker's Preview URLs should be available on the workers.dev subdomain.
 	PreviewsEnabled *bool `json:"previewsEnabled,omitempty" tf:"previews_enabled,omitempty"`
 
-	// (String) Name of the script, used in URLs and route configuration.
-	// Name of the script, used in URLs and route configuration.
+	// (String) Name of the script.
+	// Name of the script.
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 }
 
@@ -49,8 +49,8 @@ type ScriptSubdomainObservation struct {
 	// Whether the Worker's Preview URLs should be available on the workers.dev subdomain.
 	PreviewsEnabled *bool `json:"previewsEnabled,omitempty" tf:"previews_enabled,omitempty"`
 
-	// (String) Name of the script, used in URLs and route configuration.
-	// Name of the script, used in URLs and route configuration.
+	// (String) Name of the script.
+	// Name of the script.
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 }
 
@@ -71,8 +71,8 @@ type ScriptSubdomainParameters struct {
 	// +kubebuilder:validation:Optional
 	PreviewsEnabled *bool `json:"previewsEnabled,omitempty" tf:"previews_enabled,omitempty"`
 
-	// (String) Name of the script, used in URLs and route configuration.
-	// Name of the script, used in URLs and route configuration.
+	// (String) Name of the script.
+	// Name of the script.
 	// +kubebuilder:validation:Optional
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 }

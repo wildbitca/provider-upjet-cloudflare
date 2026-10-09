@@ -27,6 +27,10 @@ type TrustAccessServiceTokenInitParameters struct {
 	// The duration for how long the service token will be valid. Must be in the format `300ms` or `2h45m`, or the special value `forever` for non-expiring tokens. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
 	Duration *string `json:"duration,omitempty" tf:"duration,omitempty"`
 
+	// enabled at any time. Defaults to enabled when omitted on create.
+	// Whether the service token is enabled. A disabled service token cannot be used to authenticate; both its current and previous `client_secret` stop being accepted, but the token itself is preserved and can be re-enabled at any time. Defaults to enabled when omitted on create.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
 	// (String) The name of the service token.
 	// The name of the service token.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -57,6 +61,10 @@ type TrustAccessServiceTokenObservation struct {
 	// expiring tokens. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
 	// The duration for how long the service token will be valid. Must be in the format `300ms` or `2h45m`, or the special value `forever` for non-expiring tokens. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
 	Duration *string `json:"duration,omitempty" tf:"duration,omitempty"`
+
+	// enabled at any time. Defaults to enabled when omitted on create.
+	// Whether the service token is enabled. A disabled service token cannot be used to authenticate; both its current and previous `client_secret` stop being accepted, but the token itself is preserved and can be re-enabled at any time. Defaults to enabled when omitted on create.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	// (String)
 	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
@@ -93,6 +101,11 @@ type TrustAccessServiceTokenParameters struct {
 	// The duration for how long the service token will be valid. Must be in the format `300ms` or `2h45m`, or the special value `forever` for non-expiring tokens. Valid time units are: ns, us (or µs), ms, s, m, h. The default is 1 year in hours (8760h).
 	// +kubebuilder:validation:Optional
 	Duration *string `json:"duration,omitempty" tf:"duration,omitempty"`
+
+	// enabled at any time. Defaults to enabled when omitted on create.
+	// Whether the service token is enabled. A disabled service token cannot be used to authenticate; both its current and previous `client_secret` stop being accepted, but the token itself is preserved and can be re-enabled at any time. Defaults to enabled when omitted on create.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	// (String) The name of the service token.
 	// The name of the service token.

@@ -10,6 +10,6 @@ spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
     keyName: My-Key
-    metadata: {}
+    metadata: ${jsonencode({})}
     namespaceId: 0f2ac74b498b48028cb68387c421e279
     value: Some Value

@@ -1,0 +1,14 @@
+apiVersion: stream.upjet-cloudflare.upbound.io/v1alpha1
+kind: MOQRelay
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stream/v1alpha1/moqrelay
+  labels:
+    testing.upbound.io/example-name: example_moq_relay
+  name: example-moq-relay
+spec:
+  forProvider:
+    accountIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: Production Live Stream

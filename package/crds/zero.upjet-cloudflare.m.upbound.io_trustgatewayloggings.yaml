@@ -60,7 +60,9 @@ spec:
               forProvider:
                 properties:
                   accountId:
-                    description: (String)
+                    description: |-
+                      (String) Specify the Cloudflare account identifier.
+                      Specify the Cloudflare account identifier.
                     type: string
                   redactPii:
                     description: |-
@@ -132,7 +134,9 @@ spec:
                   autoscaler.
                 properties:
                   accountId:
-                    description: (String)
+                    description: |-
+                      (String) Specify the Cloudflare account identifier.
+                      Specify the Cloudflare account identifier.
                     type: string
                   redactPii:
                     description: |-
@@ -259,10 +263,12 @@ spec:
               atProvider:
                 properties:
                   accountId:
-                    description: (String)
+                    description: |-
+                      (String) Specify the Cloudflare account identifier.
+                      Specify the Cloudflare account identifier.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String) Specify the Cloudflare account identifier.
                     type: string
                   redactPii:
                     description: |-

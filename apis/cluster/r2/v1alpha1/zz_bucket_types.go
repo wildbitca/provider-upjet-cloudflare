@@ -15,8 +15,8 @@ import (
 
 type BucketInitParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/account/v1alpha1.Account
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
@@ -52,8 +52,8 @@ type BucketInitParameters struct {
 
 type BucketObservation struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Creation timestamp.
@@ -87,8 +87,8 @@ type BucketObservation struct {
 
 type BucketParameters struct {
 
-	// (String) Account ID.
-	// Account ID.
+	// (String) Cloudflare account ID that owns the R2 resource.
+	// Cloudflare account ID that owns the R2 resource.
 	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/account/v1alpha1.Account
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
