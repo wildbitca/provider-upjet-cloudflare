@@ -39,6 +39,12 @@ jobs:
   # ── Resolve version + package list ────────────────────────────────────
   prepare:
     runs-on: ${{ fromJSON(vars.CI_RUNNER || '"ubuntu-24.04"') }}
+    # Gates the entire release before any build/publish work starts: nothing
+    # downstream runs until the custom deployment protection rule (deploy-gate,
+    # org-wide Slack emoji-reaction approval) clears. CI already ran on the
+    # commit before it was tagged, so there is no test signal lost by gating
+    # here instead of a later job.
+    environment: production
     outputs:
       version: ${{ steps.version.outputs.version }}
       subpackages: ${{ steps.packages.outputs.subpackages }}
