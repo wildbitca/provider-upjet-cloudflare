@@ -1,6 +1,10 @@
 package zone
 
-import "github.com/crossplane/upjet/v2/pkg/config"
+import (
+	"github.com/crossplane/upjet/v2/pkg/config"
+
+	"github.com/wildbitca/provider-upjet-cloudflare/config/zonesetting"
+)
 
 // Configure adds the zone group resource configurators.
 func Configure(p *config.Provider) {
@@ -29,6 +33,18 @@ func Configure(p *config.Provider) {
 		r.LateInitializer = config.LateInitializer{
 			IgnoredFields: []string{"modified_on"},
 		}
+		// Canonicalize object-typed setting values (aegis,
+		// automatic_platform_optimization, nel, security_header) to their
+		// full known key set before upjet's auto-registered dynamic-value
+		// conversion infers a Terraform type from forProvider.value, so
+		// that Update can converge for these setting_ids. Must be
+		// prepended, not appended: upjet's NewProvider() already appended
+		// the generic dynamic-value conversion to this resource's
+		// TerraformConversions before this configurator runs, and
+		// execution order in that slice is the same for both ToTerraform
+		// and FromTerraform. See config/zonesetting for the full
+		// explanation and sources.
+		r.TerraformConversions = append([]config.TerraformConversion{zonesetting.New()}, r.TerraformConversions...)
 	})
 	p.AddResourceConfigurator("cloudflare_zone_dnssec", func(r *config.Resource) {
 		r.LateInitializer = config.LateInitializer{
