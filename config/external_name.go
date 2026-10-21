@@ -99,6 +99,24 @@ var bucketNameAsExternalName = config.ExternalName{
 	DisableNameInitializer: true,
 }
 
+// workersRouteExternalName keeps the Cloudflare route ID as the Crossplane
+// external name while using the provider's required zone_id/route_id import ID.
+var workersRouteExternalName = config.ExternalName{
+	SetIdentifierArgumentFn: config.NopSetIdentifierArgument,
+	GetExternalNameFn:       config.IDAsExternalName,
+	GetIDFn: func(_ context.Context, externalName string, parameters, _ map[string]interface{}) (string, error) {
+		zoneID, ok := parameters["zone_id"].(string)
+		if !ok || zoneID == "" {
+			return "", fmt.Errorf("cannot determine workers route import ID: zone_id is required")
+		}
+		if externalName == "" {
+			return "", fmt.Errorf("cannot determine workers route import ID: external name is required")
+		}
+		return zoneID + "/" + externalName, nil
+	},
+	DisableNameInitializer: true,
+}
+
 // ExternalNameConfigs contains all external name configurations for this
 // provider. Cloudflare uses Terraform Plugin Framework. All 198 managed
 // resources use IdentifierFromProvider (provider-generated IDs).
@@ -264,7 +282,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"cloudflare_workers_for_platforms_dispatch_namespace":                config.IdentifierFromProvider,
 	"cloudflare_workers_kv":                                              config.IdentifierFromProvider,
 	"cloudflare_workers_kv_namespace":                                    config.IdentifierFromProvider,
-	"cloudflare_workers_route":                                           config.IdentifierFromProvider,
+	"cloudflare_workers_route":                                           workersRouteExternalName,
 	"cloudflare_workers_script":                                          config.IdentifierFromProvider,
 	"cloudflare_workers_script_subdomain":                                config.IdentifierFromProvider,
 	"cloudflare_workflow":                                                config.IdentifierFromProvider,
