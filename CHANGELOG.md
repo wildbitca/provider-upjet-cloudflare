@@ -7,8 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Upgrades the toolchain and the wrapped Terraform provider. Proposed next
-version: **v0.5.0** (see the pull request for the semver reasoning).
+## [1.0.0] - 2026-10-29
+
+First stable release of the provider family (all Wildbit upjet providers move
+to 1.x). Upgrades the toolchain and the wrapped Terraform provider.
+
+### Migration
+
+See [docs/migration/cloudflare-5.28-breaking-changes.md](docs/migration/cloudflare-5.28-breaking-changes.md).
+Before upgrading: delete or migrate any `Domain` (`registrar`) resources and
+remove the `provider-cloudflare-registrar` package from your cluster (old
+registrar package versions remain on the registry but receive no updates);
+update manifests that use the renamed or newly required fields listed under
+"Breaking schema changes". Install the new `provider-cloudflare-monetization`
+package only if you need `Rules`.
 
 ### Changed
 

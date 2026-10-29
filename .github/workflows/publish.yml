@@ -27,10 +27,10 @@ env:
   UPBOUND_REGISTRY: xpkg.upbound.io/wildbitca
   OPENTOFU_VERSION: '1.13.2'
   TERRAFORM_PROVIDER_SOURCE: cloudflare/cloudflare
-  TERRAFORM_PROVIDER_VERSION: '5.27.0'
+  TERRAFORM_PROVIDER_VERSION: '5.28.1'
   TERRAFORM_PROVIDER_DOWNLOAD_NAME: terraform-provider-cloudflare
-  TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX: https://github.com/cloudflare/terraform-provider-cloudflare/releases/download/v5.27.0
-  TERRAFORM_NATIVE_PROVIDER_BINARY: terraform-provider-cloudflare_v5.27.0
+  TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX: https://github.com/cloudflare/terraform-provider-cloudflare/releases/download/v5.28.1
+  TERRAFORM_NATIVE_PROVIDER_BINARY: terraform-provider-cloudflare_v5.28.1
 
 permissions:
   contents: write
