@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type StoreSecretInitParameters struct {
@@ -23,11 +22,11 @@ type StoreSecretInitParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (String) Freeform text describing the secret
 	// Freeform text describing the secret
@@ -48,15 +47,15 @@ type StoreSecretInitParameters struct {
 
 	// Reference to a Store in secretsstore to populate storeId.
 	// +kubebuilder:validation:Optional
-	StoreIDRef *v1.NamespacedReference `json:"storeIdRef,omitempty" tf:"-"`
+	StoreIDRef *v2.NamespacedReference `json:"storeIdRef,omitempty" tf:"-"`
 
 	// Selector for a Store in secretsstore to populate storeId.
 	// +kubebuilder:validation:Optional
-	StoreIDSelector *v1.NamespacedSelector `json:"storeIdSelector,omitempty" tf:"-"`
+	StoreIDSelector *v2.NamespacedSelector `json:"storeIdSelector,omitempty" tf:"-"`
 
 	// no API response will provide this value, it is only used to create/modify secrets.
 	// The value of the secret. Maximum 64 KiB (65,536 bytes). Note that this is 'write only' - no API response will provide this value, it is only used to create/modify secrets.
-	ValueSecretRef v1.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
+	ValueSecretRef v2.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 type StoreSecretObservation struct {
@@ -107,11 +106,11 @@ type StoreSecretParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (String) Freeform text describing the secret
 	// Freeform text describing the secret
@@ -136,16 +135,16 @@ type StoreSecretParameters struct {
 
 	// Reference to a Store in secretsstore to populate storeId.
 	// +kubebuilder:validation:Optional
-	StoreIDRef *v1.NamespacedReference `json:"storeIdRef,omitempty" tf:"-"`
+	StoreIDRef *v2.NamespacedReference `json:"storeIdRef,omitempty" tf:"-"`
 
 	// Selector for a Store in secretsstore to populate storeId.
 	// +kubebuilder:validation:Optional
-	StoreIDSelector *v1.NamespacedSelector `json:"storeIdSelector,omitempty" tf:"-"`
+	StoreIDSelector *v2.NamespacedSelector `json:"storeIdSelector,omitempty" tf:"-"`
 
 	// no API response will provide this value, it is only used to create/modify secrets.
 	// The value of the secret. Maximum 64 KiB (65,536 bytes). Note that this is 'write only' - no API response will provide this value, it is only used to create/modify secrets.
 	// +kubebuilder:validation:Optional
-	ValueSecretRef v1.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
+	ValueSecretRef v2.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 // StoreSecretSpec defines the desired state of StoreSecret
@@ -167,8 +166,8 @@ type StoreSecretSpec struct {
 
 // StoreSecretStatus defines the observed state of StoreSecret.
 type StoreSecretStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        StoreSecretObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               StoreSecretObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

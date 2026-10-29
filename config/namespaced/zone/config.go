@@ -20,6 +20,7 @@ func Configure(p *config.Provider) {
 		"cloudflare_zone_hold", "cloudflare_zone_lockdown", "cloudflare_zone_subscription",
 		"cloudflare_healthcheck", "cloudflare_rate_limit", "cloudflare_page_rule",
 		"cloudflare_custom_pages", "cloudflare_custom_ssl", "cloudflare_dns_firewall",
+		"cloudflare_monetization_rules",
 	} {
 		name := resName
 		p.AddResourceConfigurator(name, func(r *config.Resource) {

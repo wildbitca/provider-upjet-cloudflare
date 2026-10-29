@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type PolicyWebhooksInitParameters struct {
@@ -25,7 +25,7 @@ type PolicyWebhooksInitParameters struct {
 
 	// webhook-auth header when dispatching generic webhook notifications or formatted for supported destinations. Secrets are not returned in any API response body.
 	// Optional secret that will be passed in the `cf-webhook-auth` header when dispatching generic webhook notifications or formatted for supported destinations. Secrets are not returned in any API response body.
-	SecretSecretRef *v1.SecretKeySelector `json:"secretSecretRef,omitempty" tf:"-"`
+	SecretSecretRef *v2.SecretKeySelector `json:"secretSecretRef,omitempty" tf:"-"`
 
 	// (String) The POST endpoint to call when dispatching a notification.
 	// The POST endpoint to call when dispatching a notification.
@@ -83,7 +83,7 @@ type PolicyWebhooksParameters struct {
 	// webhook-auth header when dispatching generic webhook notifications or formatted for supported destinations. Secrets are not returned in any API response body.
 	// Optional secret that will be passed in the `cf-webhook-auth` header when dispatching generic webhook notifications or formatted for supported destinations. Secrets are not returned in any API response body.
 	// +kubebuilder:validation:Optional
-	SecretSecretRef *v1.SecretKeySelector `json:"secretSecretRef,omitempty" tf:"-"`
+	SecretSecretRef *v2.SecretKeySelector `json:"secretSecretRef,omitempty" tf:"-"`
 
 	// (String) The POST endpoint to call when dispatching a notification.
 	// The POST endpoint to call when dispatching a notification.
@@ -93,8 +93,8 @@ type PolicyWebhooksParameters struct {
 
 // PolicyWebhooksSpec defines the desired state of PolicyWebhooks
 type PolicyWebhooksSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     PolicyWebhooksParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   PolicyWebhooksParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -110,8 +110,8 @@ type PolicyWebhooksSpec struct {
 
 // PolicyWebhooksStatus defines the observed state of PolicyWebhooks.
 type PolicyWebhooksStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        PolicyWebhooksObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               PolicyWebhooksObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

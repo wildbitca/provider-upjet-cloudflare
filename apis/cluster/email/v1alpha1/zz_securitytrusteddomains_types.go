@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type SecurityTrustedDomainsInitParameters struct {
@@ -112,8 +112,8 @@ type SecurityTrustedDomainsParameters struct {
 
 // SecurityTrustedDomainsSpec defines the desired state of SecurityTrustedDomains
 type SecurityTrustedDomainsSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     SecurityTrustedDomainsParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   SecurityTrustedDomainsParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -129,8 +129,8 @@ type SecurityTrustedDomainsSpec struct {
 
 // SecurityTrustedDomainsStatus defines the observed state of SecurityTrustedDomains.
 type SecurityTrustedDomainsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SecurityTrustedDomainsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SecurityTrustedDomainsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -147,6 +147,9 @@ type SecurityTrustedDomains struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountId) || (has(self.initProvider) && has(self.initProvider.accountId))",message="spec.forProvider.accountId is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.isRecent) || (has(self.initProvider) && has(self.initProvider.isRecent))",message="spec.forProvider.isRecent is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.isRegex) || (has(self.initProvider) && has(self.initProvider.isRegex))",message="spec.forProvider.isRegex is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.isSimilarity) || (has(self.initProvider) && has(self.initProvider.isSimilarity))",message="spec.forProvider.isSimilarity is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.pattern) || (has(self.initProvider) && has(self.initProvider.pattern))",message="spec.forProvider.pattern is a required parameter"
 	Spec   SecurityTrustedDomainsSpec   `json:"spec"`
 	Status SecurityTrustedDomainsStatus `json:"status,omitempty"`

@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type GeoRestrictionsInitParameters struct {
@@ -118,7 +118,7 @@ type SSLInitParameters_2 struct {
 
 	// (String, Sensitive) The zone's private key. Not required if custom_csr_id is provided, in which case the private key is retrieved from the CSR record held by Cloudflare.
 	// The zone's private key. Not required if custom_csr_id is provided, in which case the private key is retrieved from the CSR record held by Cloudflare.
-	PrivateKeySecretRef *v1.SecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
+	PrivateKeySecretRef *v2.SecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
 
 	// (String) The type 'legacy_custom' enables support for legacy clients which do not include SNI in the TLS handshake.
 	// Available values: "legacy_custom", "sni_custom".
@@ -133,11 +133,11 @@ type SSLInitParameters_2 struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.Reference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type SSLObservation_2 struct {
@@ -273,7 +273,7 @@ type SSLParameters_2 struct {
 	// (String, Sensitive) The zone's private key. Not required if custom_csr_id is provided, in which case the private key is retrieved from the CSR record held by Cloudflare.
 	// The zone's private key. Not required if custom_csr_id is provided, in which case the private key is retrieved from the CSR record held by Cloudflare.
 	// +kubebuilder:validation:Optional
-	PrivateKeySecretRef *v1.SecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
+	PrivateKeySecretRef *v2.SecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
 
 	// (String) The type 'legacy_custom' enables support for legacy clients which do not include SNI in the TLS handshake.
 	// Available values: "legacy_custom", "sni_custom".
@@ -290,11 +290,11 @@ type SSLParameters_2 struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.Reference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type TunnelInitParameters struct {
@@ -316,8 +316,8 @@ type TunnelParameters struct {
 
 // SSLSpec defines the desired state of SSL
 type SSLSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     SSLParameters_2 `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   SSLParameters_2 `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -333,8 +333,8 @@ type SSLSpec struct {
 
 // SSLStatus defines the observed state of SSL.
 type SSLStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SSLObservation_2 `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SSLObservation_2 `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CertificatesInitParameters struct {
@@ -334,8 +334,8 @@ type ValidationRecordsParameters struct {
 
 // PackSpec defines the desired state of Pack
 type PackSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     PackParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   PackParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -351,8 +351,8 @@ type PackSpec struct {
 
 // PackStatus defines the observed state of Pack.
 type PackStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        PackObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               PackObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

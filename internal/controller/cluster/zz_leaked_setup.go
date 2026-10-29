@@ -40,3 +40,16 @@ func SetupGated_leaked(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_leaked registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_leaked(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		credentialcheck.SetupWebhookWithManager,
+		credentialcheckrule.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

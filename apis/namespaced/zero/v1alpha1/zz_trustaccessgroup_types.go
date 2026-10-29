@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CloudflareAccountMemberInitParameters struct {
@@ -1987,11 +1986,11 @@ type TrustAccessGroupInitParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (Attributes List) Rules evaluated with a NOT logical operator. To match a policy, a user cannot meet any of the Exclude rules. (see below for nested schema)
 	Exclude []TrustAccessGroupExcludeInitParameters `json:"exclude,omitempty" tf:"exclude,omitempty"`
@@ -2056,11 +2055,11 @@ type TrustAccessGroupParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (Attributes List) Rules evaluated with a NOT logical operator. To match a policy, a user cannot meet any of the Exclude rules. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -3058,8 +3057,8 @@ type TrustAccessGroupSpec struct {
 
 // TrustAccessGroupStatus defines the observed state of TrustAccessGroup.
 type TrustAccessGroupStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustAccessGroupObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustAccessGroupObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

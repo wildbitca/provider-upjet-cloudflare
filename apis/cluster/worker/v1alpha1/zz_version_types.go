@@ -10,8 +10,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v1apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
+	v1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 )
 
 type AnnotationsInitParameters struct {
@@ -64,7 +64,7 @@ type AssetsInitParameters struct {
 
 	// (String, Sensitive) Token provided upon successful upload of all files from a registered manifest.
 	// Token provided upon successful upload of all files from a registered manifest.
-	JwtSecretRef *v1.SecretKeySelector `json:"jwtSecretRef,omitempty" tf:"-"`
+	JwtSecretRef *v2.SecretKeySelector `json:"jwtSecretRef,omitempty" tf:"-"`
 }
 
 type AssetsObservation struct {
@@ -95,7 +95,7 @@ type AssetsParameters struct {
 	// (String, Sensitive) Token provided upon successful upload of all files from a registered manifest.
 	// Token provided upon successful upload of all files from a registered manifest.
 	// +kubebuilder:validation:Optional
-	JwtSecretRef *v1.SecretKeySelector `json:"jwtSecretRef,omitempty" tf:"-"`
+	JwtSecretRef *v2.SecretKeySelector `json:"jwtSecretRef,omitempty" tf:"-"`
 }
 
 type BindingsInitParameters struct {
@@ -186,11 +186,11 @@ type BindingsInitParameters struct {
 
 	// encoded key data. Required if format is "raw", "pkcs8", or "spki".
 	// Base64-encoded key data. Required if `format` is "raw", "pkcs8", or "spki".
-	KeyBase64SecretRef *v1.SecretKeySelector `json:"keyBase64SecretRef,omitempty" tf:"-"`
+	KeyBase64SecretRef *v2.SecretKeySelector `json:"keyBase64SecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) Key data in JSON Web Key format. Required if format is "jwk".
 	// Key data in [JSON Web Key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#json_web_key) format. Required if `format` is "jwk".
-	KeyJwkSecretRef *v1.SecretKeySelector `json:"keyJwkSecretRef,omitempty" tf:"-"`
+	KeyJwkSecretRef *v2.SecretKeySelector `json:"keyJwkSecretRef,omitempty" tf:"-"`
 
 	// (String) A JavaScript variable name for the binding.
 	// A JavaScript variable name for the binding.
@@ -227,6 +227,9 @@ type BindingsInitParameters struct {
 	// Name of the Queue to bind to.
 	QueueName *string `json:"queueName,omitempty" tf:"queue_name,omitempty"`
 
+	// (Attributes) Retry policy for calls made to the Durable Object through this binding. Omitted or null properties use the runtime defaults. These limits are upper bounds and do not enable retries for otherwise ineligible calls. (see below for nested schema)
+	Retry *RetryInitParameters `json:"retry,omitempty" tf:"retry,omitempty"`
+
 	// (String) The script where the Durable Object is defined, if it is external to this Worker.
 	// The script where the Durable Object is defined, if it is external to this Worker.
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
@@ -256,7 +259,7 @@ type BindingsInitParameters struct {
 
 	// (String, Sensitive) The text value to use.
 	// The text value to use.
-	TextSecretRef *v1.SecretKeySelector `json:"textSecretRef,omitempty" tf:"-"`
+	TextSecretRef *v2.SecretKeySelector `json:"textSecretRef,omitempty" tf:"-"`
 
 	// (String) UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
 	// UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
@@ -402,6 +405,9 @@ type BindingsObservation struct {
 	// (String) Name of the Queue to bind to.
 	// Name of the Queue to bind to.
 	QueueName *string `json:"queueName,omitempty" tf:"queue_name,omitempty"`
+
+	// (Attributes) Retry policy for calls made to the Durable Object through this binding. Omitted or null properties use the runtime defaults. These limits are upper bounds and do not enable retries for otherwise ineligible calls. (see below for nested schema)
+	Retry *RetryObservation `json:"retry,omitempty" tf:"retry,omitempty"`
 
 	// (String) The script where the Durable Object is defined, if it is external to this Worker.
 	// The script where the Durable Object is defined, if it is external to this Worker.
@@ -563,12 +569,12 @@ type BindingsParameters struct {
 	// encoded key data. Required if format is "raw", "pkcs8", or "spki".
 	// Base64-encoded key data. Required if `format` is "raw", "pkcs8", or "spki".
 	// +kubebuilder:validation:Optional
-	KeyBase64SecretRef *v1.SecretKeySelector `json:"keyBase64SecretRef,omitempty" tf:"-"`
+	KeyBase64SecretRef *v2.SecretKeySelector `json:"keyBase64SecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) Key data in JSON Web Key format. Required if format is "jwk".
 	// Key data in [JSON Web Key](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#json_web_key) format. Required if `format` is "jwk".
 	// +kubebuilder:validation:Optional
-	KeyJwkSecretRef *v1.SecretKeySelector `json:"keyJwkSecretRef,omitempty" tf:"-"`
+	KeyJwkSecretRef *v2.SecretKeySelector `json:"keyJwkSecretRef,omitempty" tf:"-"`
 
 	// (String) A JavaScript variable name for the binding.
 	// A JavaScript variable name for the binding.
@@ -614,6 +620,10 @@ type BindingsParameters struct {
 	// +kubebuilder:validation:Optional
 	QueueName *string `json:"queueName,omitempty" tf:"queue_name,omitempty"`
 
+	// (Attributes) Retry policy for calls made to the Durable Object through this binding. Omitted or null properties use the runtime defaults. These limits are upper bounds and do not enable retries for otherwise ineligible calls. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Retry *RetryParameters `json:"retry,omitempty" tf:"retry,omitempty"`
+
 	// (String) The script where the Durable Object is defined, if it is external to this Worker.
 	// The script where the Durable Object is defined, if it is external to this Worker.
 	// +kubebuilder:validation:Optional
@@ -651,7 +661,7 @@ type BindingsParameters struct {
 	// (String, Sensitive) The text value to use.
 	// The text value to use.
 	// +kubebuilder:validation:Optional
-	TextSecretRef *v1.SecretKeySelector `json:"textSecretRef,omitempty" tf:"-"`
+	TextSecretRef *v2.SecretKeySelector `json:"textSecretRef,omitempty" tf:"-"`
 
 	// (String) UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
 	// UUID of the Cloudflare Tunnel to bind to. Mutually exclusive with network_id.
@@ -775,7 +785,7 @@ type ConfigInitParameters struct {
 
 	// negative rule must be provided, and negative rules have higher precedence than non-negative rules.
 	// When a boolean true, requests will always invoke the Worker script. Otherwise, attempt to serve an asset matching the request, falling back to the Worker script. When a list of strings, contains path rules to control routing to either the Worker or assets. Glob (*) and negative (!) rules are supported. Rules must start with either '/' or '!/'. At least one non-negative rule must be provided, and negative rules have higher precedence than non-negative rules.
-	RunWorkerFirst *v1apiextensions.JSON `json:"runWorkerFirst,omitempty" tf:"run_worker_first,omitempty"`
+	RunWorkerFirst *v1.JSON `json:"runWorkerFirst,omitempty" tf:"run_worker_first,omitempty"`
 }
 
 type ConfigObservation struct {
@@ -796,7 +806,7 @@ type ConfigObservation struct {
 
 	// negative rule must be provided, and negative rules have higher precedence than non-negative rules.
 	// When a boolean true, requests will always invoke the Worker script. Otherwise, attempt to serve an asset matching the request, falling back to the Worker script. When a list of strings, contains path rules to control routing to either the Worker or assets. Glob (*) and negative (!) rules are supported. Rules must start with either '/' or '!/'. At least one non-negative rule must be provided, and negative rules have higher precedence than non-negative rules.
-	RunWorkerFirst *v1apiextensions.JSON `json:"runWorkerFirst,omitempty" tf:"run_worker_first,omitempty"`
+	RunWorkerFirst *v1.JSON `json:"runWorkerFirst,omitempty" tf:"run_worker_first,omitempty"`
 }
 
 type ConfigParameters struct {
@@ -821,7 +831,7 @@ type ConfigParameters struct {
 	// negative rule must be provided, and negative rules have higher precedence than non-negative rules.
 	// When a boolean true, requests will always invoke the Worker script. Otherwise, attempt to serve an asset matching the request, falling back to the Worker script. When a list of strings, contains path rules to control routing to either the Worker or assets. Glob (*) and negative (!) rules are supported. Rules must start with either '/' or '!/'. At least one non-negative rule must be provided, and negative rules have higher precedence than non-negative rules.
 	// +kubebuilder:validation:Optional
-	RunWorkerFirst *v1apiextensions.JSON `json:"runWorkerFirst,omitempty" tf:"run_worker_first,omitempty"`
+	RunWorkerFirst *v1.JSON `json:"runWorkerFirst,omitempty" tf:"run_worker_first,omitempty"`
 }
 
 type ContainersInitParameters struct {
@@ -1591,6 +1601,41 @@ type RenamedObservation struct {
 type RenamedParameters struct {
 }
 
+type RetryInitParameters struct {
+
+	// (Number) Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
+	// Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
+	MaxAttempts *float64 `json:"maxAttempts,omitempty" tf:"max_attempts,omitempty"`
+
+	// (Number) Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
+	// Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
+	TimeoutMs *float64 `json:"timeoutMs,omitempty" tf:"timeout_ms,omitempty"`
+}
+
+type RetryObservation struct {
+
+	// (Number) Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
+	// Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
+	MaxAttempts *float64 `json:"maxAttempts,omitempty" tf:"max_attempts,omitempty"`
+
+	// (Number) Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
+	// Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
+	TimeoutMs *float64 `json:"timeoutMs,omitempty" tf:"timeout_ms,omitempty"`
+}
+
+type RetryParameters struct {
+
+	// (Number) Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
+	// Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
+	// +kubebuilder:validation:Optional
+	MaxAttempts *float64 `json:"maxAttempts,omitempty" tf:"max_attempts,omitempty"`
+
+	// (Number) Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
+	// Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
+	// +kubebuilder:validation:Optional
+	TimeoutMs *float64 `json:"timeoutMs,omitempty" tf:"timeout_ms,omitempty"`
+}
+
 type SimpleInitParameters struct {
 
 	// (Number) The limit (requests per period).
@@ -2231,8 +2276,8 @@ type WorkerParameters struct {
 
 // VersionSpec defines the desired state of Version
 type VersionSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     VersionParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   VersionParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -2248,8 +2293,8 @@ type VersionSpec struct {
 
 // VersionStatus defines the observed state of Version.
 type VersionStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        VersionObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               VersionObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

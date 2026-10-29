@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: kvnamespaces.workers.upjet-cloudflare.m.upbound.io
 spec:
   group: workers.upjet-cloudflare.m.upbound.io
@@ -151,6 +151,13 @@ spec:
                       Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
                       Available values: "eu", "fedramp", "us".
                     type: string
+                  mode:
+                    description: |-
+                      (String) The mode of the Workers KV namespace. Specify instant when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, instant is the only supported explicit value.
+                      Available values: "instant".
+                      The mode of the Workers KV namespace. Specify `instant` when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, `instant` is the only supported explicit value.
+                      Available values: "instant".
+                    type: string
                   title:
                     description: |-
                       readable string name for a Workers KV namespace.
@@ -262,6 +269,13 @@ spec:
                       Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
                       Available values: "eu", "fedramp", "us".
                     type: string
+                  mode:
+                    description: |-
+                      (String) The mode of the Workers KV namespace. Specify instant when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, instant is the only supported explicit value.
+                      Available values: "instant".
+                      The mode of the Workers KV namespace. Specify `instant` when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, `instant` is the only supported explicit value.
+                      Available values: "instant".
+                    type: string
                   title:
                     description: |-
                       readable string name for a Workers KV namespace.
@@ -351,6 +365,13 @@ spec:
                       Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
                       Available values: "eu", "fedramp", "us".
                     type: string
+                  mode:
+                    description: |-
+                      (String) The mode of the Workers KV namespace. Specify instant when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, instant is the only supported explicit value.
+                      Available values: "instant".
+                      The mode of the Workers KV namespace. Specify `instant` when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, `instant` is the only supported explicit value.
+                      Available values: "instant".
+                    type: string
                   supportsUrlEncoding:
                     description: |-
                       decoded before storing. For example, if set to "true", a key written on the URL as "%3F" will be stored as "?".
@@ -408,6 +429,13 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
               observedGeneration:
                 description: |-
                   ObservedGeneration is the latest metadata.generation

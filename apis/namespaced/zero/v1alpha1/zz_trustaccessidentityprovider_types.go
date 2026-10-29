@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CurrentCertificateInitParameters struct {
@@ -144,7 +143,7 @@ type TrustAccessIdentityProviderConfigInitParameters struct {
 
 	// (String, Sensitive) Your OAuth Client Secret
 	// Your OAuth Client Secret
-	ClientSecretSecretRef *v1.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+	ClientSecretSecretRef *v2.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) Should Cloudflare try to load authentication contexts from your account
 	// Should Cloudflare try to load authentication contexts from your account
@@ -189,6 +188,10 @@ type TrustAccessIdentityProviderConfigInitParameters struct {
 	// (String) IdP Entity ID or Issuer URL
 	// IdP Entity ID or Issuer URL
 	IssuerURL *string `json:"issuerUrl,omitempty" tf:"issuer_url,omitempty"`
+
+	// (Boolean) When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
+	// When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
+	LoginPageAutoPrompt *bool `json:"loginPageAutoPrompt,omitempty" tf:"login_page_auto_prompt,omitempty"`
 
 	// side and a short nonce is passed to the IdP instead.
 	// Set this if your IdP enforces a URL length limit.
@@ -331,6 +334,10 @@ type TrustAccessIdentityProviderConfigObservation struct {
 	// IdP Entity ID or Issuer URL
 	IssuerURL *string `json:"issuerUrl,omitempty" tf:"issuer_url,omitempty"`
 
+	// (Boolean) When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
+	// When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
+	LoginPageAutoPrompt *bool `json:"loginPageAutoPrompt,omitempty" tf:"login_page_auto_prompt,omitempty"`
+
 	// side and a short nonce is passed to the IdP instead.
 	// Set this if your IdP enforces a URL length limit.
 	// The maximum URL length the IdP accepts for the SSO redirect URL.
@@ -443,7 +450,7 @@ type TrustAccessIdentityProviderConfigParameters struct {
 	// (String, Sensitive) Your OAuth Client Secret
 	// Your OAuth Client Secret
 	// +kubebuilder:validation:Optional
-	ClientSecretSecretRef *v1.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+	ClientSecretSecretRef *v2.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) Should Cloudflare try to load authentication contexts from your account
 	// Should Cloudflare try to load authentication contexts from your account
@@ -497,6 +504,11 @@ type TrustAccessIdentityProviderConfigParameters struct {
 	// IdP Entity ID or Issuer URL
 	// +kubebuilder:validation:Optional
 	IssuerURL *string `json:"issuerUrl,omitempty" tf:"issuer_url,omitempty"`
+
+	// (Boolean) When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
+	// When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
+	// +kubebuilder:validation:Optional
+	LoginPageAutoPrompt *bool `json:"loginPageAutoPrompt,omitempty" tf:"login_page_auto_prompt,omitempty"`
 
 	// side and a short nonce is passed to the IdP instead.
 	// Set this if your IdP enforces a URL length limit.
@@ -579,11 +591,11 @@ type TrustAccessIdentityProviderInitParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (Attributes) The configuration parameters for the identity provider. To view the required parameters for a specific provider, refer to our developer documentation. (see below for nested schema)
 	Config *TrustAccessIdentityProviderConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
@@ -607,9 +619,9 @@ type TrustAccessIdentityProviderInitParameters struct {
 	// Domain Identity Management (SCIM) with the identity provider. (see below for nested schema)
 	ScimConfig *TrustAccessIdentityProviderScimConfigInitParameters `json:"scimConfig,omitempty" tf:"scim_config,omitempty"`
 
-	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
 	// The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -652,9 +664,9 @@ type TrustAccessIdentityProviderObservation struct {
 	// Domain Identity Management (SCIM) with the identity provider. (see below for nested schema)
 	ScimConfig *TrustAccessIdentityProviderScimConfigObservation `json:"scimConfig,omitempty" tf:"scim_config,omitempty"`
 
-	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
 	// The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -672,11 +684,11 @@ type TrustAccessIdentityProviderParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (Attributes) The configuration parameters for the identity provider. To view the required parameters for a specific provider, refer to our developer documentation. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -705,9 +717,9 @@ type TrustAccessIdentityProviderParameters struct {
 	// +kubebuilder:validation:Optional
 	ScimConfig *TrustAccessIdentityProviderScimConfigParameters `json:"scimConfig,omitempty" tf:"scim_config,omitempty"`
 
-	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
 	// The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
@@ -807,8 +819,8 @@ type TrustAccessIdentityProviderSpec struct {
 
 // TrustAccessIdentityProviderStatus defines the observed state of TrustAccessIdentityProvider.
 type TrustAccessIdentityProviderStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustAccessIdentityProviderObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustAccessIdentityProviderObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

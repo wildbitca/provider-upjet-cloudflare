@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type SearchTokenInitParameters struct {
@@ -19,7 +18,7 @@ type SearchTokenInitParameters struct {
 
 	CfAPIID *string `json:"cfApiId,omitempty" tf:"cf_api_id,omitempty"`
 
-	CfAPIKeySecretRef v1.LocalSecretKeySelector `json:"cfApiKeySecretRef" tf:"-"`
+	CfAPIKeySecretRef v2.LocalSecretKeySelector `json:"cfApiKeySecretRef" tf:"-"`
 
 	Legacy *bool `json:"legacy,omitempty" tf:"legacy,omitempty"`
 
@@ -57,7 +56,7 @@ type SearchTokenParameters struct {
 	CfAPIID *string `json:"cfApiId,omitempty" tf:"cf_api_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	CfAPIKeySecretRef v1.LocalSecretKeySelector `json:"cfApiKeySecretRef" tf:"-"`
+	CfAPIKeySecretRef v2.LocalSecretKeySelector `json:"cfApiKeySecretRef" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Legacy *bool `json:"legacy,omitempty" tf:"legacy,omitempty"`
@@ -85,8 +84,8 @@ type SearchTokenSpec struct {
 
 // SearchTokenStatus defines the observed state of SearchToken.
 type SearchTokenStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SearchTokenObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SearchTokenObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

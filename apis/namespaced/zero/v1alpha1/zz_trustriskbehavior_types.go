@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type BehaviorsInitParameters struct {
@@ -96,8 +95,8 @@ type TrustRiskBehaviorSpec struct {
 
 // TrustRiskBehaviorStatus defines the observed state of TrustRiskBehavior.
 type TrustRiskBehaviorStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustRiskBehaviorObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustRiskBehaviorObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

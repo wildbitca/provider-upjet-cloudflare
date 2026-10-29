@@ -37,3 +37,15 @@ func SetupGated_access(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_access registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_access(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		rule.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

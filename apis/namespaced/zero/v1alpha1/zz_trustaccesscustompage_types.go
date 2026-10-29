@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type TrustAccessCustomPageInitParameters struct {
@@ -144,8 +143,8 @@ type TrustAccessCustomPageSpec struct {
 
 // TrustAccessCustomPageStatus defines the observed state of TrustAccessCustomPage.
 type TrustAccessCustomPageStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustAccessCustomPageObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustAccessCustomPageObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

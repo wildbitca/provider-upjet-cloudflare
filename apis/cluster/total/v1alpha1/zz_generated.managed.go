@@ -6,54 +6,54 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this TLS.
-func (mg *TLS) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *TLS) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this TLS.
-func (mg *TLS) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *TLS) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this TLS.
-func (mg *TLS) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *TLS) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this TLS.
-func (mg *TLS) GetProviderConfigReference() *xpv1.Reference {
+func (mg *TLS) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this TLS.
-func (mg *TLS) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *TLS) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this TLS.
-func (mg *TLS) SetConditions(c ...xpv1.Condition) {
+func (mg *TLS) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this TLS.
-func (mg *TLS) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *TLS) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this TLS.
-func (mg *TLS) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *TLS) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this TLS.
-func (mg *TLS) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *TLS) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this TLS.
-func (mg *TLS) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *TLS) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

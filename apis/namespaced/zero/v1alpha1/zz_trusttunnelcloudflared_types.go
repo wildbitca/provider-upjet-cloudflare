@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ConnectionsInitParameters struct {
@@ -69,7 +68,7 @@ type TrustTunnelCloudflaredInitParameters struct {
 
 	// managed tunnel. Must be at least 32 bytes and encoded as a base64 string.
 	// Sets the password required to run a locally-managed tunnel. Must be at least 32 bytes and encoded as a base64 string.
-	TunnelSecretSecretRef *v1.LocalSecretKeySelector `json:"tunnelSecretSecretRef,omitempty" tf:"-"`
+	TunnelSecretSecretRef *v2.LocalSecretKeySelector `json:"tunnelSecretSecretRef,omitempty" tf:"-"`
 }
 
 type TrustTunnelCloudflaredObservation struct {
@@ -157,7 +156,7 @@ type TrustTunnelCloudflaredParameters struct {
 	// managed tunnel. Must be at least 32 bytes and encoded as a base64 string.
 	// Sets the password required to run a locally-managed tunnel. Must be at least 32 bytes and encoded as a base64 string.
 	// +kubebuilder:validation:Optional
-	TunnelSecretSecretRef *v1.LocalSecretKeySelector `json:"tunnelSecretSecretRef,omitempty" tf:"-"`
+	TunnelSecretSecretRef *v2.LocalSecretKeySelector `json:"tunnelSecretSecretRef,omitempty" tf:"-"`
 }
 
 // TrustTunnelCloudflaredSpec defines the desired state of TrustTunnelCloudflared
@@ -179,8 +178,8 @@ type TrustTunnelCloudflaredSpec struct {
 
 // TrustTunnelCloudflaredStatus defines the observed state of TrustTunnelCloudflared.
 type TrustTunnelCloudflaredStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustTunnelCloudflaredObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustTunnelCloudflaredObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

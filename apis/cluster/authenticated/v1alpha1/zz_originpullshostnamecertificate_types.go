@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type OriginPullsHostnameCertificateInitParameters struct {
@@ -21,7 +21,7 @@ type OriginPullsHostnameCertificateInitParameters struct {
 
 	// (String, Sensitive) The hostname certificate's private key.
 	// The hostname certificate's private key.
-	PrivateKeySecretRef v1.SecretKeySelector `json:"privateKeySecretRef" tf:"-"`
+	PrivateKeySecretRef v2.SecretKeySelector `json:"privateKeySecretRef" tf:"-"`
 
 	// (String) Identifier.
 	// Identifier.
@@ -78,7 +78,7 @@ type OriginPullsHostnameCertificateParameters struct {
 	// (String, Sensitive) The hostname certificate's private key.
 	// The hostname certificate's private key.
 	// +kubebuilder:validation:Optional
-	PrivateKeySecretRef v1.SecretKeySelector `json:"privateKeySecretRef" tf:"-"`
+	PrivateKeySecretRef v2.SecretKeySelector `json:"privateKeySecretRef" tf:"-"`
 
 	// (String) Identifier.
 	// Identifier.
@@ -88,8 +88,8 @@ type OriginPullsHostnameCertificateParameters struct {
 
 // OriginPullsHostnameCertificateSpec defines the desired state of OriginPullsHostnameCertificate
 type OriginPullsHostnameCertificateSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     OriginPullsHostnameCertificateParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   OriginPullsHostnameCertificateParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -105,8 +105,8 @@ type OriginPullsHostnameCertificateSpec struct {
 
 // OriginPullsHostnameCertificateStatus defines the observed state of OriginPullsHostnameCertificate.
 type OriginPullsHostnameCertificateStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        OriginPullsHostnameCertificateObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               OriginPullsHostnameCertificateObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -6,104 +6,104 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this AnalyticsRule.
-func (mg *AnalyticsRule) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *AnalyticsRule) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this AnalyticsRule.
-func (mg *AnalyticsRule) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *AnalyticsRule) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this AnalyticsRule.
-func (mg *AnalyticsRule) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *AnalyticsRule) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this AnalyticsRule.
-func (mg *AnalyticsRule) GetProviderConfigReference() *xpv1.Reference {
+func (mg *AnalyticsRule) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this AnalyticsRule.
-func (mg *AnalyticsRule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *AnalyticsRule) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this AnalyticsRule.
-func (mg *AnalyticsRule) SetConditions(c ...xpv1.Condition) {
+func (mg *AnalyticsRule) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this AnalyticsRule.
-func (mg *AnalyticsRule) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *AnalyticsRule) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this AnalyticsRule.
-func (mg *AnalyticsRule) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *AnalyticsRule) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this AnalyticsRule.
-func (mg *AnalyticsRule) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *AnalyticsRule) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this AnalyticsRule.
-func (mg *AnalyticsRule) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *AnalyticsRule) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this AnalyticsSite.
-func (mg *AnalyticsSite) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *AnalyticsSite) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this AnalyticsSite.
-func (mg *AnalyticsSite) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *AnalyticsSite) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this AnalyticsSite.
-func (mg *AnalyticsSite) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *AnalyticsSite) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this AnalyticsSite.
-func (mg *AnalyticsSite) GetProviderConfigReference() *xpv1.Reference {
+func (mg *AnalyticsSite) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this AnalyticsSite.
-func (mg *AnalyticsSite) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *AnalyticsSite) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this AnalyticsSite.
-func (mg *AnalyticsSite) SetConditions(c ...xpv1.Condition) {
+func (mg *AnalyticsSite) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this AnalyticsSite.
-func (mg *AnalyticsSite) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *AnalyticsSite) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this AnalyticsSite.
-func (mg *AnalyticsSite) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *AnalyticsSite) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this AnalyticsSite.
-func (mg *AnalyticsSite) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *AnalyticsSite) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this AnalyticsSite.
-func (mg *AnalyticsSite) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *AnalyticsSite) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

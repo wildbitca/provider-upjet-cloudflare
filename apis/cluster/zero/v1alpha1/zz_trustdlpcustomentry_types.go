@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ConfidenceInitParameters struct {
@@ -160,8 +160,8 @@ type TrustDlpCustomEntryObservation struct {
 	// (Attributes) A Predefined AI prompt classification topic entry. (see below for nested schema)
 	Variant *VariantObservation `json:"variant,omitempty" tf:"variant,omitempty"`
 
-	// (String)
-	WordList *string `json:"wordList,omitempty" tf:"word_list,omitempty"`
+	// (List of String)
+	WordList []*string `json:"wordList,omitempty" tf:"word_list,omitempty"`
 }
 
 type TrustDlpCustomEntryParameters struct {
@@ -214,8 +214,8 @@ type VariantParameters struct {
 
 // TrustDlpCustomEntrySpec defines the desired state of TrustDlpCustomEntry
 type TrustDlpCustomEntrySpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     TrustDlpCustomEntryParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   TrustDlpCustomEntryParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -231,8 +231,8 @@ type TrustDlpCustomEntrySpec struct {
 
 // TrustDlpCustomEntryStatus defines the observed state of TrustDlpCustomEntry.
 type TrustDlpCustomEntryStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustDlpCustomEntryObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustDlpCustomEntryObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

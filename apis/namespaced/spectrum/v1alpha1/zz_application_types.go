@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1common "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	v1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 )
 
@@ -418,8 +417,8 @@ type ApplicationSpec struct {
 
 // ApplicationStatus defines the observed state of Application.
 type ApplicationStatus struct {
-	v1common.ResourceStatus `json:",inline"`
-	AtProvider              ApplicationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ApplicationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -6,84 +6,84 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this SfuApp.
-func (mg *SfuApp) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *SfuApp) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this SfuApp.
-func (mg *SfuApp) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *SfuApp) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this SfuApp.
-func (mg *SfuApp) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *SfuApp) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this SfuApp.
-func (mg *SfuApp) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *SfuApp) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this SfuApp.
-func (mg *SfuApp) SetConditions(c ...xpv1.Condition) {
+func (mg *SfuApp) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this SfuApp.
-func (mg *SfuApp) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *SfuApp) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this SfuApp.
-func (mg *SfuApp) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *SfuApp) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this SfuApp.
-func (mg *SfuApp) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *SfuApp) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this TurnApp.
-func (mg *TurnApp) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *TurnApp) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this TurnApp.
-func (mg *TurnApp) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *TurnApp) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this TurnApp.
-func (mg *TurnApp) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *TurnApp) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this TurnApp.
-func (mg *TurnApp) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *TurnApp) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this TurnApp.
-func (mg *TurnApp) SetConditions(c ...xpv1.Condition) {
+func (mg *TurnApp) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this TurnApp.
-func (mg *TurnApp) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *TurnApp) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this TurnApp.
-func (mg *TurnApp) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *TurnApp) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this TurnApp.
-func (mg *TurnApp) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *TurnApp) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

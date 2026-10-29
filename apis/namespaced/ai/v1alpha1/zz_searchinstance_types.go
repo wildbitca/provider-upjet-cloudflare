@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type BoostByInitParameters struct {
@@ -92,6 +91,32 @@ type ContentSelectorParameters struct {
 	// CSS selector to extract content from pages matching the path pattern. Must not contain disallowed characters (;, `, $, {, }, \). Must target a single element; if multiple elements match, the selector is ignored and the full page is used.
 	// +kubebuilder:validation:Optional
 	Selector *string `json:"selector" tf:"selector,omitempty"`
+}
+
+type CreatedFromEmdashPluginInitParameters struct {
+
+	// Available values: "native", "rest".
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+}
+
+type CreatedFromEmdashPluginObservation struct {
+
+	// Available values: "native", "rest".
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+}
+
+type CreatedFromEmdashPluginParameters struct {
+
+	// Available values: "native", "rest".
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Version *string `json:"version" tf:"version,omitempty"`
 }
 
 type CustomMetadataInitParameters struct {
@@ -280,11 +305,15 @@ type McpParameters struct {
 type MetadataInitParameters struct {
 	CreatedFromAisearchWizard *bool `json:"createdFromAisearchWizard,omitempty" tf:"created_from_aisearch_wizard,omitempty"`
 
+	CreatedFromEmdashPlugin *CreatedFromEmdashPluginInitParameters `json:"createdFromEmdashPlugin,omitempty" tf:"created_from_emdash_plugin,omitempty"`
+
 	WorkerDomain *string `json:"workerDomain,omitempty" tf:"worker_domain,omitempty"`
 }
 
 type MetadataObservation struct {
 	CreatedFromAisearchWizard *bool `json:"createdFromAisearchWizard,omitempty" tf:"created_from_aisearch_wizard,omitempty"`
+
+	CreatedFromEmdashPlugin *CreatedFromEmdashPluginObservation `json:"createdFromEmdashPlugin,omitempty" tf:"created_from_emdash_plugin,omitempty"`
 
 	WorkerDomain *string `json:"workerDomain,omitempty" tf:"worker_domain,omitempty"`
 }
@@ -293,6 +322,9 @@ type MetadataParameters struct {
 
 	// +kubebuilder:validation:Optional
 	CreatedFromAisearchWizard *bool `json:"createdFromAisearchWizard,omitempty" tf:"created_from_aisearch_wizard,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	CreatedFromEmdashPlugin *CreatedFromEmdashPluginParameters `json:"createdFromEmdashPlugin,omitempty" tf:"created_from_emdash_plugin,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	WorkerDomain *string `json:"workerDomain,omitempty" tf:"worker_domain,omitempty"`
@@ -905,8 +937,8 @@ type SearchInstanceSpec struct {
 
 // SearchInstanceStatus defines the observed state of SearchInstance.
 type SearchInstanceStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SearchInstanceObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SearchInstanceObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

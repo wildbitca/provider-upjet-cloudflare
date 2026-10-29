@@ -10,15 +10,14 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ShieldDiscoveryOperationInitParameters struct {
 
 	// (String) UUID.
 	// UUID.
-	OperationID *string `json:"operationId,omitempty" tf:"operation_id,omitempty"`
+	DiscoveryID *string `json:"discoveryId,omitempty" tf:"discovery_id,omitempty"`
 
 	// (String) Mark state of operation in API Discovery
 	// Mark state of operation in API Discovery
@@ -35,11 +34,10 @@ type ShieldDiscoveryOperationInitParameters struct {
 type ShieldDiscoveryOperationObservation struct {
 
 	// (String) UUID.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// (String) UUID.
 	// UUID.
-	OperationID *string `json:"operationId,omitempty" tf:"operation_id,omitempty"`
+	DiscoveryID *string `json:"discoveryId,omitempty" tf:"discovery_id,omitempty"`
+
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (String) Mark state of operation in API Discovery
 	// Mark state of operation in API Discovery
@@ -58,7 +56,7 @@ type ShieldDiscoveryOperationParameters struct {
 	// (String) UUID.
 	// UUID.
 	// +kubebuilder:validation:Optional
-	OperationID *string `json:"operationId,omitempty" tf:"operation_id,omitempty"`
+	DiscoveryID *string `json:"discoveryId,omitempty" tf:"discovery_id,omitempty"`
 
 	// (String) Mark state of operation in API Discovery
 	// Mark state of operation in API Discovery
@@ -93,8 +91,8 @@ type ShieldDiscoveryOperationSpec struct {
 
 // ShieldDiscoveryOperationStatus defines the observed state of ShieldDiscoveryOperation.
 type ShieldDiscoveryOperationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ShieldDiscoveryOperationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ShieldDiscoveryOperationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -110,7 +108,8 @@ type ShieldDiscoveryOperationStatus struct {
 type ShieldDiscoveryOperation struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.operationId) || (has(self.initProvider) && has(self.initProvider.operationId))",message="spec.forProvider.operationId is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.discoveryId) || (has(self.initProvider) && has(self.initProvider.discoveryId))",message="spec.forProvider.discoveryId is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.zoneId) || (has(self.initProvider) && has(self.initProvider.zoneId))",message="spec.forProvider.zoneId is a required parameter"
 	Spec   ShieldDiscoveryOperationSpec   `json:"spec"`
 	Status ShieldDiscoveryOperationStatus `json:"status,omitempty"`
 }

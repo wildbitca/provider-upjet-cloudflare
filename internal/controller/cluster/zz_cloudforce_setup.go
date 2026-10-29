@@ -46,3 +46,18 @@ func SetupGated_cloudforce(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_cloudforce registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_cloudforce(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		onerequest.SetupWebhookWithManager,
+		onerequestasset.SetupWebhookWithManager,
+		onerequestmessage.SetupWebhookWithManager,
+		onerequestpriority.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

@@ -73,3 +73,27 @@ func SetupGated_cloudflare(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_cloudflare registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_cloudflare(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		filter.SetupWebhookWithManager,
+		healthcheck.SetupWebhookWithManager,
+		image.SetupWebhookWithManager,
+		list.SetupWebhookWithManager,
+		organization.SetupWebhookWithManager,
+		queue.SetupWebhookWithManager,
+		ruleset.SetupWebhookWithManager,
+		snippet.SetupWebhookWithManager,
+		snippets.SetupWebhookWithManager,
+		stream.SetupWebhookWithManager,
+		user.SetupWebhookWithManager,
+		worker.SetupWebhookWithManager,
+		workflow.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

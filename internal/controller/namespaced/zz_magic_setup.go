@@ -64,3 +64,24 @@ func SetupGated_magic(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_magic registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_magic(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		networkmonitoringconfiguration.SetupWebhookWithManager,
+		networkmonitoringrule.SetupWebhookWithManager,
+		transitconnector.SetupWebhookWithManager,
+		transitsite.SetupWebhookWithManager,
+		transitsiteacl.SetupWebhookWithManager,
+		transitsitelan.SetupWebhookWithManager,
+		transitsitewan.SetupWebhookWithManager,
+		wangretunnel.SetupWebhookWithManager,
+		wanipsectunnel.SetupWebhookWithManager,
+		wanstaticroute.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

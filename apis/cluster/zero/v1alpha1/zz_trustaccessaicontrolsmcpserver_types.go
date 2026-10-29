@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AuthConfigSummaryInitParameters struct {
@@ -117,9 +117,9 @@ type TrustAccessAIControlsMcpServerInitParameters struct {
 	// (String)
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// abc123"), which is wrapped server-side as Authorization: Bearer <token>, or a JSON-encoded object of the form {"headers":{"Header-Name":"value",...}} for custom or multiple static headers (e.g. Cloudflare Access service tokens: {"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}).
-	// Static credential for the upstream MCP server. For auth_type "bearer", either a raw token string (e.g. "sk-abc123"), which is wrapped server-side as `Authorization: Bearer <token>`, or a JSON-encoded object of the form `{"headers":{"Header-Name":"value",...}}` for custom or multiple static headers (e.g. Cloudflare Access service tokens: `{"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}`).
-	AuthCredentialsSecretRef *v1.SecretKeySelector `json:"authCredentialsSecretRef,omitempty" tf:"-"`
+	// abc123"), which is wrapped server-side as Authorization: Bearer <token>, or a JSON-encoded object of the form {"headers":{"Header-Name":"value",...}} for custom or multiple static headers (e.g. Cloudflare Access service tokens: {"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}). For auth_type "oauth" with a pre-registered client, send a JSON-encoded object containing auth_mode:"manual", config.authorization_endpoint, config.token_endpoint, and registration_info.client_id. Also provide registration_info.redirect_uris unless is_shared_oauth_callback_enabled is true. Optional fields include config.issuer, config.revocation_endpoint, registration_info.scope, and registration_info.token_endpoint_auth_method. Send the client secret in the separate client_secret field. Omit auth_credentials on update to preserve the existing configuration.
+	// Credential configuration for the upstream MCP server. For auth_type "bearer", either a raw token string (e.g. "sk-abc123"), which is wrapped server-side as `Authorization: Bearer <token>`, or a JSON-encoded object of the form `{"headers":{"Header-Name":"value",...}}` for custom or multiple static headers (e.g. Cloudflare Access service tokens: `{"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}`). For auth_type "oauth" with a pre-registered client, send a JSON-encoded object containing `auth_mode:"manual"`, `config.authorization_endpoint`, `config.token_endpoint`, and `registration_info.client_id`. Also provide `registration_info.redirect_uris` unless `is_shared_oauth_callback_enabled` is true. Optional fields include `config.issuer`, `config.revocation_endpoint`, `registration_info.scope`, and `registration_info.token_endpoint_auth_method`. Send the client secret in the separate `client_secret` field. Omit `auth_credentials` on update to preserve the existing configuration.
+	AuthCredentialsSecretRef *v2.SecretKeySelector `json:"authCredentialsSecretRef,omitempty" tf:"-"`
 
 	// (String) Authentication method used to connect to the upstream MCP server.
 	// Available values: "oauth", "bearer", "unauthenticated".
@@ -127,9 +127,9 @@ type TrustAccessAIControlsMcpServerInitParameters struct {
 	// Available values: "oauth", "bearer", "unauthenticated".
 	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
 
-	// registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
-	// Pre-registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
-	ClientSecretSecretRef *v1.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+	// registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Required when creating a manual OAuth server or converting an existing server to manual mode. Omit it on update to preserve the existing secret; provide it to rotate the secret. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
+	// Pre-registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Required when creating a manual OAuth server or converting an existing server to manual mode. Omit it on update to preserve the existing secret; provide it to rotate the secret. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
+	ClientSecretSecretRef *v2.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) Optional description of the MCP server.
 	// Optional description of the MCP server.
@@ -247,10 +247,10 @@ type TrustAccessAIControlsMcpServerParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// abc123"), which is wrapped server-side as Authorization: Bearer <token>, or a JSON-encoded object of the form {"headers":{"Header-Name":"value",...}} for custom or multiple static headers (e.g. Cloudflare Access service tokens: {"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}).
-	// Static credential for the upstream MCP server. For auth_type "bearer", either a raw token string (e.g. "sk-abc123"), which is wrapped server-side as `Authorization: Bearer <token>`, or a JSON-encoded object of the form `{"headers":{"Header-Name":"value",...}}` for custom or multiple static headers (e.g. Cloudflare Access service tokens: `{"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}`).
+	// abc123"), which is wrapped server-side as Authorization: Bearer <token>, or a JSON-encoded object of the form {"headers":{"Header-Name":"value",...}} for custom or multiple static headers (e.g. Cloudflare Access service tokens: {"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}). For auth_type "oauth" with a pre-registered client, send a JSON-encoded object containing auth_mode:"manual", config.authorization_endpoint, config.token_endpoint, and registration_info.client_id. Also provide registration_info.redirect_uris unless is_shared_oauth_callback_enabled is true. Optional fields include config.issuer, config.revocation_endpoint, registration_info.scope, and registration_info.token_endpoint_auth_method. Send the client secret in the separate client_secret field. Omit auth_credentials on update to preserve the existing configuration.
+	// Credential configuration for the upstream MCP server. For auth_type "bearer", either a raw token string (e.g. "sk-abc123"), which is wrapped server-side as `Authorization: Bearer <token>`, or a JSON-encoded object of the form `{"headers":{"Header-Name":"value",...}}` for custom or multiple static headers (e.g. Cloudflare Access service tokens: `{"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}`). For auth_type "oauth" with a pre-registered client, send a JSON-encoded object containing `auth_mode:"manual"`, `config.authorization_endpoint`, `config.token_endpoint`, and `registration_info.client_id`. Also provide `registration_info.redirect_uris` unless `is_shared_oauth_callback_enabled` is true. Optional fields include `config.issuer`, `config.revocation_endpoint`, `registration_info.scope`, and `registration_info.token_endpoint_auth_method`. Send the client secret in the separate `client_secret` field. Omit `auth_credentials` on update to preserve the existing configuration.
 	// +kubebuilder:validation:Optional
-	AuthCredentialsSecretRef *v1.SecretKeySelector `json:"authCredentialsSecretRef,omitempty" tf:"-"`
+	AuthCredentialsSecretRef *v2.SecretKeySelector `json:"authCredentialsSecretRef,omitempty" tf:"-"`
 
 	// (String) Authentication method used to connect to the upstream MCP server.
 	// Available values: "oauth", "bearer", "unauthenticated".
@@ -259,10 +259,10 @@ type TrustAccessAIControlsMcpServerParameters struct {
 	// +kubebuilder:validation:Optional
 	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
 
-	// registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
-	// Pre-registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
+	// registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Required when creating a manual OAuth server or converting an existing server to manual mode. Omit it on update to preserve the existing secret; provide it to rotate the secret. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
+	// Pre-registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Required when creating a manual OAuth server or converting an existing server to manual mode. Omit it on update to preserve the existing secret; provide it to rotate the secret. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
 	// +kubebuilder:validation:Optional
-	ClientSecretSecretRef *v1.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+	ClientSecretSecretRef *v2.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) Optional description of the MCP server.
 	// Optional description of the MCP server.
@@ -422,8 +422,8 @@ type TrustAccessAIControlsMcpServerUpdatedToolsParameters struct {
 
 // TrustAccessAIControlsMcpServerSpec defines the desired state of TrustAccessAIControlsMcpServer
 type TrustAccessAIControlsMcpServerSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     TrustAccessAIControlsMcpServerParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   TrustAccessAIControlsMcpServerParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -439,8 +439,8 @@ type TrustAccessAIControlsMcpServerSpec struct {
 
 // TrustAccessAIControlsMcpServerStatus defines the observed state of TrustAccessAIControlsMcpServer.
 type TrustAccessAIControlsMcpServerStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustAccessAIControlsMcpServerObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustAccessAIControlsMcpServerObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-29
+
+First stable release of the provider family (all Wildbit upjet providers move
+to 1.x). Upgrades the toolchain and the wrapped Terraform provider.
+
+### Migration
+
+See [docs/migration/cloudflare-5.28-breaking-changes.md](docs/migration/cloudflare-5.28-breaking-changes.md).
+Before upgrading: delete or migrate any `Domain` (`registrar`) resources and
+remove the `provider-cloudflare-registrar` package from your cluster (old
+registrar package versions remain on the registry but receive no updates);
+update manifests that use the renamed or newly required fields listed under
+"Breaking schema changes". Install the new `provider-cloudflare-monetization`
+package only if you need `Rules`.
+
+### Changed
+
+- Upgraded the upstream Cloudflare Terraform provider from `v5.27.0` to `v5.28.1`; schema, CRDs and controllers regenerated.
+- Upgraded OpenTofu (provider schema extraction and image build) from `1.11.5` to `1.13.2`.
+- Upgraded `crossplane/upjet` from the `wildbitca/upjet` fork `v2.2.3` to upstream `v2.5.1` (the `replace` directive was dropped), `crossplane-runtime` to `v2.4.0`, added `crossplane/apis/v2` `v2.4.1`, `controller-runtime` to `v0.24.1`, Kubernetes libraries to `v0.36.3`, `controller-tools` to `v0.20.0` and `crossplane-tools` to the latest. Go directive is now `1.26.8`.
+- `ProviderConfig` types now use `crossplane/apis/v2/core/v2` (`xpv2`) instead of `crossplane-runtime` `apis/common/v1|v2`; the CRD schema is unchanged.
+- Hand-written `providerconfig` controllers expose `SetupWebhookWithManager`, and the generated main now registers the conversion webhooks (only when a webhook certificate directory is configured).
+
+### Added
+
+- `Rules` (from `cloudflare_monetization_rules`, new in upstream `v5.28.0`) in the new `monetization` sub-provider, zone-scoped with `zoneId` references; the zone ID is used as the external name.
+- New optional fields: `workers` `KVNamespace` `mode` (KV Instant), `Script` `bindingsInherit = strict` and Durable Object binding `retry`, `zero` access application `targetCriteria` include/require/exclude, identity provider `config.loginPageAutoPrompt` and `passkeys` type, gateway certificate `region`, pages project `buildImageAutoUpgrade.fromVersion|toVersion`, `ai` search instance `metadata.createdFromEmdashPlugin`.
+
+### Removed
+
+- **BREAKING** — `Domain` (`registrar` group, from `cloudflare_registrar_domain`) and the `registrar` sub-provider: removed upstream in `v5.28.0` with no replacement.
+
+### Breaking schema changes (upstream `v5.28.0`)
+
+- **BREAKING** — `ShieldDiscoveryOperation` (`api` group): `operationId` renamed to `discoveryId`, `zoneId` is now required.
+- **BREAKING** — `SecurityTrustedDomains` (`email` group): `isRecent`, `isRegex` and `isSimilarity` are now required.
+- **BREAKING** — `TrustOrganization` (`zero` group): `mfaSshPivKeyRequirements` replaced by `mfaPivKeyRequirements`.
+- `zero` DLP entries: the computed `wordList` attribute is now a list of strings (observation only).
+
+### Fork patches
+
+- `wildbitca/upjet` fork `v2.2.3` is no longer used. `cloudflare_zone_setting` does not receive a CEL required-parameter rule for the dynamic `value` under upstream `v2.5.1`; the dynamic envelope unwrap is not needed by the CLI runtime.
+
 ## [0.2.12] - 2026-07-10
 
 Exposes two managed resources that the upstream Cloudflare Terraform provider

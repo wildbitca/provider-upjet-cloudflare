@@ -6,124 +6,124 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this Balancer.
-func (mg *Balancer) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Balancer) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this Balancer.
-func (mg *Balancer) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Balancer) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Balancer.
-func (mg *Balancer) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *Balancer) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Balancer.
-func (mg *Balancer) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *Balancer) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Balancer.
-func (mg *Balancer) SetConditions(c ...xpv1.Condition) {
+func (mg *Balancer) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this Balancer.
-func (mg *Balancer) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Balancer) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Balancer.
-func (mg *Balancer) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *Balancer) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Balancer.
-func (mg *Balancer) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *Balancer) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this BalancerMonitor.
-func (mg *BalancerMonitor) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *BalancerMonitor) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this BalancerMonitor.
-func (mg *BalancerMonitor) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *BalancerMonitor) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this BalancerMonitor.
-func (mg *BalancerMonitor) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *BalancerMonitor) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this BalancerMonitor.
-func (mg *BalancerMonitor) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *BalancerMonitor) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this BalancerMonitor.
-func (mg *BalancerMonitor) SetConditions(c ...xpv1.Condition) {
+func (mg *BalancerMonitor) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this BalancerMonitor.
-func (mg *BalancerMonitor) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *BalancerMonitor) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this BalancerMonitor.
-func (mg *BalancerMonitor) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *BalancerMonitor) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this BalancerMonitor.
-func (mg *BalancerMonitor) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *BalancerMonitor) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this BalancerPool.
-func (mg *BalancerPool) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *BalancerPool) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this BalancerPool.
-func (mg *BalancerPool) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *BalancerPool) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this BalancerPool.
-func (mg *BalancerPool) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *BalancerPool) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this BalancerPool.
-func (mg *BalancerPool) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *BalancerPool) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this BalancerPool.
-func (mg *BalancerPool) SetConditions(c ...xpv1.Condition) {
+func (mg *BalancerPool) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this BalancerPool.
-func (mg *BalancerPool) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *BalancerPool) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this BalancerPool.
-func (mg *BalancerPool) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *BalancerPool) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this BalancerPool.
-func (mg *BalancerPool) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *BalancerPool) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

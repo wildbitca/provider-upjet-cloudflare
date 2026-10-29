@@ -6,84 +6,84 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this SearchInstance.
-func (mg *SearchInstance) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *SearchInstance) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this SearchInstance.
-func (mg *SearchInstance) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *SearchInstance) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this SearchInstance.
-func (mg *SearchInstance) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *SearchInstance) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this SearchInstance.
-func (mg *SearchInstance) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *SearchInstance) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this SearchInstance.
-func (mg *SearchInstance) SetConditions(c ...xpv1.Condition) {
+func (mg *SearchInstance) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this SearchInstance.
-func (mg *SearchInstance) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *SearchInstance) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this SearchInstance.
-func (mg *SearchInstance) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *SearchInstance) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this SearchInstance.
-func (mg *SearchInstance) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *SearchInstance) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this SearchToken.
-func (mg *SearchToken) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *SearchToken) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this SearchToken.
-func (mg *SearchToken) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *SearchToken) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this SearchToken.
-func (mg *SearchToken) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *SearchToken) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this SearchToken.
-func (mg *SearchToken) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *SearchToken) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this SearchToken.
-func (mg *SearchToken) SetConditions(c ...xpv1.Condition) {
+func (mg *SearchToken) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this SearchToken.
-func (mg *SearchToken) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *SearchToken) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this SearchToken.
-func (mg *SearchToken) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *SearchToken) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this SearchToken.
-func (mg *SearchToken) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *SearchToken) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type PolicyWebhooksInitParameters struct {
@@ -26,7 +25,7 @@ type PolicyWebhooksInitParameters struct {
 
 	// webhook-auth header when dispatching generic webhook notifications or formatted for supported destinations. Secrets are not returned in any API response body.
 	// Optional secret that will be passed in the `cf-webhook-auth` header when dispatching generic webhook notifications or formatted for supported destinations. Secrets are not returned in any API response body.
-	SecretSecretRef *v1.LocalSecretKeySelector `json:"secretSecretRef,omitempty" tf:"-"`
+	SecretSecretRef *v2.LocalSecretKeySelector `json:"secretSecretRef,omitempty" tf:"-"`
 
 	// (String) The POST endpoint to call when dispatching a notification.
 	// The POST endpoint to call when dispatching a notification.
@@ -84,7 +83,7 @@ type PolicyWebhooksParameters struct {
 	// webhook-auth header when dispatching generic webhook notifications or formatted for supported destinations. Secrets are not returned in any API response body.
 	// Optional secret that will be passed in the `cf-webhook-auth` header when dispatching generic webhook notifications or formatted for supported destinations. Secrets are not returned in any API response body.
 	// +kubebuilder:validation:Optional
-	SecretSecretRef *v1.LocalSecretKeySelector `json:"secretSecretRef,omitempty" tf:"-"`
+	SecretSecretRef *v2.LocalSecretKeySelector `json:"secretSecretRef,omitempty" tf:"-"`
 
 	// (String) The POST endpoint to call when dispatching a notification.
 	// The POST endpoint to call when dispatching a notification.
@@ -111,8 +110,8 @@ type PolicyWebhooksSpec struct {
 
 // PolicyWebhooksStatus defines the observed state of PolicyWebhooks.
 type PolicyWebhooksStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        PolicyWebhooksObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               PolicyWebhooksObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

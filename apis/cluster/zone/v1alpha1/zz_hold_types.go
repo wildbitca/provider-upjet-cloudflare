@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type HoldInitParameters struct {
@@ -44,11 +44,11 @@ type HoldInitParameters struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.Reference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type HoldObservation struct {
@@ -120,17 +120,17 @@ type HoldParameters struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.Reference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 // HoldSpec defines the desired state of Hold
 type HoldSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     HoldParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   HoldParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -146,8 +146,8 @@ type HoldSpec struct {
 
 // HoldStatus defines the observed state of Hold.
 type HoldStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        HoldObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               HoldObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

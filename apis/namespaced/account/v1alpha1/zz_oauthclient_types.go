@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ClientURIVerificationInitParameters struct {
@@ -42,11 +41,11 @@ type OAuthClientInitParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (List of String) Array of allowed CORS origins.
 	// Array of allowed CORS origins.
@@ -219,11 +218,11 @@ type OAuthClientParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (List of String) Array of allowed CORS origins.
 	// Array of allowed CORS origins.
@@ -324,8 +323,8 @@ type OAuthClientSpec struct {
 
 // OAuthClientStatus defines the observed state of OAuthClient.
 type OAuthClientStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        OAuthClientObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               OAuthClientObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

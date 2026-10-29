@@ -40,3 +40,16 @@ func SetupGated_pages(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_pages registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_pages(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		domain.SetupWebhookWithManager,
+		project.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

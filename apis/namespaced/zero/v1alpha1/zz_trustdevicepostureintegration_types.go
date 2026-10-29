@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type TrustDevicePostureIntegrationConfigInitParameters struct {
@@ -26,7 +25,7 @@ type TrustDevicePostureIntegrationConfigInitParameters struct {
 
 	// Access-Client-Secret header when hitting the api_url.
 	// If present, this secret will be passed in the `CF-Access-Client-Secret` header when hitting the `api_url`.
-	AccessClientSecretSecretRef *v1.LocalSecretKeySelector `json:"accessClientSecretSecretRef,omitempty" tf:"-"`
+	AccessClientSecretSecretRef *v2.LocalSecretKeySelector `json:"accessClientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) The Workspace One Authorization URL depending on your region.
 	// The Workspace One Authorization URL depending on your region.
@@ -38,11 +37,11 @@ type TrustDevicePostureIntegrationConfigInitParameters struct {
 
 	// (String, Sensitive) The Uptycs client secret.
 	// The Uptycs client secret.
-	ClientKeySecretRef *v1.LocalSecretKeySelector `json:"clientKeySecretRef,omitempty" tf:"-"`
+	ClientKeySecretRef *v2.LocalSecretKeySelector `json:"clientKeySecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) The Workspace One client secret provided in the Workspace One Admin Dashboard.
 	// The Workspace One client secret provided in the Workspace One Admin Dashboard.
-	ClientSecretSecretRef *v1.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+	ClientSecretSecretRef *v2.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) The Crowdstrike customer ID.
 	// The Crowdstrike customer ID.
@@ -87,7 +86,7 @@ type TrustDevicePostureIntegrationConfigParameters struct {
 	// Access-Client-Secret header when hitting the api_url.
 	// If present, this secret will be passed in the `CF-Access-Client-Secret` header when hitting the `api_url`.
 	// +kubebuilder:validation:Optional
-	AccessClientSecretSecretRef *v1.LocalSecretKeySelector `json:"accessClientSecretSecretRef,omitempty" tf:"-"`
+	AccessClientSecretSecretRef *v2.LocalSecretKeySelector `json:"accessClientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) The Workspace One Authorization URL depending on your region.
 	// The Workspace One Authorization URL depending on your region.
@@ -102,12 +101,12 @@ type TrustDevicePostureIntegrationConfigParameters struct {
 	// (String, Sensitive) The Uptycs client secret.
 	// The Uptycs client secret.
 	// +kubebuilder:validation:Optional
-	ClientKeySecretRef *v1.LocalSecretKeySelector `json:"clientKeySecretRef,omitempty" tf:"-"`
+	ClientKeySecretRef *v2.LocalSecretKeySelector `json:"clientKeySecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) The Workspace One client secret provided in the Workspace One Admin Dashboard.
 	// The Workspace One client secret provided in the Workspace One Admin Dashboard.
 	// +kubebuilder:validation:Optional
-	ClientSecretSecretRef *v1.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+	ClientSecretSecretRef *v2.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) The Crowdstrike customer ID.
 	// The Crowdstrike customer ID.
@@ -211,8 +210,8 @@ type TrustDevicePostureIntegrationSpec struct {
 
 // TrustDevicePostureIntegrationStatus defines the observed state of TrustDevicePostureIntegration.
 type TrustDevicePostureIntegrationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustDevicePostureIntegrationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustDevicePostureIntegrationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

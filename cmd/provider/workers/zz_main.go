@@ -219,6 +219,11 @@ func main() {
 		kingpin.FatalIfError(controllerNamespaced.Setup_workers(mgr, namespacedOpts), "Cannot setup namespaced UpjetCloudflare controllers")
 	}
 
+	if *certsDir != "" {
+		kingpin.FatalIfError(controllerCluster.SetupWebhookWithManager_workers(mgr), "Cannot setup cluster-scoped UpjetCloudflare conversion webhooks")
+		kingpin.FatalIfError(controllerNamespaced.SetupWebhookWithManager_workers(mgr), "Cannot setup namespaced UpjetCloudflare conversion webhooks")
+	}
+
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }
 

@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: securitytrusteddomains.email.upjet-cloudflare.m.upbound.io
 spec:
   group: email.upjet-cloudflare.m.upbound.io
@@ -194,6 +194,18 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.accountId)
                 || (has(self.initProvider) && has(self.initProvider.accountId))'
+            - message: spec.forProvider.isRecent is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.isRecent)
+                || (has(self.initProvider) && has(self.initProvider.isRecent))'
+            - message: spec.forProvider.isRegex is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.isRegex)
+                || (has(self.initProvider) && has(self.initProvider.isRegex))'
+            - message: spec.forProvider.isSimilarity is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.isSimilarity)
+                || (has(self.initProvider) && has(self.initProvider.isSimilarity))'
             - message: spec.forProvider.pattern is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.pattern)
@@ -293,6 +305,13 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
               observedGeneration:
                 description: |-
                   ObservedGeneration is the latest metadata.generation

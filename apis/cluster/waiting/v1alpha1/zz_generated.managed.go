@@ -6,204 +6,204 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this Room.
-func (mg *Room) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Room) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this Room.
-func (mg *Room) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *Room) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this Room.
-func (mg *Room) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Room) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Room.
-func (mg *Room) GetProviderConfigReference() *xpv1.Reference {
+func (mg *Room) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Room.
-func (mg *Room) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *Room) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Room.
-func (mg *Room) SetConditions(c ...xpv1.Condition) {
+func (mg *Room) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this Room.
-func (mg *Room) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *Room) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this Room.
-func (mg *Room) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Room) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Room.
-func (mg *Room) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *Room) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Room.
-func (mg *Room) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *Room) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this RoomEvent.
-func (mg *RoomEvent) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *RoomEvent) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this RoomEvent.
-func (mg *RoomEvent) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *RoomEvent) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this RoomEvent.
-func (mg *RoomEvent) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *RoomEvent) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this RoomEvent.
-func (mg *RoomEvent) GetProviderConfigReference() *xpv1.Reference {
+func (mg *RoomEvent) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this RoomEvent.
-func (mg *RoomEvent) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *RoomEvent) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this RoomEvent.
-func (mg *RoomEvent) SetConditions(c ...xpv1.Condition) {
+func (mg *RoomEvent) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this RoomEvent.
-func (mg *RoomEvent) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *RoomEvent) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this RoomEvent.
-func (mg *RoomEvent) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *RoomEvent) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this RoomEvent.
-func (mg *RoomEvent) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *RoomEvent) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this RoomEvent.
-func (mg *RoomEvent) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *RoomEvent) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this RoomRules.
-func (mg *RoomRules) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *RoomRules) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this RoomRules.
-func (mg *RoomRules) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *RoomRules) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this RoomRules.
-func (mg *RoomRules) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *RoomRules) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this RoomRules.
-func (mg *RoomRules) GetProviderConfigReference() *xpv1.Reference {
+func (mg *RoomRules) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this RoomRules.
-func (mg *RoomRules) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *RoomRules) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this RoomRules.
-func (mg *RoomRules) SetConditions(c ...xpv1.Condition) {
+func (mg *RoomRules) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this RoomRules.
-func (mg *RoomRules) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *RoomRules) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this RoomRules.
-func (mg *RoomRules) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *RoomRules) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this RoomRules.
-func (mg *RoomRules) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *RoomRules) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this RoomRules.
-func (mg *RoomRules) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *RoomRules) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this RoomSettings.
-func (mg *RoomSettings) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *RoomSettings) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this RoomSettings.
-func (mg *RoomSettings) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *RoomSettings) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this RoomSettings.
-func (mg *RoomSettings) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *RoomSettings) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this RoomSettings.
-func (mg *RoomSettings) GetProviderConfigReference() *xpv1.Reference {
+func (mg *RoomSettings) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this RoomSettings.
-func (mg *RoomSettings) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *RoomSettings) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this RoomSettings.
-func (mg *RoomSettings) SetConditions(c ...xpv1.Condition) {
+func (mg *RoomSettings) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this RoomSettings.
-func (mg *RoomSettings) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *RoomSettings) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this RoomSettings.
-func (mg *RoomSettings) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *RoomSettings) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this RoomSettings.
-func (mg *RoomSettings) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *RoomSettings) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this RoomSettings.
-func (mg *RoomSettings) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *RoomSettings) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

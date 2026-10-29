@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: trustorganizations.zero.upjet-cloudflare.m.upbound.io
 spec:
   group: zero.upjet-cloudflare.m.upbound.io
@@ -68,8 +68,8 @@ spec:
                     type: boolean
                   authDomain:
                     description: |-
-                      (String) The unique subdomain assigned to your Zero Trust organization.
-                      The unique subdomain assigned to your Zero Trust organization.
+                      generated in the format adjective-noun-hex4 (e.g. frosty-moon-7a3b.cloudflareaccess.com).
+                      The unique subdomain assigned to your Zero Trust organization. If omitted on creation, a unique subdomain is auto-generated in the format `adjective-noun-hex4` (e.g. `frosty-moon-7a3b.cloudflareaccess.com`).
                     type: string
                   autoRedirectToIdentity:
                     description: |-
@@ -168,15 +168,9 @@ spec:
                       factor authentication (MFA) requirements at the application and policy level.
                       Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
                     type: boolean
-                  mfaRequiredForAllApps:
-                    description: |-
-                      infrastructure applications.
-                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot contain only the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the organization has any non-infrastructure applications.
-                    type: boolean
-                  mfaSshPivKeyRequirements:
-                    description: (Attributes) Configures SSH PIV key requirements
-                      for MFA using hardware security keys. (see below for nested
-                      schema)
+                  mfaPivKeyRequirements:
+                    description: (Attributes) Configures PIV key requirements for
+                      MFA using hardware security keys. (see below for nested schema)
                     properties:
                       pinPolicy:
                         description: |-
@@ -188,7 +182,7 @@ spec:
                       requireFipsDevice:
                         description: |-
                           2 Level 1 or higher validated device.
-                          Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+                          Requires the PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
                         type: boolean
                       sshKeySize:
                         description: |-
@@ -212,10 +206,15 @@ spec:
                           Available values: "never", "always", "cached".
                         type: string
                     type: object
+                  mfaRequiredForAllApps:
+                    description: |-
+                      infrastructure applications.
+                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot contain only the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the organization has any non-infrastructure applications.
+                    type: boolean
                   name:
                     description: |-
-                      (String) The name of your Zero Trust organization.
-                      The name of your Zero Trust organization.
+                      generated subdomain slug (e.g. frosty-moon-7a3b).
+                      The name of your Zero Trust organization. When omitted on creation, defaults to the provided auth_domain; when both are omitted, defaults to the auto-generated subdomain slug (e.g. frosty-moon-7a3b).
                     type: string
                   serviceTokenInactivity:
                     description: (Attributes) Configures automatic enforcement for
@@ -299,8 +298,8 @@ spec:
                     type: boolean
                   authDomain:
                     description: |-
-                      (String) The unique subdomain assigned to your Zero Trust organization.
-                      The unique subdomain assigned to your Zero Trust organization.
+                      generated in the format adjective-noun-hex4 (e.g. frosty-moon-7a3b.cloudflareaccess.com).
+                      The unique subdomain assigned to your Zero Trust organization. If omitted on creation, a unique subdomain is auto-generated in the format `adjective-noun-hex4` (e.g. `frosty-moon-7a3b.cloudflareaccess.com`).
                     type: string
                   autoRedirectToIdentity:
                     description: |-
@@ -399,15 +398,9 @@ spec:
                       factor authentication (MFA) requirements at the application and policy level.
                       Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
                     type: boolean
-                  mfaRequiredForAllApps:
-                    description: |-
-                      infrastructure applications.
-                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot contain only the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the organization has any non-infrastructure applications.
-                    type: boolean
-                  mfaSshPivKeyRequirements:
-                    description: (Attributes) Configures SSH PIV key requirements
-                      for MFA using hardware security keys. (see below for nested
-                      schema)
+                  mfaPivKeyRequirements:
+                    description: (Attributes) Configures PIV key requirements for
+                      MFA using hardware security keys. (see below for nested schema)
                     properties:
                       pinPolicy:
                         description: |-
@@ -419,7 +412,7 @@ spec:
                       requireFipsDevice:
                         description: |-
                           2 Level 1 or higher validated device.
-                          Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+                          Requires the PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
                         type: boolean
                       sshKeySize:
                         description: |-
@@ -443,10 +436,15 @@ spec:
                           Available values: "never", "always", "cached".
                         type: string
                     type: object
+                  mfaRequiredForAllApps:
+                    description: |-
+                      infrastructure applications.
+                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot contain only the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the organization has any non-infrastructure applications.
+                    type: boolean
                   name:
                     description: |-
-                      (String) The name of your Zero Trust organization.
-                      The name of your Zero Trust organization.
+                      generated subdomain slug (e.g. frosty-moon-7a3b).
+                      The name of your Zero Trust organization. When omitted on creation, defaults to the provided auth_domain; when both are omitted, defaults to the auto-generated subdomain slug (e.g. frosty-moon-7a3b).
                     type: string
                   serviceTokenInactivity:
                     description: (Attributes) Configures automatic enforcement for
@@ -580,8 +578,8 @@ spec:
                     type: boolean
                   authDomain:
                     description: |-
-                      (String) The unique subdomain assigned to your Zero Trust organization.
-                      The unique subdomain assigned to your Zero Trust organization.
+                      generated in the format adjective-noun-hex4 (e.g. frosty-moon-7a3b.cloudflareaccess.com).
+                      The unique subdomain assigned to your Zero Trust organization. If omitted on creation, a unique subdomain is auto-generated in the format `adjective-noun-hex4` (e.g. `frosty-moon-7a3b.cloudflareaccess.com`).
                     type: string
                   autoRedirectToIdentity:
                     description: |-
@@ -682,15 +680,9 @@ spec:
                       factor authentication (MFA) requirements at the application and policy level.
                       Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
                     type: boolean
-                  mfaRequiredForAllApps:
-                    description: |-
-                      infrastructure applications.
-                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot contain only the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the organization has any non-infrastructure applications.
-                    type: boolean
-                  mfaSshPivKeyRequirements:
-                    description: (Attributes) Configures SSH PIV key requirements
-                      for MFA using hardware security keys. (see below for nested
-                      schema)
+                  mfaPivKeyRequirements:
+                    description: (Attributes) Configures PIV key requirements for
+                      MFA using hardware security keys. (see below for nested schema)
                     properties:
                       pinPolicy:
                         description: |-
@@ -702,7 +694,7 @@ spec:
                       requireFipsDevice:
                         description: |-
                           2 Level 1 or higher validated device.
-                          Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+                          Requires the PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
                         type: boolean
                       sshKeySize:
                         description: |-
@@ -726,10 +718,15 @@ spec:
                           Available values: "never", "always", "cached".
                         type: string
                     type: object
+                  mfaRequiredForAllApps:
+                    description: |-
+                      infrastructure applications.
+                      Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot contain only the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the organization has any non-infrastructure applications.
+                    type: boolean
                   name:
                     description: |-
-                      (String) The name of your Zero Trust organization.
-                      The name of your Zero Trust organization.
+                      generated subdomain slug (e.g. frosty-moon-7a3b).
+                      The name of your Zero Trust organization. When omitted on creation, defaults to the provided auth_domain; when both are omitted, defaults to the auto-generated subdomain slug (e.g. frosty-moon-7a3b).
                     type: string
                   serviceTokenInactivity:
                     description: (Attributes) Configures automatic enforcement for
@@ -846,6 +843,13 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
               observedGeneration:
                 description: |-
                   ObservedGeneration is the latest metadata.generation

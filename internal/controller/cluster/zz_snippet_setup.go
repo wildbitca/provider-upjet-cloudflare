@@ -37,3 +37,15 @@ func SetupGated_snippet(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_snippet registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_snippet(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		rules.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

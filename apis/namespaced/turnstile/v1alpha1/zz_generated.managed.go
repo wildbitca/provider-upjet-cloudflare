@@ -6,44 +6,44 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this Widget.
-func (mg *Widget) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Widget) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this Widget.
-func (mg *Widget) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Widget) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Widget.
-func (mg *Widget) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *Widget) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Widget.
-func (mg *Widget) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *Widget) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Widget.
-func (mg *Widget) SetConditions(c ...xpv1.Condition) {
+func (mg *Widget) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this Widget.
-func (mg *Widget) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Widget) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Widget.
-func (mg *Widget) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *Widget) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Widget.
-func (mg *Widget) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *Widget) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

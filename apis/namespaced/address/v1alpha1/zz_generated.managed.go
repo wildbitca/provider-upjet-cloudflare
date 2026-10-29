@@ -6,44 +6,44 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this AddressMap.
-func (mg *AddressMap) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *AddressMap) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this AddressMap.
-func (mg *AddressMap) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *AddressMap) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this AddressMap.
-func (mg *AddressMap) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *AddressMap) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this AddressMap.
-func (mg *AddressMap) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *AddressMap) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this AddressMap.
-func (mg *AddressMap) SetConditions(c ...xpv1.Condition) {
+func (mg *AddressMap) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this AddressMap.
-func (mg *AddressMap) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *AddressMap) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this AddressMap.
-func (mg *AddressMap) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *AddressMap) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this AddressMap.
-func (mg *AddressMap) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *AddressMap) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1common "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	v1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 )
 
@@ -564,11 +564,11 @@ type RecordInitParameters struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1common.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.Reference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1common.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type RecordObservation struct {
@@ -725,11 +725,11 @@ type RecordParameters struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1common.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.Reference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1common.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type SettingsInitParameters struct {
@@ -782,8 +782,8 @@ type SettingsParameters struct {
 
 // RecordSpec defines the desired state of Record
 type RecordSpec struct {
-	v1common.ResourceSpec `json:",inline"`
-	ForProvider           RecordParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   RecordParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -799,8 +799,8 @@ type RecordSpec struct {
 
 // RecordStatus defines the observed state of Record.
 type RecordStatus struct {
-	v1common.ResourceStatus `json:",inline"`
-	AtProvider              RecordObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               RecordObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

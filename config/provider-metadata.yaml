@@ -634,6 +634,7 @@ resources:
             created_at: (String)
             created_by: (String)
             created_from_aisearch_wizard: (Boolean)
+            created_from_emdash_plugin: (Attributes) (see below for nested schema)
             custom_domains: (List of String) Custom domain hostnames that alias this public endpoint. GET and create responses return the current set; on update (PUT) this field is only echoed back when supplied in the request body, otherwise it is null (omit it to leave domains unchanged).
             custom_metadata: (Attributes List) (see below for nested schema)
             data_type: '(String) Available values: "text", "number", "boolean", "datetime".'
@@ -719,6 +720,7 @@ resources:
             use_browser_rendering: (Boolean)
             use_ocr: (Boolean) Enables OCR ingestion for PDFs and images. Changing this triggers a full re-index. Defaults to false.
             vector: (Boolean) Enable vector (embedding) storage backend.
+            version: (String)
             web_crawler: (Attributes) (see below for nested schema)
             worker_domain: (String)
         importStatements:
@@ -868,16 +870,15 @@ resources:
             - name: example_api_shield_discovery_operation
               manifest: |-
                 {
-                  "operation_id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
+                  "discovery_id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
                   "state": "review",
                   "zone_id": "023e105f4ecef8ad9ca31a8372d0c353"
                 }
         argumentDocs:
-            id: (String) UUID.
+            discovery_id: (String) UUID.
             ignored: |-
                 - Mark operation as ignored
                 Available values: "review", "ignored".
-            operation_id: (String) UUID.
             review: '- Mark operation as for review'
             state: (String) Mark state of operation in API Discovery
             zone_id: (String) Identifier.
@@ -4075,7 +4076,7 @@ resources:
             max_upload_bytes: (Number) The maximum uncompressed file size of a batch of logs. This setting value must be between 5 MB and 1 GB, or 0 to disable it. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
             max_upload_interval_seconds: (Number) The maximum interval in seconds for log batches. This setting must be between 30 and 300 seconds (5 minutes), or 0 to disable it. Note that you cannot specify a minimum interval for log batches; this means that log files may be sent in shorter intervals than this.
             max_upload_records: (Number) The maximum number of log lines per batch. This setting must be between 1000 and 1,000,000 lines, or 0 to disable it. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
-            merge_subrequests: (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset. Not supported for account-scoped jobs.
+            merge_subrequests: (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
             name: (String) Optional human readable job name. Not unique. Cloudflare suggests. that you set this to a meaningful string, like the domain name, to make it easier to identify your job.
             output_options: (Attributes) The structured replacement for logpull_options. When including this field, the logpull_option field will be ignored. (see below for nested schema)
             output_type: |-
@@ -4775,6 +4776,41 @@ resources:
             zone_id: (String) The unique ID of the zone.
         importStatements:
             - $ terraform import cloudflare_managed_transforms.example '<zone_id>'
+    cloudflare_monetization_rules:
+        subCategory: ""
+        name: cloudflare_monetization_rules
+        title: cloudflare_monetization_rules Resource - Cloudflare
+        examples:
+            - name: example_monetization_rules
+              manifest: |-
+                {
+                  "rules": [
+                    {
+                      "address": "0x1234567890abcdef1234567890abcdef12345678===",
+                      "description": "Premium API endpoint",
+                      "enabled": true,
+                      "expression": "(http.request.uri.path eq \"/premium\" and http.request.method in {\"GET\" \"POST\"})",
+                      "id": "023e105f4ecef8ad9ca31a8372d0c353",
+                      "price": "250000",
+                      "scheme": "exact"
+                    }
+                  ],
+                  "zone_id": "9f1839b6152d298aca64c4e906b6d074"
+                }
+        argumentDocs:
+            address: (String) 0x-prefixed 20-byte hexadecimal Ethereum address. Mixed-case addresses must carry a valid EIP-55 checksum; all-lowercase or all-uppercase addresses are also accepted. The address must pass wallet screening whenever its rule is deployed or patched.
+            description: (String)
+            enabled: (Boolean)
+            expression: (String) Wirefilter expression identifying the requests that require payment. Forwarded verbatim to the Rulesets API, which validates its syntax.
+            id: (String) The unique ID of the zone.
+            price: '(String) Price in the smallest indivisible unit of the configured payment token, encoded as a decimal string. Must be a canonical decimal integer in [1000, 100000000]: no leading zeros, and a bare JSON number is rejected. The price is required for the fixed-price schemes ("exact" and "upto") and must be at least 1000, the smallest amount the payment facilitator can settle ($0.001 for a 6-decimal token such as USDC), and at most 100000000 ($100 for a 6-decimal token). When the scheme is "origin_controlled" the origin server sets pricing dynamically and the rule carries no price: the field must be omitted — any provided value, including "0", is rejected because it would not be enforced. Responses always encode this as a string and omit it for "origin_controlled" rules; the pattern matches exactly the set of values the server accepts.'
+            rules: (Attributes List) Full desired Payment Required ruleset. An empty array clears all payment rules. The ruleset may contain at most 40 unique wallet addresses; address comparison is case-insensitive. Every address must pass wallet screening before deployment. (see below for nested schema)
+            scheme: |-
+                (String) X402 payment scheme. "exact" requires the specified payment amount; "upto" permits a payment up to the specified amount. Both fixed-price schemes require the price field.
+                Available values: "exact", "upto", "origin_controlled".
+            zone_id: (String) The unique ID of the zone.
+        importStatements:
+            - $ terraform import cloudflare_monetization_rules.example '<zone_id>'
     cloudflare_moq_relay:
         subCategory: ""
         name: cloudflare_moq_relay
@@ -5778,7 +5814,8 @@ resources:
             build_caching: (Boolean) Enable build caching for the project.
             build_command: (String) Command used to build project.
             build_config: (Attributes) Configs for the project build process. (see below for nested schema)
-            build_image_major_version: (Number) The major version of the build image to use for Pages Functions.
+            build_image_auto_upgrade: (Attributes) Present when the project is set to a retired build image major version and its builds have been moved to a newer one. build_image_major_version in deployment_configs then reports the version the builds run on. (see below for nested schema)
+            build_image_major_version: (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
             canonical_deployment: (Attributes) Most recent production deployment of the project. (see below for nested schema)
             certificate_id: (String)
             commit_dirty: (Boolean) Whether the deployment trigger commit was dirty.
@@ -5806,6 +5843,7 @@ resources:
             fail_open: (Boolean) Whether to fail open when the deployment config cannot be applied.
             framework: (String) Framework the project is using.
             framework_version: (String) Version of the framework the project is using.
+            from_version: (Number) The retired build image major version the project is set to.
             hyperdrive_bindings: (Attributes Map) Hyperdrive bindings used for Pages Functions. (see below for nested schema)
             id: (String) Name for the Pages project. Must begin with a lowercase letter or digit and contain only lowercase letters, digits, and hyphens.
             index_name: (String)
@@ -5855,6 +5893,7 @@ resources:
                 (String) State of the current stage.
                 Available values: "success", "idle", "active", "failure", "canceled", "skipped".
             subdomain: (String) The Cloudflare subdomain associated with the project.
+            to_version: (Number) The build image major version the project's builds run on.
             type: '(String) Available values: "plain_text", "secret_text".'
             url: (String) The live URL to view this deployment.
             usage_model: |-
@@ -6672,31 +6711,6 @@ resources:
             zone_id: (String) Identifier.
         importStatements:
             - $ terraform import cloudflare_regional_tiered_cache.example '<zone_id>'
-    cloudflare_registrar_domain:
-        subCategory: ""
-        name: cloudflare_registrar_domain
-        title: cloudflare_registrar_domain Resource - Cloudflare
-        examples:
-            - name: example_registrar_domain
-              manifest: |-
-                {
-                  "account_id": "023e105f4ecef8ad9ca31a8372d0c353",
-                  "auto_renew": true,
-                  "domain_name": "example.com",
-                  "locked": false,
-                  "privacy": true
-                }
-        argumentDocs:
-            account_id: (String) Identifier.
-            auto_renew: (Boolean) Auto-renew controls whether subscription is automatically renewed upon domain expiration.
-            domain_name: |-
-                (String) Provides a fully qualified domain name (FQDN), including the extension
-                (e.g., example.com, mybrand.app). The domain name uniquely identifies
-                a registration. Cloudflare permits only one registration per domain, making
-                the domain name a natural idempotency key for registration requests.
-            locked: (Boolean) Shows whether a registrar lock is in place for a domain.
-            privacy: (Boolean) Privacy option controls redacting WHOIS information.
-        importStatements: []
     cloudflare_ruleset:
         subCategory: ""
         name: cloudflare_ruleset
@@ -7834,7 +7848,8 @@ resources:
             domains: (List of String)
             ephemeral_id: (Boolean) Return the Ephemeral ID in /siteverify (ENT only).
             filter: |-
-                (String) Filter widgets by field using case-insensitive substring matching.
+                (String) Filter widgets by field. The name field uses case-insensitive
+                substring matching; sitekey uses exact matching.
                 Format: field:value
             id: (String) Widget item identifier tag.
             last_modified_via: |-
@@ -8802,6 +8817,7 @@ resources:
             limits: (Attributes) Resource limits enforced at runtime. (see below for nested schema)
             main_module: (String) The name of the main module in the modules array (e.g. the name of the module that exports a fetch handler).
             main_script_base64: (String) The base64-encoded main script content. This is only returned for service worker syntax workers (not ES modules). Used when importing existing workers that use the older service worker syntax.
+            max_attempts: (Number) Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
             message: (String) Human-readable explanation.
             migration_tag: (String) Durable Object migration tag. Set when the version is deployed. Omitted if the version has not been deployed or the Worker does not use Durable Objects.
             migrations: (Attributes) Migrations for Durable Objects associated with the version. Migrations are applied when the version is deployed. (see below for nested schema)
@@ -8844,6 +8860,7 @@ resources:
                 (String) Destination class name for a state: renamed tombstone. The
                 target must appear as a live (created) entry in the same
                 exports map. Write-only: never present in GET responses.
+            retry: (Attributes) Retry policy for calls made to the Durable Object through this binding. Omitted or null properties use the runtime defaults. These limits are upper bounds and do not enable retries for otherwise ineligible calls. (see below for nested schema)
             run_worker_first: (Dynamic) When a boolean true, requests will always invoke the Worker script. Otherwise, attempt to serve an asset matching the request, falling back to the Worker script. When a list of strings, contains path rules to control routing to either the Worker or assets. Glob (*) and negative (!) rules are supported. Rules must start with either '/' or '!/'. At least one non-negative rule must be provided, and negative rules have higher precedence than non-negative rules.
             scenario: (String) Stable, machine-readable tag identifying which reconciliation scenario produced an error, warning, or info entry. Clients may branch on this value instead of parsing message.
             script_name: (String) The script where the Durable Object is defined, if it is external to this Worker.
@@ -8868,6 +8885,7 @@ resources:
             subrequests: (Number) Subrequest limit per request.
             target: (Attributes List) Array of placement targets (currently limited to single target). (see below for nested schema)
             text: (String, Sensitive) The text value to use.
+            timeout_ms: (Number) Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
             to: (String)
             transfer_from: |-
                 (String) Source script for a state: expecting-transfer entry. The
@@ -9038,7 +9056,7 @@ resources:
         argumentDocs:
             account_id: (String) ID of the Cloudflare account that owns the Workers KV namespaces.
             expiration: (Number) Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
-            expiration_ttl: (Number) Expires the key after a number of seconds. Must be at least 60.
+            expiration_ttl: (Number) Number of seconds until the key expires. Must be at least 60. Takes precedence over expiration when both are specified.
             id: (String) A key's name. The name may be at most 512 bytes. All printable, non-whitespace characters are valid. Use percent-encoding to define key names as part of a URL.
             key_name: (String) A key's name. The name may be at most 512 bytes. All printable, non-whitespace characters are valid. Use percent-encoding to define key names as part of a URL.
             metadata: (String) Associates arbitrary JSON data with a key/value pair.
@@ -9057,6 +9075,7 @@ resources:
                 {
                   "account_id": "023e105f4ecef8ad9ca31a8372d0c353",
                   "jurisdiction": "eu",
+                  "mode": "instant",
                   "title": "My Own Namespace"
                 }
         argumentDocs:
@@ -9065,6 +9084,9 @@ resources:
             jurisdiction: |-
                 (String) Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
                 Available values: "eu", "fedramp", "us".
+            mode: |-
+                (String) The mode of the Workers KV namespace. Specify instant when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, instant is the only supported explicit value.
+                Available values: "instant".
             supports_url_encoding: (Boolean) True if keys written on the URL will be URL-decoded before storing. For example, if set to "true", a key written on the URL as "%3F" will be stored as "?".
             title: (String) Human-readable string name for a Workers KV namespace.
         importStatements:
@@ -9251,6 +9273,9 @@ resources:
             assets: (Attributes) Configuration for assets within a Worker. (see below for nested schema)
             base_path: (String) The public URL path prefix under which assets are served. A null request value resets it to /; responses represent the root as /. All versions in a gradual deployment must use the same canonical value. To change it, first deploy the version containing the change at 100%.
             bindings: '(Attributes List) List of bindings attached to a Worker. You can find more about bindings on our docs: https://developers.cloudflare.com/workers/configuration/multipart-upload-metadata/#bindings. (see below for nested schema)'
+            bindings_inherit: |-
+                (String) When set to "strict", the upload will fail if any inherit type bindings cannot be resolved against the previous version of the Worker. Without this, unresolvable inherit bindings are silently dropped.
+                Available values: "strict".
             body_part: (String) Name of the uploaded file that contains the script (e.g. the file adding a listener to the fetch event). Indicates a service worker syntax Worker.
             bucket_name: (String) R2 bucket to bind to.
             cache: (Attributes) Per-entrypoint cache override. When present, this overrides the top-level cache_options for this specific entrypoint. (see below for nested schema)
@@ -9327,6 +9352,7 @@ resources:
             logpush: (Boolean) Whether Logpush is turned on for the Worker.
             logs: (Attributes) Log settings for the Worker. (see below for nested schema)
             main_module: (String) Name of the uploaded file that contains the main module (e.g. the file exporting a fetch handler). Indicates a module syntax Worker.
+            max_attempts: (Number) Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
             migration_tag: (String) The tag of the Durable Object migration that was most recently applied for this Worker.
             migrations: (Attributes) Migrations to apply for Durable Objects associated with this Worker. (see below for nested schema)
             mitigation_timeout: (Number) Duration in seconds to apply the mitigation action after the rate limit is exceeded. Valid values are 0 (disabled), 10, or multiples of 60 up to 86400. Must be greater than or equal to the period when non-zero.
@@ -9366,6 +9392,7 @@ resources:
             redirects: (String) The contents of a _redirects file (used to apply redirects or proxy paths ahead of asset serving).
             region: (String) Cloud region for targeted placement in format 'provider:region'.
             renamed_classes: (Attributes List) A list of classes with Durable Object namespaces that were renamed. (see below for nested schema)
+            retry: (Attributes) Retry policy for calls made to the Durable Object through this binding. Omitted or null properties use the runtime defaults. These limits are upper bounds and do not enable retries for otherwise ineligible calls. (see below for nested schema)
             run_worker_first: (Dynamic) When a boolean true, requests will always invoke the Worker script. Otherwise, attempt to serve an asset matching the request, falling back to the Worker script. When a list of strings, contains path rules to control routing to either the Worker or assets. Glob (*) and negative (!) rules are supported. Rules must start with either '/' or '!/'. At least one non-negative rule must be provided, and negative rules have higher precedence than non-negative rules.
             script_name: (String) Name of the script, used in URLs and route configuration.
             secret_name: (String) Name of the secret in the store.
@@ -9384,6 +9411,7 @@ resources:
             tail_consumers: (Attributes Set) List of Workers that will consume logs from the attached Worker. (see below for nested schema)
             target: (Attributes List) Array of placement targets (currently limited to single target). (see below for nested schema)
             text: (String, Sensitive) The text value to use.
+            timeout_ms: (Number) Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
             to: (String)
             traces: (Attributes) Trace settings for the Worker. (see below for nested schema)
             transferred_classes: (Attributes List) A list of transfers for Durable Object namespaces from a different Worker and class to a class defined in this Worker. (see below for nested schema)
@@ -9571,7 +9599,7 @@ resources:
             account_id: (String)
             alias: (String) Custom name exposed for the capability.
             auth_config_summary: (Attributes) Safe subset of auth_credentials surfaced to the dashboard. Includes auth_mode (dcr|manual), has_client_secret, client_secret_version, and the OAuth endpoints + client_id for manual servers. Never includes the secret value. (see below for nested schema)
-            auth_credentials: '(String, Sensitive) Static credential for the upstream MCP server. For auth_type "bearer", either a raw token string (e.g. "sk-abc123"), which is wrapped server-side as Authorization: Bearer <token>, or a JSON-encoded object of the form {"headers":{"Header-Name":"value",...}} for custom or multiple static headers (e.g. Cloudflare Access service tokens: {"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}).'
+            auth_credentials: '(String, Sensitive) Credential configuration for the upstream MCP server. For auth_type "bearer", either a raw token string (e.g. "sk-abc123"), which is wrapped server-side as Authorization: Bearer <token>, or a JSON-encoded object of the form {"headers":{"Header-Name":"value",...}} for custom or multiple static headers (e.g. Cloudflare Access service tokens: {"headers":{"cf-access-client-id":"...","cf-access-client-secret":"..."}}). For auth_type "oauth" with a pre-registered client, send a JSON-encoded object containing auth_mode:"manual", config.authorization_endpoint, config.token_endpoint, and registration_info.client_id. Also provide registration_info.redirect_uris unless is_shared_oauth_callback_enabled is true. Optional fields include config.issuer, config.revocation_endpoint, registration_info.scope, and registration_info.token_endpoint_auth_method. Send the client secret in the separate client_secret field. Omit auth_credentials on update to preserve the existing configuration.'
             auth_mode: '(String) Available values: "dcr", "manual".'
             auth_type: |-
                 (String) Authentication method used to connect to the upstream MCP server.
@@ -9582,7 +9610,7 @@ resources:
             authorization_endpoint: (String)
             cause: (String) Underlying error message
             client_id: (String)
-            client_secret: (String, Sensitive) Pre-registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
+            client_secret: (String, Sensitive) Pre-registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Required when creating a manual OAuth server or converting an existing server to manual mode. Omit it on update to preserve the existing secret; provide it to rotate the secret. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
             client_secret_version: (Number)
             config: (Attributes) (see below for nested schema)
             created_at: (String)
@@ -9743,6 +9771,46 @@ resources:
                   ],
                   "type": "self_hosted",
                   "zone_id": "zone_id"
+                }
+            - name: infrastructure_application_with_tags
+              manifest: |-
+                {
+                  "account_id": "account_id",
+                  "name": "Production SSH",
+                  "target_criteria": [
+                    {
+                      "exclude": {
+                        "tags": {
+                          "environment": [
+                            "development"
+                          ]
+                        }
+                      },
+                      "include": {
+                        "tags": {
+                          "environment": [
+                            "production",
+                            "staging"
+                          ]
+                        },
+                        "target_attributes": {
+                          "hostname": [
+                            "web-*"
+                          ]
+                        }
+                      },
+                      "port": 22,
+                      "protocol": "SSH",
+                      "require": {
+                        "tags": {
+                          "team": [
+                            "engineering"
+                          ]
+                        }
+                      }
+                    }
+                  ],
+                  "type": "infrastructure"
                 }
         argumentDocs:
             ac_id: (String) The ACID of an Authentication context.
@@ -9920,7 +9988,7 @@ resources:
             self_hosted_domains: (Set of String, Deprecated) List of public domains that Access will secure. This field is deprecated in favor of destinations and will be supported until November 21, 2025. If destinations are provided, then self_hosted_domains will be ignored.
             service_auth_401_redirect: (Boolean) Returns a 401 status code when the request is blocked by a Service Auth policy.
             service_token: (Attributes) (see below for nested schema)
-            session_duration: '(String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.'
+            session_duration: '(String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.'
             skip_app_launcher_login_page: (Boolean) Determines when to skip the App Launcher landing page.
             skip_interstitial: (Boolean) Enables automatic authentication through cloudflared.
             source: (Attributes) (see below for nested schema)
@@ -9932,8 +10000,8 @@ resources:
                 (String) The level of adherence to outbound resource schemas when provisioning to this mapping. ‘Strict’ removes unknown values, while ‘passthrough’ passes unknown values to the target.
                 Available values: "strict", "passthrough".
             tags: (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
-            target_attributes: (Map of List of String) Contains a map of target attribute keys to target attribute values.
-            target_criteria: (Attributes List) (see below for nested schema)
+            target_attributes: '(Map of List of String) Deprecated: use include.target_attributes for hostname selectors and rule tags for tag-based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.'
+            target_criteria: (Attributes List) Defines targets covered by the application. Use either the legacy top-level target_attributes format or the rule format, but not both. The rule format requires include; require and exclude are optional. Each rule must contain a non-empty target_attributes or tags selector. Hostname selectors accept 1-5000 non-empty strings. Tag maps accept 1-50 non-empty keys, each with 1-50 non-empty values. (see below for nested schema)
             team: (String) The name of the team
             title: (String) The title shown on the landing page.
             token: (String, Sensitive) Token used to authenticate with the remote SCIM service.
@@ -10131,6 +10199,7 @@ resources:
             idp_public_certs: (List of String) X509 certificate to verify the signature in the SAML authentication response
             is_current: (Boolean) Indicates whether this is the currently active certificate
             issuer_url: (String) IdP Entity ID or Issuer URL
+            login_page_auto_prompt: (Boolean) When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
             max_sso_url_length: |-
                 (Number) The maximum URL length the IdP accepts for the SSO redirect URL.
                 When the constructed SSO URL would exceed this length, the RelayState
@@ -10170,7 +10239,7 @@ resources:
             token_url: (String) The token_endpoint URL of your IdP
             type: |-
                 (String) The type of identity provider. To determine the value for a specific provider, refer to our developer documentation.
-                Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+                Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
             uid: (String) Unique identifier for the certificate set
             updated_at: (String) Timestamp when the certificate set was last updated (e.g., during rotation)
             use_login_hint: (Boolean) Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
@@ -10711,13 +10780,9 @@ resources:
               manifest: |-
                 {
                   "account_id": "46148281d8a93d002ef242d8b0d5f9f6",
-                  "authentication_type": "Bearer Auth",
+                  "authentication_type": "HMAC-Signing",
                   "destination_url": "https://example.com/webhook",
                   "headers": [
-                    {
-                      "key": "Authorization",
-                      "value": "Bearer token123"
-                    },
                     {
                       "key": "X-Custom-Header",
                       "value": "value"
@@ -10872,7 +10937,7 @@ resources:
             lan_allow_minutes: (Number) The amount of time in minutes a user is allowed access to their LAN. A value of 0 will allow LAN access until the next WARP reconnection, such as a reboot or a laptop waking from sleep. Note that this field is omitted from the response if null or unset.
             lan_allow_subnet_size: (Number) The size of the subnet for the local access network. Note that this field is omitted from the response if null or unset.
             masque_endpoints: (List of String) IP:port entries for the MASQUE tunnel endpoints. Either wireguard_endpoints or masque_endpoints must be provided.
-            match: '(String) The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version".'
+            match: '(String) The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version", "device.tags".'
             mode: (String) The mode to run the WARP client under.
             name: (String) The name of the device settings profile.
             policy_id: (String)
@@ -10891,7 +10956,7 @@ resources:
             suffix: (String) The DNS search suffix to append when resolving short hostnames.
             support_url: (String) The URL to launch when the Send Feedback button is clicked.
             switch_locked: (Boolean) Whether to allow the user to turn off the WARP switch and disconnect the client.
-            target_tests: (Attributes List) (see below for nested schema)
+            target_tests: (Attributes List, Deprecated) (see below for nested schema)
             tunnel_protocol: (String) Determines which tunnel protocol to use.
             uninstall_protection: (Boolean) Determines whether uninstalling the WARP client requires an override code. (Windows only).
             virtual_networks: (Attributes) Virtual network access settings for the device. (see below for nested schema)
@@ -11513,7 +11578,7 @@ resources:
             upload_status: '(String) Available values: "empty", "uploading", "pending", "processing", "failed", "complete".'
             validation: '(String, Deprecated) Available values: "luhn".'
             variant: (Attributes) A Predefined AI prompt classification topic entry. (see below for nested schema)
-            word_list: (String)
+            word_list: (List of String)
         importStatements:
             - $ terraform import cloudflare_zero_trust_dlp_custom_entry.example '<account_id>/<entry_id>'
     cloudflare_zero_trust_dlp_custom_profile:
@@ -11764,7 +11829,7 @@ resources:
             upload_status: '(String) Available values: "empty", "uploading", "pending", "processing", "failed", "complete".'
             validation: '(String, Deprecated) Available values: "luhn".'
             variant: (Attributes) A Predefined AI prompt classification topic entry. (see below for nested schema)
-            word_list: (String)
+            word_list: (List of String)
         importStatements:
             - $ terraform import cloudflare_zero_trust_dlp_entry.example '<account_id>/<entry_id>'
     cloudflare_zero_trust_dlp_integration_entry:
@@ -11812,7 +11877,7 @@ resources:
             upload_status: '(String) Available values: "empty", "uploading", "pending", "processing", "failed", "complete".'
             validation: '(String, Deprecated) Available values: "luhn".'
             variant: (Attributes) A Predefined AI prompt classification topic entry. (see below for nested schema)
-            word_list: (String)
+            word_list: (List of String)
         importStatements:
             - $ terraform import cloudflare_zero_trust_dlp_integration_entry.example '<account_id>/<entry_id>'
     cloudflare_zero_trust_dlp_predefined_entry:
@@ -11860,7 +11925,7 @@ resources:
             upload_status: '(String) Available values: "empty", "uploading", "pending", "processing", "failed", "complete".'
             validation: '(String, Deprecated) Available values: "luhn".'
             variant: (Attributes) A Predefined AI prompt classification topic entry. (see below for nested schema)
-            word_list: (String)
+            word_list: (List of String)
         importStatements:
             - $ terraform import cloudflare_zero_trust_dlp_predefined_entry.example '<account_id>/<entry_id>'
     cloudflare_zero_trust_dlp_predefined_profile:
@@ -12121,6 +12186,7 @@ resources:
             in_use: (Boolean) Indicate whether Gateway TLS interception uses this certificate (read-only). You cannot set this value directly. To configure interception, use the Gateway configuration setting named certificate (read-only).
             issuer_org: (String) Indicate the organization that issued the certificate (read-only).
             issuer_raw: (String) Provide the entire issuer field of the certificate (read-only).
+            region: (String) Indicate the read-only region the certificate authority's key material is pinned to. Omitted for certificates that were created without a region.
             type: |-
                 (String) Indicate the read-only certificate type, BYO-PKI (custom) or Gateway-managed.
                 Available values: "custom", "gateway_managed".
@@ -12747,7 +12813,7 @@ resources:
             allow_authenticate_via_warp: (Boolean) When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
             allowed_authenticators: (List of String) Lists the MFA methods that users can authenticate with. The piv_key and ssh_fido2_key values are supported only for infrastructure applications.
             amr_matching_session_duration: '(String) Allows a user to skip MFA via Authentication Method Reference (AMR) matching when the AMR claim provided by the IdP the user used to authenticate contains "mfa". Must be in minutes (m) or hours (h). Minimum: 0m. Maximum: 720h (30 days).'
-            auth_domain: (String) The unique subdomain assigned to your Zero Trust organization.
+            auth_domain: (String) The unique subdomain assigned to your Zero Trust organization. If omitted on creation, a unique subdomain is auto-generated in the format adjective-noun-hex4 (e.g. frosty-moon-7a3b.cloudflareaccess.com).
             auto_redirect_to_identity: (Boolean) When set to true, users skip the identity provider selection step during login.
             background_color: (String) The background color on your login page.
             custom_pages: (Attributes) (see below for nested schema)
@@ -12764,13 +12830,13 @@ resources:
             logo_path: (String) The URL of the logo on your login page.
             mfa_config: (Attributes) Configures multi-factor authentication (MFA) settings for an organization. (see below for nested schema)
             mfa_configuration_allowed: (Boolean) Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
+            mfa_piv_key_requirements: (Attributes) Configures PIV key requirements for MFA using hardware security keys. (see below for nested schema)
             mfa_required_for_all_apps: '(Boolean) Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: ''allowed_authenticators'' cannot contain only the infrastructure SSH authenticators (''piv_key'' and ''ssh_fido2_key'') if the organization has any non-infrastructure applications.'
-            mfa_ssh_piv_key_requirements: (Attributes) Configures SSH PIV key requirements for MFA using hardware security keys. (see below for nested schema)
-            name: (String) The name of your Zero Trust organization.
+            name: (String) The name of your Zero Trust organization. When omitted on creation, defaults to the provided auth_domain; when both are omitted, defaults to the auto-generated subdomain slug (e.g. frosty-moon-7a3b).
             pin_policy: |-
                 (String) Defines when a PIN is required to use the SSH key. Valid values: never (no PIN required), once (PIN required once per session), always (PIN required for each use).
                 Available values: "never", "once", "always".
-            require_fips_device: (Boolean) Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+            require_fips_device: (Boolean) Requires the PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
             required_aaguids: (String) Specifies a Cloudflare List of required FIDO2 authenticator device AAGUIDs.
             service_token_inactivity: (Attributes) Configures automatic enforcement for inactive service tokens. A service token is inactive if no policy references it, and it has not successfully authenticated with an Access application during the selected inactivity period. This setting applies to every service token in your Zero Trust account. (see below for nested schema)
             session_duration: '(String) The amount of time that tokens issued for applications will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h.'
@@ -12810,8 +12876,8 @@ resources:
                   ],
                   "name": "HR",
                   "port_protocols": [
-                    "tcp/80",
-                    "tcp/443"
+                    "tcp/443",
+                    "udp/10000-20000"
                   ],
                   "support_domains": [
                     "example.com",
@@ -12825,15 +12891,15 @@ resources:
             application_source: (String) Returns the application source.
             application_type: (String) Returns the application type.
             application_type_description: (String) Returns the application type description.
-            category_id: (Number) Returns the category ID.
+            category_id: (Number) Numeric identifier for an application category.
             created_at: (String) Returns the application creation time.
             gen_ai_score: (Number) GenAI score for the application. Returns -1 when no score is available.
             hostnames: (Set of String) Hostnames matched by the application.
-            human_id: (String) Returns the human readable ID.
-            id: (Number) Returns the application ID.
+            human_id: (String) Human-readable identifier for the application.
+            id: (Number) Numeric identifier for the application.
             ip_subnets: (Set of String) IP subnets for this application. Custom application create and update requests accept IPv4 prefix lengths /8 through /32 and IPv6 prefix lengths /32 through /128.
-            name: (String) Returns the application name.
-            port_protocols: (Set of String) Port and protocol pairs matched by the application.
+            name: (String) Application name.
+            port_protocols: (Set of String) Ports matched by the application, in protocol/port or inclusive protocol/start-end format (for example, tcp/443 or udp/10000-20000). TCP and UDP ports must be between 0 and 65535.
             support_domains: (Set of String) Support domains matched by the application.
             supported: (Set of String) Cloudflare products that support this application.
             updated_at: (String) Returns the application update time.
@@ -13154,7 +13220,7 @@ resources:
             created_at: (String) Timestamp of when the resource was created.
             fnr_id: (String) Floating Network Resource ID — the secondary ENI that is moved between nodes on failover.
             ha_mode: |-
-                (String) High-availability mode for the WARP Connector tunnel. none means HA is enabled but no provider is configured yet (newly created tunnels default to this). disabled means HA is explicitly turned off. aws uses AWS ENI move for failover. local uses virtual IPs (VIPs) on the local interface.
+                (String) High-availability mode for the Mesh node. none means HA is enabled but no provider is configured yet (newly created nodes default to this). disabled means HA is explicitly turned off. aws uses AWS ENI move for failover. local uses virtual IPs (VIPs) on the local interface.
                 Available values: "none", "disabled", "aws", "local".
             id: (String) UUID of the tunnel.
             tunnel_id: (String) UUID of the tunnel.

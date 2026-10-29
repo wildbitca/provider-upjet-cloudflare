@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type WidgetInitParameters struct {
@@ -47,9 +46,11 @@ type WidgetInitParameters struct {
 	// Return the Ephemeral ID in /siteverify (ENT only).
 	EphemeralID *bool `json:"ephemeralId,omitempty" tf:"ephemeral_id,omitempty"`
 
-	// insensitive substring matching.
+	// insensitive
+	// substring matching; sitekey uses exact matching.
 	// Format: field:value
-	// Filter widgets by field using case-insensitive substring matching.
+	// Filter widgets by field. The `name` field uses case-insensitive
+	// substring matching; `sitekey` uses exact matching.
 	// Format: `field:value`
 	//
 	// Supported fields:
@@ -146,9 +147,11 @@ type WidgetObservation struct {
 	// Return the Ephemeral ID in /siteverify (ENT only).
 	EphemeralID *bool `json:"ephemeralId,omitempty" tf:"ephemeral_id,omitempty"`
 
-	// insensitive substring matching.
+	// insensitive
+	// substring matching; sitekey uses exact matching.
 	// Format: field:value
-	// Filter widgets by field using case-insensitive substring matching.
+	// Filter widgets by field. The `name` field uses case-insensitive
+	// substring matching; `sitekey` uses exact matching.
 	// Format: `field:value`
 	//
 	// Supported fields:
@@ -256,9 +259,11 @@ type WidgetParameters struct {
 	// +kubebuilder:validation:Optional
 	EphemeralID *bool `json:"ephemeralId,omitempty" tf:"ephemeral_id,omitempty"`
 
-	// insensitive substring matching.
+	// insensitive
+	// substring matching; sitekey uses exact matching.
 	// Format: field:value
-	// Filter widgets by field using case-insensitive substring matching.
+	// Filter widgets by field. The `name` field uses case-insensitive
+	// substring matching; `sitekey` uses exact matching.
 	// Format: `field:value`
 	//
 	// Supported fields:
@@ -334,8 +339,8 @@ type WidgetSpec struct {
 
 // WidgetStatus defines the observed state of Widget.
 type WidgetStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        WidgetObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               WidgetObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

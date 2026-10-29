@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CustomRemoteIdentitiesInitParameters struct {
@@ -386,7 +385,7 @@ type WanIpsecTunnelInitParameters struct {
 
 	// (String, Sensitive) A randomly generated or provided string for use in the IPsec tunnel.
 	// A randomly generated or provided string for use in the IPsec tunnel.
-	PskSecretRef *v1.LocalSecretKeySelector `json:"pskSecretRef,omitempty" tf:"-"`
+	PskSecretRef *v2.LocalSecretKeySelector `json:"pskSecretRef,omitempty" tf:"-"`
 
 	// to-customer direction.
 	// If `true`, then IPsec replay protection will be supported in the Cloudflare-to-customer direction.
@@ -519,7 +518,7 @@ type WanIpsecTunnelParameters struct {
 	// (String, Sensitive) A randomly generated or provided string for use in the IPsec tunnel.
 	// A randomly generated or provided string for use in the IPsec tunnel.
 	// +kubebuilder:validation:Optional
-	PskSecretRef *v1.LocalSecretKeySelector `json:"pskSecretRef,omitempty" tf:"-"`
+	PskSecretRef *v2.LocalSecretKeySelector `json:"pskSecretRef,omitempty" tf:"-"`
 
 	// to-customer direction.
 	// If `true`, then IPsec replay protection will be supported in the Cloudflare-to-customer direction.
@@ -546,8 +545,8 @@ type WanIpsecTunnelSpec struct {
 
 // WanIpsecTunnelStatus defines the observed state of WanIpsecTunnel.
 type WanIpsecTunnelStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        WanIpsecTunnelObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               WanIpsecTunnelObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

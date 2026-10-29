@@ -37,3 +37,15 @@ func SetupGated_observatory(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_observatory registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_observatory(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		scheduledtest.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

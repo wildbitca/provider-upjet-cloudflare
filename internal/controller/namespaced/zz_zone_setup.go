@@ -61,3 +61,23 @@ func SetupGated_zone(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_zone registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_zone(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		cachereserve.SetupWebhookWithManager,
+		cachevariants.SetupWebhookWithManager,
+		dnssec.SetupWebhookWithManager,
+		dnssettings.SetupWebhookWithManager,
+		hold.SetupWebhookWithManager,
+		lockdown.SetupWebhookWithManager,
+		setting.SetupWebhookWithManager,
+		subscription.SetupWebhookWithManager,
+		zone.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

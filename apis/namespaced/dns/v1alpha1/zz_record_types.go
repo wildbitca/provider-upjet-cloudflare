@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1common "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	v1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 )
 
@@ -565,11 +564,11 @@ type RecordInitParameters struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1common.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1common.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type RecordObservation struct {
@@ -726,11 +725,11 @@ type RecordParameters struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1common.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1common.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type SettingsInitParameters struct {
@@ -800,8 +799,8 @@ type RecordSpec struct {
 
 // RecordStatus defines the observed state of Record.
 type RecordStatus struct {
-	v1common.ResourceStatus `json:",inline"`
-	AtProvider              RecordObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               RecordObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

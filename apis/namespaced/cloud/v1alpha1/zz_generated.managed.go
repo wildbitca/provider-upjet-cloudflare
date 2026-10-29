@@ -6,44 +6,44 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this ConnectorRules.
-func (mg *ConnectorRules) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *ConnectorRules) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this ConnectorRules.
-func (mg *ConnectorRules) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *ConnectorRules) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ConnectorRules.
-func (mg *ConnectorRules) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *ConnectorRules) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this ConnectorRules.
-func (mg *ConnectorRules) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *ConnectorRules) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this ConnectorRules.
-func (mg *ConnectorRules) SetConditions(c ...xpv1.Condition) {
+func (mg *ConnectorRules) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this ConnectorRules.
-func (mg *ConnectorRules) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *ConnectorRules) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ConnectorRules.
-func (mg *ConnectorRules) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *ConnectorRules) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this ConnectorRules.
-func (mg *ConnectorRules) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *ConnectorRules) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

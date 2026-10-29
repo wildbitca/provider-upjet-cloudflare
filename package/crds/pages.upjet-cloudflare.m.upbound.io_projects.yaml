@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: projects.pages.upjet-cloudflare.m.upbound.io
 spec:
   group: pages.upjet-cloudflare.m.upbound.io
@@ -231,8 +231,8 @@ spec:
                             type: object
                           buildImageMajorVersion:
                             description: |-
-                              (Number) The major version of the build image to use for Pages Functions.
-                              The major version of the build image to use for Pages Functions.
+                              (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
+                              The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
                             type: number
                           compatibilityDate:
                             description: |-
@@ -469,8 +469,8 @@ spec:
                             type: object
                           buildImageMajorVersion:
                             description: |-
-                              (Number) The major version of the build image to use for Pages Functions.
-                              The major version of the build image to use for Pages Functions.
+                              (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
+                              The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
                             type: number
                           compatibilityDate:
                             description: |-
@@ -957,8 +957,8 @@ spec:
                             type: object
                           buildImageMajorVersion:
                             description: |-
-                              (Number) The major version of the build image to use for Pages Functions.
-                              The major version of the build image to use for Pages Functions.
+                              (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
+                              The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
                             type: number
                           compatibilityDate:
                             description: |-
@@ -1197,8 +1197,8 @@ spec:
                             type: object
                           buildImageMajorVersion:
                             description: |-
-                              (Number) The major version of the build image to use for Pages Functions.
-                              The major version of the build image to use for Pages Functions.
+                              (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
+                              The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
                             type: number
                           compatibilityDate:
                             description: |-
@@ -1609,6 +1609,24 @@ spec:
                           The classifying tag for analytics.
                         type: string
                     type: object
+                  buildImageAutoUpgrade:
+                    description: (Attributes) Present when the project is set to a
+                      retired build image major version and its builds have been moved
+                      to a newer one. build_image_major_version in deployment_configs
+                      then reports the version the builds run on. (see below for nested
+                      schema)
+                    properties:
+                      fromVersion:
+                        description: |-
+                          (Number) The retired build image major version the project is set to.
+                          The retired build image major version the project is set to.
+                        type: number
+                      toVersion:
+                        description: |-
+                          (Number) The build image major version the project's builds run on.
+                          The build image major version the project's builds run on.
+                        type: number
+                    type: object
                   canonicalDeployment:
                     description: (Attributes) Most recent production deployment of
                       the project. (see below for nested schema)
@@ -1948,8 +1966,8 @@ spec:
                             type: object
                           buildImageMajorVersion:
                             description: |-
-                              (Number) The major version of the build image to use for Pages Functions.
-                              The major version of the build image to use for Pages Functions.
+                              (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
+                              The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
                             type: number
                           compatibilityDate:
                             description: |-
@@ -2172,8 +2190,8 @@ spec:
                             type: object
                           buildImageMajorVersion:
                             description: |-
-                              (Number) The major version of the build image to use for Pages Functions.
-                              The major version of the build image to use for Pages Functions.
+                              (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
+                              The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
                             type: number
                           compatibilityDate:
                             description: |-
@@ -2840,6 +2858,13 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
               observedGeneration:
                 description: |-
                   ObservedGeneration is the latest metadata.generation

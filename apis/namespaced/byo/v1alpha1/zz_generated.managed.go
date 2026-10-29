@@ -6,44 +6,44 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this IPPrefix.
-func (mg *IPPrefix) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *IPPrefix) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this IPPrefix.
-func (mg *IPPrefix) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *IPPrefix) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this IPPrefix.
-func (mg *IPPrefix) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *IPPrefix) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this IPPrefix.
-func (mg *IPPrefix) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *IPPrefix) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this IPPrefix.
-func (mg *IPPrefix) SetConditions(c ...xpv1.Condition) {
+func (mg *IPPrefix) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this IPPrefix.
-func (mg *IPPrefix) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *IPPrefix) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this IPPrefix.
-func (mg *IPPrefix) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *IPPrefix) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this IPPrefix.
-func (mg *IPPrefix) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *IPPrefix) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

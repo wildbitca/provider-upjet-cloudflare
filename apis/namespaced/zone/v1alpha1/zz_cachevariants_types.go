@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CacheVariantsInitParameters struct {
@@ -26,11 +25,11 @@ type CacheVariantsInitParameters struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type CacheVariantsObservation struct {
@@ -68,11 +67,11 @@ type CacheVariantsParameters struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type ValueInitParameters struct {
@@ -246,8 +245,8 @@ type CacheVariantsSpec struct {
 
 // CacheVariantsStatus defines the observed state of CacheVariants.
 type CacheVariantsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        CacheVariantsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               CacheVariantsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

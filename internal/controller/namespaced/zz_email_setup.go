@@ -58,3 +58,22 @@ func SetupGated_email(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_email registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_email(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		routingaddress.SetupWebhookWithManager,
+		routingcatchall.SetupWebhookWithManager,
+		routingdns.SetupWebhookWithManager,
+		routingrule.SetupWebhookWithManager,
+		routingsettings.SetupWebhookWithManager,
+		securityblocksender.SetupWebhookWithManager,
+		securityimpersonationregistry.SetupWebhookWithManager,
+		securitytrusteddomains.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

@@ -37,3 +37,15 @@ func SetupGated_origin(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_origin registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_origin(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		cacertificate.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

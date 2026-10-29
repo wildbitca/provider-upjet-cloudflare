@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ConfigInitParameters struct {
@@ -86,11 +86,11 @@ type MOQRelayInitParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.Reference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.Reference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (Attributes) upstreams and lingering_subscribe are mutually exclusive. (see below for nested schema)
 	Config *ConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
@@ -143,11 +143,11 @@ type MOQRelayParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.Reference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.Reference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (Attributes) upstreams and lingering_subscribe are mutually exclusive. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -227,8 +227,8 @@ type UpstreamsUpstreamsParameters struct {
 
 // MOQRelaySpec defines the desired state of MOQRelay
 type MOQRelaySpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     MOQRelayParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   MOQRelayParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -244,8 +244,8 @@ type MOQRelaySpec struct {
 
 // MOQRelayStatus defines the observed state of MOQRelay.
 type MOQRelayStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        MOQRelayObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               MOQRelayObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

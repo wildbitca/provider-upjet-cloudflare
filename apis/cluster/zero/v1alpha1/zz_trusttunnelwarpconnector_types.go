@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type TrustTunnelWarpConnectorConnectionsInitParameters struct {
@@ -70,7 +70,7 @@ type TrustTunnelWarpConnectorInitParameters struct {
 
 	// managed tunnel. Must be at least 32 bytes and encoded as a base64 string.
 	// Sets the password required to run a locally-managed tunnel. Must be at least 32 bytes and encoded as a base64 string.
-	TunnelSecretSecretRef *v1.SecretKeySelector `json:"tunnelSecretSecretRef,omitempty" tf:"-"`
+	TunnelSecretSecretRef *v2.SecretKeySelector `json:"tunnelSecretSecretRef,omitempty" tf:"-"`
 }
 
 type TrustTunnelWarpConnectorObservation struct {
@@ -150,13 +150,13 @@ type TrustTunnelWarpConnectorParameters struct {
 	// managed tunnel. Must be at least 32 bytes and encoded as a base64 string.
 	// Sets the password required to run a locally-managed tunnel. Must be at least 32 bytes and encoded as a base64 string.
 	// +kubebuilder:validation:Optional
-	TunnelSecretSecretRef *v1.SecretKeySelector `json:"tunnelSecretSecretRef,omitempty" tf:"-"`
+	TunnelSecretSecretRef *v2.SecretKeySelector `json:"tunnelSecretSecretRef,omitempty" tf:"-"`
 }
 
 // TrustTunnelWarpConnectorSpec defines the desired state of TrustTunnelWarpConnector
 type TrustTunnelWarpConnectorSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     TrustTunnelWarpConnectorParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   TrustTunnelWarpConnectorParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -172,8 +172,8 @@ type TrustTunnelWarpConnectorSpec struct {
 
 // TrustTunnelWarpConnectorStatus defines the observed state of TrustTunnelWarpConnector.
 type TrustTunnelWarpConnectorStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustTunnelWarpConnectorObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustTunnelWarpConnectorObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

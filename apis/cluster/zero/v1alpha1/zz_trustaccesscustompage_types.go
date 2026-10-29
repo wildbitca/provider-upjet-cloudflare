@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type TrustAccessCustomPageInitParameters struct {
@@ -126,8 +126,8 @@ type WarningsParameters struct {
 
 // TrustAccessCustomPageSpec defines the desired state of TrustAccessCustomPage
 type TrustAccessCustomPageSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     TrustAccessCustomPageParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   TrustAccessCustomPageParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -143,8 +143,8 @@ type TrustAccessCustomPageSpec struct {
 
 // TrustAccessCustomPageStatus defines the observed state of TrustAccessCustomPage.
 type TrustAccessCustomPageStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustAccessCustomPageObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustAccessCustomPageObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

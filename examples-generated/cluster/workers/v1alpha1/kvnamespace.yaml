@@ -12,4 +12,5 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: example
     jurisdiction: eu
+    mode: instant
     title: My Own Namespace

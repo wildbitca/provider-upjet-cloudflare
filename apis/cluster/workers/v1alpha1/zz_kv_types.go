@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type KvInitParameters struct {
@@ -23,8 +23,8 @@ type KvInitParameters struct {
 	// Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
 	Expiration *float64 `json:"expiration,omitempty" tf:"expiration,omitempty"`
 
-	// (Number) Expires the key after a number of seconds. Must be at least 60.
-	// Expires the key after a number of seconds. Must be at least 60.
+	// (Number) Number of seconds until the key expires. Must be at least 60. Takes precedence over expiration when both are specified.
+	// Number of seconds until the key expires. Must be at least 60. Takes precedence over `expiration` when both are specified.
 	ExpirationTTL *float64 `json:"expirationTtl,omitempty" tf:"expiration_ttl,omitempty"`
 
 	// whitespace characters are valid. Use percent-encoding to define key names as part of a URL.
@@ -54,8 +54,8 @@ type KvObservation struct {
 	// Expires the key at a certain time, measured in number of seconds since the UNIX epoch.
 	Expiration *float64 `json:"expiration,omitempty" tf:"expiration,omitempty"`
 
-	// (Number) Expires the key after a number of seconds. Must be at least 60.
-	// Expires the key after a number of seconds. Must be at least 60.
+	// (Number) Number of seconds until the key expires. Must be at least 60. Takes precedence over expiration when both are specified.
+	// Number of seconds until the key expires. Must be at least 60. Takes precedence over `expiration` when both are specified.
 	ExpirationTTL *float64 `json:"expirationTtl,omitempty" tf:"expiration_ttl,omitempty"`
 
 	// whitespace characters are valid. Use percent-encoding to define key names as part of a URL.
@@ -90,8 +90,8 @@ type KvParameters struct {
 	// +kubebuilder:validation:Optional
 	Expiration *float64 `json:"expiration,omitempty" tf:"expiration,omitempty"`
 
-	// (Number) Expires the key after a number of seconds. Must be at least 60.
-	// Expires the key after a number of seconds. Must be at least 60.
+	// (Number) Number of seconds until the key expires. Must be at least 60. Takes precedence over expiration when both are specified.
+	// Number of seconds until the key expires. Must be at least 60. Takes precedence over `expiration` when both are specified.
 	// +kubebuilder:validation:Optional
 	ExpirationTTL *float64 `json:"expirationTtl,omitempty" tf:"expiration_ttl,omitempty"`
 
@@ -118,8 +118,8 @@ type KvParameters struct {
 
 // KvSpec defines the desired state of Kv
 type KvSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     KvParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   KvParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -135,8 +135,8 @@ type KvSpec struct {
 
 // KvStatus defines the observed state of Kv.
 type KvStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        KvObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               KvObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

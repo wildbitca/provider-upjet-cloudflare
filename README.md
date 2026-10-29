@@ -18,7 +18,7 @@ kind: Provider
 metadata:
   name: provider-cloudflare-dns
 spec:
-  package: xpkg.upbound.io/wildbitca/provider-cloudflare-dns:v0.2.0
+  package: xpkg.upbound.io/wildbitca/provider-cloudflare-dns:v1.0.0
 ```
 
 Need more services? Add more sub-providers:
@@ -29,14 +29,14 @@ kind: Provider
 metadata:
   name: provider-cloudflare-zone
 spec:
-  package: xpkg.upbound.io/wildbitca/provider-cloudflare-zone:v0.2.0
+  package: xpkg.upbound.io/wildbitca/provider-cloudflare-zone:v1.0.0
 ---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-cloudflare-workers
 spec:
-  package: xpkg.upbound.io/wildbitca/provider-cloudflare-workers:v0.2.0
+  package: xpkg.upbound.io/wildbitca/provider-cloudflare-workers:v1.0.0
 ```
 
 ### Available sub-providers

@@ -6,204 +6,204 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this OriginPulls.
-func (mg *OriginPulls) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *OriginPulls) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this OriginPulls.
-func (mg *OriginPulls) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *OriginPulls) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this OriginPulls.
-func (mg *OriginPulls) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *OriginPulls) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this OriginPulls.
-func (mg *OriginPulls) GetProviderConfigReference() *xpv1.Reference {
+func (mg *OriginPulls) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this OriginPulls.
-func (mg *OriginPulls) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *OriginPulls) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this OriginPulls.
-func (mg *OriginPulls) SetConditions(c ...xpv1.Condition) {
+func (mg *OriginPulls) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this OriginPulls.
-func (mg *OriginPulls) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *OriginPulls) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this OriginPulls.
-func (mg *OriginPulls) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *OriginPulls) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this OriginPulls.
-func (mg *OriginPulls) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *OriginPulls) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this OriginPulls.
-func (mg *OriginPulls) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *OriginPulls) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this OriginPullsCertificate.
-func (mg *OriginPullsCertificate) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *OriginPullsCertificate) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this OriginPullsCertificate.
-func (mg *OriginPullsCertificate) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *OriginPullsCertificate) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this OriginPullsCertificate.
-func (mg *OriginPullsCertificate) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *OriginPullsCertificate) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this OriginPullsCertificate.
-func (mg *OriginPullsCertificate) GetProviderConfigReference() *xpv1.Reference {
+func (mg *OriginPullsCertificate) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this OriginPullsCertificate.
-func (mg *OriginPullsCertificate) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *OriginPullsCertificate) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this OriginPullsCertificate.
-func (mg *OriginPullsCertificate) SetConditions(c ...xpv1.Condition) {
+func (mg *OriginPullsCertificate) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this OriginPullsCertificate.
-func (mg *OriginPullsCertificate) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *OriginPullsCertificate) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this OriginPullsCertificate.
-func (mg *OriginPullsCertificate) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *OriginPullsCertificate) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this OriginPullsCertificate.
-func (mg *OriginPullsCertificate) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *OriginPullsCertificate) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this OriginPullsCertificate.
-func (mg *OriginPullsCertificate) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *OriginPullsCertificate) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this OriginPullsHostnameCertificate.
-func (mg *OriginPullsHostnameCertificate) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *OriginPullsHostnameCertificate) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this OriginPullsHostnameCertificate.
-func (mg *OriginPullsHostnameCertificate) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *OriginPullsHostnameCertificate) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this OriginPullsHostnameCertificate.
-func (mg *OriginPullsHostnameCertificate) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *OriginPullsHostnameCertificate) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this OriginPullsHostnameCertificate.
-func (mg *OriginPullsHostnameCertificate) GetProviderConfigReference() *xpv1.Reference {
+func (mg *OriginPullsHostnameCertificate) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this OriginPullsHostnameCertificate.
-func (mg *OriginPullsHostnameCertificate) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *OriginPullsHostnameCertificate) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this OriginPullsHostnameCertificate.
-func (mg *OriginPullsHostnameCertificate) SetConditions(c ...xpv1.Condition) {
+func (mg *OriginPullsHostnameCertificate) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this OriginPullsHostnameCertificate.
-func (mg *OriginPullsHostnameCertificate) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *OriginPullsHostnameCertificate) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this OriginPullsHostnameCertificate.
-func (mg *OriginPullsHostnameCertificate) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *OriginPullsHostnameCertificate) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this OriginPullsHostnameCertificate.
-func (mg *OriginPullsHostnameCertificate) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *OriginPullsHostnameCertificate) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this OriginPullsHostnameCertificate.
-func (mg *OriginPullsHostnameCertificate) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *OriginPullsHostnameCertificate) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this OriginPullsSettings.
-func (mg *OriginPullsSettings) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *OriginPullsSettings) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this OriginPullsSettings.
-func (mg *OriginPullsSettings) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *OriginPullsSettings) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this OriginPullsSettings.
-func (mg *OriginPullsSettings) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *OriginPullsSettings) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this OriginPullsSettings.
-func (mg *OriginPullsSettings) GetProviderConfigReference() *xpv1.Reference {
+func (mg *OriginPullsSettings) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this OriginPullsSettings.
-func (mg *OriginPullsSettings) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *OriginPullsSettings) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this OriginPullsSettings.
-func (mg *OriginPullsSettings) SetConditions(c ...xpv1.Condition) {
+func (mg *OriginPullsSettings) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this OriginPullsSettings.
-func (mg *OriginPullsSettings) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *OriginPullsSettings) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this OriginPullsSettings.
-func (mg *OriginPullsSettings) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *OriginPullsSettings) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this OriginPullsSettings.
-func (mg *OriginPullsSettings) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *OriginPullsSettings) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this OriginPullsSettings.
-func (mg *OriginPullsSettings) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *OriginPullsSettings) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

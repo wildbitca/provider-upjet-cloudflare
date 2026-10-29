@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AudioInitParameters struct {
@@ -149,8 +148,8 @@ type AudioTrackSpec struct {
 
 // AudioTrackStatus defines the observed state of AudioTrack.
 type AudioTrackStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AudioTrackObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AudioTrackObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
