@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: trustaccessapplications.zero.upjet-cloudflare.m.upbound.io
 spec:
   group: zero.upjet-cloudflare.m.upbound.io
@@ -409,7 +409,7 @@ spec:
                         type: boolean
                       sessionDuration:
                         description: |-
-                          (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                          (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
                           How often a user will be forced to re-authenticate with MFA.
                         type: string
                     type: object
@@ -467,7 +467,7 @@ spec:
                             type: string
                           sessionDuration:
                             description: |-
-                              (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                              (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
                               The duration of the OAuth session. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
                             type: string
                         type: object
@@ -1101,7 +1101,7 @@ spec:
                               type: boolean
                             sessionDuration:
                               description: |-
-                                (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                                (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
                                 How often a user will be forced to re-authenticate with MFA.
                               type: string
                           type: object
@@ -1796,8 +1796,8 @@ spec:
                     type: boolean
                   sessionDuration:
                     description: |-
-                      (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
-                      The amount of time that tokens issued for this application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                      (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
+                      The amount of time that tokens issued for this application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to `24h` for supported application types.
                     type: string
                   skipAppLauncherLoginPage:
                     description: |-
@@ -1818,9 +1818,68 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   targetCriteria:
-                    description: (Attributes List) (see below for nested schema)
+                    description: level target_attributes format or the rule format,
+                      but not both. The rule format requires include; require and
+                      exclude are optional. Each rule must contain a non-empty target_attributes
+                      or tags selector. Hostname selectors accept 1-5000 non-empty
+                      strings. Tag maps accept 1-50 non-empty keys, each with 1-50
+                      non-empty values. (see below for nested schema)
                     items:
                       properties:
+                        exclude:
+                          description: (Attributes Set) Rules evaluated with a NOT
+                            logical operator. To match the policy, a user cannot meet
+                            any of the Exclude rules. (see below for nested schema)
+                          properties:
+                            tags:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+                                Map of target tag keys to values. Values within a key are OR'd.
+                              type: object
+                            targetAttributes:
+                              description: based matching. New or changed maps may
+                                contain only hostname. The API accepts unchanged legacy
+                                maps on update, including non-hostname keys.
+                              properties:
+                                hostname:
+                                  description: (String) The hostname of the destination.
+                                    Matches a valid SNI served by an HTTPS origin.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                          type: object
+                        include:
+                          description: (Attributes Set) Rules evaluated with an OR
+                            logical operator. A user needs to meet only one of the
+                            Include rules. (see below for nested schema)
+                          properties:
+                            tags:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+                                Map of target tag keys to values. Values within a key are OR'd.
+                              type: object
+                            targetAttributes:
+                              description: based matching. New or changed maps may
+                                contain only hostname. The API accepts unchanged legacy
+                                maps on update, including non-hostname keys.
+                              properties:
+                                hostname:
+                                  description: (String) The hostname of the destination.
+                                    Matches a valid SNI served by an HTTPS origin.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                          type: object
                         port:
                           description: |-
                             (Number) The port that the targets use for the chosen communication protocol. A port cannot be assigned to multiple protocols.
@@ -1833,14 +1892,41 @@ spec:
                             The communication protocol your application secures.
                             Available values: "SSH", "RDP".
                           type: string
+                        require:
+                          description: (Attributes Set) Rules evaluated with an AND
+                            logical operator. To match the policy, a user must meet
+                            all of the Require rules. (see below for nested schema)
+                          properties:
+                            tags:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+                                Map of target tag keys to values. Values within a key are OR'd.
+                              type: object
+                            targetAttributes:
+                              description: based matching. New or changed maps may
+                                contain only hostname. The API accepts unchanged legacy
+                                maps on update, including non-hostname keys.
+                              properties:
+                                hostname:
+                                  description: (String) The hostname of the destination.
+                                    Matches a valid SNI served by an HTTPS origin.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                          type: object
                         targetAttributes:
                           additionalProperties:
                             items:
                               type: string
                             type: array
                           description: |-
-                            (Map of List of String) Contains a map of target attribute keys to target attribute values.
-                            Contains a map of target attribute keys to target attribute values.
+                            based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+                            Deprecated: use include.target_attributes for hostname selectors and rule tags for tag-based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
                           type: object
                       type: object
                     type: array
@@ -2220,7 +2306,7 @@ spec:
                         type: boolean
                       sessionDuration:
                         description: |-
-                          (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                          (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
                           How often a user will be forced to re-authenticate with MFA.
                         type: string
                     type: object
@@ -2278,7 +2364,7 @@ spec:
                             type: string
                           sessionDuration:
                             description: |-
-                              (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                              (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
                               The duration of the OAuth session. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
                             type: string
                         type: object
@@ -2912,7 +2998,7 @@ spec:
                               type: boolean
                             sessionDuration:
                               description: |-
-                                (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                                (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
                                 How often a user will be forced to re-authenticate with MFA.
                               type: string
                           type: object
@@ -3607,8 +3693,8 @@ spec:
                     type: boolean
                   sessionDuration:
                     description: |-
-                      (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
-                      The amount of time that tokens issued for this application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                      (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
+                      The amount of time that tokens issued for this application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to `24h` for supported application types.
                     type: string
                   skipAppLauncherLoginPage:
                     description: |-
@@ -3629,9 +3715,68 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   targetCriteria:
-                    description: (Attributes List) (see below for nested schema)
+                    description: level target_attributes format or the rule format,
+                      but not both. The rule format requires include; require and
+                      exclude are optional. Each rule must contain a non-empty target_attributes
+                      or tags selector. Hostname selectors accept 1-5000 non-empty
+                      strings. Tag maps accept 1-50 non-empty keys, each with 1-50
+                      non-empty values. (see below for nested schema)
                     items:
                       properties:
+                        exclude:
+                          description: (Attributes Set) Rules evaluated with a NOT
+                            logical operator. To match the policy, a user cannot meet
+                            any of the Exclude rules. (see below for nested schema)
+                          properties:
+                            tags:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+                                Map of target tag keys to values. Values within a key are OR'd.
+                              type: object
+                            targetAttributes:
+                              description: based matching. New or changed maps may
+                                contain only hostname. The API accepts unchanged legacy
+                                maps on update, including non-hostname keys.
+                              properties:
+                                hostname:
+                                  description: (String) The hostname of the destination.
+                                    Matches a valid SNI served by an HTTPS origin.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                          type: object
+                        include:
+                          description: (Attributes Set) Rules evaluated with an OR
+                            logical operator. A user needs to meet only one of the
+                            Include rules. (see below for nested schema)
+                          properties:
+                            tags:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+                                Map of target tag keys to values. Values within a key are OR'd.
+                              type: object
+                            targetAttributes:
+                              description: based matching. New or changed maps may
+                                contain only hostname. The API accepts unchanged legacy
+                                maps on update, including non-hostname keys.
+                              properties:
+                                hostname:
+                                  description: (String) The hostname of the destination.
+                                    Matches a valid SNI served by an HTTPS origin.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                          type: object
                         port:
                           description: |-
                             (Number) The port that the targets use for the chosen communication protocol. A port cannot be assigned to multiple protocols.
@@ -3644,14 +3789,41 @@ spec:
                             The communication protocol your application secures.
                             Available values: "SSH", "RDP".
                           type: string
+                        require:
+                          description: (Attributes Set) Rules evaluated with an AND
+                            logical operator. To match the policy, a user must meet
+                            all of the Require rules. (see below for nested schema)
+                          properties:
+                            tags:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+                                Map of target tag keys to values. Values within a key are OR'd.
+                              type: object
+                            targetAttributes:
+                              description: based matching. New or changed maps may
+                                contain only hostname. The API accepts unchanged legacy
+                                maps on update, including non-hostname keys.
+                              properties:
+                                hostname:
+                                  description: (String) The hostname of the destination.
+                                    Matches a valid SNI served by an HTTPS origin.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                          type: object
                         targetAttributes:
                           additionalProperties:
                             items:
                               type: string
                             type: array
                           description: |-
-                            (Map of List of String) Contains a map of target attribute keys to target attribute values.
-                            Contains a map of target attribute keys to target attribute values.
+                            based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+                            Deprecated: use include.target_attributes for hostname selectors and rule tags for tag-based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
                           type: object
                       type: object
                     type: array
@@ -4010,7 +4182,7 @@ spec:
                         type: boolean
                       sessionDuration:
                         description: |-
-                          (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                          (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
                           How often a user will be forced to re-authenticate with MFA.
                         type: string
                     type: object
@@ -4068,7 +4240,7 @@ spec:
                             type: string
                           sessionDuration:
                             description: |-
-                              (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                              (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
                               The duration of the OAuth session. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
                             type: string
                         type: object
@@ -4702,7 +4874,7 @@ spec:
                               type: boolean
                             sessionDuration:
                               description: |-
-                                (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                                (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
                                 How often a user will be forced to re-authenticate with MFA.
                               type: string
                           type: object
@@ -5365,8 +5537,8 @@ spec:
                     type: boolean
                   sessionDuration:
                     description: |-
-                      (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
-                      The amount of time that tokens issued for this application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+                      (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
+                      The amount of time that tokens issued for this application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to `24h` for supported application types.
                     type: string
                   skipAppLauncherLoginPage:
                     description: |-
@@ -5387,9 +5559,68 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   targetCriteria:
-                    description: (Attributes List) (see below for nested schema)
+                    description: level target_attributes format or the rule format,
+                      but not both. The rule format requires include; require and
+                      exclude are optional. Each rule must contain a non-empty target_attributes
+                      or tags selector. Hostname selectors accept 1-5000 non-empty
+                      strings. Tag maps accept 1-50 non-empty keys, each with 1-50
+                      non-empty values. (see below for nested schema)
                     items:
                       properties:
+                        exclude:
+                          description: (Attributes Set) Rules evaluated with a NOT
+                            logical operator. To match the policy, a user cannot meet
+                            any of the Exclude rules. (see below for nested schema)
+                          properties:
+                            tags:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+                                Map of target tag keys to values. Values within a key are OR'd.
+                              type: object
+                            targetAttributes:
+                              description: based matching. New or changed maps may
+                                contain only hostname. The API accepts unchanged legacy
+                                maps on update, including non-hostname keys.
+                              properties:
+                                hostname:
+                                  description: (String) The hostname of the destination.
+                                    Matches a valid SNI served by an HTTPS origin.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                          type: object
+                        include:
+                          description: (Attributes Set) Rules evaluated with an OR
+                            logical operator. A user needs to meet only one of the
+                            Include rules. (see below for nested schema)
+                          properties:
+                            tags:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+                                Map of target tag keys to values. Values within a key are OR'd.
+                              type: object
+                            targetAttributes:
+                              description: based matching. New or changed maps may
+                                contain only hostname. The API accepts unchanged legacy
+                                maps on update, including non-hostname keys.
+                              properties:
+                                hostname:
+                                  description: (String) The hostname of the destination.
+                                    Matches a valid SNI served by an HTTPS origin.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                          type: object
                         port:
                           description: |-
                             (Number) The port that the targets use for the chosen communication protocol. A port cannot be assigned to multiple protocols.
@@ -5402,14 +5633,41 @@ spec:
                             The communication protocol your application secures.
                             Available values: "SSH", "RDP".
                           type: string
+                        require:
+                          description: (Attributes Set) Rules evaluated with an AND
+                            logical operator. To match the policy, a user must meet
+                            all of the Require rules. (see below for nested schema)
+                          properties:
+                            tags:
+                              additionalProperties:
+                                items:
+                                  type: string
+                                type: array
+                              description: |-
+                                (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+                                Map of target tag keys to values. Values within a key are OR'd.
+                              type: object
+                            targetAttributes:
+                              description: based matching. New or changed maps may
+                                contain only hostname. The API accepts unchanged legacy
+                                maps on update, including non-hostname keys.
+                              properties:
+                                hostname:
+                                  description: (String) The hostname of the destination.
+                                    Matches a valid SNI served by an HTTPS origin.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                          type: object
                         targetAttributes:
                           additionalProperties:
                             items:
                               type: string
                             type: array
                           description: |-
-                            (Map of List of String) Contains a map of target attribute keys to target attribute values.
-                            Contains a map of target attribute keys to target attribute values.
+                            based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+                            Deprecated: use include.target_attributes for hostname selectors and rule tags for tag-based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
                           type: object
                       type: object
                     type: array
@@ -5472,6 +5730,13 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
               observedGeneration:
                 description: |-
                   ObservedGeneration is the latest metadata.generation

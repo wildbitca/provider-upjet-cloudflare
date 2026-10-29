@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AnyValidServiceTokenInitParameters struct {
@@ -104,11 +104,11 @@ type AuthenticationInitParameters struct {
 
 	// (String, Sensitive) The application client secret, only returned on POST request.
 	// Secret used to authenticate when generating a token for authenticating with the remove SCIM service.
-	ClientSecretSecretRef *v1.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+	ClientSecretSecretRef *v2.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) Password used to authenticate with the remote SCIM service.
 	// Password used to authenticate with the remote SCIM service.
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (String) The authentication scheme to use when making SCIM requests to this application.
 	// Available values: "httpbasic", "oauthbearertoken", "oauth2", "access_service_token".
@@ -122,7 +122,7 @@ type AuthenticationInitParameters struct {
 
 	// (String, Sensitive) Token used to authenticate with the remote SCIM service.
 	// Token used to authenticate with the remote SCIM service.
-	TokenSecretRef *v1.SecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
+	TokenSecretRef *v2.SecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
 
 	// (String) URL used to generate the token used to authenticate with the remote SCIM service.
 	// URL used to generate the token used to authenticate with the remote SCIM service.
@@ -177,12 +177,12 @@ type AuthenticationParameters struct {
 	// (String, Sensitive) The application client secret, only returned on POST request.
 	// Secret used to authenticate when generating a token for authenticating with the remove SCIM service.
 	// +kubebuilder:validation:Optional
-	ClientSecretSecretRef *v1.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
+	ClientSecretSecretRef *v2.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) Password used to authenticate with the remote SCIM service.
 	// Password used to authenticate with the remote SCIM service.
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+	PasswordSecretRef *v2.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
 	// (String) The authentication scheme to use when making SCIM requests to this application.
 	// Available values: "httpbasic", "oauthbearertoken", "oauth2", "access_service_token".
@@ -199,7 +199,7 @@ type AuthenticationParameters struct {
 	// (String, Sensitive) Token used to authenticate with the remote SCIM service.
 	// Token used to authenticate with the remote SCIM service.
 	// +kubebuilder:validation:Optional
-	TokenSecretRef *v1.SecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
+	TokenSecretRef *v2.SecretKeySelector `json:"tokenSecretRef,omitempty" tf:"-"`
 
 	// (String) URL used to generate the token used to authenticate with the remote SCIM service.
 	// URL used to generate the token used to authenticate with the remote SCIM service.
@@ -1293,7 +1293,7 @@ type GrantInitParameters struct {
 	// The lifetime of the access token. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
 	AccessTokenLifetime *string `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
 
-	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
 	// The duration of the OAuth session. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 }
@@ -1304,7 +1304,7 @@ type GrantObservation struct {
 	// The lifetime of the access token. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
 	AccessTokenLifetime *string `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
 
-	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
 	// The duration of the OAuth session. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 }
@@ -1316,7 +1316,7 @@ type GrantParameters struct {
 	// +kubebuilder:validation:Optional
 	AccessTokenLifetime *string `json:"accessTokenLifetime,omitempty" tf:"access_token_lifetime,omitempty"`
 
-	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
 	// The duration of the OAuth session. Must be in the format `300ms` or `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h.
 	// +kubebuilder:validation:Optional
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
@@ -2352,6 +2352,25 @@ type IncludeServiceTokenParameters struct {
 	TokenID *string `json:"tokenId" tf:"token_id,omitempty"`
 }
 
+type IncludeTargetAttributesInitParameters struct {
+
+	// (String) The hostname of the destination. Matches a valid SNI served by an HTTPS origin.
+	Hostname []*string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+}
+
+type IncludeTargetAttributesObservation struct {
+
+	// (String) The hostname of the destination. Matches a valid SNI served by an HTTPS origin.
+	Hostname []*string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+}
+
+type IncludeTargetAttributesParameters struct {
+
+	// (String) The hostname of the destination. Matches a valid SNI served by an HTTPS origin.
+	// +kubebuilder:validation:Optional
+	Hostname []*string `json:"hostname" tf:"hostname,omitempty"`
+}
+
 type LandingPageDesignInitParameters struct {
 
 	// (String) The background color of the log in button on the landing page.
@@ -2572,7 +2591,7 @@ type MfaConfigInitParameters struct {
 	// Whether MFA is disabled for this application.
 	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
 
-	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
 	// How often a user will be forced to re-authenticate with MFA.
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 }
@@ -2589,7 +2608,7 @@ type MfaConfigObservation struct {
 	// Whether MFA is disabled for this application.
 	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
 
-	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
 	// How often a user will be forced to re-authenticate with MFA.
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 }
@@ -2608,7 +2627,7 @@ type MfaConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
 
-	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
 	// How often a user will be forced to re-authenticate with MFA.
 	// +kubebuilder:validation:Optional
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
@@ -2870,7 +2889,7 @@ type PoliciesMfaConfigInitParameters struct {
 	// Whether MFA is disabled for this policy.
 	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
 
-	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
 	// How often a user will be forced to re-authenticate with MFA.
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 }
@@ -2887,7 +2906,7 @@ type PoliciesMfaConfigObservation struct {
 	// Whether MFA is disabled for this policy.
 	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
 
-	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
 	// How often a user will be forced to re-authenticate with MFA.
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 }
@@ -2906,7 +2925,7 @@ type PoliciesMfaConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	MfaDisabled *bool `json:"mfaDisabled,omitempty" tf:"mfa_disabled,omitempty"`
 
-	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
 	// How often a user will be forced to re-authenticate with MFA.
 	// +kubebuilder:validation:Optional
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
@@ -3944,6 +3963,25 @@ type RequireServiceTokenParameters struct {
 	TokenID *string `json:"tokenId" tf:"token_id,omitempty"`
 }
 
+type RequireTargetAttributesInitParameters struct {
+
+	// (String) The hostname of the destination. Matches a valid SNI served by an HTTPS origin.
+	Hostname []*string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+}
+
+type RequireTargetAttributesObservation struct {
+
+	// (String) The hostname of the destination. Matches a valid SNI served by an HTTPS origin.
+	Hostname []*string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+}
+
+type RequireTargetAttributesParameters struct {
+
+	// (String) The hostname of the destination. Matches a valid SNI served by an HTTPS origin.
+	// +kubebuilder:validation:Optional
+	Hostname []*string `json:"hostname" tf:"hostname,omitempty"`
+}
+
 type SAMLInitParameters struct {
 
 	// (String) The name of the SAML attribute.
@@ -4439,7 +4477,96 @@ type SourceParameters struct {
 	NameByIdp []NameByIdpParameters `json:"nameByIdp,omitempty" tf:"name_by_idp,omitempty"`
 }
 
+type TargetAttributesInitParameters struct {
+
+	// (String) The hostname of the destination. Matches a valid SNI served by an HTTPS origin.
+	Hostname []*string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+}
+
+type TargetAttributesObservation struct {
+
+	// (String) The hostname of the destination. Matches a valid SNI served by an HTTPS origin.
+	Hostname []*string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+}
+
+type TargetAttributesParameters struct {
+
+	// (String) The hostname of the destination. Matches a valid SNI served by an HTTPS origin.
+	// +kubebuilder:validation:Optional
+	Hostname []*string `json:"hostname" tf:"hostname,omitempty"`
+}
+
+type TargetCriteriaExcludeInitParameters struct {
+
+	// (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+	// Map of target tag keys to values. Values within a key are OR'd.
+	Tags map[string][]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	TargetAttributes *TargetAttributesInitParameters `json:"targetAttributes,omitempty" tf:"target_attributes,omitempty"`
+}
+
+type TargetCriteriaExcludeObservation struct {
+
+	// (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+	// Map of target tag keys to values. Values within a key are OR'd.
+	Tags map[string][]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	TargetAttributes *TargetAttributesObservation `json:"targetAttributes,omitempty" tf:"target_attributes,omitempty"`
+}
+
+type TargetCriteriaExcludeParameters struct {
+
+	// (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+	// Map of target tag keys to values. Values within a key are OR'd.
+	// +kubebuilder:validation:Optional
+	Tags map[string][]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	// +kubebuilder:validation:Optional
+	TargetAttributes *TargetAttributesParameters `json:"targetAttributes,omitempty" tf:"target_attributes,omitempty"`
+}
+
+type TargetCriteriaIncludeInitParameters struct {
+
+	// (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+	// Map of target tag keys to values. Values within a key are OR'd.
+	Tags map[string][]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	TargetAttributes *IncludeTargetAttributesInitParameters `json:"targetAttributes,omitempty" tf:"target_attributes,omitempty"`
+}
+
+type TargetCriteriaIncludeObservation struct {
+
+	// (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+	// Map of target tag keys to values. Values within a key are OR'd.
+	Tags map[string][]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	TargetAttributes *IncludeTargetAttributesObservation `json:"targetAttributes,omitempty" tf:"target_attributes,omitempty"`
+}
+
+type TargetCriteriaIncludeParameters struct {
+
+	// (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+	// Map of target tag keys to values. Values within a key are OR'd.
+	// +kubebuilder:validation:Optional
+	Tags map[string][]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	// +kubebuilder:validation:Optional
+	TargetAttributes *IncludeTargetAttributesParameters `json:"targetAttributes,omitempty" tf:"target_attributes,omitempty"`
+}
+
 type TargetCriteriaInitParameters struct {
+
+	// (Attributes Set) Rules evaluated with a NOT logical operator. To match the policy, a user cannot meet any of the Exclude rules. (see below for nested schema)
+	Exclude *TargetCriteriaExcludeInitParameters `json:"exclude,omitempty" tf:"exclude,omitempty"`
+
+	// (Attributes Set) Rules evaluated with an OR logical operator. A user needs to meet only one of the Include rules. (see below for nested schema)
+	Include *TargetCriteriaIncludeInitParameters `json:"include,omitempty" tf:"include,omitempty"`
 
 	// (Number) The port that the targets use for the chosen communication protocol. A port cannot be assigned to multiple protocols.
 	// The port that the targets use for the chosen communication protocol. A port cannot be assigned to multiple protocols.
@@ -4451,13 +4578,22 @@ type TargetCriteriaInitParameters struct {
 	// Available values: "SSH", "RDP".
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// (Map of List of String) Contains a map of target attribute keys to target attribute values.
-	// Contains a map of target attribute keys to target attribute values.
+	// (Attributes Set) Rules evaluated with an AND logical operator. To match the policy, a user must meet all of the Require rules. (see below for nested schema)
+	Require *TargetCriteriaRequireInitParameters `json:"require,omitempty" tf:"require,omitempty"`
+
+	// based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	// Deprecated: use include.target_attributes for hostname selectors and rule tags for tag-based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
 	TargetAttributes map[string][]*string `json:"targetAttributes,omitempty" tf:"target_attributes,omitempty"`
 }
 
 type TargetCriteriaObservation struct {
 
+	// (Attributes Set) Rules evaluated with a NOT logical operator. To match the policy, a user cannot meet any of the Exclude rules. (see below for nested schema)
+	Exclude *TargetCriteriaExcludeObservation `json:"exclude,omitempty" tf:"exclude,omitempty"`
+
+	// (Attributes Set) Rules evaluated with an OR logical operator. A user needs to meet only one of the Include rules. (see below for nested schema)
+	Include *TargetCriteriaIncludeObservation `json:"include,omitempty" tf:"include,omitempty"`
+
 	// (Number) The port that the targets use for the chosen communication protocol. A port cannot be assigned to multiple protocols.
 	// The port that the targets use for the chosen communication protocol. A port cannot be assigned to multiple protocols.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
@@ -4468,12 +4604,23 @@ type TargetCriteriaObservation struct {
 	// Available values: "SSH", "RDP".
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// (Map of List of String) Contains a map of target attribute keys to target attribute values.
-	// Contains a map of target attribute keys to target attribute values.
+	// (Attributes Set) Rules evaluated with an AND logical operator. To match the policy, a user must meet all of the Require rules. (see below for nested schema)
+	Require *TargetCriteriaRequireObservation `json:"require,omitempty" tf:"require,omitempty"`
+
+	// based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	// Deprecated: use include.target_attributes for hostname selectors and rule tags for tag-based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
 	TargetAttributes map[string][]*string `json:"targetAttributes,omitempty" tf:"target_attributes,omitempty"`
 }
 
 type TargetCriteriaParameters struct {
+
+	// (Attributes Set) Rules evaluated with a NOT logical operator. To match the policy, a user cannot meet any of the Exclude rules. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Exclude *TargetCriteriaExcludeParameters `json:"exclude,omitempty" tf:"exclude,omitempty"`
+
+	// (Attributes Set) Rules evaluated with an OR logical operator. A user needs to meet only one of the Include rules. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Include *TargetCriteriaIncludeParameters `json:"include,omitempty" tf:"include,omitempty"`
 
 	// (Number) The port that the targets use for the chosen communication protocol. A port cannot be assigned to multiple protocols.
 	// The port that the targets use for the chosen communication protocol. A port cannot be assigned to multiple protocols.
@@ -4487,10 +4634,46 @@ type TargetCriteriaParameters struct {
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol" tf:"protocol,omitempty"`
 
-	// (Map of List of String) Contains a map of target attribute keys to target attribute values.
-	// Contains a map of target attribute keys to target attribute values.
+	// (Attributes Set) Rules evaluated with an AND logical operator. To match the policy, a user must meet all of the Require rules. (see below for nested schema)
 	// +kubebuilder:validation:Optional
-	TargetAttributes map[string][]*string `json:"targetAttributes" tf:"target_attributes,omitempty"`
+	Require *TargetCriteriaRequireParameters `json:"require,omitempty" tf:"require,omitempty"`
+
+	// based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	// Deprecated: use include.target_attributes for hostname selectors and rule tags for tag-based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	// +kubebuilder:validation:Optional
+	TargetAttributes map[string][]*string `json:"targetAttributes,omitempty" tf:"target_attributes,omitempty"`
+}
+
+type TargetCriteriaRequireInitParameters struct {
+
+	// (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+	// Map of target tag keys to values. Values within a key are OR'd.
+	Tags map[string][]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	TargetAttributes *RequireTargetAttributesInitParameters `json:"targetAttributes,omitempty" tf:"target_attributes,omitempty"`
+}
+
+type TargetCriteriaRequireObservation struct {
+
+	// (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+	// Map of target tag keys to values. Values within a key are OR'd.
+	Tags map[string][]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	TargetAttributes *RequireTargetAttributesObservation `json:"targetAttributes,omitempty" tf:"target_attributes,omitempty"`
+}
+
+type TargetCriteriaRequireParameters struct {
+
+	// (Set of String) The tags you want assigned to an application. Tags are used to filter applications in the App Launcher dashboard.
+	// Map of target tag keys to values. Values within a key are OR'd.
+	// +kubebuilder:validation:Optional
+	Tags map[string][]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// based matching. New or changed maps may contain only hostname. The API accepts unchanged legacy maps on update, including non-hostname keys.
+	// +kubebuilder:validation:Optional
+	TargetAttributes *RequireTargetAttributesParameters `json:"targetAttributes,omitempty" tf:"target_attributes,omitempty"`
 }
 
 type TrustAccessApplicationInitParameters struct {
@@ -4502,11 +4685,11 @@ type TrustAccessApplicationInitParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.Reference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.Reference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (Boolean) When set to true, users can authenticate to this application using their WARP session.  When set to false this application will always require direct IdP authentication. This setting always overrides the organization setting for WARP authentication.
 	// When set to true, users can authenticate to this application using their WARP session.  When set to false this application will always require direct IdP authentication. This setting always overrides the organization setting for WARP authentication.
@@ -4640,8 +4823,8 @@ type TrustAccessApplicationInitParameters struct {
 	// Returns a 401 status code when the request is blocked by a Service Auth policy.
 	ServiceAuth401Redirect *bool `json:"serviceAuth401Redirect,omitempty" tf:"service_auth_401_redirect,omitempty"`
 
-	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
-	// The amount of time that tokens issued for this application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
+	// The amount of time that tokens issued for this application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to `24h` for supported application types.
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 
 	// (Boolean) Determines when to skip the App Launcher landing page.
@@ -4657,7 +4840,7 @@ type TrustAccessApplicationInitParameters struct {
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// level target_attributes format or the rule format, but not both. The rule format requires include; require and exclude are optional. Each rule must contain a non-empty target_attributes or tags selector. Hostname selectors accept 1-5000 non-empty strings. Tag maps accept 1-50 non-empty keys, each with 1-50 non-empty values. (see below for nested schema)
 	TargetCriteria []TargetCriteriaInitParameters `json:"targetCriteria,omitempty" tf:"target_criteria,omitempty"`
 
 	// (String) The application type.
@@ -4816,8 +4999,8 @@ type TrustAccessApplicationObservation struct {
 	// Returns a 401 status code when the request is blocked by a Service Auth policy.
 	ServiceAuth401Redirect *bool `json:"serviceAuth401Redirect,omitempty" tf:"service_auth_401_redirect,omitempty"`
 
-	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
-	// The amount of time that tokens issued for this application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
+	// The amount of time that tokens issued for this application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to `24h` for supported application types.
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 
 	// (Boolean) Determines when to skip the App Launcher landing page.
@@ -4833,7 +5016,7 @@ type TrustAccessApplicationObservation struct {
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// level target_attributes format or the rule format, but not both. The rule format requires include; require and exclude are optional. Each rule must contain a non-empty target_attributes or tags selector. Hostname selectors accept 1-5000 non-empty strings. Tag maps accept 1-50 non-empty keys, each with 1-50 non-empty values. (see below for nested schema)
 	TargetCriteria []TargetCriteriaObservation `json:"targetCriteria,omitempty" tf:"target_criteria,omitempty"`
 
 	// (String) The application type.
@@ -4857,11 +5040,11 @@ type TrustAccessApplicationParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.Reference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.Reference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (Boolean) When set to true, users can authenticate to this application using their WARP session.  When set to false this application will always require direct IdP authentication. This setting always overrides the organization setting for WARP authentication.
 	// When set to true, users can authenticate to this application using their WARP session.  When set to false this application will always require direct IdP authentication. This setting always overrides the organization setting for WARP authentication.
@@ -5027,8 +5210,8 @@ type TrustAccessApplicationParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAuth401Redirect *bool `json:"serviceAuth401Redirect,omitempty" tf:"service_auth_401_redirect,omitempty"`
 
-	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
-	// The amount of time that tokens issued for this application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. Note: unsupported for infrastructure type applications.
+	// (String) The amount of time that tokens issued for this application will be valid. Must be in the format 300ms or 2h45m. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to 24h for supported application types.
+	// The amount of time that tokens issued for this application will be valid. Must be in the format `300ms` or `2h45m`. Valid time units are: ns, us (or µs), ms, s, m, h. For infrastructure applications, this is the maximum connection duration; connections are terminated once it elapses. Infrastructure durations must use s, m, or h and resolve to whole seconds. Defaults to `24h` for supported application types.
 	// +kubebuilder:validation:Optional
 	SessionDuration *string `json:"sessionDuration,omitempty" tf:"session_duration,omitempty"`
 
@@ -5048,7 +5231,7 @@ type TrustAccessApplicationParameters struct {
 	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// level target_attributes format or the rule format, but not both. The rule format requires include; require and exclude are optional. Each rule must contain a non-empty target_attributes or tags selector. Hostname selectors accept 1-5000 non-empty strings. Tag maps accept 1-50 non-empty keys, each with 1-50 non-empty values. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	TargetCriteria []TargetCriteriaParameters `json:"targetCriteria,omitempty" tf:"target_criteria,omitempty"`
 
@@ -5067,8 +5250,8 @@ type TrustAccessApplicationParameters struct {
 
 // TrustAccessApplicationSpec defines the desired state of TrustAccessApplication
 type TrustAccessApplicationSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     TrustAccessApplicationParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   TrustAccessApplicationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -5084,8 +5267,8 @@ type TrustAccessApplicationSpec struct {
 
 // TrustAccessApplicationStatus defines the observed state of TrustAccessApplication.
 type TrustAccessApplicationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustAccessApplicationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustAccessApplicationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -46,3 +46,18 @@ func SetupGated_waiting(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_waiting registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_waiting(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		room.SetupWebhookWithManager,
+		roomevent.SetupWebhookWithManager,
+		roomrules.SetupWebhookWithManager,
+		roomsettings.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

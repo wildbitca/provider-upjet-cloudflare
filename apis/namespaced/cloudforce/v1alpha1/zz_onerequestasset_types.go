@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type OneRequestAssetInitParameters struct {
@@ -126,8 +125,8 @@ type OneRequestAssetSpec struct {
 
 // OneRequestAssetStatus defines the observed state of OneRequestAsset.
 type OneRequestAssetStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        OneRequestAssetObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               OneRequestAssetObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

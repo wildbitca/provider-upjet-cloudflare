@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AIBindingsInitParameters struct {
@@ -88,7 +87,7 @@ type BuildConfigInitParameters struct {
 
 	// (String, Sensitive) The auth token for analytics.
 	// The auth token for analytics.
-	WebAnalyticsTokenSecretRef *v1.LocalSecretKeySelector `json:"webAnalyticsTokenSecretRef,omitempty" tf:"-"`
+	WebAnalyticsTokenSecretRef *v2.LocalSecretKeySelector `json:"webAnalyticsTokenSecretRef,omitempty" tf:"-"`
 }
 
 type BuildConfigObservation struct {
@@ -144,7 +143,24 @@ type BuildConfigParameters struct {
 	// (String, Sensitive) The auth token for analytics.
 	// The auth token for analytics.
 	// +kubebuilder:validation:Optional
-	WebAnalyticsTokenSecretRef *v1.LocalSecretKeySelector `json:"webAnalyticsTokenSecretRef,omitempty" tf:"-"`
+	WebAnalyticsTokenSecretRef *v2.LocalSecretKeySelector `json:"webAnalyticsTokenSecretRef,omitempty" tf:"-"`
+}
+
+type BuildImageAutoUpgradeInitParameters struct {
+}
+
+type BuildImageAutoUpgradeObservation struct {
+
+	// (Number) The retired build image major version the project is set to.
+	// The retired build image major version the project is set to.
+	FromVersion *float64 `json:"fromVersion,omitempty" tf:"from_version,omitempty"`
+
+	// (Number) The build image major version the project's builds run on.
+	// The build image major version the project's builds run on.
+	ToVersion *float64 `json:"toVersion,omitempty" tf:"to_version,omitempty"`
+}
+
+type BuildImageAutoUpgradeParameters struct {
 }
 
 type CanonicalDeploymentBuildConfigInitParameters struct {
@@ -810,7 +826,7 @@ type PreviewEnvVarsInitParameters struct {
 
 	// (String, Sensitive) Environment variable value.
 	// Environment variable value.
-	ValueSecretRef v1.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
+	ValueSecretRef v2.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 type PreviewEnvVarsObservation struct {
@@ -830,7 +846,7 @@ type PreviewEnvVarsParameters struct {
 	// (String, Sensitive) Environment variable value.
 	// Environment variable value.
 	// +kubebuilder:validation:Optional
-	ValueSecretRef v1.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
+	ValueSecretRef v2.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 type PreviewInitParameters struct {
@@ -848,8 +864,8 @@ type PreviewInitParameters struct {
 	// (Attributes Map) Browser bindings used for Pages Functions. (see below for nested schema)
 	Browsers map[string]BrowsersInitParameters `json:"browsers,omitempty" tf:"browsers,omitempty"`
 
-	// (Number) The major version of the build image to use for Pages Functions.
-	// The major version of the build image to use for Pages Functions.
+	// (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
+	// The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
 	BuildImageMajorVersion *float64 `json:"buildImageMajorVersion,omitempty" tf:"build_image_major_version,omitempty"`
 
 	// (String) Compatibility date used for Pages Functions.
@@ -926,8 +942,8 @@ type PreviewObservation struct {
 	// (Attributes Map) Browser bindings used for Pages Functions. (see below for nested schema)
 	Browsers map[string]BrowsersParameters `json:"browsers,omitempty" tf:"browsers,omitempty"`
 
-	// (Number) The major version of the build image to use for Pages Functions.
-	// The major version of the build image to use for Pages Functions.
+	// (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
+	// The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
 	BuildImageMajorVersion *float64 `json:"buildImageMajorVersion,omitempty" tf:"build_image_major_version,omitempty"`
 
 	// (String) Compatibility date used for Pages Functions.
@@ -1008,8 +1024,8 @@ type PreviewParameters struct {
 	// +kubebuilder:validation:Optional
 	Browsers map[string]BrowsersParameters `json:"browsers,omitempty" tf:"browsers,omitempty"`
 
-	// (Number) The major version of the build image to use for Pages Functions.
-	// The major version of the build image to use for Pages Functions.
+	// (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
+	// The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
 	// +kubebuilder:validation:Optional
 	BuildImageMajorVersion *float64 `json:"buildImageMajorVersion,omitempty" tf:"build_image_major_version,omitempty"`
 
@@ -1191,7 +1207,7 @@ type ProductionEnvVarsInitParameters struct {
 
 	// (String, Sensitive) Environment variable value.
 	// Environment variable value.
-	ValueSecretRef v1.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
+	ValueSecretRef v2.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 type ProductionEnvVarsObservation struct {
@@ -1211,7 +1227,7 @@ type ProductionEnvVarsParameters struct {
 	// (String, Sensitive) Environment variable value.
 	// Environment variable value.
 	// +kubebuilder:validation:Optional
-	ValueSecretRef v1.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
+	ValueSecretRef v2.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 type ProductionHyperdriveBindingsInitParameters struct {
@@ -1248,8 +1264,8 @@ type ProductionInitParameters struct {
 	// (Attributes Map) Browser bindings used for Pages Functions. (see below for nested schema)
 	Browsers map[string]ProductionBrowsersInitParameters `json:"browsers,omitempty" tf:"browsers,omitempty"`
 
-	// (Number) The major version of the build image to use for Pages Functions.
-	// The major version of the build image to use for Pages Functions.
+	// (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
+	// The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
 	BuildImageMajorVersion *float64 `json:"buildImageMajorVersion,omitempty" tf:"build_image_major_version,omitempty"`
 
 	// (String) Compatibility date used for Pages Functions.
@@ -1389,8 +1405,8 @@ type ProductionObservation struct {
 	// (Attributes Map) Browser bindings used for Pages Functions. (see below for nested schema)
 	Browsers map[string]ProductionBrowsersParameters `json:"browsers,omitempty" tf:"browsers,omitempty"`
 
-	// (Number) The major version of the build image to use for Pages Functions.
-	// The major version of the build image to use for Pages Functions.
+	// (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
+	// The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
 	BuildImageMajorVersion *float64 `json:"buildImageMajorVersion,omitempty" tf:"build_image_major_version,omitempty"`
 
 	// (String) Compatibility date used for Pages Functions.
@@ -1471,8 +1487,8 @@ type ProductionParameters struct {
 	// +kubebuilder:validation:Optional
 	Browsers map[string]ProductionBrowsersParameters `json:"browsers,omitempty" tf:"browsers,omitempty"`
 
-	// (Number) The major version of the build image to use for Pages Functions.
-	// The major version of the build image to use for Pages Functions.
+	// (Number) The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
+	// The major version of the build image to use for Pages Functions. Version 1 is retired and its projects are moved to version 3. Once a project's builds have been moved, a request that sets version 1 is rejected.
 	// +kubebuilder:validation:Optional
 	BuildImageMajorVersion *float64 `json:"buildImageMajorVersion,omitempty" tf:"build_image_major_version,omitempty"`
 
@@ -1707,11 +1723,11 @@ type ProjectInitParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (Attributes) Configs for the project build process. (see below for nested schema)
 	BuildConfig *BuildConfigInitParameters `json:"buildConfig,omitempty" tf:"build_config,omitempty"`
@@ -1739,6 +1755,9 @@ type ProjectObservation struct {
 
 	// (Attributes) Configs for the project build process. (see below for nested schema)
 	BuildConfig *BuildConfigObservation `json:"buildConfig,omitempty" tf:"build_config,omitempty"`
+
+	// (Attributes) Present when the project is set to a retired build image major version and its builds have been moved to a newer one. build_image_major_version in deployment_configs then reports the version the builds run on. (see below for nested schema)
+	BuildImageAutoUpgrade *BuildImageAutoUpgradeObservation `json:"buildImageAutoUpgrade,omitempty" tf:"build_image_auto_upgrade,omitempty"`
 
 	// (Attributes) Most recent production deployment of the project. (see below for nested schema)
 	CanonicalDeployment *CanonicalDeploymentObservation `json:"canonicalDeployment,omitempty" tf:"canonical_deployment,omitempty"`
@@ -1806,11 +1825,11 @@ type ProjectParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.NamespacedReference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.NamespacedSelector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (Attributes) Configs for the project build process. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -2313,8 +2332,8 @@ type ProjectSpec struct {
 
 // ProjectStatus defines the observed state of Project.
 type ProjectStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ProjectObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ProjectObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

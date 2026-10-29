@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type DataInitParameters struct {
@@ -197,8 +197,8 @@ type TrustDexTestParameters struct {
 
 // TrustDexTestSpec defines the desired state of TrustDexTest
 type TrustDexTestSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     TrustDexTestParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   TrustDexTestParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -214,8 +214,8 @@ type TrustDexTestSpec struct {
 
 // TrustDexTestStatus defines the observed state of TrustDexTest.
 type TrustDexTestStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustDexTestObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustDexTestObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

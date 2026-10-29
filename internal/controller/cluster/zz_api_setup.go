@@ -55,3 +55,21 @@ func SetupGated_api(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_api registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_api(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		shield.SetupWebhookWithManager,
+		shielddiscoveryoperation.SetupWebhookWithManager,
+		shieldoperation.SetupWebhookWithManager,
+		shieldoperationschemavalidationsettings.SetupWebhookWithManager,
+		shieldschema.SetupWebhookWithManager,
+		shieldschemavalidationsettings.SetupWebhookWithManager,
+		token.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

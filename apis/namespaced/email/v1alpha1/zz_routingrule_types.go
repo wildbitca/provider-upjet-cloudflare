@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type RoutingRuleActionsInitParameters struct {
@@ -266,8 +265,8 @@ type RoutingRuleSpec struct {
 
 // RoutingRuleStatus defines the observed state of RoutingRule.
 type RoutingRuleStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        RoutingRuleObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               RoutingRuleObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

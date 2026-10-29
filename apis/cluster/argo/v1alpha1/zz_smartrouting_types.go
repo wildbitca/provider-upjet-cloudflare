@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type SmartRoutingInitParameters struct {
@@ -67,8 +67,8 @@ type SmartRoutingParameters struct {
 
 // SmartRoutingSpec defines the desired state of SmartRouting
 type SmartRoutingSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     SmartRoutingParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   SmartRoutingParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -84,8 +84,8 @@ type SmartRoutingSpec struct {
 
 // SmartRoutingStatus defines the observed state of SmartRouting.
 type SmartRoutingStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SmartRoutingObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SmartRoutingObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

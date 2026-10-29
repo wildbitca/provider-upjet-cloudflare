@@ -1,0 +1,23 @@
+apiVersion: monetization.upjet-cloudflare.m.upbound.io/v1alpha1
+kind: Rules
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monetization/v1alpha1/rules
+  labels:
+    testing.upbound.io/example-name: example_monetization_rules
+  name: example-monetization-rules
+  namespace: crossplane-system
+spec:
+  forProvider:
+    rules:
+    - address: 0x1234567890abcdef1234567890abcdef12345678===
+      description: Premium API endpoint
+      enabled: true
+      expression: (http.request.uri.path eq "/premium" and http.request.method in
+        {"GET" "POST"})
+      id: 023e105f4ecef8ad9ca31a8372d0c353
+      price: "250000"
+      scheme: exact
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

@@ -58,3 +58,22 @@ func SetupGated_r2(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_r2 registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_r2(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		bucket.SetupWebhookWithManager,
+		bucketcors.SetupWebhookWithManager,
+		bucketeventnotification.SetupWebhookWithManager,
+		bucketlifecycle.SetupWebhookWithManager,
+		bucketlock.SetupWebhookWithManager,
+		bucketsippy.SetupWebhookWithManager,
+		customdomain.SetupWebhookWithManager,
+		manageddomain.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

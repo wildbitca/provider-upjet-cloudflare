@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type TrustGatewayCertificateInitParameters struct {
@@ -74,6 +73,10 @@ type TrustGatewayCertificateObservation struct {
 	// Provide the entire issuer field of the certificate (read-only).
 	IssuerRaw *string `json:"issuerRaw,omitempty" tf:"issuer_raw,omitempty"`
 
+	// only region the certificate authority's key material is pinned to. Omitted for certificates that were created without a region.
+	// Indicate the read-only region the certificate authority's key material is pinned to. Omitted for certificates that were created without a region.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
 	// only certificate type, BYO-PKI (custom) or Gateway-managed.
 	// Available values: "custom", "gateway_managed".
 	// Indicate the read-only certificate type, BYO-PKI (custom) or Gateway-managed.
@@ -128,8 +131,8 @@ type TrustGatewayCertificateSpec struct {
 
 // TrustGatewayCertificateStatus defines the observed state of TrustGatewayCertificate.
 type TrustGatewayCertificateStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustGatewayCertificateObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustGatewayCertificateObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

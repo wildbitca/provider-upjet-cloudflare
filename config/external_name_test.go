@@ -40,3 +40,24 @@ func TestWorkersRouteExternalName(t *testing.T) {
 		})
 	}
 }
+
+func TestMonetizationRulesExternalName(t *testing.T) {
+	cfg, ok := ExternalNameConfigs["cloudflare_monetization_rules"]
+	if !ok {
+		t.Fatal("cloudflare_monetization_rules is not configured")
+	}
+	got, err := cfg.GetExternalNameFn(map[string]interface{}{"zone_id": "d9b8169cf1a3c5cc37fe5040cc7b0db7"})
+	if err != nil {
+		t.Fatalf("GetExternalNameFn() error = %v", err)
+	}
+	if want := "d9b8169cf1a3c5cc37fe5040cc7b0db7"; got != want {
+		t.Fatalf("GetExternalNameFn() = %q, want %q", got, want)
+	}
+}
+
+func TestRemovedResourcesAreNotConfigured(t *testing.T) {
+	// cloudflare_registrar_domain was removed in Terraform provider v5.28.0.
+	if _, ok := ExternalNameConfigs["cloudflare_registrar_domain"]; ok {
+		t.Fatal("cloudflare_registrar_domain must not be configured")
+	}
+}

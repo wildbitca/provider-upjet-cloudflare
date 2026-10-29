@@ -6,164 +6,164 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this Hostname.
-func (mg *Hostname) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Hostname) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this Hostname.
-func (mg *Hostname) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Hostname) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Hostname.
-func (mg *Hostname) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *Hostname) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Hostname.
-func (mg *Hostname) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *Hostname) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Hostname.
-func (mg *Hostname) SetConditions(c ...xpv1.Condition) {
+func (mg *Hostname) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this Hostname.
-func (mg *Hostname) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Hostname) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Hostname.
-func (mg *Hostname) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *Hostname) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Hostname.
-func (mg *Hostname) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *Hostname) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this HostnameFallbackOrigin.
-func (mg *HostnameFallbackOrigin) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *HostnameFallbackOrigin) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this HostnameFallbackOrigin.
-func (mg *HostnameFallbackOrigin) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *HostnameFallbackOrigin) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this HostnameFallbackOrigin.
-func (mg *HostnameFallbackOrigin) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *HostnameFallbackOrigin) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this HostnameFallbackOrigin.
-func (mg *HostnameFallbackOrigin) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *HostnameFallbackOrigin) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this HostnameFallbackOrigin.
-func (mg *HostnameFallbackOrigin) SetConditions(c ...xpv1.Condition) {
+func (mg *HostnameFallbackOrigin) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this HostnameFallbackOrigin.
-func (mg *HostnameFallbackOrigin) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *HostnameFallbackOrigin) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this HostnameFallbackOrigin.
-func (mg *HostnameFallbackOrigin) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *HostnameFallbackOrigin) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this HostnameFallbackOrigin.
-func (mg *HostnameFallbackOrigin) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *HostnameFallbackOrigin) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this Pages.
-func (mg *Pages) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Pages) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this Pages.
-func (mg *Pages) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Pages) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Pages.
-func (mg *Pages) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *Pages) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Pages.
-func (mg *Pages) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *Pages) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Pages.
-func (mg *Pages) SetConditions(c ...xpv1.Condition) {
+func (mg *Pages) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this Pages.
-func (mg *Pages) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Pages) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Pages.
-func (mg *Pages) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *Pages) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Pages.
-func (mg *Pages) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *Pages) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this SSL.
-func (mg *SSL) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *SSL) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this SSL.
-func (mg *SSL) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *SSL) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this SSL.
-func (mg *SSL) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *SSL) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this SSL.
-func (mg *SSL) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *SSL) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this SSL.
-func (mg *SSL) SetConditions(c ...xpv1.Condition) {
+func (mg *SSL) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this SSL.
-func (mg *SSL) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *SSL) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this SSL.
-func (mg *SSL) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *SSL) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this SSL.
-func (mg *SSL) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *SSL) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

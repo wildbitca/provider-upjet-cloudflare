@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type OriginPullsHostnameCertificateInitParameters struct {
@@ -22,7 +21,7 @@ type OriginPullsHostnameCertificateInitParameters struct {
 
 	// (String, Sensitive) The hostname certificate's private key.
 	// The hostname certificate's private key.
-	PrivateKeySecretRef v1.LocalSecretKeySelector `json:"privateKeySecretRef" tf:"-"`
+	PrivateKeySecretRef v2.LocalSecretKeySelector `json:"privateKeySecretRef" tf:"-"`
 
 	// (String) Identifier.
 	// Identifier.
@@ -79,7 +78,7 @@ type OriginPullsHostnameCertificateParameters struct {
 	// (String, Sensitive) The hostname certificate's private key.
 	// The hostname certificate's private key.
 	// +kubebuilder:validation:Optional
-	PrivateKeySecretRef v1.LocalSecretKeySelector `json:"privateKeySecretRef" tf:"-"`
+	PrivateKeySecretRef v2.LocalSecretKeySelector `json:"privateKeySecretRef" tf:"-"`
 
 	// (String) Identifier.
 	// Identifier.
@@ -106,8 +105,8 @@ type OriginPullsHostnameCertificateSpec struct {
 
 // OriginPullsHostnameCertificateStatus defines the observed state of OriginPullsHostnameCertificate.
 type OriginPullsHostnameCertificateStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        OriginPullsHostnameCertificateObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               OriginPullsHostnameCertificateObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

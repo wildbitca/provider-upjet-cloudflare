@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ShieldOperationSchemaValidationSettingsInitParameters struct {
@@ -102,8 +101,8 @@ type ShieldOperationSchemaValidationSettingsSpec struct {
 
 // ShieldOperationSchemaValidationSettingsStatus defines the observed state of ShieldOperationSchemaValidationSettings.
 type ShieldOperationSchemaValidationSettingsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ShieldOperationSchemaValidationSettingsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ShieldOperationSchemaValidationSettingsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

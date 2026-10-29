@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type BrowserExtensionConfigInitParameters struct {
@@ -384,8 +383,8 @@ type TrustDeviceCustomProfileInitParameters struct {
 	// The size of the subnet for the local access network. Note that this field is omitted from the response if null or unset.
 	LanAllowSubnetSize *float64 `json:"lanAllowSubnetSize,omitempty" tf:"lan_allow_subnet_size,omitempty"`
 
-	// (String) The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version".
-	// The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version".
+	// (String) The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version", "device.tags".
+	// The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version", "device.tags".
 	Match *string `json:"match,omitempty" tf:"match,omitempty"`
 
 	// (String) The name of the device settings profile.
@@ -510,8 +509,8 @@ type TrustDeviceCustomProfileObservation struct {
 	// The size of the subnet for the local access network. Note that this field is omitted from the response if null or unset.
 	LanAllowSubnetSize *float64 `json:"lanAllowSubnetSize,omitempty" tf:"lan_allow_subnet_size,omitempty"`
 
-	// (String) The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version".
-	// The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version".
+	// (String) The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version", "device.tags".
+	// The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version", "device.tags".
 	Match *string `json:"match,omitempty" tf:"match,omitempty"`
 
 	// (String) The name of the device settings profile.
@@ -550,7 +549,7 @@ type TrustDeviceCustomProfileObservation struct {
 	// Whether to allow the user to turn off the WARP switch and disconnect the client.
 	SwitchLocked *bool `json:"switchLocked,omitempty" tf:"switch_locked,omitempty"`
 
-	// (Attributes List) (see below for nested schema)
+	// (Attributes List, Deprecated) (see below for nested schema)
 	TargetTests []TargetTestsObservation `json:"targetTests,omitempty" tf:"target_tests,omitempty"`
 
 	// (String) Determines which tunnel protocol to use.
@@ -646,8 +645,8 @@ type TrustDeviceCustomProfileParameters struct {
 	// +kubebuilder:validation:Optional
 	LanAllowSubnetSize *float64 `json:"lanAllowSubnetSize,omitempty" tf:"lan_allow_subnet_size,omitempty"`
 
-	// (String) The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version".
-	// The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version".
+	// (String) The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version", "device.tags".
+	// The wirefilter expression to match devices. Available values: "identity.email", "identity.groups.id", "identity.groups.name", "identity.groups.email", "identity.service_token_uuid", "identity.saml_attributes", "network", "os.name", "os.version", "device.tags".
 	// +kubebuilder:validation:Optional
 	Match *string `json:"match,omitempty" tf:"match,omitempty"`
 
@@ -761,8 +760,8 @@ type TrustDeviceCustomProfileSpec struct {
 
 // TrustDeviceCustomProfileStatus defines the observed state of TrustDeviceCustomProfile.
 type TrustDeviceCustomProfileStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustDeviceCustomProfileObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustDeviceCustomProfileObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

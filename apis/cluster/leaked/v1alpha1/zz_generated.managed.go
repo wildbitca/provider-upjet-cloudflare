@@ -6,104 +6,104 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this CredentialCheck.
-func (mg *CredentialCheck) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *CredentialCheck) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this CredentialCheck.
-func (mg *CredentialCheck) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *CredentialCheck) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this CredentialCheck.
-func (mg *CredentialCheck) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *CredentialCheck) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this CredentialCheck.
-func (mg *CredentialCheck) GetProviderConfigReference() *xpv1.Reference {
+func (mg *CredentialCheck) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this CredentialCheck.
-func (mg *CredentialCheck) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *CredentialCheck) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this CredentialCheck.
-func (mg *CredentialCheck) SetConditions(c ...xpv1.Condition) {
+func (mg *CredentialCheck) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this CredentialCheck.
-func (mg *CredentialCheck) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *CredentialCheck) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this CredentialCheck.
-func (mg *CredentialCheck) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *CredentialCheck) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this CredentialCheck.
-func (mg *CredentialCheck) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *CredentialCheck) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this CredentialCheck.
-func (mg *CredentialCheck) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *CredentialCheck) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this CredentialCheckRule.
-func (mg *CredentialCheckRule) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *CredentialCheckRule) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this CredentialCheckRule.
-func (mg *CredentialCheckRule) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *CredentialCheckRule) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this CredentialCheckRule.
-func (mg *CredentialCheckRule) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *CredentialCheckRule) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this CredentialCheckRule.
-func (mg *CredentialCheckRule) GetProviderConfigReference() *xpv1.Reference {
+func (mg *CredentialCheckRule) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this CredentialCheckRule.
-func (mg *CredentialCheckRule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *CredentialCheckRule) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this CredentialCheckRule.
-func (mg *CredentialCheckRule) SetConditions(c ...xpv1.Condition) {
+func (mg *CredentialCheckRule) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this CredentialCheckRule.
-func (mg *CredentialCheckRule) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *CredentialCheckRule) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this CredentialCheckRule.
-func (mg *CredentialCheckRule) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *CredentialCheckRule) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this CredentialCheckRule.
-func (mg *CredentialCheckRule) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *CredentialCheckRule) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this CredentialCheckRule.
-func (mg *CredentialCheckRule) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *CredentialCheckRule) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

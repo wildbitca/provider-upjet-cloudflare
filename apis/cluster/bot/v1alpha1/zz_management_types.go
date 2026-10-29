@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ManagementInitParameters struct {
@@ -434,8 +434,8 @@ type StaleZoneConfigurationParameters struct {
 
 // ManagementSpec defines the desired state of Management
 type ManagementSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ManagementParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ManagementParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -451,8 +451,8 @@ type ManagementSpec struct {
 
 // ManagementStatus defines the observed state of Management.
 type ManagementStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ManagementObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ManagementObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

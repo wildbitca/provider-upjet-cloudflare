@@ -6,44 +6,44 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this TLS.
-func (mg *TLS) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *TLS) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this TLS.
-func (mg *TLS) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *TLS) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this TLS.
-func (mg *TLS) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *TLS) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this TLS.
-func (mg *TLS) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *TLS) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this TLS.
-func (mg *TLS) SetConditions(c ...xpv1.Condition) {
+func (mg *TLS) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this TLS.
-func (mg *TLS) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *TLS) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this TLS.
-func (mg *TLS) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *TLS) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this TLS.
-func (mg *TLS) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *TLS) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

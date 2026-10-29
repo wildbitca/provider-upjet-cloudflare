@@ -6,84 +6,84 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this CredentialCheck.
-func (mg *CredentialCheck) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *CredentialCheck) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this CredentialCheck.
-func (mg *CredentialCheck) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *CredentialCheck) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this CredentialCheck.
-func (mg *CredentialCheck) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *CredentialCheck) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this CredentialCheck.
-func (mg *CredentialCheck) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *CredentialCheck) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this CredentialCheck.
-func (mg *CredentialCheck) SetConditions(c ...xpv1.Condition) {
+func (mg *CredentialCheck) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this CredentialCheck.
-func (mg *CredentialCheck) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *CredentialCheck) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this CredentialCheck.
-func (mg *CredentialCheck) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *CredentialCheck) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this CredentialCheck.
-func (mg *CredentialCheck) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *CredentialCheck) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this CredentialCheckRule.
-func (mg *CredentialCheckRule) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *CredentialCheckRule) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this CredentialCheckRule.
-func (mg *CredentialCheckRule) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *CredentialCheckRule) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this CredentialCheckRule.
-func (mg *CredentialCheckRule) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *CredentialCheckRule) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this CredentialCheckRule.
-func (mg *CredentialCheckRule) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *CredentialCheckRule) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this CredentialCheckRule.
-func (mg *CredentialCheckRule) SetConditions(c ...xpv1.Condition) {
+func (mg *CredentialCheckRule) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this CredentialCheckRule.
-func (mg *CredentialCheckRule) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *CredentialCheckRule) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this CredentialCheckRule.
-func (mg *CredentialCheckRule) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *CredentialCheckRule) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this CredentialCheckRule.
-func (mg *CredentialCheckRule) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *CredentialCheckRule) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

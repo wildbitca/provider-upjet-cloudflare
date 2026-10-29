@@ -40,3 +40,16 @@ func SetupGated_calls(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_calls registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_calls(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		sfuapp.SetupWebhookWithManager,
+		turnapp.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

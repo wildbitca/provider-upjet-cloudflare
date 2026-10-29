@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ZoneTransfersTsigInitParameters struct {
@@ -29,7 +28,7 @@ type ZoneTransfersTsigInitParameters struct {
 
 	// (String, Sensitive) TSIG secret.
 	// TSIG secret.
-	SecretSecretRef v1.LocalSecretKeySelector `json:"secretSecretRef" tf:"-"`
+	SecretSecretRef v2.LocalSecretKeySelector `json:"secretSecretRef" tf:"-"`
 }
 
 type ZoneTransfersTsigObservation struct {
@@ -68,7 +67,7 @@ type ZoneTransfersTsigParameters struct {
 	// (String, Sensitive) TSIG secret.
 	// TSIG secret.
 	// +kubebuilder:validation:Optional
-	SecretSecretRef v1.LocalSecretKeySelector `json:"secretSecretRef" tf:"-"`
+	SecretSecretRef v2.LocalSecretKeySelector `json:"secretSecretRef" tf:"-"`
 }
 
 // ZoneTransfersTsigSpec defines the desired state of ZoneTransfersTsig
@@ -90,8 +89,8 @@ type ZoneTransfersTsigSpec struct {
 
 // ZoneTransfersTsigStatus defines the observed state of ZoneTransfersTsig.
 type ZoneTransfersTsigStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ZoneTransfersTsigObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ZoneTransfersTsigObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

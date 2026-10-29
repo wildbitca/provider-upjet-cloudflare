@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type HostnameInitParameters struct {
@@ -238,8 +238,8 @@ type RedirectParameters struct {
 
 // ItemSpec defines the desired state of Item
 type ItemSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ItemParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ItemParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -255,8 +255,8 @@ type ItemSpec struct {
 
 // ItemStatus defines the observed state of Item.
 type ItemStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ItemObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ItemObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ActionInitParameters struct {
@@ -189,11 +188,11 @@ type RuleInitParameters struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 type RuleObservation struct {
@@ -249,11 +248,11 @@ type RuleParameters struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 // RuleSpec defines the desired state of Rule
@@ -275,8 +274,8 @@ type RuleSpec struct {
 
 // RuleStatus defines the observed state of Rule.
 type RuleStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        RuleObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               RuleObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

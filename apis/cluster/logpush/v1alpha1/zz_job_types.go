@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type JobInitParameters struct {
@@ -27,7 +27,7 @@ type JobInitParameters struct {
 
 	// (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
 	// Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-	DestinationConfSecretRef v1.SecretKeySelector `json:"destinationConfSecretRef" tf:"-"`
+	DestinationConfSecretRef v2.SecretKeySelector `json:"destinationConfSecretRef" tf:"-"`
 
 	// (Boolean) Flag that indicates if the job is enabled.
 	// Flag that indicates if the job is enabled.
@@ -78,7 +78,7 @@ type JobInitParameters struct {
 
 	// (String, Sensitive) Ownership challenge token to prove destination ownership.
 	// Ownership challenge token to prove destination ownership.
-	OwnershipChallengeSecretRef *v1.SecretKeySelector `json:"ownershipChallengeSecretRef,omitempty" tf:"-"`
+	OwnershipChallengeSecretRef *v2.SecretKeySelector `json:"ownershipChallengeSecretRef,omitempty" tf:"-"`
 
 	// (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
 	// The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -181,7 +181,7 @@ type JobParameters struct {
 	// (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
 	// Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
 	// +kubebuilder:validation:Optional
-	DestinationConfSecretRef v1.SecretKeySelector `json:"destinationConfSecretRef" tf:"-"`
+	DestinationConfSecretRef v2.SecretKeySelector `json:"destinationConfSecretRef" tf:"-"`
 
 	// (Boolean) Flag that indicates if the job is enabled.
 	// Flag that indicates if the job is enabled.
@@ -244,7 +244,7 @@ type JobParameters struct {
 	// (String, Sensitive) Ownership challenge token to prove destination ownership.
 	// Ownership challenge token to prove destination ownership.
 	// +kubebuilder:validation:Optional
-	OwnershipChallengeSecretRef *v1.SecretKeySelector `json:"ownershipChallengeSecretRef,omitempty" tf:"-"`
+	OwnershipChallengeSecretRef *v2.SecretKeySelector `json:"ownershipChallengeSecretRef,omitempty" tf:"-"`
 
 	// (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
 	// The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -274,8 +274,8 @@ type OutputOptionsInitParameters struct {
 	// List of field names to be included in the Logpush output. For the moment, there is no option to add all fields at once, so you must specify all the fields names you are interested in.
 	FieldNames []*string `json:"fieldNames,omitempty" tf:"field_names,omitempty"`
 
-	// scoped jobs.
-	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset. Not supported for account-scoped jobs.
+	// (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
+	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
 	MergeSubrequests *bool `json:"mergeSubrequests,omitempty" tf:"merge_subrequests,omitempty"`
 
 	// (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
@@ -333,8 +333,8 @@ type OutputOptionsObservation struct {
 	// List of field names to be included in the Logpush output. For the moment, there is no option to add all fields at once, so you must specify all the fields names you are interested in.
 	FieldNames []*string `json:"fieldNames,omitempty" tf:"field_names,omitempty"`
 
-	// scoped jobs.
-	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset. Not supported for account-scoped jobs.
+	// (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
+	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
 	MergeSubrequests *bool `json:"mergeSubrequests,omitempty" tf:"merge_subrequests,omitempty"`
 
 	// (String) Specifies the output type, such as ndjson or csv. This sets default values for the rest of the settings, depending on the chosen output type. Some formatting rules, like string quoting, are different between output types.
@@ -397,8 +397,8 @@ type OutputOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	FieldNames []*string `json:"fieldNames,omitempty" tf:"field_names,omitempty"`
 
-	// scoped jobs.
-	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset. Not supported for account-scoped jobs.
+	// (Boolean) If set to true, subrequests will be merged into the parent request. Only supported for the http_requests dataset.
+	// If set to true, subrequests will be merged into the parent request. Only supported for the `http_requests` dataset.
 	// +kubebuilder:validation:Optional
 	MergeSubrequests *bool `json:"mergeSubrequests,omitempty" tf:"merge_subrequests,omitempty"`
 
@@ -444,8 +444,8 @@ type OutputOptionsParameters struct {
 
 // JobSpec defines the desired state of Job
 type JobSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     JobParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   JobParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -461,8 +461,8 @@ type JobSpec struct {
 
 // JobStatus defines the observed state of Job.
 type JobStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        JobObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               JobObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

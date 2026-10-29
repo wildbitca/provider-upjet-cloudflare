@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type OneRequestPriorityInitParameters struct {
@@ -134,8 +134,8 @@ type OneRequestPriorityParameters struct {
 
 // OneRequestPrioritySpec defines the desired state of OneRequestPriority
 type OneRequestPrioritySpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     OneRequestPriorityParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   OneRequestPriorityParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -151,8 +151,8 @@ type OneRequestPrioritySpec struct {
 
 // OneRequestPriorityStatus defines the observed state of OneRequestPriority.
 type OneRequestPriorityStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        OneRequestPriorityObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               OneRequestPriorityObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

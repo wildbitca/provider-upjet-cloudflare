@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type OwnershipChallengeInitParameters struct {
@@ -22,7 +21,7 @@ type OwnershipChallengeInitParameters struct {
 
 	// (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
 	// Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
-	DestinationConfSecretRef v1.LocalSecretKeySelector `json:"destinationConfSecretRef" tf:"-"`
+	DestinationConfSecretRef v2.LocalSecretKeySelector `json:"destinationConfSecretRef" tf:"-"`
 
 	// (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
 	// The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -61,7 +60,7 @@ type OwnershipChallengeParameters struct {
 	// (String, Sensitive) Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
 	// Uniquely identifies a resource (such as an s3 bucket) where data. will be pushed. Additional configuration parameters supported by the destination may be included.
 	// +kubebuilder:validation:Optional
-	DestinationConfSecretRef v1.LocalSecretKeySelector `json:"destinationConfSecretRef" tf:"-"`
+	DestinationConfSecretRef v2.LocalSecretKeySelector `json:"destinationConfSecretRef" tf:"-"`
 
 	// (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
 	// The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -88,8 +87,8 @@ type OwnershipChallengeSpec struct {
 
 // OwnershipChallengeStatus defines the observed state of OwnershipChallenge.
 type OwnershipChallengeStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        OwnershipChallengeObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               OwnershipChallengeObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CertificateInitParameters struct {
@@ -34,7 +33,7 @@ type CertificateInitParameters struct {
 
 	// (String, Sensitive) The private key for the certificate. This field is only needed for specific use cases such as using a custom certificate with Zero Trust's block page.
 	// The private key for the certificate. This field is only needed for specific use cases such as using a custom certificate with Zero Trust's block page.
-	PrivateKeySecretRef *v1.LocalSecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
+	PrivateKeySecretRef *v2.LocalSecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
 }
 
 type CertificateObservation struct {
@@ -108,7 +107,7 @@ type CertificateParameters struct {
 	// (String, Sensitive) The private key for the certificate. This field is only needed for specific use cases such as using a custom certificate with Zero Trust's block page.
 	// The private key for the certificate. This field is only needed for specific use cases such as using a custom certificate with Zero Trust's block page.
 	// +kubebuilder:validation:Optional
-	PrivateKeySecretRef *v1.LocalSecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
+	PrivateKeySecretRef *v2.LocalSecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
 }
 
 // CertificateSpec defines the desired state of Certificate
@@ -130,8 +129,8 @@ type CertificateSpec struct {
 
 // CertificateStatus defines the observed state of Certificate.
 type CertificateStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        CertificateObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               CertificateObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

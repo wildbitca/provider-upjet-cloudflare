@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AbortMultipartUploadsTransitionInitParameters struct {
@@ -41,11 +41,11 @@ type BucketLifecycleInitParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.Reference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.Reference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (String) Jurisdiction of the bucket
 	// Jurisdiction of the bucket
@@ -82,11 +82,11 @@ type BucketLifecycleParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.Reference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.Reference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (String) Jurisdiction of the bucket
 	// Jurisdiction of the bucket
@@ -364,8 +364,8 @@ type StorageClassTransitionsParameters struct {
 
 // BucketLifecycleSpec defines the desired state of BucketLifecycle
 type BucketLifecycleSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     BucketLifecycleParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   BucketLifecycleParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -381,8 +381,8 @@ type BucketLifecycleSpec struct {
 
 // BucketLifecycleStatus defines the observed state of BucketLifecycle.
 type BucketLifecycleStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        BucketLifecycleObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               BucketLifecycleObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

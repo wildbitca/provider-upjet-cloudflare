@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ConsumerInitParameters struct {
@@ -292,8 +292,8 @@ type WebhooksParameters struct {
 
 // ConsumerSpec defines the desired state of Consumer
 type ConsumerSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ConsumerParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ConsumerParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -309,8 +309,8 @@ type ConsumerSpec struct {
 
 // ConsumerStatus defines the observed state of Consumer.
 type ConsumerStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ConsumerObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ConsumerObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

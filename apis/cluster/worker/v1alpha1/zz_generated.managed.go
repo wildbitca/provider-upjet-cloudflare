@@ -6,54 +6,54 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this Version.
-func (mg *Version) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Version) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this Version.
-func (mg *Version) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *Version) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this Version.
-func (mg *Version) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Version) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Version.
-func (mg *Version) GetProviderConfigReference() *xpv1.Reference {
+func (mg *Version) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Version.
-func (mg *Version) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *Version) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Version.
-func (mg *Version) SetConditions(c ...xpv1.Condition) {
+func (mg *Version) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this Version.
-func (mg *Version) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *Version) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this Version.
-func (mg *Version) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Version) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Version.
-func (mg *Version) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *Version) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Version.
-func (mg *Version) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *Version) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

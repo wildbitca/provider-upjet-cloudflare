@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type DNSSettingsInitParameters struct {
@@ -52,11 +51,11 @@ type DNSSettingsInitParameters struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
 
 	// (String) Whether the zone mode is a regular or CDN/DNS only zone.
 	// Available values: "standard", "cdn_only", "dns_only".
@@ -156,11 +155,11 @@ type DNSSettingsParameters struct {
 
 	// Reference to a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDRef *v1.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
+	ZoneIDRef *v2.NamespacedReference `json:"zoneIdRef,omitempty" tf:"-"`
 
 	// Selector for a Zone in zone to populate zoneId.
 	// +kubebuilder:validation:Optional
-	ZoneIDSelector *v1.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
+	ZoneIDSelector *v2.NamespacedSelector `json:"zoneIdSelector,omitempty" tf:"-"`
 
 	// (String) Whether the zone mode is a regular or CDN/DNS only zone.
 	// Available values: "standard", "cdn_only", "dns_only".
@@ -365,8 +364,8 @@ type DNSSettingsSpec struct {
 
 // DNSSettingsStatus defines the observed state of DNSSettings.
 type DNSSettingsStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        DNSSettingsObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               DNSSettingsObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

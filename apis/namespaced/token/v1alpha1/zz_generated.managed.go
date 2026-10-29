@@ -6,84 +6,84 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this ValidationConfig.
-func (mg *ValidationConfig) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *ValidationConfig) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this ValidationConfig.
-func (mg *ValidationConfig) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *ValidationConfig) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ValidationConfig.
-func (mg *ValidationConfig) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *ValidationConfig) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this ValidationConfig.
-func (mg *ValidationConfig) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *ValidationConfig) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this ValidationConfig.
-func (mg *ValidationConfig) SetConditions(c ...xpv1.Condition) {
+func (mg *ValidationConfig) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this ValidationConfig.
-func (mg *ValidationConfig) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *ValidationConfig) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ValidationConfig.
-func (mg *ValidationConfig) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *ValidationConfig) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this ValidationConfig.
-func (mg *ValidationConfig) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *ValidationConfig) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this ValidationRules.
-func (mg *ValidationRules) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *ValidationRules) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this ValidationRules.
-func (mg *ValidationRules) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *ValidationRules) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ValidationRules.
-func (mg *ValidationRules) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *ValidationRules) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this ValidationRules.
-func (mg *ValidationRules) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *ValidationRules) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this ValidationRules.
-func (mg *ValidationRules) SetConditions(c ...xpv1.Condition) {
+func (mg *ValidationRules) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this ValidationRules.
-func (mg *ValidationRules) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *ValidationRules) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ValidationRules.
-func (mg *ValidationRules) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *ValidationRules) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this ValidationRules.
-func (mg *ValidationRules) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *ValidationRules) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

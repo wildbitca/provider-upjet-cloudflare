@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type KvNamespaceInitParameters struct {
@@ -22,17 +22,23 @@ type KvNamespaceInitParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.Reference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.Reference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (String) Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
 	// Available values: "eu", "fedramp", "us".
 	// Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
 	// Available values: "eu", "fedramp", "us".
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
+
+	// (String) The mode of the Workers KV namespace. Specify instant when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, instant is the only supported explicit value.
+	// Available values: "instant".
+	// The mode of the Workers KV namespace. Specify `instant` when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, `instant` is the only supported explicit value.
+	// Available values: "instant".
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
 	// readable string name for a Workers KV namespace.
 	// Human-readable string name for a Workers KV namespace.
@@ -54,6 +60,12 @@ type KvNamespaceObservation struct {
 	// Available values: "eu", "fedramp", "us".
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
+	// (String) The mode of the Workers KV namespace. Specify instant when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, instant is the only supported explicit value.
+	// Available values: "instant".
+	// The mode of the Workers KV namespace. Specify `instant` when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, `instant` is the only supported explicit value.
+	// Available values: "instant".
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
 	// decoded before storing. For example, if set to "true", a key written on the URL as "%3F" will be stored as "?".
 	// True if keys written on the URL will be URL-decoded before storing. For example, if set to "true", a key written on the URL as "%3F" will be stored as "?".
 	SupportsURLEncoding *bool `json:"supportsUrlEncoding,omitempty" tf:"supports_url_encoding,omitempty"`
@@ -73,11 +85,11 @@ type KvNamespaceParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.Reference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.Reference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (String) Specify the jurisdiction to restrict the KV namespace to durably store data within. Can only be set at namespace creation time.
 	// Available values: "eu", "fedramp", "us".
@@ -85,6 +97,13 @@ type KvNamespaceParameters struct {
 	// Available values: "eu", "fedramp", "us".
 	// +kubebuilder:validation:Optional
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
+
+	// (String) The mode of the Workers KV namespace. Specify instant when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, instant is the only supported explicit value.
+	// Available values: "instant".
+	// The mode of the Workers KV namespace. Specify `instant` when creating a namespace to create a KV Instant namespace. Omit this field when creating a namespace to create a classic namespace. Currently, `instant` is the only supported explicit value.
+	// Available values: "instant".
+	// +kubebuilder:validation:Optional
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
 	// readable string name for a Workers KV namespace.
 	// Human-readable string name for a Workers KV namespace.
@@ -94,8 +113,8 @@ type KvNamespaceParameters struct {
 
 // KvNamespaceSpec defines the desired state of KvNamespace
 type KvNamespaceSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     KvNamespaceParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   KvNamespaceParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -111,8 +130,8 @@ type KvNamespaceSpec struct {
 
 // KvNamespaceStatus defines the observed state of KvNamespace.
 type KvNamespaceStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        KvNamespaceObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               KvNamespaceObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

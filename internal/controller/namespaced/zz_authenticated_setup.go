@@ -46,3 +46,18 @@ func SetupGated_authenticated(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_authenticated registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_authenticated(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		originpulls.SetupWebhookWithManager,
+		originpullscertificate.SetupWebhookWithManager,
+		originpullshostnamecertificate.SetupWebhookWithManager,
+		originpullssettings.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

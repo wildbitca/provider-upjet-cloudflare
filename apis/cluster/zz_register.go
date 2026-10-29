@@ -42,6 +42,7 @@ import (
 	v1alpha1logpush "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/logpush/v1alpha1"
 	v1alpha1magic "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/magic/v1alpha1"
 	v1alpha1managed "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/managed/v1alpha1"
+	v1alpha1monetization "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/monetization/v1alpha1"
 	v1alpha1mtls "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/mtls/v1alpha1"
 	v1alpha1notification "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/notification/v1alpha1"
 	v1alpha1observatory "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/observatory/v1alpha1"
@@ -53,7 +54,6 @@ import (
 	v1alpha1r2 "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/r2/v1alpha1"
 	v1alpha1rate "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/rate/v1alpha1"
 	v1alpha1regional "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/regional/v1alpha1"
-	v1alpha1registrar "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/registrar/v1alpha1"
 	v1alpha1schema "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/schema/v1alpha1"
 	v1alpha1secretsstore "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/secretsstore/v1alpha1"
 	v1alpha1snippet "github.com/wildbitca/provider-upjet-cloudflare/apis/cluster/snippet/v1alpha1"
@@ -113,6 +113,7 @@ func init() {
 		v1alpha1logpush.SchemeBuilder.AddToScheme,
 		v1alpha1magic.SchemeBuilder.AddToScheme,
 		v1alpha1managed.SchemeBuilder.AddToScheme,
+		v1alpha1monetization.SchemeBuilder.AddToScheme,
 		v1alpha1mtls.SchemeBuilder.AddToScheme,
 		v1alpha1notification.SchemeBuilder.AddToScheme,
 		v1alpha1observatory.SchemeBuilder.AddToScheme,
@@ -124,7 +125,6 @@ func init() {
 		v1alpha1r2.SchemeBuilder.AddToScheme,
 		v1alpha1rate.SchemeBuilder.AddToScheme,
 		v1alpha1regional.SchemeBuilder.AddToScheme,
-		v1alpha1registrar.SchemeBuilder.AddToScheme,
 		v1alpha1schema.SchemeBuilder.AddToScheme,
 		v1alpha1secretsstore.SchemeBuilder.AddToScheme,
 		v1alpha1snippet.SchemeBuilder.AddToScheme,

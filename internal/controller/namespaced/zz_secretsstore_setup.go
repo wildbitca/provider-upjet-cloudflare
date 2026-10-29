@@ -40,3 +40,16 @@ func SetupGated_secretsstore(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_secretsstore registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_secretsstore(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		store.SetupWebhookWithManager,
+		storesecret.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

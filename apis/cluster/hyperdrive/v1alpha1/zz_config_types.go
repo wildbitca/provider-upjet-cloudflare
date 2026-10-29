@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CachingInitParameters struct {
@@ -226,7 +226,7 @@ type OriginInitParameters struct {
 
 	// only value.
 	// Defines the Client Secret of the Access Token to use when connecting to the origin database. The API never returns this write-only value.
-	AccessClientSecretSecretRef *v1.SecretKeySelector `json:"accessClientSecretSecretRef,omitempty" tf:"-"`
+	AccessClientSecretSecretRef *v2.SecretKeySelector `json:"accessClientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) Set the name of your origin database.
 	// Set the name of your origin database.
@@ -238,7 +238,7 @@ type OriginInitParameters struct {
 
 	// only value.
 	// Set the password needed to access your origin database. The API never returns this write-only value.
-	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (Number) Defines the port of your origin database. Defaults to 5432 for PostgreSQL or 3306 for MySQL if not specified.
 	// Defines the port of your origin database. Defaults to 5432 for PostgreSQL or 3306 for MySQL if not specified.
@@ -302,7 +302,7 @@ type OriginParameters struct {
 	// only value.
 	// Defines the Client Secret of the Access Token to use when connecting to the origin database. The API never returns this write-only value.
 	// +kubebuilder:validation:Optional
-	AccessClientSecretSecretRef *v1.SecretKeySelector `json:"accessClientSecretSecretRef,omitempty" tf:"-"`
+	AccessClientSecretSecretRef *v2.SecretKeySelector `json:"accessClientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) Set the name of your origin database.
 	// Set the name of your origin database.
@@ -317,7 +317,7 @@ type OriginParameters struct {
 	// only value.
 	// Set the password needed to access your origin database. The API never returns this write-only value.
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef v2.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// (Number) Defines the port of your origin database. Defaults to 5432 for PostgreSQL or 3306 for MySQL if not specified.
 	// Defines the port of your origin database. Defaults to 5432 for PostgreSQL or 3306 for MySQL if not specified.
@@ -344,8 +344,8 @@ type OriginParameters struct {
 
 // ConfigSpec defines the desired state of Config
 type ConfigSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ConfigParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ConfigParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -361,8 +361,8 @@ type ConfigSpec struct {
 
 // ConfigStatus defines the observed state of Config.
 type ConfigStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ConfigObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ConfigObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

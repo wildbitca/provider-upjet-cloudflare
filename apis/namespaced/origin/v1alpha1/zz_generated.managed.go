@@ -6,44 +6,44 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this CACertificate.
-func (mg *CACertificate) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *CACertificate) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetManagementPolicies of this CACertificate.
-func (mg *CACertificate) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *CACertificate) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this CACertificate.
-func (mg *CACertificate) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+func (mg *CACertificate) GetProviderConfigReference() *xpv2.ProviderConfigReference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this CACertificate.
-func (mg *CACertificate) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+func (mg *CACertificate) GetWriteConnectionSecretToReference() *xpv2.LocalSecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this CACertificate.
-func (mg *CACertificate) SetConditions(c ...xpv1.Condition) {
+func (mg *CACertificate) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetManagementPolicies of this CACertificate.
-func (mg *CACertificate) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *CACertificate) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this CACertificate.
-func (mg *CACertificate) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+func (mg *CACertificate) SetProviderConfigReference(r *xpv2.ProviderConfigReference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this CACertificate.
-func (mg *CACertificate) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+func (mg *CACertificate) SetWriteConnectionSecretToReference(r *xpv2.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

@@ -6,104 +6,104 @@
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this SmartRouting.
-func (mg *SmartRouting) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *SmartRouting) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this SmartRouting.
-func (mg *SmartRouting) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *SmartRouting) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this SmartRouting.
-func (mg *SmartRouting) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *SmartRouting) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this SmartRouting.
-func (mg *SmartRouting) GetProviderConfigReference() *xpv1.Reference {
+func (mg *SmartRouting) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this SmartRouting.
-func (mg *SmartRouting) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *SmartRouting) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this SmartRouting.
-func (mg *SmartRouting) SetConditions(c ...xpv1.Condition) {
+func (mg *SmartRouting) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this SmartRouting.
-func (mg *SmartRouting) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *SmartRouting) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this SmartRouting.
-func (mg *SmartRouting) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *SmartRouting) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this SmartRouting.
-func (mg *SmartRouting) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *SmartRouting) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this SmartRouting.
-func (mg *SmartRouting) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *SmartRouting) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this TieredCaching.
-func (mg *TieredCaching) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *TieredCaching) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this TieredCaching.
-func (mg *TieredCaching) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *TieredCaching) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this TieredCaching.
-func (mg *TieredCaching) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *TieredCaching) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this TieredCaching.
-func (mg *TieredCaching) GetProviderConfigReference() *xpv1.Reference {
+func (mg *TieredCaching) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this TieredCaching.
-func (mg *TieredCaching) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *TieredCaching) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this TieredCaching.
-func (mg *TieredCaching) SetConditions(c ...xpv1.Condition) {
+func (mg *TieredCaching) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this TieredCaching.
-func (mg *TieredCaching) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *TieredCaching) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this TieredCaching.
-func (mg *TieredCaching) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *TieredCaching) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this TieredCaching.
-func (mg *TieredCaching) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *TieredCaching) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this TieredCaching.
-func (mg *TieredCaching) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *TieredCaching) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

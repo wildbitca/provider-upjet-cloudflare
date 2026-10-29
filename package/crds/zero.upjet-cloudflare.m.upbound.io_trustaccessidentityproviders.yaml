@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: trustaccessidentityproviders.zero.upjet-cloudflare.m.upbound.io
 spec:
   group: zero.upjet-cloudflare.m.upbound.io
@@ -284,6 +284,11 @@ spec:
                           (String) IdP Entity ID or Issuer URL
                           IdP Entity ID or Issuer URL
                         type: string
+                      loginPageAutoPrompt:
+                        description: |-
+                          (Boolean) When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
+                          When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
+                        type: boolean
                       maxSsoUrlLength:
                         description: |-
                           side and a short nonce is passed to the IdP instead.
@@ -406,9 +411,9 @@ spec:
                     type: object
                   type:
                     description: |-
-                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
                       The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
                     type: string
                   zoneId:
                     description: |-
@@ -652,6 +657,11 @@ spec:
                           (String) IdP Entity ID or Issuer URL
                           IdP Entity ID or Issuer URL
                         type: string
+                      loginPageAutoPrompt:
+                        description: |-
+                          (Boolean) When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
+                          When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
+                        type: boolean
                       maxSsoUrlLength:
                         description: |-
                           side and a short nonce is passed to the IdP instead.
@@ -774,9 +784,9 @@ spec:
                     type: object
                   type:
                     description: |-
-                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
                       The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
                     type: string
                   zoneId:
                     description: |-
@@ -990,6 +1000,11 @@ spec:
                           (String) IdP Entity ID or Issuer URL
                           IdP Entity ID or Issuer URL
                         type: string
+                      loginPageAutoPrompt:
+                        description: |-
+                          (Boolean) When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
+                          When enabled, the Access login page automatically prompts the user to authenticate with a passkey.
+                        type: boolean
                       maxSsoUrlLength:
                         description: |-
                           side and a short nonce is passed to the IdP instead.
@@ -1177,9 +1192,9 @@ spec:
                     type: object
                   type:
                     description: |-
-                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+                      apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
                       The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare".
+                      Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
                     type: string
                   zoneId:
                     description: |-
@@ -1233,6 +1248,13 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
               observedGeneration:
                 description: |-
                   ObservedGeneration is the latest metadata.generation

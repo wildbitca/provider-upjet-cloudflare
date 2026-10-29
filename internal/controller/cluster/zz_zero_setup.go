@@ -175,3 +175,61 @@ func SetupGated_zero(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_zero registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_zero(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		trustaccessaicontrolsmcpportal.SetupWebhookWithManager,
+		trustaccessaicontrolsmcpserver.SetupWebhookWithManager,
+		trustaccessapplication.SetupWebhookWithManager,
+		trustaccesscustompage.SetupWebhookWithManager,
+		trustaccessgroup.SetupWebhookWithManager,
+		trustaccessidentityprovider.SetupWebhookWithManager,
+		trustaccessinfrastructuretarget.SetupWebhookWithManager,
+		trustaccesskeyconfiguration.SetupWebhookWithManager,
+		trustaccessmtlscertificate.SetupWebhookWithManager,
+		trustaccessmtlshostnamesettings.SetupWebhookWithManager,
+		trustaccesspolicy.SetupWebhookWithManager,
+		trustaccessservicetoken.SetupWebhookWithManager,
+		trustaccessshortlivedcertificate.SetupWebhookWithManager,
+		trustaccesstag.SetupWebhookWithManager,
+		trustdevicecustomprofile.SetupWebhookWithManager,
+		trustdevicecustomprofilelocaldomainfallback.SetupWebhookWithManager,
+		trustdevicedefaultprofile.SetupWebhookWithManager,
+		trustdevicedefaultprofilecertificates.SetupWebhookWithManager,
+		trustdevicedefaultprofilelocaldomainfallback.SetupWebhookWithManager,
+		trustdevicemanagednetworks.SetupWebhookWithManager,
+		trustdevicepostureintegration.SetupWebhookWithManager,
+		trustdeviceposturerule.SetupWebhookWithManager,
+		trustdevicesettings.SetupWebhookWithManager,
+		trustdextest.SetupWebhookWithManager,
+		trustdlpcustomentry.SetupWebhookWithManager,
+		trustdlpcustomprofile.SetupWebhookWithManager,
+		trustdlpdataset.SetupWebhookWithManager,
+		trustdlpentry.SetupWebhookWithManager,
+		trustdlpintegrationentry.SetupWebhookWithManager,
+		trustdlppredefinedentry.SetupWebhookWithManager,
+		trustdlppredefinedprofile.SetupWebhookWithManager,
+		trustdnslocation.SetupWebhookWithManager,
+		trustgatewaycertificate.SetupWebhookWithManager,
+		trustgatewaylogging.SetupWebhookWithManager,
+		trustgatewaypolicy.SetupWebhookWithManager,
+		trustgatewayproxyendpoint.SetupWebhookWithManager,
+		trustgatewaysettings.SetupWebhookWithManager,
+		trustlist.SetupWebhookWithManager,
+		trustnetworkhostnameroute.SetupWebhookWithManager,
+		trustorganization.SetupWebhookWithManager,
+		trustriskbehavior.SetupWebhookWithManager,
+		trustriskscoringintegration.SetupWebhookWithManager,
+		trusttunnelcloudflared.SetupWebhookWithManager,
+		trusttunnelcloudflaredconfig.SetupWebhookWithManager,
+		trusttunnelcloudflaredroute.SetupWebhookWithManager,
+		trusttunnelcloudflaredvirtualnetwork.SetupWebhookWithManager,
+		trusttunnelwarpconnector.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

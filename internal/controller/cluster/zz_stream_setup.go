@@ -58,3 +58,22 @@ func SetupGated_stream(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_stream registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_stream(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		audiotrack.SetupWebhookWithManager,
+		captionlanguage.SetupWebhookWithManager,
+		download.SetupWebhookWithManager,
+		key.SetupWebhookWithManager,
+		liveinput.SetupWebhookWithManager,
+		moqrelay.SetupWebhookWithManager,
+		watermark.SetupWebhookWithManager,
+		webhook.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

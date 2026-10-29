@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CustomPagesInitParameters struct {
@@ -122,7 +122,7 @@ type LoginDesignParameters struct {
 	TextColor *string `json:"textColor,omitempty" tf:"text_color,omitempty"`
 }
 
-type MfaSSHPivKeyRequirementsInitParameters struct {
+type MfaPivKeyRequirementsInitParameters struct {
 
 	// (String) Defines when a PIN is required to use the SSH key. Valid values: never (no PIN required), once (PIN required once per session), always (PIN required for each use).
 	// Available values: "never", "once", "always".
@@ -131,7 +131,7 @@ type MfaSSHPivKeyRequirementsInitParameters struct {
 	PinPolicy *string `json:"pinPolicy,omitempty" tf:"pin_policy,omitempty"`
 
 	// 2 Level 1 or higher validated device.
-	// Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+	// Requires the PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
 	RequireFipsDevice *bool `json:"requireFipsDevice,omitempty" tf:"require_fips_device,omitempty"`
 
 	// (List of Number) Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
@@ -149,7 +149,7 @@ type MfaSSHPivKeyRequirementsInitParameters struct {
 	TouchPolicy *string `json:"touchPolicy,omitempty" tf:"touch_policy,omitempty"`
 }
 
-type MfaSSHPivKeyRequirementsObservation struct {
+type MfaPivKeyRequirementsObservation struct {
 
 	// (String) Defines when a PIN is required to use the SSH key. Valid values: never (no PIN required), once (PIN required once per session), always (PIN required for each use).
 	// Available values: "never", "once", "always".
@@ -158,7 +158,7 @@ type MfaSSHPivKeyRequirementsObservation struct {
 	PinPolicy *string `json:"pinPolicy,omitempty" tf:"pin_policy,omitempty"`
 
 	// 2 Level 1 or higher validated device.
-	// Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+	// Requires the PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
 	RequireFipsDevice *bool `json:"requireFipsDevice,omitempty" tf:"require_fips_device,omitempty"`
 
 	// (List of Number) Specifies the allowed SSH key sizes in bits. Valid sizes depend on key type. Ed25519 has a fixed key size and does not accept this parameter.
@@ -176,7 +176,7 @@ type MfaSSHPivKeyRequirementsObservation struct {
 	TouchPolicy *string `json:"touchPolicy,omitempty" tf:"touch_policy,omitempty"`
 }
 
-type MfaSSHPivKeyRequirementsParameters struct {
+type MfaPivKeyRequirementsParameters struct {
 
 	// (String) Defines when a PIN is required to use the SSH key. Valid values: never (no PIN required), once (PIN required once per session), always (PIN required for each use).
 	// Available values: "never", "once", "always".
@@ -186,7 +186,7 @@ type MfaSSHPivKeyRequirementsParameters struct {
 	PinPolicy *string `json:"pinPolicy,omitempty" tf:"pin_policy,omitempty"`
 
 	// 2 Level 1 or higher validated device.
-	// Requires the SSH PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
+	// Requires the PIV key to be stored on a FIPS 140-2 Level 1 or higher validated device.
 	// +kubebuilder:validation:Optional
 	RequireFipsDevice *bool `json:"requireFipsDevice,omitempty" tf:"require_fips_device,omitempty"`
 
@@ -268,8 +268,8 @@ type TrustOrganizationInitParameters struct {
 	// When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
 	AllowAuthenticateViaWarp *bool `json:"allowAuthenticateViaWarp,omitempty" tf:"allow_authenticate_via_warp,omitempty"`
 
-	// (String) The unique subdomain assigned to your Zero Trust organization.
-	// The unique subdomain assigned to your Zero Trust organization.
+	// generated in the format adjective-noun-hex4 (e.g. frosty-moon-7a3b.cloudflareaccess.com).
+	// The unique subdomain assigned to your Zero Trust organization. If omitted on creation, a unique subdomain is auto-generated in the format `adjective-noun-hex4` (e.g. `frosty-moon-7a3b.cloudflareaccess.com`).
 	AuthDomain *string `json:"authDomain,omitempty" tf:"auth_domain,omitempty"`
 
 	// (Boolean) When set to true, users skip the identity provider selection step during login.
@@ -301,15 +301,15 @@ type TrustOrganizationInitParameters struct {
 	// Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
 	MfaConfigurationAllowed *bool `json:"mfaConfigurationAllowed,omitempty" tf:"mfa_configuration_allowed,omitempty"`
 
+	// (Attributes) Configures PIV key requirements for MFA using hardware security keys. (see below for nested schema)
+	MfaPivKeyRequirements *MfaPivKeyRequirementsInitParameters `json:"mfaPivKeyRequirements,omitempty" tf:"mfa_piv_key_requirements,omitempty"`
+
 	// infrastructure applications.
 	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot contain only the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the organization has any non-infrastructure applications.
 	MfaRequiredForAllApps *bool `json:"mfaRequiredForAllApps,omitempty" tf:"mfa_required_for_all_apps,omitempty"`
 
-	// (Attributes) Configures SSH PIV key requirements for MFA using hardware security keys. (see below for nested schema)
-	MfaSSHPivKeyRequirements *MfaSSHPivKeyRequirementsInitParameters `json:"mfaSshPivKeyRequirements,omitempty" tf:"mfa_ssh_piv_key_requirements,omitempty"`
-
-	// (String) The name of your Zero Trust organization.
-	// The name of your Zero Trust organization.
+	// generated subdomain slug (e.g. frosty-moon-7a3b).
+	// The name of your Zero Trust organization. When omitted on creation, defaults to the provided auth_domain; when both are omitted, defaults to the auto-generated subdomain slug (e.g. frosty-moon-7a3b).
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Attributes) Configures automatic enforcement for inactive service tokens. A service token is inactive if no policy references it, and it has not successfully authenticated with an Access application during the selected inactivity period. This setting applies to every service token in your Zero Trust account. (see below for nested schema)
@@ -411,8 +411,8 @@ type TrustOrganizationObservation struct {
 	// When set to true, users can authenticate via WARP for any application in your organization. Application settings will take precedence over this value.
 	AllowAuthenticateViaWarp *bool `json:"allowAuthenticateViaWarp,omitempty" tf:"allow_authenticate_via_warp,omitempty"`
 
-	// (String) The unique subdomain assigned to your Zero Trust organization.
-	// The unique subdomain assigned to your Zero Trust organization.
+	// generated in the format adjective-noun-hex4 (e.g. frosty-moon-7a3b.cloudflareaccess.com).
+	// The unique subdomain assigned to your Zero Trust organization. If omitted on creation, a unique subdomain is auto-generated in the format `adjective-noun-hex4` (e.g. `frosty-moon-7a3b.cloudflareaccess.com`).
 	AuthDomain *string `json:"authDomain,omitempty" tf:"auth_domain,omitempty"`
 
 	// (Boolean) When set to true, users skip the identity provider selection step during login.
@@ -446,15 +446,15 @@ type TrustOrganizationObservation struct {
 	// Indicates if this organization can enforce multi-factor authentication (MFA) requirements at the application and policy level.
 	MfaConfigurationAllowed *bool `json:"mfaConfigurationAllowed,omitempty" tf:"mfa_configuration_allowed,omitempty"`
 
+	// (Attributes) Configures PIV key requirements for MFA using hardware security keys. (see below for nested schema)
+	MfaPivKeyRequirements *MfaPivKeyRequirementsObservation `json:"mfaPivKeyRequirements,omitempty" tf:"mfa_piv_key_requirements,omitempty"`
+
 	// infrastructure applications.
 	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot contain only the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the organization has any non-infrastructure applications.
 	MfaRequiredForAllApps *bool `json:"mfaRequiredForAllApps,omitempty" tf:"mfa_required_for_all_apps,omitempty"`
 
-	// (Attributes) Configures SSH PIV key requirements for MFA using hardware security keys. (see below for nested schema)
-	MfaSSHPivKeyRequirements *MfaSSHPivKeyRequirementsObservation `json:"mfaSshPivKeyRequirements,omitempty" tf:"mfa_ssh_piv_key_requirements,omitempty"`
-
-	// (String) The name of your Zero Trust organization.
-	// The name of your Zero Trust organization.
+	// generated subdomain slug (e.g. frosty-moon-7a3b).
+	// The name of your Zero Trust organization. When omitted on creation, defaults to the provided auth_domain; when both are omitted, defaults to the auto-generated subdomain slug (e.g. frosty-moon-7a3b).
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Attributes) Configures automatic enforcement for inactive service tokens. A service token is inactive if no policy references it, and it has not successfully authenticated with an Access application during the selected inactivity period. This setting applies to every service token in your Zero Trust account. (see below for nested schema)
@@ -500,8 +500,8 @@ type TrustOrganizationParameters struct {
 	// +kubebuilder:validation:Optional
 	AllowAuthenticateViaWarp *bool `json:"allowAuthenticateViaWarp,omitempty" tf:"allow_authenticate_via_warp,omitempty"`
 
-	// (String) The unique subdomain assigned to your Zero Trust organization.
-	// The unique subdomain assigned to your Zero Trust organization.
+	// generated in the format adjective-noun-hex4 (e.g. frosty-moon-7a3b.cloudflareaccess.com).
+	// The unique subdomain assigned to your Zero Trust organization. If omitted on creation, a unique subdomain is auto-generated in the format `adjective-noun-hex4` (e.g. `frosty-moon-7a3b.cloudflareaccess.com`).
 	// +kubebuilder:validation:Optional
 	AuthDomain *string `json:"authDomain,omitempty" tf:"auth_domain,omitempty"`
 
@@ -542,17 +542,17 @@ type TrustOrganizationParameters struct {
 	// +kubebuilder:validation:Optional
 	MfaConfigurationAllowed *bool `json:"mfaConfigurationAllowed,omitempty" tf:"mfa_configuration_allowed,omitempty"`
 
+	// (Attributes) Configures PIV key requirements for MFA using hardware security keys. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	MfaPivKeyRequirements *MfaPivKeyRequirementsParameters `json:"mfaPivKeyRequirements,omitempty" tf:"mfa_piv_key_requirements,omitempty"`
+
 	// infrastructure applications.
 	// Determines whether global MFA settings apply to applications by default. The organization must have MFA enabled with at least one authentication method and a session duration configured. Note: 'allowed_authenticators' cannot contain only the infrastructure SSH authenticators ('piv_key' and 'ssh_fido2_key') if the organization has any non-infrastructure applications.
 	// +kubebuilder:validation:Optional
 	MfaRequiredForAllApps *bool `json:"mfaRequiredForAllApps,omitempty" tf:"mfa_required_for_all_apps,omitempty"`
 
-	// (Attributes) Configures SSH PIV key requirements for MFA using hardware security keys. (see below for nested schema)
-	// +kubebuilder:validation:Optional
-	MfaSSHPivKeyRequirements *MfaSSHPivKeyRequirementsParameters `json:"mfaSshPivKeyRequirements,omitempty" tf:"mfa_ssh_piv_key_requirements,omitempty"`
-
-	// (String) The name of your Zero Trust organization.
-	// The name of your Zero Trust organization.
+	// generated subdomain slug (e.g. frosty-moon-7a3b).
+	// The name of your Zero Trust organization. When omitted on creation, defaults to the provided auth_domain; when both are omitted, defaults to the auto-generated subdomain slug (e.g. frosty-moon-7a3b).
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -598,8 +598,8 @@ type TrustOrganizationParameters struct {
 
 // TrustOrganizationSpec defines the desired state of TrustOrganization
 type TrustOrganizationSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     TrustOrganizationParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   TrustOrganizationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -615,8 +615,8 @@ type TrustOrganizationSpec struct {
 
 // TrustOrganizationStatus defines the observed state of TrustOrganization.
 type TrustOrganizationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        TrustOrganizationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               TrustOrganizationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

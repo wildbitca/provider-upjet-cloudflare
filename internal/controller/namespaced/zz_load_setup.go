@@ -43,3 +43,17 @@ func SetupGated_load(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager_load registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager_load(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		balancer.SetupWebhookWithManager,
+		balancermonitor.SetupWebhookWithManager,
+		balancerpool.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}

@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CustomCertBundleInitParameters struct {
@@ -22,7 +21,7 @@ type CustomCertBundleInitParameters struct {
 
 	// (String, Sensitive) The key for a custom uploaded certificate.
 	// The key for a custom uploaded certificate.
-	CustomKeySecretRef v1.LocalSecretKeySelector `json:"customKeySecretRef" tf:"-"`
+	CustomKeySecretRef v2.LocalSecretKeySelector `json:"customKeySecretRef" tf:"-"`
 }
 
 type CustomCertBundleObservation struct {
@@ -42,7 +41,7 @@ type CustomCertBundleParameters struct {
 	// (String, Sensitive) The key for a custom uploaded certificate.
 	// The key for a custom uploaded certificate.
 	// +kubebuilder:validation:Optional
-	CustomKeySecretRef v1.LocalSecretKeySelector `json:"customKeySecretRef" tf:"-"`
+	CustomKeySecretRef v2.LocalSecretKeySelector `json:"customKeySecretRef" tf:"-"`
 }
 
 type HostnameInitParameters struct {
@@ -226,7 +225,7 @@ type SSLInitParameters struct {
 
 	// (String, Sensitive) The key for a custom uploaded certificate.
 	// The key for a custom uploaded certificate.
-	CustomKeySecretRef *v1.LocalSecretKeySelector `json:"customKeySecretRef,omitempty" tf:"-"`
+	CustomKeySecretRef *v2.LocalSecretKeySelector `json:"customKeySecretRef,omitempty" tf:"-"`
 
 	// (String) Domain control validation (DCV) method used for this hostname.
 	// Available values: "http", "txt", "email".
@@ -335,7 +334,7 @@ type SSLParameters struct {
 	// (String, Sensitive) The key for a custom uploaded certificate.
 	// The key for a custom uploaded certificate.
 	// +kubebuilder:validation:Optional
-	CustomKeySecretRef *v1.LocalSecretKeySelector `json:"customKeySecretRef,omitempty" tf:"-"`
+	CustomKeySecretRef *v2.LocalSecretKeySelector `json:"customKeySecretRef,omitempty" tf:"-"`
 
 	// (String) Domain control validation (DCV) method used for this hostname.
 	// Available values: "http", "txt", "email".
@@ -478,8 +477,8 @@ type HostnameSpec struct {
 
 // HostnameStatus defines the observed state of Hostname.
 type HostnameStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        HostnameObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               HostnameObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

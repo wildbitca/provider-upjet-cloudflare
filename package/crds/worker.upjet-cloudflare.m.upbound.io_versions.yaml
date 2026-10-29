@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.19.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   name: versions.worker.upjet-cloudflare.m.upbound.io
 spec:
   group: worker.upjet-cloudflare.m.upbound.io
@@ -348,6 +348,24 @@ spec:
                             (String) Name of the Queue to bind to.
                             Name of the Queue to bind to.
                           type: string
+                        retry:
+                          description: (Attributes) Retry policy for calls made to
+                            the Durable Object through this binding. Omitted or null
+                            properties use the runtime defaults. These limits are
+                            upper bounds and do not enable retries for otherwise ineligible
+                            calls. (see below for nested schema)
+                          properties:
+                            maxAttempts:
+                              description: |-
+                                (Number) Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
+                                Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
+                              type: number
+                            timeoutMs:
+                              description: |-
+                                (Number) Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
+                                Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
+                              type: number
+                          type: object
                         scriptName:
                           description: |-
                             (String) The script where the Durable Object is defined, if it is external to this Worker.
@@ -1156,6 +1174,24 @@ spec:
                             (String) Name of the Queue to bind to.
                             Name of the Queue to bind to.
                           type: string
+                        retry:
+                          description: (Attributes) Retry policy for calls made to
+                            the Durable Object through this binding. Omitted or null
+                            properties use the runtime defaults. These limits are
+                            upper bounds and do not enable retries for otherwise ineligible
+                            calls. (see below for nested schema)
+                          properties:
+                            maxAttempts:
+                              description: |-
+                                (Number) Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
+                                Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
+                              type: number
+                            timeoutMs:
+                              description: |-
+                                (Number) Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
+                                Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
+                              type: number
+                          type: object
                         scriptName:
                           description: |-
                             (String) The script where the Durable Object is defined, if it is external to this Worker.
@@ -2001,6 +2037,24 @@ spec:
                             (String) Name of the Queue to bind to.
                             Name of the Queue to bind to.
                           type: string
+                        retry:
+                          description: (Attributes) Retry policy for calls made to
+                            the Durable Object through this binding. Omitted or null
+                            properties use the runtime defaults. These limits are
+                            upper bounds and do not enable retries for otherwise ineligible
+                            calls. (see below for nested schema)
+                          properties:
+                            maxAttempts:
+                              description: |-
+                                (Number) Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
+                                Maximum number of retries after the initial request, not the total number of attempts. Defaults to 4. Zero disables retries.
+                              type: number
+                            timeoutMs:
+                              description: |-
+                                (Number) Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
+                                Retry timeout in milliseconds, measured from the start of the call. No retry starts after it expires, and a retry still running when it expires is cancelled. This is not a request timeout; it does not limit the initial request, which is still subject to any timeouts set by your Worker. Defaults to 10000.
+                              type: number
+                          type: object
                         scriptName:
                           description: |-
                             (String) The script where the Durable Object is defined, if it is external to this Worker.
@@ -2737,6 +2791,13 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
               observedGeneration:
                 description: |-
                   ObservedGeneration is the latest metadata.generation

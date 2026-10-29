@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type RatePlanInitParameters struct {
@@ -77,11 +77,11 @@ type SubscriptionInitParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.Reference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.Reference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (String) How often the subscription is renewed automatically.
 	// Available values: "weekly", "monthly", "quarterly", "yearly".
@@ -144,11 +144,11 @@ type SubscriptionParameters struct {
 
 	// Reference to a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDRef *v1.Reference `json:"accountIdRef,omitempty" tf:"-"`
+	AccountIDRef *v2.Reference `json:"accountIdRef,omitempty" tf:"-"`
 
 	// Selector for a Account in account to populate accountId.
 	// +kubebuilder:validation:Optional
-	AccountIDSelector *v1.Selector `json:"accountIdSelector,omitempty" tf:"-"`
+	AccountIDSelector *v2.Selector `json:"accountIdSelector,omitempty" tf:"-"`
 
 	// (String) How often the subscription is renewed automatically.
 	// Available values: "weekly", "monthly", "quarterly", "yearly".
@@ -164,8 +164,8 @@ type SubscriptionParameters struct {
 
 // SubscriptionSpec defines the desired state of Subscription
 type SubscriptionSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     SubscriptionParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   SubscriptionParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -181,8 +181,8 @@ type SubscriptionSpec struct {
 
 // SubscriptionStatus defines the observed state of Subscription.
 type SubscriptionStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SubscriptionObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SubscriptionObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

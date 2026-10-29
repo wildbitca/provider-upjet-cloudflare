@@ -163,12 +163,12 @@ Each sub-provider maps to a Cloudflare API group. CRD counts include both cluste
 | `list` | `provider-cloudflare-list` | List items |
 | `logpull` | `provider-cloudflare-logpull` | Logpull retention |
 | `managed` | `provider-cloudflare-managed` | Managed transforms |
+| `monetization` | `provider-cloudflare-monetization` | Payment Required (monetization) rules |
 | `mtls` | `provider-cloudflare-mtls` | mTLS certificates |
 | `observatory` | `provider-cloudflare-observatory` | Observatory scheduled tests |
 | `organization` | `provider-cloudflare-organization` | Organization profiles |
 | `origin` | `provider-cloudflare-origin` | Origin CA certificates |
 | `rate` | `provider-cloudflare-rate` | Rate limits |
-| `registrar` | `provider-cloudflare-registrar` | Registrar domains |
 | `snippet` | `provider-cloudflare-snippet` | Snippet rules |
 | `spectrum` | `provider-cloudflare-spectrum` | Spectrum applications |
 | `sso` | `provider-cloudflare-sso` | SSO connectors |
