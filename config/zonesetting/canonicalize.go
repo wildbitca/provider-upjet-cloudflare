@@ -129,6 +129,18 @@ func New() Canonicalizer {
 
 // Convert implements config.TerraformConversion.
 func (Canonicalizer) Convert(params map[string]any, _ *config.Resource, mode config.Mode) (map[string]any, error) {
+	// Terraform DOES return DynamicPseudoType attributes in its JSON state,
+	// wrapped in a {"type": <tftypes JSON type>, "value": <value>} envelope,
+	// while upjet's dynamic-value conversion assumes it does not and leaves
+	// FromTerraform untouched. The envelope therefore leaks into
+	// status.atProvider.value and, when state is rebuilt from it after a
+	// provider pod restart, the refresh fails with "Unable to Read Previously
+	// Saved State for UpgradeResourceState ... unsupported type json.Delim
+	// sent as tftypes.String". Unwrap it in both directions so atProvider
+	// holds the plain value and already-persisted envelopes are tolerated.
+	if v, ok := unwrapDynamicEnvelope(params[valueKey]); ok {
+		params[valueKey] = v
+	}
 	if mode != config.ToTerraform {
 		return params, nil
 	}
@@ -148,6 +160,29 @@ func (Canonicalizer) Convert(params map[string]any, _ *config.Resource, mode con
 	}
 	params[valueKey] = deepMergeDefaults(userValue, template)
 	return params, nil
+}
+
+// unwrapDynamicEnvelope returns the inner value of a Terraform dynamic
+// envelope, i.e. a map with exactly the keys "type" (a JSON array or string
+// type descriptor) and "value". Anything else is returned untouched.
+func unwrapDynamicEnvelope(v any) (any, bool) {
+	m, ok := v.(map[string]any)
+	if !ok || len(m) != 2 {
+		return v, false
+	}
+	t, hasType := m["type"]
+	inner, hasValue := m["value"]
+	if !hasType || !hasValue {
+		return v, false
+	}
+	switch t.(type) {
+	case []any, string:
+		if next, again := unwrapDynamicEnvelope(inner); again {
+			return next, true
+		}
+		return inner, true
+	}
+	return v, false
 }
 
 // deepMergeDefaults returns a new map containing every key from template,
