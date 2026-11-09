@@ -3,6 +3,9 @@ package config
 import (
 	"context"
 	"testing"
+
+	"github.com/crossplane/upjet/v2/pkg/resource"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestWorkersRouteExternalName(t *testing.T) {
@@ -108,6 +111,30 @@ func TestR2DomainExternalNames(t *testing.T) {
 				t.Fatalf("SetIdentifierArgumentFn() overwrote spec arguments: %v", params)
 			}
 		})
+	}
+}
+
+func TestR2DomainsAreIDLessAndYieldExternalName(t *testing.T) {
+	p := GetProvider()
+	for res, attr := range map[string]string{
+		"cloudflare_r2_custom_domain":  "domain",
+		"cloudflare_r2_managed_domain": "bucket_name",
+	} {
+		cfg := p.Resources[res]
+		if cfg == nil {
+			t.Fatalf("%s not in provider", res)
+		}
+		if _, ok := cfg.TerraformResource.Schema["id"]; ok {
+			t.Fatalf("%s now has an id attribute; drop the custom external name", res)
+		}
+		state := map[string]any{"account_id": "a", "bucket_name": "bkt", "domain": "cdn.example.com", attr: "want-" + attr}
+		cd := &metav1.ObjectMeta{}
+		if _, err := resource.SetCriticalAnnotations(cd, cfg, state, ""); err != nil {
+			t.Fatalf("%s: SetCriticalAnnotations() = %v", res, err)
+		}
+		if got := cd.GetAnnotations()["crossplane.io/external-name"]; got != "want-"+attr {
+			t.Fatalf("%s: external-name = %q", res, got)
+		}
 	}
 }
 
