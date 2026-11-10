@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-11-10
+
+### Fixed
+
+- `authenticated` `OriginPulls` (`cloudflare_authenticated_origin_pulls`): a newly created managed resource failed its first refresh with "missing required hostname parameter" because the upstream Read() uses the computed top-level `hostname`, which is empty in the reconstructed state. The top-level `hostname` is now seeded from `config[0].hostname`; existing resources are unaffected.
+
 ## [1.0.0] - 2026-10-29
 
 First stable release of the provider family (all Wildbit upjet providers move
