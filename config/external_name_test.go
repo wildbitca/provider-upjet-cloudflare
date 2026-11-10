@@ -144,27 +144,3 @@ func TestRemovedResourcesAreNotConfigured(t *testing.T) {
 		t.Fatal("cloudflare_registrar_domain must not be configured")
 	}
 }
-
-func TestOriginPullsSeedsHostname(t *testing.T) {
-	tests := map[string]struct {
-		base map[string]interface{}
-		want interface{}
-	}{
-		"seeds hostname from config list": {
-			base: map[string]interface{}{"config": []interface{}{map[string]interface{}{"hostname": "dapi.tumed.dev", "cert_id": "c"}}},
-			want: "dapi.tumed.dev",
-		},
-		"no config leaves hostname unset": {
-			base: map[string]interface{}{"zone_id": "z"},
-			want: nil,
-		},
-	}
-	for name, tc := range tests {
-		t.Run(name, func(t *testing.T) {
-			originPullsExternalName.SetIdentifierArgumentFn(tc.base, "aop-x")
-			if got := tc.base["hostname"]; got != tc.want {
-				t.Fatalf("hostname = %v, want %v", got, tc.want)
-			}
-		})
-	}
-}

@@ -138,44 +138,6 @@ var workersRouteExternalName = config.ExternalName{
 	DisableNameInitializer: true,
 }
 
-// originPullsExternalName is IdentifierFromProvider plus seeding of the
-// top-level computed `hostname` attribute. The upstream Read() of
-// cloudflare_authenticated_origin_pulls uses the computed top-level `hostname`
-// (not config[0].hostname), so on a brand-new managed resource the synthetic
-// state used for the first refresh has no hostname and the refresh fails with
-// "missing required hostname parameter". Read-only values set here are
-// stripped from the config sent to Terraform but kept in the reconstructed
-// prior state (see upjet getFrameworkExtendedParameters).
-var originPullsExternalName = func() config.ExternalName {
-	e := config.IdentifierFromProvider
-	e.SetIdentifierArgumentFn = func(base map[string]interface{}, _ string) {
-		if h := originPullsConfigHostname(base); h != "" {
-			base["hostname"] = h
-		}
-	}
-	return e
-}()
-
-// originPullsConfigHostname returns config[0].hostname from the Terraform
-// parameters, or "" if it is not set.
-func originPullsConfigHostname(base map[string]interface{}) string {
-	var first map[string]interface{}
-	switch c := base["config"].(type) {
-	case []interface{}:
-		if len(c) > 0 {
-			first, _ = c[0].(map[string]interface{})
-		}
-	case []map[string]interface{}:
-		if len(c) > 0 {
-			first = c[0]
-		}
-	case map[string]interface{}:
-		first = c
-	}
-	h, _ := first["hostname"].(string)
-	return h
-}
-
 // ExternalNameConfigs contains all external name configurations for this
 // provider. Cloudflare uses Terraform Plugin Framework. All 198 managed
 // resources use IdentifierFromProvider (provider-generated IDs).
@@ -203,7 +165,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"cloudflare_api_token":                                       config.IdentifierFromProvider,
 	"cloudflare_argo_smart_routing":                              config.IdentifierFromProvider,
 	"cloudflare_argo_tiered_caching":                             config.IdentifierFromProvider,
-	"cloudflare_authenticated_origin_pulls":                      originPullsExternalName,
+	"cloudflare_authenticated_origin_pulls":                      config.IdentifierFromProvider,
 	"cloudflare_authenticated_origin_pulls_certificate":          config.IdentifierFromProvider,
 	"cloudflare_authenticated_origin_pulls_hostname_certificate": config.IdentifierFromProvider,
 	"cloudflare_authenticated_origin_pulls_settings":             config.IdentifierFromProvider,
@@ -411,6 +373,9 @@ func ExternalNameConfigurations() config.ResourceOption {
 	return func(r *config.Resource) {
 		if e, ok := ExternalNameConfigs[r.Name]; ok {
 			r.ExternalName = e
+		}
+		if r.Name == originPullsResource {
+			r.InitializerFns = append(r.InitializerFns, originPullsInitializer)
 		}
 	}
 }
