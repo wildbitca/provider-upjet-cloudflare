@@ -99,6 +99,27 @@ var bucketNameAsExternalName = config.ExternalName{
 	DisableNameInitializer: true,
 }
 
+// attributeAsExternalName is a custom ExternalName config for resources whose
+// Terraform schema has no `id` attribute but is keyed by a required argument
+// (e.g. cloudflare_r2_custom_domain by `domain`). The argument stays in
+// spec.forProvider and the external name is read back from it in the state.
+//
+// Without this, observe fails with "cannot find id in tfstate" and the
+// resource stays SYNCED=False even though Create went through.
+func attributeAsExternalName(attr string) config.ExternalName {
+	return config.ExternalName{
+		SetIdentifierArgumentFn: config.NopSetIdentifierArgument,
+		GetExternalNameFn: func(tfstate map[string]interface{}) (string, error) {
+			if v, ok := tfstate[attr].(string); ok && v != "" {
+				return v, nil
+			}
+			return "", fmt.Errorf("cannot determine external name: %s not found in tfstate", attr)
+		},
+		GetIDFn:                config.ExternalNameAsID,
+		DisableNameInitializer: true,
+	}
+}
+
 // workersRouteExternalName keeps the Cloudflare route ID as the Crossplane
 // external name while using the provider's required zone_id/route_id import ID.
 var workersRouteExternalName = config.ExternalName{
@@ -234,8 +255,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"cloudflare_r2_bucket_lifecycle":                                     bucketNameAsExternalName,
 	"cloudflare_r2_bucket_lock":                                          bucketNameAsExternalName,
 	"cloudflare_r2_bucket_sippy":                                         bucketNameAsExternalName,
-	"cloudflare_r2_custom_domain":                                        config.IdentifierFromProvider,
-	"cloudflare_r2_managed_domain":                                       config.IdentifierFromProvider,
+	"cloudflare_r2_custom_domain":                                        attributeAsExternalName("domain"),
+	"cloudflare_r2_managed_domain":                                       attributeAsExternalName("bucket_name"),
 	"cloudflare_rate_limit":                                              config.IdentifierFromProvider,
 	"cloudflare_regional_hostname":                                       config.IdentifierFromProvider,
 	"cloudflare_regional_tiered_cache":                                   config.IdentifierFromProvider,
