@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- A new managed resource whose external name is provider-generated (`IdentifierFromProvider`, e.g. `dns` `Record`) failed every observe with `cannot run refresh: refresh failed: failed to make http request: missing required dns_record_id parameter` and was never created. Upjet v2.5.1 writes a synthetic Terraform state with `id = ""` before the first refresh, and the Cloudflare v5 Read rejects an empty id client-side. `make vendor` now runs `go mod vendor` and applies `patches/*.patch`, failing if a patch does not apply; the vendored upjet carries [crossplane/upjet#789](https://github.com/crossplane/upjet/pull/789), which skips the synthetic state until the resource has an id. This restores the behaviour of the `wildbitca/upjet` fork used before 1.0.0. Previously `patches/apply.sh` silently patched nothing, because `make vendor` never created `vendor/`.
+
 ## [1.0.4] - 2026-11-10
 
 ### Fixed
