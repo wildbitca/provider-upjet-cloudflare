@@ -348,7 +348,16 @@ help-special: crossplane.help
 vendor: modules.download vendor.patch
 vendor.check: modules.check
 
+# Go builds from vendor/ whenever it exists, so the patched sources are what
+# every target after `make vendor` compiles.
+vendor.mod: modules.download
+	@$(INFO) go mod vendor
+	@$(GO) mod vendor || $(FAIL)
+	@$(OK) go mod vendor
+
 # Apply patches to vendored dependencies after go mod vendor.
 # These patches fix upstream issues that haven't been merged yet.
-vendor.patch:
-	@[ -x patches/apply.sh ] && patches/apply.sh || true
+vendor.patch: vendor.mod
+	@patches/apply.sh || $(FAIL)
+
+.PHONY: vendor.mod vendor.patch

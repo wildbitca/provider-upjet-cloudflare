@@ -1,19 +1,23 @@
 #!/usr/bin/env bash
-# Apply vendor patches for provider-upjet-cloudflare.
-# Run after `go mod vendor` to fix upstream issues.
-set -e
+# Applies every patches/*.patch to vendor/ (paths relative to vendor/, -p1).
+# Run by `make vendor` after `go mod vendor`; fails if a patch no longer applies.
+set -euo pipefail
 
-UPJET_FILES="vendor/github.com/crossplane/upjet/v2/pkg/terraform/files.go"
+cd "$(dirname "$0")/.."
 
-# Fix: skip setting empty ID in synthetic TF state.
-# Without this, upjet creates a state with id="" which causes TF provider v5
-# to attempt a Read with no ID, failing before Create can be attempted.
-if [ -f "$UPJET_FILES" ]; then
-  if grep -q 'if fp.hasTFID {' "$UPJET_FILES"; then
-    sed -i.bak 's/if fp.hasTFID {/if fp.hasTFID \&\& tfID != "" {/' "$UPJET_FILES"
-    rm -f "${UPJET_FILES}.bak"
-    echo "  patched: $UPJET_FILES (empty tfID guard)"
-  else
-    echo "  skipped: $UPJET_FILES (already patched or changed upstream)"
-  fi
+if [ ! -f vendor/modules.txt ]; then
+  echo "vendor/ is missing: run 'make vendor'" >&2
+  exit 1
 fi
+
+for p in patches/*.patch; do
+  if patch -p1 -d vendor -N -s --dry-run <"$p" >/dev/null; then
+    patch -p1 -d vendor -N -s <"$p"
+    echo "  patched: $p"
+  elif patch -p1 -d vendor -R -s --dry-run <"$p" >/dev/null; then
+    echo "  already applied: $p"
+  else
+    echo "cannot apply $p to vendor/: rebase it onto the vendored module or drop it" >&2
+    exit 1
+  fi
+done
