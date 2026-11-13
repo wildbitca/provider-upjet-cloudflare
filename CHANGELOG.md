@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-11-10
+
+### Fixed
+
+- `authenticated` `OriginPulls`: v1.0.3 seeded the computed top-level `hostname` into the Terraform parameters, which made every existing resource fail with "Invalid Configuration for Read-Only Attribute". The seed is removed; `hostname` is now injected only into the in-memory observation (used as prior state, never as configuration) by an initializer, so new resources refresh correctly and existing ones are unaffected. Covered by an integration test against the real pinned provider binary.
+
 ## [1.0.3] - 2026-11-10
 
 ### Fixed
