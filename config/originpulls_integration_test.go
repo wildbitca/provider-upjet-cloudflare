@@ -66,7 +66,7 @@ func newOriginPulls(uid string, existing bool, extName string) *v1alpha1.OriginP
 		cr.Status.AtProvider.Enabled = &e
 		cr.Status.AtProvider.CertID = &c
 	}
-	cr.ObjectMeta.CreationTimestamp = metav1.Now()
+	cr.CreationTimestamp = metav1.Now()
 	return cr
 }
 
