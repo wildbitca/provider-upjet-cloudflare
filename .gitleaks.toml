@@ -1,0 +1,13 @@
+title = "provider-upjet-cloudflare gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Generated files embed upstream provider docs examples (sample certificate/key, resource names), not real credentials."
+paths = [
+  '''^config/provider-metadata\.yaml$''',
+  '''^config/(cluster|namespaced)/account/config\.go$''',
+  '''^apis/(cluster|namespaced)/.*/zz_.*\.go$''',
+  '''^package/crds/.*\.yaml$''',
+]
