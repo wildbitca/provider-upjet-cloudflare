@@ -50,7 +50,7 @@ SUBPACKAGES ?= config
 # Map subpackage names to Go package paths
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/generator $(foreach sp,$(SUBPACKAGES),$(GO_PROJECT)/cmd/provider/$(sp))
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
-GO_SUBDIRS += cmd internal apis
+GO_SUBDIRS += cmd internal apis config
 -include build/makelib/golang.mk
 
 # ====================================================================================
@@ -348,7 +348,16 @@ help-special: crossplane.help
 vendor: modules.download vendor.patch
 vendor.check: modules.check
 
+# Go builds from vendor/ whenever it exists, so the patched sources are what
+# every target after `make vendor` compiles.
+vendor.mod: modules.download
+	@$(INFO) go mod vendor
+	@$(GO) mod vendor || $(FAIL)
+	@$(OK) go mod vendor
+
 # Apply patches to vendored dependencies after go mod vendor.
 # These patches fix upstream issues that haven't been merged yet.
-vendor.patch:
-	@[ -x patches/apply.sh ] && patches/apply.sh || true
+vendor.patch: vendor.mod
+	@patches/apply.sh || $(FAIL)
+
+.PHONY: vendor.mod vendor.patch

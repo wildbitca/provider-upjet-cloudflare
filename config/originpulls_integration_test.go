@@ -13,6 +13,7 @@ package config
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -119,7 +120,9 @@ func setupTofuEnv(t *testing.T, providerBin string) {
 // runRefresh mimics one reconcile of the generated controller: run the
 // resource initializers, build the workspace (writes main.tf.json + prior
 // tfstate) and refresh. `seed` additionally reproduces the v1.0.3 behaviour.
-func runRefresh(t *testing.T, base string, cr *v1alpha1.OriginPulls, useInitializer, v103Seed bool) (string, error) {
+// A CR with no external name gets no prior tfstate, so it refreshes as
+// missing (exists == false) and the controller creates it.
+func runRefresh(t *testing.T, base string, cr *v1alpha1.OriginPulls, useInitializer, v103Seed bool) (state map[string]any, exists bool, err error) {
 	p := GetProvider()
 	cfg := p.Resources[originPullsResource]
 	if cfg == nil {
@@ -150,16 +153,16 @@ func runRefresh(t *testing.T, base string, cr *v1alpha1.OriginPulls, useInitiali
 	}
 	w, err := ws.Workspace(context.Background(), noopSecrets{}, cr, ts, cfg)
 	if err != nil {
-		return "", err
+		return nil, false, err
 	}
 	res, err := w.Refresh(context.Background())
-	if err != nil {
-		return "", err
+	if err != nil || !res.Exists {
+		return nil, false, err
 	}
-	if !res.Exists {
-		return "", fmt.Errorf("refresh reported resource does not exist")
+	if err := json.Unmarshal(res.State.GetAttributes(), &state); err != nil {
+		t.Fatalf("cannot parse refreshed state: %v", err)
 	}
-	return string(res.State.GetAttributes()), nil
+	return state, true, nil
 }
 
 func TestOriginPullsRefresh(t *testing.T) {
@@ -177,22 +180,23 @@ func TestOriginPullsRefresh(t *testing.T) {
 		initializer    bool
 		v103           bool
 		wantErrContain string // "" => must succeed
+		wantMissing    bool   // refresh must report the resource as not existing
 	}{
 		// Negative controls: prove the harness enforces the real provider rules.
-		{name: "control/new CR, no fix => missing hostname", existing: false, initializer: false, wantErrContain: "missing required hostname parameter"},
+		{name: "control/adopted CR, no fix => missing hostname", existing: false, extName: opHost, initializer: false, wantErrContain: "missing required hostname parameter"},
 		{name: "control/existing CR, v1.0.3 seed => read-only attribute", existing: true, initializer: false, v103: true, wantErrContain: "Read-Only Attribute"},
 		// Subject under test.
-		{name: "fix/new CR (no status, no external-name)", existing: false, initializer: true},
+		{name: "new CR (no status, no external-name) => missing, so it is created", existing: false, initializer: true, wantMissing: true},
 		{name: "fix/new CR (external-name = hostname, no status)", existing: false, extName: opHost, initializer: true},
 		{name: "fix/existing CR (populated atProvider)", existing: true, initializer: true},
 	}
 	for i, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
 			cr := newOriginPulls(fmt.Sprintf("uid-%d", i), tc.existing, tc.extName)
-			state, err := runRefresh(t, srv.URL, cr, tc.initializer, tc.v103)
+			state, exists, err := runRefresh(t, srv.URL, cr, tc.initializer, tc.v103)
 			if tc.wantErrContain != "" {
 				if err == nil || !strings.Contains(err.Error(), tc.wantErrContain) {
-					t.Fatalf("want error containing %q, got err=%v state=%s", tc.wantErrContain, err, state)
+					t.Fatalf("want error containing %q, got err=%v exists=%v state=%v", tc.wantErrContain, err, exists, state)
 				}
 				t.Logf("expected failure reproduced: %.300s", err.Error())
 				return
@@ -200,8 +204,14 @@ func TestOriginPullsRefresh(t *testing.T) {
 			if err != nil {
 				t.Fatalf("refresh failed: %v", err)
 			}
-			if !strings.Contains(state, `"hostname":"`+opHost+`"`) {
-				t.Fatalf("refreshed state lacks hostname: %s", state)
+			if exists == tc.wantMissing {
+				t.Fatalf("refresh reported exists=%v, want %v (state=%v)", exists, !tc.wantMissing, state)
+			}
+			if tc.wantMissing {
+				return
+			}
+			if state["hostname"] != opHost {
+				t.Fatalf("refreshed state hostname = %v, want %q: %v", state["hostname"], opHost, state)
 			}
 			// a refresh must never send anything but GET
 			for _, r := range *reqs {
