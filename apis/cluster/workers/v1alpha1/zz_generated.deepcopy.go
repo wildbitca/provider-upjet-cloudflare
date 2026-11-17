@@ -10,6 +10,7 @@ package v1alpha1
 
 import (
 	"github.com/crossplane/crossplane/apis/v2/core/v2"
+	"github.com/wildbitca/provider-upjet-cloudflare/apis/workerartifact"
 	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
@@ -4961,6 +4962,16 @@ func (in *ScriptParameters) DeepCopy() *ScriptParameters {
 func (in *ScriptSpec) DeepCopyInto(out *ScriptSpec) {
 	*out = *in
 	in.ClusterManagedResourceSpec.DeepCopyInto(&out.ClusterManagedResourceSpec)
+	if in.Artifact != nil {
+		in, out := &in.Artifact, &out.Artifact
+		*out = new(workerartifact.Source)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ArtifactFiles != nil {
+		in, out := &in.ArtifactFiles, &out.ArtifactFiles
+		*out = new(workerartifact.Files)
+		(*in).DeepCopyInto(*out)
+	}
 	in.ForProvider.DeepCopyInto(&out.ForProvider)
 	in.InitProvider.DeepCopyInto(&out.InitProvider)
 }

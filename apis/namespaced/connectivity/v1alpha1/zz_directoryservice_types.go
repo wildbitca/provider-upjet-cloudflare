@@ -195,7 +195,16 @@ type HostParameters struct {
 type NetworkInitParameters struct {
 
 	// (String)
+	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/zero/v1alpha1.TrustTunnelCloudflared
 	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
+
+	// Reference to a TrustTunnelCloudflared in zero to populate tunnelId.
+	// +kubebuilder:validation:Optional
+	TunnelIDRef *v2.NamespacedReference `json:"tunnelIdRef,omitempty" tf:"-"`
+
+	// Selector for a TrustTunnelCloudflared in zero to populate tunnelId.
+	// +kubebuilder:validation:Optional
+	TunnelIDSelector *v2.NamespacedSelector `json:"tunnelIdSelector,omitempty" tf:"-"`
 }
 
 type NetworkObservation struct {
@@ -207,8 +216,17 @@ type NetworkObservation struct {
 type NetworkParameters struct {
 
 	// (String)
+	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/zero/v1alpha1.TrustTunnelCloudflared
 	// +kubebuilder:validation:Optional
-	TunnelID *string `json:"tunnelId" tf:"tunnel_id,omitempty"`
+	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
+
+	// Reference to a TrustTunnelCloudflared in zero to populate tunnelId.
+	// +kubebuilder:validation:Optional
+	TunnelIDRef *v2.NamespacedReference `json:"tunnelIdRef,omitempty" tf:"-"`
+
+	// Selector for a TrustTunnelCloudflared in zero to populate tunnelId.
+	// +kubebuilder:validation:Optional
+	TunnelIDSelector *v2.NamespacedSelector `json:"tunnelIdSelector,omitempty" tf:"-"`
 }
 
 type ResolverNetworkInitParameters struct {
@@ -217,7 +235,16 @@ type ResolverNetworkInitParameters struct {
 	ResolverIps []*string `json:"resolverIps,omitempty" tf:"resolver_ips,omitempty"`
 
 	// (String)
+	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/zero/v1alpha1.TrustTunnelCloudflared
 	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
+
+	// Reference to a TrustTunnelCloudflared in zero to populate tunnelId.
+	// +kubebuilder:validation:Optional
+	TunnelIDRef *v2.NamespacedReference `json:"tunnelIdRef,omitempty" tf:"-"`
+
+	// Selector for a TrustTunnelCloudflared in zero to populate tunnelId.
+	// +kubebuilder:validation:Optional
+	TunnelIDSelector *v2.NamespacedSelector `json:"tunnelIdSelector,omitempty" tf:"-"`
 }
 
 type ResolverNetworkObservation struct {
@@ -236,8 +263,17 @@ type ResolverNetworkParameters struct {
 	ResolverIps []*string `json:"resolverIps,omitempty" tf:"resolver_ips,omitempty"`
 
 	// (String)
+	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/zero/v1alpha1.TrustTunnelCloudflared
 	// +kubebuilder:validation:Optional
-	TunnelID *string `json:"tunnelId" tf:"tunnel_id,omitempty"`
+	TunnelID *string `json:"tunnelId,omitempty" tf:"tunnel_id,omitempty"`
+
+	// Reference to a TrustTunnelCloudflared in zero to populate tunnelId.
+	// +kubebuilder:validation:Optional
+	TunnelIDRef *v2.NamespacedReference `json:"tunnelIdRef,omitempty" tf:"-"`
+
+	// Selector for a TrustTunnelCloudflared in zero to populate tunnelId.
+	// +kubebuilder:validation:Optional
+	TunnelIDSelector *v2.NamespacedSelector `json:"tunnelIdSelector,omitempty" tf:"-"`
 }
 
 type TLSSettingsInitParameters struct {

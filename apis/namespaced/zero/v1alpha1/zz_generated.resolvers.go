@@ -8,6 +8,7 @@ package v1alpha1
 
 import (
 	"context"
+
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	v1alpha1 "github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/account/v1alpha1"
@@ -38,6 +39,29 @@ func (mg *TrustAccessApplication) ResolveReferences(ctx context.Context, c clien
 	mg.Spec.ForProvider.AccountID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.AccountIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Policies); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Policies[i3].Include); i4++ {
+			if mg.Spec.ForProvider.Policies[i3].Include[i4].ServiceToken != nil {
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Policies[i3].Include[i4].ServiceToken.TokenID),
+					Extract:      reference.ExternalName(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.ForProvider.Policies[i3].Include[i4].ServiceToken.TokenIDRef,
+					Selector:     mg.Spec.ForProvider.Policies[i3].Include[i4].ServiceToken.TokenIDSelector,
+					To: reference.To{
+						List:    &TrustAccessServiceTokenList{},
+						Managed: &TrustAccessServiceToken{},
+					},
+				})
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.Policies[i3].Include[i4].ServiceToken.TokenID")
+				}
+				mg.Spec.ForProvider.Policies[i3].Include[i4].ServiceToken.TokenID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.Policies[i3].Include[i4].ServiceToken.TokenIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AccountID),
 		Extract:      reference.ExternalName(),
@@ -54,6 +78,30 @@ func (mg *TrustAccessApplication) ResolveReferences(ctx context.Context, c clien
 	}
 	mg.Spec.InitProvider.AccountID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.AccountIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Policies); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.Policies[i3].Include); i4++ {
+			if mg.Spec.InitProvider.Policies[i3].Include[i4].ServiceToken != nil {
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Policies[i3].Include[i4].ServiceToken.TokenID),
+					Extract:      reference.ExternalName(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.InitProvider.Policies[i3].Include[i4].ServiceToken.TokenIDRef,
+					Selector:     mg.Spec.InitProvider.Policies[i3].Include[i4].ServiceToken.TokenIDSelector,
+					To: reference.To{
+						List:    &TrustAccessServiceTokenList{},
+						Managed: &TrustAccessServiceToken{},
+					},
+				})
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.Policies[i3].Include[i4].ServiceToken.TokenID")
+				}
+				mg.Spec.InitProvider.Policies[i3].Include[i4].ServiceToken.TokenID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.Policies[i3].Include[i4].ServiceToken.TokenIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
 
 	return nil
 }

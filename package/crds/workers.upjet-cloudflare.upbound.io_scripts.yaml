@@ -57,6 +57,34 @@ spec:
           spec:
             description: ScriptSpec defines the desired state of Script
             properties:
+              artifact:
+                description: Artifact optionally selects a digest-pinned prebuilt
+                  Worker bundle.
+                properties:
+                  pullSecretRef:
+                    description: |-
+                      PullSecretRef selects a kubernetes.io/dockerconfigjson Secret. Namespaced
+                      resources can only use their own namespace. Cluster resources must specify it.
+                    properties:
+                      name:
+                        description: Name identifies the Secret.
+                        minLength: 1
+                        type: string
+                      namespace:
+                        description: Namespace defaults to the managed resource's
+                          namespace.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  ref:
+                    description: Ref is an OCI manifest reference pinned by SHA-256
+                      digest, without a URL scheme.
+                    pattern: ^[^[:space:]@]+@sha256:[a-f0-9]{64}$
+                    type: string
+                required:
+                - ref
+                type: object
               deletionPolicy:
                 default: Delete
                 description: |-
@@ -2930,6 +2958,10 @@ spec:
                   it can not recover from without human intervention.
                 format: int64
                 type: integer
+              resolvedArtifactDigest:
+                description: ResolvedArtifactDigest identifies the fetched bundle,
+                  not deployment health.
+                type: string
             type: object
         required:
         - spec

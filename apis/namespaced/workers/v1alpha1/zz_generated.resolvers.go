@@ -11,6 +11,7 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	v1alpha1 "github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/account/v1alpha1"
+	v1alpha11 "github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/connectivity/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -54,6 +55,55 @@ func (mg *KvNamespace) ResolveReferences(ctx context.Context, c client.Reader) e
 	}
 	mg.Spec.InitProvider.AccountID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.AccountIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this Script.
+func (mg *Script) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Bindings); i3++ {
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Bindings[i3].ServiceID),
+			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.Bindings[i3].ServiceIDRef,
+			Selector:     mg.Spec.ForProvider.Bindings[i3].ServiceIDSelector,
+			To: reference.To{
+				List:    &v1alpha11.DirectoryServiceList{},
+				Managed: &v1alpha11.DirectoryService{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.Bindings[i3].ServiceID")
+		}
+		mg.Spec.ForProvider.Bindings[i3].ServiceID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.Bindings[i3].ServiceIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Bindings); i3++ {
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Bindings[i3].ServiceID),
+			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.Bindings[i3].ServiceIDRef,
+			Selector:     mg.Spec.InitProvider.Bindings[i3].ServiceIDSelector,
+			To: reference.To{
+				List:    &v1alpha11.DirectoryServiceList{},
+				Managed: &v1alpha11.DirectoryService{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.Bindings[i3].ServiceID")
+		}
+		mg.Spec.InitProvider.Bindings[i3].ServiceID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.Bindings[i3].ServiceIDRef = rsp.ResolvedReference
+
+	}
 
 	return nil
 }
