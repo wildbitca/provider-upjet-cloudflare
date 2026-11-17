@@ -2,6 +2,7 @@
 # Applies every patches/*.patch to vendor/ (paths relative to vendor/, -p1).
 # Run by `make vendor` after `go mod vendor`; fails if a patch no longer applies.
 set -euo pipefail
+shopt -s nullglob
 
 cd "$(dirname "$0")/.."
 
