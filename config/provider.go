@@ -20,6 +20,7 @@ import (
 	dnsNamespaced "github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/dns"
 	secretsstoreNamespaced "github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/secretsstore"
 	streamNamespaced "github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/stream"
+	workerAccessNamespaced "github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/workeraccess"
 	zeroNamespaced "github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/zero"
 	zoneNamespaced "github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/zone"
 )
@@ -66,6 +67,7 @@ func GetProvider() *ujconfig.Provider {
 func GetProviderNamespaced() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
 		ujconfig.WithRootGroup("upjet-cloudflare.m.upbound.io"),
+		ujconfig.WithControllerTemplate(hack.WorkerAccessControllerTemplate()),
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithMainTemplate(hack.MainTemplate),
@@ -84,6 +86,7 @@ func GetProviderNamespaced() *ujconfig.Provider {
 		zeroNamespaced.Configure,
 		secretsstoreNamespaced.Configure,
 		streamNamespaced.Configure,
+		workerAccessNamespaced.Configure,
 	} {
 		configure(pc)
 	}

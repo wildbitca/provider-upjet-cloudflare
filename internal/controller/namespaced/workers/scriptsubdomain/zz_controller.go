@@ -23,6 +23,8 @@ import (
 
 	v1alpha1 "github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/workers/v1alpha1"
 	features "github.com/wildbitca/provider-upjet-cloudflare/internal/features"
+
+	workeraccess "github.com/wildbitca/provider-upjet-cloudflare/internal/workeraccess"
 )
 
 // SetupWebhookWithManager registers the conversion webhook for ScriptSubdomain.
@@ -48,6 +50,7 @@ func SetupGated(mgr ctrl.Manager, o tjcontroller.Options) error {
 func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 	name := managed.ControllerName(v1alpha1.ScriptSubdomain_GroupVersionKind.String())
 	var initializers managed.InitializerChain
+	initializers = append(initializers, workeraccess.NewInitializer(mgr.GetAPIReader()))
 	eventHandler := handler.NewEventHandler(handler.WithLogger(o.Logger.WithValues("gvk", v1alpha1.ScriptSubdomain_GroupVersionKind)))
 	ac := tjcontroller.NewAPICallbacks(mgr, xpresource.ManagedKind(v1alpha1.ScriptSubdomain_GroupVersionKind), tjcontroller.WithEventHandler(eventHandler))
 	opts := []managed.ReconcilerOption{
