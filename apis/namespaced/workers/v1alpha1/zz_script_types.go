@@ -1499,6 +1499,14 @@ type ScriptAnnotationsParameters struct {
 
 type ScriptInitParameters struct {
 
+	// Reference to a TrustAccessApplication in zero to populate scriptName.
+	// +kubebuilder:validation:Optional
+	AccessApplicationRef *v2.NamespacedReference `json:"accessApplicationRef,omitempty" tf:"-"`
+
+	// Selector for a TrustAccessApplication in zero to populate scriptName.
+	// +kubebuilder:validation:Optional
+	AccessApplicationSelector *v2.NamespacedSelector `json:"accessApplicationSelector,omitempty" tf:"-"`
+
 	// (String) Identifier.
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
@@ -1597,6 +1605,10 @@ type ScriptInitParameters struct {
 
 	// (String) Name of the script, used in URLs and route configuration.
 	// Name of the script, used in URLs and route configuration.
+	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/zero/v1alpha1.TrustAccessApplication
+	// +crossplane:generate:reference:extractor=github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/workeraccess.AccessWorkerName()
+	// +crossplane:generate:reference:refFieldName=AccessApplicationRef
+	// +crossplane:generate:reference:selectorFieldName=AccessApplicationSelector
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 
 	// (Attributes Set) List of Workers that will consume logs from the attached Worker. (see below for nested schema)
@@ -1772,6 +1784,14 @@ type ScriptObservation struct {
 
 type ScriptParameters struct {
 
+	// Reference to a TrustAccessApplication in zero to populate scriptName.
+	// +kubebuilder:validation:Optional
+	AccessApplicationRef *v2.NamespacedReference `json:"accessApplicationRef,omitempty" tf:"-"`
+
+	// Selector for a TrustAccessApplication in zero to populate scriptName.
+	// +kubebuilder:validation:Optional
+	AccessApplicationSelector *v2.NamespacedSelector `json:"accessApplicationSelector,omitempty" tf:"-"`
+
 	// (String) Identifier.
 	// Identifier.
 	// +kubebuilder:validation:Optional
@@ -1895,6 +1915,10 @@ type ScriptParameters struct {
 
 	// (String) Name of the script, used in URLs and route configuration.
 	// Name of the script, used in URLs and route configuration.
+	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/zero/v1alpha1.TrustAccessApplication
+	// +crossplane:generate:reference:extractor=github.com/wildbitca/provider-upjet-cloudflare/config/namespaced/workeraccess.AccessWorkerName()
+	// +crossplane:generate:reference:refFieldName=AccessApplicationRef
+	// +crossplane:generate:reference:selectorFieldName=AccessApplicationSelector
 	// +kubebuilder:validation:Optional
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 
@@ -2315,7 +2339,6 @@ type Script struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountId) || (has(self.initProvider) && has(self.initProvider.accountId))",message="spec.forProvider.accountId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.scriptName) || (has(self.initProvider) && has(self.initProvider.scriptName))",message="spec.forProvider.scriptName is a required parameter"
 	Spec   ScriptSpec   `json:"spec"`
 	Status ScriptStatus `json:"status,omitempty"`
 }
