@@ -1,0 +1,69 @@
+package e1
+
+import (
+	"fmt"
+	"sort"
+	"testing"
+
+	"github.com/cloudflare/terraform-provider-cloudflare/internal/apijson"
+	"github.com/cloudflare/terraform-provider-cloudflare/internal/customfield"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
+	"github.com/hashicorp/terraform-plugin-framework/types"
+)
+
+// verbatim copy of zone_setting.ZoneSettingModel JSON-relevant fields (v5.28.1 model.go:19-26)
+type M struct {
+	ID        types.String                       `tfsdk:"id" json:"-,computed"`
+	SettingID types.String                       `tfsdk:"setting_id" path:"setting_id,required"`
+	ZoneID    types.String                       `tfsdk:"zone_id" path:"zone_id,required"`
+	Value     customfield.NormalizedDynamicValue `tfsdk:"value" json:"value,required"`
+	Enabled   types.Bool                         `tfsdk:"enabled" json:"enabled,computed_optional"`
+	Editable  types.Bool                         `tfsdk:"editable" json:"editable,computed"`
+}
+
+func dyn(v attr.Value) customfield.NormalizedDynamicValue {
+	return customfield.RawNormalizedDynamicValue(types.DynamicValue(v))
+}
+func m(v customfield.NormalizedDynamicValue, en types.Bool) M {
+	return M{SettingID: types.StringValue("http3"), ZoneID: types.StringValue("z"), Value: v, Enabled: en, ID: types.StringValue("http3"), Editable: types.BoolValue(true)}
+}
+func obj(strict bool) attr.Value {
+	o, _ := types.ObjectValue(map[string]attr.Type{"enabled": types.BoolType, "max_age": types.Int64Type},
+		map[string]attr.Value{"enabled": types.BoolValue(strict), "max_age": types.Int64Value(100)})
+	return o
+}
+func TestE1(t *testing.T) {
+	u := types.BoolUnknown()
+	k := types.BoolValue(true)
+	cases := map[string][2]M{
+		"01 scalar differs off->on, enabled unknown": {m(dyn(types.StringValue("on")), u), m(dyn(types.StringValue("off")), k)},
+		"02 scalar equal, enabled unknown":           {m(dyn(types.StringValue("on")), u), m(dyn(types.StringValue("on")), k)},
+		"03 scalar equal, enabled known":             {m(dyn(types.StringValue("on")), k), m(dyn(types.StringValue("on")), k)},
+		"04 scalar differs, enabled known equal":     {m(dyn(types.StringValue("on")), k), m(dyn(types.StringValue("off")), k)},
+		"05 object differs one field":                {m(dyn(obj(true)), u), m(dyn(obj(false)), k)},
+		"06 object equal":                            {m(dyn(obj(true)), u), m(dyn(obj(true)), k)},
+		"07 number differs":                          {m(dyn(types.Float64Value(1.3)), u), m(dyn(types.Float64Value(1.2)), k)},
+		"08 int64 plan vs float64 state, equal":      {m(dyn(types.Int64Value(1)), u), m(dyn(types.Float64Value(1)), k)},
+		"09 string plan vs bool state":               {m(dyn(types.StringValue("on")), u), m(dyn(types.BoolValue(false)), k)},
+	}
+	var keys []string
+	for n := range cases {
+		keys = append(keys, n)
+	}
+	sort.Strings(keys)
+	for _, n := range keys {
+		c := cases[n]
+		var b []byte
+		var err error
+		func() {
+			defer func() {
+				if r := recover(); r != nil {
+					err = fmt.Errorf("PANIC: %v", r)
+				}
+			}()
+			b, err = apijson.MarshalForPatch(c[0], c[1])
+		}()
+		full, _ := apijson.MarshalRoot(c[0])
+		fmt.Printf("E1 | %-44s | patch=%s err=%v | full=%s\n", n, b, err, full)
+	}
+}
