@@ -145,6 +145,12 @@ This provider exposes 198 managed resources from the [Cloudflare Terraform Provi
 
 API reference: [doc.crds.dev](https://doc.crds.dev/github.com/wildbitca/provider-upjet-cloudflare)
 
+## Prebuilt Worker artifacts
+
+Worker `Script` resources can select digest-pinned OCI bundles of
+prebuilt modules and static assets with `spec.artifact`. See the
+[bundle format, examples and lifecycle](docs/worker-artifacts.md).
+
 ## Report a Bug
 
 Open an [issue](https://github.com/wildbitca/provider-upjet-cloudflare/issues).

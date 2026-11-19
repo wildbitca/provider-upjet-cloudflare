@@ -10,6 +10,7 @@ package v1alpha1
 
 import (
 	"github.com/crossplane/crossplane/apis/v2/core/v2"
+	"github.com/wildbitca/provider-upjet-cloudflare/apis/workerartifact"
 	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
@@ -358,6 +359,16 @@ func (in *BindingsInitParameters) DeepCopyInto(out *BindingsInitParameters) {
 		in, out := &in.ServiceID, &out.ServiceID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ServiceIDRef != nil {
+		in, out := &in.ServiceIDRef, &out.ServiceIDRef
+		*out = new(v2.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ServiceIDSelector != nil {
+		in, out := &in.ServiceIDSelector, &out.ServiceIDSelector
+		*out = new(v2.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Simple != nil {
 		in, out := &in.Simple, &out.Simple
@@ -849,6 +860,16 @@ func (in *BindingsParameters) DeepCopyInto(out *BindingsParameters) {
 		in, out := &in.ServiceID, &out.ServiceID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ServiceIDRef != nil {
+		in, out := &in.ServiceIDRef, &out.ServiceIDRef
+		*out = new(v2.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ServiceIDSelector != nil {
+		in, out := &in.ServiceIDSelector, &out.ServiceIDSelector
+		*out = new(v2.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Simple != nil {
 		in, out := &in.Simple, &out.Simple
@@ -4961,6 +4982,16 @@ func (in *ScriptParameters) DeepCopy() *ScriptParameters {
 func (in *ScriptSpec) DeepCopyInto(out *ScriptSpec) {
 	*out = *in
 	in.ManagedResourceSpec.DeepCopyInto(&out.ManagedResourceSpec)
+	if in.Artifact != nil {
+		in, out := &in.Artifact, &out.Artifact
+		*out = new(workerartifact.Source)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ArtifactFiles != nil {
+		in, out := &in.ArtifactFiles, &out.ArtifactFiles
+		*out = new(workerartifact.Files)
+		(*in).DeepCopyInto(*out)
+	}
 	in.ForProvider.DeepCopyInto(&out.ForProvider)
 	in.InitProvider.DeepCopyInto(&out.InitProvider)
 }

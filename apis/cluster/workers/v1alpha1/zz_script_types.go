@@ -12,6 +12,8 @@ import (
 
 	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	v1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+
+	workerartifact "github.com/wildbitca/provider-upjet-cloudflare/apis/workerartifact"
 )
 
 type AssetsInitParameters struct {
@@ -2281,7 +2283,13 @@ type WorkerParameters struct {
 // ScriptSpec defines the desired state of Script
 type ScriptSpec struct {
 	v2.ClusterManagedResourceSpec `json:",inline"`
-	ForProvider                   ScriptParameters `json:"forProvider"`
+
+	// Artifact optionally selects a digest-pinned prebuilt Worker bundle.
+	// +optional
+	Artifact *workerartifact.Source `json:"artifact,omitempty"`
+	// ArtifactFiles is disposable local state and is never written to Kubernetes.
+	ArtifactFiles *workerartifact.Files `json:"-"`
+	ForProvider   ScriptParameters      `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -2299,6 +2307,9 @@ type ScriptSpec struct {
 type ScriptStatus struct {
 	v2.ManagedResourceStatus `json:",inline"`
 	AtProvider               ScriptObservation `json:"atProvider,omitempty"`
+	// ResolvedArtifactDigest identifies the fetched bundle, not deployment health.
+	// +optional
+	ResolvedArtifactDigest string `json:"resolvedArtifactDigest,omitempty"`
 }
 
 // +kubebuilder:object:root=true
