@@ -2,7 +2,10 @@
 package preview
 
 import (
+	"context"
 	"encoding/json"
+	"errors"
+	"strings"
 
 	"github.com/crossplane/upjet/v2/pkg/config"
 )
@@ -19,6 +22,7 @@ func Configure(p *config.Provider) {
 		r.References["policies.include.service_token.token_id"] = config.Reference{TerraformName: "cloudflare_zero_trust_access_service_token"}
 	})
 	p.AddResourceConfigurator("cloudflare_zero_trust_tunnel_cloudflared", func(r *config.Resource) {
+		r.ExternalName.GetImportIDFn = cloudflaredTunnelImportID
 		r.Sensitive.AdditionalConnectionDetailsFn = TunnelCredentials
 	})
 	p.AddResourceConfigurator("cloudflare_zero_trust_access_service_token", func(r *config.Resource) {
@@ -32,6 +36,19 @@ func Configure(p *config.Provider) {
 			return out, nil
 		}
 	})
+}
+
+// cloudflaredTunnelImportID qualifies the Terraform import ID while references
+// continue to resolve the tunnel UUID from the resource's external name.
+func cloudflaredTunnelImportID(_ context.Context, externalName string, parameters, _ map[string]any) (string, error) {
+	if externalName == "" || strings.Contains(externalName, "/") {
+		return externalName, nil
+	}
+	accountID, _ := parameters["account_id"].(string)
+	if accountID == "" {
+		return "", errors.New("cloudflared tunnel import requires account_id")
+	}
+	return accountID + "/" + externalName, nil
 }
 
 // TunnelCredentials exports the native cloudflared credential file through its connection Secret.
