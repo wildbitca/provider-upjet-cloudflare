@@ -26,8 +26,8 @@ type ConsumerInitParameters struct {
 	// A Resource identifier.
 	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
 
-	// (String) Name of a Worker
-	// Name of a Worker
+	// (String) For type: worker: Name of a Worker
+	// For `type: worker`: Name of a Worker
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -64,8 +64,8 @@ type ConsumerObservation struct {
 	// (String)
 	QueueName *string `json:"queueName,omitempty" tf:"queue_name,omitempty"`
 
-	// (String) Name of a Worker
-	// Name of a Worker
+	// (String) For type: worker: Name of a Worker
+	// For `type: worker`: Name of a Worker
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
@@ -92,8 +92,8 @@ type ConsumerParameters struct {
 	// +kubebuilder:validation:Optional
 	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
 
-	// (String) Name of a Worker
-	// Name of a Worker
+	// (String) For type: worker: Name of a Worker
+	// For `type: worker`: Name of a Worker
 	// +kubebuilder:validation:Optional
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 

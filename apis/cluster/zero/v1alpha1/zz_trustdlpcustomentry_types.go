@@ -96,6 +96,11 @@ type TrustDlpCustomEntryInitParameters struct {
 
 	// (String)
 	ProfileID *string `json:"profileId,omitempty" tf:"profile_id,omitempty"`
+
+	// (Set of String) Validators the new entry should reference, by id, at most 10.
+	// Validators the new entry should reference, by id, at most 10.
+	// +listType=set
+	ValidatorIds []*string `json:"validatorIds,omitempty" tf:"validator_ids,omitempty"`
 }
 
 type TrustDlpCustomEntryObservation struct {
@@ -105,7 +110,7 @@ type TrustDlpCustomEntryObservation struct {
 
 	// sensitive manner
 	// Cannot be set to false if secret is true
-	// Only applies to custom word lists.
+	// For `type: exact_data`: Only applies to custom word lists.
 	// Determines if the words should be matched in a case-sensitive manner
 	// Cannot be set to false if secret is true
 	CaseSensitive *bool `json:"caseSensitive,omitempty" tf:"case_sensitive,omitempty"`
@@ -116,9 +121,9 @@ type TrustDlpCustomEntryObservation struct {
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Boolean) Whether this entry is deprecated for new use. This is computed from the static catalog and
+	// (Boolean) For type: predefined: Whether this entry is deprecated for new use. This is computed from the static catalog and
 	// emitted only when true.
-	// Whether this entry is deprecated for new use. This is computed from the static catalog and
+	// For `type: predefined`: Whether this entry is deprecated for new use. This is computed from the static catalog and
 	// emitted only when true.
 	Deprecated *bool `json:"deprecated,omitempty" tf:"deprecated,omitempty"`
 
@@ -157,7 +162,12 @@ type TrustDlpCustomEntryObservation struct {
 	// Available values: "empty", "uploading", "pending", "processing", "failed", "complete".
 	UploadStatus *string `json:"uploadStatus,omitempty" tf:"upload_status,omitempty"`
 
-	// (Attributes) A Predefined AI prompt classification topic entry. (see below for nested schema)
+	// (Set of String) Validators the new entry should reference, by id, at most 10.
+	// Validators the new entry should reference, by id, at most 10.
+	// +listType=set
+	ValidatorIds []*string `json:"validatorIds,omitempty" tf:"validator_ids,omitempty"`
+
+	// (Attributes) For type: predefined: A Predefined AI prompt classification topic entry. (see below for nested schema)
 	Variant *VariantObservation `json:"variant,omitempty" tf:"variant,omitempty"`
 
 	// (List of String)
@@ -189,6 +199,12 @@ type TrustDlpCustomEntryParameters struct {
 	// (String)
 	// +kubebuilder:validation:Optional
 	ProfileID *string `json:"profileId,omitempty" tf:"profile_id,omitempty"`
+
+	// (Set of String) Validators the new entry should reference, by id, at most 10.
+	// Validators the new entry should reference, by id, at most 10.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	ValidatorIds []*string `json:"validatorIds,omitempty" tf:"validator_ids,omitempty"`
 }
 
 type VariantInitParameters struct {
@@ -197,7 +213,9 @@ type VariantInitParameters struct {
 type VariantObservation struct {
 
 	// (String)
-	// A customer-facing explanation of what this predefined AI prompt topic represents.
+	// For `type: PromptTopic`: A customer-facing explanation of what this predefined AI prompt topic represents.
+	//
+	// For `type: General`: A customer-facing explanation of what this predefined entry represents.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (String) Available values: "Intent", "Content".

@@ -60,9 +60,9 @@ spec:
                 properties:
                   value:
                     description: |-
-                      (String) Enables Tiered Caching.
+                      (String) Enables or disables Tiered Cache.
                       Available values: "on", "off".
-                      Enables Tiered Caching.
+                      Enables or disables Tiered Cache.
                       Available values: "on", "off".
                     type: string
                   zoneId:
@@ -86,9 +86,9 @@ spec:
                 properties:
                   value:
                     description: |-
-                      (String) Enables Tiered Caching.
+                      (String) Enables or disables Tiered Cache.
                       Available values: "on", "off".
-                      Enables Tiered Caching.
+                      Enables or disables Tiered Cache.
                       Available values: "on", "off".
                     type: string
                   zoneId:
@@ -184,9 +184,9 @@ spec:
                     type: string
                   value:
                     description: |-
-                      (String) Enables Tiered Caching.
+                      (String) Enables or disables Tiered Cache.
                       Available values: "on", "off".
-                      Enables Tiered Caching.
+                      Enables or disables Tiered Cache.
                       Available values: "on", "off".
                     type: string
                   zoneId:

@@ -2582,9 +2582,9 @@ type MappingsParameters struct {
 type MfaConfigInitParameters struct {
 
 	// (List of String) The authenticators allowed for MFA.
-	// Available values: "totp", "biometrics", "security_key".
+	// Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
 	// The authenticators allowed for MFA.
-	// Available values: "totp", "biometrics", "security_key".
+	// Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
 	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
 
 	// (Boolean) Whether MFA is disabled for this application.
@@ -2599,9 +2599,9 @@ type MfaConfigInitParameters struct {
 type MfaConfigObservation struct {
 
 	// (List of String) The authenticators allowed for MFA.
-	// Available values: "totp", "biometrics", "security_key".
+	// Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
 	// The authenticators allowed for MFA.
-	// Available values: "totp", "biometrics", "security_key".
+	// Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
 	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
 
 	// (Boolean) Whether MFA is disabled for this application.
@@ -2616,9 +2616,9 @@ type MfaConfigObservation struct {
 type MfaConfigParameters struct {
 
 	// (List of String) The authenticators allowed for MFA.
-	// Available values: "totp", "biometrics", "security_key".
+	// Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
 	// The authenticators allowed for MFA.
-	// Available values: "totp", "biometrics", "security_key".
+	// Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
 	// +kubebuilder:validation:Optional
 	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
 
@@ -2862,7 +2862,7 @@ type PoliciesInitParameters struct {
 	// (Attributes Set) Rules evaluated with an OR logical operator. A user needs to meet only one of the Include rules. (see below for nested schema)
 	Include []IncludeInitParameters `json:"include,omitempty" tf:"include,omitempty"`
 
-	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, and rdp application types. (see below for nested schema)
+	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, rdp, and infrastructure application types. For infrastructure applications, supported authenticators are piv_key and ssh_fido2_key; for other application types use totp, biometrics, or security_key. (see below for nested schema)
 	MfaConfig *PoliciesMfaConfigInitParameters `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
 
 	// (String) The name of the application.
@@ -2880,9 +2880,9 @@ type PoliciesInitParameters struct {
 type PoliciesMfaConfigInitParameters struct {
 
 	// (List of String) The authenticators allowed for MFA.
-	// Available values: "totp", "biometrics", "security_key".
+	// Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
 	// The authenticators allowed for MFA.
-	// Available values: "totp", "biometrics", "security_key", "ssh_piv_key".
+	// Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
 	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
 
 	// (Boolean) Whether MFA is disabled for this application.
@@ -2897,9 +2897,9 @@ type PoliciesMfaConfigInitParameters struct {
 type PoliciesMfaConfigObservation struct {
 
 	// (List of String) The authenticators allowed for MFA.
-	// Available values: "totp", "biometrics", "security_key".
+	// Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
 	// The authenticators allowed for MFA.
-	// Available values: "totp", "biometrics", "security_key", "ssh_piv_key".
+	// Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
 	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
 
 	// (Boolean) Whether MFA is disabled for this application.
@@ -2914,9 +2914,9 @@ type PoliciesMfaConfigObservation struct {
 type PoliciesMfaConfigParameters struct {
 
 	// (List of String) The authenticators allowed for MFA.
-	// Available values: "totp", "biometrics", "security_key".
+	// Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
 	// The authenticators allowed for MFA.
-	// Available values: "totp", "biometrics", "security_key", "ssh_piv_key".
+	// Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
 	// +kubebuilder:validation:Optional
 	AllowedAuthenticators []*string `json:"allowedAuthenticators,omitempty" tf:"allowed_authenticators,omitempty"`
 
@@ -2952,7 +2952,7 @@ type PoliciesObservation struct {
 	// (Attributes Set) Rules evaluated with an OR logical operator. A user needs to meet only one of the Include rules. (see below for nested schema)
 	Include []IncludeObservation `json:"include,omitempty" tf:"include,omitempty"`
 
-	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, and rdp application types. (see below for nested schema)
+	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, rdp, and infrastructure application types. For infrastructure applications, supported authenticators are piv_key and ssh_fido2_key; for other application types use totp, biometrics, or security_key. (see below for nested schema)
 	MfaConfig *PoliciesMfaConfigObservation `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
 
 	// (String) The name of the application.
@@ -2993,7 +2993,7 @@ type PoliciesParameters struct {
 	// +kubebuilder:validation:Optional
 	Include []IncludeParameters `json:"include,omitempty" tf:"include,omitempty"`
 
-	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, and rdp application types. (see below for nested schema)
+	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, rdp, and infrastructure application types. For infrastructure applications, supported authenticators are piv_key and ssh_fido2_key; for other application types use totp, biometrics, or security_key. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	MfaConfig *PoliciesMfaConfigParameters `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
 
@@ -4768,7 +4768,7 @@ type TrustAccessApplicationInitParameters struct {
 	// The image URL for the logo shown in the App Launcher dashboard.
 	LogoURL *string `json:"logoUrl,omitempty" tf:"logo_url,omitempty"`
 
-	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, and rdp application types. (see below for nested schema)
+	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, rdp, and infrastructure application types. For infrastructure applications, supported authenticators are piv_key and ssh_fido2_key; for other application types use totp, biometrics, or security_key. (see below for nested schema)
 	MfaConfig *MfaConfigInitParameters `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
 
 	// (String) The name of the application.
@@ -4944,7 +4944,7 @@ type TrustAccessApplicationObservation struct {
 	// The image URL for the logo shown in the App Launcher dashboard.
 	LogoURL *string `json:"logoUrl,omitempty" tf:"logo_url,omitempty"`
 
-	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, and rdp application types. (see below for nested schema)
+	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, rdp, and infrastructure application types. For infrastructure applications, supported authenticators are piv_key and ssh_fido2_key; for other application types use totp, biometrics, or security_key. (see below for nested schema)
 	MfaConfig *MfaConfigObservation `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
 
 	// (String) The name of the application.
@@ -5143,7 +5143,7 @@ type TrustAccessApplicationParameters struct {
 	// +kubebuilder:validation:Optional
 	LogoURL *string `json:"logoUrl,omitempty" tf:"logo_url,omitempty"`
 
-	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, and rdp application types. (see below for nested schema)
+	// factor authentication (MFA) settings for the application. Only valid for self_hosted, ssh, vnc, rdp, and infrastructure application types. For infrastructure applications, supported authenticators are piv_key and ssh_fido2_key; for other application types use totp, biometrics, or security_key. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	MfaConfig *MfaConfigParameters `json:"mfaConfig,omitempty" tf:"mfa_config,omitempty"`
 

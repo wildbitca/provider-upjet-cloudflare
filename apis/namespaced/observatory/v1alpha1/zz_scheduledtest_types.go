@@ -18,54 +18,40 @@ type DesktopReportInitParameters struct {
 
 type DesktopReportObservation struct {
 
-	// (Number) Cumulative Layout Shift.
 	// Cumulative Layout Shift.
 	Cls *float64 `json:"cls,omitempty" tf:"cls,omitempty"`
 
-	// (String) The type of device.
-	// Available values: "DESKTOP", "MOBILE".
 	// The type of device.
 	// Available values: "DESKTOP", "MOBILE".
 	DeviceType *string `json:"deviceType,omitempty" tf:"device_type,omitempty"`
 
-	// (Attributes) (see below for nested schema)
 	Error *ErrorObservation `json:"error,omitempty" tf:"error,omitempty"`
 
-	// (Number) First Contentful Paint.
 	// First Contentful Paint.
 	Fcp *float64 `json:"fcp,omitempty" tf:"fcp,omitempty"`
 
-	// (String) The URL to the full Lighthouse JSON report.
 	// The URL to the full Lighthouse JSON report.
 	JSONReportURL *string `json:"jsonReportUrl,omitempty" tf:"json_report_url,omitempty"`
 
-	// (Number) Largest Contentful Paint.
 	// Largest Contentful Paint.
 	Lcp *float64 `json:"lcp,omitempty" tf:"lcp,omitempty"`
 
-	// (Number) The Lighthouse performance score.
 	// The Lighthouse performance score.
 	PerformanceScore *float64 `json:"performanceScore,omitempty" tf:"performance_score,omitempty"`
 
-	// (Number) Speed Index.
 	// Speed Index.
 	Si *float64 `json:"si,omitempty" tf:"si,omitempty"`
 
-	// (String) The state of the Lighthouse report.
-	// Available values: "RUNNING", "COMPLETE", "FAILED".
 	// The state of the Lighthouse report.
 	// Available values: "RUNNING", "COMPLETE", "FAILED".
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
-	// (Number) Total Blocking Time.
 	// Total Blocking Time.
 	Tbt *float64 `json:"tbt,omitempty" tf:"tbt,omitempty"`
 
-	// (Number) Time To First Byte.
 	// Time To First Byte.
 	Ttfb *float64 `json:"ttfb,omitempty" tf:"ttfb,omitempty"`
 
-	// (Number) Time To Interactive.
 	// Time To Interactive.
 	Tti *float64 `json:"tti,omitempty" tf:"tti,omitempty"`
 }
@@ -78,17 +64,13 @@ type ErrorInitParameters struct {
 
 type ErrorObservation struct {
 
-	// (String) The error code of the Lighthouse result.
-	// Available values: "NOT_REACHABLE", "DNS_FAILURE", "NOT_HTML", "LIGHTHOUSE_TIMEOUT", "UNKNOWN".
 	// The error code of the Lighthouse result.
 	// Available values: "NOT_REACHABLE", "DNS_FAILURE", "NOT_HTML", "LIGHTHOUSE_TIMEOUT", "UNKNOWN".
 	Code *string `json:"code,omitempty" tf:"code,omitempty"`
 
-	// (String) Detailed error message.
 	// Detailed error message.
 	Detail *string `json:"detail,omitempty" tf:"detail,omitempty"`
 
-	// (String) The final URL displayed to the user.
 	// The final URL displayed to the user.
 	FinalDisplayedURL *string `json:"finalDisplayedUrl,omitempty" tf:"final_displayed_url,omitempty"`
 }
@@ -101,17 +83,13 @@ type MobileReportErrorInitParameters struct {
 
 type MobileReportErrorObservation struct {
 
-	// (String) The error code of the Lighthouse result.
-	// Available values: "NOT_REACHABLE", "DNS_FAILURE", "NOT_HTML", "LIGHTHOUSE_TIMEOUT", "UNKNOWN".
 	// The error code of the Lighthouse result.
 	// Available values: "NOT_REACHABLE", "DNS_FAILURE", "NOT_HTML", "LIGHTHOUSE_TIMEOUT", "UNKNOWN".
 	Code *string `json:"code,omitempty" tf:"code,omitempty"`
 
-	// (String) Detailed error message.
 	// Detailed error message.
 	Detail *string `json:"detail,omitempty" tf:"detail,omitempty"`
 
-	// (String) The final URL displayed to the user.
 	// The final URL displayed to the user.
 	FinalDisplayedURL *string `json:"finalDisplayedUrl,omitempty" tf:"final_displayed_url,omitempty"`
 }
@@ -124,54 +102,40 @@ type MobileReportInitParameters struct {
 
 type MobileReportObservation struct {
 
-	// (Number) Cumulative Layout Shift.
 	// Cumulative Layout Shift.
 	Cls *float64 `json:"cls,omitempty" tf:"cls,omitempty"`
 
-	// (String) The type of device.
-	// Available values: "DESKTOP", "MOBILE".
 	// The type of device.
 	// Available values: "DESKTOP", "MOBILE".
 	DeviceType *string `json:"deviceType,omitempty" tf:"device_type,omitempty"`
 
-	// (Attributes) (see below for nested schema)
 	Error *MobileReportErrorObservation `json:"error,omitempty" tf:"error,omitempty"`
 
-	// (Number) First Contentful Paint.
 	// First Contentful Paint.
 	Fcp *float64 `json:"fcp,omitempty" tf:"fcp,omitempty"`
 
-	// (String) The URL to the full Lighthouse JSON report.
 	// The URL to the full Lighthouse JSON report.
 	JSONReportURL *string `json:"jsonReportUrl,omitempty" tf:"json_report_url,omitempty"`
 
-	// (Number) Largest Contentful Paint.
 	// Largest Contentful Paint.
 	Lcp *float64 `json:"lcp,omitempty" tf:"lcp,omitempty"`
 
-	// (Number) The Lighthouse performance score.
 	// The Lighthouse performance score.
 	PerformanceScore *float64 `json:"performanceScore,omitempty" tf:"performance_score,omitempty"`
 
-	// (Number) Speed Index.
 	// Speed Index.
 	Si *float64 `json:"si,omitempty" tf:"si,omitempty"`
 
-	// (String) The state of the Lighthouse report.
-	// Available values: "RUNNING", "COMPLETE", "FAILED".
 	// The state of the Lighthouse report.
 	// Available values: "RUNNING", "COMPLETE", "FAILED".
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
-	// (Number) Total Blocking Time.
 	// Total Blocking Time.
 	Tbt *float64 `json:"tbt,omitempty" tf:"tbt,omitempty"`
 
-	// (Number) Time To First Byte.
 	// Time To First Byte.
 	Ttfb *float64 `json:"ttfb,omitempty" tf:"ttfb,omitempty"`
 
-	// (Number) Time To Interactive.
 	// Time To Interactive.
 	Tti *float64 `json:"tti,omitempty" tf:"tti,omitempty"`
 }
@@ -183,11 +147,8 @@ type RegionInitParameters struct {
 }
 
 type RegionObservation struct {
-
-	// (String)
 	Label *string `json:"label,omitempty" tf:"label,omitempty"`
 
-	// east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
 	// A test region.
 	// Available values: "asia-east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
@@ -201,18 +162,14 @@ type ScheduleInitParameters struct {
 
 type ScheduleObservation struct {
 
-	// (String) The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
-	// Available values: "DAILY", "WEEKLY".
 	// The frequency of the test.
 	// Available values: "DAILY", "WEEKLY".
 	Frequency *string `json:"frequency,omitempty" tf:"frequency,omitempty"`
 
-	// east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
 	// A test region.
 	// Available values: "asia-east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// (String) A URL.
 	// A URL.
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
@@ -222,78 +179,60 @@ type ScheduleParameters struct {
 
 type ScheduledTestInitParameters struct {
 
-	// (String) The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
-	// Available values: "DAILY", "WEEKLY".
 	// The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
 	// Available values: "DAILY", "WEEKLY".
 	Frequency *string `json:"frequency,omitempty" tf:"frequency,omitempty"`
 
-	// east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
 	// A test region.
 	// Available values: "asia-east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// (String) A URL.
 	// A URL.
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 
-	// (String) Identifier.
 	// Identifier.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type ScheduledTestObservation struct {
 
-	// (String) The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
-	// Available values: "DAILY", "WEEKLY".
 	// The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
 	// Available values: "DAILY", "WEEKLY".
 	Frequency *string `json:"frequency,omitempty" tf:"frequency,omitempty"`
 
-	// (String) A URL.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
 	// A test region.
 	// Available values: "asia-east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// (Attributes) The test schedule. (see below for nested schema)
 	Schedule *ScheduleObservation `json:"schedule,omitempty" tf:"schedule,omitempty"`
 
-	// (Attributes) (see below for nested schema)
 	Test *TestObservation `json:"test,omitempty" tf:"test,omitempty"`
 
-	// (String) A URL.
 	// A URL.
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 
-	// (String) Identifier.
 	// Identifier.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type ScheduledTestParameters struct {
 
-	// (String) The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
-	// Available values: "DAILY", "WEEKLY".
 	// The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
 	// Available values: "DAILY", "WEEKLY".
 	// +kubebuilder:validation:Optional
 	Frequency *string `json:"frequency,omitempty" tf:"frequency,omitempty"`
 
-	// east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
 	// A test region.
 	// Available values: "asia-east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// (String) A URL.
 	// A URL.
 	// +kubebuilder:validation:Optional
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 
-	// (String) Identifier.
 	// Identifier.
 	// +kubebuilder:validation:Optional
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
@@ -303,30 +242,21 @@ type TestInitParameters struct {
 }
 
 type TestObservation struct {
-
-	// (String)
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
-	// (Attributes) The Lighthouse report. (see below for nested schema)
 	DesktopReport *DesktopReportObservation `json:"desktopReport,omitempty" tf:"desktop_report,omitempty"`
 
-	// (String) A URL.
 	// UUID.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Attributes) The Lighthouse report. (see below for nested schema)
 	MobileReport *MobileReportObservation `json:"mobileReport,omitempty" tf:"mobile_report,omitempty"`
 
-	// east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
 	Region *RegionObservation `json:"region,omitempty" tf:"region,omitempty"`
 
-	// (String) The frequency of the test.
-	// Available values: "DAILY", "WEEKLY".
 	// The frequency of the test.
 	// Available values: "DAILY", "WEEKLY".
 	ScheduleFrequency *string `json:"scheduleFrequency,omitempty" tf:"schedule_frequency,omitempty"`
 
-	// (String) A URL.
 	// A URL.
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 }
@@ -361,7 +291,7 @@ type ScheduledTestStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// ScheduledTest is the Schema for the ScheduledTests API. Accepted Permissions Zone Settings ReadZone Settings Write
+// ScheduledTest is the Schema for the ScheduledTests API. <no value>
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

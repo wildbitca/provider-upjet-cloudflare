@@ -111,6 +111,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  enableDeviceCredentialAuthentication:
+                    description: |-
+                      based reauthentication.
+                      Determines whether the WARP client can silently reauthenticate the user with device credentials (Microsoft Entra) instead of prompting for browser-based reauthentication.
+                    type: boolean
                   exclude:
                     description: (Attributes List) List of routes excluded in the
                       WARP client's tunnel. Both 'exclude' and 'include' cannot be
@@ -143,6 +148,11 @@ spec:
                     description: network/concepts/global-acceleration/. (see below
                       for nested schema)
                     properties:
+                      allowManualOverride:
+                        description: |-
+                          (Boolean) Whether WARP users may manually override the automatic Global Acceleration decision. Defaults to true when not provided.
+                          Whether WARP users may manually override the automatic Global Acceleration decision. Defaults to true when not provided.
+                        type: boolean
                       apiEndpoints:
                         description: |-
                           (List of String) IP:port entries for the API endpoints.
@@ -150,6 +160,11 @@ spec:
                         items:
                           type: string
                         type: array
+                      autoswitch:
+                        description: |-
+                          (Boolean) Automatically switch Global Acceleration regions based on device location. Defaults to false when not provided.
+                          Automatically switch Global Acceleration regions based on device location. Defaults to false when not provided.
+                        type: boolean
                       enabled:
                         description: |-
                           (Boolean) Whether the policy will be applied to matching devices.
@@ -329,6 +344,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  enableDeviceCredentialAuthentication:
+                    description: |-
+                      based reauthentication.
+                      Determines whether the WARP client can silently reauthenticate the user with device credentials (Microsoft Entra) instead of prompting for browser-based reauthentication.
+                    type: boolean
                   exclude:
                     description: (Attributes List) List of routes excluded in the
                       WARP client's tunnel. Both 'exclude' and 'include' cannot be
@@ -361,6 +381,11 @@ spec:
                     description: network/concepts/global-acceleration/. (see below
                       for nested schema)
                     properties:
+                      allowManualOverride:
+                        description: |-
+                          (Boolean) Whether WARP users may manually override the automatic Global Acceleration decision. Defaults to true when not provided.
+                          Whether WARP users may manually override the automatic Global Acceleration decision. Defaults to true when not provided.
+                        type: boolean
                       apiEndpoints:
                         description: |-
                           (List of String) IP:port entries for the API endpoints.
@@ -368,6 +393,11 @@ spec:
                         items:
                           type: string
                         type: array
+                      autoswitch:
+                        description: |-
+                          (Boolean) Automatically switch Global Acceleration regions based on device location. Defaults to false when not provided.
+                          Automatically switch Global Acceleration regions based on device location. Defaults to false when not provided.
+                        type: boolean
                       enabled:
                         description: |-
                           (Boolean) Whether the policy will be applied to matching devices.
@@ -608,6 +638,11 @@ spec:
                           type: string
                       type: object
                     type: array
+                  enableDeviceCredentialAuthentication:
+                    description: |-
+                      based reauthentication.
+                      Determines whether the WARP client can silently reauthenticate the user with device credentials (Microsoft Entra) instead of prompting for browser-based reauthentication.
+                    type: boolean
                   enabled:
                     description: |-
                       (Boolean) Whether the policy will be applied to matching devices.
@@ -671,6 +706,11 @@ spec:
                     description: network/concepts/global-acceleration/. (see below
                       for nested schema)
                     properties:
+                      allowManualOverride:
+                        description: |-
+                          (Boolean) Whether WARP users may manually override the automatic Global Acceleration decision. Defaults to true when not provided.
+                          Whether WARP users may manually override the automatic Global Acceleration decision. Defaults to true when not provided.
+                        type: boolean
                       apiEndpoints:
                         description: |-
                           (List of String) IP:port entries for the API endpoints.
@@ -678,6 +718,11 @@ spec:
                         items:
                           type: string
                         type: array
+                      autoswitch:
+                        description: |-
+                          (Boolean) Automatically switch Global Acceleration regions based on device location. Defaults to false when not provided.
+                          Automatically switch Global Acceleration regions based on device location. Defaults to false when not provided.
+                        type: boolean
                       enabled:
                         description: |-
                           (Boolean) Whether the policy will be applied to matching devices.

@@ -35,7 +35,13 @@ spec:
     schema:
       openAPIV3Schema:
         description: Organization is the Schema for the Organizations API. Accepted
-          Permissions User Details Write
+          Permissions User Details Write User API tokens can list and create Organizations,
+          but reading, updating, or deleting an Organization requires a Global API
+          key and your registered email address. See Organizations authentication
+          limitations https://developers.cloudflare.com/fundamentals/organizations/limitations/#api-authentication
+          for credential compatibility by operation. Each endpoint’s Security section
+          lists its supported authentication methods, with Accepted Permissions where
+          applicable.
         properties:
           apiVersion:
             description: |-
@@ -60,7 +66,9 @@ spec:
               forProvider:
                 properties:
                   name:
-                    description: (String)
+                    description: |-
+                      8 bytes.
+                      The Organization name, limited to 65 UTF-8 bytes.
                     type: string
                   parent:
                     description: (Attributes) (see below for nested schema)
@@ -69,8 +77,14 @@ spec:
                         description: (String) The ID of this resource.
                         type: string
                     type: object
+                  parentId:
+                    description: |-
+                      (String) The current parent Organization ID. A different value is rejected; this endpoint cannot move an Organization.
+                      The current parent Organization ID. A different value is rejected; this endpoint cannot move an Organization.
+                    type: string
                   profile:
-                    description: (Attributes) (see below for nested schema)
+                    description: 8 bytes. An empty profile is ignored. (see below
+                      for nested schema)
                     properties:
                       businessAddress:
                         description: (String)
@@ -103,7 +117,9 @@ spec:
                   autoscaler.
                 properties:
                   name:
-                    description: (String)
+                    description: |-
+                      8 bytes.
+                      The Organization name, limited to 65 UTF-8 bytes.
                     type: string
                   parent:
                     description: (Attributes) (see below for nested schema)
@@ -112,8 +128,14 @@ spec:
                         description: (String) The ID of this resource.
                         type: string
                     type: object
+                  parentId:
+                    description: |-
+                      (String) The current parent Organization ID. A different value is rejected; this endpoint cannot move an Organization.
+                      The current parent Organization ID. A different value is rejected; this endpoint cannot move an Organization.
+                    type: string
                   profile:
-                    description: (Attributes) (see below for nested schema)
+                    description: 8 bytes. An empty profile is ignored. (see below
+                      for nested schema)
                     properties:
                       businessAddress:
                         description: (String)
@@ -209,6 +231,9 @@ spec:
                   meta:
                     description: (Attributes) (see below for nested schema)
                     properties:
+                      areChildAccountsAccessibleByOrgMembers:
+                        description: (Boolean)
+                        type: boolean
                       hierarchyTags:
                         description: |-
                           element array containing their own tag; sub-organizations return
@@ -256,9 +281,14 @@ spec:
                             description: (String)
                             type: string
                         type: object
+                      tenantType:
+                        description: (String)
+                        type: string
                     type: object
                   name:
-                    description: (String)
+                    description: |-
+                      8 bytes.
+                      The Organization name, limited to 65 UTF-8 bytes.
                     type: string
                   parent:
                     description: (Attributes) (see below for nested schema)
@@ -266,12 +296,15 @@ spec:
                       id:
                         description: (String) The ID of this resource.
                         type: string
-                      name:
-                        description: (String)
-                        type: string
                     type: object
+                  parentId:
+                    description: |-
+                      (String) The current parent Organization ID. A different value is rejected; this endpoint cannot move an Organization.
+                      The current parent Organization ID. A different value is rejected; this endpoint cannot move an Organization.
+                    type: string
                   profile:
-                    description: (Attributes) (see below for nested schema)
+                    description: 8 bytes. An empty profile is ignored. (see below
+                      for nested schema)
                     properties:
                       businessAddress:
                         description: (String)

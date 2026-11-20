@@ -15,9 +15,9 @@ import (
 
 type TLSInitParameters struct {
 
-	// (String) The Certificate Authority that Total TLS certificates will be issued through.
+	// (String) The Certificate Authority that Total TLS certificates will be issued through. Not returned in responses when Total TLS is disabled.
 	// Available values: "google", "lets_encrypt", "ssl_com".
-	// The Certificate Authority that Total TLS certificates will be issued through.
+	// The Certificate Authority that Total TLS certificates will be issued through. Not returned in responses when Total TLS is disabled.
 	// Available values: "google", "lets_encrypt", "ssl_com".
 	CertificateAuthority *string `json:"certificateAuthority,omitempty" tf:"certificate_authority,omitempty"`
 
@@ -32,9 +32,9 @@ type TLSInitParameters struct {
 
 type TLSObservation struct {
 
-	// (String) The Certificate Authority that Total TLS certificates will be issued through.
+	// (String) The Certificate Authority that Total TLS certificates will be issued through. Not returned in responses when Total TLS is disabled.
 	// Available values: "google", "lets_encrypt", "ssl_com".
-	// The Certificate Authority that Total TLS certificates will be issued through.
+	// The Certificate Authority that Total TLS certificates will be issued through. Not returned in responses when Total TLS is disabled.
 	// Available values: "google", "lets_encrypt", "ssl_com".
 	CertificateAuthority *string `json:"certificateAuthority,omitempty" tf:"certificate_authority,omitempty"`
 
@@ -45,9 +45,9 @@ type TLSObservation struct {
 	// (String) Identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Number) The validity period in days for the certificates ordered via Total TLS.
+	// (Number) The validity period in days for the certificates ordered via Total TLS. Not returned when Total TLS is disabled.
 	// Available values: 90.
-	// The validity period in days for the certificates ordered via Total TLS.
+	// The validity period in days for the certificates ordered via Total TLS. Not returned when Total TLS is disabled.
 	// Available values: 90.
 	ValidityPeriod *float64 `json:"validityPeriod,omitempty" tf:"validity_period,omitempty"`
 
@@ -58,9 +58,9 @@ type TLSObservation struct {
 
 type TLSParameters struct {
 
-	// (String) The Certificate Authority that Total TLS certificates will be issued through.
+	// (String) The Certificate Authority that Total TLS certificates will be issued through. Not returned in responses when Total TLS is disabled.
 	// Available values: "google", "lets_encrypt", "ssl_com".
-	// The Certificate Authority that Total TLS certificates will be issued through.
+	// The Certificate Authority that Total TLS certificates will be issued through. Not returned in responses when Total TLS is disabled.
 	// Available values: "google", "lets_encrypt", "ssl_com".
 	// +kubebuilder:validation:Optional
 	CertificateAuthority *string `json:"certificateAuthority,omitempty" tf:"certificate_authority,omitempty"`

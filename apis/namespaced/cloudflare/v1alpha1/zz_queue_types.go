@@ -32,8 +32,8 @@ type ConsumersObservation struct {
 	// (String)
 	QueueName *string `json:"queueName,omitempty" tf:"queue_name,omitempty"`
 
-	// (String) Name of a Worker
-	// Name of a Worker
+	// (String) For type: worker: Name of a Worker
+	// For `type: worker`: Name of a Worker
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 
 	// (Attributes) (see below for nested schema)

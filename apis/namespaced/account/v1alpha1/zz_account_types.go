@@ -18,8 +18,8 @@ type AccountInitParameters struct {
 	// (Attributes) Parent container details (see below for nested schema)
 	ManagedBy *ManagedByInitParameters `json:"managedBy,omitempty" tf:"managed_by,omitempty"`
 
-	// (String) Account name
-	// Account name
+	// 8 bytes.
+	// Account name, limited to 65 UTF-8 bytes.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Attributes) Account settings (see below for nested schema)
@@ -29,7 +29,9 @@ type AccountInitParameters struct {
 	// Set to `true` and omit `unit` to create a standalone Free Account. If provided, this field must be `true`.
 	Standalone *bool `json:"standalone,omitempty" tf:"standalone,omitempty"`
 
-	// (String, Deprecated) Available values: "standard", "enterprise".
+	// serve customers, use standard. for enterprise customers, use enterprise.
+	// Available values: "standard", "enterprise".
+	// the type of account being created. For self-serve customers, use standard. for enterprise customers, use enterprise.
 	// Available values: "standard", "enterprise".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
@@ -46,11 +48,14 @@ type AccountObservation struct {
 	// (String) Identifier
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Attributes) Legacy account flags. (see below for nested schema)
+	LegacyFlags *LegacyFlagsObservation `json:"legacyFlags,omitempty" tf:"legacy_flags,omitempty"`
+
 	// (Attributes) Parent container details (see below for nested schema)
 	ManagedBy *ManagedByObservation `json:"managedBy,omitempty" tf:"managed_by,omitempty"`
 
-	// (String) Account name
-	// Account name
+	// 8 bytes.
+	// Account name, limited to 65 UTF-8 bytes.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Attributes) Account settings (see below for nested schema)
@@ -60,7 +65,9 @@ type AccountObservation struct {
 	// Set to `true` and omit `unit` to create a standalone Free Account. If provided, this field must be `true`.
 	Standalone *bool `json:"standalone,omitempty" tf:"standalone,omitempty"`
 
-	// (String, Deprecated) Available values: "standard", "enterprise".
+	// serve customers, use standard. for enterprise customers, use enterprise.
+	// Available values: "standard", "enterprise".
+	// the type of account being created. For self-serve customers, use standard. for enterprise customers, use enterprise.
 	// Available values: "standard", "enterprise".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
@@ -74,8 +81,8 @@ type AccountParameters struct {
 	// +kubebuilder:validation:Optional
 	ManagedBy *ManagedByParameters `json:"managedBy,omitempty" tf:"managed_by,omitempty"`
 
-	// (String) Account name
-	// Account name
+	// 8 bytes.
+	// Account name, limited to 65 UTF-8 bytes.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -88,7 +95,9 @@ type AccountParameters struct {
 	// +kubebuilder:validation:Optional
 	Standalone *bool `json:"standalone,omitempty" tf:"standalone,omitempty"`
 
-	// (String, Deprecated) Available values: "standard", "enterprise".
+	// serve customers, use standard. for enterprise customers, use enterprise.
+	// Available values: "standard", "enterprise".
+	// the type of account being created. For self-serve customers, use standard. for enterprise customers, use enterprise.
 	// Available values: "standard", "enterprise".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -96,6 +105,39 @@ type AccountParameters struct {
 	// to/manage-accounts/. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Unit *UnitParameters `json:"unit,omitempty" tf:"unit,omitempty"`
+}
+
+type EnterpriseZoneQuotaInitParameters struct {
+}
+
+type EnterpriseZoneQuotaObservation struct {
+
+	// (Number) Number of additional Enterprise zones available. Returns 0 if the quota is not allocated or is exhausted.
+	// Number of additional Enterprise zones available. Returns 0 if the quota is not allocated or is exhausted.
+	Available *float64 `json:"available,omitempty" tf:"available,omitempty"`
+
+	// (Number) Current number of Enterprise zones.
+	// Current number of Enterprise zones.
+	Current *float64 `json:"current,omitempty" tf:"current,omitempty"`
+
+	// (Number) Maximum number of Enterprise zones allowed.
+	// Maximum number of Enterprise zones allowed.
+	Maximum *float64 `json:"maximum,omitempty" tf:"maximum,omitempty"`
+}
+
+type EnterpriseZoneQuotaParameters struct {
+}
+
+type LegacyFlagsInitParameters struct {
+}
+
+type LegacyFlagsObservation struct {
+
+	// (Attributes) Enterprise zone quota for standard and enterprise accounts. Accounts without a quota have a maximum of 0. (see below for nested schema)
+	EnterpriseZoneQuota *EnterpriseZoneQuotaObservation `json:"enterpriseZoneQuota,omitempty" tf:"enterprise_zone_quota,omitempty"`
+}
+
+type LegacyFlagsParameters struct {
 }
 
 type ManagedByInitParameters struct {
@@ -110,6 +152,14 @@ type ManagedByObservation struct {
 	// (String) Name of the parent Organization, if one exists
 	// Name of the parent Organization, if one exists
 	ParentOrgName *string `json:"parentOrgName,omitempty" tf:"parent_org_name,omitempty"`
+
+	// (String) ID of the root Organization, if one exists
+	// ID of the root Organization, if one exists
+	RootOrgID *string `json:"rootOrgId,omitempty" tf:"root_org_id,omitempty"`
+
+	// (Boolean) Indicates whether the parent Organization hierarchy should be displayed
+	// Indicates whether the parent Organization hierarchy should be displayed
+	ShouldDisplayParentOrgs *bool `json:"shouldDisplayParentOrgs,omitempty" tf:"should_display_parent_orgs,omitempty"`
 }
 
 type ManagedByParameters struct {

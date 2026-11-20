@@ -118,6 +118,41 @@ type ExcludeCloudflareAccountMemberParameters struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 }
 
+type ExcludeServiceTokenTagInitParameters struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ExcludeServiceTokenTagObservation struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ExcludeServiceTokenTagParameters struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
+}
+
 type ExcludeUserRiskScoreInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
@@ -698,6 +733,9 @@ type TrustAccessPolicyExcludeInitParameters struct {
 	ServiceToken *TrustAccessPolicyExcludeServiceTokenInitParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	ServiceTokenTag *ExcludeServiceTokenTagInitParameters `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	UserRiskScore *ExcludeUserRiskScoreInitParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
@@ -821,6 +859,9 @@ type TrustAccessPolicyExcludeObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessPolicyExcludeServiceTokenObservation `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	ServiceTokenTag *ExcludeServiceTokenTagObservation `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	UserRiskScore *ExcludeUserRiskScoreObservation `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
@@ -1010,6 +1051,10 @@ type TrustAccessPolicyExcludeParameters struct {
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ServiceToken *TrustAccessPolicyExcludeServiceTokenParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	ServiceTokenTag *ExcludeServiceTokenTagParameters `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -1647,6 +1692,9 @@ type TrustAccessPolicyIncludeInitParameters struct {
 	ServiceToken *TrustAccessPolicyIncludeServiceTokenInitParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	ServiceTokenTag *TrustAccessPolicyIncludeServiceTokenTagInitParameters `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	UserRiskScore *TrustAccessPolicyIncludeUserRiskScoreInitParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
@@ -1770,6 +1818,9 @@ type TrustAccessPolicyIncludeObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessPolicyIncludeServiceTokenObservation `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	ServiceTokenTag *TrustAccessPolicyIncludeServiceTokenTagObservation `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	UserRiskScore *TrustAccessPolicyIncludeUserRiskScoreObservation `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
@@ -1962,6 +2013,10 @@ type TrustAccessPolicyIncludeParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
+	ServiceTokenTag *TrustAccessPolicyIncludeServiceTokenTagParameters `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
 	UserRiskScore *TrustAccessPolicyIncludeUserRiskScoreParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
@@ -2035,6 +2090,41 @@ type TrustAccessPolicyIncludeServiceTokenParameters struct {
 	TokenID *string `json:"tokenId" tf:"token_id,omitempty"`
 }
 
+type TrustAccessPolicyIncludeServiceTokenTagInitParameters struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type TrustAccessPolicyIncludeServiceTokenTagObservation struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type TrustAccessPolicyIncludeServiceTokenTagParameters struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
+}
+
 type TrustAccessPolicyIncludeUserRiskScoreInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
@@ -2104,6 +2194,10 @@ type TrustAccessPolicyInitParameters struct {
 	// (String) The name of the Access policy.
 	// The name of the Access policy.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// account WARP authentication. The account must be trusted by the account that owns this policy.
+	// The account ID used to resolve policy resources and identity for cross-account WARP authentication. The account must be trusted by the account that owns this policy.
+	PolicyResolutionAccountID *string `json:"policyResolutionAccountId,omitempty" tf:"policy_resolution_account_id,omitempty"`
 
 	// (String) A custom message that will appear on the purpose justification screen.
 	// A custom message that will appear on the purpose justification screen.
@@ -2175,10 +2269,6 @@ type TrustAccessPolicyObservation struct {
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (Number) Number of access applications currently using this policy.
-	// Number of access applications currently using this policy.
-	AppCount *float64 `json:"appCount,omitempty" tf:"app_count,omitempty"`
-
 	// (Attributes Set) Administrators who can approve a temporary authentication request. (see below for nested schema)
 	ApprovalGroups []ApprovalGroupsObservation `json:"approvalGroups,omitempty" tf:"approval_groups,omitempty"`
 
@@ -2217,6 +2307,10 @@ type TrustAccessPolicyObservation struct {
 	// (String) The name of the Access policy.
 	// The name of the Access policy.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// account WARP authentication. The account must be trusted by the account that owns this policy.
+	// The account ID used to resolve policy resources and identity for cross-account WARP authentication. The account must be trusted by the account that owns this policy.
+	PolicyResolutionAccountID *string `json:"policyResolutionAccountId,omitempty" tf:"policy_resolution_account_id,omitempty"`
 
 	// (String) A custom message that will appear on the purpose justification screen.
 	// A custom message that will appear on the purpose justification screen.
@@ -2297,6 +2391,11 @@ type TrustAccessPolicyParameters struct {
 	// The name of the Access policy.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// account WARP authentication. The account must be trusted by the account that owns this policy.
+	// The account ID used to resolve policy resources and identity for cross-account WARP authentication. The account must be trusted by the account that owns this policy.
+	// +kubebuilder:validation:Optional
+	PolicyResolutionAccountID *string `json:"policyResolutionAccountId,omitempty" tf:"policy_resolution_account_id,omitempty"`
 
 	// (String) A custom message that will appear on the purpose justification screen.
 	// A custom message that will appear on the purpose justification screen.
@@ -2879,6 +2978,9 @@ type TrustAccessPolicyRequireInitParameters struct {
 	ServiceToken *TrustAccessPolicyRequireServiceTokenInitParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	ServiceTokenTag *TrustAccessPolicyRequireServiceTokenTagInitParameters `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	UserRiskScore *TrustAccessPolicyRequireUserRiskScoreInitParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
@@ -3002,6 +3104,9 @@ type TrustAccessPolicyRequireObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessPolicyRequireServiceTokenObservation `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	ServiceTokenTag *TrustAccessPolicyRequireServiceTokenTagObservation `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	UserRiskScore *TrustAccessPolicyRequireUserRiskScoreObservation `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
@@ -3194,6 +3299,10 @@ type TrustAccessPolicyRequireParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
+	ServiceTokenTag *TrustAccessPolicyRequireServiceTokenTagParameters `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
 	UserRiskScore *TrustAccessPolicyRequireUserRiskScoreParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
@@ -3265,6 +3374,41 @@ type TrustAccessPolicyRequireServiceTokenParameters struct {
 	// The ID of a Service Token.
 	// +kubebuilder:validation:Optional
 	TokenID *string `json:"tokenId" tf:"token_id,omitempty"`
+}
+
+type TrustAccessPolicyRequireServiceTokenTagInitParameters struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type TrustAccessPolicyRequireServiceTokenTagObservation struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type TrustAccessPolicyRequireServiceTokenTagParameters struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
 }
 
 type TrustAccessPolicyRequireUserRiskScoreInitParameters struct {

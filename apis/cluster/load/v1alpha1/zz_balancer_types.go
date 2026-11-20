@@ -71,6 +71,9 @@ type BalancerInitParameters struct {
 	// List of networks where Load Balancer or Pool is enabled.
 	Networks []*string `json:"networks,omitempty" tf:"networks,omitempty"`
 
+	// (Attributes List) An optional list of pool sets, evaluated in array order with first match wins. Pool sets are independent from the standard steering fields (region_pools / country_pools / pop_pools / default_pools / steering_policy / random_steering / fallback_pool / rules). On a PATCH, an empty array (pool_sets: []) clears all pool sets, while omitting the field leaves existing pool sets unchanged. (see below for nested schema)
+	PoolSets []PoolSetsInitParameters `json:"poolSets,omitempty" tf:"pool_sets,omitempty"`
+
 	// (Map of List of String) Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
 	// Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
 	PopPools map[string][]*string `json:"popPools,omitempty" tf:"pop_pools,omitempty"`
@@ -177,6 +180,9 @@ type BalancerObservation struct {
 	// List of networks where Load Balancer or Pool is enabled.
 	Networks []*string `json:"networks,omitempty" tf:"networks,omitempty"`
 
+	// (Attributes List) An optional list of pool sets, evaluated in array order with first match wins. Pool sets are independent from the standard steering fields (region_pools / country_pools / pop_pools / default_pools / steering_policy / random_steering / fallback_pool / rules). On a PATCH, an empty array (pool_sets: []) clears all pool sets, while omitting the field leaves existing pool sets unchanged. (see below for nested schema)
+	PoolSets []PoolSetsObservation `json:"poolSets,omitempty" tf:"pool_sets,omitempty"`
+
 	// (Map of List of String) Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
 	// Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
 	PopPools map[string][]*string `json:"popPools,omitempty" tf:"pop_pools,omitempty"`
@@ -276,6 +282,10 @@ type BalancerParameters struct {
 	// List of networks where Load Balancer or Pool is enabled.
 	// +kubebuilder:validation:Optional
 	Networks []*string `json:"networks,omitempty" tf:"networks,omitempty"`
+
+	// (Attributes List) An optional list of pool sets, evaluated in array order with first match wins. Pool sets are independent from the standard steering fields (region_pools / country_pools / pop_pools / default_pools / steering_policy / random_steering / fallback_pool / rules). On a PATCH, an empty array (pool_sets: []) clears all pool sets, while omitting the field leaves existing pool sets unchanged. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	PoolSets []PoolSetsParameters `json:"poolSets,omitempty" tf:"pool_sets,omitempty"`
 
 	// (Map of List of String) Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
 	// Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
@@ -574,6 +584,38 @@ type LocationStrategyParameters struct {
 	PreferEcs *string `json:"preferEcs,omitempty" tf:"prefer_ecs,omitempty"`
 }
 
+type MatchInitParameters struct {
+
+	// (Boolean) When true, matches every request. Cannot be combined with topology.
+	// When true, matches every request. Cannot be combined with `topology`.
+	Default *bool `json:"default,omitempty" tf:"default,omitempty"`
+
+	// (Attributes) Matches requests by location. Set any combination of pops, countries, and regions (at least one is required); a request matches when its value appears in any populated list (e.g. regions: ["WNAM"] with countries: ["US"] matches a request in either WNAM or the US). (see below for nested schema)
+	Topology *TopologyInitParameters `json:"topology,omitempty" tf:"topology,omitempty"`
+}
+
+type MatchObservation struct {
+
+	// (Boolean) When true, matches every request. Cannot be combined with topology.
+	// When true, matches every request. Cannot be combined with `topology`.
+	Default *bool `json:"default,omitempty" tf:"default,omitempty"`
+
+	// (Attributes) Matches requests by location. Set any combination of pops, countries, and regions (at least one is required); a request matches when its value appears in any populated list (e.g. regions: ["WNAM"] with countries: ["US"] matches a request in either WNAM or the US). (see below for nested schema)
+	Topology *TopologyObservation `json:"topology,omitempty" tf:"topology,omitempty"`
+}
+
+type MatchParameters struct {
+
+	// (Boolean) When true, matches every request. Cannot be combined with topology.
+	// When true, matches every request. Cannot be combined with `topology`.
+	// +kubebuilder:validation:Optional
+	Default *bool `json:"default,omitempty" tf:"default,omitempty"`
+
+	// (Attributes) Matches requests by location. Set any combination of pops, countries, and regions (at least one is required); a request matches when its value appears in any populated list (e.g. regions: ["WNAM"] with countries: ["US"] matches a request in either WNAM or the US). (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Topology *TopologyParameters `json:"topology,omitempty" tf:"topology,omitempty"`
+}
+
 type OverridesAdaptiveRoutingInitParameters struct {
 
 	// downtime failover of requests to healthy origins from alternate pools, when no healthy alternate exists in the same pool, according to the failover order defined by traffic and origin steering. When set false (the default) zero-downtime failover will only occur between origins within the same pool. See session_affinity_attributes for control over when sessions are broken or reassigned.
@@ -598,47 +640,22 @@ type OverridesAdaptiveRoutingParameters struct {
 
 type OverridesInitParameters struct {
 
-	// downtime failover occurs immediately when an origin becomes unavailable due to HTTP 521, 522, or 523 response codes. If there is another healthy origin in the same pool, the request is retried once against this alternate origin. (see below for nested schema)
-	AdaptiveRouting *OverridesAdaptiveRoutingInitParameters `json:"adaptiveRouting,omitempty" tf:"adaptive_routing,omitempty"`
-
-	// (Map of List of String) A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
-	// A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
-	CountryPools map[string][]*string `json:"countryPools,omitempty" tf:"country_pools,omitempty"`
-
-	// (List of String) A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
-	// A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
-	DefaultPools []*string `json:"defaultPools,omitempty" tf:"default_pools,omitempty"`
-
 	// (String) The pool ID to use when all other pools are detected as unhealthy.
 	// The pool ID to use when all other pools are detected as unhealthy.
 	FallbackPool *string `json:"fallbackPool,omitempty" tf:"fallback_pool,omitempty"`
 
-	// based steering for non-proxied requests. See steering_policy to learn how steering is affected. (see below for nested schema)
-	LocationStrategy *OverridesLocationStrategyInitParameters `json:"locationStrategy,omitempty" tf:"location_strategy,omitempty"`
+	// (Number) The default weight for pools not listed in pool_weights. The declarative alternative to random_steering.default_weight; mutually exclusive with random_steering.
+	// The default weight for pools not listed in `pool_weights`. The declarative alternative to `random_steering.default_weight`; mutually exclusive with `random_steering`.
+	PoolDefaultWeight *float64 `json:"poolDefaultWeight,omitempty" tf:"pool_default_weight,omitempty"`
 
-	// (Map of List of String) Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
-	// Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
-	PopPools map[string][]*string `json:"popPools,omitempty" tf:"pop_pools,omitempty"`
+	// (Map of Number) A mapping of pool IDs to custom weights, relative to the other pools. The declarative alternative to random_steering.pool_weights; mutually exclusive with random_steering.
+	// A mapping of pool IDs to custom weights, relative to the other pools. The declarative alternative to `random_steering.pool_weights`; mutually exclusive with `random_steering`.
+	// +mapType=granular
+	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
 
-	// (Attributes) Configures pool weights.
-	RandomSteering *OverridesRandomSteeringInitParameters `json:"randomSteering,omitempty" tf:"random_steering,omitempty"`
-
-	// (Map of List of String) A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
-	// A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
-	RegionPools map[string][]*string `json:"regionPools,omitempty" tf:"region_pools,omitempty"`
-
-	// "cookie": On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - "ip_cookie": Behaves the same as "cookie" except the initial origin selection is stable and based on the client's ip address. - "header": On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see session_affinity_attributes.headers) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of session_affinity_ttl seconds or the origin server is unhealthy, then a new origin server is calculated and used. See headers in session_affinity_attributes for additional required configuration.
-	// Available values: "none", "cookie", "ip_cookie", "header".
-	// Specifies the type of session affinity the load balancer should use unless specified as `"none"`. The supported types are: - `"cookie"`: On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - `"ip_cookie"`: Behaves the same as `"cookie"` except the initial origin selection is stable and based on the client's ip address. - `"header"`: On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see `session_affinity_attributes.headers`) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of `session_affinity_ttl` seconds or the origin server is unhealthy, then a new origin server is calculated and used. See `headers` in `session_affinity_attributes` for additional required configuration.
-	// Available values: "none", "cookie", "ip_cookie", "header".
-	SessionAffinity *string `json:"sessionAffinity,omitempty" tf:"session_affinity,omitempty"`
-
-	// (Attributes) Configures attributes for session affinity. (see below for nested schema)
-	SessionAffinityAttributes *SessionAffinityAttributesInitParameters `json:"sessionAffinityAttributes,omitempty" tf:"session_affinity_attributes,omitempty"`
-
-	// "cookie" / "ip_cookie": The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - "header": The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
-	// Time, in seconds, until a client's session expires after being created. Once the expiry time has been reached, subsequent requests may get sent to a different origin server. The accepted ranges per `session_affinity` policy are: - `"cookie"` / `"ip_cookie"`: The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - `"header"`: The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
-	SessionAffinityTTL *float64 `json:"sessionAffinityTtl,omitempty" tf:"session_affinity_ttl,omitempty"`
+	// (List of String) A flat, ordered list of pool IDs to route the matched audience to. Replaces the resolved topology with exactly these pools. Mutually exclusive with fixed_response.
+	// A flat, ordered list of pool IDs to route the matched audience to. Replaces the resolved topology with exactly these pools. Mutually exclusive with `fixed_response`.
+	Pools []*string `json:"pools,omitempty" tf:"pools,omitempty"`
 
 	// (String) Steering Policy for this load balancer.
 	// Steering Policy for this load balancer.
@@ -652,10 +669,6 @@ type OverridesInitParameters struct {
 	// - `""`: Will map to `"geo"` if you use `region_pools`/`country_pools`/`pop_pools` otherwise `"off"`.
 	// Available values: "off", "geo", "random", "dynamic_latency", "proximity", "least_outstanding_requests", "least_connections", "".
 	SteeringPolicy *string `json:"steeringPolicy,omitempty" tf:"steering_policy,omitempty"`
-
-	// clouded (unproxied) load balancers.
-	// Time to live (TTL) of the DNS entry for the IP address returned by this load balancer. This only applies to gray-clouded (unproxied) load balancers.
-	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type OverridesLocationStrategyInitParameters struct {
@@ -719,6 +732,399 @@ type OverridesLocationStrategyParameters struct {
 
 type OverridesObservation struct {
 
+	// (String) The pool ID to use when all other pools are detected as unhealthy.
+	// The pool ID to use when all other pools are detected as unhealthy.
+	FallbackPool *string `json:"fallbackPool,omitempty" tf:"fallback_pool,omitempty"`
+
+	// (Number) The default weight for pools not listed in pool_weights. The declarative alternative to random_steering.default_weight; mutually exclusive with random_steering.
+	// The default weight for pools not listed in `pool_weights`. The declarative alternative to `random_steering.default_weight`; mutually exclusive with `random_steering`.
+	PoolDefaultWeight *float64 `json:"poolDefaultWeight,omitempty" tf:"pool_default_weight,omitempty"`
+
+	// (Map of Number) A mapping of pool IDs to custom weights, relative to the other pools. The declarative alternative to random_steering.pool_weights; mutually exclusive with random_steering.
+	// A mapping of pool IDs to custom weights, relative to the other pools. The declarative alternative to `random_steering.pool_weights`; mutually exclusive with `random_steering`.
+	// +mapType=granular
+	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
+
+	// (List of String) A flat, ordered list of pool IDs to route the matched audience to. Replaces the resolved topology with exactly these pools. Mutually exclusive with fixed_response.
+	// A flat, ordered list of pool IDs to route the matched audience to. Replaces the resolved topology with exactly these pools. Mutually exclusive with `fixed_response`.
+	Pools []*string `json:"pools,omitempty" tf:"pools,omitempty"`
+
+	// (String) Steering Policy for this load balancer.
+	// Steering Policy for this load balancer.
+	// - `"off"`: Use `default_pools`.
+	// - `"geo"`: Use `region_pools`/`country_pools`/`pop_pools`. For non-proxied requests, the country for `country_pools` is determined by `location_strategy`.
+	// - `"random"`: Select a pool randomly.
+	// - `"dynamic_latency"`: Use round trip time to select the closest pool in default_pools (requires pool health checks).
+	// - `"proximity"`: Use the pools' latitude and longitude to select the closest pool using the Cloudflare PoP location for proxied requests or the location determined by `location_strategy` for non-proxied requests.
+	// - `"least_outstanding_requests"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of outstanding requests. Pools with more pending requests are weighted proportionately less relative to others.
+	// - `"least_connections"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of open connections. Pools with more open connections are weighted proportionately less relative to others. Supported for HTTP/1 and HTTP/2 connections.
+	// - `""`: Will map to `"geo"` if you use `region_pools`/`country_pools`/`pop_pools` otherwise `"off"`.
+	// Available values: "off", "geo", "random", "dynamic_latency", "proximity", "least_outstanding_requests", "least_connections", "".
+	SteeringPolicy *string `json:"steeringPolicy,omitempty" tf:"steering_policy,omitempty"`
+}
+
+type OverridesParameters struct {
+
+	// (String) The pool ID to use when all other pools are detected as unhealthy.
+	// The pool ID to use when all other pools are detected as unhealthy.
+	// +kubebuilder:validation:Optional
+	FallbackPool *string `json:"fallbackPool,omitempty" tf:"fallback_pool,omitempty"`
+
+	// (Number) The default weight for pools not listed in pool_weights. The declarative alternative to random_steering.default_weight; mutually exclusive with random_steering.
+	// The default weight for pools not listed in `pool_weights`. The declarative alternative to `random_steering.default_weight`; mutually exclusive with `random_steering`.
+	// +kubebuilder:validation:Optional
+	PoolDefaultWeight *float64 `json:"poolDefaultWeight,omitempty" tf:"pool_default_weight,omitempty"`
+
+	// (Map of Number) A mapping of pool IDs to custom weights, relative to the other pools. The declarative alternative to random_steering.pool_weights; mutually exclusive with random_steering.
+	// A mapping of pool IDs to custom weights, relative to the other pools. The declarative alternative to `random_steering.pool_weights`; mutually exclusive with `random_steering`.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
+
+	// (List of String) A flat, ordered list of pool IDs to route the matched audience to. Replaces the resolved topology with exactly these pools. Mutually exclusive with fixed_response.
+	// A flat, ordered list of pool IDs to route the matched audience to. Replaces the resolved topology with exactly these pools. Mutually exclusive with `fixed_response`.
+	// +kubebuilder:validation:Optional
+	Pools []*string `json:"pools,omitempty" tf:"pools,omitempty"`
+
+	// (String) Steering Policy for this load balancer.
+	// Steering Policy for this load balancer.
+	// - `"off"`: Use `default_pools`.
+	// - `"geo"`: Use `region_pools`/`country_pools`/`pop_pools`. For non-proxied requests, the country for `country_pools` is determined by `location_strategy`.
+	// - `"random"`: Select a pool randomly.
+	// - `"dynamic_latency"`: Use round trip time to select the closest pool in default_pools (requires pool health checks).
+	// - `"proximity"`: Use the pools' latitude and longitude to select the closest pool using the Cloudflare PoP location for proxied requests or the location determined by `location_strategy` for non-proxied requests.
+	// - `"least_outstanding_requests"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of outstanding requests. Pools with more pending requests are weighted proportionately less relative to others.
+	// - `"least_connections"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of open connections. Pools with more open connections are weighted proportionately less relative to others. Supported for HTTP/1 and HTTP/2 connections.
+	// - `""`: Will map to `"geo"` if you use `region_pools`/`country_pools`/`pop_pools` otherwise `"off"`.
+	// Available values: "off", "geo", "random", "dynamic_latency", "proximity", "least_outstanding_requests", "least_connections", "".
+	// +kubebuilder:validation:Optional
+	SteeringPolicy *string `json:"steeringPolicy,omitempty" tf:"steering_policy,omitempty"`
+}
+
+type OverridesRandomSteeringInitParameters struct {
+
+	// (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
+	// The default weight for pools in the load balancer that are not specified in the pool_weights map. An omitted value inherits the load balancer's default weight.
+	DefaultWeight *float64 `json:"defaultWeight,omitempty" tf:"default_weight,omitempty"`
+
+	// (Map of Number) A mapping of pool IDs to custom weights, relative to the other pools. The declarative alternative to random_steering.pool_weights; mutually exclusive with random_steering.
+	// A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+	// +mapType=granular
+	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
+}
+
+type OverridesRandomSteeringObservation struct {
+
+	// (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
+	// The default weight for pools in the load balancer that are not specified in the pool_weights map. An omitted value inherits the load balancer's default weight.
+	DefaultWeight *float64 `json:"defaultWeight,omitempty" tf:"default_weight,omitempty"`
+
+	// (Map of Number) A mapping of pool IDs to custom weights, relative to the other pools. The declarative alternative to random_steering.pool_weights; mutually exclusive with random_steering.
+	// A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+	// +mapType=granular
+	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
+}
+
+type OverridesRandomSteeringParameters struct {
+
+	// (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
+	// The default weight for pools in the load balancer that are not specified in the pool_weights map. An omitted value inherits the load balancer's default weight.
+	// +kubebuilder:validation:Optional
+	DefaultWeight *float64 `json:"defaultWeight,omitempty" tf:"default_weight,omitempty"`
+
+	// (Map of Number) A mapping of pool IDs to custom weights, relative to the other pools. The declarative alternative to random_steering.pool_weights; mutually exclusive with random_steering.
+	// A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
+}
+
+type PoolSetsInitParameters struct {
+
+	// (Boolean) Disable this specific pool set. It will no longer be evaluated.
+	// Disable this specific pool set. It will no longer be evaluated.
+	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// (Attributes) A collection of fields used to directly respond to the client instead of routing to a pool. When supplied on a rule, that rule stops further rule evaluation. (see below for nested schema)
+	FixedResponse *FixedResponseInitParameters `json:"fixedResponse,omitempty" tf:"fixed_response,omitempty"`
+
+	// (Attributes) Determines which requests a pool set applies to. Set topology to match by location or default: true to match all requests; the two are mutually exclusive. A pool set with no match matches all requests. (see below for nested schema)
+	Match *MatchInitParameters `json:"match,omitempty" tf:"match,omitempty"`
+
+	// (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+	// A human-readable name for this pool set.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// routing fields plus fallback_pool and steering_policy are settable. All fields are optional. (see below for nested schema)
+	Overrides *OverridesInitParameters `json:"overrides,omitempty" tf:"overrides,omitempty"`
+}
+
+type PoolSetsObservation struct {
+
+	// (Boolean) Disable this specific pool set. It will no longer be evaluated.
+	// Disable this specific pool set. It will no longer be evaluated.
+	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// (Attributes) A collection of fields used to directly respond to the client instead of routing to a pool. When supplied on a rule, that rule stops further rule evaluation. (see below for nested schema)
+	FixedResponse *FixedResponseObservation `json:"fixedResponse,omitempty" tf:"fixed_response,omitempty"`
+
+	// (Attributes) Determines which requests a pool set applies to. Set topology to match by location or default: true to match all requests; the two are mutually exclusive. A pool set with no match matches all requests. (see below for nested schema)
+	Match *MatchObservation `json:"match,omitempty" tf:"match,omitempty"`
+
+	// (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+	// A human-readable name for this pool set.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// routing fields plus fallback_pool and steering_policy are settable. All fields are optional. (see below for nested schema)
+	Overrides *OverridesObservation `json:"overrides,omitempty" tf:"overrides,omitempty"`
+}
+
+type PoolSetsParameters struct {
+
+	// (Boolean) Disable this specific pool set. It will no longer be evaluated.
+	// Disable this specific pool set. It will no longer be evaluated.
+	// +kubebuilder:validation:Optional
+	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// (Attributes) A collection of fields used to directly respond to the client instead of routing to a pool. When supplied on a rule, that rule stops further rule evaluation. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	FixedResponse *FixedResponseParameters `json:"fixedResponse,omitempty" tf:"fixed_response,omitempty"`
+
+	// (Attributes) Determines which requests a pool set applies to. Set topology to match by location or default: true to match all requests; the two are mutually exclusive. A pool set with no match matches all requests. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Match *MatchParameters `json:"match,omitempty" tf:"match,omitempty"`
+
+	// (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+	// A human-readable name for this pool set.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// routing fields plus fallback_pool and steering_policy are settable. All fields are optional. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Overrides *OverridesParameters `json:"overrides,omitempty" tf:"overrides,omitempty"`
+}
+
+type RandomSteeringInitParameters struct {
+
+	// (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
+	// The default weight for pools in the load balancer that are not specified in the pool_weights map.
+	DefaultWeight *float64 `json:"defaultWeight,omitempty" tf:"default_weight,omitempty"`
+
+	// (Map of Number) A mapping of pool IDs to custom weights, relative to the other pools. The declarative alternative to random_steering.pool_weights; mutually exclusive with random_steering.
+	// A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+	// +mapType=granular
+	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
+}
+
+type RandomSteeringObservation struct {
+
+	// (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
+	// The default weight for pools in the load balancer that are not specified in the pool_weights map.
+	DefaultWeight *float64 `json:"defaultWeight,omitempty" tf:"default_weight,omitempty"`
+
+	// (Map of Number) A mapping of pool IDs to custom weights, relative to the other pools. The declarative alternative to random_steering.pool_weights; mutually exclusive with random_steering.
+	// A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+	// +mapType=granular
+	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
+}
+
+type RandomSteeringParameters struct {
+
+	// (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
+	// The default weight for pools in the load balancer that are not specified in the pool_weights map.
+	// +kubebuilder:validation:Optional
+	DefaultWeight *float64 `json:"defaultWeight,omitempty" tf:"default_weight,omitempty"`
+
+	// (Map of Number) A mapping of pool IDs to custom weights, relative to the other pools. The declarative alternative to random_steering.pool_weights; mutually exclusive with random_steering.
+	// A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
+}
+
+type RulesFixedResponseInitParameters struct {
+
+	// Type' header to include in the response.
+	// The http 'Content-Type' header to include in the response.
+	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
+
+	// (String) The http 'Location' header to include in the response.
+	// The http 'Location' header to include in the response.
+	Location *string `json:"location,omitempty" tf:"location,omitempty"`
+
+	// (String) Text to include as the http body.
+	// Text to include as the http body.
+	MessageBody *string `json:"messageBody,omitempty" tf:"message_body,omitempty"`
+
+	// (Number) The http status code to respond with.
+	// The http status code to respond with.
+	StatusCode *float64 `json:"statusCode,omitempty" tf:"status_code,omitempty"`
+}
+
+type RulesFixedResponseObservation struct {
+
+	// Type' header to include in the response.
+	// The http 'Content-Type' header to include in the response.
+	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
+
+	// (String) The http 'Location' header to include in the response.
+	// The http 'Location' header to include in the response.
+	Location *string `json:"location,omitempty" tf:"location,omitempty"`
+
+	// (String) Text to include as the http body.
+	// Text to include as the http body.
+	MessageBody *string `json:"messageBody,omitempty" tf:"message_body,omitempty"`
+
+	// (Number) The http status code to respond with.
+	// The http status code to respond with.
+	StatusCode *float64 `json:"statusCode,omitempty" tf:"status_code,omitempty"`
+}
+
+type RulesFixedResponseParameters struct {
+
+	// Type' header to include in the response.
+	// The http 'Content-Type' header to include in the response.
+	// +kubebuilder:validation:Optional
+	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
+
+	// (String) The http 'Location' header to include in the response.
+	// The http 'Location' header to include in the response.
+	// +kubebuilder:validation:Optional
+	Location *string `json:"location,omitempty" tf:"location,omitempty"`
+
+	// (String) Text to include as the http body.
+	// Text to include as the http body.
+	// +kubebuilder:validation:Optional
+	MessageBody *string `json:"messageBody,omitempty" tf:"message_body,omitempty"`
+
+	// (Number) The http status code to respond with.
+	// The http status code to respond with.
+	// +kubebuilder:validation:Optional
+	StatusCode *float64 `json:"statusCode,omitempty" tf:"status_code,omitempty"`
+}
+
+type RulesInitParameters struct {
+
+	// balancing/understand-basics/load-balancing-rules/expressions.
+	// The condition expressions to evaluate. If the condition evaluates to true, the overrides or fixed_response in this rule will be applied. An empty condition is always true. For more details on condition expressions, please see https://developers.cloudflare.com/load-balancing/understand-basics/load-balancing-rules/expressions.
+	Condition *string `json:"condition,omitempty" tf:"condition,omitempty"`
+
+	// (Boolean) Disable this specific pool set. It will no longer be evaluated.
+	// Disable this specific rule. It will no longer be evaluated by this load balancer.
+	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// (Attributes) A collection of fields used to directly respond to the client instead of routing to a pool. When supplied on a rule, that rule stops further rule evaluation. (see below for nested schema)
+	FixedResponse *RulesFixedResponseInitParameters `json:"fixedResponse,omitempty" tf:"fixed_response,omitempty"`
+
+	// (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+	// Name of this rule. Only used for human readability.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// routing fields plus fallback_pool and steering_policy are settable. All fields are optional. (see below for nested schema)
+	Overrides *RulesOverridesInitParameters `json:"overrides,omitempty" tf:"overrides,omitempty"`
+
+	// (Number) The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If all priorities are omitted or zero, the API assigns priorities based on the array order of the rules field.
+	// The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If all priorities are omitted or zero, the API assigns priorities based on the array order of the rules field.
+	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	// (Boolean) If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
+	// If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
+	Terminates *bool `json:"terminates,omitempty" tf:"terminates,omitempty"`
+}
+
+type RulesObservation struct {
+
+	// balancing/understand-basics/load-balancing-rules/expressions.
+	// The condition expressions to evaluate. If the condition evaluates to true, the overrides or fixed_response in this rule will be applied. An empty condition is always true. For more details on condition expressions, please see https://developers.cloudflare.com/load-balancing/understand-basics/load-balancing-rules/expressions.
+	Condition *string `json:"condition,omitempty" tf:"condition,omitempty"`
+
+	// (Boolean) Disable this specific pool set. It will no longer be evaluated.
+	// Disable this specific rule. It will no longer be evaluated by this load balancer.
+	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// (Attributes) A collection of fields used to directly respond to the client instead of routing to a pool. When supplied on a rule, that rule stops further rule evaluation. (see below for nested schema)
+	FixedResponse *RulesFixedResponseObservation `json:"fixedResponse,omitempty" tf:"fixed_response,omitempty"`
+
+	// (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
+	// Name of this rule. Only used for human readability.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// routing fields plus fallback_pool and steering_policy are settable. All fields are optional. (see below for nested schema)
+	Overrides *RulesOverridesObservation `json:"overrides,omitempty" tf:"overrides,omitempty"`
+
+	// (Number) The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If all priorities are omitted or zero, the API assigns priorities based on the array order of the rules field.
+	// The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If all priorities are omitted or zero, the API assigns priorities based on the array order of the rules field.
+	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	// (Boolean) If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
+	// If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
+	Terminates *bool `json:"terminates,omitempty" tf:"terminates,omitempty"`
+}
+
+type RulesOverridesInitParameters struct {
+
+	// downtime failover occurs immediately when an origin becomes unavailable due to HTTP 521, 522, or 523 response codes. If there is another healthy origin in the same pool, the request is retried once against this alternate origin. (see below for nested schema)
+	AdaptiveRouting *OverridesAdaptiveRoutingInitParameters `json:"adaptiveRouting,omitempty" tf:"adaptive_routing,omitempty"`
+
+	// (Map of List of String) A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+	// A mapping of country codes to a list of pool IDs (ordered by their failover priority) for the given country. Any country not explicitly defined will fall back to using the corresponding region_pool mapping if it exists else to default_pools.
+	CountryPools map[string][]*string `json:"countryPools,omitempty" tf:"country_pools,omitempty"`
+
+	// (List of String) A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+	// A list of pool IDs ordered by their failover priority. Pools defined here are used by default, or when region_pools are not configured for a given region.
+	DefaultPools []*string `json:"defaultPools,omitempty" tf:"default_pools,omitempty"`
+
+	// (String) The pool ID to use when all other pools are detected as unhealthy.
+	// The pool ID to use when all other pools are detected as unhealthy.
+	FallbackPool *string `json:"fallbackPool,omitempty" tf:"fallback_pool,omitempty"`
+
+	// based steering for non-proxied requests. See steering_policy to learn how steering is affected. (see below for nested schema)
+	LocationStrategy *OverridesLocationStrategyInitParameters `json:"locationStrategy,omitempty" tf:"location_strategy,omitempty"`
+
+	// (Map of List of String) Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+	// Enterprise only: A mapping of Cloudflare PoP identifiers to a list of pool IDs (ordered by their failover priority) for the PoP (datacenter). Any PoPs not explicitly defined will fall back to using the corresponding country_pool, then region_pool mapping if it exists else to default_pools.
+	PopPools map[string][]*string `json:"popPools,omitempty" tf:"pop_pools,omitempty"`
+
+	// (Attributes) Configures pool weights.
+	RandomSteering *OverridesRandomSteeringInitParameters `json:"randomSteering,omitempty" tf:"random_steering,omitempty"`
+
+	// (Map of List of String) A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+	// A mapping of region codes to a list of pool IDs (ordered by their failover priority) for the given region. Any regions not explicitly defined will fall back to using default_pools.
+	RegionPools map[string][]*string `json:"regionPools,omitempty" tf:"region_pools,omitempty"`
+
+	// "cookie": On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - "ip_cookie": Behaves the same as "cookie" except the initial origin selection is stable and based on the client's ip address. - "header": On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see session_affinity_attributes.headers) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of session_affinity_ttl seconds or the origin server is unhealthy, then a new origin server is calculated and used. See headers in session_affinity_attributes for additional required configuration.
+	// Available values: "none", "cookie", "ip_cookie", "header".
+	// Specifies the type of session affinity the load balancer should use unless specified as `"none"`. The supported types are: - `"cookie"`: On the first request to a proxied load balancer, a cookie is generated, encoding information of which origin the request will be forwarded to. Subsequent requests, by the same client to the same load balancer, will be sent to the origin server the cookie encodes, for the duration of the cookie and as long as the origin server remains healthy. If the cookie has expired or the origin server is unhealthy, then a new origin server is calculated and used. - `"ip_cookie"`: Behaves the same as `"cookie"` except the initial origin selection is stable and based on the client's ip address. - `"header"`: On the first request to a proxied load balancer, a session key based on the configured HTTP headers (see `session_affinity_attributes.headers`) is generated, encoding the request headers used for storing in the load balancer session state which origin the request will be forwarded to. Subsequent requests to the load balancer with the same headers will be sent to the same origin server, for the duration of the session and as long as the origin server remains healthy. If the session has been idle for the duration of `session_affinity_ttl` seconds or the origin server is unhealthy, then a new origin server is calculated and used. See `headers` in `session_affinity_attributes` for additional required configuration.
+	// Available values: "none", "cookie", "ip_cookie", "header".
+	SessionAffinity *string `json:"sessionAffinity,omitempty" tf:"session_affinity,omitempty"`
+
+	// (Attributes) Configures attributes for session affinity. (see below for nested schema)
+	SessionAffinityAttributes *SessionAffinityAttributesInitParameters `json:"sessionAffinityAttributes,omitempty" tf:"session_affinity_attributes,omitempty"`
+
+	// "cookie" / "ip_cookie": The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - "header": The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+	// Time, in seconds, until a client's session expires after being created. Once the expiry time has been reached, subsequent requests may get sent to a different origin server. The accepted ranges per `session_affinity` policy are: - `"cookie"` / `"ip_cookie"`: The current default of 23 hours will be used unless explicitly set. The accepted range of values is between [1800, 604800]. - `"header"`: The current default of 1800 seconds will be used unless explicitly set. The accepted range of values is between [30, 3600]. Note: With session affinity by header, sessions only expire after they haven't been used for the number of seconds specified.
+	SessionAffinityTTL *float64 `json:"sessionAffinityTtl,omitempty" tf:"session_affinity_ttl,omitempty"`
+
+	// (String) Steering Policy for this load balancer.
+	// Steering Policy for this load balancer.
+	// - `"off"`: Use `default_pools`.
+	// - `"geo"`: Use `region_pools`/`country_pools`/`pop_pools`. For non-proxied requests, the country for `country_pools` is determined by `location_strategy`.
+	// - `"random"`: Select a pool randomly.
+	// - `"dynamic_latency"`: Use round trip time to select the closest pool in default_pools (requires pool health checks).
+	// - `"proximity"`: Use the pools' latitude and longitude to select the closest pool using the Cloudflare PoP location for proxied requests or the location determined by `location_strategy` for non-proxied requests.
+	// - `"least_outstanding_requests"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of outstanding requests. Pools with more pending requests are weighted proportionately less relative to others.
+	// - `"least_connections"`: Select a pool by taking into consideration `random_steering` weights, as well as each pool's number of open connections. Pools with more open connections are weighted proportionately less relative to others. Supported for HTTP/1 and HTTP/2 connections.
+	// - `""`: Will map to `"geo"` if you use `region_pools`/`country_pools`/`pop_pools` otherwise `"off"`.
+	// Available values: "off", "geo", "random", "dynamic_latency", "proximity", "least_outstanding_requests", "least_connections", "".
+	SteeringPolicy *string `json:"steeringPolicy,omitempty" tf:"steering_policy,omitempty"`
+
+	// clouded (unproxied) load balancers.
+	// Time to live (TTL) of the DNS entry for the IP address returned by this load balancer. This only applies to gray-clouded (unproxied) load balancers.
+	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+}
+
+type RulesOverridesObservation struct {
+
 	// downtime failover occurs immediately when an origin becomes unavailable due to HTTP 521, 522, or 523 response codes. If there is another healthy origin in the same pool, the request is retried once against this alternate origin. (see below for nested schema)
 	AdaptiveRouting *OverridesAdaptiveRoutingObservation `json:"adaptiveRouting,omitempty" tf:"adaptive_routing,omitempty"`
 
@@ -779,7 +1185,7 @@ type OverridesObservation struct {
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
-type OverridesParameters struct {
+type RulesOverridesParameters struct {
 
 	// downtime failover occurs immediately when an origin becomes unavailable due to HTTP 521, 522, or 523 response codes. If there is another healthy origin in the same pool, the request is retried once against this alternate origin. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -854,140 +1260,6 @@ type OverridesParameters struct {
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
-type OverridesRandomSteeringInitParameters struct {
-
-	// (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
-	// The default weight for pools in the load balancer that are not specified in the pool_weights map.
-	DefaultWeight *float64 `json:"defaultWeight,omitempty" tf:"default_weight,omitempty"`
-
-	// (Map of Number) A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
-	// A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
-	// +mapType=granular
-	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
-}
-
-type OverridesRandomSteeringObservation struct {
-
-	// (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
-	// The default weight for pools in the load balancer that are not specified in the pool_weights map.
-	DefaultWeight *float64 `json:"defaultWeight,omitempty" tf:"default_weight,omitempty"`
-
-	// (Map of Number) A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
-	// A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
-	// +mapType=granular
-	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
-}
-
-type OverridesRandomSteeringParameters struct {
-
-	// (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
-	// The default weight for pools in the load balancer that are not specified in the pool_weights map.
-	// +kubebuilder:validation:Optional
-	DefaultWeight *float64 `json:"defaultWeight,omitempty" tf:"default_weight,omitempty"`
-
-	// (Map of Number) A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
-	// A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
-	// +kubebuilder:validation:Optional
-	// +mapType=granular
-	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
-}
-
-type RandomSteeringInitParameters struct {
-
-	// (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
-	// The default weight for pools in the load balancer that are not specified in the pool_weights map.
-	DefaultWeight *float64 `json:"defaultWeight,omitempty" tf:"default_weight,omitempty"`
-
-	// (Map of Number) A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
-	// A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
-	// +mapType=granular
-	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
-}
-
-type RandomSteeringObservation struct {
-
-	// (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
-	// The default weight for pools in the load balancer that are not specified in the pool_weights map.
-	DefaultWeight *float64 `json:"defaultWeight,omitempty" tf:"default_weight,omitempty"`
-
-	// (Map of Number) A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
-	// A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
-	// +mapType=granular
-	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
-}
-
-type RandomSteeringParameters struct {
-
-	// (Number) The default weight for pools in the load balancer that are not specified in the pool_weights map.
-	// The default weight for pools in the load balancer that are not specified in the pool_weights map.
-	// +kubebuilder:validation:Optional
-	DefaultWeight *float64 `json:"defaultWeight,omitempty" tf:"default_weight,omitempty"`
-
-	// (Map of Number) A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
-	// A mapping of pool IDs to custom weights. The weight is relative to other pools in the load balancer.
-	// +kubebuilder:validation:Optional
-	// +mapType=granular
-	PoolWeights map[string]*float64 `json:"poolWeights,omitempty" tf:"pool_weights,omitempty"`
-}
-
-type RulesInitParameters struct {
-
-	// balancing/understand-basics/load-balancing-rules/expressions.
-	// The condition expressions to evaluate. If the condition evaluates to true, the overrides or fixed_response in this rule will be applied. An empty condition is always true. For more details on condition expressions, please see https://developers.cloudflare.com/load-balancing/understand-basics/load-balancing-rules/expressions.
-	Condition *string `json:"condition,omitempty" tf:"condition,omitempty"`
-
-	// (Boolean) Disable this specific rule. It will no longer be evaluated by this load balancer.
-	// Disable this specific rule. It will no longer be evaluated by this load balancer.
-	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
-
-	// (Attributes) A collection of fields used to directly respond to the eyeball instead of routing to a pool. If a fixed_response is supplied the rule will be marked as terminates. (see below for nested schema)
-	FixedResponse *FixedResponseInitParameters `json:"fixedResponse,omitempty" tf:"fixed_response,omitempty"`
-
-	// (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
-	// Name of this rule. Only used for human readability.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// (Attributes) A collection of overrides to apply to the load balancer when this rule's condition is true. All fields are optional. (see below for nested schema)
-	Overrides *OverridesInitParameters `json:"overrides,omitempty" tf:"overrides,omitempty"`
-
-	// (Number) The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If no value is provided for any rule the array order of the rules field will be used to assign a priority.
-	// The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If no value is provided for any rule the array order of the rules field will be used to assign a priority.
-	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
-
-	// (Boolean) If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
-	// If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
-	Terminates *bool `json:"terminates,omitempty" tf:"terminates,omitempty"`
-}
-
-type RulesObservation struct {
-
-	// balancing/understand-basics/load-balancing-rules/expressions.
-	// The condition expressions to evaluate. If the condition evaluates to true, the overrides or fixed_response in this rule will be applied. An empty condition is always true. For more details on condition expressions, please see https://developers.cloudflare.com/load-balancing/understand-basics/load-balancing-rules/expressions.
-	Condition *string `json:"condition,omitempty" tf:"condition,omitempty"`
-
-	// (Boolean) Disable this specific rule. It will no longer be evaluated by this load balancer.
-	// Disable this specific rule. It will no longer be evaluated by this load balancer.
-	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
-
-	// (Attributes) A collection of fields used to directly respond to the eyeball instead of routing to a pool. If a fixed_response is supplied the rule will be marked as terminates. (see below for nested schema)
-	FixedResponse *FixedResponseObservation `json:"fixedResponse,omitempty" tf:"fixed_response,omitempty"`
-
-	// (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
-	// Name of this rule. Only used for human readability.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// (Attributes) A collection of overrides to apply to the load balancer when this rule's condition is true. All fields are optional. (see below for nested schema)
-	Overrides *OverridesObservation `json:"overrides,omitempty" tf:"overrides,omitempty"`
-
-	// (Number) The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If no value is provided for any rule the array order of the rules field will be used to assign a priority.
-	// The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If no value is provided for any rule the array order of the rules field will be used to assign a priority.
-	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
-
-	// (Boolean) If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
-	// If this rule's condition is true, this causes rule evaluation to stop after processing this rule.
-	Terminates *bool `json:"terminates,omitempty" tf:"terminates,omitempty"`
-}
-
 type RulesParameters struct {
 
 	// balancing/understand-basics/load-balancing-rules/expressions.
@@ -995,26 +1267,26 @@ type RulesParameters struct {
 	// +kubebuilder:validation:Optional
 	Condition *string `json:"condition,omitempty" tf:"condition,omitempty"`
 
-	// (Boolean) Disable this specific rule. It will no longer be evaluated by this load balancer.
+	// (Boolean) Disable this specific pool set. It will no longer be evaluated.
 	// Disable this specific rule. It will no longer be evaluated by this load balancer.
 	// +kubebuilder:validation:Optional
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// (Attributes) A collection of fields used to directly respond to the eyeball instead of routing to a pool. If a fixed_response is supplied the rule will be marked as terminates. (see below for nested schema)
+	// (Attributes) A collection of fields used to directly respond to the client instead of routing to a pool. When supplied on a rule, that rule stops further rule evaluation. (see below for nested schema)
 	// +kubebuilder:validation:Optional
-	FixedResponse *FixedResponseParameters `json:"fixedResponse,omitempty" tf:"fixed_response,omitempty"`
+	FixedResponse *RulesFixedResponseParameters `json:"fixedResponse,omitempty" tf:"fixed_response,omitempty"`
 
 	// (String) The DNS hostname to associate with your Load Balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the Load Balancer will take precedence and the DNS record will not be used.
 	// Name of this rule. Only used for human readability.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Attributes) A collection of overrides to apply to the load balancer when this rule's condition is true. All fields are optional. (see below for nested schema)
+	// routing fields plus fallback_pool and steering_policy are settable. All fields are optional. (see below for nested schema)
 	// +kubebuilder:validation:Optional
-	Overrides *OverridesParameters `json:"overrides,omitempty" tf:"overrides,omitempty"`
+	Overrides *RulesOverridesParameters `json:"overrides,omitempty" tf:"overrides,omitempty"`
 
-	// (Number) The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If no value is provided for any rule the array order of the rules field will be used to assign a priority.
-	// The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If no value is provided for any rule the array order of the rules field will be used to assign a priority.
+	// (Number) The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If all priorities are omitted or zero, the API assigns priorities based on the array order of the rules field.
+	// The order in which rules should be executed in relation to each other. Lower values are executed first. Values do not need to be sequential. If all priorities are omitted or zero, the API assigns priorities based on the array order of the rules field.
 	// +kubebuilder:validation:Optional
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
@@ -1127,6 +1399,54 @@ type SessionAffinityAttributesParameters struct {
 	// Available values: "none", "temporary", "sticky".
 	// +kubebuilder:validation:Optional
 	ZeroDowntimeFailover *string `json:"zeroDowntimeFailover,omitempty" tf:"zero_downtime_failover,omitempty"`
+}
+
+type TopologyInitParameters struct {
+
+	// 1 alpha-2 country codes. Matches when the request's country is in this list.
+	// A list of ISO 3166-1 alpha-2 country codes. Matches when the request's country is in this list.
+	Countries []*string `json:"countries,omitempty" tf:"countries,omitempty"`
+
+	// (List of String) A list of Cloudflare PoP codes. Matches when the request's PoP is in this list.
+	// A list of Cloudflare PoP codes. Matches when the request's PoP is in this list.
+	Pops []*string `json:"pops,omitempty" tf:"pops,omitempty"`
+
+	// (List of String) A list of Cloudflare region codes (e.g. WNAM, ENAM, WEU). Matches when the request's region is in this list.
+	// A list of Cloudflare region codes (e.g. `WNAM`, `ENAM`, `WEU`). Matches when the request's region is in this list.
+	Regions []*string `json:"regions,omitempty" tf:"regions,omitempty"`
+}
+
+type TopologyObservation struct {
+
+	// 1 alpha-2 country codes. Matches when the request's country is in this list.
+	// A list of ISO 3166-1 alpha-2 country codes. Matches when the request's country is in this list.
+	Countries []*string `json:"countries,omitempty" tf:"countries,omitempty"`
+
+	// (List of String) A list of Cloudflare PoP codes. Matches when the request's PoP is in this list.
+	// A list of Cloudflare PoP codes. Matches when the request's PoP is in this list.
+	Pops []*string `json:"pops,omitempty" tf:"pops,omitempty"`
+
+	// (List of String) A list of Cloudflare region codes (e.g. WNAM, ENAM, WEU). Matches when the request's region is in this list.
+	// A list of Cloudflare region codes (e.g. `WNAM`, `ENAM`, `WEU`). Matches when the request's region is in this list.
+	Regions []*string `json:"regions,omitempty" tf:"regions,omitempty"`
+}
+
+type TopologyParameters struct {
+
+	// 1 alpha-2 country codes. Matches when the request's country is in this list.
+	// A list of ISO 3166-1 alpha-2 country codes. Matches when the request's country is in this list.
+	// +kubebuilder:validation:Optional
+	Countries []*string `json:"countries,omitempty" tf:"countries,omitempty"`
+
+	// (List of String) A list of Cloudflare PoP codes. Matches when the request's PoP is in this list.
+	// A list of Cloudflare PoP codes. Matches when the request's PoP is in this list.
+	// +kubebuilder:validation:Optional
+	Pops []*string `json:"pops,omitempty" tf:"pops,omitempty"`
+
+	// (List of String) A list of Cloudflare region codes (e.g. WNAM, ENAM, WEU). Matches when the request's region is in this list.
+	// A list of Cloudflare region codes (e.g. `WNAM`, `ENAM`, `WEU`). Matches when the request's region is in this list.
+	// +kubebuilder:validation:Optional
+	Regions []*string `json:"regions,omitempty" tf:"regions,omitempty"`
 }
 
 // BalancerSpec defines the desired state of Balancer

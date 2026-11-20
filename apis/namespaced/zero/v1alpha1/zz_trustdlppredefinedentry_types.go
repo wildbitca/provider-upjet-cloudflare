@@ -55,7 +55,7 @@ type TrustDlpPredefinedEntryObservation struct {
 
 	// sensitive manner
 	// Cannot be set to false if secret is true
-	// Only applies to custom word lists.
+	// For `type: exact_data`: Only applies to custom word lists.
 	// Determines if the words should be matched in a case-sensitive manner
 	// Cannot be set to false if secret is true
 	CaseSensitive *bool `json:"caseSensitive,omitempty" tf:"case_sensitive,omitempty"`
@@ -66,13 +66,18 @@ type TrustDlpPredefinedEntryObservation struct {
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Boolean) Whether this entry is deprecated for new use. This is computed from the static catalog and
+	// (Boolean) For type: predefined: Whether this entry is deprecated for new use. This is computed from the static catalog and
 	// emitted only when true.
-	// Whether this entry is deprecated for new use. This is computed from the static catalog and
+	// For `type: predefined`: Whether this entry is deprecated for new use. This is computed from the static catalog and
 	// emitted only when true.
 	Deprecated *bool `json:"deprecated,omitempty" tf:"deprecated,omitempty"`
 
-	// (String)
+	// (String) For type: custom_prompt_topic: The optional description of the custom prompt topic entry.
+	// For `type: custom_prompt_topic`: The optional description of the custom prompt topic entry.
+	//
+	// For `type: exact_data`: The optional description of the exact data entry.
+	//
+	// For `type: document_fingerprint`: The optional description of the document fingerprint entry.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (Boolean)
@@ -113,7 +118,17 @@ type TrustDlpPredefinedEntryObservation struct {
 	// Available values: "empty", "uploading", "pending", "processing", "failed", "complete".
 	UploadStatus *string `json:"uploadStatus,omitempty" tf:"upload_status,omitempty"`
 
-	// (Attributes) A Predefined AI prompt classification topic entry. (see below for nested schema)
+	// (Set of String) For type: custom: Validators this entry references, by id, at most 10. An empty list means the entry
+	// references none.
+	// For `type: custom`: Validators this entry references, by id, at most 10. An empty list means the entry
+	// references none.
+	//
+	// Returned by the entry endpoints. Not returned on entries embedded in other responses, such
+	// as profiles.
+	// +listType=set
+	ValidatorIds []*string `json:"validatorIds,omitempty" tf:"validator_ids,omitempty"`
+
+	// (Attributes) For type: predefined: A Predefined AI prompt classification topic entry. (see below for nested schema)
 	Variant *TrustDlpPredefinedEntryVariantObservation `json:"variant,omitempty" tf:"variant,omitempty"`
 
 	// (List of String)
@@ -178,8 +193,10 @@ type TrustDlpPredefinedEntryVariantInitParameters struct {
 
 type TrustDlpPredefinedEntryVariantObservation struct {
 
-	// (String)
-	// A customer-facing explanation of what this predefined AI prompt topic represents.
+	// (String) For type: custom_prompt_topic: The optional description of the custom prompt topic entry.
+	// For `type: PromptTopic`: A customer-facing explanation of what this predefined AI prompt topic represents.
+	//
+	// For `type: General`: A customer-facing explanation of what this predefined entry represents.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// (String) Available values: "Intent", "Content".

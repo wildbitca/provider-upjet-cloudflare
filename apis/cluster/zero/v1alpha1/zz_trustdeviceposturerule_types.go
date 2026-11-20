@@ -37,6 +37,8 @@ type InputInitParameters struct {
 
 	// (String) Common Name that is protected by the certificate.
 	// Common Name that is protected by the certificate.
+	//
+	// Certificate Common Name. This may include one or more variables in the ${ } notation. Only ${serial_number} and ${hostname} are valid variables.
 	Cn *string `json:"cn,omitempty" tf:"cn,omitempty"`
 
 	// (String) Compliance Status.
@@ -77,6 +79,8 @@ type InputInitParameters struct {
 
 	// (String) API UUID.
 	// List ID.
+	//
+	// UUID of Access List.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Boolean) Whether device is infected.
@@ -105,8 +109,9 @@ type InputInitParameters struct {
 	NetworkStatus *string `json:"networkStatus,omitempty" tf:"network_status,omitempty"`
 
 	// (String) Operating system.
-	// Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
 	// Operating system.
+	//
+	// Operating System.
 	// Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
 	OperatingSystem *string `json:"operatingSystem,omitempty" tf:"operating_system,omitempty"`
 
@@ -117,8 +122,9 @@ type InputInitParameters struct {
 	OperationalState *string `json:"operationalState,omitempty" tf:"operational_state,omitempty"`
 
 	// (String) Operator.
-	// Available values: "<", "<=", ">", ">=", "==".
 	// Operator.
+	//
+	// Operator to evaluate risk_level or eid_last_seen.
 	// Available values: "<", "<=", ">", ">=", "==".
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
 
@@ -144,6 +150,8 @@ type InputInitParameters struct {
 
 	// (String) File path.
 	// File path.
+	//
+	// Path for the application.
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
 	// (Boolean) Whether to check all disks for encryption.
@@ -198,6 +206,8 @@ type InputInitParameters struct {
 
 	// (String) Version of OS.
 	// Version of OS.
+	//
+	// Version.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 
 	// (String) Version Operator.
@@ -231,6 +241,8 @@ type InputObservation struct {
 
 	// (String) Common Name that is protected by the certificate.
 	// Common Name that is protected by the certificate.
+	//
+	// Certificate Common Name. This may include one or more variables in the ${ } notation. Only ${serial_number} and ${hostname} are valid variables.
 	Cn *string `json:"cn,omitempty" tf:"cn,omitempty"`
 
 	// (String) Compliance Status.
@@ -271,6 +283,8 @@ type InputObservation struct {
 
 	// (String) API UUID.
 	// List ID.
+	//
+	// UUID of Access List.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Boolean) Whether device is infected.
@@ -299,8 +313,9 @@ type InputObservation struct {
 	NetworkStatus *string `json:"networkStatus,omitempty" tf:"network_status,omitempty"`
 
 	// (String) Operating system.
-	// Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
 	// Operating system.
+	//
+	// Operating System.
 	// Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
 	OperatingSystem *string `json:"operatingSystem,omitempty" tf:"operating_system,omitempty"`
 
@@ -311,8 +326,9 @@ type InputObservation struct {
 	OperationalState *string `json:"operationalState,omitempty" tf:"operational_state,omitempty"`
 
 	// (String) Operator.
-	// Available values: "<", "<=", ">", ">=", "==".
 	// Operator.
+	//
+	// Operator to evaluate risk_level or eid_last_seen.
 	// Available values: "<", "<=", ">", ">=", "==".
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
 
@@ -338,6 +354,8 @@ type InputObservation struct {
 
 	// (String) File path.
 	// File path.
+	//
+	// Path for the application.
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
 	// (Boolean) Whether to check all disks for encryption.
@@ -392,6 +410,8 @@ type InputObservation struct {
 
 	// (String) Version of OS.
 	// Version of OS.
+	//
+	// Version.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 
 	// (String) Version Operator.
@@ -430,6 +450,8 @@ type InputParameters struct {
 
 	// (String) Common Name that is protected by the certificate.
 	// Common Name that is protected by the certificate.
+	//
+	// Certificate Common Name. This may include one or more variables in the ${ } notation. Only ${serial_number} and ${hostname} are valid variables.
 	// +kubebuilder:validation:Optional
 	Cn *string `json:"cn,omitempty" tf:"cn,omitempty"`
 
@@ -479,6 +501,8 @@ type InputParameters struct {
 
 	// (String) API UUID.
 	// List ID.
+	//
+	// UUID of Access List.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -514,8 +538,9 @@ type InputParameters struct {
 	NetworkStatus *string `json:"networkStatus,omitempty" tf:"network_status,omitempty"`
 
 	// (String) Operating system.
-	// Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
 	// Operating system.
+	//
+	// Operating System.
 	// Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
 	// +kubebuilder:validation:Optional
 	OperatingSystem *string `json:"operatingSystem,omitempty" tf:"operating_system,omitempty"`
@@ -528,8 +553,9 @@ type InputParameters struct {
 	OperationalState *string `json:"operationalState,omitempty" tf:"operational_state,omitempty"`
 
 	// (String) Operator.
-	// Available values: "<", "<=", ">", ">=", "==".
 	// Operator.
+	//
+	// Operator to evaluate risk_level or eid_last_seen.
 	// Available values: "<", "<=", ">", ">=", "==".
 	// +kubebuilder:validation:Optional
 	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
@@ -561,6 +587,8 @@ type InputParameters struct {
 
 	// (String) File path.
 	// File path.
+	//
+	// Path for the application.
 	// +kubebuilder:validation:Optional
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
@@ -627,6 +655,8 @@ type InputParameters struct {
 
 	// (String) Version of OS.
 	// Version of OS.
+	//
+	// Version.
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 

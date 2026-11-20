@@ -26,7 +26,7 @@ type BucketSippyInitParameters struct {
 	// Jurisdiction of the bucket
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
-	// (Attributes) AWS S3 bucket to copy objects from. (see below for nested schema)
+	// (Attributes) AWS S3 bucket to copy objects from.
 	Source *SourceInitParameters `json:"source,omitempty" tf:"source,omitempty"`
 }
 
@@ -49,7 +49,7 @@ type BucketSippyObservation struct {
 	// Jurisdiction of the bucket
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
-	// (Attributes) AWS S3 bucket to copy objects from. (see below for nested schema)
+	// (Attributes) AWS S3 bucket to copy objects from.
 	Source *SourceObservation `json:"source,omitempty" tf:"source,omitempty"`
 }
 
@@ -69,7 +69,7 @@ type BucketSippyParameters struct {
 	// +kubebuilder:validation:Optional
 	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
-	// (Attributes) AWS S3 bucket to copy objects from. (see below for nested schema)
+	// (Attributes) AWS S3 bucket to copy objects from.
 	// +kubebuilder:validation:Optional
 	Source *SourceParameters `json:"source,omitempty" tf:"source,omitempty"`
 }
@@ -158,53 +158,55 @@ type SourceInitParameters struct {
 	// (String) ID of a Cloudflare API token.
 	// This is the value labelled "Access Key ID" when creating an API.
 	// token from the R2 dashboard.
-	// Access Key ID of an IAM credential (ideally scoped to a single S3 bucket).
+	// For `r2_bucket_sippy_provider: aws` or `r2_bucket_sippy_provider: s3`: Access Key ID of an IAM credential (ideally scoped to a single S3 bucket).
 	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
 
-	// (String, Sensitive) Access key for the Azure Storage account. Mutually exclusive with sasToken.
-	// Access key for the Azure Storage account. Mutually exclusive with sasToken.
+	// (String, Sensitive) For r2_bucket_sippy_provider: azure: Access key for the Azure Storage account. Mutually exclusive with sasToken.
+	// For `r2_bucket_sippy_provider: azure`: Access key for the Azure Storage account. Mutually exclusive with sasToken.
 	AccountKeySecretRef *v2.SecretKeySelector `json:"accountKeySecretRef,omitempty" tf:"-"`
 
-	// (String) Name of the Azure Storage account.
-	// Name of the Azure Storage account.
+	// (String) For r2_bucket_sippy_provider: azure: Name of the Azure Storage account.
+	// For `r2_bucket_sippy_provider: azure`: Name of the Azure Storage account.
 	AccountName *string `json:"accountName,omitempty" tf:"account_name,omitempty"`
 
-	// (String) Name of the AWS S3 bucket.
-	// Name of the AWS S3 bucket.
+	// (String) For r2_bucket_sippy_provider: aws: Name of the AWS S3 bucket.
+	// For `r2_bucket_sippy_provider: aws`: Name of the AWS S3 bucket.
+	//
+	// For `r2_bucket_sippy_provider: gcs`: Name of the GCS bucket.
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
 	// compatible API of the bucket.
-	// URL to the S3-compatible API of the bucket.
+	// For `r2_bucket_sippy_provider: s3`: URL to the S3-compatible API of the bucket.
 	BucketURL *string `json:"bucketUrl,omitempty" tf:"bucket_url,omitempty"`
 
-	// (String) Client email of an IAM credential (ideally scoped to a single GCS bucket).
-	// Client email of an IAM credential (ideally scoped to a single GCS bucket).
+	// (String) For r2_bucket_sippy_provider: gcs: Client email of an IAM credential (ideally scoped to a single GCS bucket).
+	// For `r2_bucket_sippy_provider: gcs`: Client email of an IAM credential (ideally scoped to a single GCS bucket).
 	ClientEmail *string `json:"clientEmail,omitempty" tf:"client_email,omitempty"`
 
 	// (String) Available values: "r2".
 	// Available values: "aws", "gcs", "s3", "azure".
 	CloudProvider *string `json:"cloudProvider,omitempty" tf:"cloud_provider,omitempty"`
 
-	// (String) Name of the Azure Blob Storage container.
-	// Name of the Azure Blob Storage container.
+	// (String) For r2_bucket_sippy_provider: azure: Name of the Azure Blob Storage container.
+	// For `r2_bucket_sippy_provider: azure`: Name of the Azure Blob Storage container.
 	Container *string `json:"container,omitempty" tf:"container,omitempty"`
 
-	// (String, Sensitive) Private Key of an IAM credential (ideally scoped to a single GCS bucket).
-	// Private Key of an IAM credential (ideally scoped to a single GCS bucket).
+	// (String, Sensitive) For r2_bucket_sippy_provider: gcs: Private Key of an IAM credential (ideally scoped to a single GCS bucket).
+	// For `r2_bucket_sippy_provider: gcs`: Private Key of an IAM credential (ideally scoped to a single GCS bucket).
 	PrivateKeySecretRef *v2.SecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
 
-	// (String) AWS region containing the source S3 bucket.
-	// AWS region containing the source S3 bucket.
+	// (String) For r2_bucket_sippy_provider: aws: AWS region containing the source S3 bucket.
+	// For `r2_bucket_sippy_provider: aws`: AWS region containing the source S3 bucket.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// (String, Sensitive) Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
-	// Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
+	// (String, Sensitive) For r2_bucket_sippy_provider: azure: Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
+	// For `r2_bucket_sippy_provider: azure`: Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
 	SasTokenSecretRef *v2.SecretKeySelector `json:"sasTokenSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) Value of a Cloudflare API token.
 	// This is the value labelled "Secret Access Key" when creating an API.
 	// token from the R2 dashboard.
-	// Secret Access Key of an IAM credential (ideally scoped to a single S3 bucket).
+	// For `r2_bucket_sippy_provider: aws` or `r2_bucket_sippy_provider: s3`: Secret Access Key of an IAM credential (ideally scoped to a single S3 bucket).
 	SecretAccessKeySecretRef *v2.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
 }
 
@@ -213,35 +215,37 @@ type SourceObservation struct {
 	// (String) ID of a Cloudflare API token.
 	// This is the value labelled "Access Key ID" when creating an API.
 	// token from the R2 dashboard.
-	// Access Key ID of an IAM credential (ideally scoped to a single S3 bucket).
+	// For `r2_bucket_sippy_provider: aws` or `r2_bucket_sippy_provider: s3`: Access Key ID of an IAM credential (ideally scoped to a single S3 bucket).
 	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
 
-	// (String) Name of the Azure Storage account.
-	// Name of the Azure Storage account.
+	// (String) For r2_bucket_sippy_provider: azure: Name of the Azure Storage account.
+	// For `r2_bucket_sippy_provider: azure`: Name of the Azure Storage account.
 	AccountName *string `json:"accountName,omitempty" tf:"account_name,omitempty"`
 
-	// (String) Name of the AWS S3 bucket.
-	// Name of the AWS S3 bucket.
+	// (String) For r2_bucket_sippy_provider: aws: Name of the AWS S3 bucket.
+	// For `r2_bucket_sippy_provider: aws`: Name of the AWS S3 bucket.
+	//
+	// For `r2_bucket_sippy_provider: gcs`: Name of the GCS bucket.
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
 	// compatible API of the bucket.
-	// URL to the S3-compatible API of the bucket.
+	// For `r2_bucket_sippy_provider: s3`: URL to the S3-compatible API of the bucket.
 	BucketURL *string `json:"bucketUrl,omitempty" tf:"bucket_url,omitempty"`
 
-	// (String) Client email of an IAM credential (ideally scoped to a single GCS bucket).
-	// Client email of an IAM credential (ideally scoped to a single GCS bucket).
+	// (String) For r2_bucket_sippy_provider: gcs: Client email of an IAM credential (ideally scoped to a single GCS bucket).
+	// For `r2_bucket_sippy_provider: gcs`: Client email of an IAM credential (ideally scoped to a single GCS bucket).
 	ClientEmail *string `json:"clientEmail,omitempty" tf:"client_email,omitempty"`
 
 	// (String) Available values: "r2".
 	// Available values: "aws", "gcs", "s3", "azure".
 	CloudProvider *string `json:"cloudProvider,omitempty" tf:"cloud_provider,omitempty"`
 
-	// (String) Name of the Azure Blob Storage container.
-	// Name of the Azure Blob Storage container.
+	// (String) For r2_bucket_sippy_provider: azure: Name of the Azure Blob Storage container.
+	// For `r2_bucket_sippy_provider: azure`: Name of the Azure Blob Storage container.
 	Container *string `json:"container,omitempty" tf:"container,omitempty"`
 
-	// (String) AWS region containing the source S3 bucket.
-	// AWS region containing the source S3 bucket.
+	// (String) For r2_bucket_sippy_provider: aws: AWS region containing the source S3 bucket.
+	// For `r2_bucket_sippy_provider: aws`: AWS region containing the source S3 bucket.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
@@ -250,32 +254,34 @@ type SourceParameters struct {
 	// (String) ID of a Cloudflare API token.
 	// This is the value labelled "Access Key ID" when creating an API.
 	// token from the R2 dashboard.
-	// Access Key ID of an IAM credential (ideally scoped to a single S3 bucket).
+	// For `r2_bucket_sippy_provider: aws` or `r2_bucket_sippy_provider: s3`: Access Key ID of an IAM credential (ideally scoped to a single S3 bucket).
 	// +kubebuilder:validation:Optional
 	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
 
-	// (String, Sensitive) Access key for the Azure Storage account. Mutually exclusive with sasToken.
-	// Access key for the Azure Storage account. Mutually exclusive with sasToken.
+	// (String, Sensitive) For r2_bucket_sippy_provider: azure: Access key for the Azure Storage account. Mutually exclusive with sasToken.
+	// For `r2_bucket_sippy_provider: azure`: Access key for the Azure Storage account. Mutually exclusive with sasToken.
 	// +kubebuilder:validation:Optional
 	AccountKeySecretRef *v2.SecretKeySelector `json:"accountKeySecretRef,omitempty" tf:"-"`
 
-	// (String) Name of the Azure Storage account.
-	// Name of the Azure Storage account.
+	// (String) For r2_bucket_sippy_provider: azure: Name of the Azure Storage account.
+	// For `r2_bucket_sippy_provider: azure`: Name of the Azure Storage account.
 	// +kubebuilder:validation:Optional
 	AccountName *string `json:"accountName,omitempty" tf:"account_name,omitempty"`
 
-	// (String) Name of the AWS S3 bucket.
-	// Name of the AWS S3 bucket.
+	// (String) For r2_bucket_sippy_provider: aws: Name of the AWS S3 bucket.
+	// For `r2_bucket_sippy_provider: aws`: Name of the AWS S3 bucket.
+	//
+	// For `r2_bucket_sippy_provider: gcs`: Name of the GCS bucket.
 	// +kubebuilder:validation:Optional
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
 	// compatible API of the bucket.
-	// URL to the S3-compatible API of the bucket.
+	// For `r2_bucket_sippy_provider: s3`: URL to the S3-compatible API of the bucket.
 	// +kubebuilder:validation:Optional
 	BucketURL *string `json:"bucketUrl,omitempty" tf:"bucket_url,omitempty"`
 
-	// (String) Client email of an IAM credential (ideally scoped to a single GCS bucket).
-	// Client email of an IAM credential (ideally scoped to a single GCS bucket).
+	// (String) For r2_bucket_sippy_provider: gcs: Client email of an IAM credential (ideally scoped to a single GCS bucket).
+	// For `r2_bucket_sippy_provider: gcs`: Client email of an IAM credential (ideally scoped to a single GCS bucket).
 	// +kubebuilder:validation:Optional
 	ClientEmail *string `json:"clientEmail,omitempty" tf:"client_email,omitempty"`
 
@@ -284,30 +290,30 @@ type SourceParameters struct {
 	// +kubebuilder:validation:Optional
 	CloudProvider *string `json:"cloudProvider,omitempty" tf:"cloud_provider,omitempty"`
 
-	// (String) Name of the Azure Blob Storage container.
-	// Name of the Azure Blob Storage container.
+	// (String) For r2_bucket_sippy_provider: azure: Name of the Azure Blob Storage container.
+	// For `r2_bucket_sippy_provider: azure`: Name of the Azure Blob Storage container.
 	// +kubebuilder:validation:Optional
 	Container *string `json:"container,omitempty" tf:"container,omitempty"`
 
-	// (String, Sensitive) Private Key of an IAM credential (ideally scoped to a single GCS bucket).
-	// Private Key of an IAM credential (ideally scoped to a single GCS bucket).
+	// (String, Sensitive) For r2_bucket_sippy_provider: gcs: Private Key of an IAM credential (ideally scoped to a single GCS bucket).
+	// For `r2_bucket_sippy_provider: gcs`: Private Key of an IAM credential (ideally scoped to a single GCS bucket).
 	// +kubebuilder:validation:Optional
 	PrivateKeySecretRef *v2.SecretKeySelector `json:"privateKeySecretRef,omitempty" tf:"-"`
 
-	// (String) AWS region containing the source S3 bucket.
-	// AWS region containing the source S3 bucket.
+	// (String) For r2_bucket_sippy_provider: aws: AWS region containing the source S3 bucket.
+	// For `r2_bucket_sippy_provider: aws`: AWS region containing the source S3 bucket.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// (String, Sensitive) Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
-	// Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
+	// (String, Sensitive) For r2_bucket_sippy_provider: azure: Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
+	// For `r2_bucket_sippy_provider: azure`: Shared Access Signature token for the Azure Storage account. Mutually exclusive with accountKey.
 	// +kubebuilder:validation:Optional
 	SasTokenSecretRef *v2.SecretKeySelector `json:"sasTokenSecretRef,omitempty" tf:"-"`
 
 	// (String, Sensitive) Value of a Cloudflare API token.
 	// This is the value labelled "Secret Access Key" when creating an API.
 	// token from the R2 dashboard.
-	// Secret Access Key of an IAM credential (ideally scoped to a single S3 bucket).
+	// For `r2_bucket_sippy_provider: aws` or `r2_bucket_sippy_provider: s3`: Secret Access Key of an IAM credential (ideally scoped to a single S3 bucket).
 	// +kubebuilder:validation:Optional
 	SecretAccessKeySecretRef *v2.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
 }

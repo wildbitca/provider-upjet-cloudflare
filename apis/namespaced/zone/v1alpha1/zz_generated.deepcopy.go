@@ -881,11 +881,6 @@ func (in *DNSSettingsInitParameters) DeepCopyInto(out *DNSSettingsInitParameters
 		*out = new(bool)
 		**out = **in
 	}
-	if in.FoundationDNS != nil {
-		in, out := &in.FoundationDNS, &out.FoundationDNS
-		*out = new(bool)
-		**out = **in
-	}
 	if in.InternalDNS != nil {
 		in, out := &in.InternalDNS, &out.InternalDNS
 		*out = new(InternalDNSInitParameters)
@@ -988,11 +983,6 @@ func (in *DNSSettingsObservation) DeepCopyInto(out *DNSSettingsObservation) {
 		*out = new(bool)
 		**out = **in
 	}
-	if in.FoundationDNS != nil {
-		in, out := &in.FoundationDNS, &out.FoundationDNS
-		*out = new(bool)
-		**out = **in
-	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -1055,11 +1045,6 @@ func (in *DNSSettingsParameters) DeepCopyInto(out *DNSSettingsParameters) {
 	*out = *in
 	if in.FlattenAllCnames != nil {
 		in, out := &in.FlattenAllCnames, &out.FlattenAllCnames
-		*out = new(bool)
-		**out = **in
-	}
-	if in.FoundationDNS != nil {
-		in, out := &in.FoundationDNS, &out.FoundationDNS
 		*out = new(bool)
 		**out = **in
 	}

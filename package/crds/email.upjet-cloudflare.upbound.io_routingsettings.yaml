@@ -75,8 +75,8 @@ spec:
                 properties:
                   supportSubaddress:
                     description: |-
-                      addressing) is honored when matching incoming mail against routing rules.
-                      Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+                      addressing) is honored when matching incoming mail against routing rules. When omitted, preserves the existing setting.
+                      Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules. When omitted, preserves the existing setting.
                     type: boolean
                   zoneId:
                     description: |-
@@ -99,8 +99,8 @@ spec:
                 properties:
                   supportSubaddress:
                     description: |-
-                      addressing) is honored when matching incoming mail against routing rules.
-                      Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+                      addressing) is honored when matching incoming mail against routing rules. When omitted, preserves the existing setting.
+                      Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules. When omitted, preserves the existing setting.
                     type: boolean
                   zoneId:
                     description: |-
@@ -241,8 +241,8 @@ spec:
                     type: string
                   supportSubaddress:
                     description: |-
-                      addressing) is honored when matching incoming mail against routing rules.
-                      Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+                      addressing) is honored when matching incoming mail against routing rules. When omitted, preserves the existing setting.
+                      Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules. When omitted, preserves the existing setting.
                     type: boolean
                   tag:
                     description: |-

@@ -157,6 +157,8 @@ spec:
                       workerDomain:
                         type: string
                     type: object
+                  namespace:
+                    type: string
                   paused:
                     type: boolean
                   publicEndpointParams:
@@ -169,7 +171,7 @@ spec:
                         properties:
                           disabled:
                             description: Disable chat completions endpoint for this
-                              public endpoint
+                              public endpoint.
                             type: boolean
                         type: object
                       customDomains:
@@ -196,7 +198,7 @@ spec:
                           description:
                             type: string
                           disabled:
-                            description: Disable MCP endpoint for this public endpoint
+                            description: Disable MCP endpoint for this public endpoint.
                             type: boolean
                         type: object
                       rateLimit:
@@ -212,7 +214,7 @@ spec:
                       searchEndpoint:
                         properties:
                           disabled:
-                            description: Disable search endpoint for this public endpoint
+                            description: Disable search endpoint for this public endpoint.
                             type: boolean
                         type: object
                     type: object
@@ -241,7 +243,7 @@ spec:
                         type: array
                       keywordMatchMode:
                         description: |-
-                          Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. When omitted on an update, the existing stored value is preserved; when never set, search falls back to 'and'.
+                          Controls which documents become candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term and ranks results according to BM25 relevance. When omitted on an update, the existing stored value stays unchanged; when never set, search falls back to 'and'.
                           Available values: "and", "or".
                         type: string
                     type: object
@@ -253,6 +255,8 @@ spec:
                   rewriteQuery:
                     type: boolean
                   scoreThreshold:
+                    description: Minimum similarity score a chunk must reach to be
+                      returned. Defaults to 0.4.
                     type: number
                   source:
                     type: string
@@ -262,8 +266,8 @@ spec:
                         description: 'List of path patterns to exclude. Uses micromatch
                           glob syntax: * matches within a path segment, ** matches
                           across path segments (e.g., /admin/** matches /admin/users
-                          and /admin/settings/advanced). Most accounts are limited
-                          to 10 rules; contact support to raise it.'
+                          and /admin/settings/advanced). Most accounts have a limit
+                          of 10 rules; contact support to raise it.'
                         items:
                           type: string
                         type: array
@@ -271,7 +275,7 @@ spec:
                         description: 'List of path patterns to include. Uses micromatch
                           glob syntax: * matches within a path segment, ** matches
                           across path segments (e.g., /blog/** matches /blog/post
-                          and /blog/2024/post). Most accounts are limited to 10 rules;
+                          and /blog/2024/post). Most accounts have a limit of 10 rules;
                           contact support to raise it.'
                         items:
                           type: string
@@ -290,8 +294,8 @@ spec:
                                 type: number
                               includeExternalLinks:
                                 description: Follow links that point outside the source
-                                  domain. Must stay `false` — discover crawls are
-                                  restricted to the zone you own.
+                                  domain. Must stay `false` because discover crawls
+                                  only cover the zone you own.
                                 type: boolean
                               includeSubdomains:
                                 description: Follow links to subdomains of the source
@@ -321,12 +325,12 @@ spec:
                                         * matches within a segment, ** crosses directories.'
                                       type: string
                                     selector:
-                                      description: CSS selector to extract content
-                                        from pages matching the path pattern. Must
-                                        not contain disallowed characters (;, `, $,
-                                        {, }, \). Must target a single element; if
-                                        multiple elements match, the selector is ignored
-                                        and the full page is used.
+                                      description: 'CSS selector to extract content
+                                        from pages matching the path pattern. Disallowed
+                                        characters: ;, `, $, {, }, \. Must target
+                                        a single element; if multiple elements match,
+                                        the crawler ignores the selector and uses
+                                        the full page.'
                                       type: string
                                   type: object
                                 type: array
@@ -334,9 +338,10 @@ spec:
                                 additionalProperties:
                                   type: string
                                 description: Up to 5 custom HTTP headers sent with
-                                  each crawl request. Names must be RFC-7230 token
-                                  characters (no spaces, colons, or control characters);
-                                  values must be HTAB + printable ASCII (no CR/LF).
+                                  each crawl request. Names must use RFC-7230 token
+                                  characters, excluding spaces, colons, and control
+                                  characters. Values must use HTAB and printable ASCII
+                                  only, excluding CR and LF.
                                 type: object
                                 x-kubernetes-map-type: granular
                               includeImages:
@@ -352,7 +357,7 @@ spec:
                             type: object
                           parseType:
                             description: |-
-                              How URLs are discovered. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to be a Verified zone on this account.
+                              How the crawler finds URLs. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to belong to a Verified zone on this account.
                               Available values: "sitemap", "discover".
                             type: string
                         type: object
@@ -363,7 +368,7 @@ spec:
                     type: string
                   syncInterval:
                     description: |-
-                      Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
+                      Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h). Defaults to 86400 (24h).
                       Available values: 900, 1800, 3600, 7200, 14400, 21600, 43200, 86400.
                     type: number
                   systemPromptAisearch:
@@ -477,6 +482,8 @@ spec:
                       workerDomain:
                         type: string
                     type: object
+                  namespace:
+                    type: string
                   paused:
                     type: boolean
                   publicEndpointParams:
@@ -489,7 +496,7 @@ spec:
                         properties:
                           disabled:
                             description: Disable chat completions endpoint for this
-                              public endpoint
+                              public endpoint.
                             type: boolean
                         type: object
                       customDomains:
@@ -516,7 +523,7 @@ spec:
                           description:
                             type: string
                           disabled:
-                            description: Disable MCP endpoint for this public endpoint
+                            description: Disable MCP endpoint for this public endpoint.
                             type: boolean
                         type: object
                       rateLimit:
@@ -532,7 +539,7 @@ spec:
                       searchEndpoint:
                         properties:
                           disabled:
-                            description: Disable search endpoint for this public endpoint
+                            description: Disable search endpoint for this public endpoint.
                             type: boolean
                         type: object
                     type: object
@@ -561,7 +568,7 @@ spec:
                         type: array
                       keywordMatchMode:
                         description: |-
-                          Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. When omitted on an update, the existing stored value is preserved; when never set, search falls back to 'and'.
+                          Controls which documents become candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term and ranks results according to BM25 relevance. When omitted on an update, the existing stored value stays unchanged; when never set, search falls back to 'and'.
                           Available values: "and", "or".
                         type: string
                     type: object
@@ -573,6 +580,8 @@ spec:
                   rewriteQuery:
                     type: boolean
                   scoreThreshold:
+                    description: Minimum similarity score a chunk must reach to be
+                      returned. Defaults to 0.4.
                     type: number
                   source:
                     type: string
@@ -582,8 +591,8 @@ spec:
                         description: 'List of path patterns to exclude. Uses micromatch
                           glob syntax: * matches within a path segment, ** matches
                           across path segments (e.g., /admin/** matches /admin/users
-                          and /admin/settings/advanced). Most accounts are limited
-                          to 10 rules; contact support to raise it.'
+                          and /admin/settings/advanced). Most accounts have a limit
+                          of 10 rules; contact support to raise it.'
                         items:
                           type: string
                         type: array
@@ -591,7 +600,7 @@ spec:
                         description: 'List of path patterns to include. Uses micromatch
                           glob syntax: * matches within a path segment, ** matches
                           across path segments (e.g., /blog/** matches /blog/post
-                          and /blog/2024/post). Most accounts are limited to 10 rules;
+                          and /blog/2024/post). Most accounts have a limit of 10 rules;
                           contact support to raise it.'
                         items:
                           type: string
@@ -610,8 +619,8 @@ spec:
                                 type: number
                               includeExternalLinks:
                                 description: Follow links that point outside the source
-                                  domain. Must stay `false` — discover crawls are
-                                  restricted to the zone you own.
+                                  domain. Must stay `false` because discover crawls
+                                  only cover the zone you own.
                                 type: boolean
                               includeSubdomains:
                                 description: Follow links to subdomains of the source
@@ -641,12 +650,12 @@ spec:
                                         * matches within a segment, ** crosses directories.'
                                       type: string
                                     selector:
-                                      description: CSS selector to extract content
-                                        from pages matching the path pattern. Must
-                                        not contain disallowed characters (;, `, $,
-                                        {, }, \). Must target a single element; if
-                                        multiple elements match, the selector is ignored
-                                        and the full page is used.
+                                      description: 'CSS selector to extract content
+                                        from pages matching the path pattern. Disallowed
+                                        characters: ;, `, $, {, }, \. Must target
+                                        a single element; if multiple elements match,
+                                        the crawler ignores the selector and uses
+                                        the full page.'
                                       type: string
                                   type: object
                                 type: array
@@ -654,9 +663,10 @@ spec:
                                 additionalProperties:
                                   type: string
                                 description: Up to 5 custom HTTP headers sent with
-                                  each crawl request. Names must be RFC-7230 token
-                                  characters (no spaces, colons, or control characters);
-                                  values must be HTAB + printable ASCII (no CR/LF).
+                                  each crawl request. Names must use RFC-7230 token
+                                  characters, excluding spaces, colons, and control
+                                  characters. Values must use HTAB and printable ASCII
+                                  only, excluding CR and LF.
                                 type: object
                                 x-kubernetes-map-type: granular
                               includeImages:
@@ -672,7 +682,7 @@ spec:
                             type: object
                           parseType:
                             description: |-
-                              How URLs are discovered. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to be a Verified zone on this account.
+                              How the crawler finds URLs. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to belong to a Verified zone on this account.
                               Available values: "sitemap", "discover".
                             type: string
                         type: object
@@ -683,7 +693,7 @@ spec:
                     type: string
                   syncInterval:
                     description: |-
-                      Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
+                      Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h). Defaults to 86400 (24h).
                       Available values: 900, 1800, 3600, 7200, 14400, 21600, 43200, 86400.
                     type: number
                   systemPromptAisearch:
@@ -912,7 +922,7 @@ spec:
                         properties:
                           disabled:
                             description: Disable chat completions endpoint for this
-                              public endpoint
+                              public endpoint.
                             type: boolean
                         type: object
                       customDomains:
@@ -939,7 +949,7 @@ spec:
                           description:
                             type: string
                           disabled:
-                            description: Disable MCP endpoint for this public endpoint
+                            description: Disable MCP endpoint for this public endpoint.
                             type: boolean
                         type: object
                       rateLimit:
@@ -955,7 +965,7 @@ spec:
                       searchEndpoint:
                         properties:
                           disabled:
-                            description: Disable search endpoint for this public endpoint
+                            description: Disable search endpoint for this public endpoint.
                             type: boolean
                         type: object
                     type: object
@@ -984,7 +994,7 @@ spec:
                         type: array
                       keywordMatchMode:
                         description: |-
-                          Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. When omitted on an update, the existing stored value is preserved; when never set, search falls back to 'and'.
+                          Controls which documents become candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term and ranks results according to BM25 relevance. When omitted on an update, the existing stored value stays unchanged; when never set, search falls back to 'and'.
                           Available values: "and", "or".
                         type: string
                     type: object
@@ -996,6 +1006,8 @@ spec:
                   rewriteQuery:
                     type: boolean
                   scoreThreshold:
+                    description: Minimum similarity score a chunk must reach to be
+                      returned. Defaults to 0.4.
                     type: number
                   source:
                     type: string
@@ -1005,8 +1017,8 @@ spec:
                         description: 'List of path patterns to exclude. Uses micromatch
                           glob syntax: * matches within a path segment, ** matches
                           across path segments (e.g., /admin/** matches /admin/users
-                          and /admin/settings/advanced). Most accounts are limited
-                          to 10 rules; contact support to raise it.'
+                          and /admin/settings/advanced). Most accounts have a limit
+                          of 10 rules; contact support to raise it.'
                         items:
                           type: string
                         type: array
@@ -1014,7 +1026,7 @@ spec:
                         description: 'List of path patterns to include. Uses micromatch
                           glob syntax: * matches within a path segment, ** matches
                           across path segments (e.g., /blog/** matches /blog/post
-                          and /blog/2024/post). Most accounts are limited to 10 rules;
+                          and /blog/2024/post). Most accounts have a limit of 10 rules;
                           contact support to raise it.'
                         items:
                           type: string
@@ -1033,8 +1045,8 @@ spec:
                                 type: number
                               includeExternalLinks:
                                 description: Follow links that point outside the source
-                                  domain. Must stay `false` — discover crawls are
-                                  restricted to the zone you own.
+                                  domain. Must stay `false` because discover crawls
+                                  only cover the zone you own.
                                 type: boolean
                               includeSubdomains:
                                 description: Follow links to subdomains of the source
@@ -1064,12 +1076,12 @@ spec:
                                         * matches within a segment, ** crosses directories.'
                                       type: string
                                     selector:
-                                      description: CSS selector to extract content
-                                        from pages matching the path pattern. Must
-                                        not contain disallowed characters (;, `, $,
-                                        {, }, \). Must target a single element; if
-                                        multiple elements match, the selector is ignored
-                                        and the full page is used.
+                                      description: 'CSS selector to extract content
+                                        from pages matching the path pattern. Disallowed
+                                        characters: ;, `, $, {, }, \. Must target
+                                        a single element; if multiple elements match,
+                                        the crawler ignores the selector and uses
+                                        the full page.'
                                       type: string
                                   type: object
                                 type: array
@@ -1077,9 +1089,10 @@ spec:
                                 additionalProperties:
                                   type: string
                                 description: Up to 5 custom HTTP headers sent with
-                                  each crawl request. Names must be RFC-7230 token
-                                  characters (no spaces, colons, or control characters);
-                                  values must be HTAB + printable ASCII (no CR/LF).
+                                  each crawl request. Names must use RFC-7230 token
+                                  characters, excluding spaces, colons, and control
+                                  characters. Values must use HTAB and printable ASCII
+                                  only, excluding CR and LF.
                                 type: object
                                 x-kubernetes-map-type: granular
                               includeImages:
@@ -1095,7 +1108,7 @@ spec:
                             type: object
                           parseType:
                             description: |-
-                              How URLs are discovered. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to be a Verified zone on this account.
+                              How the crawler finds URLs. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to belong to a Verified zone on this account.
                               Available values: "sitemap", "discover".
                             type: string
                         type: object
@@ -1108,7 +1121,7 @@ spec:
                     type: string
                   syncInterval:
                     description: |-
-                      Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
+                      Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h). Defaults to 86400 (24h).
                       Available values: 900, 1800, 3600, 7200, 14400, 21600, 43200, 86400.
                     type: number
                   systemPromptAisearch:

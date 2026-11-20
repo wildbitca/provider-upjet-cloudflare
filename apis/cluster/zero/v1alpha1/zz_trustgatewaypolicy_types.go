@@ -13,28 +13,6 @@ import (
 	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
-type AuditSSHInitParameters struct {
-
-	// (Boolean) Enable SSH command logging.
-	// Enable SSH command logging.
-	CommandLogging *bool `json:"commandLogging,omitempty" tf:"command_logging,omitempty"`
-}
-
-type AuditSSHObservation struct {
-
-	// (Boolean) Enable SSH command logging.
-	// Enable SSH command logging.
-	CommandLogging *bool `json:"commandLogging,omitempty" tf:"command_logging,omitempty"`
-}
-
-type AuditSSHParameters struct {
-
-	// (Boolean) Enable SSH command logging.
-	// Enable SSH command logging.
-	// +kubebuilder:validation:Optional
-	CommandLogging *bool `json:"commandLogging,omitempty" tf:"command_logging,omitempty"`
-}
-
 type BisoAdminControlsInitParameters struct {
 
 	// (String) Configure copy behavior. If set to remote_only, users cannot copy isolated content from the remote browser to the local clipboard. If this field is absent, copying remains enabled. Applies only when version == "v2".
@@ -69,10 +47,10 @@ type BisoAdminControlsInitParameters struct {
 	// Set to false to enable uploading. Only applies when `version == "v1"`.
 	Du *bool `json:"du,omitempty" tf:"du,omitempty"`
 
-	// (String) Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
-	// Available values: "enabled", "disabled".
-	// Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
-	// Available values: "enabled", "disabled".
+	// all) may execute; other keyboard input is blocked from reaching the page. Copy and print remain subject to their independent controls. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2". The enable_read_only_actions value requires an explicit version of "v2".
+	// Available values: "enabled", "disabled", "enable_read_only_actions".
+	// Configure keyboard usage behavior. When set to enable_read_only_actions, only approved browser commands (find, copy, print, zoom, and select-all) may execute; other keyboard input is blocked from reaching the page. Copy and print remain subject to their independent controls. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2". The enable_read_only_actions value requires an explicit version of "v2".
+	// Available values: "enabled", "disabled", "enable_read_only_actions".
 	Keyboard *string `json:"keyboard,omitempty" tf:"keyboard,omitempty"`
 
 	// (String) Configure paste behavior. If set to remote_only, users cannot paste content from the local clipboard into isolated pages. If this field is absent, pasting remains enabled. Applies only when version == "v2".
@@ -137,10 +115,10 @@ type BisoAdminControlsObservation struct {
 	// Set to false to enable uploading. Only applies when `version == "v1"`.
 	Du *bool `json:"du,omitempty" tf:"du,omitempty"`
 
-	// (String) Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
-	// Available values: "enabled", "disabled".
-	// Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
-	// Available values: "enabled", "disabled".
+	// all) may execute; other keyboard input is blocked from reaching the page. Copy and print remain subject to their independent controls. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2". The enable_read_only_actions value requires an explicit version of "v2".
+	// Available values: "enabled", "disabled", "enable_read_only_actions".
+	// Configure keyboard usage behavior. When set to enable_read_only_actions, only approved browser commands (find, copy, print, zoom, and select-all) may execute; other keyboard input is blocked from reaching the page. Copy and print remain subject to their independent controls. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2". The enable_read_only_actions value requires an explicit version of "v2".
+	// Available values: "enabled", "disabled", "enable_read_only_actions".
 	Keyboard *string `json:"keyboard,omitempty" tf:"keyboard,omitempty"`
 
 	// (String) Configure paste behavior. If set to remote_only, users cannot paste content from the local clipboard into isolated pages. If this field is absent, pasting remains enabled. Applies only when version == "v2".
@@ -212,10 +190,10 @@ type BisoAdminControlsParameters struct {
 	// +kubebuilder:validation:Optional
 	Du *bool `json:"du,omitempty" tf:"du,omitempty"`
 
-	// (String) Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
-	// Available values: "enabled", "disabled".
-	// Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
-	// Available values: "enabled", "disabled".
+	// all) may execute; other keyboard input is blocked from reaching the page. Copy and print remain subject to their independent controls. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2". The enable_read_only_actions value requires an explicit version of "v2".
+	// Available values: "enabled", "disabled", "enable_read_only_actions".
+	// Configure keyboard usage behavior. When set to enable_read_only_actions, only approved browser commands (find, copy, print, zoom, and select-all) may execute; other keyboard input is blocked from reaching the page. Copy and print remain subject to their independent controls. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2". The enable_read_only_actions value requires an explicit version of "v2".
+	// Available values: "enabled", "disabled", "enable_read_only_actions".
 	// +kubebuilder:validation:Optional
 	Keyboard *string `json:"keyboard,omitempty" tf:"keyboard,omitempty"`
 
@@ -582,6 +560,28 @@ type ForensicCopyParameters struct {
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
+type ForwardInitParameters struct {
+
+	// (String) Specify the public Worker ID of the target Worker.
+	// Specify the public Worker ID of the target Worker.
+	WorkerID *string `json:"workerId,omitempty" tf:"worker_id,omitempty"`
+}
+
+type ForwardObservation struct {
+
+	// (String) Specify the public Worker ID of the target Worker.
+	// Specify the public Worker ID of the target Worker.
+	WorkerID *string `json:"workerId,omitempty" tf:"worker_id,omitempty"`
+}
+
+type ForwardParameters struct {
+
+	// (String) Specify the public Worker ID of the target Worker.
+	// Specify the public Worker ID of the target Worker.
+	// +kubebuilder:validation:Optional
+	WorkerID *string `json:"workerId" tf:"worker_id,omitempty"`
+}
+
 type L4OverrideInitParameters struct {
 
 	// (String) Specify the IPv4 address of the upstream resolver.
@@ -821,9 +821,6 @@ type RuleSettingsInitParameters struct {
 	// Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
 	AllowChildBypass *bool `json:"allowChildBypass,omitempty" tf:"allow_child_bypass,omitempty"`
 
-	// (Attributes) Define the settings for the Audit SSH action. Settable only for l4 rules with audit_ssh action. (see below for nested schema)
-	AuditSSH *AuditSSHInitParameters `json:"auditSsh,omitempty" tf:"audit_ssh,omitempty"`
-
 	// (Attributes) Configure browser isolation behavior. Settable only for http rules with the action set to isolate. (see below for nested schema)
 	BisoAdminControls *BisoAdminControlsInitParameters `json:"bisoAdminControls,omitempty" tf:"biso_admin_controls,omitempty"`
 
@@ -857,6 +854,9 @@ type RuleSettingsInitParameters struct {
 
 	// (Attributes) Configure whether a copy of the HTTP request will be sent to storage when the rule matches. (see below for nested schema)
 	ForensicCopy *ForensicCopyInitParameters `json:"forensicCopy,omitempty" tf:"forensic_copy,omitempty"`
+
+	// (Attributes) Forward matching HTTP requests to a Worker. Required for http rules with the action set to forward. (see below for nested schema)
+	Forward *ForwardInitParameters `json:"forward,omitempty" tf:"forward,omitempty"`
 
 	// (Boolean) Enable IPs in DNS resolver category blocks. The system blocks only domain name categories unless you enable this setting. Settable only for dns and dns_resolver rules.
 	// Enable IPs in DNS resolver category blocks. The system blocks only domain name categories unless you enable this setting. Settable only for `dns` and `dns_resolver` rules.
@@ -922,9 +922,6 @@ type RuleSettingsObservation struct {
 	// Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
 	AllowChildBypass *bool `json:"allowChildBypass,omitempty" tf:"allow_child_bypass,omitempty"`
 
-	// (Attributes) Define the settings for the Audit SSH action. Settable only for l4 rules with audit_ssh action. (see below for nested schema)
-	AuditSSH *AuditSSHObservation `json:"auditSsh,omitempty" tf:"audit_ssh,omitempty"`
-
 	// (Attributes) Configure browser isolation behavior. Settable only for http rules with the action set to isolate. (see below for nested schema)
 	BisoAdminControls *BisoAdminControlsObservation `json:"bisoAdminControls,omitempty" tf:"biso_admin_controls,omitempty"`
 
@@ -958,6 +955,9 @@ type RuleSettingsObservation struct {
 
 	// (Attributes) Configure whether a copy of the HTTP request will be sent to storage when the rule matches. (see below for nested schema)
 	ForensicCopy *ForensicCopyObservation `json:"forensicCopy,omitempty" tf:"forensic_copy,omitempty"`
+
+	// (Attributes) Forward matching HTTP requests to a Worker. Required for http rules with the action set to forward. (see below for nested schema)
+	Forward *ForwardObservation `json:"forward,omitempty" tf:"forward,omitempty"`
 
 	// (Boolean) Enable IPs in DNS resolver category blocks. The system blocks only domain name categories unless you enable this setting. Settable only for dns and dns_resolver rules.
 	// Enable IPs in DNS resolver category blocks. The system blocks only domain name categories unless you enable this setting. Settable only for `dns` and `dns_resolver` rules.
@@ -1025,10 +1025,6 @@ type RuleSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	AllowChildBypass *bool `json:"allowChildBypass,omitempty" tf:"allow_child_bypass,omitempty"`
 
-	// (Attributes) Define the settings for the Audit SSH action. Settable only for l4 rules with audit_ssh action. (see below for nested schema)
-	// +kubebuilder:validation:Optional
-	AuditSSH *AuditSSHParameters `json:"auditSsh,omitempty" tf:"audit_ssh,omitempty"`
-
 	// (Attributes) Configure browser isolation behavior. Settable only for http rules with the action set to isolate. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	BisoAdminControls *BisoAdminControlsParameters `json:"bisoAdminControls,omitempty" tf:"biso_admin_controls,omitempty"`
@@ -1072,6 +1068,10 @@ type RuleSettingsParameters struct {
 	// (Attributes) Configure whether a copy of the HTTP request will be sent to storage when the rule matches. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ForensicCopy *ForensicCopyParameters `json:"forensicCopy,omitempty" tf:"forensic_copy,omitempty"`
+
+	// (Attributes) Forward matching HTTP requests to a Worker. Required for http rules with the action set to forward. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	Forward *ForwardParameters `json:"forward,omitempty" tf:"forward,omitempty"`
 
 	// (Boolean) Enable IPs in DNS resolver category blocks. The system blocks only domain name categories unless you enable this setting. Settable only for dns and dns_resolver rules.
 	// Enable IPs in DNS resolver category blocks. The system blocks only domain name categories unless you enable this setting. Settable only for `dns` and `dns_resolver` rules.
@@ -1262,9 +1262,9 @@ type TrustGatewayPolicyInitParameters struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
-	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
 	// Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to `true`.
-	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
 	// (String) Specify the rule description.
@@ -1316,9 +1316,9 @@ type TrustGatewayPolicyObservation struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
-	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
 	// Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to `true`.
-	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
 	// (String)
@@ -1404,9 +1404,9 @@ type TrustGatewayPolicyParameters struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
 	// (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
-	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
 	// Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to `true`.
-	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
@@ -1466,7 +1466,7 @@ type TrustGatewayPolicyParameters struct {
 type UntrustedCertInitParameters struct {
 
 	// (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
-	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
 	// Defines the action performed when an untrusted certificate seen. The default action an error with HTTP code 526.
 	// Available values: "pass_through", "block", "error".
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
@@ -1475,7 +1475,7 @@ type UntrustedCertInitParameters struct {
 type UntrustedCertObservation struct {
 
 	// (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
-	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
 	// Defines the action performed when an untrusted certificate seen. The default action an error with HTTP code 526.
 	// Available values: "pass_through", "block", "error".
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
@@ -1484,7 +1484,7 @@ type UntrustedCertObservation struct {
 type UntrustedCertParameters struct {
 
 	// (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
-	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+	// Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
 	// Defines the action performed when an untrusted certificate seen. The default action an error with HTTP code 526.
 	// Available values: "pass_through", "block", "error".
 	// +kubebuilder:validation:Optional

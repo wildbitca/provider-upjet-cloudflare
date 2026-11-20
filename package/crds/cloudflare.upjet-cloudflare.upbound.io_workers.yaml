@@ -35,7 +35,10 @@ spec:
     schema:
       openAPIV3Schema:
         description: Worker is the Schema for the Workers API. Accepted Permissions
-          Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
+          Individual Workers AdminIndividual Workers Content Read-OnlyIndividual Workers
+          EditorIndividual Workers Metadata Read-OnlyWorkers AdminWorkers Content
+          Read-OnlyWorkers EditorWorkers Metadata Read-OnlyWorkers Scripts ReadWorkers
+          Scripts WriteWorkers Tail Read
         properties:
           apiVersion:
             description: |-
@@ -429,8 +432,9 @@ spec:
                           mode:
                             description: |-
                               (String) Enables Smart Placement.
-                              Available values: "smart", "targeted".
                               Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+
+                              Targeted placement mode.
                               Available values: "smart", "targeted".
                             type: string
                           region:
@@ -880,8 +884,9 @@ spec:
                           mode:
                             description: |-
                               (String) Enables Smart Placement.
-                              Available values: "smart", "targeted".
                               Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+
+                              Targeted placement mode.
                               Available values: "smart", "targeted".
                             type: string
                           region:
@@ -1353,8 +1358,9 @@ spec:
                           mode:
                             description: |-
                               (String) Enables Smart Placement.
-                              Available values: "smart", "targeted".
                               Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+
+                              Targeted placement mode.
                               Available values: "smart", "targeted".
                             type: string
                           region:

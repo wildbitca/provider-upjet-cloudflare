@@ -19,6 +19,10 @@ type CustomDomainInitParameters struct {
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// (Boolean) Whether the configured hostname is routable for the domain. If disabled, then requests to the configured hostname will not be routed to the configured Worker. If disabled, then preview routing must be enabled, and only subdomains of the configured hostname will be routable.
+	// Whether the configured hostname is routable for the domain. If disabled, then requests to the configured hostname will not be routed to the configured Worker. If disabled, then preview routing must be enabled, and only subdomains of the configured hostname will be routable.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
 	// (String, Deprecated) Worker environment associated with the domain.
 	// Worker environment associated with the domain.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
@@ -26,6 +30,10 @@ type CustomDomainInitParameters struct {
 	// (String) Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
 	// Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// feature.app.example.com will be routed to the preview with slug my-feature, if such a preview exists. If preview routing is disabled, then hostname routing must be enabled.
+	// Whether previews are routable for the domain. If enabled, previews will be routable as subdomains of the configured hostname. For example, if the configured hostname is `app.example.com`, then requests to `my-feature.app.example.com` will be routed to the preview with slug `my-feature`, if such a preview exists. If preview routing is disabled, then hostname routing must be enabled.
+	PreviewsEnabled *bool `json:"previewsEnabled,omitempty" tf:"previews_enabled,omitempty"`
 
 	// (String) Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
 	// Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
@@ -50,6 +58,10 @@ type CustomDomainObservation struct {
 	// ID of the TLS certificate issued for the domain.
 	CertID *string `json:"certId,omitempty" tf:"cert_id,omitempty"`
 
+	// (Boolean) Whether the configured hostname is routable for the domain. If disabled, then requests to the configured hostname will not be routed to the configured Worker. If disabled, then preview routing must be enabled, and only subdomains of the configured hostname will be routable.
+	// Whether the configured hostname is routable for the domain. If disabled, then requests to the configured hostname will not be routed to the configured Worker. If disabled, then preview routing must be enabled, and only subdomains of the configured hostname will be routable.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
 	// (String, Deprecated) Worker environment associated with the domain.
 	// Worker environment associated with the domain.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
@@ -60,6 +72,10 @@ type CustomDomainObservation struct {
 
 	// (String) Immutable ID of the domain.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// feature.app.example.com will be routed to the preview with slug my-feature, if such a preview exists. If preview routing is disabled, then hostname routing must be enabled.
+	// Whether previews are routable for the domain. If enabled, previews will be routable as subdomains of the configured hostname. For example, if the configured hostname is `app.example.com`, then requests to `my-feature.app.example.com` will be routed to the preview with slug `my-feature`, if such a preview exists. If preview routing is disabled, then hostname routing must be enabled.
+	PreviewsEnabled *bool `json:"previewsEnabled,omitempty" tf:"previews_enabled,omitempty"`
 
 	// (String) Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
 	// Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
@@ -81,6 +97,11 @@ type CustomDomainParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
+	// (Boolean) Whether the configured hostname is routable for the domain. If disabled, then requests to the configured hostname will not be routed to the configured Worker. If disabled, then preview routing must be enabled, and only subdomains of the configured hostname will be routable.
+	// Whether the configured hostname is routable for the domain. If disabled, then requests to the configured hostname will not be routed to the configured Worker. If disabled, then preview routing must be enabled, and only subdomains of the configured hostname will be routable.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
 	// (String, Deprecated) Worker environment associated with the domain.
 	// Worker environment associated with the domain.
 	// +kubebuilder:validation:Optional
@@ -90,6 +111,11 @@ type CustomDomainParameters struct {
 	// Hostname of the domain. Can be either the zone apex or a subdomain of the zone. Requests to this hostname will be routed to the configured Worker.
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// feature.app.example.com will be routed to the preview with slug my-feature, if such a preview exists. If preview routing is disabled, then hostname routing must be enabled.
+	// Whether previews are routable for the domain. If enabled, previews will be routable as subdomains of the configured hostname. For example, if the configured hostname is `app.example.com`, then requests to `my-feature.app.example.com` will be routed to the preview with slug `my-feature`, if such a preview exists. If preview routing is disabled, then hostname routing must be enabled.
+	// +kubebuilder:validation:Optional
+	PreviewsEnabled *bool `json:"previewsEnabled,omitempty" tf:"previews_enabled,omitempty"`
 
 	// (String) Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.
 	// Name of the Worker associated with the domain. Requests to the configured hostname will be routed to this Worker.

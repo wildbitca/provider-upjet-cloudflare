@@ -128,6 +128,7 @@ spec:
                     type: number
                   tlsSettings:
                     description: (Attributes) TLS settings for a connectivity service.
+                      (see below for nested schema)
                     properties:
                       certVerificationMode:
                         description: |-
@@ -137,6 +138,19 @@ spec:
                           - `"verify_full"` — verify certificate chain and hostname (default)
                           - `"verify_ca"` — verify certificate chain only, skip hostname check
                           - `"disabled"` — do not verify the server certificate at all
+
+                          `disabled` cannot be combined with `certificate_authority`: a custom CA is
+                          only used to verify the server certificate.
+                        type: string
+                      certificateAuthority:
+                        description: |-
+                          (String) UUID of the custom CA certificate or chain.
+                          UUID of the custom CA certificate or chain.
+                        type: string
+                      clientCertificate:
+                        description: |-
+                          (String) UUID of the mTLS client certificate and private key.
+                          UUID of the mTLS client certificate and private key.
                         type: string
                     type: object
                   type:
@@ -214,6 +228,7 @@ spec:
                     type: number
                   tlsSettings:
                     description: (Attributes) TLS settings for a connectivity service.
+                      (see below for nested schema)
                     properties:
                       certVerificationMode:
                         description: |-
@@ -223,6 +238,19 @@ spec:
                           - `"verify_full"` — verify certificate chain and hostname (default)
                           - `"verify_ca"` — verify certificate chain only, skip hostname check
                           - `"disabled"` — do not verify the server certificate at all
+
+                          `disabled` cannot be combined with `certificate_authority`: a custom CA is
+                          only used to verify the server certificate.
+                        type: string
+                      certificateAuthority:
+                        description: |-
+                          (String) UUID of the custom CA certificate or chain.
+                          UUID of the custom CA certificate or chain.
+                        type: string
+                      clientCertificate:
+                        description: |-
+                          (String) UUID of the mTLS client certificate and private key.
+                          UUID of the mTLS client certificate and private key.
                         type: string
                     type: object
                   type:
@@ -404,6 +432,7 @@ spec:
                     type: number
                   tlsSettings:
                     description: (Attributes) TLS settings for a connectivity service.
+                      (see below for nested schema)
                     properties:
                       certVerificationMode:
                         description: |-
@@ -413,6 +442,19 @@ spec:
                           - `"verify_full"` — verify certificate chain and hostname (default)
                           - `"verify_ca"` — verify certificate chain only, skip hostname check
                           - `"disabled"` — do not verify the server certificate at all
+
+                          `disabled` cannot be combined with `certificate_authority`: a custom CA is
+                          only used to verify the server certificate.
+                        type: string
+                      certificateAuthority:
+                        description: |-
+                          (String) UUID of the custom CA certificate or chain.
+                          UUID of the custom CA certificate or chain.
+                        type: string
+                      clientCertificate:
+                        description: |-
+                          (String) UUID of the mTLS client certificate and private key.
+                          UUID of the mTLS client certificate and private key.
                         type: string
                     type: object
                   type:

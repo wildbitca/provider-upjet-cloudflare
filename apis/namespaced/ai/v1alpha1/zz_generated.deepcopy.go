@@ -1548,6 +1548,11 @@ func (in *SearchInstanceInitParameters) DeepCopyInto(out *SearchInstanceInitPara
 		*out = new(MetadataInitParameters)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.Namespace != nil {
+		in, out := &in.Namespace, &out.Namespace
+		*out = new(string)
+		**out = **in
+	}
 	if in.Paused != nil {
 		in, out := &in.Paused, &out.Paused
 		*out = new(bool)
@@ -2018,6 +2023,11 @@ func (in *SearchInstanceParameters) DeepCopyInto(out *SearchInstanceParameters) 
 		in, out := &in.Metadata, &out.Metadata
 		*out = new(MetadataParameters)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.Namespace != nil {
+		in, out := &in.Namespace, &out.Namespace
+		*out = new(string)
+		**out = **in
 	}
 	if in.Paused != nil {
 		in, out := &in.Paused, &out.Paused

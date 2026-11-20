@@ -84,15 +84,25 @@ spec:
                   priority:
                     description: (Number)
                     type: number
+                  provisionedDownloadKbps:
+                    description: |-
+                      (Number) Provisioned download rate of the WAN circuit in kilobits per second.
+                      Provisioned download rate of the WAN circuit in kilobits per second.
+                    type: number
+                  provisionedUploadKbps:
+                    description: |-
+                      (Number) Provisioned upload rate of the WAN circuit in kilobits per second.
+                      Provisioned upload rate of the WAN circuit in kilobits per second.
+                    type: number
                   siteId:
                     description: |-
                       (String) Identifier
                       Identifier
                     type: string
                   staticAddressing:
-                    description: (Attributes)  if omitted, use DHCP. Submit secondary_address
-                      when site is in high availability mode. (see below for nested
-                      schema)
+                    description: (Attributes) Static addressing configuration for
+                      a WAN. Omit to use DHCP. Submit secondary_address when the site
+                      is in high availability mode. (see below for nested schema)
                     properties:
                       address:
                         description: |-
@@ -108,6 +118,11 @@ spec:
                         description: |-
                           (String) A valid CIDR notation representing an IP range.
                           A valid CIDR notation representing an IP range.
+                        type: string
+                      secondaryGatewayAddress:
+                        description: |-
+                          (String) Gateway address for the secondary connector of a high availability site.
+                          Gateway address for the secondary connector of a high availability site.
                         type: string
                     type: object
                   vlanTag:
@@ -153,15 +168,25 @@ spec:
                   priority:
                     description: (Number)
                     type: number
+                  provisionedDownloadKbps:
+                    description: |-
+                      (Number) Provisioned download rate of the WAN circuit in kilobits per second.
+                      Provisioned download rate of the WAN circuit in kilobits per second.
+                    type: number
+                  provisionedUploadKbps:
+                    description: |-
+                      (Number) Provisioned upload rate of the WAN circuit in kilobits per second.
+                      Provisioned upload rate of the WAN circuit in kilobits per second.
+                    type: number
                   siteId:
                     description: |-
                       (String) Identifier
                       Identifier
                     type: string
                   staticAddressing:
-                    description: (Attributes)  if omitted, use DHCP. Submit secondary_address
-                      when site is in high availability mode. (see below for nested
-                      schema)
+                    description: (Attributes) Static addressing configuration for
+                      a WAN. Omit to use DHCP. Submit secondary_address when the site
+                      is in high availability mode. (see below for nested schema)
                     properties:
                       address:
                         description: |-
@@ -177,6 +202,11 @@ spec:
                         description: |-
                           (String) A valid CIDR notation representing an IP range.
                           A valid CIDR notation representing an IP range.
+                        type: string
+                      secondaryGatewayAddress:
+                        description: |-
+                          (String) Gateway address for the secondary connector of a high availability site.
+                          Gateway address for the secondary connector of a high availability site.
                         type: string
                     type: object
                   vlanTag:
@@ -288,15 +318,25 @@ spec:
                   priority:
                     description: (Number)
                     type: number
+                  provisionedDownloadKbps:
+                    description: |-
+                      (Number) Provisioned download rate of the WAN circuit in kilobits per second.
+                      Provisioned download rate of the WAN circuit in kilobits per second.
+                    type: number
+                  provisionedUploadKbps:
+                    description: |-
+                      (Number) Provisioned upload rate of the WAN circuit in kilobits per second.
+                      Provisioned upload rate of the WAN circuit in kilobits per second.
+                    type: number
                   siteId:
                     description: |-
                       (String) Identifier
                       Identifier
                     type: string
                   staticAddressing:
-                    description: (Attributes)  if omitted, use DHCP. Submit secondary_address
-                      when site is in high availability mode. (see below for nested
-                      schema)
+                    description: (Attributes) Static addressing configuration for
+                      a WAN. Omit to use DHCP. Submit secondary_address when the site
+                      is in high availability mode. (see below for nested schema)
                     properties:
                       address:
                         description: |-
@@ -312,6 +352,11 @@ spec:
                         description: |-
                           (String) A valid CIDR notation representing an IP range.
                           A valid CIDR notation representing an IP range.
+                        type: string
+                      secondaryGatewayAddress:
+                        description: |-
+                          (String) Gateway address for the secondary connector of a high availability site.
+                          Gateway address for the secondary connector of a high availability site.
                         type: string
                     type: object
                   vlanTag:

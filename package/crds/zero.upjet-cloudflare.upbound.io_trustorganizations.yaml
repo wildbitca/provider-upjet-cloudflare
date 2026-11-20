@@ -116,6 +116,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  disableEndUserAppCreation:
+                    description: |-
+                      (Boolean) Whether creation of end user applications is disabled for this organization.
+                      Whether creation of end user applications is disabled for this organization.
+                    type: boolean
                   isUiReadOnly:
                     description: |-
                       Only in the Dashboard, regardless of user permission.
@@ -346,6 +351,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  disableEndUserAppCreation:
+                    description: |-
+                      (Boolean) Whether creation of end user applications is disabled for this organization.
+                      Whether creation of end user applications is disabled for this organization.
+                    type: boolean
                   isUiReadOnly:
                     description: |-
                       Only in the Dashboard, regardless of user permission.
@@ -654,6 +664,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  disableEndUserAppCreation:
+                    description: |-
+                      (Boolean) Whether creation of end user applications is disabled for this organization.
+                      Whether creation of end user applications is disabled for this organization.
+                    type: boolean
                   id:
                     type: string
                   isUiReadOnly:

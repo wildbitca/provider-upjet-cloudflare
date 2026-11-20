@@ -15,9 +15,9 @@ import (
 
 type TieredCachingInitParameters struct {
 
-	// (String) Enables Tiered Caching.
+	// (String) Enables or disables Tiered Cache.
 	// Available values: "on", "off".
-	// Enables Tiered Caching.
+	// Enables or disables Tiered Cache.
 	// Available values: "on", "off".
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 
@@ -39,9 +39,9 @@ type TieredCachingObservation struct {
 	// Last time this setting was modified.
 	ModifiedOn *string `json:"modifiedOn,omitempty" tf:"modified_on,omitempty"`
 
-	// (String) Enables Tiered Caching.
+	// (String) Enables or disables Tiered Cache.
 	// Available values: "on", "off".
-	// Enables Tiered Caching.
+	// Enables or disables Tiered Cache.
 	// Available values: "on", "off".
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 
@@ -52,9 +52,9 @@ type TieredCachingObservation struct {
 
 type TieredCachingParameters struct {
 
-	// (String) Enables Tiered Caching.
+	// (String) Enables or disables Tiered Cache.
 	// Available values: "on", "off".
-	// Enables Tiered Caching.
+	// Enables or disables Tiered Cache.
 	// Available values: "on", "off".
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`

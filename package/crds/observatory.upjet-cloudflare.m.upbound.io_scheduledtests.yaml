@@ -34,8 +34,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: ScheduledTest is the Schema for the ScheduledTests API. Accepted
-          Permissions Zone Settings ReadZone Settings Write
+        description: ScheduledTest is the Schema for the ScheduledTests API. <no value>
         properties:
           apiVersion:
             description: |-
@@ -61,26 +60,19 @@ spec:
                 properties:
                   frequency:
                     description: |-
-                      (String) The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
-                      Available values: "DAILY", "WEEKLY".
                       The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
                       Available values: "DAILY", "WEEKLY".
                     type: string
                   region:
                     description: |-
-                      east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
                       A test region.
                       Available values: "asia-east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
                     type: string
                   url:
-                    description: |-
-                      (String) A URL.
-                      A URL.
+                    description: A URL.
                     type: string
                   zoneId:
-                    description: |-
-                      (String) Identifier.
-                      Identifier.
+                    description: Identifier.
                     type: string
                 type: object
               initProvider:
@@ -98,26 +90,19 @@ spec:
                 properties:
                   frequency:
                     description: |-
-                      (String) The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
-                      Available values: "DAILY", "WEEKLY".
                       The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
                       Available values: "DAILY", "WEEKLY".
                     type: string
                   region:
                     description: |-
-                      east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
                       A test region.
                       Available values: "asia-east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
                     type: string
                   url:
-                    description: |-
-                      (String) A URL.
-                      A URL.
+                    description: A URL.
                     type: string
                   zoneId:
-                    description: |-
-                      (String) Identifier.
-                      Identifier.
+                    description: Identifier.
                     type: string
                 type: object
               managementPolicies:
@@ -194,264 +179,171 @@ spec:
                 properties:
                   frequency:
                     description: |-
-                      (String) The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
-                      Available values: "DAILY", "WEEKLY".
                       The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
                       Available values: "DAILY", "WEEKLY".
                     type: string
                   id:
-                    description: (String) A URL.
                     type: string
                   region:
                     description: |-
-                      east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
                       A test region.
                       Available values: "asia-east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
                     type: string
                   schedule:
-                    description: (Attributes) The test schedule. (see below for nested
-                      schema)
                     properties:
                       frequency:
                         description: |-
-                          (String) The frequency of the scheduled test. Defaults to WEEKLY for free plans, DAILY for paid plans.
-                          Available values: "DAILY", "WEEKLY".
                           The frequency of the test.
                           Available values: "DAILY", "WEEKLY".
                         type: string
                       region:
                         description: |-
-                          east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
                           A test region.
                           Available values: "asia-east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
                         type: string
                       url:
-                        description: |-
-                          (String) A URL.
-                          A URL.
+                        description: A URL.
                         type: string
                     type: object
                   test:
-                    description: (Attributes) (see below for nested schema)
                     properties:
                       date:
-                        description: (String)
                         type: string
                       desktopReport:
-                        description: (Attributes) The Lighthouse report. (see below
-                          for nested schema)
                         properties:
                           cls:
-                            description: |-
-                              (Number) Cumulative Layout Shift.
-                              Cumulative Layout Shift.
+                            description: Cumulative Layout Shift.
                             type: number
                           deviceType:
                             description: |-
-                              (String) The type of device.
-                              Available values: "DESKTOP", "MOBILE".
                               The type of device.
                               Available values: "DESKTOP", "MOBILE".
                             type: string
                           error:
-                            description: (Attributes) (see below for nested schema)
                             properties:
                               code:
                                 description: |-
-                                  (String) The error code of the Lighthouse result.
-                                  Available values: "NOT_REACHABLE", "DNS_FAILURE", "NOT_HTML", "LIGHTHOUSE_TIMEOUT", "UNKNOWN".
                                   The error code of the Lighthouse result.
                                   Available values: "NOT_REACHABLE", "DNS_FAILURE", "NOT_HTML", "LIGHTHOUSE_TIMEOUT", "UNKNOWN".
                                 type: string
                               detail:
-                                description: |-
-                                  (String) Detailed error message.
-                                  Detailed error message.
+                                description: Detailed error message.
                                 type: string
                               finalDisplayedUrl:
-                                description: |-
-                                  (String) The final URL displayed to the user.
-                                  The final URL displayed to the user.
+                                description: The final URL displayed to the user.
                                 type: string
                             type: object
                           fcp:
-                            description: |-
-                              (Number) First Contentful Paint.
-                              First Contentful Paint.
+                            description: First Contentful Paint.
                             type: number
                           jsonReportUrl:
-                            description: |-
-                              (String) The URL to the full Lighthouse JSON report.
-                              The URL to the full Lighthouse JSON report.
+                            description: The URL to the full Lighthouse JSON report.
                             type: string
                           lcp:
-                            description: |-
-                              (Number) Largest Contentful Paint.
-                              Largest Contentful Paint.
+                            description: Largest Contentful Paint.
                             type: number
                           performanceScore:
-                            description: |-
-                              (Number) The Lighthouse performance score.
-                              The Lighthouse performance score.
+                            description: The Lighthouse performance score.
                             type: number
                           si:
-                            description: |-
-                              (Number) Speed Index.
-                              Speed Index.
+                            description: Speed Index.
                             type: number
                           state:
                             description: |-
-                              (String) The state of the Lighthouse report.
-                              Available values: "RUNNING", "COMPLETE", "FAILED".
                               The state of the Lighthouse report.
                               Available values: "RUNNING", "COMPLETE", "FAILED".
                             type: string
                           tbt:
-                            description: |-
-                              (Number) Total Blocking Time.
-                              Total Blocking Time.
+                            description: Total Blocking Time.
                             type: number
                           ttfb:
-                            description: |-
-                              (Number) Time To First Byte.
-                              Time To First Byte.
+                            description: Time To First Byte.
                             type: number
                           tti:
-                            description: |-
-                              (Number) Time To Interactive.
-                              Time To Interactive.
+                            description: Time To Interactive.
                             type: number
                         type: object
                       id:
-                        description: |-
-                          (String) A URL.
-                          UUID.
+                        description: UUID.
                         type: string
                       mobileReport:
-                        description: (Attributes) The Lighthouse report. (see below
-                          for nested schema)
                         properties:
                           cls:
-                            description: |-
-                              (Number) Cumulative Layout Shift.
-                              Cumulative Layout Shift.
+                            description: Cumulative Layout Shift.
                             type: number
                           deviceType:
                             description: |-
-                              (String) The type of device.
-                              Available values: "DESKTOP", "MOBILE".
                               The type of device.
                               Available values: "DESKTOP", "MOBILE".
                             type: string
                           error:
-                            description: (Attributes) (see below for nested schema)
                             properties:
                               code:
                                 description: |-
-                                  (String) The error code of the Lighthouse result.
-                                  Available values: "NOT_REACHABLE", "DNS_FAILURE", "NOT_HTML", "LIGHTHOUSE_TIMEOUT", "UNKNOWN".
                                   The error code of the Lighthouse result.
                                   Available values: "NOT_REACHABLE", "DNS_FAILURE", "NOT_HTML", "LIGHTHOUSE_TIMEOUT", "UNKNOWN".
                                 type: string
                               detail:
-                                description: |-
-                                  (String) Detailed error message.
-                                  Detailed error message.
+                                description: Detailed error message.
                                 type: string
                               finalDisplayedUrl:
-                                description: |-
-                                  (String) The final URL displayed to the user.
-                                  The final URL displayed to the user.
+                                description: The final URL displayed to the user.
                                 type: string
                             type: object
                           fcp:
-                            description: |-
-                              (Number) First Contentful Paint.
-                              First Contentful Paint.
+                            description: First Contentful Paint.
                             type: number
                           jsonReportUrl:
-                            description: |-
-                              (String) The URL to the full Lighthouse JSON report.
-                              The URL to the full Lighthouse JSON report.
+                            description: The URL to the full Lighthouse JSON report.
                             type: string
                           lcp:
-                            description: |-
-                              (Number) Largest Contentful Paint.
-                              Largest Contentful Paint.
+                            description: Largest Contentful Paint.
                             type: number
                           performanceScore:
-                            description: |-
-                              (Number) The Lighthouse performance score.
-                              The Lighthouse performance score.
+                            description: The Lighthouse performance score.
                             type: number
                           si:
-                            description: |-
-                              (Number) Speed Index.
-                              Speed Index.
+                            description: Speed Index.
                             type: number
                           state:
                             description: |-
-                              (String) The state of the Lighthouse report.
-                              Available values: "RUNNING", "COMPLETE", "FAILED".
                               The state of the Lighthouse report.
                               Available values: "RUNNING", "COMPLETE", "FAILED".
                             type: string
                           tbt:
-                            description: |-
-                              (Number) Total Blocking Time.
-                              Total Blocking Time.
+                            description: Total Blocking Time.
                             type: number
                           ttfb:
-                            description: |-
-                              (Number) Time To First Byte.
-                              Time To First Byte.
+                            description: Time To First Byte.
                             type: number
                           tti:
-                            description: |-
-                              (Number) Time To Interactive.
-                              Time To Interactive.
+                            description: Time To Interactive.
                             type: number
                         type: object
                       region:
-                        description: east1", "asia-northeast1", "asia-northeast2",
-                          "asia-south1", "asia-southeast1", "australia-southeast1",
-                          "europe-north1", "europe-southwest1", "europe-west1", "europe-west2",
-                          "europe-west3", "europe-west4", "europe-west8", "europe-west9",
-                          "me-west1", "southamerica-east1", "us-central1", "us-east1",
-                          "us-east4", "us-south1", "us-west1".
                         properties:
                           label:
-                            description: (String)
                             type: string
                           value:
                             description: |-
-                              east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
                               A test region.
                               Available values: "asia-east1", "asia-northeast1", "asia-northeast2", "asia-south1", "asia-southeast1", "australia-southeast1", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west8", "europe-west9", "me-west1", "southamerica-east1", "us-central1", "us-east1", "us-east4", "us-south1", "us-west1".
                             type: string
                         type: object
                       scheduleFrequency:
                         description: |-
-                          (String) The frequency of the test.
-                          Available values: "DAILY", "WEEKLY".
                           The frequency of the test.
                           Available values: "DAILY", "WEEKLY".
                         type: string
                       url:
-                        description: |-
-                          (String) A URL.
-                          A URL.
+                        description: A URL.
                         type: string
                     type: object
                   url:
-                    description: |-
-                      (String) A URL.
-                      A URL.
+                    description: A URL.
                     type: string
                   zoneId:
-                    description: |-
-                      (String) Identifier.
-                      Identifier.
+                    description: Identifier.
                     type: string
                 type: object
               conditions:

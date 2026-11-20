@@ -109,6 +109,8 @@ spec:
                         description: |-
                           (String) Common Name that is protected by the certificate.
                           Common Name that is protected by the certificate.
+
+                          Certificate Common Name. This may include one or more variables in the ${ } notation. Only ${serial_number} and ${hostname} are valid variables.
                         type: string
                       complianceStatus:
                         description: |-
@@ -160,6 +162,8 @@ spec:
                         description: |-
                           (String) API UUID.
                           List ID.
+
+                          UUID of Access List.
                         type: string
                       infected:
                         description: |-
@@ -209,8 +213,9 @@ spec:
                       operatingSystem:
                         description: |-
                           (String) Operating system.
-                          Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
                           Operating system.
+
+                          Operating System.
                           Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
                         type: string
                       operationalState:
@@ -223,8 +228,9 @@ spec:
                       operator:
                         description: |-
                           (String) Operator.
-                          Available values: "<", "<=", ">", ">=", "==".
                           Operator.
+
+                          Operator to evaluate risk_level or eid_last_seen.
                           Available values: "<", "<=", ">", ">=", "==".
                         type: string
                       os:
@@ -256,6 +262,8 @@ spec:
                         description: |-
                           (String) File path.
                           File path.
+
+                          Path for the application.
                         type: string
                       requireAll:
                         description: |-
@@ -324,6 +332,8 @@ spec:
                         description: |-
                           (String) Version of OS.
                           Version of OS.
+
+                          Version.
                         type: string
                       versionOperator:
                         description: |-
@@ -426,6 +436,8 @@ spec:
                         description: |-
                           (String) Common Name that is protected by the certificate.
                           Common Name that is protected by the certificate.
+
+                          Certificate Common Name. This may include one or more variables in the ${ } notation. Only ${serial_number} and ${hostname} are valid variables.
                         type: string
                       complianceStatus:
                         description: |-
@@ -477,6 +489,8 @@ spec:
                         description: |-
                           (String) API UUID.
                           List ID.
+
+                          UUID of Access List.
                         type: string
                       infected:
                         description: |-
@@ -526,8 +540,9 @@ spec:
                       operatingSystem:
                         description: |-
                           (String) Operating system.
-                          Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
                           Operating system.
+
+                          Operating System.
                           Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
                         type: string
                       operationalState:
@@ -540,8 +555,9 @@ spec:
                       operator:
                         description: |-
                           (String) Operator.
-                          Available values: "<", "<=", ">", ">=", "==".
                           Operator.
+
+                          Operator to evaluate risk_level or eid_last_seen.
                           Available values: "<", "<=", ">", ">=", "==".
                         type: string
                       os:
@@ -573,6 +589,8 @@ spec:
                         description: |-
                           (String) File path.
                           File path.
+
+                          Path for the application.
                         type: string
                       requireAll:
                         description: |-
@@ -641,6 +659,8 @@ spec:
                         description: |-
                           (String) Version of OS.
                           Version of OS.
+
+                          Version.
                         type: string
                       versionOperator:
                         description: |-
@@ -811,6 +831,8 @@ spec:
                         description: |-
                           (String) Common Name that is protected by the certificate.
                           Common Name that is protected by the certificate.
+
+                          Certificate Common Name. This may include one or more variables in the ${ } notation. Only ${serial_number} and ${hostname} are valid variables.
                         type: string
                       complianceStatus:
                         description: |-
@@ -862,6 +884,8 @@ spec:
                         description: |-
                           (String) API UUID.
                           List ID.
+
+                          UUID of Access List.
                         type: string
                       infected:
                         description: |-
@@ -911,8 +935,9 @@ spec:
                       operatingSystem:
                         description: |-
                           (String) Operating system.
-                          Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
                           Operating system.
+
+                          Operating System.
                           Available values: "windows", "linux", "mac", "android", "ios", "chromeos".
                         type: string
                       operationalState:
@@ -925,8 +950,9 @@ spec:
                       operator:
                         description: |-
                           (String) Operator.
-                          Available values: "<", "<=", ">", ">=", "==".
                           Operator.
+
+                          Operator to evaluate risk_level or eid_last_seen.
                           Available values: "<", "<=", ">", ">=", "==".
                         type: string
                       os:
@@ -958,6 +984,8 @@ spec:
                         description: |-
                           (String) File path.
                           File path.
+
+                          Path for the application.
                         type: string
                       requireAll:
                         description: |-
@@ -1026,6 +1054,8 @@ spec:
                         description: |-
                           (String) Version of OS.
                           Version of OS.
+
+                          Version.
                         type: string
                       versionOperator:
                         description: |-

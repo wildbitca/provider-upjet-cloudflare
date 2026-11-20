@@ -78,11 +78,6 @@ spec:
                           (Boolean) Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
                           Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
                         type: boolean
-                      foundationDns:
-                        description: |-
-                          (Boolean) Whether to enable Foundation DNS Advanced Nameservers on the zone.
-                          Whether to enable Foundation DNS Advanced Nameservers on the zone.
-                        type: boolean
                       internalDns:
                         description: (Attributes) Settings for this internal zone.
                           (see below for nested schema)
@@ -106,9 +101,9 @@ spec:
                           type:
                             description: |-
                               (String) Nameserver type
-                              Available values: "cloudflare.standard", "cloudflare.standard.random", "custom.account", "custom.tenant".
+                              Available values: "cloudflare.standard", "cloudflare.advanced", "cloudflare.standard.random", "custom.account", "custom.tenant".
                               Nameserver type
-                              Available values: "cloudflare.standard", "cloudflare.standard.random", "custom.account", "custom.tenant".
+                              Available values: "cloudflare.standard", "cloudflare.advanced", "cloudflare.standard.random", "custom.account", "custom.tenant".
                             type: string
                         type: object
                       nsTtl:
@@ -202,11 +197,6 @@ spec:
                           (Boolean) Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
                           Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
                         type: boolean
-                      foundationDns:
-                        description: |-
-                          (Boolean) Whether to enable Foundation DNS Advanced Nameservers on the zone.
-                          Whether to enable Foundation DNS Advanced Nameservers on the zone.
-                        type: boolean
                       internalDns:
                         description: (Attributes) Settings for this internal zone.
                           (see below for nested schema)
@@ -230,9 +220,9 @@ spec:
                           type:
                             description: |-
                               (String) Nameserver type
-                              Available values: "cloudflare.standard", "cloudflare.standard.random", "custom.account", "custom.tenant".
+                              Available values: "cloudflare.standard", "cloudflare.advanced", "cloudflare.standard.random", "custom.account", "custom.tenant".
                               Nameserver type
-                              Available values: "cloudflare.standard", "cloudflare.standard.random", "custom.account", "custom.tenant".
+                              Available values: "cloudflare.standard", "cloudflare.advanced", "cloudflare.standard.random", "custom.account", "custom.tenant".
                             type: string
                         type: object
                       nsTtl:
@@ -383,11 +373,6 @@ spec:
                           (Boolean) Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
                           Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
                         type: boolean
-                      foundationDns:
-                        description: |-
-                          (Boolean) Whether to enable Foundation DNS Advanced Nameservers on the zone.
-                          Whether to enable Foundation DNS Advanced Nameservers on the zone.
-                        type: boolean
                       internalDns:
                         description: (Attributes) Settings for this internal zone.
                           (see below for nested schema)
@@ -411,9 +396,9 @@ spec:
                           type:
                             description: |-
                               (String) Nameserver type
-                              Available values: "cloudflare.standard", "cloudflare.standard.random", "custom.account", "custom.tenant".
+                              Available values: "cloudflare.standard", "cloudflare.advanced", "cloudflare.standard.random", "custom.account", "custom.tenant".
                               Nameserver type
-                              Available values: "cloudflare.standard", "cloudflare.standard.random", "custom.account", "custom.tenant".
+                              Available values: "cloudflare.standard", "cloudflare.advanced", "cloudflare.standard.random", "custom.account", "custom.tenant".
                             type: string
                         type: object
                       nsTtl:

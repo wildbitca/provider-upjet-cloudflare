@@ -17,14 +17,28 @@ type TrustDevicePostureIntegrationConfigInitParameters struct {
 
 	// (String) The Workspace One API URL provided in the Workspace One Admin Dashboard.
 	// The Workspace One API URL provided in the Workspace One Admin Dashboard.
+	//
+	// The Crowdstrike API URL.
+	//
+	// The Uptycs API URL.
+	//
+	// The Tanium API URL.
+	//
+	// The SentinelOne S2S API URL.
+	//
+	// The Custom Device Posture Integration  API URL.
 	APIURL *string `json:"apiUrl,omitempty" tf:"api_url,omitempty"`
 
 	// Access-Client-ID header when hitting the api_url.
 	// If present, this id will be passed in the `CF-Access-Client-ID` header when hitting the `api_url`.
+	//
+	// This id will be passed in the `CF-Access-Client-ID` header when hitting the `api_url`.
 	AccessClientID *string `json:"accessClientId,omitempty" tf:"access_client_id,omitempty"`
 
 	// Access-Client-Secret header when hitting the api_url.
 	// If present, this secret will be passed in the `CF-Access-Client-Secret` header when hitting the `api_url`.
+	//
+	// This secret will be passed in the `CF-Access-Client-Secret` header when hitting the `api_url`.
 	AccessClientSecretSecretRef *v2.SecretKeySelector `json:"accessClientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) The Workspace One Authorization URL depending on your region.
@@ -33,6 +47,12 @@ type TrustDevicePostureIntegrationConfigInitParameters struct {
 
 	// (String) The Workspace One client ID provided in the Workspace One Admin Dashboard.
 	// The Workspace One client ID provided in the Workspace One Admin Dashboard.
+	//
+	// The Crowdstrike client ID.
+	//
+	// The Intune client ID.
+	//
+	// The Kolide client ID.
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
 
 	// (String, Sensitive) The Uptycs client secret.
@@ -41,10 +61,26 @@ type TrustDevicePostureIntegrationConfigInitParameters struct {
 
 	// (String, Sensitive) The Workspace One client secret provided in the Workspace One Admin Dashboard.
 	// The Workspace One client secret provided in the Workspace One Admin Dashboard.
+	//
+	// The Crowdstrike client secret.
+	//
+	// The Uptycs client secret.
+	//
+	// The Intune client secret.
+	//
+	// The Kolide client secret.
+	//
+	// The Tanium client secret.
+	//
+	// The SentinelOne S2S client secret.
 	ClientSecretSecretRef *v2.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) The Crowdstrike customer ID.
 	// The Crowdstrike customer ID.
+	//
+	// The Uptycs customer ID.
+	//
+	// The Intune customer ID.
 	CustomerID *string `json:"customerId,omitempty" tf:"customer_id,omitempty"`
 }
 
@@ -52,10 +88,22 @@ type TrustDevicePostureIntegrationConfigObservation struct {
 
 	// (String) The Workspace One API URL provided in the Workspace One Admin Dashboard.
 	// The Workspace One API URL provided in the Workspace One Admin Dashboard.
+	//
+	// The Crowdstrike API URL.
+	//
+	// The Uptycs API URL.
+	//
+	// The Tanium API URL.
+	//
+	// The SentinelOne S2S API URL.
+	//
+	// The Custom Device Posture Integration  API URL.
 	APIURL *string `json:"apiUrl,omitempty" tf:"api_url,omitempty"`
 
 	// Access-Client-ID header when hitting the api_url.
 	// If present, this id will be passed in the `CF-Access-Client-ID` header when hitting the `api_url`.
+	//
+	// This id will be passed in the `CF-Access-Client-ID` header when hitting the `api_url`.
 	AccessClientID *string `json:"accessClientId,omitempty" tf:"access_client_id,omitempty"`
 
 	// (String) The Workspace One Authorization URL depending on your region.
@@ -64,10 +112,20 @@ type TrustDevicePostureIntegrationConfigObservation struct {
 
 	// (String) The Workspace One client ID provided in the Workspace One Admin Dashboard.
 	// The Workspace One client ID provided in the Workspace One Admin Dashboard.
+	//
+	// The Crowdstrike client ID.
+	//
+	// The Intune client ID.
+	//
+	// The Kolide client ID.
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
 
 	// (String) The Crowdstrike customer ID.
 	// The Crowdstrike customer ID.
+	//
+	// The Uptycs customer ID.
+	//
+	// The Intune customer ID.
 	CustomerID *string `json:"customerId,omitempty" tf:"customer_id,omitempty"`
 }
 
@@ -75,16 +133,30 @@ type TrustDevicePostureIntegrationConfigParameters struct {
 
 	// (String) The Workspace One API URL provided in the Workspace One Admin Dashboard.
 	// The Workspace One API URL provided in the Workspace One Admin Dashboard.
+	//
+	// The Crowdstrike API URL.
+	//
+	// The Uptycs API URL.
+	//
+	// The Tanium API URL.
+	//
+	// The SentinelOne S2S API URL.
+	//
+	// The Custom Device Posture Integration  API URL.
 	// +kubebuilder:validation:Optional
 	APIURL *string `json:"apiUrl,omitempty" tf:"api_url,omitempty"`
 
 	// Access-Client-ID header when hitting the api_url.
 	// If present, this id will be passed in the `CF-Access-Client-ID` header when hitting the `api_url`.
+	//
+	// This id will be passed in the `CF-Access-Client-ID` header when hitting the `api_url`.
 	// +kubebuilder:validation:Optional
 	AccessClientID *string `json:"accessClientId,omitempty" tf:"access_client_id,omitempty"`
 
 	// Access-Client-Secret header when hitting the api_url.
 	// If present, this secret will be passed in the `CF-Access-Client-Secret` header when hitting the `api_url`.
+	//
+	// This secret will be passed in the `CF-Access-Client-Secret` header when hitting the `api_url`.
 	// +kubebuilder:validation:Optional
 	AccessClientSecretSecretRef *v2.SecretKeySelector `json:"accessClientSecretSecretRef,omitempty" tf:"-"`
 
@@ -95,6 +167,12 @@ type TrustDevicePostureIntegrationConfigParameters struct {
 
 	// (String) The Workspace One client ID provided in the Workspace One Admin Dashboard.
 	// The Workspace One client ID provided in the Workspace One Admin Dashboard.
+	//
+	// The Crowdstrike client ID.
+	//
+	// The Intune client ID.
+	//
+	// The Kolide client ID.
 	// +kubebuilder:validation:Optional
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
 
@@ -105,11 +183,27 @@ type TrustDevicePostureIntegrationConfigParameters struct {
 
 	// (String, Sensitive) The Workspace One client secret provided in the Workspace One Admin Dashboard.
 	// The Workspace One client secret provided in the Workspace One Admin Dashboard.
+	//
+	// The Crowdstrike client secret.
+	//
+	// The Uptycs client secret.
+	//
+	// The Intune client secret.
+	//
+	// The Kolide client secret.
+	//
+	// The Tanium client secret.
+	//
+	// The SentinelOne S2S client secret.
 	// +kubebuilder:validation:Optional
 	ClientSecretSecretRef *v2.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) The Crowdstrike customer ID.
 	// The Crowdstrike customer ID.
+	//
+	// The Uptycs customer ID.
+	//
+	// The Intune customer ID.
 	// +kubebuilder:validation:Optional
 	CustomerID *string `json:"customerId,omitempty" tf:"customer_id,omitempty"`
 }

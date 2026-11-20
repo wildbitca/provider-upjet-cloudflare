@@ -37,11 +37,19 @@ type TransitSiteWanInitParameters struct {
 	// (Number)
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
+	// (Number) Provisioned download rate of the WAN circuit in kilobits per second.
+	// Provisioned download rate of the WAN circuit in kilobits per second.
+	ProvisionedDownloadKbps *float64 `json:"provisionedDownloadKbps,omitempty" tf:"provisioned_download_kbps,omitempty"`
+
+	// (Number) Provisioned upload rate of the WAN circuit in kilobits per second.
+	// Provisioned upload rate of the WAN circuit in kilobits per second.
+	ProvisionedUploadKbps *float64 `json:"provisionedUploadKbps,omitempty" tf:"provisioned_upload_kbps,omitempty"`
+
 	// (String) Identifier
 	// Identifier
 	SiteID *string `json:"siteId,omitempty" tf:"site_id,omitempty"`
 
-	// (Attributes)  if omitted, use DHCP. Submit secondary_address when site is in high availability mode. (see below for nested schema)
+	// (Attributes) Static addressing configuration for a WAN. Omit to use DHCP. Submit secondary_address when the site is in high availability mode. (see below for nested schema)
 	StaticAddressing *TransitSiteWanStaticAddressingInitParameters `json:"staticAddressing,omitempty" tf:"static_addressing,omitempty"`
 
 	// (Number) VLAN ID. Use zero for untagged.
@@ -76,11 +84,19 @@ type TransitSiteWanObservation struct {
 	// (Number)
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
+	// (Number) Provisioned download rate of the WAN circuit in kilobits per second.
+	// Provisioned download rate of the WAN circuit in kilobits per second.
+	ProvisionedDownloadKbps *float64 `json:"provisionedDownloadKbps,omitempty" tf:"provisioned_download_kbps,omitempty"`
+
+	// (Number) Provisioned upload rate of the WAN circuit in kilobits per second.
+	// Provisioned upload rate of the WAN circuit in kilobits per second.
+	ProvisionedUploadKbps *float64 `json:"provisionedUploadKbps,omitempty" tf:"provisioned_upload_kbps,omitempty"`
+
 	// (String) Identifier
 	// Identifier
 	SiteID *string `json:"siteId,omitempty" tf:"site_id,omitempty"`
 
-	// (Attributes)  if omitted, use DHCP. Submit secondary_address when site is in high availability mode. (see below for nested schema)
+	// (Attributes) Static addressing configuration for a WAN. Omit to use DHCP. Submit secondary_address when the site is in high availability mode. (see below for nested schema)
 	StaticAddressing *TransitSiteWanStaticAddressingObservation `json:"staticAddressing,omitempty" tf:"static_addressing,omitempty"`
 
 	// (Number) VLAN ID. Use zero for untagged.
@@ -118,12 +134,22 @@ type TransitSiteWanParameters struct {
 	// +kubebuilder:validation:Optional
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
+	// (Number) Provisioned download rate of the WAN circuit in kilobits per second.
+	// Provisioned download rate of the WAN circuit in kilobits per second.
+	// +kubebuilder:validation:Optional
+	ProvisionedDownloadKbps *float64 `json:"provisionedDownloadKbps,omitempty" tf:"provisioned_download_kbps,omitempty"`
+
+	// (Number) Provisioned upload rate of the WAN circuit in kilobits per second.
+	// Provisioned upload rate of the WAN circuit in kilobits per second.
+	// +kubebuilder:validation:Optional
+	ProvisionedUploadKbps *float64 `json:"provisionedUploadKbps,omitempty" tf:"provisioned_upload_kbps,omitempty"`
+
 	// (String) Identifier
 	// Identifier
 	// +kubebuilder:validation:Optional
 	SiteID *string `json:"siteId,omitempty" tf:"site_id,omitempty"`
 
-	// (Attributes)  if omitted, use DHCP. Submit secondary_address when site is in high availability mode. (see below for nested schema)
+	// (Attributes) Static addressing configuration for a WAN. Omit to use DHCP. Submit secondary_address when the site is in high availability mode. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	StaticAddressing *TransitSiteWanStaticAddressingParameters `json:"staticAddressing,omitempty" tf:"static_addressing,omitempty"`
 
@@ -146,6 +172,10 @@ type TransitSiteWanStaticAddressingInitParameters struct {
 	// (String) A valid CIDR notation representing an IP range.
 	// A valid CIDR notation representing an IP range.
 	SecondaryAddress *string `json:"secondaryAddress,omitempty" tf:"secondary_address,omitempty"`
+
+	// (String) Gateway address for the secondary connector of a high availability site.
+	// Gateway address for the secondary connector of a high availability site.
+	SecondaryGatewayAddress *string `json:"secondaryGatewayAddress,omitempty" tf:"secondary_gateway_address,omitempty"`
 }
 
 type TransitSiteWanStaticAddressingObservation struct {
@@ -161,6 +191,10 @@ type TransitSiteWanStaticAddressingObservation struct {
 	// (String) A valid CIDR notation representing an IP range.
 	// A valid CIDR notation representing an IP range.
 	SecondaryAddress *string `json:"secondaryAddress,omitempty" tf:"secondary_address,omitempty"`
+
+	// (String) Gateway address for the secondary connector of a high availability site.
+	// Gateway address for the secondary connector of a high availability site.
+	SecondaryGatewayAddress *string `json:"secondaryGatewayAddress,omitempty" tf:"secondary_gateway_address,omitempty"`
 }
 
 type TransitSiteWanStaticAddressingParameters struct {
@@ -179,6 +213,11 @@ type TransitSiteWanStaticAddressingParameters struct {
 	// A valid CIDR notation representing an IP range.
 	// +kubebuilder:validation:Optional
 	SecondaryAddress *string `json:"secondaryAddress,omitempty" tf:"secondary_address,omitempty"`
+
+	// (String) Gateway address for the secondary connector of a high availability site.
+	// Gateway address for the secondary connector of a high availability site.
+	// +kubebuilder:validation:Optional
+	SecondaryGatewayAddress *string `json:"secondaryGatewayAddress,omitempty" tf:"secondary_gateway_address,omitempty"`
 }
 
 // TransitSiteWanSpec defines the desired state of TransitSiteWan

@@ -104,6 +104,12 @@ type WorkflowInitParameters struct {
 	// (Attributes) Default retention applied to instances of this version when they do not set their own retention. (see below for nested schema)
 	DefaultRetention *DefaultRetentionInitParameters `json:"defaultRetention,omitempty" tf:"default_retention,omitempty"`
 
+	// (String) Jurisdiction where instances of this workflow run and store data. Can only be set when the workflow is created and cannot be changed afterwards; omit it to keep the existing jurisdiction.
+	// Available values: "eu", "fedramp", "us".
+	// Jurisdiction where instances of this workflow run and store data. Can only be set when the workflow is created and cannot be changed afterwards; omit it to keep the existing jurisdiction.
+	// Available values: "eu", "fedramp", "us".
+	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
+
 	// (Attributes) (see below for nested schema)
 	Limits *WorkflowLimitsInitParameters `json:"limits,omitempty" tf:"limits,omitempty"`
 
@@ -163,6 +169,12 @@ type WorkflowObservation struct {
 	// (Number)
 	IsDeleted *float64 `json:"isDeleted,omitempty" tf:"is_deleted,omitempty"`
 
+	// (String) Jurisdiction where instances of this workflow run and store data. Can only be set when the workflow is created and cannot be changed afterwards; omit it to keep the existing jurisdiction.
+	// Available values: "eu", "fedramp", "us".
+	// Jurisdiction where instances of this workflow run and store data. Can only be set when the workflow is created and cannot be changed afterwards; omit it to keep the existing jurisdiction.
+	// Available values: "eu", "fedramp", "us".
+	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
+
 	// (Attributes) (see below for nested schema)
 	Limits *WorkflowLimitsObservation `json:"limits,omitempty" tf:"limits,omitempty"`
 
@@ -212,6 +224,13 @@ type WorkflowParameters struct {
 	// (Attributes) Default retention applied to instances of this version when they do not set their own retention. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	DefaultRetention *DefaultRetentionParameters `json:"defaultRetention,omitempty" tf:"default_retention,omitempty"`
+
+	// (String) Jurisdiction where instances of this workflow run and store data. Can only be set when the workflow is created and cannot be changed afterwards; omit it to keep the existing jurisdiction.
+	// Available values: "eu", "fedramp", "us".
+	// Jurisdiction where instances of this workflow run and store data. Can only be set when the workflow is created and cannot be changed afterwards; omit it to keep the existing jurisdiction.
+	// Available values: "eu", "fedramp", "us".
+	// +kubebuilder:validation:Optional
+	Jurisdiction *string `json:"jurisdiction,omitempty" tf:"jurisdiction,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional

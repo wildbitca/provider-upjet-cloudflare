@@ -70,6 +70,11 @@ spec:
                       (Boolean) Indicate whether this location is the default location.
                       Indicate whether this location is the default location.
                     type: boolean
+                  dns64Enabled:
+                    description: |-
+                      (Boolean) Enable DNS64 synthesis for DNS queries matched to this location. When updating a location, omitting this field resets it to false.
+                      Enable DNS64 synthesis for DNS queries matched to this location. When updating a location, omitting this field resets it to false.
+                    type: boolean
                   dnsDestinationIpsId:
                     description: |-
                       6fb8-4858-9296-98f51631e8e6) is auto-assigned. When updating a location, if this field is absent or set to null, the pre-assigned pair remains unchanged.
@@ -221,6 +226,11 @@ spec:
                     description: |-
                       (Boolean) Indicate whether this location is the default location.
                       Indicate whether this location is the default location.
+                    type: boolean
+                  dns64Enabled:
+                    description: |-
+                      (Boolean) Enable DNS64 synthesis for DNS queries matched to this location. When updating a location, omitting this field resets it to false.
+                      Enable DNS64 synthesis for DNS queries matched to this location. When updating a location, omitting this field resets it to false.
                     type: boolean
                   dnsDestinationIpsId:
                     description: |-
@@ -436,6 +446,11 @@ spec:
                   createdAt:
                     description: (String)
                     type: string
+                  dns64Enabled:
+                    description: |-
+                      (Boolean) Enable DNS64 synthesis for DNS queries matched to this location. When updating a location, omitting this field resets it to false.
+                      Enable DNS64 synthesis for DNS queries matched to this location. When updating a location, omitting this field resets it to false.
+                    type: boolean
                   dnsDestinationIpsId:
                     description: |-
                       6fb8-4858-9296-98f51631e8e6) is auto-assigned. When updating a location, if this field is absent or set to null, the pre-assigned pair remains unchanged.

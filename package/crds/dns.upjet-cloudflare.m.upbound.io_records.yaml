@@ -70,8 +70,8 @@ spec:
                       A valid IPv4 address.
                     type: string
                   data:
-                    description: (Attributes) Components of a MX record. (see below
-                      for nested schema)
+                    description: '(Attributes) For type: CAA: Components of a CAA
+                      record.'
                     properties:
                       algorithm:
                         description: |-
@@ -107,6 +107,8 @@ spec:
                         description: |-
                           (Dynamic) Flags for the CAA record.
                           Flags for the CAA record.
+
+                          Flags.
                         x-kubernetes-preserve-unknown-fields: true
                       keyTag:
                         description: |-
@@ -191,6 +193,8 @@ spec:
                         description: |-
                           (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
                           Priority.
+
+                          Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
                         type: number
                       protocol:
                         description: |-
@@ -236,6 +240,10 @@ spec:
                         description: |-
                           (String) Target.
                           Target.
+
+                          A valid hostname.
+
+                          The record content.
                         type: string
                       type:
                         description: |-
@@ -252,6 +260,8 @@ spec:
                         description: |-
                           (String) Value of the record. This field's semantics depend on the chosen tag.
                           Value of the record. This field's semantics depend on the chosen tag.
+
+                          Value.
                         type: string
                       weight:
                         description: |-
@@ -276,8 +286,8 @@ spec:
                     type: number
                   privateRouting:
                     description: |-
-                      (Boolean) Enables private network routing to the origin.
-                      Enables private network routing to the origin.
+                      (Boolean) For type: A or type: AAAA: Enables private network routing to the origin.
+                      For `type: A` or `type: AAAA`: Enables private network routing to the origin.
                     type: boolean
                   proxied:
                     description: |-
@@ -434,8 +444,8 @@ spec:
                       A valid IPv4 address.
                     type: string
                   data:
-                    description: (Attributes) Components of a MX record. (see below
-                      for nested schema)
+                    description: '(Attributes) For type: CAA: Components of a CAA
+                      record.'
                     properties:
                       algorithm:
                         description: |-
@@ -471,6 +481,8 @@ spec:
                         description: |-
                           (Dynamic) Flags for the CAA record.
                           Flags for the CAA record.
+
+                          Flags.
                         x-kubernetes-preserve-unknown-fields: true
                       keyTag:
                         description: |-
@@ -555,6 +567,8 @@ spec:
                         description: |-
                           (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
                           Priority.
+
+                          Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
                         type: number
                       protocol:
                         description: |-
@@ -600,6 +614,10 @@ spec:
                         description: |-
                           (String) Target.
                           Target.
+
+                          A valid hostname.
+
+                          The record content.
                         type: string
                       type:
                         description: |-
@@ -616,6 +634,8 @@ spec:
                         description: |-
                           (String) Value of the record. This field's semantics depend on the chosen tag.
                           Value of the record. This field's semantics depend on the chosen tag.
+
+                          Value.
                         type: string
                       weight:
                         description: |-
@@ -640,8 +660,8 @@ spec:
                     type: number
                   privateRouting:
                     description: |-
-                      (Boolean) Enables private network routing to the origin.
-                      Enables private network routing to the origin.
+                      (Boolean) For type: A or type: AAAA: Enables private network routing to the origin.
+                      For `type: A` or `type: AAAA`: Enables private network routing to the origin.
                     type: boolean
                   proxied:
                     description: |-
@@ -871,8 +891,8 @@ spec:
                       When the record was created.
                     type: string
                   data:
-                    description: (Attributes) Components of a MX record. (see below
-                      for nested schema)
+                    description: '(Attributes) For type: CAA: Components of a CAA
+                      record.'
                     properties:
                       algorithm:
                         description: |-
@@ -908,6 +928,8 @@ spec:
                         description: |-
                           (Dynamic) Flags for the CAA record.
                           Flags for the CAA record.
+
+                          Flags.
                         x-kubernetes-preserve-unknown-fields: true
                       keyTag:
                         description: |-
@@ -992,6 +1014,8 @@ spec:
                         description: |-
                           (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
                           Priority.
+
+                          Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
                         type: number
                       protocol:
                         description: |-
@@ -1037,6 +1061,10 @@ spec:
                         description: |-
                           (String) Target.
                           Target.
+
+                          A valid hostname.
+
+                          The record content.
                         type: string
                       type:
                         description: |-
@@ -1053,6 +1081,8 @@ spec:
                         description: |-
                           (String) Value of the record. This field's semantics depend on the chosen tag.
                           Value of the record. This field's semantics depend on the chosen tag.
+
+                          Value.
                         type: string
                       weight:
                         description: |-
@@ -1090,8 +1120,8 @@ spec:
                     type: number
                   privateRouting:
                     description: |-
-                      (Boolean) Enables private network routing to the origin.
-                      Enables private network routing to the origin.
+                      (Boolean) For type: A or type: AAAA: Enables private network routing to the origin.
+                      For `type: A` or `type: AAAA`: Enables private network routing to the origin.
                     type: boolean
                   proxiable:
                     description: |-

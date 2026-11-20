@@ -120,11 +120,6 @@ type ProfileStatus struct {
 type Profile struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.businessAddress) || (has(self.initProvider) && has(self.initProvider.businessAddress))",message="spec.forProvider.businessAddress is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.businessEmail) || (has(self.initProvider) && has(self.initProvider.businessEmail))",message="spec.forProvider.businessEmail is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.businessName) || (has(self.initProvider) && has(self.initProvider.businessName))",message="spec.forProvider.businessName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.businessPhone) || (has(self.initProvider) && has(self.initProvider.businessPhone))",message="spec.forProvider.businessPhone is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalMetadata) || (has(self.initProvider) && has(self.initProvider.externalMetadata))",message="spec.forProvider.externalMetadata is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.organizationId) || (has(self.initProvider) && has(self.initProvider.organizationId))",message="spec.forProvider.organizationId is a required parameter"
 	Spec   ProfileSpec   `json:"spec"`
 	Status ProfileStatus `json:"status,omitempty"`

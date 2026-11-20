@@ -824,8 +824,10 @@ type PreviewEnvVarsInitParameters struct {
 	// Available values: "plain_text", "secret_text".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (String, Sensitive) Environment variable value.
-	// Environment variable value.
+	// (String, Sensitive) For type: plain_text: Environment variable value.
+	// For `type: plain_text`: Environment variable value.
+	//
+	// For `type: secret_text`: Secret value.
 	ValueSecretRef v2.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
@@ -843,8 +845,10 @@ type PreviewEnvVarsParameters struct {
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
-	// (String, Sensitive) Environment variable value.
-	// Environment variable value.
+	// (String, Sensitive) For type: plain_text: Environment variable value.
+	// For `type: plain_text`: Environment variable value.
+	//
+	// For `type: secret_text`: Secret value.
 	// +kubebuilder:validation:Optional
 	ValueSecretRef v2.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
@@ -1205,8 +1209,10 @@ type ProductionEnvVarsInitParameters struct {
 	// Available values: "plain_text", "secret_text".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (String, Sensitive) Environment variable value.
-	// Environment variable value.
+	// (String, Sensitive) For type: plain_text: Environment variable value.
+	// For `type: plain_text`: Environment variable value.
+	//
+	// For `type: secret_text`: Secret value.
 	ValueSecretRef v2.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
@@ -1224,8 +1230,10 @@ type ProductionEnvVarsParameters struct {
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
-	// (String, Sensitive) Environment variable value.
-	// Environment variable value.
+	// (String, Sensitive) For type: plain_text: Environment variable value.
+	// For `type: plain_text`: Environment variable value.
+	//
+	// For `type: secret_text`: Secret value.
 	// +kubebuilder:validation:Optional
 	ValueSecretRef v2.LocalSecretKeySelector `json:"valueSecretRef" tf:"-"`
 }

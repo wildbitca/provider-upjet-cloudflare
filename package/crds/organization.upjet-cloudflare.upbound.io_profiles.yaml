@@ -210,26 +210,6 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: spec.forProvider.businessAddress is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.businessAddress)
-                || (has(self.initProvider) && has(self.initProvider.businessAddress))'
-            - message: spec.forProvider.businessEmail is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.businessEmail)
-                || (has(self.initProvider) && has(self.initProvider.businessEmail))'
-            - message: spec.forProvider.businessName is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.businessName)
-                || (has(self.initProvider) && has(self.initProvider.businessName))'
-            - message: spec.forProvider.businessPhone is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.businessPhone)
-                || (has(self.initProvider) && has(self.initProvider.businessPhone))'
-            - message: spec.forProvider.externalMetadata is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.externalMetadata)
-                || (has(self.initProvider) && has(self.initProvider.externalMetadata))'
             - message: spec.forProvider.organizationId is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.organizationId)

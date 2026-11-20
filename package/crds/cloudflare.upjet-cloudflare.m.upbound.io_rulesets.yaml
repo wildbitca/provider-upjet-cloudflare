@@ -1268,6 +1268,18 @@ spec:
                                     rewrite. (see below for nested schema)
                                   type: object
                               type: object
+                            webmcpEnabled:
+                              description: |-
+                                (Boolean) Whether to serve the WebMCP bridge script, which exposes the page's tools to browser AI agents.
+                                Whether to serve the WebMCP bridge script, which exposes the page's tools to browser AI agents.
+                              type: boolean
+                            webmcpPacks:
+                              description: |-
+                                (List of String) Bundled WebMCP tool packs to activate for matching requests. An empty list disables all packs. Omitting this parameter leaves the pack selection unchanged. Does not enable the WebMCP bridge itself.
+                                Bundled WebMCP tool packs to activate for matching requests. An empty list disables all packs. Omitting this parameter leaves the pack selection unchanged. Does not enable the WebMCP bridge itself.
+                              items:
+                                type: string
+                              type: array
                           type: object
                         description:
                           description: |-
@@ -2592,6 +2604,18 @@ spec:
                                     rewrite. (see below for nested schema)
                                   type: object
                               type: object
+                            webmcpEnabled:
+                              description: |-
+                                (Boolean) Whether to serve the WebMCP bridge script, which exposes the page's tools to browser AI agents.
+                                Whether to serve the WebMCP bridge script, which exposes the page's tools to browser AI agents.
+                              type: boolean
+                            webmcpPacks:
+                              description: |-
+                                (List of String) Bundled WebMCP tool packs to activate for matching requests. An empty list disables all packs. Omitting this parameter leaves the pack selection unchanged. Does not enable the WebMCP bridge itself.
+                                Bundled WebMCP tool packs to activate for matching requests. An empty list disables all packs. Omitting this parameter leaves the pack selection unchanged. Does not enable the WebMCP bridge itself.
+                              items:
+                                type: string
+                              type: array
                           type: object
                         description:
                           description: |-
@@ -3987,6 +4011,18 @@ spec:
                                     rewrite. (see below for nested schema)
                                   type: object
                               type: object
+                            webmcpEnabled:
+                              description: |-
+                                (Boolean) Whether to serve the WebMCP bridge script, which exposes the page's tools to browser AI agents.
+                                Whether to serve the WebMCP bridge script, which exposes the page's tools to browser AI agents.
+                              type: boolean
+                            webmcpPacks:
+                              description: |-
+                                (List of String) Bundled WebMCP tool packs to activate for matching requests. An empty list disables all packs. Omitting this parameter leaves the pack selection unchanged. Does not enable the WebMCP bridge itself.
+                                Bundled WebMCP tool packs to activate for matching requests. An empty list disables all packs. Omitting this parameter leaves the pack selection unchanged. Does not enable the WebMCP bridge itself.
+                              items:
+                                type: string
+                              type: array
                           type: object
                         description:
                           description: |-

@@ -287,6 +287,10 @@ type TrustOrganizationInitParameters struct {
 	// Contains zone names to exempt from the `deny_unmatched_requests` feature. Requests to a subdomain in an exempted zone will block unauthenticated traffic by default if there is a configured Access application and policy that matches the request.
 	DenyUnmatchedRequestsExemptedZoneNames []*string `json:"denyUnmatchedRequestsExemptedZoneNames,omitempty" tf:"deny_unmatched_requests_exempted_zone_names,omitempty"`
 
+	// (Boolean) Whether creation of end user applications is disabled for this organization.
+	// Whether creation of end user applications is disabled for this organization.
+	DisableEndUserAppCreation *bool `json:"disableEndUserAppCreation,omitempty" tf:"disable_end_user_app_creation,omitempty"`
+
 	// Only in the Dashboard, regardless of user permission.
 	// Lock all settings as Read-Only in the Dashboard, regardless of user permission.
 	IsUIReadOnly *bool `json:"isUiReadOnly,omitempty" tf:"is_ui_read_only,omitempty"`
@@ -430,6 +434,10 @@ type TrustOrganizationObservation struct {
 	// Contains zone names to exempt from the `deny_unmatched_requests` feature. Requests to a subdomain in an exempted zone will block unauthenticated traffic by default if there is a configured Access application and policy that matches the request.
 	DenyUnmatchedRequestsExemptedZoneNames []*string `json:"denyUnmatchedRequestsExemptedZoneNames,omitempty" tf:"deny_unmatched_requests_exempted_zone_names,omitempty"`
 
+	// (Boolean) Whether creation of end user applications is disabled for this organization.
+	// Whether creation of end user applications is disabled for this organization.
+	DisableEndUserAppCreation *bool `json:"disableEndUserAppCreation,omitempty" tf:"disable_end_user_app_creation,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Only in the Dashboard, regardless of user permission.
@@ -523,6 +531,11 @@ type TrustOrganizationParameters struct {
 	// Contains zone names to exempt from the `deny_unmatched_requests` feature. Requests to a subdomain in an exempted zone will block unauthenticated traffic by default if there is a configured Access application and policy that matches the request.
 	// +kubebuilder:validation:Optional
 	DenyUnmatchedRequestsExemptedZoneNames []*string `json:"denyUnmatchedRequestsExemptedZoneNames,omitempty" tf:"deny_unmatched_requests_exempted_zone_names,omitempty"`
+
+	// (Boolean) Whether creation of end user applications is disabled for this organization.
+	// Whether creation of end user applications is disabled for this organization.
+	// +kubebuilder:validation:Optional
+	DisableEndUserAppCreation *bool `json:"disableEndUserAppCreation,omitempty" tf:"disable_end_user_app_creation,omitempty"`
 
 	// Only in the Dashboard, regardless of user permission.
 	// Lock all settings as Read-Only in the Dashboard, regardless of user permission.

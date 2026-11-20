@@ -294,8 +294,8 @@ type TrustDlpCustomProfileObservation struct {
 	// (Attributes, Deprecated) Scan the context of predefined entries to only return matches surrounded by keywords. (see below for nested schema)
 	ContextAwareness *ContextAwarenessObservation `json:"contextAwareness,omitempty" tf:"context_awareness,omitempty"`
 
-	// (String) When the profile was created.
-	// When the profile was created.
+	// (String) For type: custom: When the profile was created.
+	// For `type: custom`: When the profile was created.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
 	// (List of String) Data class IDs to associate with the profile.
@@ -326,8 +326,8 @@ type TrustDlpCustomProfileObservation struct {
 	// (Boolean)
 	OcrEnabled *bool `json:"ocrEnabled,omitempty" tf:"ocr_enabled,omitempty"`
 
-	// (Boolean) Whether this profile can be accessed by anyone.
-	// Whether this profile can be accessed by anyone.
+	// (Boolean) For type: predefined: Whether this profile can be accessed by anyone.
+	// For `type: predefined`: Whether this profile can be accessed by anyone.
 	OpenAccess *bool `json:"openAccess,omitempty" tf:"open_access,omitempty"`
 
 	// (Attributes List) Sensitivity levels to associate with the profile. (see below for nested schema)
@@ -340,8 +340,8 @@ type TrustDlpCustomProfileObservation struct {
 	// Available values: "custom", "predefined", "integration".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (String) When the profile was lasted updated.
-	// When the profile was lasted updated.
+	// (String) For type: custom: When the profile was lasted updated.
+	// For `type: custom`: When the profile was lasted updated.
 	UpdatedAt *string `json:"updatedAt,omitempty" tf:"updated_at,omitempty"`
 }
 

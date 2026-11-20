@@ -85,27 +85,27 @@ type InternalDNSParameters struct {
 type NameserversInitParameters struct {
 
 	// (String) Nameserver type
-	// Available values: "cloudflare.standard", "cloudflare.standard.random", "custom.account", "custom.tenant".
+	// Available values: "cloudflare.standard", "cloudflare.advanced", "cloudflare.standard.random", "custom.account", "custom.tenant".
 	// Nameserver type
-	// Available values: "cloudflare.standard", "cloudflare.standard.random", "custom.account", "custom.tenant".
+	// Available values: "cloudflare.standard", "cloudflare.advanced", "cloudflare.standard.random", "custom.account", "custom.tenant".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type NameserversObservation struct {
 
 	// (String) Nameserver type
-	// Available values: "cloudflare.standard", "cloudflare.standard.random", "custom.account", "custom.tenant".
+	// Available values: "cloudflare.standard", "cloudflare.advanced", "cloudflare.standard.random", "custom.account", "custom.tenant".
 	// Nameserver type
-	// Available values: "cloudflare.standard", "cloudflare.standard.random", "custom.account", "custom.tenant".
+	// Available values: "cloudflare.standard", "cloudflare.advanced", "cloudflare.standard.random", "custom.account", "custom.tenant".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type NameserversParameters struct {
 
 	// (String) Nameserver type
-	// Available values: "cloudflare.standard", "cloudflare.standard.random", "custom.account", "custom.tenant".
+	// Available values: "cloudflare.standard", "cloudflare.advanced", "cloudflare.standard.random", "custom.account", "custom.tenant".
 	// Nameserver type
-	// Available values: "cloudflare.standard", "cloudflare.standard.random", "custom.account", "custom.tenant".
+	// Available values: "cloudflare.standard", "cloudflare.advanced", "cloudflare.standard.random", "custom.account", "custom.tenant".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
@@ -216,10 +216,6 @@ type ZoneDefaultsInitParameters struct {
 	// Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
 	FlattenAllCnames *bool `json:"flattenAllCnames,omitempty" tf:"flatten_all_cnames,omitempty"`
 
-	// (Boolean) Whether to enable Foundation DNS Advanced Nameservers on the zone.
-	// Whether to enable Foundation DNS Advanced Nameservers on the zone.
-	FoundationDNS *bool `json:"foundationDns,omitempty" tf:"foundation_dns,omitempty"`
-
 	// (Attributes) Settings for this internal zone. (see below for nested schema)
 	InternalDNS *InternalDNSInitParameters `json:"internalDns,omitempty" tf:"internal_dns,omitempty"`
 
@@ -253,10 +249,6 @@ type ZoneDefaultsObservation struct {
 	// (Boolean) Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
 	// Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
 	FlattenAllCnames *bool `json:"flattenAllCnames,omitempty" tf:"flatten_all_cnames,omitempty"`
-
-	// (Boolean) Whether to enable Foundation DNS Advanced Nameservers on the zone.
-	// Whether to enable Foundation DNS Advanced Nameservers on the zone.
-	FoundationDNS *bool `json:"foundationDns,omitempty" tf:"foundation_dns,omitempty"`
 
 	// (Attributes) Settings for this internal zone. (see below for nested schema)
 	InternalDNS *InternalDNSObservation `json:"internalDns,omitempty" tf:"internal_dns,omitempty"`
@@ -292,11 +284,6 @@ type ZoneDefaultsParameters struct {
 	// Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
 	// +kubebuilder:validation:Optional
 	FlattenAllCnames *bool `json:"flattenAllCnames,omitempty" tf:"flatten_all_cnames,omitempty"`
-
-	// (Boolean) Whether to enable Foundation DNS Advanced Nameservers on the zone.
-	// Whether to enable Foundation DNS Advanced Nameservers on the zone.
-	// +kubebuilder:validation:Optional
-	FoundationDNS *bool `json:"foundationDns,omitempty" tf:"foundation_dns,omitempty"`
 
 	// (Attributes) Settings for this internal zone. (see below for nested schema)
 	// +kubebuilder:validation:Optional

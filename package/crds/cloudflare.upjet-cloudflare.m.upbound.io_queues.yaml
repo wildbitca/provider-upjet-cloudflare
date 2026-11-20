@@ -237,8 +237,8 @@ spec:
                           type: string
                         scriptName:
                           description: |-
-                            (String) Name of a Worker
-                            Name of a Worker
+                            (String) For type: worker: Name of a Worker
+                            For `type: worker`: Name of a Worker
                           type: string
                         settings:
                           description: (Attributes) (see below for nested schema)

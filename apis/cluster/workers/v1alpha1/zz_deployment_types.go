@@ -39,14 +39,61 @@ type AnnotationsParameters struct {
 	WorkersMessage *string `json:"workersMessage,omitempty" tf:"workers_message,omitempty"`
 }
 
+type CodeUpdateStrategyInitParameters struct {
+
+	// (Number) For mode: deferred: Set the maximum number of seconds to wait before forcing the update. When omitted, the default maximum delay applies.
+	// For `mode: deferred`: Set the maximum number of seconds to wait before forcing the update. When omitted, the default maximum delay applies.
+	MaxDelay *float64 `json:"maxDelay,omitempty" tf:"max_delay,omitempty"`
+
+	// (String) For mode: immediate: Apply Durable Object code updates immediately.
+	// For `mode: immediate`: Apply Durable Object code updates immediately.
+	//
+	// For `mode: deferred`: Allow active Durable Objects to hibernate before updating their code.
+	// Available values: "immediate", "deferred".
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+}
+
+type CodeUpdateStrategyObservation struct {
+
+	// (Number) For mode: deferred: Set the maximum number of seconds to wait before forcing the update. When omitted, the default maximum delay applies.
+	// For `mode: deferred`: Set the maximum number of seconds to wait before forcing the update. When omitted, the default maximum delay applies.
+	MaxDelay *float64 `json:"maxDelay,omitempty" tf:"max_delay,omitempty"`
+
+	// (String) For mode: immediate: Apply Durable Object code updates immediately.
+	// For `mode: immediate`: Apply Durable Object code updates immediately.
+	//
+	// For `mode: deferred`: Allow active Durable Objects to hibernate before updating their code.
+	// Available values: "immediate", "deferred".
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+}
+
+type CodeUpdateStrategyParameters struct {
+
+	// (Number) For mode: deferred: Set the maximum number of seconds to wait before forcing the update. When omitted, the default maximum delay applies.
+	// For `mode: deferred`: Set the maximum number of seconds to wait before forcing the update. When omitted, the default maximum delay applies.
+	// +kubebuilder:validation:Optional
+	MaxDelay *float64 `json:"maxDelay,omitempty" tf:"max_delay,omitempty"`
+
+	// (String) For mode: immediate: Apply Durable Object code updates immediately.
+	// For `mode: immediate`: Apply Durable Object code updates immediately.
+	//
+	// For `mode: deferred`: Allow active Durable Objects to hibernate before updating their code.
+	// Available values: "immediate", "deferred".
+	// +kubebuilder:validation:Optional
+	Mode *string `json:"mode" tf:"mode,omitempty"`
+}
+
 type DeploymentInitParameters struct {
 
 	// (String) Identifier.
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) Metadata attached to the deployment. (see below for nested schema)
 	Annotations *AnnotationsInitParameters `json:"annotations,omitempty" tf:"annotations,omitempty"`
+
+	// (Attributes) Choose whether to apply Durable Object code updates immediately or defer them. When omitted, the default strategy applies. (see below for nested schema)
+	CodeUpdateStrategy *CodeUpdateStrategyInitParameters `json:"codeUpdateStrategy,omitempty" tf:"code_update_strategy,omitempty"`
 
 	// (Boolean) If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
 	// If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
@@ -56,7 +103,9 @@ type DeploymentInitParameters struct {
 	// Name of the script.
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 
-	// (String) Available values: "percentage".
+	// (String) Strategy for routing traffic across the listed versions. percentage splits traffic according to each version's percentage.
+	// Available values: "percentage".
+	// Strategy for routing traffic across the listed versions. `percentage` splits traffic according to each version's `percentage`.
 	// Available values: "percentage".
 	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
 
@@ -70,11 +119,14 @@ type DeploymentObservation struct {
 	// Identifier.
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) Metadata attached to the deployment. (see below for nested schema)
 	Annotations *AnnotationsObservation `json:"annotations,omitempty" tf:"annotations,omitempty"`
 
 	// (String)
 	AuthorEmail *string `json:"authorEmail,omitempty" tf:"author_email,omitempty"`
+
+	// (Attributes) Choose whether to apply Durable Object code updates immediately or defer them. When omitted, the default strategy applies. (see below for nested schema)
+	CodeUpdateStrategy *CodeUpdateStrategyObservation `json:"codeUpdateStrategy,omitempty" tf:"code_update_strategy,omitempty"`
 
 	// (String)
 	CreatedOn *string `json:"createdOn,omitempty" tf:"created_on,omitempty"`
@@ -93,7 +145,9 @@ type DeploymentObservation struct {
 	// (String)
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 
-	// (String) Available values: "percentage".
+	// (String) Strategy for routing traffic across the listed versions. percentage splits traffic according to each version's percentage.
+	// Available values: "percentage".
+	// Strategy for routing traffic across the listed versions. `percentage` splits traffic according to each version's `percentage`.
 	// Available values: "percentage".
 	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
 
@@ -108,9 +162,13 @@ type DeploymentParameters struct {
 	// +kubebuilder:validation:Optional
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (Attributes) Metadata attached to the deployment. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Annotations *AnnotationsParameters `json:"annotations,omitempty" tf:"annotations,omitempty"`
+
+	// (Attributes) Choose whether to apply Durable Object code updates immediately or defer them. When omitted, the default strategy applies. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	CodeUpdateStrategy *CodeUpdateStrategyParameters `json:"codeUpdateStrategy,omitempty" tf:"code_update_strategy,omitempty"`
 
 	// (Boolean) If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
 	// If set to true, the deployment will be created even if normally blocked by something such rolling back to an older version when a secret has changed.
@@ -122,7 +180,9 @@ type DeploymentParameters struct {
 	// +kubebuilder:validation:Optional
 	ScriptName *string `json:"scriptName,omitempty" tf:"script_name,omitempty"`
 
-	// (String) Available values: "percentage".
+	// (String) Strategy for routing traffic across the listed versions. percentage splits traffic according to each version's percentage.
+	// Available values: "percentage".
+	// Strategy for routing traffic across the listed versions. `percentage` splits traffic according to each version's `percentage`.
 	// Available values: "percentage".
 	// +kubebuilder:validation:Optional
 	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
@@ -194,7 +254,7 @@ type DeploymentStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Deployment is the Schema for the Deployments API. Accepted Permissions Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
+// Deployment is the Schema for the Deployments API. Accepted Permissions Individual Workers AdminIndividual Workers Content Read-OnlyIndividual Workers EditorIndividual Workers Metadata Read-OnlyWorkers AdminWorkers Content Read-OnlyWorkers EditorWorkers Metadata Read-OnlyWorkers Scripts ReadWorkers Scripts WriteWorkers Tail Read
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

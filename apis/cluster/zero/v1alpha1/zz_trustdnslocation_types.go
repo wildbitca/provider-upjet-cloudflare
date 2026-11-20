@@ -314,6 +314,10 @@ type TrustDNSLocationInitParameters struct {
 	// Specify the identifier of the pair of IPv4 addresses assigned to this location. When creating a location, if this field is absent or set to null, the pair of shared IPv4 addresses (0e4a32c6-6fb8-4858-9296-98f51631e8e6) is auto-assigned. When updating a location, if this field is absent or set to null, the pre-assigned pair remains unchanged.
 	DNSDestinationIpsID *string `json:"dnsDestinationIpsId,omitempty" tf:"dns_destination_ips_id,omitempty"`
 
+	// (Boolean) Enable DNS64 synthesis for DNS queries matched to this location. When updating a location, omitting this field resets it to false.
+	// Enable DNS64 synthesis for DNS queries matched to this location. When updating a location, omitting this field resets it to false.
+	Dns64Enabled *bool `json:"dns64Enabled,omitempty" tf:"dns64_enabled,omitempty"`
+
 	// (Boolean) Indicate whether the location must resolve EDNS queries.
 	// Indicate whether the location must resolve EDNS queries.
 	EcsSupport *bool `json:"ecsSupport,omitempty" tf:"ecs_support,omitempty"`
@@ -375,6 +379,10 @@ type TrustDNSLocationObservation struct {
 	// Specify the identifier of the pair of IPv4 addresses assigned to this location. When creating a location, if this field is absent or set to null, the pair of shared IPv4 addresses (0e4a32c6-6fb8-4858-9296-98f51631e8e6) is auto-assigned. When updating a location, if this field is absent or set to null, the pre-assigned pair remains unchanged.
 	DNSDestinationIpsID *string `json:"dnsDestinationIpsId,omitempty" tf:"dns_destination_ips_id,omitempty"`
 
+	// (Boolean) Enable DNS64 synthesis for DNS queries matched to this location. When updating a location, omitting this field resets it to false.
+	// Enable DNS64 synthesis for DNS queries matched to this location. When updating a location, omitting this field resets it to false.
+	Dns64Enabled *bool `json:"dns64Enabled,omitempty" tf:"dns64_enabled,omitempty"`
+
 	// (String) Specify the DNS over HTTPS domain that receives DNS requests. Gateway automatically generates this value.
 	// Specify the DNS over HTTPS domain that receives DNS requests. Gateway automatically generates this value.
 	DohSubdomain *string `json:"dohSubdomain,omitempty" tf:"doh_subdomain,omitempty"`
@@ -431,6 +439,11 @@ type TrustDNSLocationParameters struct {
 	// Specify the identifier of the pair of IPv4 addresses assigned to this location. When creating a location, if this field is absent or set to null, the pair of shared IPv4 addresses (0e4a32c6-6fb8-4858-9296-98f51631e8e6) is auto-assigned. When updating a location, if this field is absent or set to null, the pre-assigned pair remains unchanged.
 	// +kubebuilder:validation:Optional
 	DNSDestinationIpsID *string `json:"dnsDestinationIpsId,omitempty" tf:"dns_destination_ips_id,omitempty"`
+
+	// (Boolean) Enable DNS64 synthesis for DNS queries matched to this location. When updating a location, omitting this field resets it to false.
+	// Enable DNS64 synthesis for DNS queries matched to this location. When updating a location, omitting this field resets it to false.
+	// +kubebuilder:validation:Optional
+	Dns64Enabled *bool `json:"dns64Enabled,omitempty" tf:"dns64_enabled,omitempty"`
 
 	// (Boolean) Indicate whether the location must resolve EDNS queries.
 	// Indicate whether the location must resolve EDNS queries.

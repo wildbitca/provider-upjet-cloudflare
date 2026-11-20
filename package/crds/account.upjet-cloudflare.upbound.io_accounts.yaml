@@ -87,8 +87,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Account name
-                      Account name
+                      8 bytes.
+                      Account name, limited to 65 UTF-8 bytes.
                     type: string
                   settings:
                     description: (Attributes) Account settings (see below for nested
@@ -113,7 +113,9 @@ spec:
                     type: boolean
                   type:
                     description: |-
-                      (String, Deprecated) Available values: "standard", "enterprise".
+                      serve customers, use standard. for enterprise customers, use enterprise.
+                      Available values: "standard", "enterprise".
+                      the type of account being created. For self-serve customers, use standard. for enterprise customers, use enterprise.
                       Available values: "standard", "enterprise".
                     type: string
                   unit:
@@ -145,8 +147,8 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) Account name
-                      Account name
+                      8 bytes.
+                      Account name, limited to 65 UTF-8 bytes.
                     type: string
                   settings:
                     description: (Attributes) Account settings (see below for nested
@@ -171,7 +173,9 @@ spec:
                     type: boolean
                   type:
                     description: |-
-                      (String, Deprecated) Available values: "standard", "enterprise".
+                      serve customers, use standard. for enterprise customers, use enterprise.
+                      Available values: "standard", "enterprise".
+                      the type of account being created. For self-serve customers, use standard. for enterprise customers, use enterprise.
                       Available values: "standard", "enterprise".
                     type: string
                   unit:
@@ -288,6 +292,32 @@ spec:
                   id:
                     description: (String) Identifier
                     type: string
+                  legacyFlags:
+                    description: (Attributes) Legacy account flags. (see below for
+                      nested schema)
+                    properties:
+                      enterpriseZoneQuota:
+                        description: (Attributes) Enterprise zone quota for standard
+                          and enterprise accounts. Accounts without a quota have a
+                          maximum of 0. (see below for nested schema)
+                        properties:
+                          available:
+                            description: |-
+                              (Number) Number of additional Enterprise zones available. Returns 0 if the quota is not allocated or is exhausted.
+                              Number of additional Enterprise zones available. Returns 0 if the quota is not allocated or is exhausted.
+                            type: number
+                          current:
+                            description: |-
+                              (Number) Current number of Enterprise zones.
+                              Current number of Enterprise zones.
+                            type: number
+                          maximum:
+                            description: |-
+                              (Number) Maximum number of Enterprise zones allowed.
+                              Maximum number of Enterprise zones allowed.
+                            type: number
+                        type: object
+                    type: object
                   managedBy:
                     description: (Attributes) Parent container details (see below
                       for nested schema)
@@ -302,11 +332,21 @@ spec:
                           (String) Name of the parent Organization, if one exists
                           Name of the parent Organization, if one exists
                         type: string
+                      rootOrgId:
+                        description: |-
+                          (String) ID of the root Organization, if one exists
+                          ID of the root Organization, if one exists
+                        type: string
+                      shouldDisplayParentOrgs:
+                        description: |-
+                          (Boolean) Indicates whether the parent Organization hierarchy should be displayed
+                          Indicates whether the parent Organization hierarchy should be displayed
+                        type: boolean
                     type: object
                   name:
                     description: |-
-                      (String) Account name
-                      Account name
+                      8 bytes.
+                      Account name, limited to 65 UTF-8 bytes.
                     type: string
                   settings:
                     description: (Attributes) Account settings (see below for nested
@@ -331,7 +371,9 @@ spec:
                     type: boolean
                   type:
                     description: |-
-                      (String, Deprecated) Available values: "standard", "enterprise".
+                      serve customers, use standard. for enterprise customers, use enterprise.
+                      Available values: "standard", "enterprise".
+                      the type of account being created. For self-serve customers, use standard. for enterprise customers, use enterprise.
                       Available values: "standard", "enterprise".
                     type: string
                   unit:

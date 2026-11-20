@@ -15,8 +15,14 @@ import (
 
 type AuthIDCharacteristicsInitParameters struct {
 
-	// (String) The name of the characteristic field, i.e., the header or cookie name.
-	// The name of the characteristic field, i.e., the header or cookie name.
+	// (String) For type: header or type: cookie: The name of the characteristic field, i.e., the header or cookie name.
+	// For `type: header` or `type: cookie`: The name of the characteristic field, i.e., the header or cookie name.
+	//
+	// For `type: jwt`: Claim location expressed as `$(token_config_id):$(json_path)`, where `token_config_id`
+	// is the ID of the token configuration used in validating the JWT, and `json_path` is a RFC 9535
+	// JSONPath (https://goessner.net/articles/JsonPath/, https://www.rfc-editor.org/rfc/rfc9535.html).
+	// The JSONPath expression may be in dot or bracket notation, may only specify literal keys
+	// or array indexes, and must return a singleton value, which will be interpreted as a string.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) The type of characteristic.
@@ -28,8 +34,14 @@ type AuthIDCharacteristicsInitParameters struct {
 
 type AuthIDCharacteristicsObservation struct {
 
-	// (String) The name of the characteristic field, i.e., the header or cookie name.
-	// The name of the characteristic field, i.e., the header or cookie name.
+	// (String) For type: header or type: cookie: The name of the characteristic field, i.e., the header or cookie name.
+	// For `type: header` or `type: cookie`: The name of the characteristic field, i.e., the header or cookie name.
+	//
+	// For `type: jwt`: Claim location expressed as `$(token_config_id):$(json_path)`, where `token_config_id`
+	// is the ID of the token configuration used in validating the JWT, and `json_path` is a RFC 9535
+	// JSONPath (https://goessner.net/articles/JsonPath/, https://www.rfc-editor.org/rfc/rfc9535.html).
+	// The JSONPath expression may be in dot or bracket notation, may only specify literal keys
+	// or array indexes, and must return a singleton value, which will be interpreted as a string.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (String) The type of characteristic.
@@ -41,8 +53,14 @@ type AuthIDCharacteristicsObservation struct {
 
 type AuthIDCharacteristicsParameters struct {
 
-	// (String) The name of the characteristic field, i.e., the header or cookie name.
-	// The name of the characteristic field, i.e., the header or cookie name.
+	// (String) For type: header or type: cookie: The name of the characteristic field, i.e., the header or cookie name.
+	// For `type: header` or `type: cookie`: The name of the characteristic field, i.e., the header or cookie name.
+	//
+	// For `type: jwt`: Claim location expressed as `$(token_config_id):$(json_path)`, where `token_config_id`
+	// is the ID of the token configuration used in validating the JWT, and `json_path` is a RFC 9535
+	// JSONPath (https://goessner.net/articles/JsonPath/, https://www.rfc-editor.org/rfc/rfc9535.html).
+	// The JSONPath expression may be in dot or bracket notation, may only specify literal keys
+	// or array indexes, and must return a singleton value, which will be interpreted as a string.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 

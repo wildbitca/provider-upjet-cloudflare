@@ -81,9 +81,9 @@ spec:
                   action:
                     description: |-
                       (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
-                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
                       Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to `true`.
-                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
                     type: string
                   description:
                     description: |-
@@ -158,17 +158,6 @@ spec:
                           (Boolean) Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
                           Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
                         type: boolean
-                      auditSsh:
-                        description: (Attributes) Define the settings for the Audit
-                          SSH action. Settable only for l4 rules with audit_ssh action.
-                          (see below for nested schema)
-                        properties:
-                          commandLogging:
-                            description: |-
-                              (Boolean) Enable SSH command logging.
-                              Enable SSH command logging.
-                            type: boolean
-                        type: object
                       bisoAdminControls:
                         description: (Attributes) Configure browser isolation behavior.
                           Settable only for http rules with the action set to isolate.
@@ -215,10 +204,10 @@ spec:
                             type: boolean
                           keyboard:
                             description: |-
-                              (String) Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
-                              Available values: "enabled", "disabled".
-                              Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
-                              Available values: "enabled", "disabled".
+                              all) may execute; other keyboard input is blocked from reaching the page. Copy and print remain subject to their independent controls. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2". The enable_read_only_actions value requires an explicit version of "v2".
+                              Available values: "enabled", "disabled", "enable_read_only_actions".
+                              Configure keyboard usage behavior. When set to enable_read_only_actions, only approved browser commands (find, copy, print, zoom, and select-all) may execute; other keyboard input is blocked from reaching the page. Copy and print remain subject to their independent controls. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2". The enable_read_only_actions value requires an explicit version of "v2".
+                              Available values: "enabled", "disabled", "enable_read_only_actions".
                             type: string
                           paste:
                             description: |-
@@ -403,6 +392,17 @@ spec:
                               Enable sending the copy to storage.
                             type: boolean
                         type: object
+                      forward:
+                        description: (Attributes) Forward matching HTTP requests to
+                          a Worker. Required for http rules with the action set to
+                          forward. (see below for nested schema)
+                        properties:
+                          workerId:
+                            description: |-
+                              (String) Specify the public Worker ID of the target Worker.
+                              Specify the public Worker ID of the target Worker.
+                            type: string
+                        type: object
                       ignoreCnameCategoryMatches:
                         description: |-
                           (Boolean) Ignore category matches at CNAME domains in a response. When off, evaluate categories in this rule against all CNAME domain categories in the response. Settable only for dns and dns_resolver rules.
@@ -567,7 +567,7 @@ spec:
                           action:
                             description: |-
                               (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
-                              Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                              Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
                               Defines the action performed when an untrusted certificate seen. The default action an error with HTTP code 526.
                               Available values: "pass_through", "block", "error".
                             type: string
@@ -646,9 +646,9 @@ spec:
                   action:
                     description: |-
                       (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
-                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
                       Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to `true`.
-                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
                     type: string
                   description:
                     description: |-
@@ -723,17 +723,6 @@ spec:
                           (Boolean) Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
                           Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
                         type: boolean
-                      auditSsh:
-                        description: (Attributes) Define the settings for the Audit
-                          SSH action. Settable only for l4 rules with audit_ssh action.
-                          (see below for nested schema)
-                        properties:
-                          commandLogging:
-                            description: |-
-                              (Boolean) Enable SSH command logging.
-                              Enable SSH command logging.
-                            type: boolean
-                        type: object
                       bisoAdminControls:
                         description: (Attributes) Configure browser isolation behavior.
                           Settable only for http rules with the action set to isolate.
@@ -780,10 +769,10 @@ spec:
                             type: boolean
                           keyboard:
                             description: |-
-                              (String) Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
-                              Available values: "enabled", "disabled".
-                              Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
-                              Available values: "enabled", "disabled".
+                              all) may execute; other keyboard input is blocked from reaching the page. Copy and print remain subject to their independent controls. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2". The enable_read_only_actions value requires an explicit version of "v2".
+                              Available values: "enabled", "disabled", "enable_read_only_actions".
+                              Configure keyboard usage behavior. When set to enable_read_only_actions, only approved browser commands (find, copy, print, zoom, and select-all) may execute; other keyboard input is blocked from reaching the page. Copy and print remain subject to their independent controls. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2". The enable_read_only_actions value requires an explicit version of "v2".
+                              Available values: "enabled", "disabled", "enable_read_only_actions".
                             type: string
                           paste:
                             description: |-
@@ -968,6 +957,17 @@ spec:
                               Enable sending the copy to storage.
                             type: boolean
                         type: object
+                      forward:
+                        description: (Attributes) Forward matching HTTP requests to
+                          a Worker. Required for http rules with the action set to
+                          forward. (see below for nested schema)
+                        properties:
+                          workerId:
+                            description: |-
+                              (String) Specify the public Worker ID of the target Worker.
+                              Specify the public Worker ID of the target Worker.
+                            type: string
+                        type: object
                       ignoreCnameCategoryMatches:
                         description: |-
                           (Boolean) Ignore category matches at CNAME domains in a response. When off, evaluate categories in this rule against all CNAME domain categories in the response. Settable only for dns and dns_resolver rules.
@@ -1132,7 +1132,7 @@ spec:
                           action:
                             description: |-
                               (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
-                              Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                              Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
                               Defines the action performed when an untrusted certificate seen. The default action an error with HTTP code 526.
                               Available values: "pass_through", "block", "error".
                             type: string
@@ -1302,9 +1302,9 @@ spec:
                   action:
                     description: |-
                       (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
-                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
                       Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to `true`.
-                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                      Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
                     type: string
                   createdAt:
                     description: (String)
@@ -1400,17 +1400,6 @@ spec:
                           (Boolean) Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
                           Set to enable MSP children to bypass this rule. Only parent MSP accounts can set this. this rule. Settable for all types of rules.
                         type: boolean
-                      auditSsh:
-                        description: (Attributes) Define the settings for the Audit
-                          SSH action. Settable only for l4 rules with audit_ssh action.
-                          (see below for nested schema)
-                        properties:
-                          commandLogging:
-                            description: |-
-                              (Boolean) Enable SSH command logging.
-                              Enable SSH command logging.
-                            type: boolean
-                        type: object
                       bisoAdminControls:
                         description: (Attributes) Configure browser isolation behavior.
                           Settable only for http rules with the action set to isolate.
@@ -1457,10 +1446,10 @@ spec:
                             type: boolean
                           keyboard:
                             description: |-
-                              (String) Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
-                              Available values: "enabled", "disabled".
-                              Configure keyboard usage behavior. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2".
-                              Available values: "enabled", "disabled".
+                              all) may execute; other keyboard input is blocked from reaching the page. Copy and print remain subject to their independent controls. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2". The enable_read_only_actions value requires an explicit version of "v2".
+                              Available values: "enabled", "disabled", "enable_read_only_actions".
+                              Configure keyboard usage behavior. When set to enable_read_only_actions, only approved browser commands (find, copy, print, zoom, and select-all) may execute; other keyboard input is blocked from reaching the page. Copy and print remain subject to their independent controls. If this field is absent, keyboard usage remains enabled. Applies only when version == "v2". The enable_read_only_actions value requires an explicit version of "v2".
+                              Available values: "enabled", "disabled", "enable_read_only_actions".
                             type: string
                           paste:
                             description: |-
@@ -1645,6 +1634,17 @@ spec:
                               Enable sending the copy to storage.
                             type: boolean
                         type: object
+                      forward:
+                        description: (Attributes) Forward matching HTTP requests to
+                          a Worker. Required for http rules with the action set to
+                          forward. (see below for nested schema)
+                        properties:
+                          workerId:
+                            description: |-
+                              (String) Specify the public Worker ID of the target Worker.
+                              Specify the public Worker ID of the target Worker.
+                            type: string
+                        type: object
                       ignoreCnameCategoryMatches:
                         description: |-
                           (Boolean) Ignore category matches at CNAME domains in a response. When off, evaluate categories in this rule against all CNAME domain categories in the response. Settable only for dns and dns_resolver rules.
@@ -1809,7 +1809,7 @@ spec:
                           action:
                             description: |-
                               (String) Specify the action to perform when the associated traffic, identity, and device posture expressions either absent or evaluate to true.
-                              Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect".
+                              Available values: "on", "off", "allow", "block", "scan", "noscan", "safesearch", "ytrestricted", "isolate", "noisolate", "override", "l4_override", "egress", "resolve", "quarantine", "redirect", "forward".
                               Defines the action performed when an untrusted certificate seen. The default action an error with HTTP code 526.
                               Available values: "pass_through", "block", "error".
                             type: string

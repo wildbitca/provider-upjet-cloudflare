@@ -127,8 +127,8 @@ type TrustAccessAIControlsMcpServerInitParameters struct {
 	// Available values: "oauth", "bearer", "unauthenticated".
 	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
 
-	// registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Required when creating a manual OAuth server or converting an existing server to manual mode. Omit it on update to preserve the existing secret; provide it to rotate the secret. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
-	// Pre-registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Required when creating a manual OAuth server or converting an existing server to manual mode. Omit it on update to preserve the existing secret; provide it to rotate the secret. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
+	// registered OAuth client. This field is accepted on create or update only when 'auth_credentials.auth_mode' is 'manual'. It is required when creating an MCP server with manual OAuth credentials or changing an existing server to use manual OAuth credentials. Omit 'client_secret' on update to preserve the existing secret. Provide a new 'client_secret' to rotate the secret. The secret is never returned by read, create, or update requests.
+	// Provides 'client_secret' for a pre-registered OAuth client. This field is accepted on create or update only when 'auth_credentials.auth_mode' is 'manual'. It is required when creating an MCP server with manual OAuth credentials or changing an existing server to use manual OAuth credentials. Omit 'client_secret' on update to preserve the existing secret. Provide a new 'client_secret' to rotate the secret. The secret is never returned by read, create, or update requests.
 	ClientSecretSecretRef *v2.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (String) Optional description of the MCP server.
@@ -139,8 +139,8 @@ type TrustAccessAIControlsMcpServerInitParameters struct {
 	// URL of the upstream MCP endpoint.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
-	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
+	// user authorization uses the shared Cloudflare callback URL as the 'redirect_uri' instead of the portal callback URL. The default is false. Set 'is_shared_oauth_callback_enabled' to true to enable the shared Cloudflare callback URL for this MCP server.
+	// When true, per-user authorization uses the shared Cloudflare callback URL as the 'redirect_uri' instead of the portal callback URL. The default is false. Set 'is_shared_oauth_callback_enabled' to true to enable the shared Cloudflare callback URL for this MCP server.
 	IsSharedOauthCallbackEnabled *bool `json:"isSharedOauthCallbackEnabled,omitempty" tf:"is_shared_oauth_callback_enabled,omitempty"`
 
 	// (String) Display name for the MCP server.
@@ -201,8 +201,8 @@ type TrustAccessAIControlsMcpServerObservation struct {
 	// (String) Unique identifier for the MCP server.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
-	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
+	// user authorization uses the shared Cloudflare callback URL as the 'redirect_uri' instead of the portal callback URL. The default is false. Set 'is_shared_oauth_callback_enabled' to true to enable the shared Cloudflare callback URL for this MCP server.
+	// When true, per-user authorization uses the shared Cloudflare callback URL as the 'redirect_uri' instead of the portal callback URL. The default is false. Set 'is_shared_oauth_callback_enabled' to true to enable the shared Cloudflare callback URL for this MCP server.
 	IsSharedOauthCallbackEnabled *bool `json:"isSharedOauthCallbackEnabled,omitempty" tf:"is_shared_oauth_callback_enabled,omitempty"`
 
 	// (String)
@@ -223,6 +223,10 @@ type TrustAccessAIControlsMcpServerObservation struct {
 
 	// (List of Map of String)
 	Prompts []map[string]*string `json:"prompts,omitempty" tf:"prompts,omitempty"`
+
+	// (String) Timestamp of the most recent successful admin OAuth registration.
+	// Timestamp of the most recent successful admin OAuth registration.
+	RegisteredAt *string `json:"registeredAt,omitempty" tf:"registered_at,omitempty"`
 
 	// (Boolean) Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
 	// Route outbound traffic to this MCP server through Zero Trust Secure Web Gateway.
@@ -259,8 +263,8 @@ type TrustAccessAIControlsMcpServerParameters struct {
 	// +kubebuilder:validation:Optional
 	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
 
-	// registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Required when creating a manual OAuth server or converting an existing server to manual mode. Omit it on update to preserve the existing secret; provide it to rotate the secret. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
-	// Pre-registered OAuth client_secret. Write-only - accepted on create/update when auth_credentials.auth_mode is 'manual'. Required when creating a manual OAuth server or converting an existing server to manual mode. Omit it on update to preserve the existing secret; provide it to rotate the secret. Stored AES-GCM-encrypted in server_oauth_secrets; never returned by read endpoints.
+	// registered OAuth client. This field is accepted on create or update only when 'auth_credentials.auth_mode' is 'manual'. It is required when creating an MCP server with manual OAuth credentials or changing an existing server to use manual OAuth credentials. Omit 'client_secret' on update to preserve the existing secret. Provide a new 'client_secret' to rotate the secret. The secret is never returned by read, create, or update requests.
+	// Provides 'client_secret' for a pre-registered OAuth client. This field is accepted on create or update only when 'auth_credentials.auth_mode' is 'manual'. It is required when creating an MCP server with manual OAuth credentials or changing an existing server to use manual OAuth credentials. Omit 'client_secret' on update to preserve the existing secret. Provide a new 'client_secret' to rotate the secret. The secret is never returned by read, create, or update requests.
 	// +kubebuilder:validation:Optional
 	ClientSecretSecretRef *v2.LocalSecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
@@ -274,8 +278,8 @@ type TrustAccessAIControlsMcpServerParameters struct {
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
-	// When true, the gateway worker uses the shared Cloudflare-owned OAuth callback endpoint as the redirect_uri for upstream on-behalf OAuth, instead of the customer portal hostname. Defaults to false (off); opt in per server by setting true.
+	// user authorization uses the shared Cloudflare callback URL as the 'redirect_uri' instead of the portal callback URL. The default is false. Set 'is_shared_oauth_callback_enabled' to true to enable the shared Cloudflare callback URL for this MCP server.
+	// When true, per-user authorization uses the shared Cloudflare callback URL as the 'redirect_uri' instead of the portal callback URL. The default is false. Set 'is_shared_oauth_callback_enabled' to true to enable the shared Cloudflare callback URL for this MCP server.
 	// +kubebuilder:validation:Optional
 	IsSharedOauthCallbackEnabled *bool `json:"isSharedOauthCallbackEnabled,omitempty" tf:"is_shared_oauth_callback_enabled,omitempty"`
 

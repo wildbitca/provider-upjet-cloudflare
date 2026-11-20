@@ -90,6 +90,13 @@ spec:
                           Specifies the duration in milliseconds or as a string like '5 minutes'.
                         x-kubernetes-preserve-unknown-fields: true
                     type: object
+                  jurisdiction:
+                    description: |-
+                      (String) Jurisdiction where instances of this workflow run and store data. Can only be set when the workflow is created and cannot be changed afterwards; omit it to keep the existing jurisdiction.
+                      Available values: "eu", "fedramp", "us".
+                      Jurisdiction where instances of this workflow run and store data. Can only be set when the workflow is created and cannot be changed afterwards; omit it to keep the existing jurisdiction.
+                      Available values: "eu", "fedramp", "us".
+                    type: string
                   limits:
                     description: (Attributes) (see below for nested schema)
                     properties:
@@ -157,6 +164,13 @@ spec:
                           Specifies the duration in milliseconds or as a string like '5 minutes'.
                         x-kubernetes-preserve-unknown-fields: true
                     type: object
+                  jurisdiction:
+                    description: |-
+                      (String) Jurisdiction where instances of this workflow run and store data. Can only be set when the workflow is created and cannot be changed afterwards; omit it to keep the existing jurisdiction.
+                      Available values: "eu", "fedramp", "us".
+                      Jurisdiction where instances of this workflow run and store data. Can only be set when the workflow is created and cannot be changed afterwards; omit it to keep the existing jurisdiction.
+                      Available values: "eu", "fedramp", "us".
+                    type: string
                   limits:
                     description: (Attributes) (see below for nested schema)
                     properties:
@@ -306,6 +320,13 @@ spec:
                   isDeleted:
                     description: (Number)
                     type: number
+                  jurisdiction:
+                    description: |-
+                      (String) Jurisdiction where instances of this workflow run and store data. Can only be set when the workflow is created and cannot be changed afterwards; omit it to keep the existing jurisdiction.
+                      Available values: "eu", "fedramp", "us".
+                      Jurisdiction where instances of this workflow run and store data. Can only be set when the workflow is created and cannot be changed afterwards; omit it to keep the existing jurisdiction.
+                      Available values: "eu", "fedramp", "us".
+                    type: string
                   limits:
                     description: (Attributes) (see below for nested schema)
                     properties:

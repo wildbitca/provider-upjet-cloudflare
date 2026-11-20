@@ -18,6 +18,9 @@ type MetaInitParameters struct {
 
 type MetaObservation struct {
 
+	// (Boolean)
+	AreChildAccountsAccessibleByOrgMembers *bool `json:"areChildAccountsAccessibleByOrgMembers,omitempty" tf:"are_child_accounts_accessible_by_org_members,omitempty"`
+
 	// element array containing their own tag; sub-organizations return
 	// [rootTag, ...intermediateTags, parentTag, selfTag]. Useful for
 	// constructing authorization scopes that need to cover every ancestor
@@ -35,6 +38,9 @@ type MetaObservation struct {
 
 	// (Attributes) Enable features for Organizations. (see below for nested schema)
 	TenantFlags *TenantFlagsObservation `json:"tenantFlags,omitempty" tf:"tenant_flags,omitempty"`
+
+	// (String)
+	TenantType *string `json:"tenantType,omitempty" tf:"tenant_type,omitempty"`
 }
 
 type MetaParameters struct {
@@ -42,13 +48,18 @@ type MetaParameters struct {
 
 type OrganizationInitParameters struct {
 
-	// (String)
+	// 8 bytes.
+	// The Organization name, limited to 65 UTF-8 bytes.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	Parent *ParentInitParameters `json:"parent,omitempty" tf:"parent,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (String) The current parent Organization ID. A different value is rejected; this endpoint cannot move an Organization.
+	// The current parent Organization ID. A different value is rejected; this endpoint cannot move an Organization.
+	ParentID *string `json:"parentId,omitempty" tf:"parent_id,omitempty"`
+
+	// 8 bytes. An empty profile is ignored. (see below for nested schema)
 	Profile *ProfileInitParameters `json:"profile,omitempty" tf:"profile,omitempty"`
 }
 
@@ -63,19 +74,25 @@ type OrganizationObservation struct {
 	// (Attributes) (see below for nested schema)
 	Meta *MetaObservation `json:"meta,omitempty" tf:"meta,omitempty"`
 
-	// (String)
+	// 8 bytes.
+	// The Organization name, limited to 65 UTF-8 bytes.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	Parent *ParentObservation `json:"parent,omitempty" tf:"parent,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (String) The current parent Organization ID. A different value is rejected; this endpoint cannot move an Organization.
+	// The current parent Organization ID. A different value is rejected; this endpoint cannot move an Organization.
+	ParentID *string `json:"parentId,omitempty" tf:"parent_id,omitempty"`
+
+	// 8 bytes. An empty profile is ignored. (see below for nested schema)
 	Profile *ProfileObservation `json:"profile,omitempty" tf:"profile,omitempty"`
 }
 
 type OrganizationParameters struct {
 
-	// (String)
+	// 8 bytes.
+	// The Organization name, limited to 65 UTF-8 bytes.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -83,7 +100,12 @@ type OrganizationParameters struct {
 	// +kubebuilder:validation:Optional
 	Parent *ParentParameters `json:"parent,omitempty" tf:"parent,omitempty"`
 
-	// (Attributes) (see below for nested schema)
+	// (String) The current parent Organization ID. A different value is rejected; this endpoint cannot move an Organization.
+	// The current parent Organization ID. A different value is rejected; this endpoint cannot move an Organization.
+	// +kubebuilder:validation:Optional
+	ParentID *string `json:"parentId,omitempty" tf:"parent_id,omitempty"`
+
+	// 8 bytes. An empty profile is ignored. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Profile *ProfileParameters `json:"profile,omitempty" tf:"profile,omitempty"`
 }
@@ -98,9 +120,6 @@ type ParentObservation struct {
 
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// (String)
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type ParentParameters struct {
@@ -150,23 +169,23 @@ type ProfileParameters struct {
 
 	// (String)
 	// +kubebuilder:validation:Optional
-	BusinessAddress *string `json:"businessAddress" tf:"business_address,omitempty"`
+	BusinessAddress *string `json:"businessAddress,omitempty" tf:"business_address,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional
-	BusinessEmail *string `json:"businessEmail" tf:"business_email,omitempty"`
+	BusinessEmail *string `json:"businessEmail,omitempty" tf:"business_email,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional
-	BusinessName *string `json:"businessName" tf:"business_name,omitempty"`
+	BusinessName *string `json:"businessName,omitempty" tf:"business_name,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional
-	BusinessPhone *string `json:"businessPhone" tf:"business_phone,omitempty"`
+	BusinessPhone *string `json:"businessPhone,omitempty" tf:"business_phone,omitempty"`
 
 	// (String)
 	// +kubebuilder:validation:Optional
-	ExternalMetadata *string `json:"externalMetadata" tf:"external_metadata,omitempty"`
+	ExternalMetadata *string `json:"externalMetadata,omitempty" tf:"external_metadata,omitempty"`
 }
 
 type TenantFlagsInitParameters struct {
@@ -229,7 +248,7 @@ type OrganizationStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Organization is the Schema for the Organizations API. Accepted Permissions User Details Write
+// Organization is the Schema for the Organizations API. Accepted Permissions User Details Write User API tokens can list and create Organizations, but reading, updating, or deleting an Organization requires a Global API key and your registered email address. See Organizations authentication limitations https://developers.cloudflare.com/fundamentals/organizations/limitations/#api-authentication for credential compatibility by operation. Each endpoint’s Security section lists its supported authentication methods, with Accepted Permissions where applicable.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

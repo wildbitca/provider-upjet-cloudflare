@@ -42,6 +42,8 @@ type DataInitParameters struct {
 
 	// (Dynamic) Flags for the CAA record.
 	// Flags for the CAA record.
+	//
+	// Flags.
 	Flags *v1.JSON `json:"flags,omitempty" tf:"flags,omitempty"`
 
 	// (Number) Key Tag.
@@ -110,6 +112,8 @@ type DataInitParameters struct {
 
 	// (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
 	// Priority.
+	//
+	// Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
 	// (Number) Protocol.
@@ -146,6 +150,10 @@ type DataInitParameters struct {
 
 	// (String) Target.
 	// Target.
+	//
+	// A valid hostname.
+	//
+	// The record content.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
 	// (String) Record type.
@@ -159,6 +167,8 @@ type DataInitParameters struct {
 
 	// (String) Value of the record. This field's semantics depend on the chosen tag.
 	// Value of the record. This field's semantics depend on the chosen tag.
+	//
+	// Value.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 
 	// (Number) The record weight.
@@ -194,6 +204,8 @@ type DataObservation struct {
 
 	// (Dynamic) Flags for the CAA record.
 	// Flags for the CAA record.
+	//
+	// Flags.
 	Flags *v1.JSON `json:"flags,omitempty" tf:"flags,omitempty"`
 
 	// (Number) Key Tag.
@@ -262,6 +274,8 @@ type DataObservation struct {
 
 	// (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
 	// Priority.
+	//
+	// Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
 	// (Number) Protocol.
@@ -298,6 +312,10 @@ type DataObservation struct {
 
 	// (String) Target.
 	// Target.
+	//
+	// A valid hostname.
+	//
+	// The record content.
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
 	// (String) Record type.
@@ -311,6 +329,8 @@ type DataObservation struct {
 
 	// (String) Value of the record. This field's semantics depend on the chosen tag.
 	// Value of the record. This field's semantics depend on the chosen tag.
+	//
+	// Value.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 
 	// (Number) The record weight.
@@ -352,6 +372,8 @@ type DataParameters struct {
 
 	// (Dynamic) Flags for the CAA record.
 	// Flags for the CAA record.
+	//
+	// Flags.
 	// +kubebuilder:validation:Optional
 	Flags *v1.JSON `json:"flags,omitempty" tf:"flags,omitempty"`
 
@@ -436,6 +458,8 @@ type DataParameters struct {
 
 	// (Number) Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
 	// Priority.
+	//
+	// Required for MX and URI records; ignored for other record types (but may still be returned by the API). Records with lower priorities are preferred. This field is to be deprecated in favor of the priority field within the data map.
 	// +kubebuilder:validation:Optional
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
@@ -481,6 +505,10 @@ type DataParameters struct {
 
 	// (String) Target.
 	// Target.
+	//
+	// A valid hostname.
+	//
+	// The record content.
 	// +kubebuilder:validation:Optional
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
 
@@ -497,6 +525,8 @@ type DataParameters struct {
 
 	// (String) Value of the record. This field's semantics depend on the chosen tag.
 	// Value of the record. This field's semantics depend on the chosen tag.
+	//
+	// Value.
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 
@@ -516,7 +546,7 @@ type RecordInitParameters struct {
 	// A valid IPv4 address.
 	Content *string `json:"content,omitempty" tf:"content,omitempty"`
 
-	// (Attributes) Components of a MX record. (see below for nested schema)
+	// (Attributes) For type: CAA: Components of a CAA record.
 	Data *DataInitParameters `json:"data,omitempty" tf:"data,omitempty"`
 
 	// (Boolean) Whether to include shadow metadata in the meta field of each record in the response. See Shadowed records.
@@ -531,8 +561,8 @@ type RecordInitParameters struct {
 	// Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
-	// (Boolean) Enables private network routing to the origin.
-	// Enables private network routing to the origin.
+	// (Boolean) For type: A or type: AAAA: Enables private network routing to the origin.
+	// For `type: A` or `type: AAAA`: Enables private network routing to the origin.
 	PrivateRouting *bool `json:"privateRouting,omitempty" tf:"private_routing,omitempty"`
 
 	// (Boolean) Whether the record is receiving the performance and security benefits of Cloudflare.
@@ -589,7 +619,7 @@ type RecordObservation struct {
 	// When the record was created.
 	CreatedOn *string `json:"createdOn,omitempty" tf:"created_on,omitempty"`
 
-	// (Attributes) Components of a MX record. (see below for nested schema)
+	// (Attributes) For type: CAA: Components of a CAA record.
 	Data *DataObservation `json:"data,omitempty" tf:"data,omitempty"`
 
 	// (String) Identifier.
@@ -615,8 +645,8 @@ type RecordObservation struct {
 	// Required for MX, SRV and URI records; unused by other record types. Records with lower priorities are preferred.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
-	// (Boolean) Enables private network routing to the origin.
-	// Enables private network routing to the origin.
+	// (Boolean) For type: A or type: AAAA: Enables private network routing to the origin.
+	// For `type: A` or `type: AAAA`: Enables private network routing to the origin.
 	PrivateRouting *bool `json:"privateRouting,omitempty" tf:"private_routing,omitempty"`
 
 	// (Boolean) Whether the record can be proxied by Cloudflare or not.
@@ -666,7 +696,7 @@ type RecordParameters struct {
 	// +kubebuilder:validation:Optional
 	Content *string `json:"content,omitempty" tf:"content,omitempty"`
 
-	// (Attributes) Components of a MX record. (see below for nested schema)
+	// (Attributes) For type: CAA: Components of a CAA record.
 	// +kubebuilder:validation:Optional
 	Data *DataParameters `json:"data,omitempty" tf:"data,omitempty"`
 
@@ -685,8 +715,8 @@ type RecordParameters struct {
 	// +kubebuilder:validation:Optional
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
-	// (Boolean) Enables private network routing to the origin.
-	// Enables private network routing to the origin.
+	// (Boolean) For type: A or type: AAAA: Enables private network routing to the origin.
+	// For `type: A` or `type: AAAA`: Enables private network routing to the origin.
 	// +kubebuilder:validation:Optional
 	PrivateRouting *bool `json:"privateRouting,omitempty" tf:"private_routing,omitempty"`
 

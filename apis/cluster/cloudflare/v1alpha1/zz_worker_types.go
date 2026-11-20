@@ -550,8 +550,9 @@ type PlacementInitParameters struct {
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
 	// (String) Enables Smart Placement.
-	// Available values: "smart", "targeted".
 	// Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+	//
+	// Targeted placement mode.
 	// Available values: "smart", "targeted".
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
@@ -574,8 +575,9 @@ type PlacementObservation struct {
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
 	// (String) Enables Smart Placement.
-	// Available values: "smart", "targeted".
 	// Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+	//
+	// Targeted placement mode.
 	// Available values: "smart", "targeted".
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
@@ -600,8 +602,9 @@ type PlacementParameters struct {
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
 	// (String) Enables Smart Placement.
-	// Available values: "smart", "targeted".
 	// Enables [Smart Placement](https://developers.cloudflare.com/workers/configuration/smart-placement).
+	//
+	// Targeted placement mode.
 	// Available values: "smart", "targeted".
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
@@ -1233,7 +1236,7 @@ type WorkerStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Worker is the Schema for the Workers API. Accepted Permissions Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
+// Worker is the Schema for the Workers API. Accepted Permissions Individual Workers AdminIndividual Workers Content Read-OnlyIndividual Workers EditorIndividual Workers Metadata Read-OnlyWorkers AdminWorkers Content Read-OnlyWorkers EditorWorkers Metadata Read-OnlyWorkers Scripts ReadWorkers Scripts WriteWorkers Tail Read
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

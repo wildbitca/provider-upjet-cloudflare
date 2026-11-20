@@ -476,8 +476,8 @@ spec:
                     type: object
                   createdAt:
                     description: |-
-                      (String) When the profile was created.
-                      When the profile was created.
+                      (String) For type: custom: When the profile was created.
+                      For `type: custom`: When the profile was created.
                     type: string
                   dataClasses:
                     description: |-
@@ -545,8 +545,8 @@ spec:
                     type: boolean
                   openAccess:
                     description: |-
-                      (Boolean) Whether this profile can be accessed by anyone.
-                      Whether this profile can be accessed by anyone.
+                      (Boolean) For type: predefined: Whether this profile can be accessed by anyone.
+                      For `type: predefined`: Whether this profile can be accessed by anyone.
                     type: boolean
                   sensitivityLevels:
                     description: (Attributes List) Sensitivity levels to associate
@@ -587,8 +587,8 @@ spec:
                     type: string
                   updatedAt:
                     description: |-
-                      (String) When the profile was lasted updated.
-                      When the profile was lasted updated.
+                      (String) For type: custom: When the profile was lasted updated.
+                      For `type: custom`: When the profile was lasted updated.
                     type: string
                 type: object
               conditions:

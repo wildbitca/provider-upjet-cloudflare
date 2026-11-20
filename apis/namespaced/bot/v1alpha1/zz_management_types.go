@@ -13,7 +13,114 @@ import (
 	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
+type AIAgentsInitParameters struct {
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	AnthropicAgent *string `json:"anthropicAgent,omitempty" tf:"anthropic_agent,omitempty"`
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	GoogleAgent *string `json:"googleAgent,omitempty" tf:"google_agent,omitempty"`
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	Instinct *string `json:"instinct,omitempty" tf:"instinct,omitempty"`
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	Muse *string `json:"muse,omitempty" tf:"muse,omitempty"`
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	OpenaiAgent *string `json:"openaiAgent,omitempty" tf:"openai_agent,omitempty"`
+}
+
+type AIAgentsObservation struct {
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	AnthropicAgent *string `json:"anthropicAgent,omitempty" tf:"anthropic_agent,omitempty"`
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	GoogleAgent *string `json:"googleAgent,omitempty" tf:"google_agent,omitempty"`
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	Instinct *string `json:"instinct,omitempty" tf:"instinct,omitempty"`
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	Muse *string `json:"muse,omitempty" tf:"muse,omitempty"`
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	OpenaiAgent *string `json:"openaiAgent,omitempty" tf:"openai_agent,omitempty"`
+}
+
+type AIAgentsParameters struct {
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// +kubebuilder:validation:Optional
+	AnthropicAgent *string `json:"anthropicAgent,omitempty" tf:"anthropic_agent,omitempty"`
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// +kubebuilder:validation:Optional
+	GoogleAgent *string `json:"googleAgent,omitempty" tf:"google_agent,omitempty"`
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// +kubebuilder:validation:Optional
+	Instinct *string `json:"instinct,omitempty" tf:"instinct,omitempty"`
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// +kubebuilder:validation:Optional
+	Muse *string `json:"muse,omitempty" tf:"muse,omitempty"`
+
+	// (String) Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// Action to apply to one supported personal AI agent.
+	// Available values: "disabled", "block", "only_on_ad_pages".
+	// +kubebuilder:validation:Optional
+	OpenaiAgent *string `json:"openaiAgent,omitempty" tf:"openai_agent,omitempty"`
+}
+
 type ManagementInitParameters struct {
+
+	// (Attributes) Configure blocking behavior for supported personal AI agents. (see below for nested schema)
+	AIAgents *AIAgentsInitParameters `json:"aiAgents,omitempty" tf:"ai_agents,omitempty"`
 
 	// rule updates.
 	// Temporary migration flag tracking zones opted out of AI bots managed-rule updates.
@@ -129,6 +236,9 @@ type ManagementInitParameters struct {
 }
 
 type ManagementObservation struct {
+
+	// (Attributes) Configure blocking behavior for supported personal AI agents. (see below for nested schema)
+	AIAgents *AIAgentsObservation `json:"aiAgents,omitempty" tf:"ai_agents,omitempty"`
 
 	// rule updates.
 	// Temporary migration flag tracking zones opted out of AI bots managed-rule updates.
@@ -254,6 +364,10 @@ type ManagementObservation struct {
 }
 
 type ManagementParameters struct {
+
+	// (Attributes) Configure blocking behavior for supported personal AI agents. (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	AIAgents *AIAgentsParameters `json:"aiAgents,omitempty" tf:"ai_agents,omitempty"`
 
 	// rule updates.
 	// Temporary migration flag tracking zones opted out of AI bots managed-rule updates.

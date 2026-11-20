@@ -19,10 +19,6 @@ type DNSSettingsInitParameters struct {
 	// Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
 	FlattenAllCnames *bool `json:"flattenAllCnames,omitempty" tf:"flatten_all_cnames,omitempty"`
 
-	// (Boolean, Deprecated) Deprecated. Use nameservers.type to configure Advanced Nameservers.
-	// Deprecated. Use nameservers.type to configure Advanced Nameservers.
-	FoundationDNS *bool `json:"foundationDns,omitempty" tf:"foundation_dns,omitempty"`
-
 	// (Attributes) Settings for this internal zone. (see below for nested schema)
 	InternalDNS *InternalDNSInitParameters `json:"internalDns,omitempty" tf:"internal_dns,omitempty"`
 
@@ -70,10 +66,6 @@ type DNSSettingsObservation struct {
 	// Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
 	FlattenAllCnames *bool `json:"flattenAllCnames,omitempty" tf:"flatten_all_cnames,omitempty"`
 
-	// (Boolean, Deprecated) Deprecated. Use nameservers.type to configure Advanced Nameservers.
-	// Deprecated. Use nameservers.type to configure Advanced Nameservers.
-	FoundationDNS *bool `json:"foundationDns,omitempty" tf:"foundation_dns,omitempty"`
-
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Attributes) Settings for this internal zone. (see below for nested schema)
@@ -114,11 +106,6 @@ type DNSSettingsParameters struct {
 	// Whether to flatten all CNAME records in the zone. Note that, due to DNS limitations, a CNAME record at the zone apex will always be flattened.
 	// +kubebuilder:validation:Optional
 	FlattenAllCnames *bool `json:"flattenAllCnames,omitempty" tf:"flatten_all_cnames,omitempty"`
-
-	// (Boolean, Deprecated) Deprecated. Use nameservers.type to configure Advanced Nameservers.
-	// Deprecated. Use nameservers.type to configure Advanced Nameservers.
-	// +kubebuilder:validation:Optional
-	FoundationDNS *bool `json:"foundationDns,omitempty" tf:"foundation_dns,omitempty"`
 
 	// (Attributes) Settings for this internal zone. (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -194,11 +181,11 @@ type InternalDNSParameters struct {
 type NameserversInitParameters struct {
 
 	// owned Custom Nameserver Set to use for this zone.
-	// Identifier of the account-owned Custom Nameserver Set to use for this zone.
+	// For `type: custom`: Identifier of the account-owned Custom Nameserver Set to use for this zone.
 	NameserverSetID *string `json:"nameserverSetId,omitempty" tf:"nameserver_set_id,omitempty"`
 
-	// (Number) Configured nameserver set number to use for this zone.
-	// Configured nameserver set number to use for this zone.
+	// (Number) For type: custom.account or type: custom.tenant or type: custom.zone: Configured nameserver set number to use for this zone.
+	// For `type: custom.account` or `type: custom.tenant` or `type: custom.zone`: Configured nameserver set number to use for this zone.
 	NsSet *float64 `json:"nsSet,omitempty" tf:"ns_set,omitempty"`
 
 	// (String) Nameserver type.
@@ -211,11 +198,11 @@ type NameserversInitParameters struct {
 type NameserversObservation struct {
 
 	// owned Custom Nameserver Set to use for this zone.
-	// Identifier of the account-owned Custom Nameserver Set to use for this zone.
+	// For `type: custom`: Identifier of the account-owned Custom Nameserver Set to use for this zone.
 	NameserverSetID *string `json:"nameserverSetId,omitempty" tf:"nameserver_set_id,omitempty"`
 
-	// (Number) Configured nameserver set number to use for this zone.
-	// Configured nameserver set number to use for this zone.
+	// (Number) For type: custom.account or type: custom.tenant or type: custom.zone: Configured nameserver set number to use for this zone.
+	// For `type: custom.account` or `type: custom.tenant` or `type: custom.zone`: Configured nameserver set number to use for this zone.
 	NsSet *float64 `json:"nsSet,omitempty" tf:"ns_set,omitempty"`
 
 	// (String) Nameserver type.
@@ -228,12 +215,12 @@ type NameserversObservation struct {
 type NameserversParameters struct {
 
 	// owned Custom Nameserver Set to use for this zone.
-	// Identifier of the account-owned Custom Nameserver Set to use for this zone.
+	// For `type: custom`: Identifier of the account-owned Custom Nameserver Set to use for this zone.
 	// +kubebuilder:validation:Optional
 	NameserverSetID *string `json:"nameserverSetId,omitempty" tf:"nameserver_set_id,omitempty"`
 
-	// (Number) Configured nameserver set number to use for this zone.
-	// Configured nameserver set number to use for this zone.
+	// (Number) For type: custom.account or type: custom.tenant or type: custom.zone: Configured nameserver set number to use for this zone.
+	// For `type: custom.account` or `type: custom.tenant` or `type: custom.zone`: Configured nameserver set number to use for this zone.
 	// +kubebuilder:validation:Optional
 	NsSet *float64 `json:"nsSet,omitempty" tf:"ns_set,omitempty"`
 

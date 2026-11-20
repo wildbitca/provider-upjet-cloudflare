@@ -18,8 +18,8 @@ type BehaviorsInitParameters struct {
 	// (Boolean)
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String) Available values: "low", "medium", "high".
-	// Available values: "low", "medium", "high".
+	// (String) Available values: "info", "low", "medium", "high".
+	// Available values: "info", "low", "medium", "high".
 	RiskLevel *string `json:"riskLevel,omitempty" tf:"risk_level,omitempty"`
 }
 
@@ -28,8 +28,8 @@ type BehaviorsObservation struct {
 	// (Boolean)
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (String) Available values: "low", "medium", "high".
-	// Available values: "low", "medium", "high".
+	// (String) Available values: "info", "low", "medium", "high".
+	// Available values: "info", "low", "medium", "high".
 	RiskLevel *string `json:"riskLevel,omitempty" tf:"risk_level,omitempty"`
 }
 
@@ -39,8 +39,8 @@ type BehaviorsParameters struct {
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
 
-	// (String) Available values: "low", "medium", "high".
-	// Available values: "low", "medium", "high".
+	// (String) Available values: "info", "low", "medium", "high".
+	// Available values: "info", "low", "medium", "high".
 	// +kubebuilder:validation:Optional
 	RiskLevel *string `json:"riskLevel" tf:"risk_level,omitempty"`
 }

@@ -233,7 +233,7 @@ spec:
                     description: |-
                       sensitive manner
                       Cannot be set to false if secret is true
-                      Only applies to custom word lists.
+                      For `type: exact_data`: Only applies to custom word lists.
                       Determines if the words should be matched in a case-sensitive manner
                       Cannot be set to false if secret is true
                     type: boolean
@@ -256,13 +256,19 @@ spec:
                     type: string
                   deprecated:
                     description: |-
-                      (Boolean) Whether this entry is deprecated for new use. This is computed from the static catalog and
+                      (Boolean) For type: predefined: Whether this entry is deprecated for new use. This is computed from the static catalog and
                       emitted only when true.
-                      Whether this entry is deprecated for new use. This is computed from the static catalog and
+                      For `type: predefined`: Whether this entry is deprecated for new use. This is computed from the static catalog and
                       emitted only when true.
                     type: boolean
                   description:
-                    description: (String)
+                    description: |-
+                      (String) For type: custom_prompt_topic: The optional description of the custom prompt topic entry.
+                      For `type: custom_prompt_topic`: The optional description of the custom prompt topic entry.
+
+                      For `type: exact_data`: The optional description of the exact data entry.
+
+                      For `type: document_fingerprint`: The optional description of the document fingerprint entry.
                     type: string
                   enabled:
                     description: (Boolean)
@@ -323,14 +329,30 @@ spec:
                       (String) Available values: "empty", "uploading", "pending", "processing", "failed", "complete".
                       Available values: "empty", "uploading", "pending", "processing", "failed", "complete".
                     type: string
+                  validatorIds:
+                    description: |-
+                      (Set of String) For type: custom: Validators this entry references, by id, at most 10. An empty list means the entry
+                      references none.
+                      For `type: custom`: Validators this entry references, by id, at most 10. An empty list means the entry
+                      references none.
+
+                      Returned by the entry endpoints. Not returned on entries embedded in other responses, such
+                      as profiles.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                   variant:
-                    description: (Attributes) A Predefined AI prompt classification
-                      topic entry. (see below for nested schema)
+                    description: '(Attributes) For type: predefined: A Predefined
+                      AI prompt classification topic entry. (see below for nested
+                      schema)'
                     properties:
                       description:
                         description: |-
-                          (String)
-                          A customer-facing explanation of what this predefined AI prompt topic represents.
+                          (String) For type: custom_prompt_topic: The optional description of the custom prompt topic entry.
+                          For `type: PromptTopic`: A customer-facing explanation of what this predefined AI prompt topic represents.
+
+                          For `type: General`: A customer-facing explanation of what this predefined entry represents.
                         type: string
                       topicType:
                         description: |-

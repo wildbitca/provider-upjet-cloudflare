@@ -99,6 +99,11 @@ spec:
                       The number of days for which the certificate should be valid.
                       Available values: 7, 30, 90, 365, 730, 1095, 5475.
                     type: number
+                  zoneId:
+                    description: |-
+                      certificate; ignored otherwise.
+                      Identifier of the zone whose keyless servers the certificate is for. Required when `request_type` is `keyless-certificate`; ignored otherwise.
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -140,6 +145,11 @@ spec:
                       The number of days for which the certificate should be valid.
                       Available values: 7, 30, 90, 365, 730, 1095, 5475.
                     type: number
+                  zoneId:
+                    description: |-
+                      certificate; ignored otherwise.
+                      Identifier of the zone whose keyless servers the certificate is for. Required when `request_type` is `keyless-certificate`; ignored otherwise.
+                    type: string
                 type: object
               managementPolicies:
                 default:
@@ -286,6 +296,16 @@ spec:
                       The number of days for which the certificate should be valid.
                       Available values: 7, 30, 90, 365, 730, 1095, 5475.
                     type: number
+                  revokedAt:
+                    description: |-
+                      (String) When the certificate was revoked.
+                      When the certificate was revoked.
+                    type: string
+                  zoneId:
+                    description: |-
+                      certificate; ignored otherwise.
+                      Identifier of the zone whose keyless servers the certificate is for. Required when `request_type` is `keyless-certificate`; ignored otherwise.
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.

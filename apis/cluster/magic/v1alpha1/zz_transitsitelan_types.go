@@ -195,6 +195,41 @@ type NATParameters struct {
 	StaticPrefix *string `json:"staticPrefix,omitempty" tf:"static_prefix,omitempty"`
 }
 
+type RemoteSubnetsInitParameters struct {
+
+	// (String) A valid CIDR notation representing an IP range.
+	// A valid CIDR notation representing an IP range.
+	LocalAliasPrefix *string `json:"localAliasPrefix,omitempty" tf:"local_alias_prefix,omitempty"`
+
+	// (String) A valid CIDR notation representing an IP range.
+	// A valid CIDR notation representing an IP range.
+	RemotePrefix *string `json:"remotePrefix,omitempty" tf:"remote_prefix,omitempty"`
+}
+
+type RemoteSubnetsObservation struct {
+
+	// (String) A valid CIDR notation representing an IP range.
+	// A valid CIDR notation representing an IP range.
+	LocalAliasPrefix *string `json:"localAliasPrefix,omitempty" tf:"local_alias_prefix,omitempty"`
+
+	// (String) A valid CIDR notation representing an IP range.
+	// A valid CIDR notation representing an IP range.
+	RemotePrefix *string `json:"remotePrefix,omitempty" tf:"remote_prefix,omitempty"`
+}
+
+type RemoteSubnetsParameters struct {
+
+	// (String) A valid CIDR notation representing an IP range.
+	// A valid CIDR notation representing an IP range.
+	// +kubebuilder:validation:Optional
+	LocalAliasPrefix *string `json:"localAliasPrefix" tf:"local_alias_prefix,omitempty"`
+
+	// (String) A valid CIDR notation representing an IP range.
+	// A valid CIDR notation representing an IP range.
+	// +kubebuilder:validation:Optional
+	RemotePrefix *string `json:"remotePrefix" tf:"remote_prefix,omitempty"`
+}
+
 type RoutedSubnetsInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
@@ -361,6 +396,9 @@ type TransitSiteLanInitParameters struct {
 	Physport *float64 `json:"physport,omitempty" tf:"physport,omitempty"`
 
 	// (Attributes List) (see below for nested schema)
+	RemoteSubnets []RemoteSubnetsInitParameters `json:"remoteSubnets,omitempty" tf:"remote_subnets,omitempty"`
+
+	// (Attributes List) (see below for nested schema)
 	RoutedSubnets []RoutedSubnetsInitParameters `json:"routedSubnets,omitempty" tf:"routed_subnets,omitempty"`
 
 	// (String) Identifier
@@ -407,6 +445,9 @@ type TransitSiteLanObservation struct {
 
 	// (Number)
 	Physport *float64 `json:"physport,omitempty" tf:"physport,omitempty"`
+
+	// (Attributes List) (see below for nested schema)
+	RemoteSubnets []RemoteSubnetsObservation `json:"remoteSubnets,omitempty" tf:"remote_subnets,omitempty"`
 
 	// (Attributes List) (see below for nested schema)
 	RoutedSubnets []RoutedSubnetsObservation `json:"routedSubnets,omitempty" tf:"routed_subnets,omitempty"`
@@ -460,6 +501,10 @@ type TransitSiteLanParameters struct {
 	// (Number)
 	// +kubebuilder:validation:Optional
 	Physport *float64 `json:"physport,omitempty" tf:"physport,omitempty"`
+
+	// (Attributes List) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	RemoteSubnets []RemoteSubnetsParameters `json:"remoteSubnets,omitempty" tf:"remote_subnets,omitempty"`
 
 	// (Attributes List) (see below for nested schema)
 	// +kubebuilder:validation:Optional

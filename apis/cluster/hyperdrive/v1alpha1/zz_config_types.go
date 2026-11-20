@@ -18,10 +18,12 @@ type CachingInitParameters struct {
 	// (Boolean)
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// (Number)
+	// (Number) Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
+	// Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
 	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
 
-	// (Number)
+	// (Number) Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
+	// Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
 	StaleWhileRevalidate *float64 `json:"staleWhileRevalidate,omitempty" tf:"stale_while_revalidate,omitempty"`
 }
 
@@ -30,10 +32,12 @@ type CachingObservation struct {
 	// (Boolean)
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// (Number)
+	// (Number) Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
+	// Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
 	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
 
-	// (Number)
+	// (Number) Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
+	// Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
 	StaleWhileRevalidate *float64 `json:"staleWhileRevalidate,omitempty" tf:"stale_while_revalidate,omitempty"`
 }
 
@@ -43,11 +47,13 @@ type CachingParameters struct {
 	// +kubebuilder:validation:Optional
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// (Number)
+	// (Number) Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
+	// Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
 	// +kubebuilder:validation:Optional
 	MaxAge *float64 `json:"maxAge,omitempty" tf:"max_age,omitempty"`
 
-	// (Number)
+	// (Number) Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
+	// Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
 	// +kubebuilder:validation:Optional
 	StaleWhileRevalidate *float64 `json:"staleWhileRevalidate,omitempty" tf:"stale_while_revalidate,omitempty"`
 }
@@ -61,7 +67,8 @@ type ConfigInitParameters struct {
 	// (Attributes) (see below for nested schema)
 	Caching *CachingInitParameters `json:"caching,omitempty" tf:"caching,omitempty"`
 
-	// (String)
+	// only metadata and cannot be changed with replace or update operations.
+	// Selects a PlanetScale database and provisions credentials managed by Cloudflare when creating a Hyperdrive configuration. The Cloudflare account must already be linked to PlanetScale in the Hyperdrive dashboard. The selection is returned as read-only metadata and cannot be changed with replace or update operations.
 	Integration *string `json:"integration,omitempty" tf:"integration,omitempty"`
 
 	// (Attributes) mTLS configuration for the origin connection. Cannot be used with VPC Service origins; TLS must be managed on the VPC Service. (see below for nested schema)
@@ -100,7 +107,8 @@ type ConfigObservation struct {
 	// (String) Define configurations using a unique string identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String)
+	// only metadata and cannot be changed with replace or update operations.
+	// Selects a PlanetScale database and provisions credentials managed by Cloudflare when creating a Hyperdrive configuration. The Cloudflare account must already be linked to PlanetScale in the Hyperdrive dashboard. The selection is returned as read-only metadata and cannot be changed with replace or update operations.
 	Integration *string `json:"integration,omitempty" tf:"integration,omitempty"`
 
 	// (String) Defines the last modified time of the Hyperdrive configuration.
@@ -142,7 +150,8 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Caching *CachingParameters `json:"caching,omitempty" tf:"caching,omitempty"`
 
-	// (String)
+	// only metadata and cannot be changed with replace or update operations.
+	// Selects a PlanetScale database and provisions credentials managed by Cloudflare when creating a Hyperdrive configuration. The Cloudflare account must already be linked to PlanetScale in the Hyperdrive dashboard. The selection is returned as read-only metadata and cannot be changed with replace or update operations.
 	// +kubebuilder:validation:Optional
 	Integration *string `json:"integration,omitempty" tf:"integration,omitempty"`
 
@@ -234,6 +243,8 @@ type OriginInitParameters struct {
 
 	// local IP addresses are not allowed.
 	// Defines the publicly reachable hostname or IP of your origin database. Private, loopback, and link-local IP addresses are not allowed.
+	//
+	// Defines the host (hostname or IP) of your origin database.
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
 	// only value.
@@ -271,6 +282,8 @@ type OriginObservation struct {
 
 	// local IP addresses are not allowed.
 	// Defines the publicly reachable hostname or IP of your origin database. Private, loopback, and link-local IP addresses are not allowed.
+	//
+	// Defines the host (hostname or IP) of your origin database.
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
 	// (Number) Defines the port of your origin database. Defaults to 5432 for PostgreSQL or 3306 for MySQL if not specified.
@@ -311,6 +324,8 @@ type OriginParameters struct {
 
 	// local IP addresses are not allowed.
 	// Defines the publicly reachable hostname or IP of your origin database. Private, loopback, and link-local IP addresses are not allowed.
+	//
+	// Defines the host (hostname or IP) of your origin database.
 	// +kubebuilder:validation:Optional
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 

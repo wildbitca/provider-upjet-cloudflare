@@ -75,9 +75,9 @@ spec:
                 properties:
                   certificateAuthority:
                     description: |-
-                      (String) The Certificate Authority that Total TLS certificates will be issued through.
+                      (String) The Certificate Authority that Total TLS certificates will be issued through. Not returned in responses when Total TLS is disabled.
                       Available values: "google", "lets_encrypt", "ssl_com".
-                      The Certificate Authority that Total TLS certificates will be issued through.
+                      The Certificate Authority that Total TLS certificates will be issued through. Not returned in responses when Total TLS is disabled.
                       Available values: "google", "lets_encrypt", "ssl_com".
                     type: string
                   enabled:
@@ -106,9 +106,9 @@ spec:
                 properties:
                   certificateAuthority:
                     description: |-
-                      (String) The Certificate Authority that Total TLS certificates will be issued through.
+                      (String) The Certificate Authority that Total TLS certificates will be issued through. Not returned in responses when Total TLS is disabled.
                       Available values: "google", "lets_encrypt", "ssl_com".
-                      The Certificate Authority that Total TLS certificates will be issued through.
+                      The Certificate Authority that Total TLS certificates will be issued through. Not returned in responses when Total TLS is disabled.
                       Available values: "google", "lets_encrypt", "ssl_com".
                     type: string
                   enabled:
@@ -224,9 +224,9 @@ spec:
                 properties:
                   certificateAuthority:
                     description: |-
-                      (String) The Certificate Authority that Total TLS certificates will be issued through.
+                      (String) The Certificate Authority that Total TLS certificates will be issued through. Not returned in responses when Total TLS is disabled.
                       Available values: "google", "lets_encrypt", "ssl_com".
-                      The Certificate Authority that Total TLS certificates will be issued through.
+                      The Certificate Authority that Total TLS certificates will be issued through. Not returned in responses when Total TLS is disabled.
                       Available values: "google", "lets_encrypt", "ssl_com".
                     type: string
                   enabled:
@@ -239,9 +239,9 @@ spec:
                     type: string
                   validityPeriod:
                     description: |-
-                      (Number) The validity period in days for the certificates ordered via Total TLS.
+                      (Number) The validity period in days for the certificates ordered via Total TLS. Not returned when Total TLS is disabled.
                       Available values: 90.
-                      The validity period in days for the certificates ordered via Total TLS.
+                      The validity period in days for the certificates ordered via Total TLS. Not returned when Total TLS is disabled.
                       Available values: 90.
                     type: number
                   zoneId:

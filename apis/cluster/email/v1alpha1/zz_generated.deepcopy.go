@@ -1577,6 +1577,11 @@ func (in *SecurityBlockSenderInitParameters) DeepCopyInto(out *SecurityBlockSend
 		*out = new(string)
 		**out = **in
 	}
+	if in.ExpiresAt != nil {
+		in, out := &in.ExpiresAt, &out.ExpiresAt
+		*out = new(string)
+		**out = **in
+	}
 	if in.IsRegex != nil {
 		in, out := &in.IsRegex, &out.IsRegex
 		*out = new(bool)
@@ -1654,6 +1659,11 @@ func (in *SecurityBlockSenderObservation) DeepCopyInto(out *SecurityBlockSenderO
 		*out = new(string)
 		**out = **in
 	}
+	if in.ExpiresAt != nil {
+		in, out := &in.ExpiresAt, &out.ExpiresAt
+		*out = new(string)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -1706,6 +1716,11 @@ func (in *SecurityBlockSenderParameters) DeepCopyInto(out *SecurityBlockSenderPa
 	}
 	if in.Comments != nil {
 		in, out := &in.Comments, &out.Comments
+		*out = new(string)
+		**out = **in
+	}
+	if in.ExpiresAt != nil {
+		in, out := &in.ExpiresAt, &out.ExpiresAt
 		*out = new(string)
 		**out = **in
 	}

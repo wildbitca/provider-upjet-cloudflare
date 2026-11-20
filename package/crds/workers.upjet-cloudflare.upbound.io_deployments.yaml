@@ -35,7 +35,10 @@ spec:
     schema:
       openAPIV3Schema:
         description: Deployment is the Schema for the Deployments API. Accepted Permissions
-          Workers Scripts ReadWorkers Scripts WriteWorkers Tail Read
+          Individual Workers AdminIndividual Workers Content Read-OnlyIndividual Workers
+          EditorIndividual Workers Metadata Read-OnlyWorkers AdminWorkers Content
+          Read-OnlyWorkers EditorWorkers Metadata Read-OnlyWorkers Scripts ReadWorkers
+          Scripts WriteWorkers Tail Read
         properties:
           apiVersion:
             description: |-
@@ -79,12 +82,32 @@ spec:
                       Identifier.
                     type: string
                   annotations:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) Metadata attached to the deployment.
+                      (see below for nested schema)
                     properties:
                       workersMessage:
                         description: |-
                           readable message about the deployment. Truncated to 1000 bytes if longer.
                           Human-readable message about the deployment. Truncated to 1000 bytes if longer.
+                        type: string
+                    type: object
+                  codeUpdateStrategy:
+                    description: (Attributes) Choose whether to apply Durable Object
+                      code updates immediately or defer them. When omitted, the default
+                      strategy applies. (see below for nested schema)
+                    properties:
+                      maxDelay:
+                        description: |-
+                          (Number) For mode: deferred: Set the maximum number of seconds to wait before forcing the update. When omitted, the default maximum delay applies.
+                          For `mode: deferred`: Set the maximum number of seconds to wait before forcing the update. When omitted, the default maximum delay applies.
+                        type: number
+                      mode:
+                        description: |-
+                          (String) For mode: immediate: Apply Durable Object code updates immediately.
+                          For `mode: immediate`: Apply Durable Object code updates immediately.
+
+                          For `mode: deferred`: Allow active Durable Objects to hibernate before updating their code.
+                          Available values: "immediate", "deferred".
                         type: string
                     type: object
                   force:
@@ -99,7 +122,9 @@ spec:
                     type: string
                   strategy:
                     description: |-
-                      (String) Available values: "percentage".
+                      (String) Strategy for routing traffic across the listed versions. percentage splits traffic according to each version's percentage.
+                      Available values: "percentage".
+                      Strategy for routing traffic across the listed versions. `percentage` splits traffic according to each version's `percentage`.
                       Available values: "percentage".
                     type: string
                   versions:
@@ -141,12 +166,32 @@ spec:
                       Identifier.
                     type: string
                   annotations:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) Metadata attached to the deployment.
+                      (see below for nested schema)
                     properties:
                       workersMessage:
                         description: |-
                           readable message about the deployment. Truncated to 1000 bytes if longer.
                           Human-readable message about the deployment. Truncated to 1000 bytes if longer.
+                        type: string
+                    type: object
+                  codeUpdateStrategy:
+                    description: (Attributes) Choose whether to apply Durable Object
+                      code updates immediately or defer them. When omitted, the default
+                      strategy applies. (see below for nested schema)
+                    properties:
+                      maxDelay:
+                        description: |-
+                          (Number) For mode: deferred: Set the maximum number of seconds to wait before forcing the update. When omitted, the default maximum delay applies.
+                          For `mode: deferred`: Set the maximum number of seconds to wait before forcing the update. When omitted, the default maximum delay applies.
+                        type: number
+                      mode:
+                        description: |-
+                          (String) For mode: immediate: Apply Durable Object code updates immediately.
+                          For `mode: immediate`: Apply Durable Object code updates immediately.
+
+                          For `mode: deferred`: Allow active Durable Objects to hibernate before updating their code.
+                          Available values: "immediate", "deferred".
                         type: string
                     type: object
                   force:
@@ -161,7 +206,9 @@ spec:
                     type: string
                   strategy:
                     description: |-
-                      (String) Available values: "percentage".
+                      (String) Strategy for routing traffic across the listed versions. percentage splits traffic according to each version's percentage.
+                      Available values: "percentage".
+                      Strategy for routing traffic across the listed versions. `percentage` splits traffic according to each version's `percentage`.
                       Available values: "percentage".
                     type: string
                   versions:
@@ -298,7 +345,8 @@ spec:
                       Identifier.
                     type: string
                   annotations:
-                    description: (Attributes) (see below for nested schema)
+                    description: (Attributes) Metadata attached to the deployment.
+                      (see below for nested schema)
                     properties:
                       workersMessage:
                         description: |-
@@ -314,6 +362,25 @@ spec:
                   authorEmail:
                     description: (String)
                     type: string
+                  codeUpdateStrategy:
+                    description: (Attributes) Choose whether to apply Durable Object
+                      code updates immediately or defer them. When omitted, the default
+                      strategy applies. (see below for nested schema)
+                    properties:
+                      maxDelay:
+                        description: |-
+                          (Number) For mode: deferred: Set the maximum number of seconds to wait before forcing the update. When omitted, the default maximum delay applies.
+                          For `mode: deferred`: Set the maximum number of seconds to wait before forcing the update. When omitted, the default maximum delay applies.
+                        type: number
+                      mode:
+                        description: |-
+                          (String) For mode: immediate: Apply Durable Object code updates immediately.
+                          For `mode: immediate`: Apply Durable Object code updates immediately.
+
+                          For `mode: deferred`: Allow active Durable Objects to hibernate before updating their code.
+                          Available values: "immediate", "deferred".
+                        type: string
+                    type: object
                   createdOn:
                     description: (String)
                     type: string
@@ -335,7 +402,9 @@ spec:
                     type: string
                   strategy:
                     description: |-
-                      (String) Available values: "percentage".
+                      (String) Strategy for routing traffic across the listed versions. percentage splits traffic according to each version's percentage.
+                      Available values: "percentage".
+                      Strategy for routing traffic across the listed versions. `percentage` splits traffic according to each version's `percentage`.
                       Available values: "percentage".
                     type: string
                   versions:

@@ -80,18 +80,18 @@ spec:
                             crv:
                               description: |-
                                 256", "P-384".
-                                Curve
+                                For `alg: ES256` or `alg: ES384`: Curve
                                 Available values: "P-256", "P-384".
                               type: string
                             e:
                               description: |-
-                                (String) RSA exponent
-                                RSA exponent
+                                (String) For alg: RS256 or alg: RS384 or alg: RS512 or alg: PS256 or alg: PS384 or alg: PS512: RSA exponent
+                                For `alg: RS256` or `alg: RS384` or `alg: RS512` or `alg: PS256` or `alg: PS384` or `alg: PS512`: RSA exponent
                               type: string
                             k:
                               description: |-
-                                (String) Symmetric key material. Required for create and PUT update requests.
-                                Symmetric key material. Required for create and PUT update requests.
+                                (String) For alg: HS256 or alg: HS384 or alg: HS512: Symmetric key material. Required for create and PUT update requests.
+                                For `alg: HS256` or `alg: HS384` or `alg: HS512`: Symmetric key material. Required for create and PUT update requests.
                               type: string
                             kid:
                               description: |-
@@ -107,18 +107,18 @@ spec:
                               type: string
                             "n":
                               description: |-
-                                (String) RSA modulus
-                                RSA modulus
+                                (String) For alg: RS256 or alg: RS384 or alg: RS512 or alg: PS256 or alg: PS384 or alg: PS512: RSA modulus
+                                For `alg: RS256` or `alg: RS384` or `alg: RS512` or `alg: PS256` or `alg: PS384` or `alg: PS512`: RSA modulus
                               type: string
                             x:
                               description: |-
-                                (String) X EC coordinate
-                                X EC coordinate
+                                (String) For alg: ES256 or alg: ES384: X EC coordinate
+                                For `alg: ES256` or `alg: ES384`: X EC coordinate
                               type: string
                             "y":
                               description: |-
-                                (String) Y EC coordinate
-                                Y EC coordinate
+                                (String) For alg: ES256 or alg: ES384: Y EC coordinate
+                                For `alg: ES256` or `alg: ES384`: Y EC coordinate
                               type: string
                           type: object
                         type: array
@@ -178,18 +178,18 @@ spec:
                             crv:
                               description: |-
                                 256", "P-384".
-                                Curve
+                                For `alg: ES256` or `alg: ES384`: Curve
                                 Available values: "P-256", "P-384".
                               type: string
                             e:
                               description: |-
-                                (String) RSA exponent
-                                RSA exponent
+                                (String) For alg: RS256 or alg: RS384 or alg: RS512 or alg: PS256 or alg: PS384 or alg: PS512: RSA exponent
+                                For `alg: RS256` or `alg: RS384` or `alg: RS512` or `alg: PS256` or `alg: PS384` or `alg: PS512`: RSA exponent
                               type: string
                             k:
                               description: |-
-                                (String) Symmetric key material. Required for create and PUT update requests.
-                                Symmetric key material. Required for create and PUT update requests.
+                                (String) For alg: HS256 or alg: HS384 or alg: HS512: Symmetric key material. Required for create and PUT update requests.
+                                For `alg: HS256` or `alg: HS384` or `alg: HS512`: Symmetric key material. Required for create and PUT update requests.
                               type: string
                             kid:
                               description: |-
@@ -205,18 +205,18 @@ spec:
                               type: string
                             "n":
                               description: |-
-                                (String) RSA modulus
-                                RSA modulus
+                                (String) For alg: RS256 or alg: RS384 or alg: RS512 or alg: PS256 or alg: PS384 or alg: PS512: RSA modulus
+                                For `alg: RS256` or `alg: RS384` or `alg: RS512` or `alg: PS256` or `alg: PS384` or `alg: PS512`: RSA modulus
                               type: string
                             x:
                               description: |-
-                                (String) X EC coordinate
-                                X EC coordinate
+                                (String) For alg: ES256 or alg: ES384: X EC coordinate
+                                For `alg: ES256` or `alg: ES384`: X EC coordinate
                               type: string
                             "y":
                               description: |-
-                                (String) Y EC coordinate
-                                Y EC coordinate
+                                (String) For alg: ES256 or alg: ES384: Y EC coordinate
+                                For `alg: ES256` or `alg: ES384`: Y EC coordinate
                               type: string
                           type: object
                         type: array
@@ -354,18 +354,18 @@ spec:
                             crv:
                               description: |-
                                 256", "P-384".
-                                Curve
+                                For `alg: ES256` or `alg: ES384`: Curve
                                 Available values: "P-256", "P-384".
                               type: string
                             e:
                               description: |-
-                                (String) RSA exponent
-                                RSA exponent
+                                (String) For alg: RS256 or alg: RS384 or alg: RS512 or alg: PS256 or alg: PS384 or alg: PS512: RSA exponent
+                                For `alg: RS256` or `alg: RS384` or `alg: RS512` or `alg: PS256` or `alg: PS384` or `alg: PS512`: RSA exponent
                               type: string
                             k:
                               description: |-
-                                (String) Symmetric key material. Required for create and PUT update requests.
-                                Symmetric key material. Required for create and PUT update requests.
+                                (String) For alg: HS256 or alg: HS384 or alg: HS512: Symmetric key material. Required for create and PUT update requests.
+                                For `alg: HS256` or `alg: HS384` or `alg: HS512`: Symmetric key material. Required for create and PUT update requests.
                               type: string
                             kid:
                               description: |-
@@ -381,18 +381,18 @@ spec:
                               type: string
                             "n":
                               description: |-
-                                (String) RSA modulus
-                                RSA modulus
+                                (String) For alg: RS256 or alg: RS384 or alg: RS512 or alg: PS256 or alg: PS384 or alg: PS512: RSA modulus
+                                For `alg: RS256` or `alg: RS384` or `alg: RS512` or `alg: PS256` or `alg: PS384` or `alg: PS512`: RSA modulus
                               type: string
                             x:
                               description: |-
-                                (String) X EC coordinate
-                                X EC coordinate
+                                (String) For alg: ES256 or alg: ES384: X EC coordinate
+                                For `alg: ES256` or `alg: ES384`: X EC coordinate
                               type: string
                             "y":
                               description: |-
-                                (String) Y EC coordinate
-                                Y EC coordinate
+                                (String) For alg: ES256 or alg: ES384: Y EC coordinate
+                                For `alg: ES256` or `alg: ES384`: Y EC coordinate
                               type: string
                           type: object
                         type: array

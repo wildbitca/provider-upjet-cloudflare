@@ -318,6 +318,14 @@ type ActionParametersInitParameters struct {
 
 	// header override. (see below for nested schema)
 	Vary *VaryInitParameters `json:"vary,omitempty" tf:"vary,omitempty"`
+
+	// (Boolean) Whether to serve the WebMCP bridge script, which exposes the page's tools to browser AI agents.
+	// Whether to serve the WebMCP bridge script, which exposes the page's tools to browser AI agents.
+	WebmcpEnabled *bool `json:"webmcpEnabled,omitempty" tf:"webmcp_enabled,omitempty"`
+
+	// (List of String) Bundled WebMCP tool packs to activate for matching requests. An empty list disables all packs. Omitting this parameter leaves the pack selection unchanged. Does not enable the WebMCP bridge itself.
+	// Bundled WebMCP tool packs to activate for matching requests. An empty list disables all packs. Omitting this parameter leaves the pack selection unchanged. Does not enable the WebMCP bridge itself.
+	WebmcpPacks []*string `json:"webmcpPacks,omitempty" tf:"webmcp_packs,omitempty"`
 }
 
 type ActionParametersObservation struct {
@@ -625,6 +633,14 @@ type ActionParametersObservation struct {
 
 	// header override. (see below for nested schema)
 	Vary *VaryObservation `json:"vary,omitempty" tf:"vary,omitempty"`
+
+	// (Boolean) Whether to serve the WebMCP bridge script, which exposes the page's tools to browser AI agents.
+	// Whether to serve the WebMCP bridge script, which exposes the page's tools to browser AI agents.
+	WebmcpEnabled *bool `json:"webmcpEnabled,omitempty" tf:"webmcp_enabled,omitempty"`
+
+	// (List of String) Bundled WebMCP tool packs to activate for matching requests. An empty list disables all packs. Omitting this parameter leaves the pack selection unchanged. Does not enable the WebMCP bridge itself.
+	// Bundled WebMCP tool packs to activate for matching requests. An empty list disables all packs. Omitting this parameter leaves the pack selection unchanged. Does not enable the WebMCP bridge itself.
+	WebmcpPacks []*string `json:"webmcpPacks,omitempty" tf:"webmcp_packs,omitempty"`
 }
 
 type ActionParametersParameters struct {
@@ -1012,6 +1028,16 @@ type ActionParametersParameters struct {
 	// header override. (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Vary *VaryParameters `json:"vary,omitempty" tf:"vary,omitempty"`
+
+	// (Boolean) Whether to serve the WebMCP bridge script, which exposes the page's tools to browser AI agents.
+	// Whether to serve the WebMCP bridge script, which exposes the page's tools to browser AI agents.
+	// +kubebuilder:validation:Optional
+	WebmcpEnabled *bool `json:"webmcpEnabled,omitempty" tf:"webmcp_enabled,omitempty"`
+
+	// (List of String) Bundled WebMCP tool packs to activate for matching requests. An empty list disables all packs. Omitting this parameter leaves the pack selection unchanged. Does not enable the WebMCP bridge itself.
+	// Bundled WebMCP tool packs to activate for matching requests. An empty list disables all packs. Omitting this parameter leaves the pack selection unchanged. Does not enable the WebMCP bridge itself.
+	// +kubebuilder:validation:Optional
+	WebmcpPacks []*string `json:"webmcpPacks,omitempty" tf:"webmcp_packs,omitempty"`
 }
 
 type AlgorithmsInitParameters struct {

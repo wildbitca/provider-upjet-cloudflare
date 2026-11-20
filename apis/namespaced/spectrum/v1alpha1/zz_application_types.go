@@ -130,6 +130,16 @@ type ApplicationObservation struct {
 	// Optional Worker script tag (worker ID) to use as the application's origin. Only supported for TCP applications with traffic_type "worker"; mutually exclusive with origin_direct, origin_dns, origin_port, proxy_protocol, and argo_smart_routing. tls may only be "off" or "flexible".
 	OriginWorkerID *string `json:"originWorkerId,omitempty" tf:"origin_worker_id,omitempty"`
 
+	// (String) Name of the Worker origin. Omitted when the Worker is not found or its name cannot be resolved.
+	// Name of the Worker origin. Omitted when the Worker is not found or its name cannot be resolved.
+	OriginWorkerName *string `json:"originWorkerName,omitempty" tf:"origin_worker_name,omitempty"`
+
+	// (String) Lookup status of the Worker origin. Unknown indicates that its name could not be resolved. Only returned for Worker origins.
+	// Available values: "available", "not_found", "unknown".
+	// Lookup status of the Worker origin. Unknown indicates that its name could not be resolved. Only returned for Worker origins.
+	// Available values: "available", "not_found", "unknown".
+	OriginWorkerStatus *string `json:"originWorkerStatus,omitempty" tf:"origin_worker_status,omitempty"`
+
 	// 2000".
 	// The port configuration at Cloudflare's edge. May specify a single port, for example `"tcp/1000"`, or a range of ports, for example `"tcp/1000-2000"`.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
@@ -286,59 +296,65 @@ type DNSParameters struct {
 
 type EdgeIpsInitParameters struct {
 
-	// (String) The IP versions supported for inbound connections on Spectrum anycast IPs.
+	// (String) For type: dynamic: The IP versions supported for inbound connections on Spectrum anycast IPs.
 	// Available values: "all", "ipv4", "ipv6".
-	// The IP versions supported for inbound connections on Spectrum anycast IPs.
+	// For `type: dynamic`: The IP versions supported for inbound connections on Spectrum anycast IPs.
 	// Available values: "all", "ipv4", "ipv6".
 	Connectivity *string `json:"connectivity,omitempty" tf:"connectivity,omitempty"`
 
-	// (List of String) The array of customer owned IPs we broadcast via anycast for this hostname and application.
-	// The array of customer owned IPs we broadcast via anycast for this hostname and application.
+	// (List of String) For type: static: The array of customer owned IPs we broadcast via anycast for this hostname and application.
+	// For `type: static`: The array of customer owned IPs we broadcast via anycast for this hostname and application.
 	Ips []*string `json:"ips,omitempty" tf:"ips,omitempty"`
 
 	// (String) The type of DNS record associated with the application.
 	// Available values: "CNAME", "ADDRESS".
-	// The type of edge IP configuration specified. Dynamically allocated edge IPs use Spectrum anycast IPs in accordance with the connectivity you specify. Only valid with CNAME DNS names.
+	// For `type: dynamic`: The type of edge IP configuration specified. Dynamically allocated edge IPs use Spectrum anycast IPs in accordance with the connectivity you specify. Only valid with CNAME DNS names.
+	//
+	// For `type: static`: The type of edge IP configuration specified. Statically allocated edge IPs use customer IPs in accordance with the ips array you specify. Only valid with ADDRESS DNS names.
 	// Available values: "dynamic", "static".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type EdgeIpsObservation struct {
 
-	// (String) The IP versions supported for inbound connections on Spectrum anycast IPs.
+	// (String) For type: dynamic: The IP versions supported for inbound connections on Spectrum anycast IPs.
 	// Available values: "all", "ipv4", "ipv6".
-	// The IP versions supported for inbound connections on Spectrum anycast IPs.
+	// For `type: dynamic`: The IP versions supported for inbound connections on Spectrum anycast IPs.
 	// Available values: "all", "ipv4", "ipv6".
 	Connectivity *string `json:"connectivity,omitempty" tf:"connectivity,omitempty"`
 
-	// (List of String) The array of customer owned IPs we broadcast via anycast for this hostname and application.
-	// The array of customer owned IPs we broadcast via anycast for this hostname and application.
+	// (List of String) For type: static: The array of customer owned IPs we broadcast via anycast for this hostname and application.
+	// For `type: static`: The array of customer owned IPs we broadcast via anycast for this hostname and application.
 	Ips []*string `json:"ips,omitempty" tf:"ips,omitempty"`
 
 	// (String) The type of DNS record associated with the application.
 	// Available values: "CNAME", "ADDRESS".
-	// The type of edge IP configuration specified. Dynamically allocated edge IPs use Spectrum anycast IPs in accordance with the connectivity you specify. Only valid with CNAME DNS names.
+	// For `type: dynamic`: The type of edge IP configuration specified. Dynamically allocated edge IPs use Spectrum anycast IPs in accordance with the connectivity you specify. Only valid with CNAME DNS names.
+	//
+	// For `type: static`: The type of edge IP configuration specified. Statically allocated edge IPs use customer IPs in accordance with the ips array you specify. Only valid with ADDRESS DNS names.
 	// Available values: "dynamic", "static".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type EdgeIpsParameters struct {
 
-	// (String) The IP versions supported for inbound connections on Spectrum anycast IPs.
+	// (String) For type: dynamic: The IP versions supported for inbound connections on Spectrum anycast IPs.
 	// Available values: "all", "ipv4", "ipv6".
-	// The IP versions supported for inbound connections on Spectrum anycast IPs.
+	// For `type: dynamic`: The IP versions supported for inbound connections on Spectrum anycast IPs.
 	// Available values: "all", "ipv4", "ipv6".
 	// +kubebuilder:validation:Optional
 	Connectivity *string `json:"connectivity,omitempty" tf:"connectivity,omitempty"`
 
-	// (List of String) The array of customer owned IPs we broadcast via anycast for this hostname and application.
-	// The array of customer owned IPs we broadcast via anycast for this hostname and application.
+	// (List of String) For type: static: The array of customer owned IPs we broadcast via anycast for this hostname and application.
+	// For `type: static`: The array of customer owned IPs we broadcast via anycast for this hostname and application.
 	// +kubebuilder:validation:Optional
 	Ips []*string `json:"ips,omitempty" tf:"ips,omitempty"`
 
 	// (String) The type of DNS record associated with the application.
 	// Available values: "CNAME", "ADDRESS".
-	// The type of edge IP configuration specified. Dynamically allocated edge IPs use Spectrum anycast IPs in accordance with the connectivity you specify. Only valid with CNAME DNS names.
+	// For `type: dynamic`: The type of edge IP configuration specified. Dynamically allocated edge IPs use Spectrum anycast IPs in accordance with the connectivity you specify. Only valid with CNAME DNS names.
+	//
+	// For `type: static`: The type of edge IP configuration specified. Statically allocated edge IPs use customer IPs in accordance with the ips array you specify. Only valid with ADDRESS DNS names.
 	// Available values: "dynamic", "static".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`

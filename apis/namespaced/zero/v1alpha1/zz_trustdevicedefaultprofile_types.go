@@ -123,6 +123,14 @@ type TrustDeviceDefaultProfileGlobalAccelerationInitParameters struct {
 	// IP:port entries for the API endpoints.
 	APIEndpoints []*string `json:"apiEndpoints,omitempty" tf:"api_endpoints,omitempty"`
 
+	// (Boolean) Whether WARP users may manually override the automatic Global Acceleration decision. Defaults to true when not provided.
+	// Whether WARP users may manually override the automatic Global Acceleration decision. Defaults to true when not provided.
+	AllowManualOverride *bool `json:"allowManualOverride,omitempty" tf:"allow_manual_override,omitempty"`
+
+	// (Boolean) Automatically switch Global Acceleration regions based on device location. Defaults to false when not provided.
+	// Automatically switch Global Acceleration regions based on device location. Defaults to false when not provided.
+	Autoswitch *bool `json:"autoswitch,omitempty" tf:"autoswitch,omitempty"`
+
 	// (Boolean) Whether the policy will be applied to matching devices.
 	// Global acceleration settings are used only when "enabled".
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -141,6 +149,14 @@ type TrustDeviceDefaultProfileGlobalAccelerationObservation struct {
 	// (List of String) IP:port entries for the API endpoints.
 	// IP:port entries for the API endpoints.
 	APIEndpoints []*string `json:"apiEndpoints,omitempty" tf:"api_endpoints,omitempty"`
+
+	// (Boolean) Whether WARP users may manually override the automatic Global Acceleration decision. Defaults to true when not provided.
+	// Whether WARP users may manually override the automatic Global Acceleration decision. Defaults to true when not provided.
+	AllowManualOverride *bool `json:"allowManualOverride,omitempty" tf:"allow_manual_override,omitempty"`
+
+	// (Boolean) Automatically switch Global Acceleration regions based on device location. Defaults to false when not provided.
+	// Automatically switch Global Acceleration regions based on device location. Defaults to false when not provided.
+	Autoswitch *bool `json:"autoswitch,omitempty" tf:"autoswitch,omitempty"`
 
 	// (Boolean) Whether the policy will be applied to matching devices.
 	// Global acceleration settings are used only when "enabled".
@@ -161,6 +177,16 @@ type TrustDeviceDefaultProfileGlobalAccelerationParameters struct {
 	// IP:port entries for the API endpoints.
 	// +kubebuilder:validation:Optional
 	APIEndpoints []*string `json:"apiEndpoints" tf:"api_endpoints,omitempty"`
+
+	// (Boolean) Whether WARP users may manually override the automatic Global Acceleration decision. Defaults to true when not provided.
+	// Whether WARP users may manually override the automatic Global Acceleration decision. Defaults to true when not provided.
+	// +kubebuilder:validation:Optional
+	AllowManualOverride *bool `json:"allowManualOverride,omitempty" tf:"allow_manual_override,omitempty"`
+
+	// (Boolean) Automatically switch Global Acceleration regions based on device location. Defaults to false when not provided.
+	// Automatically switch Global Acceleration regions based on device location. Defaults to false when not provided.
+	// +kubebuilder:validation:Optional
+	Autoswitch *bool `json:"autoswitch,omitempty" tf:"autoswitch,omitempty"`
 
 	// (Boolean) Whether the policy will be applied to matching devices.
 	// Global acceleration settings are used only when "enabled".
@@ -258,6 +284,10 @@ type TrustDeviceDefaultProfileInitParameters struct {
 	// If the `dns_server` field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to `true`.
 	DisableAutoFallback *bool `json:"disableAutoFallback,omitempty" tf:"disable_auto_fallback,omitempty"`
 
+	// based reauthentication.
+	// Determines whether the WARP client can silently reauthenticate the user with device credentials (Microsoft Entra) instead of prompting for browser-based reauthentication.
+	EnableDeviceCredentialAuthentication *bool `json:"enableDeviceCredentialAuthentication,omitempty" tf:"enable_device_credential_authentication,omitempty"`
+
 	// (Attributes List) List of routes excluded in the WARP client's tunnel. Both 'exclude' and 'include' cannot be set in the same request. (see below for nested schema)
 	Exclude []TrustDeviceDefaultProfileExcludeInitParameters `json:"exclude,omitempty" tf:"exclude,omitempty"`
 
@@ -345,6 +375,10 @@ type TrustDeviceDefaultProfileObservation struct {
 	// (Boolean) If the dns_server field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to true.
 	// If the `dns_server` field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to `true`.
 	DisableAutoFallback *bool `json:"disableAutoFallback,omitempty" tf:"disable_auto_fallback,omitempty"`
+
+	// based reauthentication.
+	// Determines whether the WARP client can silently reauthenticate the user with device credentials (Microsoft Entra) instead of prompting for browser-based reauthentication.
+	EnableDeviceCredentialAuthentication *bool `json:"enableDeviceCredentialAuthentication,omitempty" tf:"enable_device_credential_authentication,omitempty"`
 
 	// (Boolean) Whether the policy will be applied to matching devices.
 	// Whether the policy will be applied to matching devices.
@@ -459,6 +493,11 @@ type TrustDeviceDefaultProfileParameters struct {
 	// If the `dns_server` field of a fallback domain is not present, the client will fall back to a best guess of the default/system DNS resolvers unless this policy option is set to `true`.
 	// +kubebuilder:validation:Optional
 	DisableAutoFallback *bool `json:"disableAutoFallback,omitempty" tf:"disable_auto_fallback,omitempty"`
+
+	// based reauthentication.
+	// Determines whether the WARP client can silently reauthenticate the user with device credentials (Microsoft Entra) instead of prompting for browser-based reauthentication.
+	// +kubebuilder:validation:Optional
+	EnableDeviceCredentialAuthentication *bool `json:"enableDeviceCredentialAuthentication,omitempty" tf:"enable_device_credential_authentication,omitempty"`
 
 	// (Attributes List) List of routes excluded in the WARP client's tunnel. Both 'exclude' and 'include' cannot be set in the same request. (see below for nested schema)
 	// +kubebuilder:validation:Optional

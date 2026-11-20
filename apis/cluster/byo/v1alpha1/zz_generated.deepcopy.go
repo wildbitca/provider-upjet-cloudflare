@@ -144,6 +144,16 @@ func (in *IPPrefixObservation) DeepCopyInto(out *IPPrefixObservation) {
 		*out = new(float64)
 		**out = **in
 	}
+	if in.AsnOwnershipValidationState != nil {
+		in, out := &in.AsnOwnershipValidationState, &out.AsnOwnershipValidationState
+		*out = new(string)
+		**out = **in
+	}
+	if in.AspaValidationState != nil {
+		in, out := &in.AspaValidationState, &out.AspaValidationState
+		*out = new(string)
+		**out = **in
+	}
 	if in.Cidr != nil {
 		in, out := &in.Cidr, &out.Cidr
 		*out = new(string)

@@ -35,6 +35,10 @@ type CACertificateInitParameters struct {
 	// The number of days for which the certificate should be valid.
 	// Available values: 7, 30, 90, 365, 730, 1095, 5475.
 	RequestedValidity *float64 `json:"requestedValidity,omitempty" tf:"requested_validity,omitempty"`
+
+	// certificate; ignored otherwise.
+	// Identifier of the zone whose keyless servers the certificate is for. Required when `request_type` is `keyless-certificate`; ignored otherwise.
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type CACertificateObservation struct {
@@ -70,6 +74,14 @@ type CACertificateObservation struct {
 	// The number of days for which the certificate should be valid.
 	// Available values: 7, 30, 90, 365, 730, 1095, 5475.
 	RequestedValidity *float64 `json:"requestedValidity,omitempty" tf:"requested_validity,omitempty"`
+
+	// (String) When the certificate was revoked.
+	// When the certificate was revoked.
+	RevokedAt *string `json:"revokedAt,omitempty" tf:"revoked_at,omitempty"`
+
+	// certificate; ignored otherwise.
+	// Identifier of the zone whose keyless servers the certificate is for. Required when `request_type` is `keyless-certificate`; ignored otherwise.
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type CACertificateParameters struct {
@@ -98,6 +110,11 @@ type CACertificateParameters struct {
 	// Available values: 7, 30, 90, 365, 730, 1095, 5475.
 	// +kubebuilder:validation:Optional
 	RequestedValidity *float64 `json:"requestedValidity,omitempty" tf:"requested_validity,omitempty"`
+
+	// certificate; ignored otherwise.
+	// Identifier of the zone whose keyless servers the certificate is for. Required when `request_type` is `keyless-certificate`; ignored otherwise.
+	// +kubebuilder:validation:Optional
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 // CACertificateSpec defines the desired state of CACertificate

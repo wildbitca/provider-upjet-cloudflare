@@ -47,19 +47,19 @@ type BoostByParameters struct {
 
 type ChatCompletionsEndpointInitParameters struct {
 
-	// Disable chat completions endpoint for this public endpoint
+	// Disable chat completions endpoint for this public endpoint.
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 }
 
 type ChatCompletionsEndpointObservation struct {
 
-	// Disable chat completions endpoint for this public endpoint
+	// Disable chat completions endpoint for this public endpoint.
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 }
 
 type ChatCompletionsEndpointParameters struct {
 
-	// Disable chat completions endpoint for this public endpoint
+	// Disable chat completions endpoint for this public endpoint.
 	// +kubebuilder:validation:Optional
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 }
@@ -69,7 +69,7 @@ type ContentSelectorInitParameters struct {
 	// Glob pattern to match against the page URL path. Uses standard glob syntax: * matches within a segment, ** crosses directories.
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// CSS selector to extract content from pages matching the path pattern. Must not contain disallowed characters (;, `, $, {, }, \). Must target a single element; if multiple elements match, the selector is ignored and the full page is used.
+	// CSS selector to extract content from pages matching the path pattern. Disallowed characters: ;, `, $, {, }, \. Must target a single element; if multiple elements match, the crawler ignores the selector and uses the full page.
 	Selector *string `json:"selector,omitempty" tf:"selector,omitempty"`
 }
 
@@ -78,7 +78,7 @@ type ContentSelectorObservation struct {
 	// Glob pattern to match against the page URL path. Uses standard glob syntax: * matches within a segment, ** crosses directories.
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// CSS selector to extract content from pages matching the path pattern. Must not contain disallowed characters (;, `, $, {, }, \). Must target a single element; if multiple elements match, the selector is ignored and the full page is used.
+	// CSS selector to extract content from pages matching the path pattern. Disallowed characters: ;, `, $, {, }, \. Must target a single element; if multiple elements match, the crawler ignores the selector and uses the full page.
 	Selector *string `json:"selector,omitempty" tf:"selector,omitempty"`
 }
 
@@ -88,7 +88,7 @@ type ContentSelectorParameters struct {
 	// +kubebuilder:validation:Optional
 	Path *string `json:"path" tf:"path,omitempty"`
 
-	// CSS selector to extract content from pages matching the path pattern. Must not contain disallowed characters (;, `, $, {, }, \). Must target a single element; if multiple elements match, the selector is ignored and the full page is used.
+	// CSS selector to extract content from pages matching the path pattern. Disallowed characters: ;, `, $, {, }, \. Must target a single element; if multiple elements match, the crawler ignores the selector and uses the full page.
 	// +kubebuilder:validation:Optional
 	Selector *string `json:"selector" tf:"selector,omitempty"`
 }
@@ -150,7 +150,7 @@ type DiscoverOptionsInitParameters struct {
 	// Maximum link-follow depth from the seed URL.
 	Depth *float64 `json:"depth,omitempty" tf:"depth,omitempty"`
 
-	// Follow links that point outside the source domain. Must stay `false` — discover crawls are restricted to the zone you own.
+	// Follow links that point outside the source domain. Must stay `false` because discover crawls only cover the zone you own.
 	IncludeExternalLinks *bool `json:"includeExternalLinks,omitempty" tf:"include_external_links,omitempty"`
 
 	// Follow links to subdomains of the source host.
@@ -172,7 +172,7 @@ type DiscoverOptionsObservation struct {
 	// Maximum link-follow depth from the seed URL.
 	Depth *float64 `json:"depth,omitempty" tf:"depth,omitempty"`
 
-	// Follow links that point outside the source domain. Must stay `false` — discover crawls are restricted to the zone you own.
+	// Follow links that point outside the source domain. Must stay `false` because discover crawls only cover the zone you own.
 	IncludeExternalLinks *bool `json:"includeExternalLinks,omitempty" tf:"include_external_links,omitempty"`
 
 	// Follow links to subdomains of the source host.
@@ -195,7 +195,7 @@ type DiscoverOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	Depth *float64 `json:"depth,omitempty" tf:"depth,omitempty"`
 
-	// Follow links that point outside the source domain. Must stay `false` — discover crawls are restricted to the zone you own.
+	// Follow links that point outside the source domain. Must stay `false` because discover crawls only cover the zone you own.
 	// +kubebuilder:validation:Optional
 	IncludeExternalLinks *bool `json:"includeExternalLinks,omitempty" tf:"include_external_links,omitempty"`
 
@@ -239,11 +239,11 @@ type IndexMethodParameters struct {
 
 	// Enable keyword (BM25) storage backend.
 	// +kubebuilder:validation:Optional
-	Keyword *bool `json:"keyword" tf:"keyword,omitempty"`
+	Keyword *bool `json:"keyword,omitempty" tf:"keyword,omitempty"`
 
 	// Enable vector (embedding) storage backend.
 	// +kubebuilder:validation:Optional
-	Vector *bool `json:"vector" tf:"vector,omitempty"`
+	Vector *bool `json:"vector,omitempty" tf:"vector,omitempty"`
 }
 
 type IndexingOptionsInitParameters struct {
@@ -281,14 +281,14 @@ type IndexingOptionsParameters struct {
 type McpInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Disable MCP endpoint for this public endpoint
+	// Disable MCP endpoint for this public endpoint.
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 }
 
 type McpObservation struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Disable MCP endpoint for this public endpoint
+	// Disable MCP endpoint for this public endpoint.
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 }
 
@@ -297,7 +297,7 @@ type McpParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Disable MCP endpoint for this public endpoint
+	// Disable MCP endpoint for this public endpoint.
 	// +kubebuilder:validation:Optional
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 }
@@ -333,7 +333,7 @@ type MetadataParameters struct {
 type ParseOptionsInitParameters struct {
 	ContentSelector []ContentSelectorInitParameters `json:"contentSelector,omitempty" tf:"content_selector,omitempty"`
 
-	// Up to 5 custom HTTP headers sent with each crawl request. Names must be RFC-7230 token characters (no spaces, colons, or control characters); values must be HTAB + printable ASCII (no CR/LF).
+	// Up to 5 custom HTTP headers sent with each crawl request. Names must use RFC-7230 token characters, excluding spaces, colons, and control characters. Values must use HTAB and printable ASCII only, excluding CR and LF.
 	// +mapType=granular
 	IncludeHeaders map[string]*string `json:"includeHeaders,omitempty" tf:"include_headers,omitempty"`
 
@@ -348,7 +348,7 @@ type ParseOptionsInitParameters struct {
 type ParseOptionsObservation struct {
 	ContentSelector []ContentSelectorObservation `json:"contentSelector,omitempty" tf:"content_selector,omitempty"`
 
-	// Up to 5 custom HTTP headers sent with each crawl request. Names must be RFC-7230 token characters (no spaces, colons, or control characters); values must be HTAB + printable ASCII (no CR/LF).
+	// Up to 5 custom HTTP headers sent with each crawl request. Names must use RFC-7230 token characters, excluding spaces, colons, and control characters. Values must use HTAB and printable ASCII only, excluding CR and LF.
 	// +mapType=granular
 	IncludeHeaders map[string]*string `json:"includeHeaders,omitempty" tf:"include_headers,omitempty"`
 
@@ -365,7 +365,7 @@ type ParseOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	ContentSelector []ContentSelectorParameters `json:"contentSelector,omitempty" tf:"content_selector,omitempty"`
 
-	// Up to 5 custom HTTP headers sent with each crawl request. Names must be RFC-7230 token characters (no spaces, colons, or control characters); values must be HTAB + printable ASCII (no CR/LF).
+	// Up to 5 custom HTTP headers sent with each crawl request. Names must use RFC-7230 token characters, excluding spaces, colons, and control characters. Values must use HTAB and printable ASCII only, excluding CR and LF.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	IncludeHeaders map[string]*string `json:"includeHeaders,omitempty" tf:"include_headers,omitempty"`
@@ -484,7 +484,7 @@ type RateLimitParameters struct {
 type RetrievalOptionsInitParameters struct {
 	BoostBy []BoostByInitParameters `json:"boostBy,omitempty" tf:"boost_by,omitempty"`
 
-	// Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. When omitted on an update, the existing stored value is preserved; when never set, search falls back to 'and'.
+	// Controls which documents become candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term and ranks results according to BM25 relevance. When omitted on an update, the existing stored value stays unchanged; when never set, search falls back to 'and'.
 	// Available values: "and", "or".
 	KeywordMatchMode *string `json:"keywordMatchMode,omitempty" tf:"keyword_match_mode,omitempty"`
 }
@@ -492,7 +492,7 @@ type RetrievalOptionsInitParameters struct {
 type RetrievalOptionsObservation struct {
 	BoostBy []BoostByObservation `json:"boostBy,omitempty" tf:"boost_by,omitempty"`
 
-	// Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. When omitted on an update, the existing stored value is preserved; when never set, search falls back to 'and'.
+	// Controls which documents become candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term and ranks results according to BM25 relevance. When omitted on an update, the existing stored value stays unchanged; when never set, search falls back to 'and'.
 	// Available values: "and", "or".
 	KeywordMatchMode *string `json:"keywordMatchMode,omitempty" tf:"keyword_match_mode,omitempty"`
 }
@@ -502,7 +502,7 @@ type RetrievalOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	BoostBy []BoostByParameters `json:"boostBy,omitempty" tf:"boost_by,omitempty"`
 
-	// Controls which documents are candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term, ranked by BM25 relevance. When omitted on an update, the existing stored value is preserved; when never set, search falls back to 'and'.
+	// Controls which documents become candidates for BM25 scoring. 'and' restricts candidates to documents containing all query terms; 'or' includes any document containing at least one term and ranks results according to BM25 relevance. When omitted on an update, the existing stored value stays unchanged; when never set, search falls back to 'and'.
 	// Available values: "and", "or".
 	// +kubebuilder:validation:Optional
 	KeywordMatchMode *string `json:"keywordMatchMode,omitempty" tf:"keyword_match_mode,omitempty"`
@@ -510,19 +510,19 @@ type RetrievalOptionsParameters struct {
 
 type SearchEndpointInitParameters struct {
 
-	// Disable search endpoint for this public endpoint
+	// Disable search endpoint for this public endpoint.
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 }
 
 type SearchEndpointObservation struct {
 
-	// Disable search endpoint for this public endpoint
+	// Disable search endpoint for this public endpoint.
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 }
 
 type SearchEndpointParameters struct {
 
-	// Disable search endpoint for this public endpoint
+	// Disable search endpoint for this public endpoint.
 	// +kubebuilder:validation:Optional
 	Disabled *bool `json:"disabled,omitempty" tf:"disabled,omitempty"`
 }
@@ -568,6 +568,8 @@ type SearchInstanceInitParameters struct {
 
 	Metadata *MetadataInitParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
+	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
+
 	Paused *bool `json:"paused,omitempty" tf:"paused,omitempty"`
 
 	PublicEndpointParams *PublicEndpointParamsInitParameters `json:"publicEndpointParams,omitempty" tf:"public_endpoint_params,omitempty"`
@@ -583,6 +585,7 @@ type SearchInstanceInitParameters struct {
 
 	RewriteQuery *bool `json:"rewriteQuery,omitempty" tf:"rewrite_query,omitempty"`
 
+	// Minimum similarity score a chunk must reach to be returned. Defaults to 0.4.
 	ScoreThreshold *float64 `json:"scoreThreshold,omitempty" tf:"score_threshold,omitempty"`
 
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
@@ -593,7 +596,7 @@ type SearchInstanceInitParameters struct {
 
 	SummarizationModel *string `json:"summarizationModel,omitempty" tf:"summarization_model,omitempty"`
 
-	// Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
+	// Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h). Defaults to 86400 (24h).
 	// Available values: 900, 1800, 3600, 7200, 14400, 21600, 43200, 86400.
 	SyncInterval *float64 `json:"syncInterval,omitempty" tf:"sync_interval,omitempty"`
 
@@ -686,6 +689,7 @@ type SearchInstanceObservation struct {
 
 	RewriteQuery *bool `json:"rewriteQuery,omitempty" tf:"rewrite_query,omitempty"`
 
+	// Minimum similarity score a chunk must reach to be returned. Defaults to 0.4.
 	ScoreThreshold *float64 `json:"scoreThreshold,omitempty" tf:"score_threshold,omitempty"`
 
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
@@ -698,7 +702,7 @@ type SearchInstanceObservation struct {
 
 	SummarizationModel *string `json:"summarizationModel,omitempty" tf:"summarization_model,omitempty"`
 
-	// Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
+	// Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h). Defaults to 86400 (24h).
 	// Available values: 900, 1800, 3600, 7200, 14400, 21600, 43200, 86400.
 	SyncInterval *float64 `json:"syncInterval,omitempty" tf:"sync_interval,omitempty"`
 
@@ -775,6 +779,9 @@ type SearchInstanceParameters struct {
 	Metadata *MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	Paused *bool `json:"paused,omitempty" tf:"paused,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -796,6 +803,7 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	RewriteQuery *bool `json:"rewriteQuery,omitempty" tf:"rewrite_query,omitempty"`
 
+	// Minimum similarity score a chunk must reach to be returned. Defaults to 0.4.
 	// +kubebuilder:validation:Optional
 	ScoreThreshold *float64 `json:"scoreThreshold,omitempty" tf:"score_threshold,omitempty"`
 
@@ -811,7 +819,7 @@ type SearchInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	SummarizationModel *string `json:"summarizationModel,omitempty" tf:"summarization_model,omitempty"`
 
-	// Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h).
+	// Interval between automatic syncs, in seconds. Allowed values: 900 (15min), 1800 (30min), 3600 (1h), 7200 (2h), 14400 (4h), 21600 (6h), 43200 (12h), 86400 (24h). Defaults to 86400 (24h).
 	// Available values: 900, 1800, 3600, 7200, 14400, 21600, 43200, 86400.
 	// +kubebuilder:validation:Optional
 	SyncInterval *float64 `json:"syncInterval,omitempty" tf:"sync_interval,omitempty"`
@@ -836,10 +844,10 @@ type SearchInstanceParameters struct {
 
 type SourceParamsInitParameters struct {
 
-	// List of path patterns to exclude. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /admin/** matches /admin/users and /admin/settings/advanced). Most accounts are limited to 10 rules; contact support to raise it.
+	// List of path patterns to exclude. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /admin/** matches /admin/users and /admin/settings/advanced). Most accounts have a limit of 10 rules; contact support to raise it.
 	ExcludeItems []*string `json:"excludeItems,omitempty" tf:"exclude_items,omitempty"`
 
-	// List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post). Most accounts are limited to 10 rules; contact support to raise it.
+	// List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post). Most accounts have a limit of 10 rules; contact support to raise it.
 	IncludeItems []*string `json:"includeItems,omitempty" tf:"include_items,omitempty"`
 
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
@@ -851,10 +859,10 @@ type SourceParamsInitParameters struct {
 
 type SourceParamsObservation struct {
 
-	// List of path patterns to exclude. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /admin/** matches /admin/users and /admin/settings/advanced). Most accounts are limited to 10 rules; contact support to raise it.
+	// List of path patterns to exclude. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /admin/** matches /admin/users and /admin/settings/advanced). Most accounts have a limit of 10 rules; contact support to raise it.
 	ExcludeItems []*string `json:"excludeItems,omitempty" tf:"exclude_items,omitempty"`
 
-	// List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post). Most accounts are limited to 10 rules; contact support to raise it.
+	// List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post). Most accounts have a limit of 10 rules; contact support to raise it.
 	IncludeItems []*string `json:"includeItems,omitempty" tf:"include_items,omitempty"`
 
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
@@ -866,11 +874,11 @@ type SourceParamsObservation struct {
 
 type SourceParamsParameters struct {
 
-	// List of path patterns to exclude. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /admin/** matches /admin/users and /admin/settings/advanced). Most accounts are limited to 10 rules; contact support to raise it.
+	// List of path patterns to exclude. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /admin/** matches /admin/users and /admin/settings/advanced). Most accounts have a limit of 10 rules; contact support to raise it.
 	// +kubebuilder:validation:Optional
 	ExcludeItems []*string `json:"excludeItems,omitempty" tf:"exclude_items,omitempty"`
 
-	// List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post). Most accounts are limited to 10 rules; contact support to raise it.
+	// List of path patterns to include. Uses micromatch glob syntax: * matches within a path segment, ** matches across path segments (e.g., /blog/** matches /blog/post and /blog/2024/post). Most accounts have a limit of 10 rules; contact support to raise it.
 	// +kubebuilder:validation:Optional
 	IncludeItems []*string `json:"includeItems,omitempty" tf:"include_items,omitempty"`
 
@@ -889,7 +897,7 @@ type WebCrawlerInitParameters struct {
 
 	ParseOptions *ParseOptionsInitParameters `json:"parseOptions,omitempty" tf:"parse_options,omitempty"`
 
-	// How URLs are discovered. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to be a Verified zone on this account.
+	// How the crawler finds URLs. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to belong to a Verified zone on this account.
 	// Available values: "sitemap", "discover".
 	ParseType *string `json:"parseType,omitempty" tf:"parse_type,omitempty"`
 }
@@ -899,7 +907,7 @@ type WebCrawlerObservation struct {
 
 	ParseOptions *ParseOptionsObservation `json:"parseOptions,omitempty" tf:"parse_options,omitempty"`
 
-	// How URLs are discovered. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to be a Verified zone on this account.
+	// How the crawler finds URLs. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to belong to a Verified zone on this account.
 	// Available values: "sitemap", "discover".
 	ParseType *string `json:"parseType,omitempty" tf:"parse_type,omitempty"`
 }
@@ -912,7 +920,7 @@ type WebCrawlerParameters struct {
 	// +kubebuilder:validation:Optional
 	ParseOptions *ParseOptionsParameters `json:"parseOptions,omitempty" tf:"parse_options,omitempty"`
 
-	// How URLs are discovered. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to be a Verified zone on this account.
+	// How the crawler finds URLs. 'sitemap' reads XML sitemaps; 'discover' follows links recursively and requires the source to belong to a Verified zone on this account.
 	// Available values: "sitemap", "discover".
 	// +kubebuilder:validation:Optional
 	ParseType *string `json:"parseType,omitempty" tf:"parse_type,omitempty"`

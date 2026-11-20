@@ -36,8 +36,8 @@ type StoreSecretInitParameters struct {
 	// The name of the secret
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (List of String) The list of services that can use this secret. Valid values are workers, ai_gateway, dex, and access. Must be listed in alphabetical order.
-	// The list of services that can use this secret. Valid values are `workers`, `ai_gateway`, `dex`, and `access`. Must be listed in alphabetical order.
+	// (List of String) The list of services that can use this secret, or null when the secret inherits its store's scopes. Set it to null in a patch to inherit again. An empty list lets no service use the secret. Explicit scopes must be listed in alphabetical order.
+	// The list of services that can use this secret, or null when the secret inherits its store's scopes. Set it to null in a patch to inherit again. An empty list lets no service use the secret. Explicit scopes must be listed in alphabetical order.
 	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
 	// (String) Store Identifier
@@ -83,8 +83,8 @@ type StoreSecretObservation struct {
 	// The name of the secret
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (List of String) The list of services that can use this secret. Valid values are workers, ai_gateway, dex, and access. Must be listed in alphabetical order.
-	// The list of services that can use this secret. Valid values are `workers`, `ai_gateway`, `dex`, and `access`. Must be listed in alphabetical order.
+	// (List of String) The list of services that can use this secret, or null when the secret inherits its store's scopes. Set it to null in a patch to inherit again. An empty list lets no service use the secret. Explicit scopes must be listed in alphabetical order.
+	// The list of services that can use this secret, or null when the secret inherits its store's scopes. Set it to null in a patch to inherit again. An empty list lets no service use the secret. Explicit scopes must be listed in alphabetical order.
 	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
 	// (String) Available values: "pending", "active", "deleted".
@@ -122,8 +122,8 @@ type StoreSecretParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (List of String) The list of services that can use this secret. Valid values are workers, ai_gateway, dex, and access. Must be listed in alphabetical order.
-	// The list of services that can use this secret. Valid values are `workers`, `ai_gateway`, `dex`, and `access`. Must be listed in alphabetical order.
+	// (List of String) The list of services that can use this secret, or null when the secret inherits its store's scopes. Set it to null in a patch to inherit again. An empty list lets no service use the secret. Explicit scopes must be listed in alphabetical order.
+	// The list of services that can use this secret, or null when the secret inherits its store's scopes. Set it to null in a patch to inherit again. An empty list lets no service use the secret. Explicit scopes must be listed in alphabetical order.
 	// +kubebuilder:validation:Optional
 	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
@@ -184,7 +184,6 @@ type StoreSecret struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.scopes) || (has(self.initProvider) && has(self.initProvider.scopes))",message="spec.forProvider.scopes is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.valueSecretRef)",message="spec.forProvider.valueSecretRef is a required parameter"
 	Spec   StoreSecretSpec   `json:"spec"`
 	Status StoreSecretStatus `json:"status,omitempty"`

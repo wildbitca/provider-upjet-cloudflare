@@ -15,8 +15,8 @@ import (
 
 type RoutingSettingsInitParameters struct {
 
-	// addressing) is honored when matching incoming mail against routing rules.
-	// Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+	// addressing) is honored when matching incoming mail against routing rules. When omitted, preserves the existing setting.
+	// Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules. When omitted, preserves the existing setting.
 	SupportSubaddress *bool `json:"supportSubaddress,omitempty" tf:"support_subaddress,omitempty"`
 
 	// (String) Identifier.
@@ -55,8 +55,8 @@ type RoutingSettingsObservation struct {
 	// Available values: "ready", "unconfigured", "misconfigured", "misconfigured/locked", "unlocked".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// addressing) is honored when matching incoming mail against routing rules.
-	// Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+	// addressing) is honored when matching incoming mail against routing rules. When omitted, preserves the existing setting.
+	// Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules. When omitted, preserves the existing setting.
 	SupportSubaddress *bool `json:"supportSubaddress,omitempty" tf:"support_subaddress,omitempty"`
 
 	// (String, Deprecated) Email Routing settings tag. (Deprecated, replaced by Email Routing settings identifier)
@@ -70,8 +70,8 @@ type RoutingSettingsObservation struct {
 
 type RoutingSettingsParameters struct {
 
-	// addressing) is honored when matching incoming mail against routing rules.
-	// Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules.
+	// addressing) is honored when matching incoming mail against routing rules. When omitted, preserves the existing setting.
+	// Whether subaddressing (plus-addressing) is honored when matching incoming mail against routing rules. When omitted, preserves the existing setting.
 	// +kubebuilder:validation:Optional
 	SupportSubaddress *bool `json:"supportSubaddress,omitempty" tf:"support_subaddress,omitempty"`
 

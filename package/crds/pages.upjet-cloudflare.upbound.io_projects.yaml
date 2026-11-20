@@ -293,8 +293,10 @@ spec:
                                   type: string
                                 valueSecretRef:
                                   description: |-
-                                    (String, Sensitive) Environment variable value.
-                                    Environment variable value.
+                                    (String, Sensitive) For type: plain_text: Environment variable value.
+                                    For `type: plain_text`: Environment variable value.
+
+                                    For `type: secret_text`: Secret value.
                                   properties:
                                     key:
                                       description: The key to select.
@@ -536,8 +538,10 @@ spec:
                                   type: string
                                 valueSecretRef:
                                   description: |-
-                                    (String, Sensitive) Environment variable value.
-                                    Environment variable value.
+                                    (String, Sensitive) For type: plain_text: Environment variable value.
+                                    For `type: plain_text`: Environment variable value.
+
+                                    For `type: secret_text`: Secret value.
                                   properties:
                                     key:
                                       description: The key to select.
@@ -1028,8 +1032,10 @@ spec:
                                   type: string
                                 valueSecretRef:
                                   description: |-
-                                    (String, Sensitive) Environment variable value.
-                                    Environment variable value.
+                                    (String, Sensitive) For type: plain_text: Environment variable value.
+                                    For `type: plain_text`: Environment variable value.
+
+                                    For `type: secret_text`: Secret value.
                                   properties:
                                     key:
                                       description: The key to select.
@@ -1273,8 +1279,10 @@ spec:
                                   type: string
                                 valueSecretRef:
                                   description: |-
-                                    (String, Sensitive) Environment variable value.
-                                    Environment variable value.
+                                    (String, Sensitive) For type: plain_text: Environment variable value.
+                                    For `type: plain_text`: Environment variable value.
+
+                                    For `type: secret_text`: Secret value.
                                   properties:
                                     key:
                                       description: The key to select.

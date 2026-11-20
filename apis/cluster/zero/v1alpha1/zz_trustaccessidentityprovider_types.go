@@ -139,10 +139,14 @@ type TrustAccessIdentityProviderConfigInitParameters struct {
 
 	// (String) Your OAuth Client ID
 	// Your OAuth Client ID
+	//
+	// The client ID from the Duo Generic OIDC Relying Party metadata.
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
 
 	// (String, Sensitive) Your OAuth Client Secret
 	// Your OAuth Client Secret
+	//
+	// The client secret from the Duo Generic OIDC Relying Party metadata.
 	ClientSecretSecretRef *v2.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
 	// (Boolean) Should Cloudflare try to load authentication contexts from your account
@@ -185,7 +189,9 @@ type TrustAccessIdentityProviderConfigInitParameters struct {
 	// X509 certificate to verify the signature in the SAML authentication response
 	IdpPublicCerts []*string `json:"idpPublicCerts,omitempty" tf:"idp_public_certs,omitempty"`
 
-	// (String) IdP Entity ID or Issuer URL
+	// (String) The issuer URL from the Duo Generic OIDC Relying Party metadata.
+	// The issuer URL from the Duo Generic OIDC Relying Party metadata.
+	//
 	// IdP Entity ID or Issuer URL
 	IssuerURL *string `json:"issuerUrl,omitempty" tf:"issuer_url,omitempty"`
 
@@ -218,8 +224,9 @@ type TrustAccessIdentityProviderConfigInitParameters struct {
 	PkceEnabled *bool `json:"pkceEnabled,omitempty" tf:"pkce_enabled,omitempty"`
 
 	// sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-	// Available values: "login", "select_account", "none", "consent".
 	// Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
+	//
+	// Configures the prompt behavior for Google authentication.
 	// Available values: "login", "select_account", "none", "consent".
 	Prompt *string `json:"prompt,omitempty" tf:"prompt,omitempty"`
 
@@ -243,8 +250,8 @@ type TrustAccessIdentityProviderConfigInitParameters struct {
 	// Should Cloudflare try to load groups from your account
 	SupportGroups *bool `json:"supportGroups,omitempty" tf:"support_groups,omitempty"`
 
-	// (String) The token_endpoint URL of your IdP
-	// The token_endpoint URL of your IdP
+	// only changes do not require client_secret.
+	// The token_endpoint URL of your IdP. Updates that change its origin (scheme, host, or port) require client_secret in the request. Path-only changes do not require client_secret.
 	TokenURL *string `json:"tokenUrl,omitempty" tf:"token_url,omitempty"`
 
 	// (Boolean) Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
@@ -288,6 +295,8 @@ type TrustAccessIdentityProviderConfigObservation struct {
 
 	// (String) Your OAuth Client ID
 	// Your OAuth Client ID
+	//
+	// The client ID from the Duo Generic OIDC Relying Party metadata.
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
 
 	// (Boolean) Should Cloudflare try to load authentication contexts from your account
@@ -330,7 +339,9 @@ type TrustAccessIdentityProviderConfigObservation struct {
 	// X509 certificate to verify the signature in the SAML authentication response
 	IdpPublicCerts []*string `json:"idpPublicCerts,omitempty" tf:"idp_public_certs,omitempty"`
 
-	// (String) IdP Entity ID or Issuer URL
+	// (String) The issuer URL from the Duo Generic OIDC Relying Party metadata.
+	// The issuer URL from the Duo Generic OIDC Relying Party metadata.
+	//
 	// IdP Entity ID or Issuer URL
 	IssuerURL *string `json:"issuerUrl,omitempty" tf:"issuer_url,omitempty"`
 
@@ -363,8 +374,9 @@ type TrustAccessIdentityProviderConfigObservation struct {
 	PkceEnabled *bool `json:"pkceEnabled,omitempty" tf:"pkce_enabled,omitempty"`
 
 	// sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-	// Available values: "login", "select_account", "none", "consent".
 	// Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
+	//
+	// Configures the prompt behavior for Google authentication.
 	// Available values: "login", "select_account", "none", "consent".
 	Prompt *string `json:"prompt,omitempty" tf:"prompt,omitempty"`
 
@@ -391,8 +403,8 @@ type TrustAccessIdentityProviderConfigObservation struct {
 	// Should Cloudflare try to load groups from your account
 	SupportGroups *bool `json:"supportGroups,omitempty" tf:"support_groups,omitempty"`
 
-	// (String) The token_endpoint URL of your IdP
-	// The token_endpoint URL of your IdP
+	// only changes do not require client_secret.
+	// The token_endpoint URL of your IdP. Updates that change its origin (scheme, host, or port) require client_secret in the request. Path-only changes do not require client_secret.
 	TokenURL *string `json:"tokenUrl,omitempty" tf:"token_url,omitempty"`
 
 	// (Boolean) Whether to use a previously authenticated Access email as a Google login hint when exactly one email matches the Workspace domain.
@@ -444,11 +456,15 @@ type TrustAccessIdentityProviderConfigParameters struct {
 
 	// (String) Your OAuth Client ID
 	// Your OAuth Client ID
+	//
+	// The client ID from the Duo Generic OIDC Relying Party metadata.
 	// +kubebuilder:validation:Optional
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
 
 	// (String, Sensitive) Your OAuth Client Secret
 	// Your OAuth Client Secret
+	//
+	// The client secret from the Duo Generic OIDC Relying Party metadata.
 	// +kubebuilder:validation:Optional
 	ClientSecretSecretRef *v2.SecretKeySelector `json:"clientSecretSecretRef,omitempty" tf:"-"`
 
@@ -500,7 +516,9 @@ type TrustAccessIdentityProviderConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	IdpPublicCerts []*string `json:"idpPublicCerts,omitempty" tf:"idp_public_certs,omitempty"`
 
-	// (String) IdP Entity ID or Issuer URL
+	// (String) The issuer URL from the Duo Generic OIDC Relying Party metadata.
+	// The issuer URL from the Duo Generic OIDC Relying Party metadata.
+	//
 	// IdP Entity ID or Issuer URL
 	// +kubebuilder:validation:Optional
 	IssuerURL *string `json:"issuerUrl,omitempty" tf:"issuer_url,omitempty"`
@@ -540,8 +558,9 @@ type TrustAccessIdentityProviderConfigParameters struct {
 	PkceEnabled *bool `json:"pkceEnabled,omitempty" tf:"pkce_enabled,omitempty"`
 
 	// sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
-	// Available values: "login", "select_account", "none", "consent".
 	// Indicates the type of user interaction that is required. prompt=login forces the user to enter their credentials on that request, negating single-sign on. prompt=none is the opposite. It ensures that the user isn't presented with any interactive prompt. If the request can't be completed silently by using single-sign on, the Microsoft identity platform returns an interaction_required error. prompt=select_account interrupts single sign-on providing account selection experience listing all the accounts either in session or any remembered account or an option to choose to use a different account altogether.
+	//
+	// Configures the prompt behavior for Google authentication.
 	// Available values: "login", "select_account", "none", "consent".
 	// +kubebuilder:validation:Optional
 	Prompt *string `json:"prompt,omitempty" tf:"prompt,omitempty"`
@@ -571,8 +590,8 @@ type TrustAccessIdentityProviderConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	SupportGroups *bool `json:"supportGroups,omitempty" tf:"support_groups,omitempty"`
 
-	// (String) The token_endpoint URL of your IdP
-	// The token_endpoint URL of your IdP
+	// only changes do not require client_secret.
+	// The token_endpoint URL of your IdP. Updates that change its origin (scheme, host, or port) require client_secret in the request. Path-only changes do not require client_secret.
 	// +kubebuilder:validation:Optional
 	TokenURL *string `json:"tokenUrl,omitempty" tf:"token_url,omitempty"`
 
@@ -619,9 +638,9 @@ type TrustAccessIdentityProviderInitParameters struct {
 	// Domain Identity Management (SCIM) with the identity provider. (see below for nested schema)
 	ScimConfig *TrustAccessIdentityProviderScimConfigInitParameters `json:"scimConfig,omitempty" tf:"scim_config,omitempty"`
 
-	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
+	// apps", "google", "linkedin", "oidc", "duo", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
 	// The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
+	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "duo", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -664,9 +683,9 @@ type TrustAccessIdentityProviderObservation struct {
 	// Domain Identity Management (SCIM) with the identity provider. (see below for nested schema)
 	ScimConfig *TrustAccessIdentityProviderScimConfigObservation `json:"scimConfig,omitempty" tf:"scim_config,omitempty"`
 
-	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
+	// apps", "google", "linkedin", "oidc", "duo", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
 	// The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
+	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "duo", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (String) The Zone ID to use for this endpoint. Mutually exclusive with the Account ID.
@@ -717,9 +736,9 @@ type TrustAccessIdentityProviderParameters struct {
 	// +kubebuilder:validation:Optional
 	ScimConfig *TrustAccessIdentityProviderScimConfigParameters `json:"scimConfig,omitempty" tf:"scim_config,omitempty"`
 
-	// apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
+	// apps", "google", "linkedin", "oidc", "duo", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
 	// The type of identity provider. To determine the value for a specific provider, refer to our [developer documentation](https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/).
-	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
+	// Available values: "onetimepin", "azureAD", "saml", "centrify", "facebook", "github", "google-apps", "google", "linkedin", "oidc", "duo", "okta", "onelogin", "pingone", "yandex", "cloudflare", "passkeys".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 

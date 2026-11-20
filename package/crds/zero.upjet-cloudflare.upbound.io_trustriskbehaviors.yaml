@@ -84,8 +84,8 @@ spec:
                           type: boolean
                         riskLevel:
                           description: |-
-                            (String) Available values: "low", "medium", "high".
-                            Available values: "low", "medium", "high".
+                            (String) Available values: "info", "low", "medium", "high".
+                            Available values: "info", "low", "medium", "high".
                           type: string
                       type: object
                     description: (Attributes Map) (see below for nested schema)
@@ -115,8 +115,8 @@ spec:
                           type: boolean
                         riskLevel:
                           description: |-
-                            (String) Available values: "low", "medium", "high".
-                            Available values: "low", "medium", "high".
+                            (String) Available values: "info", "low", "medium", "high".
+                            Available values: "info", "low", "medium", "high".
                           type: string
                       type: object
                     description: (Attributes Map) (see below for nested schema)
@@ -233,8 +233,8 @@ spec:
                           type: boolean
                         riskLevel:
                           description: |-
-                            (String) Available values: "low", "medium", "high".
-                            Available values: "low", "medium", "high".
+                            (String) Available values: "info", "low", "medium", "high".
+                            Available values: "info", "low", "medium", "high".
                           type: string
                       type: object
                     description: (Attributes Map) (see below for nested schema)

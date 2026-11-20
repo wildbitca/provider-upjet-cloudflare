@@ -103,15 +103,15 @@ spec:
                     properties:
                       connectivity:
                         description: |-
-                          (String) The IP versions supported for inbound connections on Spectrum anycast IPs.
+                          (String) For type: dynamic: The IP versions supported for inbound connections on Spectrum anycast IPs.
                           Available values: "all", "ipv4", "ipv6".
-                          The IP versions supported for inbound connections on Spectrum anycast IPs.
+                          For `type: dynamic`: The IP versions supported for inbound connections on Spectrum anycast IPs.
                           Available values: "all", "ipv4", "ipv6".
                         type: string
                       ips:
                         description: |-
-                          (List of String) The array of customer owned IPs we broadcast via anycast for this hostname and application.
-                          The array of customer owned IPs we broadcast via anycast for this hostname and application.
+                          (List of String) For type: static: The array of customer owned IPs we broadcast via anycast for this hostname and application.
+                          For `type: static`: The array of customer owned IPs we broadcast via anycast for this hostname and application.
                         items:
                           type: string
                         type: array
@@ -119,7 +119,9 @@ spec:
                         description: |-
                           (String) The type of DNS record associated with the application.
                           Available values: "CNAME", "ADDRESS".
-                          The type of edge IP configuration specified. Dynamically allocated edge IPs use Spectrum anycast IPs in accordance with the connectivity you specify. Only valid with CNAME DNS names.
+                          For `type: dynamic`: The type of edge IP configuration specified. Dynamically allocated edge IPs use Spectrum anycast IPs in accordance with the connectivity you specify. Only valid with CNAME DNS names.
+
+                          For `type: static`: The type of edge IP configuration specified. Statically allocated edge IPs use customer IPs in accordance with the ips array you specify. Only valid with ADDRESS DNS names.
                           Available values: "dynamic", "static".
                         type: string
                     type: object
@@ -251,15 +253,15 @@ spec:
                     properties:
                       connectivity:
                         description: |-
-                          (String) The IP versions supported for inbound connections on Spectrum anycast IPs.
+                          (String) For type: dynamic: The IP versions supported for inbound connections on Spectrum anycast IPs.
                           Available values: "all", "ipv4", "ipv6".
-                          The IP versions supported for inbound connections on Spectrum anycast IPs.
+                          For `type: dynamic`: The IP versions supported for inbound connections on Spectrum anycast IPs.
                           Available values: "all", "ipv4", "ipv6".
                         type: string
                       ips:
                         description: |-
-                          (List of String) The array of customer owned IPs we broadcast via anycast for this hostname and application.
-                          The array of customer owned IPs we broadcast via anycast for this hostname and application.
+                          (List of String) For type: static: The array of customer owned IPs we broadcast via anycast for this hostname and application.
+                          For `type: static`: The array of customer owned IPs we broadcast via anycast for this hostname and application.
                         items:
                           type: string
                         type: array
@@ -267,7 +269,9 @@ spec:
                         description: |-
                           (String) The type of DNS record associated with the application.
                           Available values: "CNAME", "ADDRESS".
-                          The type of edge IP configuration specified. Dynamically allocated edge IPs use Spectrum anycast IPs in accordance with the connectivity you specify. Only valid with CNAME DNS names.
+                          For `type: dynamic`: The type of edge IP configuration specified. Dynamically allocated edge IPs use Spectrum anycast IPs in accordance with the connectivity you specify. Only valid with CNAME DNS names.
+
+                          For `type: static`: The type of edge IP configuration specified. Statically allocated edge IPs use customer IPs in accordance with the ips array you specify. Only valid with ADDRESS DNS names.
                           Available values: "dynamic", "static".
                         type: string
                     type: object
@@ -495,15 +499,15 @@ spec:
                     properties:
                       connectivity:
                         description: |-
-                          (String) The IP versions supported for inbound connections on Spectrum anycast IPs.
+                          (String) For type: dynamic: The IP versions supported for inbound connections on Spectrum anycast IPs.
                           Available values: "all", "ipv4", "ipv6".
-                          The IP versions supported for inbound connections on Spectrum anycast IPs.
+                          For `type: dynamic`: The IP versions supported for inbound connections on Spectrum anycast IPs.
                           Available values: "all", "ipv4", "ipv6".
                         type: string
                       ips:
                         description: |-
-                          (List of String) The array of customer owned IPs we broadcast via anycast for this hostname and application.
-                          The array of customer owned IPs we broadcast via anycast for this hostname and application.
+                          (List of String) For type: static: The array of customer owned IPs we broadcast via anycast for this hostname and application.
+                          For `type: static`: The array of customer owned IPs we broadcast via anycast for this hostname and application.
                         items:
                           type: string
                         type: array
@@ -511,7 +515,9 @@ spec:
                         description: |-
                           (String) The type of DNS record associated with the application.
                           Available values: "CNAME", "ADDRESS".
-                          The type of edge IP configuration specified. Dynamically allocated edge IPs use Spectrum anycast IPs in accordance with the connectivity you specify. Only valid with CNAME DNS names.
+                          For `type: dynamic`: The type of edge IP configuration specified. Dynamically allocated edge IPs use Spectrum anycast IPs in accordance with the connectivity you specify. Only valid with CNAME DNS names.
+
+                          For `type: static`: The type of edge IP configuration specified. Statically allocated edge IPs use customer IPs in accordance with the ips array you specify. Only valid with ADDRESS DNS names.
                           Available values: "dynamic", "static".
                         type: string
                     type: object
@@ -570,6 +576,18 @@ spec:
                     description: |-
                       (String) Optional Worker script tag (worker ID) to use as the application's origin. Only supported for TCP applications with traffic_type "worker"; mutually exclusive with origin_direct, origin_dns, origin_port, proxy_protocol, and argo_smart_routing. tls may only be "off" or "flexible".
                       Optional Worker script tag (worker ID) to use as the application's origin. Only supported for TCP applications with traffic_type "worker"; mutually exclusive with origin_direct, origin_dns, origin_port, proxy_protocol, and argo_smart_routing. tls may only be "off" or "flexible".
+                    type: string
+                  originWorkerName:
+                    description: |-
+                      (String) Name of the Worker origin. Omitted when the Worker is not found or its name cannot be resolved.
+                      Name of the Worker origin. Omitted when the Worker is not found or its name cannot be resolved.
+                    type: string
+                  originWorkerStatus:
+                    description: |-
+                      (String) Lookup status of the Worker origin. Unknown indicates that its name could not be resolved. Only returned for Worker origins.
+                      Available values: "available", "not_found", "unknown".
+                      Lookup status of the Worker origin. Unknown indicates that its name could not be resolved. Only returned for Worker origins.
+                      Available values: "available", "not_found", "unknown".
                     type: string
                   protocol:
                     description: |-

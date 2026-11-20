@@ -227,6 +227,16 @@ func (in *ApplicationObservation) DeepCopyInto(out *ApplicationObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.OriginWorkerName != nil {
+		in, out := &in.OriginWorkerName, &out.OriginWorkerName
+		*out = new(string)
+		**out = **in
+	}
+	if in.OriginWorkerStatus != nil {
+		in, out := &in.OriginWorkerStatus, &out.OriginWorkerStatus
+		*out = new(string)
+		**out = **in
+	}
 	if in.Protocol != nil {
 		in, out := &in.Protocol, &out.Protocol
 		*out = new(string)

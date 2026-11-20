@@ -398,15 +398,18 @@ spec:
                     type: string
                   mfaConfig:
                     description: factor authentication (MFA) settings for the application.
-                      Only valid for self_hosted, ssh, vnc, and rdp application types.
-                      (see below for nested schema)
+                      Only valid for self_hosted, ssh, vnc, rdp, and infrastructure
+                      application types. For infrastructure applications, supported
+                      authenticators are piv_key and ssh_fido2_key; for other application
+                      types use totp, biometrics, or security_key. (see below for
+                      nested schema)
                     properties:
                       allowedAuthenticators:
                         description: |-
                           (List of String) The authenticators allowed for MFA.
-                          Available values: "totp", "biometrics", "security_key".
+                          Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
                           The authenticators allowed for MFA.
-                          Available values: "totp", "biometrics", "security_key".
+                          Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
                         items:
                           type: string
                         type: array
@@ -1090,15 +1093,18 @@ spec:
                           type: array
                         mfaConfig:
                           description: factor authentication (MFA) settings for the
-                            application. Only valid for self_hosted, ssh, vnc, and
-                            rdp application types. (see below for nested schema)
+                            application. Only valid for self_hosted, ssh, vnc, rdp,
+                            and infrastructure application types. For infrastructure
+                            applications, supported authenticators are piv_key and
+                            ssh_fido2_key; for other application types use totp, biometrics,
+                            or security_key. (see below for nested schema)
                           properties:
                             allowedAuthenticators:
                               description: |-
                                 (List of String) The authenticators allowed for MFA.
-                                Available values: "totp", "biometrics", "security_key".
+                                Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
                                 The authenticators allowed for MFA.
-                                Available values: "totp", "biometrics", "security_key", "ssh_piv_key".
+                                Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
                               items:
                                 type: string
                               type: array
@@ -2304,15 +2310,18 @@ spec:
                     type: string
                   mfaConfig:
                     description: factor authentication (MFA) settings for the application.
-                      Only valid for self_hosted, ssh, vnc, and rdp application types.
-                      (see below for nested schema)
+                      Only valid for self_hosted, ssh, vnc, rdp, and infrastructure
+                      application types. For infrastructure applications, supported
+                      authenticators are piv_key and ssh_fido2_key; for other application
+                      types use totp, biometrics, or security_key. (see below for
+                      nested schema)
                     properties:
                       allowedAuthenticators:
                         description: |-
                           (List of String) The authenticators allowed for MFA.
-                          Available values: "totp", "biometrics", "security_key".
+                          Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
                           The authenticators allowed for MFA.
-                          Available values: "totp", "biometrics", "security_key".
+                          Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
                         items:
                           type: string
                         type: array
@@ -2996,15 +3005,18 @@ spec:
                           type: array
                         mfaConfig:
                           description: factor authentication (MFA) settings for the
-                            application. Only valid for self_hosted, ssh, vnc, and
-                            rdp application types. (see below for nested schema)
+                            application. Only valid for self_hosted, ssh, vnc, rdp,
+                            and infrastructure application types. For infrastructure
+                            applications, supported authenticators are piv_key and
+                            ssh_fido2_key; for other application types use totp, biometrics,
+                            or security_key. (see below for nested schema)
                           properties:
                             allowedAuthenticators:
                               description: |-
                                 (List of String) The authenticators allowed for MFA.
-                                Available values: "totp", "biometrics", "security_key".
+                                Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
                                 The authenticators allowed for MFA.
-                                Available values: "totp", "biometrics", "security_key", "ssh_piv_key".
+                                Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
                               items:
                                 type: string
                               type: array
@@ -4223,15 +4235,18 @@ spec:
                     type: string
                   mfaConfig:
                     description: factor authentication (MFA) settings for the application.
-                      Only valid for self_hosted, ssh, vnc, and rdp application types.
-                      (see below for nested schema)
+                      Only valid for self_hosted, ssh, vnc, rdp, and infrastructure
+                      application types. For infrastructure applications, supported
+                      authenticators are piv_key and ssh_fido2_key; for other application
+                      types use totp, biometrics, or security_key. (see below for
+                      nested schema)
                     properties:
                       allowedAuthenticators:
                         description: |-
                           (List of String) The authenticators allowed for MFA.
-                          Available values: "totp", "biometrics", "security_key".
+                          Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
                           The authenticators allowed for MFA.
-                          Available values: "totp", "biometrics", "security_key".
+                          Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
                         items:
                           type: string
                         type: array
@@ -4915,15 +4930,18 @@ spec:
                           type: array
                         mfaConfig:
                           description: factor authentication (MFA) settings for the
-                            application. Only valid for self_hosted, ssh, vnc, and
-                            rdp application types. (see below for nested schema)
+                            application. Only valid for self_hosted, ssh, vnc, rdp,
+                            and infrastructure application types. For infrastructure
+                            applications, supported authenticators are piv_key and
+                            ssh_fido2_key; for other application types use totp, biometrics,
+                            or security_key. (see below for nested schema)
                           properties:
                             allowedAuthenticators:
                               description: |-
                                 (List of String) The authenticators allowed for MFA.
-                                Available values: "totp", "biometrics", "security_key".
+                                Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
                                 The authenticators allowed for MFA.
-                                Available values: "totp", "biometrics", "security_key", "ssh_piv_key".
+                                Available values: "totp", "biometrics", "security_key", "piv_key", "ssh_fido2_key".
                               items:
                                 type: string
                               type: array

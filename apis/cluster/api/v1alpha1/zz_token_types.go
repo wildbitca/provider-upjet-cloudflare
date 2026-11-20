@@ -230,6 +230,22 @@ type TokenObservation struct {
 	// Status of the token.
 	// Available values: "active", "disabled", "expired".
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// (String) The prefix of the token value, before the first underscore. Use it with
+	// token_suffix to identify a token. Only present for tokens created or
+	// rolled after this field was added.
+	// The prefix of the token value, before the first underscore. Use it with
+	// `token_suffix` to identify a token. Only present for tokens created or
+	// rolled after this field was added.
+	TokenPrefix *string `json:"tokenPrefix,omitempty" tf:"token_prefix,omitempty"`
+
+	// (String) The last 4 characters of the token value. Use it with token_prefix to
+	// identify a token. It is not unique. Only present for tokens created or
+	// rolled after this field was added.
+	// The last 4 characters of the token value. Use it with `token_prefix` to
+	// identify a token. It is not unique. Only present for tokens created or
+	// rolled after this field was added.
+	TokenSuffix *string `json:"tokenSuffix,omitempty" tf:"token_suffix,omitempty"`
 }
 
 type TokenParameters struct {

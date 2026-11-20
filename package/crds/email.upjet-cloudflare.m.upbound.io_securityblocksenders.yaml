@@ -68,6 +68,11 @@ spec:
                   comments:
                     description: (String)
                     type: string
+                  expiresAt:
+                    description: |-
+                      (String) Timestamp at which the pattern expires. After this time, Email Security ignores the pattern. The value must lie in the future. Send null to clear the expiration.
+                      Timestamp at which the pattern expires. After this time, Email Security ignores the pattern. The value must lie in the future. Send `null` to clear the expiration.
+                    type: string
                   isRegex:
                     description: |-
                       (Boolean) Whether pattern is a regular expression instead of a literal value.
@@ -109,6 +114,11 @@ spec:
                     type: string
                   comments:
                     description: (String)
+                    type: string
+                  expiresAt:
+                    description: |-
+                      (String) Timestamp at which the pattern expires. After this time, Email Security ignores the pattern. The value must lie in the future. Send null to clear the expiration.
+                      Timestamp at which the pattern expires. After this time, Email Security ignores the pattern. The value must lie in the future. Send `null` to clear the expiration.
                     type: string
                   isRegex:
                     description: |-
@@ -221,6 +231,11 @@ spec:
                     type: string
                   createdAt:
                     description: (String)
+                    type: string
+                  expiresAt:
+                    description: |-
+                      (String) Timestamp at which the pattern expires. After this time, Email Security ignores the pattern. The value must lie in the future. Send null to clear the expiration.
+                      Timestamp at which the pattern expires. After this time, Email Security ignores the pattern. The value must lie in the future. Send `null` to clear the expiration.
                     type: string
                   id:
                     description: (String) Blocked sender pattern identifier.

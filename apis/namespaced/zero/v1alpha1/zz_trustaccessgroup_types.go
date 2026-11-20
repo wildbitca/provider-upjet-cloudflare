@@ -715,6 +715,41 @@ type IncludeCloudflareAccountMemberParameters struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 }
 
+type IncludeServiceTokenTagInitParameters struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type IncludeServiceTokenTagObservation struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type IncludeServiceTokenTagParameters struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
+}
+
 type IncludeUserRiskScoreInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
@@ -759,6 +794,41 @@ type RequireCloudflareAccountMemberParameters struct {
 	AccountID *string `json:"accountId,omitempty" tf:"account_id,omitempty"`
 }
 
+type RequireServiceTokenTagInitParameters struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type RequireServiceTokenTagObservation struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type RequireServiceTokenTagParameters struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
+}
+
 type RequireUserRiskScoreInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
@@ -779,6 +849,41 @@ type RequireUserRiskScoreParameters struct {
 	// A list of risk score levels to match. Values can be low, medium, high, or unscored.
 	// +kubebuilder:validation:Optional
 	UserRiskScore []*string `json:"userRiskScore" tf:"user_risk_score,omitempty"`
+}
+
+type ServiceTokenTagInitParameters struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ServiceTokenTagObservation struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type ServiceTokenTagParameters struct {
+
+	// sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key" tf:"key,omitempty"`
+
+	// sensitive, preserve whitespace, and must not contain NUL characters.
+	// The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value" tf:"value,omitempty"`
 }
 
 type TrustAccessGroupExcludeInitParameters struct {
@@ -857,6 +962,9 @@ type TrustAccessGroupExcludeInitParameters struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *ExcludeServiceTokenInitParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	ServiceTokenTag *ServiceTokenTagInitParameters `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	UserRiskScore *UserRiskScoreInitParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
@@ -938,6 +1046,9 @@ type TrustAccessGroupExcludeObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *ExcludeServiceTokenObservation `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	ServiceTokenTag *ServiceTokenTagObservation `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	UserRiskScore *UserRiskScoreObservation `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
@@ -1044,6 +1155,10 @@ type TrustAccessGroupExcludeParameters struct {
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ServiceToken *ExcludeServiceTokenParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	ServiceTokenTag *ServiceTokenTagParameters `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -1589,6 +1704,9 @@ type TrustAccessGroupIncludeInitParameters struct {
 	ServiceToken *TrustAccessGroupIncludeServiceTokenInitParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	ServiceTokenTag *IncludeServiceTokenTagInitParameters `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	UserRiskScore *IncludeUserRiskScoreInitParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
@@ -1712,6 +1830,9 @@ type TrustAccessGroupIncludeObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessGroupIncludeServiceTokenObservation `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	ServiceTokenTag *IncludeServiceTokenTagObservation `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	UserRiskScore *IncludeUserRiskScoreObservation `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
@@ -1901,6 +2022,10 @@ type TrustAccessGroupIncludeParameters struct {
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ServiceToken *TrustAccessGroupIncludeServiceTokenParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	ServiceTokenTag *IncludeServiceTokenTagParameters `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
@@ -2628,6 +2753,9 @@ type TrustAccessGroupRequireInitParameters struct {
 	ServiceToken *TrustAccessGroupRequireServiceTokenInitParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
 
 	// (Attributes) (see below for nested schema)
+	ServiceTokenTag *RequireServiceTokenTagInitParameters `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
+
+	// (Attributes) (see below for nested schema)
 	UserRiskScore *RequireUserRiskScoreInitParameters `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
 }
 
@@ -2751,6 +2879,9 @@ type TrustAccessGroupRequireObservation struct {
 
 	// (Attributes) (see below for nested schema)
 	ServiceToken *TrustAccessGroupRequireServiceTokenObservation `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	ServiceTokenTag *RequireServiceTokenTagObservation `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	UserRiskScore *RequireUserRiskScoreObservation `json:"userRiskScore,omitempty" tf:"user_risk_score,omitempty"`
@@ -2940,6 +3071,10 @@ type TrustAccessGroupRequireParameters struct {
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	ServiceToken *TrustAccessGroupRequireServiceTokenParameters `json:"serviceToken,omitempty" tf:"service_token,omitempty"`
+
+	// (Attributes) (see below for nested schema)
+	// +kubebuilder:validation:Optional
+	ServiceTokenTag *RequireServiceTokenTagParameters `json:"serviceTokenTag,omitempty" tf:"service_token_tag,omitempty"`
 
 	// (Attributes) (see below for nested schema)
 	// +kubebuilder:validation:Optional

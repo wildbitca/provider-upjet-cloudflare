@@ -71,14 +71,20 @@ spec:
                         description: (Boolean)
                         type: boolean
                       maxAge:
-                        description: (Number)
+                        description: |-
+                          (Number) Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
+                          Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
                         type: number
                       staleWhileRevalidate:
-                        description: (Number)
+                        description: |-
+                          (Number) Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
+                          Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
                         type: number
                     type: object
                   integration:
-                    description: (String)
+                    description: |-
+                      only metadata and cannot be changed with replace or update operations.
+                      Selects a PlanetScale database and provisions credentials managed by Cloudflare when creating a Hyperdrive configuration. The Cloudflare account must already be linked to PlanetScale in the Hyperdrive dashboard. The selection is returned as read-only metadata and cannot be changed with replace or update operations.
                     type: string
                   mtls:
                     description: (Attributes) mTLS configuration for the origin connection.
@@ -139,6 +145,8 @@ spec:
                         description: |-
                           local IP addresses are not allowed.
                           Defines the publicly reachable hostname or IP of your origin database. Private, loopback, and link-local IP addresses are not allowed.
+
+                          Defines the host (hostname or IP) of your origin database.
                         type: string
                       passwordSecretRef:
                         description: |-
@@ -213,14 +221,20 @@ spec:
                         description: (Boolean)
                         type: boolean
                       maxAge:
-                        description: (Number)
+                        description: |-
+                          (Number) Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
+                          Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
                         type: number
                       staleWhileRevalidate:
-                        description: (Number)
+                        description: |-
+                          (Number) Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
+                          Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
                         type: number
                     type: object
                   integration:
-                    description: (String)
+                    description: |-
+                      only metadata and cannot be changed with replace or update operations.
+                      Selects a PlanetScale database and provisions credentials managed by Cloudflare when creating a Hyperdrive configuration. The Cloudflare account must already be linked to PlanetScale in the Hyperdrive dashboard. The selection is returned as read-only metadata and cannot be changed with replace or update operations.
                     type: string
                   mtls:
                     description: (Attributes) mTLS configuration for the origin connection.
@@ -281,6 +295,8 @@ spec:
                         description: |-
                           local IP addresses are not allowed.
                           Defines the publicly reachable hostname or IP of your origin database. Private, loopback, and link-local IP addresses are not allowed.
+
+                          Defines the host (hostname or IP) of your origin database.
                         type: string
                       passwordSecretRef:
                         description: |-
@@ -416,10 +432,14 @@ spec:
                         description: (Boolean)
                         type: boolean
                       maxAge:
-                        description: (Number)
+                        description: |-
+                          (Number) Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
+                          Specify the maximum duration (in seconds) items should persist in the cache. Defaults to 60 seconds if not specified.
                         type: number
                       staleWhileRevalidate:
-                        description: (Number)
+                        description: |-
+                          (Number) Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
+                          Specify the number of seconds the cache may serve a stale response. Defaults to 15 seconds if not specified.
                         type: number
                     type: object
                   createdOn:
@@ -432,7 +452,9 @@ spec:
                       identifier.
                     type: string
                   integration:
-                    description: (String)
+                    description: |-
+                      only metadata and cannot be changed with replace or update operations.
+                      Selects a PlanetScale database and provisions credentials managed by Cloudflare when creating a Hyperdrive configuration. The Cloudflare account must already be linked to PlanetScale in the Hyperdrive dashboard. The selection is returned as read-only metadata and cannot be changed with replace or update operations.
                     type: string
                   modifiedOn:
                     description: |-
@@ -484,6 +506,8 @@ spec:
                         description: |-
                           local IP addresses are not allowed.
                           Defines the publicly reachable hostname or IP of your origin database. Private, loopback, and link-local IP addresses are not allowed.
+
+                          Defines the host (hostname or IP) of your origin database.
                         type: string
                       port:
                         description: |-

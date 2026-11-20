@@ -98,6 +98,22 @@ spec:
                   physport:
                     description: (Number)
                     type: number
+                  remoteSubnets:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        localAliasPrefix:
+                          description: |-
+                            (String) A valid CIDR notation representing an IP range.
+                            A valid CIDR notation representing an IP range.
+                          type: string
+                        remotePrefix:
+                          description: |-
+                            (String) A valid CIDR notation representing an IP range.
+                            A valid CIDR notation representing an IP range.
+                          type: string
+                      type: object
+                    type: array
                   routedSubnets:
                     description: (Attributes List) (see below for nested schema)
                     items:
@@ -276,6 +292,22 @@ spec:
                   physport:
                     description: (Number)
                     type: number
+                  remoteSubnets:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        localAliasPrefix:
+                          description: |-
+                            (String) A valid CIDR notation representing an IP range.
+                            A valid CIDR notation representing an IP range.
+                          type: string
+                        remotePrefix:
+                          description: |-
+                            (String) A valid CIDR notation representing an IP range.
+                            A valid CIDR notation representing an IP range.
+                          type: string
+                      type: object
+                    type: array
                   routedSubnets:
                     description: (Attributes List) (see below for nested schema)
                     items:
@@ -516,6 +548,22 @@ spec:
                   physport:
                     description: (Number)
                     type: number
+                  remoteSubnets:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        localAliasPrefix:
+                          description: |-
+                            (String) A valid CIDR notation representing an IP range.
+                            A valid CIDR notation representing an IP range.
+                          type: string
+                        remotePrefix:
+                          description: |-
+                            (String) A valid CIDR notation representing an IP range.
+                            A valid CIDR notation representing an IP range.
+                          type: string
+                      type: object
+                    type: array
                   routedSubnets:
                     description: (Attributes List) (see below for nested schema)
                     items:

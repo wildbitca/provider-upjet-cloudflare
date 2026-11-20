@@ -486,6 +486,20 @@ spec:
                                 The ID of a Service Token.
                               type: string
                           type: object
+                        serviceTokenTag:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            key:
+                              description: |-
+                                sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                                The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                              type: string
+                            value:
+                              description: |-
+                                sensitive, preserve whitespace, and must not contain NUL characters.
+                                The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+                              type: string
+                          type: object
                         userRiskScore:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -779,6 +793,20 @@ spec:
                                 The ID of a Service Token.
                               type: string
                           type: object
+                        serviceTokenTag:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            key:
+                              description: |-
+                                sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                                The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                              type: string
+                            value:
+                              description: |-
+                                sensitive, preserve whitespace, and must not contain NUL characters.
+                                The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+                              type: string
+                          type: object
                         userRiskScore:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -823,6 +851,11 @@ spec:
                     description: |-
                       (String) The name of the Access policy.
                       The name of the Access policy.
+                    type: string
+                  policyResolutionAccountId:
+                    description: |-
+                      account WARP authentication. The account must be trusted by the account that owns this policy.
+                      The account ID used to resolve policy resources and identity for cross-account WARP authentication. The account must be trusted by the account that owns this policy.
                     type: string
                   purposeJustificationPrompt:
                     description: |-
@@ -1112,6 +1145,20 @@ spec:
                               description: |-
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
+                              type: string
+                          type: object
+                        serviceTokenTag:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            key:
+                              description: |-
+                                sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                                The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                              type: string
+                            value:
+                              description: |-
+                                sensitive, preserve whitespace, and must not contain NUL characters.
+                                The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
                               type: string
                           type: object
                         userRiskScore:
@@ -1572,6 +1619,20 @@ spec:
                                 The ID of a Service Token.
                               type: string
                           type: object
+                        serviceTokenTag:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            key:
+                              description: |-
+                                sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                                The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                              type: string
+                            value:
+                              description: |-
+                                sensitive, preserve whitespace, and must not contain NUL characters.
+                                The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+                              type: string
+                          type: object
                         userRiskScore:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -1865,6 +1926,20 @@ spec:
                                 The ID of a Service Token.
                               type: string
                           type: object
+                        serviceTokenTag:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            key:
+                              description: |-
+                                sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                                The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                              type: string
+                            value:
+                              description: |-
+                                sensitive, preserve whitespace, and must not contain NUL characters.
+                                The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+                              type: string
+                          type: object
                         userRiskScore:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -1909,6 +1984,11 @@ spec:
                     description: |-
                       (String) The name of the Access policy.
                       The name of the Access policy.
+                    type: string
+                  policyResolutionAccountId:
+                    description: |-
+                      account WARP authentication. The account must be trusted by the account that owns this policy.
+                      The account ID used to resolve policy resources and identity for cross-account WARP authentication. The account must be trusted by the account that owns this policy.
                     type: string
                   purposeJustificationPrompt:
                     description: |-
@@ -2200,6 +2280,20 @@ spec:
                                 The ID of a Service Token.
                               type: string
                           type: object
+                        serviceTokenTag:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            key:
+                              description: |-
+                                sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                                The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                              type: string
+                            value:
+                              description: |-
+                                sensitive, preserve whitespace, and must not contain NUL characters.
+                                The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+                              type: string
+                          type: object
                         userRiskScore:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -2296,11 +2390,6 @@ spec:
                       (String) Identifier.
                       Identifier.
                     type: string
-                  appCount:
-                    description: |-
-                      (Number) Number of access applications currently using this policy.
-                      Number of access applications currently using this policy.
-                    type: number
                   approvalGroups:
                     description: (Attributes Set) Administrators who can approve a
                       temporary authentication request. (see below for nested schema)
@@ -2645,6 +2734,20 @@ spec:
                                 The ID of a Service Token.
                               type: string
                           type: object
+                        serviceTokenTag:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            key:
+                              description: |-
+                                sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                                The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                              type: string
+                            value:
+                              description: |-
+                                sensitive, preserve whitespace, and must not contain NUL characters.
+                                The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+                              type: string
+                          type: object
                         userRiskScore:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -2941,6 +3044,20 @@ spec:
                                 The ID of a Service Token.
                               type: string
                           type: object
+                        serviceTokenTag:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            key:
+                              description: |-
+                                sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                                The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                              type: string
+                            value:
+                              description: |-
+                                sensitive, preserve whitespace, and must not contain NUL characters.
+                                The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
+                              type: string
+                          type: object
                         userRiskScore:
                           description: (Attributes) (see below for nested schema)
                           properties:
@@ -2985,6 +3102,11 @@ spec:
                     description: |-
                       (String) The name of the Access policy.
                       The name of the Access policy.
+                    type: string
+                  policyResolutionAccountId:
+                    description: |-
+                      account WARP authentication. The account must be trusted by the account that owns this policy.
+                      The account ID used to resolve policy resources and identity for cross-account WARP authentication. The account must be trusted by the account that owns this policy.
                     type: string
                   purposeJustificationPrompt:
                     description: |-
@@ -3274,6 +3396,20 @@ spec:
                               description: |-
                                 (String) The ID of a Service Token.
                                 The ID of a Service Token.
+                              type: string
+                          type: object
+                        serviceTokenTag:
+                          description: (Attributes) (see below for nested schema)
+                          properties:
+                            key:
+                              description: |-
+                                sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                                The tag key to match. Keys are case-sensitive and may contain Unicode letters and digits, underscores, periods, and hyphens.
+                              type: string
+                            value:
+                              description: |-
+                                sensitive, preserve whitespace, and must not contain NUL characters.
+                                The tag value to match. Values are case-sensitive, preserve whitespace, and must not contain NUL characters.
                               type: string
                           type: object
                         userRiskScore:

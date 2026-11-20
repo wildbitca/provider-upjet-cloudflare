@@ -41,16 +41,16 @@ type KeysInitParameters struct {
 	Alg *string `json:"alg,omitempty" tf:"alg,omitempty"`
 
 	// 256", "P-384".
-	// Curve
+	// For `alg: ES256` or `alg: ES384`: Curve
 	// Available values: "P-256", "P-384".
 	Crv *string `json:"crv,omitempty" tf:"crv,omitempty"`
 
-	// (String) RSA exponent
-	// RSA exponent
+	// (String) For alg: RS256 or alg: RS384 or alg: RS512 or alg: PS256 or alg: PS384 or alg: PS512: RSA exponent
+	// For `alg: RS256` or `alg: RS384` or `alg: RS512` or `alg: PS256` or `alg: PS384` or `alg: PS512`: RSA exponent
 	E *string `json:"e,omitempty" tf:"e,omitempty"`
 
-	// (String) Symmetric key material. Required for create and PUT update requests.
-	// Symmetric key material. Required for create and PUT update requests.
+	// (String) For alg: HS256 or alg: HS384 or alg: HS512: Symmetric key material. Required for create and PUT update requests.
+	// For `alg: HS256` or `alg: HS384` or `alg: HS512`: Symmetric key material. Required for create and PUT update requests.
 	K *string `json:"k,omitempty" tf:"k,omitempty"`
 
 	// (String) Key ID
@@ -63,16 +63,16 @@ type KeysInitParameters struct {
 	// Available values: "RSA", "EC", "oct".
 	Kty *string `json:"kty,omitempty" tf:"kty,omitempty"`
 
-	// (String) RSA modulus
-	// RSA modulus
+	// (String) For alg: RS256 or alg: RS384 or alg: RS512 or alg: PS256 or alg: PS384 or alg: PS512: RSA modulus
+	// For `alg: RS256` or `alg: RS384` or `alg: RS512` or `alg: PS256` or `alg: PS384` or `alg: PS512`: RSA modulus
 	N *string `json:"n,omitempty" tf:"n,omitempty"`
 
-	// (String) X EC coordinate
-	// X EC coordinate
+	// (String) For alg: ES256 or alg: ES384: X EC coordinate
+	// For `alg: ES256` or `alg: ES384`: X EC coordinate
 	X *string `json:"x,omitempty" tf:"x,omitempty"`
 
-	// (String) Y EC coordinate
-	// Y EC coordinate
+	// (String) For alg: ES256 or alg: ES384: Y EC coordinate
+	// For `alg: ES256` or `alg: ES384`: Y EC coordinate
 	Y *string `json:"y,omitempty" tf:"y,omitempty"`
 }
 
@@ -85,16 +85,16 @@ type KeysObservation struct {
 	Alg *string `json:"alg,omitempty" tf:"alg,omitempty"`
 
 	// 256", "P-384".
-	// Curve
+	// For `alg: ES256` or `alg: ES384`: Curve
 	// Available values: "P-256", "P-384".
 	Crv *string `json:"crv,omitempty" tf:"crv,omitempty"`
 
-	// (String) RSA exponent
-	// RSA exponent
+	// (String) For alg: RS256 or alg: RS384 or alg: RS512 or alg: PS256 or alg: PS384 or alg: PS512: RSA exponent
+	// For `alg: RS256` or `alg: RS384` or `alg: RS512` or `alg: PS256` or `alg: PS384` or `alg: PS512`: RSA exponent
 	E *string `json:"e,omitempty" tf:"e,omitempty"`
 
-	// (String) Symmetric key material. Required for create and PUT update requests.
-	// Symmetric key material. Required for create and PUT update requests.
+	// (String) For alg: HS256 or alg: HS384 or alg: HS512: Symmetric key material. Required for create and PUT update requests.
+	// For `alg: HS256` or `alg: HS384` or `alg: HS512`: Symmetric key material. Required for create and PUT update requests.
 	K *string `json:"k,omitempty" tf:"k,omitempty"`
 
 	// (String) Key ID
@@ -107,16 +107,16 @@ type KeysObservation struct {
 	// Available values: "RSA", "EC", "oct".
 	Kty *string `json:"kty,omitempty" tf:"kty,omitempty"`
 
-	// (String) RSA modulus
-	// RSA modulus
+	// (String) For alg: RS256 or alg: RS384 or alg: RS512 or alg: PS256 or alg: PS384 or alg: PS512: RSA modulus
+	// For `alg: RS256` or `alg: RS384` or `alg: RS512` or `alg: PS256` or `alg: PS384` or `alg: PS512`: RSA modulus
 	N *string `json:"n,omitempty" tf:"n,omitempty"`
 
-	// (String) X EC coordinate
-	// X EC coordinate
+	// (String) For alg: ES256 or alg: ES384: X EC coordinate
+	// For `alg: ES256` or `alg: ES384`: X EC coordinate
 	X *string `json:"x,omitempty" tf:"x,omitempty"`
 
-	// (String) Y EC coordinate
-	// Y EC coordinate
+	// (String) For alg: ES256 or alg: ES384: Y EC coordinate
+	// For `alg: ES256` or `alg: ES384`: Y EC coordinate
 	Y *string `json:"y,omitempty" tf:"y,omitempty"`
 }
 
@@ -130,18 +130,18 @@ type KeysParameters struct {
 	Alg *string `json:"alg" tf:"alg,omitempty"`
 
 	// 256", "P-384".
-	// Curve
+	// For `alg: ES256` or `alg: ES384`: Curve
 	// Available values: "P-256", "P-384".
 	// +kubebuilder:validation:Optional
 	Crv *string `json:"crv,omitempty" tf:"crv,omitempty"`
 
-	// (String) RSA exponent
-	// RSA exponent
+	// (String) For alg: RS256 or alg: RS384 or alg: RS512 or alg: PS256 or alg: PS384 or alg: PS512: RSA exponent
+	// For `alg: RS256` or `alg: RS384` or `alg: RS512` or `alg: PS256` or `alg: PS384` or `alg: PS512`: RSA exponent
 	// +kubebuilder:validation:Optional
 	E *string `json:"e,omitempty" tf:"e,omitempty"`
 
-	// (String) Symmetric key material. Required for create and PUT update requests.
-	// Symmetric key material. Required for create and PUT update requests.
+	// (String) For alg: HS256 or alg: HS384 or alg: HS512: Symmetric key material. Required for create and PUT update requests.
+	// For `alg: HS256` or `alg: HS384` or `alg: HS512`: Symmetric key material. Required for create and PUT update requests.
 	// +kubebuilder:validation:Optional
 	K *string `json:"k,omitempty" tf:"k,omitempty"`
 
@@ -157,18 +157,18 @@ type KeysParameters struct {
 	// +kubebuilder:validation:Optional
 	Kty *string `json:"kty" tf:"kty,omitempty"`
 
-	// (String) RSA modulus
-	// RSA modulus
+	// (String) For alg: RS256 or alg: RS384 or alg: RS512 or alg: PS256 or alg: PS384 or alg: PS512: RSA modulus
+	// For `alg: RS256` or `alg: RS384` or `alg: RS512` or `alg: PS256` or `alg: PS384` or `alg: PS512`: RSA modulus
 	// +kubebuilder:validation:Optional
 	N *string `json:"n,omitempty" tf:"n,omitempty"`
 
-	// (String) X EC coordinate
-	// X EC coordinate
+	// (String) For alg: ES256 or alg: ES384: X EC coordinate
+	// For `alg: ES256` or `alg: ES384`: X EC coordinate
 	// +kubebuilder:validation:Optional
 	X *string `json:"x,omitempty" tf:"x,omitempty"`
 
-	// (String) Y EC coordinate
-	// Y EC coordinate
+	// (String) For alg: ES256 or alg: ES384: Y EC coordinate
+	// For `alg: ES256` or `alg: ES384`: Y EC coordinate
 	// +kubebuilder:validation:Optional
 	Y *string `json:"y,omitempty" tf:"y,omitempty"`
 }

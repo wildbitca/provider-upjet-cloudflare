@@ -22,6 +22,10 @@ type SecurityBlockSenderInitParameters struct {
 	// (String)
 	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
 
+	// (String) Timestamp at which the pattern expires. After this time, Email Security ignores the pattern. The value must lie in the future. Send null to clear the expiration.
+	// Timestamp at which the pattern expires. After this time, Email Security ignores the pattern. The value must lie in the future. Send `null` to clear the expiration.
+	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
+
 	// (Boolean) Whether pattern is a regular expression instead of a literal value.
 	// Whether `pattern` is a regular expression instead of a literal value.
 	IsRegex *bool `json:"isRegex,omitempty" tf:"is_regex,omitempty"`
@@ -51,6 +55,10 @@ type SecurityBlockSenderObservation struct {
 
 	// (String)
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
+
+	// (String) Timestamp at which the pattern expires. After this time, Email Security ignores the pattern. The value must lie in the future. Send null to clear the expiration.
+	// Timestamp at which the pattern expires. After this time, Email Security ignores the pattern. The value must lie in the future. Send `null` to clear the expiration.
+	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
 
 	// (String) Blocked sender pattern identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -90,6 +98,11 @@ type SecurityBlockSenderParameters struct {
 	// (String)
 	// +kubebuilder:validation:Optional
 	Comments *string `json:"comments,omitempty" tf:"comments,omitempty"`
+
+	// (String) Timestamp at which the pattern expires. After this time, Email Security ignores the pattern. The value must lie in the future. Send null to clear the expiration.
+	// Timestamp at which the pattern expires. After this time, Email Security ignores the pattern. The value must lie in the future. Send `null` to clear the expiration.
+	// +kubebuilder:validation:Optional
+	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
 
 	// (Boolean) Whether pattern is a regular expression instead of a literal value.
 	// Whether `pattern` is a regular expression instead of a literal value.
