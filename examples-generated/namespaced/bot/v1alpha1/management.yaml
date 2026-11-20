@@ -9,6 +9,12 @@ metadata:
   namespace: crossplane-system
 spec:
   forProvider:
+    aiAgents:
+      anthropicAgent: block
+      googleAgent: block
+      instinct: block
+      muse: block
+      openaiAgent: block
     aiBotsMigrationOptOut: false
     aiBotsProtection: block
     aiTraining: disallow

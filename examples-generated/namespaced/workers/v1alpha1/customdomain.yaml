@@ -10,7 +10,9 @@ metadata:
 spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    enabled: true
     hostname: app.example.com
+    previewsEnabled: false
     service: my-worker
     zoneId: 593c9c94de529bbbfaac7c53ced0447d
     zoneName: example.com

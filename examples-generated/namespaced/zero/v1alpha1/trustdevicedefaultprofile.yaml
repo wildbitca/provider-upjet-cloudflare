@@ -19,13 +19,16 @@ spec:
     dnsSearchSuffixes:
     - description: Example internal domains
       suffix: internal.corp
+    enableDeviceCredentialAuthentication: false
     exclude:
     - address: 192.0.2.0/24
       description: Exclude testing domains from the tunnel
     excludeOfficeIps: true
     globalAcceleration:
+      allowManualOverride: true
       apiEndpoints:
       - 198.51.100.1:443
+      autoswitch: true
       enabled: true
       masqueEndpoints:
       - 198.51.100.1:443

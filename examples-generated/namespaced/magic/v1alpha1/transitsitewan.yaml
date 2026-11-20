@@ -15,9 +15,12 @@ spec:
     name: name
     physport: 1
     priority: 0
+    provisionedDownloadKbps: 500
+    provisionedUploadKbps: 100
     siteId: 023e105f4ecef8ad9ca31a8372d0c353
     staticAddressing:
       address: 192.0.2.0/24
       gatewayAddress: 192.0.2.1
       secondaryAddress: 192.0.2.0/24
+      secondaryGatewayAddress: 192.0.2.1
     vlanTag: 42

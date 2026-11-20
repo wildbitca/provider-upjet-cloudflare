@@ -45,6 +45,7 @@ spec:
       mfaDisabled: false
       sessionDuration: 24h
     name: Allow devs
+    policyResolutionAccountId: policy_resolution_account_id
     purposeJustificationPrompt: Please enter a justification for entering this protected
       domain.
     purposeJustificationRequired: true

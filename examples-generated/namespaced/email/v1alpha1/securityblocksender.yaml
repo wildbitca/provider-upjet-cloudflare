@@ -11,6 +11,7 @@ spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
     comments: Block sender with email test@example.com
+    expiresAt: "2027-01-01T00:00:00Z"
     isRegex: false
     pattern: test@example.com
     patternType: EMAIL

@@ -39,6 +39,8 @@ spec:
     cacheOptions:
       crossVersionCache: true
       enabled: true
+    codeUpdateStrategy:
+      mode: immediate
     compatibilityDate: "2021-01-01T00:00:00Z"
     compatibilityFlags:
     - nodejs_compat

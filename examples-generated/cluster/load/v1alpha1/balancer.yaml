@@ -28,7 +28,34 @@ spec:
       preferEcs: always
     name: www.example.com
     networks:
-    - string
+    - cloudflare
+    - jdcloud
+    poolSets:
+    - disabled: true
+      fixedResponse:
+        contentType: application/json
+        location: www.example.com
+        messageBody: Testing Hello
+        statusCode: 0
+      match:
+        default: true
+        topology:
+          countries:
+          - string
+          pops:
+          - string
+          regions:
+          - WNAM
+      name: wnam-primary
+      overrides:
+        fallbackPool: 9290f38c5d07c2e2f4df57b1f61d4196
+        poolDefaultWeight: 0.2
+        poolWeights:
+          9290f38c5d07c2e2f4df57b1f61d4196: 0.5
+          de90f38ced07c2e2f4df50b1f61d4194: 0.3
+        pools:
+        - 17b5962d775c646f3f9725cbc7a53df4
+        steeringPolicy: random
     popPools:
       LAX:
       - de90f38ced07c2e2f4df50b1f61d4194

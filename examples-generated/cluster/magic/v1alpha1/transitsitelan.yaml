@@ -17,6 +17,9 @@ spec:
     nat:
       staticPrefix: 192.0.2.0/24
     physport: 1
+    remoteSubnets:
+    - localAliasPrefix: 192.0.2.0/24
+      remotePrefix: 192.0.2.0/24
     routedSubnets:
     - nat:
         staticPrefix: 192.0.2.0/24

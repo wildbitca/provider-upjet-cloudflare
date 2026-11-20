@@ -15,6 +15,7 @@ spec:
     defaultRetention:
       errorRetention: 5 minutes
       successRetention: 5 minutes
+    jurisdiction: eu
     limits:
       steps: 1
     schedules:

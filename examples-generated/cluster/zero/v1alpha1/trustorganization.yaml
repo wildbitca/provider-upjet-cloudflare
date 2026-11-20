@@ -17,6 +17,7 @@ spec:
     denyUnmatchedRequests: true
     denyUnmatchedRequestsExemptedZoneNames:
     - example.com
+    disableEndUserAppCreation: false
     isUiReadOnly: true
     loginDesign:
       backgroundColor: '#c5ed1b'

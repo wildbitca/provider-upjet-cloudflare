@@ -9,8 +9,14 @@ metadata:
 spec:
   forProvider:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
+    checkRegions:
+    - WEU
+    - ENAM
     description: Primary data center - Provider XYZ
     enabled: false
+    healthSources:
+    - regional
+    - global
     latitude: 0
     loadShedding:
       defaultPercent: 0

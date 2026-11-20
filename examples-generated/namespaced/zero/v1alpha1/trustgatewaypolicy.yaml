@@ -30,8 +30,6 @@ spec:
         X-Custom-Header-Name:
         - somecustomvalue
       allowChildBypass: false
-      auditSsh:
-        commandLogging: false
       bisoAdminControls:
         copy: remote_only
         dcp: true
@@ -75,6 +73,8 @@ spec:
         ipv6: 2001:DB8::/64
       forensicCopy:
         enabled: true
+      forward:
+        workerId: 0123456789abcdef0123456789abcdef
       ignoreCnameCategoryMatches: true
       insecureDisableDnssecValidation: false
       ipCategories: true

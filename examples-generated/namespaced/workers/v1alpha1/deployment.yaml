@@ -12,6 +12,8 @@ spec:
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
     annotations:
       workersMessage: Deploy bug fix.
+    codeUpdateStrategy:
+      mode: immediate
     scriptName: this-is_my_script-01
     strategy: percentage
     versions:
