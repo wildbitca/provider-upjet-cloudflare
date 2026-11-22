@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: provider-cloudflare
 spec:
-  package: xpkg.crossplane.io/wildbitca/provider-cloudflare:v0.1.0
+  package: xpkg.crossplane.io/wildbitca/provider-cloudflare:v2.0.0

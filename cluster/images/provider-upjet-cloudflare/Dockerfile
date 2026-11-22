@@ -1,4 +1,4 @@
-FROM alpine:3.23.3
+FROM alpine:3.24.4@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0f5a48c71bf
 # Retry apk to tolerate transient Alpine mirror timeouts. With ~65 image builds
 # running in parallel in the publish matrix, a single flaky mirror fetch would
 # otherwise fail an individual sub-provider at random (exit code 2).
