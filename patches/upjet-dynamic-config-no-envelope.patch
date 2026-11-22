@@ -1,0 +1,108 @@
+upjet dynamicValueConversion wraps DynamicPseudoType attributes in a
+{"type": ..., "value": ...} envelope. Terraform/OpenTofu requires that
+envelope inside terraform.tfstate, but main.tf.json is HCL JSON configuration
+where the envelope is parsed as a literal 2-field object instead of the value,
+causing Cloudflare zone_setting Update to send {"value":{"type":...,"value":...}}
+and fail with 400 Invalid value for zone setting.
+
+Keep main.tf.json parameters free of dynamicValueConversion and apply
+dynamicValueConversion only when synthesizing terraform.tfstate in EnsureTFState.
+
+--- a/github.com/crossplane/upjet/v2/pkg/config/tf_conversion.go	2026-11-22 19:24:08.946049768 +0000
++++ b/github.com/crossplane/upjet/v2/pkg/config/tf_conversion.go
+@@ -49,8 +49,30 @@
+ // WARNING: The original params map and the returned map from
+ // ApplyTFConversions share the same map object.
+ func (r *Resource) ApplyTFConversions(params map[string]any, mode Mode) (map[string]any, error) {
++	return r.applyTFConversions(params, mode, true, true)
++}
++
++// ApplyTFConfigConversions applies all configured Terraform conversions except
++// dynamicValueConversion. HCL JSON configuration (main.tf.json) requires plain
++// values rather than the tfstate {"type","value"} dynamic envelope.
++func (r *Resource) ApplyTFConfigConversions(params map[string]any, mode Mode) (map[string]any, error) {
++	return r.applyTFConversions(params, mode, true, false)
++}
++
++// ApplyTFDynamicConversions applies only dynamicValueConversion entries in
++// r.TerraformConversions, producing the {"type","value"} envelope required by
++// terraform.tfstate for DynamicPseudoType attributes.
++func (r *Resource) ApplyTFDynamicConversions(params map[string]any, mode Mode) (map[string]any, error) {
++	return r.applyTFConversions(params, mode, false, true)
++}
++
++func (r *Resource) applyTFConversions(params map[string]any, mode Mode, includeNonDynamic, includeDynamic bool) (map[string]any, error) {
+ 	var err error
+ 	for _, c := range r.TerraformConversions {
++		_, isDyn := c.(dynamicValueConversion)
++		if (isDyn && !includeDynamic) || (!isDyn && !includeNonDynamic) {
++			continue
++		}
+ 		params, err = c.Convert(params, r, mode)
+ 		if err != nil {
+ 			return nil, err
+--- a/github.com/crossplane/upjet/v2/pkg/terraform/files.go	2026-11-22 19:24:08.947722514 +0000
++++ b/github.com/crossplane/upjet/v2/pkg/terraform/files.go
+@@ -110,8 +110,10 @@
+ 		}
+ 	}
+ 
+-	// Apply Terraform conversions.
+-	params, err = cfg.ApplyTFConversions(params, config.ToTerraform)
++	// Apply non-dynamic Terraform conversions for main.tf.json configuration;
++	// dynamicValueConversion's {"type","value"} envelope is tfstate-only and
++	// applied in EnsureTFState so main.tf.json keeps plain HCL JSON values.
++	params, err = cfg.ApplyTFConfigConversions(params, config.ToTerraform)
+ 	if err != nil {
+ 		return nil, errors.Wrap(err, "cannot apply terraform parameter conversions")
+ 	}
+@@ -126,8 +128,7 @@
+ 		return nil, errors.Wrap(err, "cannot get observation")
+ 	}
+ 
+-	// Apply Terraform conversions.
+-	obs, err = cfg.ApplyTFConversions(obs, config.ToTerraform)
++	obs, err = cfg.ApplyTFConfigConversions(obs, config.ToTerraform)
+ 	if err != nil {
+ 		return nil, errors.Wrap(err, "cannot apply terraform conversions on MR state")
+ 	}
+@@ -273,6 +274,12 @@
+ 	if fp.hasTFID {
+ 		base["id"] = tfID
+ 	}
++	if len(fp.Config.TFDynamicAttributeConversionPaths()) > 0 {
++		base = cloneDynamicMap(base)
++		if base, err = fp.Config.ApplyTFDynamicConversions(base, config.ToTerraform); err != nil {
++			return errors.Wrap(err, "cannot apply dynamic terraform conversions on MR state")
++		}
++	}
+ 	attr, err := json.JSParser.Marshal(base)
+ 	if err != nil {
+ 		return errors.Wrap(err, errMarshalAttributes)
+@@ -392,3 +399,26 @@
+ 	}
+ 	return v != fp.Setup.Requirement.Version, nil
+ }
++
++func cloneDynamicMap(m map[string]any) map[string]any {
++	cp := make(map[string]any, len(m))
++	for k, v := range m {
++		cp[k] = cloneDynamicValue(v)
++	}
++	return cp
++}
++
++func cloneDynamicValue(v any) any {
++	switch t := v.(type) {
++	case map[string]any:
++		return cloneDynamicMap(t)
++	case []any:
++		cp := make([]any, len(t))
++		for i, item := range t {
++			cp[i] = cloneDynamicValue(item)
++		}
++		return cp
++	default:
++		return v
++	}
++}
