@@ -57,3 +57,52 @@ func (mg *KvNamespace) ResolveReferences(ctx context.Context, c client.Reader) e
 
 	return nil
 }
+
+// ResolveReferences of this Script.
+func (mg *Script) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Bindings); i3++ {
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Bindings[i3].Service),
+			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.Bindings[i3].ServiceRef,
+			Selector:     mg.Spec.ForProvider.Bindings[i3].ServiceSelector,
+			To: reference.To{
+				List:    &ScriptList{},
+				Managed: &Script{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.Bindings[i3].Service")
+		}
+		mg.Spec.ForProvider.Bindings[i3].Service = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.Bindings[i3].ServiceRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Bindings); i3++ {
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Bindings[i3].Service),
+			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.Bindings[i3].ServiceRef,
+			Selector:     mg.Spec.InitProvider.Bindings[i3].ServiceSelector,
+			To: reference.To{
+				List:    &ScriptList{},
+				Managed: &Script{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.Bindings[i3].Service")
+		}
+		mg.Spec.InitProvider.Bindings[i3].Service = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.Bindings[i3].ServiceRef = rsp.ResolvedReference
+
+	}
+
+	return nil
+}
