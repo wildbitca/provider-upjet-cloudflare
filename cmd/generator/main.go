@@ -8,6 +8,7 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/pipeline"
 
 	"github.com/wildbitca/provider-upjet-cloudflare/config"
+	"github.com/wildbitca/provider-upjet-cloudflare/internal/workerartifactgen"
 )
 
 func main() {
@@ -19,5 +20,6 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("cannot calculate the absolute path with %s", rootDir))
 	}
+	workerartifactgen.Configure()
 	pipeline.Run(config.GetProvider(), config.GetProviderNamespaced(), absRootDir)
 }

@@ -12,6 +12,8 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/resource"
 	"github.com/crossplane/upjet/v2/pkg/resource/json"
+
+	workerartifact "github.com/wildbitca/provider-upjet-cloudflare/apis/workerartifact"
 )
 
 // GetTerraformResourceType returns Terraform resource type for this Script
@@ -58,7 +60,16 @@ func (tr *Script) GetParameters() (map[string]any, error) {
 		return nil, err
 	}
 	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
+
+	if err := json.TFParser.Unmarshal(p, &base); err != nil {
+		return nil, err
+	}
+	if tr.Spec.Artifact != nil && tr.GetDeletionTimestamp() == nil {
+		if err := tr.ValidateWorkerArtifactInputs(); err != nil {
+			return nil, err
+		}
+	}
+	return workerartifact.Parameters(tr.Spec.Artifact, tr.Spec.ArtifactFiles, tr.GetDeletionTimestamp() != nil, "cloudflare_workers_script", base)
 }
 
 // SetParameters for this Script
@@ -119,6 +130,11 @@ func (tr *Script) LateInitialize(attrs []byte) (bool, error) {
 	}
 	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
 
+	if tr.Spec.Artifact != nil {
+		for _, name := range []string{"Content", "ContentFile", "ContentSha256", "ContentType", "MainModule", "Modules", "Files", "BodyPart", "Assets", "KeepAssets"} {
+			opts = append(opts, resource.WithNameFilter(name))
+		}
+	}
 	li := resource.NewGenericLateInitializer(opts...)
 	return li.LateInitialize(&tr.Spec.ForProvider, params)
 }
@@ -126,4 +142,24 @@ func (tr *Script) LateInitialize(attrs []byte) (bool, error) {
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *Script) GetTerraformSchemaVersion() int {
 	return 500
+}
+
+// GetWorkerArtifact returns the optional immutable bundle selection.
+func (tr *Script) GetWorkerArtifact() *workerartifact.Source { return tr.Spec.Artifact }
+
+// GetWorkerArtifactFiles returns the controller-local bundle attachment.
+func (tr *Script) GetWorkerArtifactFiles() *workerartifact.Files { return tr.Spec.ArtifactFiles }
+
+// SetWorkerArtifactFiles attaches controller-local files without persisting paths.
+func (tr *Script) SetWorkerArtifactFiles(files *workerartifact.Files) { tr.Spec.ArtifactFiles = files }
+
+// SetResolvedWorkerArtifact records which immutable bundle was fetched.
+func (tr *Script) SetResolvedWorkerArtifact(digest string) { tr.Status.ResolvedArtifactDigest = digest }
+
+// ValidateWorkerArtifactInputs rejects conflicting code and asset input owners.
+func (tr *Script) ValidateWorkerArtifactInputs() error {
+	if err := workerartifact.ValidateRawInputs(tr.Spec.ForProvider); err != nil {
+		return err
+	}
+	return workerartifact.ValidateRawInputs(tr.Spec.InitProvider)
 }
