@@ -9,6 +9,9 @@ metadata:
   namespace: crossplane-system
 spec:
   forProvider:
+    accessApplicationSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     accountId: 023e105f4ecef8ad9ca31a8372d0c353
     assets:
       config:
@@ -115,7 +118,6 @@ spec:
       packageJsonVersion: ^4.17.21
     placement:
       mode: smart
-    scriptName: this-is_my_script-01
     tags:
     - string
     tailConsumers:
