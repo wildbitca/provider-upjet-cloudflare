@@ -3,6 +3,7 @@ package config
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/crossplane/upjet/v2/pkg/config"
 )
@@ -138,6 +139,65 @@ var workersRouteExternalName = config.ExternalName{
 	DisableNameInitializer: true,
 }
 
+func extractLeafID(externalName string, expectedSegments int) (string, bool, error) {
+	if externalName == "" {
+		return "", false, nil
+	}
+	if !strings.Contains(externalName, "/") {
+		return externalName, false, nil
+	}
+	parts := strings.Split(externalName, "/")
+	if len(parts) != expectedSegments {
+		return "", false, fmt.Errorf("invalid external name %q: expected bare ID or %d slash-separated segments", externalName, expectedSegments)
+	}
+	for _, p := range parts {
+		if p == "" {
+			return "", false, fmt.Errorf("invalid external name %q: empty segment", externalName)
+		}
+	}
+	return parts[expectedSegments-1], true, nil
+}
+
+// scopedExternalName keeps the provider-generated leaf ID (`tfstate["id"]`) as
+// the Crossplane external name and TF state ID for Refresh/Read, while building
+// the slash-joined `<scopeKeys...>/<id>` import ID for `terraform import`.
+// GetIDFn also accepts legacy composite external names and strips the scope
+// prefix so Refresh never sends a composite path to the single-resource Read API.
+func scopedExternalName(scopeKeys ...string) config.ExternalName {
+	expectedSegments := len(scopeKeys) + 1
+	return config.ExternalName{
+		SetIdentifierArgumentFn: config.NopSetIdentifierArgument,
+		GetExternalNameFn:       config.IDAsExternalName,
+		GetIDFn: func(_ context.Context, externalName string, _, _ map[string]interface{}) (string, error) {
+			leafID, _, err := extractLeafID(externalName, expectedSegments)
+			return leafID, err
+		},
+		GetImportIDFn: func(_ context.Context, externalName string, parameters, _ map[string]interface{}) (string, error) {
+			leafID, isComposite, err := extractLeafID(externalName, expectedSegments)
+			if err != nil {
+				return "", err
+			}
+			if leafID == "" {
+				return "", nil
+			}
+			if isComposite {
+				return externalName, nil
+			}
+			parts := make([]string, 0, expectedSegments)
+			for _, key := range scopeKeys {
+				v, ok := parameters[key].(string)
+				if !ok || v == "" {
+					return "", fmt.Errorf("cannot determine import ID: %s is required", key)
+				}
+				parts = append(parts, v)
+			}
+			parts = append(parts, leafID)
+			return strings.Join(parts, "/"), nil
+		},
+		DisableNameInitializer: true,
+	}
+}
+
 // ExternalNameConfigs contains all external name configurations for this
 // provider. Cloudflare uses Terraform Plugin Framework. All 198 managed
 // resources use IdentifierFromProvider (provider-generated IDs).
@@ -264,8 +324,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"cloudflare_schema_validation_operation_settings":                    config.IdentifierFromProvider,
 	"cloudflare_schema_validation_schemas":                               config.IdentifierFromProvider,
 	"cloudflare_schema_validation_settings":                              config.IdentifierFromProvider,
-	"cloudflare_secrets_store":                                           config.IdentifierFromProvider,
-	"cloudflare_secrets_store_secret":                                    config.IdentifierFromProvider,
+	"cloudflare_secrets_store":                                           scopedExternalName("account_id"),
+	"cloudflare_secrets_store_secret":                                    scopedExternalName("account_id", "store_id"),
 	"cloudflare_snippet":                                                 config.IdentifierFromProvider,
 	"cloudflare_snippet_rules":                                           config.IdentifierFromProvider,
 	"cloudflare_snippets":                                                config.IdentifierFromProvider,

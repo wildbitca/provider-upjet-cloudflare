@@ -144,3 +144,115 @@ func TestRemovedResourcesAreNotConfigured(t *testing.T) {
 		t.Fatal("cloudflare_registrar_domain must not be configured")
 	}
 }
+
+func TestSecretsStoreExternalNames(t *testing.T) {
+	cases := map[string]struct {
+		resource     string
+		externalName string
+		parameters   map[string]interface{}
+		wantTFID     string
+		wantImportID string
+		wantTFIDErr  bool
+		wantImpErr   bool
+	}{
+		"store bare id": {
+			resource:     "cloudflare_secrets_store",
+			externalName: "store-1",
+			parameters:   map[string]interface{}{"account_id": "acc-1"},
+			wantTFID:     "store-1",
+			wantImportID: "acc-1/store-1",
+		},
+		"store legacy composite": {
+			resource:     "cloudflare_secrets_store",
+			externalName: "acc-1/store-1",
+			parameters:   map[string]interface{}{},
+			wantTFID:     "store-1",
+			wantImportID: "acc-1/store-1",
+		},
+		"store empty": {
+			resource:     "cloudflare_secrets_store",
+			externalName: "",
+			parameters:   map[string]interface{}{"account_id": "acc-1"},
+			wantTFID:     "",
+			wantImportID: "",
+		},
+		"store missing account_id": {
+			resource:     "cloudflare_secrets_store",
+			externalName: "store-1",
+			parameters:   map[string]interface{}{},
+			wantTFID:     "store-1",
+			wantImpErr:   true,
+		},
+		"store malformed slash count": {
+			resource:     "cloudflare_secrets_store",
+			externalName: "acc-1/store-1/extra",
+			parameters:   map[string]interface{}{"account_id": "acc-1"},
+			wantTFIDErr:  true,
+			wantImpErr:   true,
+		},
+		"secret bare id": {
+			resource:     "cloudflare_secrets_store_secret",
+			externalName: "sec-1",
+			parameters:   map[string]interface{}{"account_id": "acc-1", "store_id": "store-1"},
+			wantTFID:     "sec-1",
+			wantImportID: "acc-1/store-1/sec-1",
+		},
+		"secret legacy three-part": {
+			resource:     "cloudflare_secrets_store_secret",
+			externalName: "acc-1/store-1/sec-1",
+			parameters:   map[string]interface{}{},
+			wantTFID:     "sec-1",
+			wantImportID: "acc-1/store-1/sec-1",
+		},
+		"secret empty": {
+			resource:     "cloudflare_secrets_store_secret",
+			externalName: "",
+			parameters:   map[string]interface{}{"account_id": "acc-1", "store_id": "store-1"},
+			wantTFID:     "",
+			wantImportID: "",
+		},
+		"secret missing store_id": {
+			resource:     "cloudflare_secrets_store_secret",
+			externalName: "sec-1",
+			parameters:   map[string]interface{}{"account_id": "acc-1"},
+			wantTFID:     "sec-1",
+			wantImpErr:   true,
+		},
+		"secret malformed two-part": {
+			resource:     "cloudflare_secrets_store_secret",
+			externalName: "acc-1/sec-1",
+			parameters:   map[string]interface{}{"account_id": "acc-1", "store_id": "store-1"},
+			wantTFIDErr:  true,
+			wantImpErr:   true,
+		},
+	}
+
+	for name, tc := range cases {
+		t.Run(name, func(t *testing.T) {
+			cfg, ok := ExternalNameConfigs[tc.resource]
+			if !ok {
+				t.Fatalf("%s not configured", tc.resource)
+			}
+			gotID, err := cfg.GetIDFn(context.Background(), tc.externalName, tc.parameters, nil)
+			if (err != nil) != tc.wantTFIDErr {
+				t.Fatalf("GetIDFn() error = %v, wantErr %t", err, tc.wantTFIDErr)
+			}
+			if !tc.wantTFIDErr && gotID != tc.wantTFID {
+				t.Fatalf("GetIDFn() = %q, want %q", gotID, tc.wantTFID)
+			}
+
+			gotImp, err := cfg.GetImportIDFn(context.Background(), tc.externalName, tc.parameters, nil)
+			if (err != nil) != tc.wantImpErr {
+				t.Fatalf("GetImportIDFn() error = %v, wantErr %t", err, tc.wantImpErr)
+			}
+			if !tc.wantImpErr && gotImp != tc.wantImportID {
+				t.Fatalf("GetImportIDFn() = %q, want %q", gotImp, tc.wantImportID)
+			}
+
+			gotExt, err := cfg.GetExternalNameFn(map[string]interface{}{"id": "leaf-id"})
+			if err != nil || gotExt != "leaf-id" {
+				t.Fatalf("GetExternalNameFn() = (%q, %v), want (\"leaf-id\", nil)", gotExt, err)
+			}
+		})
+	}
+}
