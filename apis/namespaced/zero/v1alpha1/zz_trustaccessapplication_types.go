@@ -2334,7 +2334,16 @@ type IncludeServiceTokenInitParameters struct {
 
 	// (String) The ID of a Service Token.
 	// The ID of a Service Token.
+	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/zero/v1alpha1.TrustAccessServiceToken
 	TokenID *string `json:"tokenId,omitempty" tf:"token_id,omitempty"`
+
+	// Reference to a TrustAccessServiceToken in zero to populate tokenId.
+	// +kubebuilder:validation:Optional
+	TokenIDRef *v2.NamespacedReference `json:"tokenIdRef,omitempty" tf:"-"`
+
+	// Selector for a TrustAccessServiceToken in zero to populate tokenId.
+	// +kubebuilder:validation:Optional
+	TokenIDSelector *v2.NamespacedSelector `json:"tokenIdSelector,omitempty" tf:"-"`
 }
 
 type IncludeServiceTokenObservation struct {
@@ -2348,8 +2357,17 @@ type IncludeServiceTokenParameters struct {
 
 	// (String) The ID of a Service Token.
 	// The ID of a Service Token.
+	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/zero/v1alpha1.TrustAccessServiceToken
 	// +kubebuilder:validation:Optional
-	TokenID *string `json:"tokenId" tf:"token_id,omitempty"`
+	TokenID *string `json:"tokenId,omitempty" tf:"token_id,omitempty"`
+
+	// Reference to a TrustAccessServiceToken in zero to populate tokenId.
+	// +kubebuilder:validation:Optional
+	TokenIDRef *v2.NamespacedReference `json:"tokenIdRef,omitempty" tf:"-"`
+
+	// Selector for a TrustAccessServiceToken in zero to populate tokenId.
+	// +kubebuilder:validation:Optional
+	TokenIDSelector *v2.NamespacedSelector `json:"tokenIdSelector,omitempty" tf:"-"`
 }
 
 type IncludeTargetAttributesInitParameters struct {

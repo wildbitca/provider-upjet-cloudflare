@@ -200,7 +200,16 @@ type BindingsInitParameters struct {
 
 	// (String) Identifier of the VPC service to bind to.
 	// Identifier of the VPC service to bind to.
+	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/connectivity/v1alpha1.DirectoryService
 	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// Reference to a DirectoryService in connectivity to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDRef *v2.NamespacedReference `json:"serviceIdRef,omitempty" tf:"-"`
+
+	// Selector for a DirectoryService in connectivity to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDSelector *v2.NamespacedSelector `json:"serviceIdSelector,omitempty" tf:"-"`
 
 	// (Attributes) A simple rate limit. (see below for nested schema)
 	Simple *SimpleInitParameters `json:"simple,omitempty" tf:"simple,omitempty"`
@@ -586,8 +595,17 @@ type BindingsParameters struct {
 
 	// (String) Identifier of the VPC service to bind to.
 	// Identifier of the VPC service to bind to.
+	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/connectivity/v1alpha1.DirectoryService
 	// +kubebuilder:validation:Optional
 	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// Reference to a DirectoryService in connectivity to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDRef *v2.NamespacedReference `json:"serviceIdRef,omitempty" tf:"-"`
+
+	// Selector for a DirectoryService in connectivity to populate serviceId.
+	// +kubebuilder:validation:Optional
+	ServiceIDSelector *v2.NamespacedSelector `json:"serviceIdSelector,omitempty" tf:"-"`
 
 	// (Attributes) A simple rate limit. (see below for nested schema)
 	// +kubebuilder:validation:Optional

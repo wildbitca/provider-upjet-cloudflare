@@ -359,6 +359,16 @@ func (in *BindingsInitParameters) DeepCopyInto(out *BindingsInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ServiceIDRef != nil {
+		in, out := &in.ServiceIDRef, &out.ServiceIDRef
+		*out = new(v2.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ServiceIDSelector != nil {
+		in, out := &in.ServiceIDSelector, &out.ServiceIDSelector
+		*out = new(v2.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Simple != nil {
 		in, out := &in.Simple, &out.Simple
 		*out = new(SimpleInitParameters)
@@ -849,6 +859,16 @@ func (in *BindingsParameters) DeepCopyInto(out *BindingsParameters) {
 		in, out := &in.ServiceID, &out.ServiceID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ServiceIDRef != nil {
+		in, out := &in.ServiceIDRef, &out.ServiceIDRef
+		*out = new(v2.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ServiceIDSelector != nil {
+		in, out := &in.ServiceIDSelector, &out.ServiceIDSelector
+		*out = new(v2.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Simple != nil {
 		in, out := &in.Simple, &out.Simple

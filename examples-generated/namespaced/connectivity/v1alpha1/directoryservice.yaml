@@ -13,7 +13,9 @@ spec:
     host:
       ipv4: 10.0.0.1
       network:
-        tunnelId: 0191dce4-9ab4-7fce-b660-8e5dec5172da
+        tunnelIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: example
     httpPort: 8080
     httpsPort: 8443
     name: web-app
