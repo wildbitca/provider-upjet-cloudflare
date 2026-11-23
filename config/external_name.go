@@ -3,6 +3,7 @@ package config
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/crossplane/upjet/v2/pkg/config"
 )
@@ -136,6 +137,19 @@ var workersRouteExternalName = config.ExternalName{
 		return zoneID + "/" + externalName, nil
 	},
 	DisableNameInitializer: true,
+}
+
+// cloudflaredTunnelImportID qualifies the Terraform import ID while retaining
+// the tunnel UUID as the Crossplane external name and Terraform state ID.
+func cloudflaredTunnelImportID(_ context.Context, externalName string, parameters, _ map[string]any) (string, error) {
+	if externalName == "" || strings.Contains(externalName, "/") {
+		return externalName, nil
+	}
+	accountID, _ := parameters["account_id"].(string)
+	if accountID == "" {
+		return "", fmt.Errorf("cloudflared tunnel import requires account_id")
+	}
+	return accountID + "/" + externalName, nil
 }
 
 // ExternalNameConfigs contains all external name configurations for this
@@ -376,6 +390,9 @@ func ExternalNameConfigurations() config.ResourceOption {
 		}
 		if r.Name == originPullsResource {
 			r.InitializerFns = append(r.InitializerFns, originPullsInitializer)
+		}
+		if r.Name == "cloudflare_zero_trust_tunnel_cloudflared" {
+			r.ExternalName.GetImportIDFn = cloudflaredTunnelImportID
 		}
 	}
 }
