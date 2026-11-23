@@ -4,41 +4,53 @@ import (
 	"context"
 	"testing"
 
+	"github.com/crossplane/upjet/v2/pkg/config"
 	"github.com/crossplane/upjet/v2/pkg/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestWorkersRouteExternalName(t *testing.T) {
 	tests := map[string]struct {
+		idFn         config.GetIDFn
 		externalName string
 		parameters   map[string]interface{}
 		want         string
 		wantErr      bool
 	}{
+		"new Route has no state ID": {
+			idFn: workersRouteExternalName.GetIDFn,
+		},
+		"existing Route has a bare state ID": {
+			idFn:         workersRouteExternalName.GetIDFn,
+			externalName: testRouteID,
+			parameters:   map[string]interface{}{"zone_id": testZoneID},
+			want:         testRouteID,
+		},
 		"builds Terraform import ID": {
-			externalName: "394ecb2c6017461c868c101d64ded9af",
-			parameters:   map[string]interface{}{"zone_id": "d9b8169cf1a3c5cc37fe5040cc7b0db7"},
-			want:         "d9b8169cf1a3c5cc37fe5040cc7b0db7/394ecb2c6017461c868c101d64ded9af",
+			idFn:         workersRouteExternalName.GetImportIDFn,
+			externalName: testRouteID,
+			parameters:   map[string]interface{}{"zone_id": testZoneID},
+			want:         testZoneID + "/" + testRouteID,
 		},
 		"requires zone ID": {
-			externalName: "394ecb2c6017461c868c101d64ded9af",
-			parameters:   map[string]interface{}{},
+			idFn:         workersRouteExternalName.GetImportIDFn,
+			externalName: testRouteID,
 			wantErr:      true,
 		},
-		"requires route ID": {
-			parameters: map[string]interface{}{"zone_id": "d9b8169cf1a3c5cc37fe5040cc7b0db7"},
-			wantErr:    true,
+		"no route ID means skip import": {
+			idFn:       workersRouteExternalName.GetImportIDFn,
+			parameters: map[string]interface{}{"zone_id": testZoneID},
 		},
 	}
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			got, err := workersRouteExternalName.GetIDFn(context.Background(), tc.externalName, tc.parameters, nil)
+			got, err := tc.idFn(context.Background(), tc.externalName, tc.parameters, nil)
 			if (err != nil) != tc.wantErr {
-				t.Fatalf("GetIDFn() error = %v, wantErr %t", err, tc.wantErr)
+				t.Fatalf("ID function error = %v, wantErr %t", err, tc.wantErr)
 			}
 			if got != tc.want {
-				t.Fatalf("GetIDFn() = %q, want %q", got, tc.want)
+				t.Fatalf("ID function = %q, want %q", got, tc.want)
 			}
 		})
 	}
