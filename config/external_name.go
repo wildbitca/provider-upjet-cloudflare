@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/crossplane/upjet/v2/pkg/config"
+	"github.com/wildbitca/provider-upjet-cloudflare/internal/workerartifact"
 )
 
 // zoneIDAsExternalName is a custom ExternalName config for singleton resources
@@ -376,6 +377,9 @@ func ExternalNameConfigurations() config.ResourceOption {
 		}
 		if r.Name == originPullsResource {
 			r.InitializerFns = append(r.InitializerFns, originPullsInitializer)
+		}
+		if r.Name == "cloudflare_workers_script" {
+			r.InitializerFns = append(r.InitializerFns, workerartifact.NewInitializer)
 		}
 	}
 }
