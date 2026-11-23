@@ -196,11 +196,20 @@ type BindingsInitParameters struct {
 
 	// (String) Name of Worker to bind to.
 	// Name of Worker to bind to.
+	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/workers/v1alpha1.Script
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
 	// (String) Identifier of the VPC service to bind to.
 	// Identifier of the VPC service to bind to.
 	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// Reference to a Script in workers to populate service.
+	// +kubebuilder:validation:Optional
+	ServiceRef *v2.NamespacedReference `json:"serviceRef,omitempty" tf:"-"`
+
+	// Selector for a Script in workers to populate service.
+	// +kubebuilder:validation:Optional
+	ServiceSelector *v2.NamespacedSelector `json:"serviceSelector,omitempty" tf:"-"`
 
 	// (Attributes) A simple rate limit. (see below for nested schema)
 	Simple *SimpleInitParameters `json:"simple,omitempty" tf:"simple,omitempty"`
@@ -581,6 +590,7 @@ type BindingsParameters struct {
 
 	// (String) Name of Worker to bind to.
 	// Name of Worker to bind to.
+	// +crossplane:generate:reference:type=github.com/wildbitca/provider-upjet-cloudflare/apis/namespaced/workers/v1alpha1.Script
 	// +kubebuilder:validation:Optional
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
@@ -588,6 +598,14 @@ type BindingsParameters struct {
 	// Identifier of the VPC service to bind to.
 	// +kubebuilder:validation:Optional
 	ServiceID *string `json:"serviceId,omitempty" tf:"service_id,omitempty"`
+
+	// Reference to a Script in workers to populate service.
+	// +kubebuilder:validation:Optional
+	ServiceRef *v2.NamespacedReference `json:"serviceRef,omitempty" tf:"-"`
+
+	// Selector for a Script in workers to populate service.
+	// +kubebuilder:validation:Optional
+	ServiceSelector *v2.NamespacedSelector `json:"serviceSelector,omitempty" tf:"-"`
 
 	// (Attributes) A simple rate limit. (see below for nested schema)
 	// +kubebuilder:validation:Optional
