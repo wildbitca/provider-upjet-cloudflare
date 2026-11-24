@@ -126,13 +126,14 @@ func attributeAsExternalName(attr string) config.ExternalName {
 var workersRouteExternalName = config.ExternalName{
 	SetIdentifierArgumentFn: config.NopSetIdentifierArgument,
 	GetExternalNameFn:       config.IDAsExternalName,
-	GetIDFn: func(_ context.Context, externalName string, parameters, _ map[string]interface{}) (string, error) {
+	GetIDFn:                 config.ExternalNameAsID,
+	GetImportIDFn: func(_ context.Context, externalName string, parameters, _ map[string]interface{}) (string, error) {
+		if externalName == "" {
+			return "", nil
+		}
 		zoneID, ok := parameters["zone_id"].(string)
 		if !ok || zoneID == "" {
 			return "", fmt.Errorf("cannot determine workers route import ID: zone_id is required")
-		}
-		if externalName == "" {
-			return "", fmt.Errorf("cannot determine workers route import ID: external name is required")
 		}
 		return zoneID + "/" + externalName, nil
 	},
